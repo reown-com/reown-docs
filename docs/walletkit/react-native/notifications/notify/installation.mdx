@@ -5,8 +5,8 @@ import TabItem from '@theme/TabItem'
 
 Install the WalletConnect NotifyClient package.
 
-```bash npm2yarn
-npm install @walletconnect/notify-client @walletconnect/react-native-compat
+```
+yarn add @walletconnect/notify-client @walletconnect/react-native-compat
 ```
 
 You will need to polyfill crypto depending on your environment. See instructions below.
@@ -20,8 +20,8 @@ queryString="rn-method"
 >
 <TabItem value="expo">
 
-```bash npm2yarn
-npm i expo-crypto
+```
+yarn add expo-crypto
 ```
 
 1. Create a file called `expo-crypto-shim.js` at the root of your project
@@ -59,8 +59,8 @@ import './expo-crypto-shim.js'
 </TabItem>
 <TabItem value="rn-cli">
 
-```bash npm2yarn
-npm i react-native-quick-crypto react-native-quick-base64 stream-browserify @craftzdog/react-native-buffer babel-plugin-module-resolver
+```
+yarn add react-native-quick-crypto react-native-quick-base64 stream-browserify @craftzdog/react-native-buffer babel-plugin-module-resolver
 ```
 
 For iOS only
