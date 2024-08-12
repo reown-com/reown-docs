@@ -230,7 +230,16 @@ module.exports = {
                 { type: 'doc', label: 'Solana', id: 'appkit/features/solana' }
               ]
             },
-            'appkit/upgrade'
+            'appkit/upgrade',
+            {
+              type: 'category',
+              label: 'Migration',
+              collapsed: true,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },
+              ]
+            },
           ]
         },
         {
