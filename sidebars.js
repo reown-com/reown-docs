@@ -51,7 +51,10 @@ const advanced = {
             'advanced/multichain/rpc-reference/tezos-rpc',
             'advanced/multichain/rpc-reference/xrpl-rpc',
             'advanced/multichain/rpc-reference/casper-rpc',
-            'advanced/multichain/rpc-reference/everscale-rpc'
+            'advanced/multichain/rpc-reference/everscale-rpc',
+            'advanced/multichain/rpc-reference/bitcoin-rpc',
+            'advanced/multichain/rpc-reference/litecoin-rpc',
+            'advanced/multichain/rpc-reference/dogecoin-rpc'
           ]
         },
         {
