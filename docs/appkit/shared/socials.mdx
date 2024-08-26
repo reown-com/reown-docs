@@ -3,7 +3,7 @@ import PlatformTabItem from '../../components/PlatformTabItem'
 
 To allow users to authenticate using their email or social accounts, you need to configure the `auth` parameter in the `defaultConfig` function.
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "solana"]}>
 <PlatformTabItem value="wagmi">
 
 ```ts
@@ -70,6 +70,30 @@ const modal = createWeb3Modal({
     /* highlight-add-end */
   })
   //...
+})
+```
+
+:::info
+
+AppKit with ethers v5 does not support the `auth` parameter and social logins. If you're using ethers v5, please consider upgrading to ethers v6 following this [ethers migration guide](https://docs.ethers.org/v6/migrating/) and [AppKit Docs](https://docs.walletconnect.com/appkit/overview)
+:::
+</PlatformTabItem>
+
+<PlatformTabItem value="solana">
+
+```ts
+const solanaConfig = defaultSolanaConfig({
+  chains,
+  projectId,
+  metadata,
+  /*highlight-add-start*/
+  auth: {
+    email: true, // default to true
+    socials: ['google', 'x', 'discord', 'farcaster', 'github', 'apple', 'facebook'],
+    walletFeatures: true, // default to true
+    showWallets: true // default to true
+  }
+  /*highlight-add-end*/
 })
 ```
 
