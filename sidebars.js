@@ -1068,8 +1068,7 @@ module.exports = {
       items: [
         'walletkit/web/installation',
         'walletkit/web/usage',
-        'walletkit/web/one-click-auth-siwe',
-        'walletkit/web/one-click-auth-siws',
+        'walletkit/web/one-click-auth',
         'walletkit/web/verify',
         'walletkit/web/eip5792',
         'walletkit/web/best-practices',
