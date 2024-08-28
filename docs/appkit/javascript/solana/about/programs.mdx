@@ -1,6 +1,6 @@
 [@Solana/web3.js](https://solana.com/docs/clients/javascript) can help us interact with wallets and smart contracts:
 
-```tsx
+```js
 import {
   SystemProgram,
   PublicKey,
@@ -11,7 +11,7 @@ import {
 } from '@solana/web3.js'
 import { useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
 
-function deserializeCounterAccount(data?: Buffer): { count: number } {
+function deserializeCounterAccount(data) {
   if (data?.byteLength !== 8) {
     throw Error('Need exactly 8 bytes to deserialize counter')
   }
@@ -36,7 +36,7 @@ async function onIncrementCounter() {
   }
 
   const COUNTER_ACCOUNT_SIZE = 8
-  const allocIx: TransactionInstruction = SystemProgram.createAccount({
+  const allocIx = SystemProgram.createAccount({
     fromPubkey: walletProvider.publicKey,
     newAccountPubkey: counter,
     lamports: await connection.getMinimumBalanceForRentExemption(COUNTER_ACCOUNT_SIZE),
@@ -44,7 +44,7 @@ async function onIncrementCounter() {
     programId: PROGRAM_ID
   })
 
-  const incrementIx: TransactionInstruction = new TransactionInstruction({
+  const incrementIx = new TransactionInstruction({
     programId: PROGRAM_ID,
     keys: [
       {
