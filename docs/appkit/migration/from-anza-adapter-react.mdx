@@ -1,0 +1,195 @@
+---
+title: Migration from Solana Anza Adapter to AppKit
+pagination_next: 
+
+---
+
+# Migration from Solana Anza Adapter to AppKit
+
+Follow the steps below to migrate from the Starter Pack of Anza Adapter using React to an AppKit project using Vite. Based on the default implementation. Our starting point is the [Anza Adapter Starter Pack](https://github.com/anza-xyz/wallet-adapter/blob/master/packages/starter/react-ui-starter/) in Github that is using Parcel.
+
+## Step 1 Migrate from Parcel to Vite.
+
+### a. Uninstall Parcel dependencies:
+
+'pnpm uninstall @parcel/packager-raw-url @parcel/transformer-webmanifest parcel'
+
+### b. Install Vite dependencies:
+
+'pnpm install --save-dev @vitejs/plugin-react-swc vite'
+
+### c. Update `package.json`scripts and type:
+```tsx
+    "scripts": {
+/* highlight-delete-start */
+-       "build": "parcel build",
+-       "start": "parcel src/index.html",
+-       "clean": "rm -rf .parcel-cache dist",
+/* highlight-delete-end */
+/* highlight-add-start */
++       "dev": "vite",
++       "build": "tsc && vite build",
++       "preview": "vite preview"
+/* highlight-add-end */
+    }
+/* highlight-add-start */
++   "type": "module",
+/* highlight-add-end */
+```
+
+### d. Move `index.html` to the root directory:
+
+run `mv src/index.html index.html` (or move it by your own) and ensure that the `index.html` has the correct link to the index.tsx file into the src directory
+
+### e. Create the file `vite.config.ts` in the root directory with:
+
+```js
+import react from '@vitejs/plugin-react-swc';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  plugins: [react()],
+});
+```
+
+### f. Fill ` tsconfig.json ` with the following content:
+
+```json
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "useDefineForClassFields": true,
+      "lib": [
+        "DOM",
+        "DOM.Iterable",
+        "ESNext"
+      ],
+      "allowJs": false,
+      "skipLibCheck": true,
+      "esModuleInterop": false,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": true,
+      "jsx": "react-jsx",
+      "composite": true,
+    },
+    "include": [
+      "src", "vite.config.ts"
+    ]
+  }
+```
+
+### g. Install and Run the project:
+
+Run `pnpm install` and `pnpm run dev` to start the project.
+
+:::info
+Ensure the project is running correctly before proceeding to the next step.
+:::
+
+## Step 2. Create a project in WalletConnect Cloud
+
++ Create a new project on [WalletConnect Cloud](https://cloud.walletconnect.com) and obtain a new project ID.
+
+## Step 3. Integrate Solana AppKit
+
+### a. Install the AppKit packages: 
+
+```bash
+pnpm i @web3modal/solana
+```
+
+### b. Add imports to the top of the `App.tsx`
+
+Remove old imports:
+
+```tsx
+/* highlight-delete-start */
+- import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+- import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+- import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+/* highlight-delete-end */
+```
+
+Add the new imports:
+
+```tsx
+/* highlight-add-start */
++ import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
++ import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+/* highlight-add-end */
+```
+
+Update the code:
+
+```tsx
+// 0. Setup chains
+const chains = [solana, solanaTestnet, solanaDevnet]
+
+//  Get projectId at https://cloud.walletconnect.com
+const projectId = import.meta.env.VITE_PROJECT_ID;
+if (!projectId) throw new Error("Project ID is undefined");
+
+
+// 2. Create solanaConfig
+const metadata = {
+    name: 'Appkit Solana Example',
+    description: 'Appkit Solana Example',
+    url: 'https://example.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886'],
+}
+
+const solanaConfig = defaultSolanaConfig({
+        metadata,
+        chains,
+        projectId,
+    })
+
+//  Create modal
+createWeb3Modal({
+    metadata,
+    solanaConfig,
+    chains,
+    projectId,
+  })
+```
+
+### d. Update the `App.tsx` component
+
+Use the AppKit Button. It can be configure following these [guidelines](https://docs.walletconnect.com/appkit/react-native/core/components#w3mbutton-).
+
+:::info
+AppKit's web components are global HTML elements that don't require importing.
+:::
+
+```diff
+const Content: FC = () => {
+/* highlight-delete-start */
+-   return <WalletMultiButton />;
+/* highlight-delete-end */
+/* highlight-add-start */
++   return <w3m-button />
+/* highlight-add-end */   
+};
+
+```
+
+### e. Create the `.env` file with the projectId from the step 2
+
+```
+VITE_PROJECT_ID=<Add_your_project_id>
+```
+
+### f. Install and Run the Solana AppKit Project.
+
+Run `pnpm install` and `pnpm run dev` to start the project.
+
+# Final notes
+
+- Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
+- Check our [AppKit web examples](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal) to compare with your implementation in case you are having issues
