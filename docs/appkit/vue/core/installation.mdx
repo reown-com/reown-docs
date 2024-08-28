@@ -13,9 +13,9 @@ import Ethers5Implementation from '../ethers5/implementation.mdx'
 
 import EthersImplementation from '../ethers/about/implementation.mdx'
 import EthersModal from '../ethers/about/triggermodal.mdx'
-
-import SolanaImplementation from '../solana/about/implementation.mdx'
-import SolanaModal from '../solana/about/triggermodal.mdx'
+import SolanaImplementation from '../solana/implementation.mdx'
+import SolanaModal from '../solana/triggermodal.mdx'
+import SolanaPrograms from '../solana/programs.mdx'
 
 # Vue
 
@@ -51,7 +51,7 @@ npm install @web3modal/ethers ethers
 <PlatformTabItem value="solana">
 
 ```bash npm2yarn
-npm install @web3modal/solana
+npm install @web3modal/solana/vue
 ```
 
 </PlatformTabItem>
@@ -107,15 +107,13 @@ Create a new project on WalletConnect Cloud at https://cloud.walletconnect.com a
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
-
-<SolanaModal />
-
+  <SolanaModal />
 </PlatformTabItem>
 </PlatformTabs>
 
 ## Smart Contract Interaction
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers","solana"]}>
 <PlatformTabItem value="wagmi">
 
 [Wagmi actions](https://wagmi.sh/core/api/actions/readContract) can help us interact with wallets and smart contracts:
@@ -175,4 +173,9 @@ Read more about Wagmi actions for smart contract interaction [here](https://wagm
 ```
 
 </PlatformTabItem>
+
+<PlatformTabItem value="solana">
+  <SolanaPrograms />
+</PlatformTabItem>
+
 </PlatformTabs>
