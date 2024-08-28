@@ -161,11 +161,7 @@ const metadata = {
 const solanaConfig = defaultSolanaConfig({
         metadata,
         chains,
-        projectId,
-        auth: {
-            email: true,
-            socials: ['google','github','farcaster','x']
-        }
+        projectId
     })
 
 //  Create modal
@@ -176,6 +172,9 @@ createWeb3Modal({
     projectId,
   })
 ```
+:::info
+Email an social logins are enabled by default.
+:::
 
 
 ### d. Update the `App.tsx` component
