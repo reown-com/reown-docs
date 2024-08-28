@@ -10,13 +10,19 @@ Follow the steps below to migrate from the Starter Pack of Anza Adapter using Re
 
 ## Step 1 Migrate from Parcel to Vite.
 
+While we support the use of any modern JavaScript bundler, such as Webpack or Parcel, we have chosen Vite for this migration because of its superior performance and ease of use. All our React examples use Vite. 
+If you have any concerns about this issue please refer to the React [docs](https://react.dev/learn/start-a-new-react-project#can-i-use-react-without-a-framework)
+
 ### a. Uninstall Parcel dependencies:
 
-'pnpm uninstall @parcel/packager-raw-url @parcel/transformer-webmanifest parcel'
+```bash npm2yarn
+npm uninstall @parcel/packager-raw-url @parcel/transformer-webmanifest parcel
+```
 
 ### b. Install Vite dependencies:
-
-'pnpm install --save-dev @vitejs/plugin-react-swc vite'
+```bash npm2yarn
+npm install --save-dev @vitejs/plugin-react-swc vite
+```
 
 ### c. Update `package.json`scripts and type:
 ```tsx
@@ -39,7 +45,7 @@ Follow the steps below to migrate from the Starter Pack of Anza Adapter using Re
 
 ### d. Move `index.html` to the root directory:
 
-run `mv src/index.html index.html` (or move it by your own) and ensure that the `index.html` has the correct link to the index.tsx file into the src directory
+Run `mv src/index.html index.html` (or move it by your own) and ensure that the `index.html` has the correct link to the index.tsx file into the src directory
 
 ### e. Create the file `vite.config.ts` in the root directory with:
 
@@ -86,25 +92,33 @@ export default defineConfig({
 
 ### g. Install and Run the project:
 
-Run `pnpm install` and `pnpm run dev` to start the project.
+Install the project dependencies:
+```bash npm2yarn
+npm install
+```
+
+Run with:
+```bash npm2yarn
+npm run dev
+```
 
 :::info
 Ensure the project is running correctly before proceeding to the next step.
 :::
 
-## Step 2. Create a project in WalletConnect Cloud
+## Step 2. Integrate Solana Appkit
+
+### a. Create a project in WalletConnect Cloud
 
 + Create a new project on [WalletConnect Cloud](https://cloud.walletconnect.com) and obtain a new project ID.
 
-## Step 3. Integrate Solana AppKit
+### b. Install the AppKit packages: 
 
-### a. Install the AppKit packages: 
-
-```bash
+```bash npm2yarn
 pnpm i @web3modal/solana
 ```
 
-### b. Add imports to the top of the `App.tsx`
+### c. Add imports to the top of the `App.tsx`
 
 Remove old imports:
 
@@ -148,6 +162,10 @@ const solanaConfig = defaultSolanaConfig({
         metadata,
         chains,
         projectId,
+        auth: {
+            email: true,
+            socials: ['google','github','farcaster','x']
+        }
     })
 
 //  Create modal
@@ -159,6 +177,7 @@ createWeb3Modal({
   })
 ```
 
+
 ### d. Update the `App.tsx` component
 
 Use the AppKit Button. It can be configure following these [guidelines](https://docs.walletconnect.com/appkit/react-native/core/components#w3mbutton-).
@@ -167,7 +186,7 @@ Use the AppKit Button. It can be configure following these [guidelines](https://
 AppKit's web components are global HTML elements that don't require importing.
 :::
 
-```diff
+```tsx
 const Content: FC = () => {
 /* highlight-delete-start */
 -   return <WalletMultiButton />;
@@ -187,9 +206,17 @@ VITE_PROJECT_ID=<Add_your_project_id>
 
 ### f. Install and Run the Solana AppKit Project.
 
-Run `pnpm install` and `pnpm run dev` to start the project.
+Install dependencies:
+```bash npm2yarn
+npm install
+```
+ Start the project:
+```bash npm2yarn
+npm run dev
+```
 
 # Final notes
 
+- Check our [Solana AppKit React Docs](http://localhost:3000/appkit/react/core/installation?platform=solana) for more information on how to customize your project.
 - Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
 - Check our [AppKit web examples](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal) to compare with your implementation in case you are having issues
