@@ -161,7 +161,11 @@ const metadata = {
 const solanaConfig = defaultSolanaConfig({
         metadata,
         chains,
-        projectId
+        projectId,
+        auth: {
+          email: true,
+          socials: ['google', 'x', 'farcaster', 'github']
+        }
     })
 
 //  Create modal
@@ -197,7 +201,7 @@ const Content: FC = () => {
 
 ```
 
-### e. Create the `.env` file with the projectId from the step 2
+### e. Create the `.env` file with the projectId
 
 ```
 VITE_PROJECT_ID=<Add_your_project_id>
@@ -216,6 +220,6 @@ npm run dev
 
 # Final notes
 
-- Check our [Solana AppKit React Docs](http://localhost:3000/appkit/react/core/installation?platform=solana) for more information on how to customize your project.
+- Check our [Solana AppKit React Docs](/appkit/react/core/installation?platform=solana) for more information on how to customize your project.
 - Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
-- Check our [AppKit web examples](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal) to compare with your implementation in case you are having issues
+- Check our [AppKit web examples](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal/react-solana) to compare with your implementation in case you are having issues. Also 
