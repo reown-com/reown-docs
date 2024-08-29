@@ -207,7 +207,65 @@ const Content: FC = () => {
 VITE_PROJECT_ID=<Add_your_project_id>
 ```
 
-### f. Install and Run the Solana AppKit Project.
+## Step 3. Interact with the Solana network
+
+After integrating AppKit, you can interact with the Solana network using the `@solana/web3.js` library. 
+You can check our [example](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal/react-solana) on how to fully interact or read our [documentation](https://docs.walletconnect.com/appkit/react/core/installation#smart-contract-interaction) for more information.
+
+### a. Add all the imports you need to interact with the Solana network:
+
+```tsx
+import { useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
+import {
+  PublicKey,
+  Transaction,
+  SystemProgram,
+  Connection
+} from '@solana/web3.js'
+```
+
+### b. call the hooks `useWeb3ModalAccount` and `useWeb3ModalProvider`:
+
+```tsx
+const { address } = useWeb3ModalAccount()
+const { walletProvider, connection } = useWeb3ModalProvider() 
+```
+
+### c. Create a function to generate a transaction:
+
+```tsx
+const handleSendTransaction = async () => {
+  if (!walletProvider || !address || !connection) {
+    // walletProvider, connection or address are undefined
+    return;
+  }
+
+  // Recipient address
+  const recipientAddress = new PublicKey("DG1Bq6muEMqaW6MHzWZFfQ8MmHiwvEuQcjVefVmPoV3j")
+
+  // Create a new transaction
+  const transaction = new Transaction().add(
+    SystemProgram.transfer({
+      fromPubkey: walletProvider.publicKey,
+      toPubkey: recipientAddress,
+      lamports: 10000000,  //0.01 SOL
+    })
+  )
+  transaction.feePayer = walletProvider.publicKey;
+
+  const { blockhash } = await connection.getLatestBlockhash();
+  transaction.recentBlockhash = blockhash;
+  const tx = await walletProvider.sendTransaction(transaction, connection as Connection)
+}
+```
+
+### d. Call the function:
+  
+  ```tsx
+  <button onClick={handleSendTransaction}>Send Transaction</button>
+  ```
+
+### e. Install and Run the Solana AppKit Project.
 
 Install dependencies:
 ```bash npm2yarn
@@ -222,4 +280,3 @@ npm run dev
 
 - Check our [Solana AppKit React Docs](/appkit/react/core/installation?platform=solana) for more information on how to customize your project.
 - Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
-- Check our [AppKit web examples](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal/react-solana) to compare with your implementation in case you are having issues. Also 
