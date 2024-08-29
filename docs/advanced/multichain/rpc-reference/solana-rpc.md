@@ -76,23 +76,23 @@ This method returns a signature over the provided instructions by the targeted p
 
 ### Parameters
 
-    1. `Object` - Signing parameters:
-    	1.1. [deprecated] `feePayer` : `String` -  public key of the transaction fee payer
-    	1.2. [deprecated] `instructions` : `Array` - instructions to be atomically executed:
-    		1.2.1. `Object` - instruction
-    			1.2.1.1. `programId` : `String` - public key of the on chain program
-    			1.2.1.2. `data` : `String | undefined` - encoded calldata for instruction
-    			1.2.1.3. `keys` : `Array` - account metadata used to define instructions
-    				1.2.1.3.1. `Object` - key
-    					1.2.1.3.1.1. `isSigner` : `Boolean` - true if an instruction requires a transaction signature matching `pubkey`
-    					1.2.1.3.1.2. `isWritable` : `Boolean` - true if the `pubkey` can be loaded as a read-write account
-    					1.2.1.3.1.3. `pubkey` : `String` - public key of authorized program
-    	1.3. [deprecated] `recentBlockhash` : `String` - a recent blockhash
-    	1.4. [deprecated] `partialSignatures` : `Array`, - (optional) previous partial signatures for this instruction set
-    		1.4.1. `Object` - partial signature
-    			1.4.1.2. `pubkey` : `String` - pubkey of the signer
-    			1.4.1.1. `signature` : `String` - signature matching `pubkey`
-    	1.5. `transaction` : `String`, - base64-encoded serialized transaction
+`Object` - Signing parameters:<br />
+- **[deprecated]** `feePayer` : `String` -  public key of the transaction fee payer<br />
+- **[deprecated]** `instructions` : `Array` of `Object` - instructions to be atomically executed:<br />
+&nbsp;- `Object` - instruction<br />
+&emsp;- `programId` : `String` - public key of the on chain program<br />
+&emsp;- `data` : `String | undefined` - encoded calldata for instruction<br />
+&emsp;- `keys` : `Array` of `Object`- account metadata used to define instructions<br />
+&emsp;&emsp;- `Object` - key<br />
+&emsp;&emsp;&emsp;- `isSigner` : `Boolean` - true if an instruction requires a transaction signature matching `pubkey`<br />
+&emsp;&emsp;&emsp;- `isWritable` : `Boolean` - true if the `pubkey` can be loaded as a read-write account<br />
+&emsp;&emsp;&emsp;- `pubkey` : `String` - public key of authorized program<br />
+- **[deprecated]** `recentBlockhash` : `String` - a recent blockhash<br />
+- **[deprecated]** `signatures` : `Array` of `Object`, - (optional) previous partial signatures for this instruction set<br />
+&nbsp;- `Object` - partial signature<br />
+&emsp;- `pubkey` : `String` - pubkey of the signer<br />
+&emsp;- `signature` : `String` - signature matching `pubkey`<br />
+- `transaction` : `String`, - base64-encoded serialized transaction<br />
 
 ### Returns
 
