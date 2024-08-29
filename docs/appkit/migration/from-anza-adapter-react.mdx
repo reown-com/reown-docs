@@ -6,116 +6,22 @@ pagination_next:
 
 # Migration from Solana Anza Adapter to AppKit
 
-Follow the steps below to migrate from the Starter Pack of Anza Adapter using React to an AppKit project using Vite. Based on the default implementation. Our starting point is the [Anza Adapter Starter Pack](https://github.com/anza-xyz/wallet-adapter/blob/master/packages/starter/react-ui-starter/) in Github that is using Parcel.
+Follow the steps below to migrate from the Starter Pack of Anza Adapter to AppKit. Based on the default implementation. Our starting point is the [Anza Adapter Starter Pack](https://github.com/anza-xyz/wallet-adapter/blob/master/packages/starter/react-ui-starter/) in Github.
 
-## Step 1 Migrate from Parcel to Vite.
-
-While we support the use of any modern JavaScript bundler, such as Webpack or Parcel, we have chosen Vite for this migration because of its superior performance and ease of use. All our React examples use Vite. 
-If you have any concerns about this issue please refer to the React [docs](https://react.dev/learn/start-a-new-react-project#can-i-use-react-without-a-framework)
-
-### a. Uninstall Parcel dependencies:
-
-```bash npm2yarn
-npm uninstall @parcel/packager-raw-url @parcel/transformer-webmanifest parcel
-```
-
-### b. Install Vite dependencies:
-```bash npm2yarn
-npm install --save-dev @vitejs/plugin-react-swc vite
-```
-
-### c. Update `package.json`scripts and type:
-```tsx
-    "scripts": {
-/* highlight-delete-start */
--       "build": "parcel build",
--       "start": "parcel src/index.html",
--       "clean": "rm -rf .parcel-cache dist",
-/* highlight-delete-end */
-/* highlight-add-start */
-+       "dev": "vite",
-+       "build": "tsc && vite build",
-+       "preview": "vite preview"
-/* highlight-add-end */
-    }
-/* highlight-add-start */
-+   "type": "module",
-/* highlight-add-end */
-```
-
-### d. Move `index.html` to the root directory:
-
-Run `mv src/index.html index.html` (or move it by your own) and ensure that the `index.html` has the correct link to the index.tsx file into the src directory
-
-### e. Create the file `vite.config.ts` in the root directory with:
-
-```js
-import react from '@vitejs/plugin-react-swc';
-import { defineConfig } from 'vite';
-
-export default defineConfig({
-  plugins: [react()],
-});
-```
-
-### f. Fill ` tsconfig.json ` with the following content:
-
-```json
-{
-    "compilerOptions": {
-      "target": "ESNext",
-      "useDefineForClassFields": true,
-      "lib": [
-        "DOM",
-        "DOM.Iterable",
-        "ESNext"
-      ],
-      "allowJs": false,
-      "skipLibCheck": true,
-      "esModuleInterop": false,
-      "allowSyntheticDefaultImports": true,
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "module": "ESNext",
-      "moduleResolution": "Node",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "noEmit": true,
-      "jsx": "react-jsx",
-      "composite": true,
-    },
-    "include": [
-      "src", "vite.config.ts"
-    ]
-  }
-```
-
-### g. Install and Run the project:
-
-Install the project dependencies:
-```bash npm2yarn
-npm install
-```
-
-Run with:
-```bash npm2yarn
-npm run dev
-```
-
-:::info
-Ensure the project is running correctly before proceeding to the next step.
-:::
-
-## Step 2. Integrate Solana Appkit
+## Step 1. Integrate Solana Appkit
 
 ### a. Create a project in WalletConnect Cloud
 
 + Create a new project on [WalletConnect Cloud](https://cloud.walletconnect.com) and obtain a new project ID.
 
-### b. Install the AppKit packages: 
+### b. Uninstall old packages and install the AppKit packages: 
 
 ```bash npm2yarn
-pnpm i @web3modal/solana
+npm uninstall @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wallet-adapter-react-ui
+```
+
+```bash npm2yarn
+npm install @web3modal/solana
 ```
 
 ### c. Add imports to the top of the `App.tsx`
@@ -207,7 +113,7 @@ const Content: FC = () => {
 VITE_PROJECT_ID=<Add_your_project_id>
 ```
 
-## Step 3. Interact with the Solana network
+## Step 2. Interact with the Solana network
 
 After integrating AppKit, you can interact with the Solana network using the `@solana/web3.js` library. 
 You can check our [example](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal/react-solana) on how to fully interact or read our [documentation](https://docs.walletconnect.com/appkit/react/core/installation#smart-contract-interaction) for more information.
