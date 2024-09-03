@@ -2,8 +2,8 @@
 
 :root {
   /*Code block highlight*/
-  --ifm-color-primary: #1c8aff;
-  --ifm-link-hover-color: #006eff;
+  --ifm-color-primary: #008847;
+  --ifm-link-hover-color: rgba(0, 136, 71, 0.5);
   --ifm-heading-font-family: 'KH Teka Bold', monospace;
   --ifm-heading-font-weight: bold;
   --ifm-font-family-base: 'KH Teka', monospace;
@@ -134,8 +134,8 @@ html[data-theme='dark'] {
   --ifm-table-bg-color: var(--ifm-color-gray-900);
   --ifm-table-alternate-bg-color: rgba(255, 255, 255, 0.05);
   --ifm-footer-title-color: var(--ifm-color-white);
-  --ifm-color-primary: #66b0ff;
-  --ifm-link-hover-color: #3396ff;
+  --ifm-color-primary: #008847;
+  --ifm-link-hover-color: rgba(0, 136, 71, 0.5);
   --ifm-article-text: #fffff;
   --ifm-nav-bg-color: #202020;
   --ifm-background-color: #202020;
@@ -555,7 +555,7 @@ article a {
 article a:hover {
   color: var(--ifm-article-text);
   text-decoration: none;
-  border-color: rgba(51, 150, 255, 1);
+  border-color: #008847;
 }
 
 article ul {
@@ -881,6 +881,7 @@ article ul li:not([role='tab'])::before {
   justify-content: center;
   gap: 1rem;
 }
+
 
 .cloud__wrapper h2,
 .cloud__wrapper p {
