@@ -7,9 +7,9 @@ const Banner = () => {
   return (
     <div className={styles.banner__container}>
       <div className={styles.banner__text}>
-        <h2>WalletConnect Docs</h2>
+        <h2>Reown Docs</h2>
         <p>
-        WalletConnect gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.
+        Reown gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.
         </p>
         {/* <Link to="/getting-started">
           Get Started

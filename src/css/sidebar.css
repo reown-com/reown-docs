@@ -2,9 +2,9 @@
   /*Code block highlight*/
   --ifm-color-primary: #1c8aff;
   --ifm-link-hover-color: #006eff;
-  --ifm-heading-font-family: 'ABC Diatype Bold', sans-serif;
+  --ifm-heading-font-family: 'KH Teka Bold', monospace;
   --ifm-heading-font-weight: bold;
-  --ifm-font-family-base: 'ABC Diatype', sans-serif;
+  --ifm-font-family-base: 'KH Teka', monospace;
   --ifm-heading-color: #1d2d35;
   --ifm-color-gray-800: hsla(0, 0%, 100%, 0.1);
   --ifm-nav-bg-color: rgba(255, 255, 255, 0.4);
@@ -27,7 +27,7 @@
   --ifm-platform-tabs-color-active-border: rgb(28, 138, 255, 0.5);
   --ifm-platform-bg-color: rgb(28, 138, 255, 0.1);
   --ifm-cloud-button-bg-color: rgba(0, 55, 113, 0.1);
-  --ifm-cloud-bg-primary: #0e0f11;
+  --ifm-cloud-bg-primary: #2b2b2b;
   --ifm-cloud-bg-secondary: var(--ifm-color-primary-darkest);
   --ifm-feedback-heading: var(--ifm-color-gray-900);
   --ifm-container-background-color: #fff;
@@ -94,14 +94,16 @@ html[data-theme='light'] {
   width: 1px;
   height: 100%;
   background: linear-gradient(180deg, var(--ifm-border-color) 0, transparent 80%);
+  z-index: 300;
 }
 
 .custom-list__logo {
   position: absolute;
   list-style: none;
   margin: 0;
-  padding: 0.8rem 0 0 1.25rem;
   z-index: 200;
+  width: 100%;
+  background-color: #141414;
 }
 
 @media (max-width: 996px) {
@@ -117,7 +119,7 @@ html[data-theme='light'] {
 
 .navbar__brand span {
   text-transform: uppercase;
-  font-family: 'Office Code Pro', monospace;
+  font-family: 'KH Teka', monospace;
   font-weight: normal;
   color: var(--ifm-color-primary);
   margin-left: 5px;

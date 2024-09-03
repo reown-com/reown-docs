@@ -4,9 +4,9 @@
   /*Code block highlight*/
   --ifm-color-primary: #1c8aff;
   --ifm-link-hover-color: #006eff;
-  --ifm-heading-font-family: 'ABC Diatype Bold', sans-serif;
+  --ifm-heading-font-family: 'KH Teka Bold', monospace;
   --ifm-heading-font-weight: bold;
-  --ifm-font-family-base: 'ABC Diatype', sans-serif;
+  --ifm-font-family-base: 'KH Teka', monospace;
   --ifm-heading-color: #1d2d35;
   --ifm-color-gray-800: hsla(0, 0%, 100%, 0.1);
   --ifm-nav-bg-color: rgba(255, 255, 255, 0.4);
@@ -28,7 +28,7 @@
   --ifm-platform-tabs-color-active-border: rgb(28, 138, 255, 0.5);
   --ifm-platform-bg-color: rgb(28, 138, 255, 0.1);
   --ifm-cloud-button-bg-color: rgba(0, 55, 113, 0.1);
-  --ifm-cloud-bg-primary: #0e0f11;
+  --ifm-cloud-bg-primary: #2b2b2b;
   --ifm-cloud-bg-secondary: var(--ifm-color-primary-darkest);
   --ifm-feedback-heading: var(--ifm-color-gray-900);
   --ifm-container-background-color: #fff;
@@ -43,7 +43,7 @@
 }
 
 .kill {
-  margin: 10px;
+  margin: 20px;
   visibility: hidden;
 }
 
@@ -169,7 +169,7 @@ h4,
 h5,
 h6 {
   font-feature-settings: 'case', 'ss02', 'ss04', 'ss06';
-  font-family: 'ABC Diatype Bold', sans-serif;
+  font-family: 'KH Teka', monospace;
   letter-spacing: -0.03em;
 }
 
@@ -223,6 +223,12 @@ h1::after {
   margin-left: 0.75rem;
 }
 
+.navbar__items{
+  align-items: center;
+  display: flex;
+  min-width: 0;
+}
+
 .navbar__items .navbar__brand,
 .navbar__items .navbar__item:nth-child(3) {
   display: none;
@@ -252,14 +258,31 @@ h1::after {
 .navbar__brand {
   font-weight: bold;
   color: var(--ifm-heading-color);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
 }
 
 .navbar__brand span {
   text-transform: uppercase;
-  font-family: 'Office Code Pro', monospace;
+  font-family: 'KH Teka', monospace;
   font-weight: normal;
   color: var(--ifm-color-primary);
   margin-left: 5px;
+}
+
+.navbar__brand img{
+  min-width: 189px;
+  min-height: 41.8px;
+  max-width: 180px;
+  max-height: 46px;
+}
+
+@media (max-width: 442px){
+  .navbar__brand{
+    position: absolute;
+  }
 }
 
 .navbar--fixed-top {
@@ -291,11 +314,12 @@ article nav[aria-label='Breadcrumbs'] {
 .navbar__logo {
   display: flex;
   align-items: center;
+  padding: 15px;
 }
 
 .navbar__logo img {
-  width: 30px;
-  height: 18px;
+  width: 217px;
+  height: 48px;
 }
 
 .footer {
@@ -406,7 +430,7 @@ img[alt='web3modal-customisation'] {
   text-transform: uppercase;
   font-size: 13px;
   color: var(--ifm-color-gray-600) !important;
-  font-family: 'Office Code Pro', 'Courier New', Courier, monospace;
+  font-family: 'KH Teka', 'Courier New', Courier, monospace;
 }
 
 .menu_outer_list > div:hover {
@@ -460,6 +484,11 @@ img[alt='web3modal-customisation'] {
 
 .theme-doc-sidebar-item-link-level-5 {
   position: relative;
+}
+
+.menu__link{
+  font-family: 'KH Teka', monospace !important;
+  font-weight: 400;
 }
 
 .theme-doc-sidebar-item-link-level-5 .menu__link::before {
@@ -839,21 +868,15 @@ article img {
 
 .cloud__wrapper {
   position: relative;
-  background: linear-gradient(
-    135deg,
-    var(--ifm-cloud-bg-primary) 0%,
-    var(--ifm-cloud-bg-secondary) 100%
-  );
+  background: var(--ifm-cloud-bg-primary);
   border-radius: 1rem;
   padding: 2.5rem 1.67rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  isolation: isolate;
   overflow: hidden;
   margin: 1.5rem 0;
   gap: 1rem;
-  border: 2px solid #31363c;
 }
 
 .cloud__wrapper h2,
@@ -898,7 +921,7 @@ article img {
   border: 1px solid var(--ifm-color-primary-lightest);
   border: none;
   color: white;
-  background: rgba(255, 255, 255, 0.15);
+  background: #0988F0;
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
@@ -914,7 +937,7 @@ article img {
 }
 
 .cloud__wrapper a:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(9, 136, 240, 0.80);
   color: white;
 }
 
