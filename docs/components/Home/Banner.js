@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../../static/assets/wc-logo-glass-big.webp'
+import logo from '../../../static/assets/reown-docs-banner.png'
 import styles from '../../../src/css/banner.module.css'
 import Link from '@docusaurus/Link'
 
@@ -7,29 +7,13 @@ const Banner = () => {
   return (
     <div className={styles.banner__container}>
       <div className={styles.banner__text}>
-        <h2>WalletConnect Docs</h2>
+        <h2>re:own Docs</h2>
         <p>
-        WalletConnect gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.
+        re:own gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.
         </p>
-        {/* <Link to="/getting-started">
-          Get Started
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-            />
-          </svg>
-        </Link> */}
       </div>
       <div className={styles.banner__backdrop} />
-      <img className={styles.banner__image} src={logo} alt="WalletConnect Logo" />
+      <img className={styles.banner__image} src={logo} alt="re:org banner" />
     </div>
   )
 }
