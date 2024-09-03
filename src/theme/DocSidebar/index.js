@@ -10,7 +10,7 @@ export default function DocSidebarWrapper(props) {
     <>
       <li className="custom-list__logo">
         <a className="navbar__brand" href="/">
-            <img src="/img/docs-logo.svg" alt="Docs Logo" />
+          <img src="/img/docs-logo.svg" alt="Docs Logo" />
         </a>
       </li>
       <FrameworksMenu />
