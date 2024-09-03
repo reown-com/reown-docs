@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from '../../../static/reown/banner-image.svg'
 import styles from '../../../src/css/banner.module.css'
 import Link from '@docusaurus/Link'
 
