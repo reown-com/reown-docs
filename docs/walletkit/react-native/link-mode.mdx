@@ -1,0 +1,110 @@
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
+
+# Link Mode
+
+WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth requests and session requests over universal links, reducing the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with networking connections, especially when the user has an unstable internet connection.
+
+### How to enable it:
+
+To support link mode add a universal link for your wallet in Cloud project configuration [dashboard](https://cloud.walletconnect.com/sign-in), configure your Metadata with a valid universal link and set the `linkMode` property to `true`:
+
+```ts
+const web3wallet = await Web3Wallet.init({
+  core,
+  metadata: {
+    name: 'Demo React Native Wallet',
+    description: 'Demo RN Wallet to interface with Dapps',
+    url: 'www.reown.com',
+    icons: ['https://your_wallet_icon.png'],
+    redirect: {
+      native: 'yourwalletscheme://',
+      /* highlight-add-start */
+      universal: 'https://example.com/example_wallet',
+      linkMode: true,
+      /* highlight-add-end */
+    }
+  }
+})
+```
+
+### Platform specifics:
+
+<PlatformTabs activeOptions={["ios","android"]}>
+<PlatformTabItem value="ios">
+
+To enable universal links for your app, refer to [React Native Documentation](https://reactnative.dev/docs/linking?syntax=ios#enabling-deep-links).<br />
+
+After following the steps provided in the official guide:
+
+1. Ensure that you handle incoming Universal Links in the your `AppDelegate.mm` file.
+```swift
+#import <React/RCTLinkingManager.h>
+
+// Enable deeplinks
+- (BOOL)application:(UIApplication *)application
+   openURL:(NSURL *)url
+   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RCTLinkingManager application:application openURL:url options:options];
+}
+
+// Enable Universal Links
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
+ restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+{
+ return [RCTLinkingManager application:application
+                  continueUserActivity:userActivity
+                    restorationHandler:restorationHandler];
+}
+```
+
+2. Open your project in XCode and go to `Settings/Signing & Capabilities/Associated Domains` to add the new domain. After this, `your_project.entitlement` should look like this:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>com.apple.developer.associated-domains</key>
+  <array>
+    <string>applinks:example.com</string>
+  </array>
+</dict>
+</plist>
+```
+3. Update/Create your domain's `.well-known/apple-app-site-association` file accordingly.
+
+For more information about supporting universal links, visit the [Supporting associated domains](https://developer.apple.com/documentation/xcode/supporting-associated-domains?language=objc) page
+
+For a debugging guide, visit the [Debugging Universal Links](https://developer.apple.com/documentation/technotes/tn3155-debugging-universal-links) page.<br />
+
+</PlatformTabItem>
+<PlatformTabItem value="android">
+
+Android Studio provides a tool to configure Universal Links easily, you can read the guide in [Android Documentation](https://developer.android.com/studio/write/app-link-indexing) 
+
+After following the steps provided in the guide:
+
+1. Ensure that your Universal Link is properly configured in your app's `AndroidManifest.xml` file with the `autoVerify` set to `true`. It should look similar to this:
+```xml
+<intent-filter android:autoVerify="true">
+  <action android:name="android.intent.action.VIEW" />
+
+  <category android:name="android.intent.category.DEFAULT" />
+  <category android:name="android.intent.category.BROWSABLE" />
+
+  <data android:scheme="https" />
+  <data android:host="example.com" />
+  <data android:pathPattern="/example_wallet" />
+</intent-filter>
+```
+
+2. Update/Create your domains's `.well-known/assetlinks.json` file accordingly
+
+For more information on how to configure universal links for your app, refer to [Android Documentation](https://developer.android.com/studio/write/app-link-indexing).<br />
+For testing the configured universal link to app content check [this](https://developer.android.com/training/app-links/deep-linking#testing-filters) documentation page.<br />
+
+</PlatformTabItem>
+</PlatformTabs>
+
+Once everything is properly configured, and the user interacts with a Link Mode-supporting dApp, your wallet will receive requests through it.

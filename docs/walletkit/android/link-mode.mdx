@@ -2,13 +2,15 @@
 
 WalletKit link mode is a low latency mechanism for transporting One-Click Auth requests and session requests over universal links, reducing the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with networking connections, especially when the user has an unstable internet connection.
 
-To support link mode add universal link for your wallet in Cloud project configuration dashboard, configure your AppMetaData `appLink` with a valid universal link and set the `linkMode` property to `true`:
+To support link mode add a universal link for your wallet in Cloud project configuration dashboard, configure your AppMetaData `appLink` with a valid universal link and set the `linkMode` property to `true`:
 
 ```kotlin
  val appMetaData = Core.Model.AppMetaData(
     ...
+    /* highlight-add-start */
     appLink = "https://example.com/example_wallet",
     linkMode = true
+    /* highlight-add-end */
 )
 
 CoreClient.initialize(

@@ -1034,6 +1034,7 @@ module.exports = {
         'walletkit/react-native/usage',
         'walletkit/react-native/one-click-auth',
         'walletkit/react-native/mobile-linking',
+        'walletkit/react-native/link-mode',
         'walletkit/react-native/verify',
         'walletkit/react-native/eip5792',
         {
