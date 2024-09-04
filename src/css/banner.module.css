@@ -6,10 +6,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /*background:
-    linear-gradient(to right, var(--ifm-background-color), var(--ifm-background-color)) padding-box,
-    linear-gradient(to right, transparent, transparent, var(--ifm-color-gray-600)) border-box;*/
-  border-radius: 1.5 1.5rem 1.5rem 1.5;
   border: 1px solid transparent;
   overflow: hidden;
   min-height: 15rem;
@@ -23,6 +19,11 @@
 .banner__text {
   position: relative;
   z-index: 2;
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .banner__text h2,
@@ -42,13 +43,9 @@
   padding: 0.5rem 1.125rem;
   border-radius: 0.875rem;
   border: none;
-  background: linear-gradient(
-    180deg,
-    var(--ifm-color-primary-lighter) 0%,
-    var(--ifm-color-primary-dark) 100%
-  );
+  background: #0988F0;
   box-shadow: 0px 0px 8px -1px var(--ifm-color-primary-darker) inset;
-  color: white !important;
+  color: #141414 !important;
   font-weight: 700;
   letter-spacing: 0.25px;
   display: flex;
@@ -59,11 +56,7 @@
 }
 
 .banner__text a:hover {
-  background: linear-gradient(
-    180deg,
-    var(--ifm-color-primary-light) 0%,
-    var(--ifm-color-primary-darker) 100%
-  );
+  background: rgba(9, 136, 240, 0.80);
 }
 
 .banner__text a > svg {
@@ -115,7 +108,7 @@
   }
 }
 
-@media screen and (max-width: 660px) {
+@media screen and (max-width: 1050px) {
   .banner__image {
     display: none;
   }

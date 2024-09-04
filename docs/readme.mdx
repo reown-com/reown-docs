@@ -8,8 +8,6 @@ import Wrapper from './components/Home/Wrapper'
 import twitterLogo from '../static/assets/home/logo-white.png'
 import discordLogo from '../static/assets/home/discord.png'
 import telegramLogo from '../static/assets/home/telegram.png'
-import appkitlLogo from '../static/assets/home/appkitLogo.png'
-import walletkitLogo from '../static/assets/home/walletkitLogo.png'
 import web3inboxLogo from '../static/assets/home/web3inboxLogo.png'
 import bookLogo from '../static/assets/home/bookLogo.png'
 import githubLogo from '../static/assets/home/githubLogo.png'
@@ -21,7 +19,9 @@ import Link from '@docusaurus/Link'
 
 <Banner />
 
-## WalletConnect SDKs
+<div className="home__divider" />
+
+## Reown SDKs
 
 Effortlessly integrate our suite of SDKs
 
@@ -30,20 +30,20 @@ Effortlessly integrate our suite of SDKs
   items={[
     {
       name: 'AppKit',
-      icon: appkitlLogo,
+      icon: 'reown/appkit-logo.svg',
       href: '/appkit/overview',
-      description: 'The all-in-one stack to build apps for the new internet.'
+      description: 'The all-in-one stack to build apps for the new internet.',
     },
     {
       name: 'WalletKit',
-      icon: walletkitLogo,
+      icon: 'reown/walletkit-logo.svg',
       href: '/walletkit/overview',
-      description: 'The ultimate toolkit for building and connecting wallets.'
+      description: 'The ultimate toolkit for building and connecting wallets.',
     }
   ]}
 />
 
-<hr className="home__divider" />
+<div className="home__divider" />
 
 ## Join our community
 
@@ -79,29 +79,17 @@ Share your experience, contribute, or ask questions
   ]}
 />
 
-<hr className="home__divider" />
+<div className="home__divider" />
 
 ## How to contribute
 
 <div className="cloud__wrapper" style={{ padding: '1.67rem' }}>
-  Every page footer has an <strong>Edit this page</strong> link.
+<div>
+  <img src='/assets/home/bookLogo.png' />
+  Every page footer has an "Edit this page" link.
   <br /> Change the Markdown, open a Pull Request and we’ll merge it!
+</div>
   <Link to="https://github.com/WalletConnect/walletconnect-docs/" target="_blank">
     Docs Repo
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#0988F0"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      height={20}
-      width={20}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-      />
-    </svg>
   </Link>
 </div>

@@ -10,10 +10,7 @@ export default function DocSidebarWrapper(props) {
     <>
       <li className="custom-list__logo">
         <a className="navbar__brand" href="/">
-          <div className="">
-            <img src="/img/walletconnect-logo-black.svg#dark-mode-only" alt="re:own Logo" />
-            <img src="/img/walletconnect-logo-black.svg#light-mode-only" alt="re:own Logo" />
-          </div>
+          <img src="/img/docs-logo.svg" alt="Docs Logo" />
         </a>
       </li>
       <FrameworksMenu />

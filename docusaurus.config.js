@@ -57,7 +57,7 @@ const config = {
       `
     }
   ],
-  title: 'WalletConnect Docs',
+  title: 'Reown Docs',
   tagline: 'WalletConnect is an open protocol to communicate securely between Dapps and Wallets.',
   url: 'https://docs.walletconnect.com/',
   baseUrl: '/',
@@ -71,7 +71,7 @@ const config = {
     {
       src: 'https://plausible.io/js/plausible.js',
       defer: 'true',
-      'data-domain': 'docs.walletconnect.com'
+      'data-domain': 'docs.reown.com'
     }
   ],
   presets: [
@@ -124,7 +124,7 @@ const config = {
         {
           type: 'html',
           value:
-            '<a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/walletconnect-logo-white.svg#dark-mode-only"  alt="WalletConnect Logo"><img src="/img/walletconnect-logo-black.svg#light-mode-only"  alt="WalletConnect Logo"></div>WalletConnect<span>Docs<span></a>'
+            '<a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/docs-logo.svg"  alt="Docs Logo"></a>'
         },
         {
           label: 'Dashboard',
