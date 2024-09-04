@@ -1002,6 +1002,7 @@ module.exports = {
         'walletkit/flutter/usage',
         'walletkit/flutter/one-click-auth',
         'walletkit/flutter/mobile-linking',
+        'walletkit/flutter/link-mode',
         'walletkit/flutter/verify',
         'walletkit/flutter/eip5792',
         {
