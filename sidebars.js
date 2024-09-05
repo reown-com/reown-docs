@@ -663,6 +663,7 @@ module.exports = {
             'appkit/react-native/core/hooks',
             'appkit/react-native/core/components',
             'appkit/react-native/core/siwe',
+            'appkit/react-native/core/link-mode',
             'appkit/react-native/core/resources'
           ]
         },
