@@ -663,6 +663,7 @@ module.exports = {
             'appkit/react-native/core/hooks',
             'appkit/react-native/core/components',
             'appkit/react-native/core/siwe',
+            'appkit/react-native/core/link-mode',
             'appkit/react-native/core/resources'
           ]
         },
@@ -1002,6 +1003,7 @@ module.exports = {
         'walletkit/flutter/usage',
         'walletkit/flutter/one-click-auth',
         'walletkit/flutter/mobile-linking',
+        'walletkit/flutter/link-mode',
         'walletkit/flutter/verify',
         'walletkit/flutter/eip5792',
         {
@@ -1033,6 +1035,7 @@ module.exports = {
         'walletkit/react-native/usage',
         'walletkit/react-native/one-click-auth',
         'walletkit/react-native/mobile-linking',
+        'walletkit/react-native/link-mode',
         'walletkit/react-native/verify',
         'walletkit/react-native/eip5792',
         {
