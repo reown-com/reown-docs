@@ -4,21 +4,17 @@ import TabItem from '@theme/TabItem'
 On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
 
 ```tsx
-import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5/react'
+import { createWeb3Modal } from '@reorg/base/react'
+import { EVMEthers5Client } from '@reorg/adapter-ethers5'
+import { mainnet, arbitrum } from '@reorg/base/chains'
 
 // 1. Get projectId
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Set chains
-const mainnet = {
-  chainId: 1,
-  name: 'Ethereum',
-  currency: 'ETH',
-  explorerUrl: 'https://etherscan.io',
-  rpcUrl: 'https://cloudflare-eth.com'
-}
+// 2. Set Ethers adapters
+const ethers5Adapter = new EVMEthers5Client()
 
-// 3. Create a metadata object
+// 3. Create a metadata object - optional
 const metadata = {
   name: 'My Website',
   description: 'My Website description',
@@ -26,29 +22,19 @@ const metadata = {
   icons: ['https://avatars.mywebsite.com/']
 }
 
-// 4. Create Ethers config
-const ethersConfig = defaultConfig({
-  /*Required*/
-  metadata,
-
-  /*Optional*/
-  enableEIP6963: true, // true by default
-  enableInjected: true, // true by default
-  enableCoinbase: true, // true by default
-  rpcUrl: '...', // used for the Coinbase SDK
-  defaultChainId: 1 // used for the Coinbase SDK
-})
-
-// 5. Create a AppKit instance
+// 4. Create the AppKit instance
 createWeb3Modal({
-  ethersConfig,
-  chains: [mainnet],
+  adapters: [ethers5Adapter],
+  metadata: metadata,
+  caipNetworks: [mainnet, arbitrum],
   projectId,
-  enableAnalytics: true // Optional - defaults to your Cloud configuration
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
 })
 
 export default function App() {
-  return <YourApp />
+  return <YourApp /> //make sure you have configured the <w3m-button> inside
 }
 ```
 

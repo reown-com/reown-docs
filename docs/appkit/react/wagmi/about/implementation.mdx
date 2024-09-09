@@ -1,15 +1,16 @@
-For a quick integration you can use `defaultWagmiConfig` function which wraps Wagmi's [`createConfig`](https://wagmi.sh/core/api/createConfig) function with a predefined configuration.
+For a quick integration, you can use the `createWeb3Modal` function with a unified configuration. This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana, so you no longer need to manually configure each one individually. Simply pass the common parameters such as `projectId`, `chains`, `metadata`, etc., and the function will handle the adapter-specific configurations under the hood.
+
 This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api.mdx) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
 
 On top of your app set up the following configuration, making sure that all functions are called **outside** any React component to avoid unwanted rerenders.
 
 ```tsx
-import { createWeb3Modal } from '@web3modal/wagmi/react'
-import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
+import { createWeb3Modal } from '@reorg/base/react'
 
 import { WagmiProvider } from 'wagmi'
-import { arbitrum, mainnet } from 'wagmi/chains'
+import { arbitrum, mainnet } from '@reorg/base/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { EVMWagmiClient } from '@reorg/adapter-wagmi'
 
 // 0. Setup queryClient
 const queryClient = new QueryClient()
@@ -26,23 +27,24 @@ const metadata = {
 }
 
 const chains = [mainnet, arbitrum] as const
-const config = defaultWagmiConfig({
-  chains,
-  projectId,
-  metadata,
+const wagmiConfig = new EVMWagmiClient({
+  ssr: true
 })
 
 // 3. Create modal
 createWeb3Modal({
+  adapter: [wagmiConfig],
+  caipNetworks: [mainnet, arbitrum],
   metadata,
-  wagmiConfig: config,
   projectId,
-  enableAnalytics: true // Optional - defaults to your Cloud configuration
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
 })
 
 export function AppKitProvider({ children }) {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </WagmiProvider>
   )

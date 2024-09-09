@@ -7,17 +7,31 @@ On top of your app set up the following configuration, making sure that all func
 
 ```tsx
 // App.tsx
+import { createWeb3Modal, type CaipNetwork } from '@reorg/base/react'
+import { SolanaWeb3JsClient } from '@reorg/adapter-solana/react'
+import { solana, solanaTestnet, solanaDevnet } from '@reorg/base/chains'
+import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 
-import { createWeb3Modal, defaultSolanaConfig } from '@web3modal/solana/react'
-import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+// 0. Set up Solana Adapter
+const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
 
-// 0. Setup chains
-const chains = [solana, solanaTestnet, solanaDevnet]
+// 1. If Solana does not exist
+export const solanaNotExist = {
+  id: 'solana:chaindoesntexist',
+  chainId: 'chaindoesntexist',
+  name: 'Solana Unsupported',
+  currency: 'SOL',
+  explorerUrl: 'https://explorer.solana.com/?cluster=devnet',
+  rpcUrl: '',
+  chainNamespace: 'solana'
+} as CaipNetwork
 
-// 1. Get projectId from https://cloud.walletconnect.com
+// 2. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Create solanaConfig
+// 3. Create a metadata object - optional
 const metadata = {
   name: 'AppKit',
   description: 'AppKit Solana Example',
@@ -25,20 +39,15 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
-const solanaConfig = defaultSolanaConfig({
-  metadata,
-  chains,
-  projectId
-})
-
-// 3. Create modal
+// 4. Create modal
 createWeb3Modal({
-  solanaConfig,
-  chains,
+  adapters: [solanaWeb3JsAdapter],
+  caipNetworks: [solana, solanaTestnet, solanaDevnet, solanaNotExist],
+  metadata: metadata,
   projectId,
-  wallets: [
-      // Solana wallet adapters (check Custom connectors for more info)
-  ]
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  }
 })
 
 export default function App() {
