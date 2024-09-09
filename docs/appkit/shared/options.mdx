@@ -10,10 +10,10 @@ import TabItem from '@theme/TabItem'
 The following options can be passed to the `createWeb3Modal` function:
 
 ```ts
-createWeb3Modal({ wagmiConfig, projectId, chains, ...options })
+createWeb3Modal({ adapters, projectId, caipNetworks, ...options })
 ```
 
-## defaultChain
+## defaultCaipNetwork
 
 You can set a desired chain for the initial connection:
 
@@ -21,11 +21,11 @@ You can set a desired chain for the initial connection:
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { mainnet } from 'viem/chains'
+import { mainnet } from '@reorg/base/chains'
 
 createWeb3Modal({
   //...
-  defaultChain: mainnet
+  defaultCaipNetwork: mainnet
 })
 ```
 
@@ -43,7 +43,7 @@ const mainnet = {
 
 createWeb3Modal({
   //...
-  defaultChain: mainnet
+  defaultCaipNetwork: mainnet
 })
 ```
 
@@ -51,11 +51,11 @@ createWeb3Modal({
 <PlatformTabItem value="solana">
 
 ```ts
-import { solana } from '@web3modal/solana/chains'
+import { solana } from '@reorg/base/chains'
 
 createWeb3Modal({
   //...
-  defaultChain: solana
+  defaultCaipNetwork: solana
 })
 ```
 
@@ -136,7 +136,7 @@ Set or override the images of any [connector](https://wagmi.sh/core/connectors/i
 createWeb3Modal({
   connectorImages: {
     coinbaseWallet: 'https://images.mydapp.com/coinbase.png',
-    metamask: 'https://images.mydapp.com/metamask.png'
+    metaMask: 'https://images.mydapp.com/metamask.png'
   }
 })
 ```
@@ -194,41 +194,48 @@ createWeb3Modal({
   privacyPolicyUrl: 'https://www.myprivacypolicy.com'
 })
 ```
-
-## enableAnalytics
+## features
+This allows you to toggle (enable or disable) additional features provided by AppKit. Features such as analytics, email and social logins, On-ramp, swaps, etc., can be enabled using this parameter.
+### analytics
 
 Enable analytics to get more insights on your users activity within your [WalletConnect Cloud's dashboard](https://cloud.walletconnect.com)
 
 ```ts
 createWeb3Modal({
   //...
-  enableAnalytics: true
+  features: {
+    analytics: true,
+  }
 })
 ```
+<Button name="Learn More" url="/cloud/analytics" />
 
-## enableSwaps
+### swaps
 
 Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transactions/swaps) feature is enabled by default.
 
 ```ts
 createWeb3Modal({
   //...
-  enableSwaps: false
+  features: {
+    swaps: true,
+  }
 })
 ```
 
-## enableOnramp
+### onramp
 
 Enable or disable the onramp feature in your AppKit. [Onramp](/appkit/react/transactions/onramp) feature is enabled by default.
 
 ```ts
 createWeb3Modal({
   //...
-  enableOnramp: false
+  features: {
+    onramp: true,
+  }
 })
 ```
 
-<Button name="Learn More" url="/cloud/analytics" />
 
 ## customWallets
 
@@ -355,8 +362,9 @@ Select your preferred configuration mode below:
 <TabItem value="default" label="Default">
 
 ```ts
-export const config = defaultWagmiConfig({
+createWeb3Modal({
   //...
+  enableCoinbase: true, // true by default
   /* highlight-add-start */
   coinbasePreference: 'smartWalletOnly'
   /* highlight-add-end */
@@ -369,7 +377,9 @@ export const config = defaultWagmiConfig({
 Learn more about the Coinbase connector in the [Wagmi documentation](https://wagmi.sh/react/api/connectors/coinbaseWallet#preference).
 
 ```ts
-const config = createConfig({
+import { EVMWagmiClient } from '@reown/adapter-wagmi'
+
+const adapter = new EVMWagmiClient({
   //...
   connectors: [
     coinbaseWallet({
@@ -380,6 +390,8 @@ const config = createConfig({
     })
   ]
 })
+
+export const config = wagmiAdapter.wagmiConfig
 ```
 
 </TabItem>
@@ -389,8 +401,9 @@ const config = createConfig({
 <PlatformTabItem value="ethers">
 
 ```ts
-export const config = defaultConfig({
+createWeb3Modal({
   //...
+  enableCoinbase: true, // true by default
   /* highlight-add-start */
   coinbasePreference: 'smartWalletOnly'
   /* highlight-add-end */
