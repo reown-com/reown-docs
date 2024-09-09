@@ -5,10 +5,10 @@ import Button from '../../../components/button'
 Hook that returns the client's information.
 
 ```tsx
-import { useWeb3ModalAccount } from '@web3modal/ethers/react'
+import { useWeb3ModalAccount } from '@reorg/base/react'
 
 function Components() {
-  const { address, chainId, isConnected } = useWeb3ModalAccount()
+  const { address, status, isConnected } = useWeb3ModalAccount()
 
   //...
 }
@@ -17,13 +17,20 @@ function Components() {
 ### useSwitchNetwork
 
 ```tsx
-import { useSwitchNetwork } from '@web3modal/ethers/react'
+import { createWeb3Modal } from '@reorg/base/react'
+import { mainnet, arbitrum, polygon } from '@reorg/base/chains'
 
-const chainId = 137
+const modal = createWeb3Modal({
+  adapters: [wagmiAdapter],
+  projectId,
+  caipNetworks: [mainnet, arbitrum],
+  metadata: metadata,
+  features: {
+    analytics: true,
+  }
+})
 
-const { switchNetwork } = useSwitchNetwork()
-
-switchNetwork(chainId)
+modal.switchNetwork(polygon)
 ```
 
 ### useWeb3ModalProvider
@@ -32,10 +39,9 @@ Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
 import { BrowserProvider } from 'ethers'
-import { useWeb3ModalProvider } from '@web3modal/ethers/react'
 
 function Components() {
-  const { walletProvider } = useWeb3ModalProvider()
+  const walletProvider = modal.getWalletProvider();
 
   async function onSignMessage() {
     const provider = new BrowserProvider(walletProvider)
@@ -51,11 +57,8 @@ function Components() {
 ### useWeb3ModalError
 
 ```ts
-import { useWeb3ModalError } from '@web3modal/ethers/react'
-
 function Components() {
-  const { error } = useWeb3ModalError()
-
+  const error = modal.getError();
   //...
 }
 ```
