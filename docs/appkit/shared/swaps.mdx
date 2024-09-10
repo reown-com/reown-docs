@@ -25,15 +25,18 @@ Swaps is currently in Beta. Users may experience changes or improvements in the 
 
 The Swaps feature is enabled by default, so no additional configuration is required. 
 
-If you prefer to disable it, set the `enableSwaps` flag to `false` in the configuration of the `createWeb3Modal` function.
+If you prefer to disable it, set the `swaps` flag to `false` in the configuration of the `createWeb3Modal` function.
 
 ```ts
 const modal = createWeb3Modal({
-  //...
-  chains: [mainnet],
+  adapters: [wagmiAdapter],
   projectId,
-  /* highlight-add-start */
-  enableSwaps: false // Optional - true by default
-  /* highlight-add-end */
+  caipNetworks: [mainnet, arbitrum],
+  metadata: metadata,
+  features{
+    /* highlight-add-start */
+    swaps: false // Optional - true by default
+    /* highlight-add-end */
+  }
 })
 ```
