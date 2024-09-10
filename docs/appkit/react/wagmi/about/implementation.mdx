@@ -5,12 +5,12 @@ This includes WalletConnect, Coinbase and Injected connectors, and the [Blockcha
 On top of your app set up the following configuration, making sure that all functions are called **outside** any React component to avoid unwanted rerenders.
 
 ```tsx
-import { createWeb3Modal } from '@reorg/base/react'
+import { createWeb3Modal } from '@reown/base/react'
 
 import { WagmiProvider } from 'wagmi'
-import { arbitrum, mainnet } from '@reorg/base/chains'
+import { arbitrum, mainnet } from '@reown/base/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { EVMWagmiClient } from '@reorg/adapter-wagmi'
+import { EVMWagmiClient } from '@reown/adapter-wagmi'
 
 // 0. Setup queryClient
 const queryClient = new QueryClient()

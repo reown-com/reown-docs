@@ -5,7 +5,7 @@ import Button from '../../../components/button'
 Hook that returns the client's information.
 
 ```tsx
-import { useWeb3ModalAccount } from '@reorg/base/react'
+import { useWeb3ModalAccount } from '@reown/base/react'
 
 function Components() {
   const { address, status, isConnected } = useWeb3ModalAccount()
@@ -17,8 +17,8 @@ function Components() {
 ### useSwitchNetwork
 
 ```tsx
-import { createWeb3Modal } from '@reorg/base/react'
-import { mainnet, arbitrum, polygon } from '@reorg/base/chains'
+import { createWeb3Modal } from '@reown/base/react'
+import { mainnet, arbitrum, polygon } from '@reown/base/chains'
 
 const modal = createWeb3Modal({
   adapters: [wagmiAdapter],
