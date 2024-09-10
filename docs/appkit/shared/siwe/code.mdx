@@ -12,7 +12,7 @@ import {
     type SIWECreateMessageArgs,
     createSIWEConfig,
     formatMessage,
-  } from '@web3modal/siwe'
+  } from '@reown/siwe'
 
 const BASE_URL = 'http://localhost:8080';
 
@@ -60,7 +60,7 @@ async function getSession(){
 
 // Check the full example for signOut and getNonce functions ... 
 
-/* Create a SIWE configuration object */
+/* Create a SIWE configuration object */ //This code snippet may change for reown - to be confirmed
 const siweConfig = createSIWEConfig({
         getMessageParams: async () => ({
               domain: window.location.host,
