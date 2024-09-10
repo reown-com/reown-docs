@@ -1,4 +1,5 @@
-For a quick integration you can use `defaultWagmiConfig` function which wraps Wagmi's [`createConfig`](https://wagmi.sh/core/api/createConfig) function with a predefined configuration.
+For a quick integration, you can use the `createWeb3Modal` function with a unified configuration. This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana, so you no longer need to manually configure each one individually. Simply pass the common parameters such as projectId, chains, metadata, etc., and the function will handle the adapter-specific configurations under the hood.
+
 This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api.mdx) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
 
 ### Wagmi config
@@ -8,39 +9,29 @@ Create a new file for your Wagmi configuration, since we are going to be calling
 For this example we will create a file called `config/index.tsx` outside our app directory and set up the following configuration
 
 ```tsx
-import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
-
-import { cookieStorage, createStorage } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
+import { cookieStorage, createStorage, http } from '@wagmi/core'
+import { EVMWagmiClient } from '@rerock/adapter-wagmi'
 
 // Get projectId from https://cloud.walletconnect.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 
-if (!projectId) throw new Error('Project ID is not defined')
-
-export const metadata = {
-  name: 'AppKit',
-  description: 'AppKit Example',
-  url: 'https://web3modal.com', // origin must match your domain & subdomain
-  icons: ['https://avatars.githubusercontent.com/u/37784886']
+if (!projectId) {
+  throw new Error('Project ID is not defined')
 }
 
-// Create wagmiConfig
-const chains = [mainnet, sepolia] as const
-export const config = defaultWagmiConfig({
-  chains,
-  projectId,
-  metadata,
-  ssr: true,
+//Set up the Wagmi Adapter (Config)
+export const wagmiAdapter = new EVMWagmiClient({
   storage: createStorage({
     storage: cookieStorage
   }),
+  ssr: true,
 })
+
+export const config = wagmiAdapter.wagmiConfig
 ```
 
 :::info
 
-- Notice that we are using here the [recommended configuration from Wagmi for SSR](https://wagmi.sh/react/guides/ssr).
 - Using cookies is completely optional and by default Wagmi will use `localStorage` instead if the `storage` param is not defined.
 - The `ssr` flag will delay the hydration of the Wagmi's store to avoid hydration mismatch errors.
   :::
@@ -49,81 +40,92 @@ export const config = defaultWagmiConfig({
 
 ### Context Provider
 
-Let's create now a context provider that will wrap our application and initialized AppKit (`createWeb3Modal` needs to be called inside a React Client Component file).
+Let's create now a context provider that will wrap our application and initialized AppKit (`createWeb3Modal` needs to be called inside a Next Client Component file).
 
 In this example we will create a file called `context/index.tsx` outside our app directory and set up the following configuration
 
 ```tsx
 'use client'
 
-import React, { ReactNode } from 'react'
-import { config, projectId, metadata } from '@/config'
-
-import { createWeb3Modal } from '@web3modal/wagmi/react'
-
+import { wagmiAdapter, projectId } from '@/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { createWeb3Modal } from '@rerock/base/react' 
+import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@rerock/base/chains'
+import React, { type ReactNode } from 'react'
+import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
 
-import { State, WagmiProvider } from 'wagmi'
-
-// Setup queryClient
+// Set up queryClient
 const queryClient = new QueryClient()
 
-if (!projectId) throw new Error('Project ID is not defined')
+if (!projectId) {
+  throw new Error('Project ID is not defined')
+}
 
-// Create modal
-createWeb3Modal({
-  metadata,
-  wagmiConfig: config,
+// Set up metadata
+const metadata = {
+  name: "appkit-example-scroll",
+  description: "AppKit Example - Scroll",
+  url: "https://scrollapp.com", // origin must match your domain & subdomain
+  icons: ["https://avatars.githubusercontent.com/u/37784886"]
+}
+
+// Create the modal
+const modal = createWeb3Modal({
+  adapters: [wagmiAdapter],
   projectId,
-  enableAnalytics: true // Optional - defaults to your Cloud configuration
+  caipNetworks: [mainnet, arbitrum, avalanche, base, optimism, polygon],
+  defaultCaipNetwork: mainnet,
+  metadata: metadata,
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  }
 })
 
-export default function AppKitProvider({
-  children,
-  initialState
-}: {
-  children: ReactNode
-  initialState?: State
-}) {
+function ContextProvider({ children, cookies }: { children: ReactNode; cookies: string | null }) {
+  const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies)
+
   return (
-    <WagmiProvider config={config} initialState={initialState}>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </WagmiProvider>
   )
 }
+
+export default ContextProvider
 ```
 
 ### Layout
 
-Next, in our `app/layout.tsx` file, we will import our `AppKitProvider` component and call [the Wagmi's function `cookieToInitialState`.](https://wagmi.sh/react/guides/ssr#_2-hydrate-the-cookie)
+Next, in our `app/layout.tsx` file, we will import our `ContextProvider` component and call [the Wagmi's function `cookieToInitialState`.](https://wagmi.sh/react/guides/ssr#_2-hydrate-the-cookie)
 
 The `initialState` returned by `cookieToInitialState`, contains the optimistic values that will populate the Wagmi's store both on the server and client.
 
 ```tsx
-import './globals.css'
-import type { Metadata } from 'next'
-import { headers } from 'next/headers'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-import { cookieToInitialState } from 'wagmi'
+const inter = Inter({ subsets: ["latin"] });
 
-import { config } from '@/config'
-import AppKitProvider from '@/context'
+import { headers } from "next/headers"; // added
+import ContextProvider from '@/context'
 
 export const metadata: Metadata = {
-  title: 'Create Next App',
-  description: 'Generated by create next app'
-}
+  title: "AppKit Example App",
+  description: "Powered by WalletConnect"
+};
 
 export default function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const initialState = cookieToInitialState(config, headers().get('cookie'))
+  const cookies = headers().get('cookie')
+
   return (
     <html lang="en">
-      <body>
-        <AppKitProvider initialState={initialState}>{children}</AppKitProvider>
+      <body className={inter.className}>
+        <ContextProvider cookies={cookies}>{children}</ContextProvider>
       </body>
     </html>
   )
