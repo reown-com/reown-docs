@@ -11,9 +11,15 @@ Add custom connectors for Ethers or Wagmi
 If you already have Wagmi integrated into your application or would like more control over Wagmi's configuration, you can integrate AppKit on top of it.
 
 ```tsx
-import { createConfig, cookieStorage, createStorage, http } from 'wagmi'
-import { sepolia } from 'wagmi/chains'
-import { walletConnect } from 'wagmi/connectors'
+import { createWeb3Modal } from '@reown/base/react'
+import { EVMWagmiClient } from '@reown/adapter-wagmi'
+
+import { http, WagmiProvider } from 'wagmi'
+import { sepolia } from '@reown/base/chains'
+import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 
@@ -21,21 +27,40 @@ const metadata = {
   //...
 }
 
-// Create wagmiConfig
-export const config = createConfig({
-  chains: [sepolia],
+// create the connectors (delete the ones you don't need)
+const connectors: CreateConnectorFn[] = []
+connectors.push(walletConnect({ projectId, metadata, showQrModal: false })) // showQrModal must be false
+connectors.push(injected({ shimDisconnect: true }))
+connectors.push(
+  coinbaseWallet({
+    appName: metadata.name,
+    appLogoUrl: metadata.icons[0]
+  })
+)
+
+export const wagmiAdapter = new EVMWagmiClient({
+  storage:
   transports: {
     [sepolia.id]: http()
   },
-  connectors: [
-    walletConnect({ projectId, metadata, showQrModal: false }), // showQrModal must be false.
-    // Other connectors...
-  ],
-  ssr: true,
-  storage: createStorage({
-    storage: cookieStorage
-  })
+  connectors
 })
+
+export const config = wagmiAdapter.wagmiConfig
+
+createWeb3Modal({
+  adapters: [wagmiAdapter],
+  projectId,
+  caipNetworks: [mainnet, arbitrum, avalanche, base, optimism, polygon]
+})
+
+export function ContextProvider({ children }) {
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </WagmiProvider>
+  )
+}
 ```
 
 </PlatformTabItem>
@@ -48,43 +73,38 @@ Coming soon...
 Add custom wallet adapters for Solana wallets by first installing the wallet adapter package and then including the adapters in the wallets array. You can find a more Solana wallet adapters [here](https://github.com/anza-xyz/wallet-adapter/tree/master/packages/wallets).
 
 ```bash npm2yarn
-npm install @solana/wallet-adapter-solflare
+npm install @solana/wallet-adapter-wallets
 ```
 
 ```ts
-import { createWeb3Modal, defaultSolanaConfig } from '@web3modal/solana/react'
-import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
-import { SolflareWalletAdapter } from '@solana/wallet-adapter-solflare'
+import { createWeb3Modal } from '@reown/base/react'
+import { SolanaWeb3JsClient } from '@reown/adapter-solana/react'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
 
-// 0. Setup chains
-const chains = [solana, solanaTestnet, solanaDevnet]
+import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+// 0. Set up Solana adapter
+const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Create solanaConfig
+// 2. Set up the metadata
 const metadata = {
   //...
 }
 
-const solanaConfig = defaultSolanaConfig({
-  chains,
-  projectId,
-  metadata
-})
-
-// 3. Create modal
+// 3. Create the modal
 const modal = createWeb3Modal({
-  solanaConfig,
-  projectId: projectId,
+  adapters: [solanaWeb3JsAdapter],
+  caipNetworks: [solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
-  chains,
-  enableAnalytics: true,
-  termsConditionsUrl: 'https://walletconnect.com/terms',
-  privacyPolicyUrl: 'https://walletconnect.com/privacy',
-  wallets: [
-      new SolflareWalletAdapter(),
-    ]
+  projectId,
+  features: {
+    analytics: true,
+  }
 })
 ```
 </PlatformTabItem>
