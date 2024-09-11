@@ -52,10 +52,17 @@ npm i @reown/siwe siwe
 Add the `siweConfig` to your createWeb3Modal parameters
 
 ```ts
-createWeb3Modal({
-  //..
-  siweConfig
-})
+// Pass your siweConfig inside the createWeb3Modal() function
+  const modal = createWeb3Modal({
+      adapters: [wagmiAdapter], //or your Ethers adapter
+      projectId,
+      caipNetworks: [mainnet, arbitrum],
+      defaultCaipNetwork: mainnet,
+      features: {
+        analytics: true, // Optional - defaults to your Cloud configuration
+      },
+      siweConfig: siweConfig // pass your siweConfig
+  })
 ```
 
 ## SIWE Config Parameters

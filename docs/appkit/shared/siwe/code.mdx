@@ -62,20 +62,27 @@ async function getSession(){
 
 /* Create a SIWE configuration object */ //This code snippet may change for reown - to be confirmed
 const siweConfig = createSIWEConfig({
-        getMessageParams: async () => ({
-              domain: window.location.host,
-              uri: window.location.origin, 
-              chains: [1, 2020],
-              statement: 'Please sign with your account',
-            }),
-        createMessage: ({ address, ...args }: SIWECreateMessageArgs) => formatMessage(args, address),
-        getNonce,
-        getSession,
-        verifyMessage,
-        signOut,
-    })
-```
+  getMessageParams: async () => ({
+    domain: window.location.host,
+    uri: window.location.origin, 
+    chains: [1, 2020],
+      statement: 'Please sign with your account',
+  }),
+  createMessage: ({ address, ...args }: SIWECreateMessageArgs) => formatMessage(args, address),
 
+  getNonce: async () => { //This is only an example, substitute it with your actual nonce getter.
+    const nonce = "YOUR_NONCE_GETTER"
+    if (!nonce) {
+      throw new Error('Failed to get nonce!')
+    }
+    return nonce
+  }
+  getSession,
+  verifyMessage,
+  signOut: async () => { //Example
+    // Implement your Sign out function
+  }
+```
 
 ## Server Side 
 Setting up a backend server using Express for a web application that interacts with the Siwe protocol.
@@ -154,7 +161,7 @@ Check the github full example to see the full flow working: [siwe-quickstart](ht
 Verify a SIWE signature.
 
 ```ts
-import { verifySignature } from '@web3modal/siwe'
+import { verifySignature } from '@reown/siwe'
 
 const isValid = await verifySignature({ address, message, signature, chainId, projectId })
 ```
@@ -170,8 +177,7 @@ The nonce and verification process will be implemented in your backend. [Read mo
 
 ```ts
 import { SiweMessage } from 'siwe'
-import { createSIWEConfig } from '@web3modal/siwe'
-import type { SIWECreateMessageArgs, SIWEVerifyMessageArgs } from '@web3modal/siwe'
+import type { SIWECreateMessageArgs, SIWEVerifyMessageArgs } from '@rerock/siwe'
 
 /* Function that creates a SIWE message */
 function createMessage({ nonce, address, chainId }: SIWECreateMessageArgs){
@@ -207,10 +213,18 @@ async function verifyMessage({ message, signature }: SIWEVerifyMessageArgs){
 /* Create a SIWE configuration object */
 const siweConfig = createSIWEConfig({
   createMessage,
-  getNonce,
+  getNonce: async () => { //This is only an example, substitute it with your actual nonce getter.
+    const nonce = "YOUR_NONCE_GETTER"
+    if (!nonce) {
+      throw new Error('Failed to get nonce!')
+    }
+    return nonce
+  },
   getSession,
   verifyMessage,
-  signOut
+  signOut: async () => { //Example
+    // Implement your Sign out function
+  }
 })
 ```
 
