@@ -9,6 +9,11 @@ In your `App.vue` file set up the following configuration.
   import {PhantomWalletAdapter,SolflareWalletAdapter} from '@solana/wallet-adapter-wallets'
   import {solana, solanaTestnet, solanaDevnet} from '@rerock/base/chains'
 
+  // 0. Set up Solana Adapter
+  const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+  })
+
   // 1. Get projectId from https://cloud.walletconnect.com
   const projectId = 'YOUR_PROJECT_ID'
 
@@ -22,6 +27,7 @@ In your `App.vue` file set up the following configuration.
 
   // 3. Create modal
   createWeb3Modal({
+    adapters: [solanaWeb3JsAdapter],
     metadata: metadata,
     caipNetworks: [solana, solanaTestnet, solanaDevnet],
     projectId,
