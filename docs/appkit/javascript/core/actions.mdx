@@ -13,7 +13,11 @@ Actions are functions that will help you control the modal, subscribe to wallet 
 ## Open and close the modal
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createWeb3Modal({
+   adapters: [wagmiAdapter], 
+   caipNetworks: [mainnet, arbitrum],
+   projectId 
+  })
 
 modal.open()
 
@@ -105,7 +109,11 @@ const { name, icon } = modal.getWalletInfo()
 Get the current value of the modal's state
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createWeb3Modal({
+   adapters: [wagmiAdapter], 
+   caipNetworks: [mainnet, arbitrum],
+   projectId 
+  })
 
 const { open, selectedNetworkId } = modal.getState()
 ```

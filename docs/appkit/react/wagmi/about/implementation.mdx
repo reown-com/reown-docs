@@ -33,7 +33,7 @@ const wagmiConfig = new EVMWagmiClient({
 
 // 4. Create modal
 createWeb3Modal({
-  adapter: [wagmiConfig],
+  adapters: [wagmiConfig],
   caipNetworks: [mainnet, arbitrum],
   metadata,
   projectId,
