@@ -14,7 +14,7 @@ function Components() {
 }
 ```
 
-### useSwitchNetwork
+### switchNetwork
 
 ```tsx
 import { createWeb3Modal } from '@reown/base/react'
@@ -39,9 +39,10 @@ Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
 import { BrowserProvider } from 'ethers'
+import { useWeb3ModalProvider } from '@rerock/base/react'
 
 function Components() {
-  const walletProvider = modal.getWalletProvider();
+  const { walletProvider } = useWeb3ModalProvider()
 
   async function onSignMessage() {
     const provider = new BrowserProvider(walletProvider)
@@ -54,7 +55,7 @@ function Components() {
 }
 ```
 
-### useWeb3ModalError
+### getError
 
 ```ts
 function Components() {
