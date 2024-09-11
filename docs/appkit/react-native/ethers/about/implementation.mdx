@@ -1,8 +1,8 @@
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-Start by importing `createWeb3Modal`, and wagmi packages, then create your configs as shown below.
-Finally, pass your configuration to `createWeb3Modal`.
+Start by importing `createAppKit`, and wagmi packages, then create your configs as shown below.
+Finally, pass your configuration to `createAppKit`.
 
 :::info Note
 
@@ -13,7 +13,7 @@ Make sure you import `@walletconnect/react-native-compat` before using our packa
 ```tsx
 import '@walletconnect/react-native-compat'
 
-import { createWeb3Modal, defaultConfig, Web3Modal } from '@web3modal/ethers-react-native'
+import { createAppKit, defaultConfig, AppKit } from '@appkit/ethers-react-native'
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -22,7 +22,7 @@ const projectId = 'YOUR_PROJECT_ID'
 const metadata = {
   name: 'AppKit RN',
   description: 'AppKit RN Example',
-  url: 'https://walletconnect.com',
+  url: 'https://example.com',
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
   redirect: {
     native: 'YOUR_APP_SCHEME://'
@@ -51,7 +51,7 @@ const polygon = {
 const chains = [mainnet, polygon]
 
 // 4. Create modal
-createWeb3Modal({
+createAppKit({
   projectId,
   chains,
   config,
@@ -62,7 +62,7 @@ export default function App() {
   return (
     <>
       // Rest of your app...
-      <Web3Modal />
+      <AppKit />
     </>
   )
 }
@@ -77,13 +77,13 @@ To open AppKit modal you can use our **default** button component or build your 
 You can use default components to open the modal
 
 ```tsx
-import { W3mButton } from '@web3modal/ethers-react-native'
+import { AppKitButton } from '@appkit/ethers-react-native'
 
 export default function ConnectView() {
   return (
     <>
       ...rest of your view
-      <W3mButton />
+      <AppKitButton />
     </>
   )
 }
@@ -94,14 +94,14 @@ Learn more about the AppKit components [here](../../core/components.mdx)
 </TabItem>
 <TabItem value="hooks" label="Hooks">
 
-You can trigger the modal by calling the `open` function from `useWeb3Modal` hook.
+You can trigger the modal by calling the `open` function from `useAppKit` hook.
 
 ```tsx
 import { Pressable, Text } from 'react-native'
-import { useWeb3Modal } from '@web3modal/ethers-react-native'
+import { useAppKit } from '@appkit/ethers-react-native'
 
 export default function ConnectView() {
-  const { open } = useWeb3Modal()
+  const { open } = useAppKit()
 
   return (
     <>

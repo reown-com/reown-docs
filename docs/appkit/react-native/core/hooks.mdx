@@ -9,18 +9,18 @@ import Ethers5Hooks from '../ethers5/hooks.mdx'
 
 # Hooks
 
-## useWeb3Modal
+## useAppKit
 
-Control the modal with the `useWeb3Modal` hook
+Control the modal with the `useAppKit` hook
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "ethers5"]}>
 
 <PlatformTabItem value="wagmi">
 ```ts
-import { useWeb3Modal } from '@web3modal/wagmi-react-native'
+import { useAppKit } from '@appkit/wagmi-react-native'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -31,10 +31,10 @@ export default function Component() {
 
 <PlatformTabItem value="ethers">
 ```ts
-import { useWeb3Modal } from '@web3modal/ethers-react-native'
+import { useAppKit } from '@appkit/ethers-react-native'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -46,10 +46,10 @@ export default function Component() {
 
 <PlatformTabItem value="ethers5">
 ```ts
-import { useWeb3Modal } from '@web3modal/ethers5-react-native'
+import { useAppKit } from '@appkit/ethers5-react-native'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -95,7 +95,7 @@ List of views you can select
   ]}
 />
 
-## useWeb3ModalState
+## useAppKitState
 
 Get the current value of the modal's state
 
@@ -103,26 +103,26 @@ Get the current value of the modal's state
 
 <PlatformTabItem value="wagmi">
   ```ts
-import { useWeb3ModalState } from '@web3modal/wagmi-react-native'
+import { useAppKitState } from '@appkit/wagmi-react-native'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ````
 </PlatformTabItem>
 
 <PlatformTabItem value="ethers">
 ```ts
-import { useWeb3ModalState } from '@web3modal/ethers-react-native'
+import { useAppKitState } from '@appkit/ethers-react-native'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ````
 
 </PlatformTabItem>
 
 <PlatformTabItem value="ethers5">
 ```ts
-import { useWeb3ModalState } from '@web3modal/ethers5-react-native'
+import { useAppKitState } from '@appkit/ethers5-react-native'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ````
 </PlatformTabItem>
 
@@ -147,7 +147,7 @@ The modal state consists of two reactive values:
 />
 
 
-## useWeb3ModalEvents
+## useAppKitEvents
 
 Get the last tracked modal event
 
@@ -155,26 +155,26 @@ Get the last tracked modal event
 
 <PlatformTabItem value="wagmi">
   ```ts
-import { useWeb3ModalEvents } from '@web3modal/wagmi-react-native'
+import { useAppKitEvents } from '@appkit/wagmi-react-native'
 
-const event = useWeb3ModalEvents()
+const event = useAppKitEvents()
 ````
 
 </PlatformTabItem>
 
 <PlatformTabItem value="ethers">
 ```ts
-import { useWeb3ModalEvents } from '@web3modal/ethers-react-native'
+import { useAppKitEvents } from '@appkit/ethers-react-native'
 
-const event = useWeb3ModalEvents()
+const event = useAppKitEvents()
 ````
 </PlatformTabItem>
 
 <PlatformTabItem value="ethers5">
 ```ts
-import { useWeb3ModalEvents } from '@web3modal/ethers5-react-native'
+import { useAppKitEvents } from '@appkit/ethers5-react-native'
 
-const event = useWeb3ModalEvents()
+const event = useAppKitEvents()
 ````
 
 </PlatformTabItem>
@@ -189,7 +189,7 @@ Get the metadata information from the connected wallet
 
 <PlatformTabItem value="wagmi">
 ```ts
-import { useWalletInfo } from '@web3modal/wagmi-react-native'
+import { useWalletInfo } from '@appkit/wagmi-react-native'
 
 const { walletInfo } = useWalletInfo()
 ````
@@ -198,7 +198,7 @@ const { walletInfo } = useWalletInfo()
 
 <PlatformTabItem value="ethers">
 ```ts
-import { useWalletInfo } from '@web3modal/ethers-react-native'
+import { useWalletInfo } from '@appkit/ethers-react-native'
 
 const { walletInfo } = useWalletInfo()
 ````
@@ -206,7 +206,7 @@ const { walletInfo } = useWalletInfo()
 
 <PlatformTabItem value="ethers5">
 ```ts
-import { useWalletInfo } from '@web3modal/ethers5-react-native'
+import { useWalletInfo } from '@appkit/ethers5-react-native'
 
 const { walletInfo } = useWalletInfo()
 ````

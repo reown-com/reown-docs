@@ -32,7 +32,7 @@ import {
   formatMessage,
   type SIWEVerifyMessageArgs,
   type SIWECreateMessageArgs
-} from '@web3modal/siwe-react-native';
+} from '@appkit/siwe-react-native';
 
 export const siweConfig = createSIWEConfig({
   getNonce: async (): Promise<string> => {
@@ -96,12 +96,12 @@ export const siweConfig = createSIWEConfig({
 ```
 
 ## Initialize AppKit with your `siweConfig`
-Add the siwe configuration in `createWeb3Modal` initialization
+Add the siwe configuration in `createAppKit` initialization
 
 ```ts
 import { siweConfig } from './siweConfig.ts'
 
-createWeb3Modal({
+createAppKit({
   //..
   /* highlight-add-start */
   siweConfig
@@ -159,7 +159,7 @@ interface SIWEConfig {
 Verify a SIWE signature. Internally it calls your backend verification method.
 
 ```ts
-import { verifySignature } from '@web3modal/siwe-react-native'
+import { verifySignature } from '@appkit/siwe-react-native'
 
 const isValid = await verifySignature({ address, message, signature, chainId, projectId })
 ```
@@ -169,7 +169,7 @@ const isValid = await verifySignature({ address, message, signature, chainId, pr
 Get the chain ID from the SIWE message.
 
 ```ts
-import { getChainIdFromMessage } from '@web3modal/siwe-react-native'
+import { getChainIdFromMessage } from '@appkit/siwe-react-native'
 
 const chainId = getChainIdFromMessage(message)
 ```
@@ -179,7 +179,7 @@ const chainId = getChainIdFromMessage(message)
 Get the address from the SIWE message.
 
 ```ts
-import { getAddressFromMessage } from '@web3modal/siwe-react-native'
+import { getAddressFromMessage } from '@appkit/siwe-react-native'
 
 const address = getAddressFromMessage(message)
 ```

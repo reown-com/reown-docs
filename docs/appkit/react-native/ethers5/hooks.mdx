@@ -1,29 +1,29 @@
 import Button from '../../../components/button'
 
-#### useWeb3ModalAccount
+#### useAppKitAccount
 
 Hook that returns the client's information.
 
 ```tsx
-import { useWeb3ModalAccount } from '@web3modal/ethers5-react-native'
+import { useAppKitAccount } from '@appkit/ethers5-react-native'
 
 function Components() {
-  const { address, chainId, isConnected } = useWeb3ModalAccount()
+  const { address, chainId, isConnected } = useAppKitAccount()
 
   //...
 }
 ```
 
-#### useWeb3ModalProvider
+#### useAppKitProvider
 
 Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
 import { ethers } from 'ethers'
-import { useWeb3ModalProvider } from '@web3modal/ethers5-react-native'
+import { useAppKitProvider } from '@appkit/ethers5-react-native'
 
 function Components() {
-  const { walletProvider } = useWeb3ModalProvider()
+  const { walletProvider } = useAppKitProvider()
 
   async function onSignMessage() {
     const provider = new ethers.providers.Web3Provider(walletProvider)
@@ -36,13 +36,13 @@ function Components() {
 }
 ```
 
-#### useWeb3ModalError
+#### useAppKitError
 
 ```ts
-import { useWeb3ModalError } from '@web3modal/ethers5-react-native'
+import { useAppKitError } from '@appkit/ethers5-react-native'
 
 function Components() {
-  const { error } = useWeb3ModalError()
+  const { error } = useAppKitError()
 
   //...
 }
