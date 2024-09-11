@@ -14,7 +14,7 @@ If you already have Wagmi integrated into your application or would like more co
 import { createWeb3Modal } from '@reown/base/react'
 import { EVMWagmiClient } from '@reown/adapter-wagmi'
 
-import { http, WagmiProvider } from 'wagmi'
+import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
 import { sepolia } from '@reown/base/chains'
 import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -51,7 +51,7 @@ export const config = wagmiAdapter.wagmiConfig
 createWeb3Modal({
   adapters: [wagmiAdapter],
   projectId,
-  caipNetworks: [mainnet, arbitrum, avalanche, base, optimism, polygon]
+  caipNetworks: [sepolia]
 })
 
 export function ContextProvider({ children }) {
