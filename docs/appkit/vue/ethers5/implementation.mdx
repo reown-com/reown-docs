@@ -25,11 +25,11 @@ In your `App.vue` file set up the following configuration.
   }
 
   // 3. Create Ethers adapter
-  const ethersAdapter = new EVMEthers5Client()
+  const ethers5Adapter = new EVMEthers5Client()
 
   // 4. Create a AppKit instance
   createWeb3Modal({
-    adapters: [ethersAdapter],
+    adapters: [ethers5Adapter],
     caipNetworks: [mainnet, arbitrum],
     projectId,
     features: {
