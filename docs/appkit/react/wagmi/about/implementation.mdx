@@ -18,7 +18,7 @@ const queryClient = new QueryClient()
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Create wagmiConfig
+// 2. Create a metadata object - optional
 const metadata = {
   name: 'AppKit',
   description: 'AppKit Example',
@@ -26,12 +26,12 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
-const chains = [mainnet, arbitrum] as const
+// 3. Create Wagmi Adapter
 const wagmiConfig = new EVMWagmiClient({
   ssr: true
 })
 
-// 3. Create modal
+// 4. Create modal
 createWeb3Modal({
   adapter: [wagmiConfig],
   caipNetworks: [mainnet, arbitrum],

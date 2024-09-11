@@ -11,10 +11,15 @@ In this example we are going to use the `<w3m-button>` component.
     <title>HTML Example</title>
   </head>
   <body>
-    /* highlight-add-start */
-    <w3m-button></w3m-button>
-    /* highlight-add-end */
-    <script type="module" src="main.ts"></script>
+    <div id="app">
+      <button id="open-connect-modal">Open Modal</button>
+      <button id="open-network-modal">Open Networks</button>
+      /* highlight-add-start */
+      <w3m-button></w3m-button>
+      <w3m-network-button></w3m-network-button>
+      /* highlight-add-end */
+    </div>
+    <script type="module" src="main.js"></script>
   </body>
 </html>
 ```

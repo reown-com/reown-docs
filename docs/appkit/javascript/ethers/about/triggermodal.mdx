@@ -9,8 +9,10 @@ To open AppKit you can use our [**web component**](../../core/components.mdx) or
 ```html
   <body>
     <div id="app">
+      /* highlight-add-start */
       <w3m-button></w3m-button>
-      <w3m-network-button> </w3m-network-button>
+      <w3m-network-button></w3m-network-button>
+      /* highlight-add-end */
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
@@ -38,16 +40,24 @@ Let's first add two html button elements into our `index.html` file:
     <title>HTML Example</title>
   </head>
   <body>
-    <button id="open-connect-modal">Open Modal</button>
-    <button id="open-network-modal">Open Networks</button>
+    <div id="app">
+      <button id="open-connect-modal">Open Modal</button>
+      <button id="open-network-modal">Open Networks</button>
+      /* highlight-add-start */
+      <w3m-button></w3m-button>
+      <w3m-network-button></w3m-network-button>
+      /* highlight-add-end */
+    </div>
     <script type="module" src="main.js"></script>
   </body>
 </html>
 ```
 
-Following with our `main.ts` file, we can now add the needed logic to open the modal:
+Following with our `main.js` file, we can now add the needed logic to open the modal:
 
 ```ts
+// Trigger modal programaticaly
+// Add this code inside `main.js` file at the end of the code file
 const openConnectModalBtn = document.getElementById('open-connect-modal')
 const openNetworkModalBtn = document.getElementById('open-network-modal')
 

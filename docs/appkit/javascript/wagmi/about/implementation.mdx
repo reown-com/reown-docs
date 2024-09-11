@@ -1,36 +1,45 @@
-For a quick integration you can use `defaultWagmiConfig` function which wraps Wagmi's [`createConfig`](https://wagmi.sh/core/api/createConfig) function with a predefined configuration.
+For a quick integration, you can use the `createWeb3Modal` function with a unified configuration. This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana, so you no longer need to manually configure each one individually. Simply pass the common parameters such as `projectId`, `chains`, `metadata`, etc., and the function will handle the adapter-specific configurations under the hood.
+
 This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api.mdx) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
 
-In your `main.ts` file set up the following configuration.
+In your `main.js` file set up the following configuration.
 
 ```ts
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
-
-import { mainnet, arbitrum } from 'viem/chains'
-import { reconnect } from '@wagmi/core'
+import { createWeb3Modal } from '@reown/base'
+import { mainnet, arbitrum } from '@reown/base/chains'
+import { EVMWagmiClient } from '@reown/adapter-wagmi'
 
 // 1. Get a project ID at https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Create wagmiConfig
+// 2. Set up Wagmi adapter
+const wagmiAdapter = new EVMWagmiClient()
+
+// 3. Configure the metadata
 const metadata = {
   name: 'AppKit',
   description: 'AppKit Example',
-  url: 'https://web3modal.com', // origin must match your domain & subdomain.
+  url: 'https://web3modal.com', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
-const chains = [mainnet, arbitrum] as const
-export const config = defaultWagmiConfig({
-  chains,
-  projectId,
+// 3. Create the modal
+createWeb3Modal({
+  adapter: [wagmiAdapter],
+  caipNetworks: [mainnet, arbitrum],
   metadata,
-})
-reconnect(config)
-
-// 3. Create modal
-const modal = createWeb3Modal({
-  wagmiConfig: config,
   projectId,
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
 })
+
+// 4. Trigger modal programaticaly
+const openConnectModalBtn = document.getElementById('open-connect-modal')
+const openNetworkModalBtn = document.getElementById('open-network-modal')
+
+openConnectModalBtn.addEventListener('click', () => modal.open())
+openNetworkModalBtn.addEventListener('click', () => modal.open({ view: 'Networks' }))
+
+// 5. Alternatively use w3m component buttons within the index.html file
 ```
