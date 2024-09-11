@@ -10,7 +10,7 @@ For this example we will create a file called `config/index.tsx` outside our app
 
 ```tsx
 import { cookieStorage, createStorage, http } from '@wagmi/core'
-import { EVMWagmiClient } from '@rerock/adapter-wagmi'
+import { EVMWagmiClient } from '@reown/adapter-wagmi'
 
 // Get projectId from https://cloud.walletconnect.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
@@ -49,8 +49,8 @@ In this example we will create a file called `context/index.tsx` outside our app
 
 import { wagmiAdapter, projectId } from '@/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createWeb3Modal } from '@rerock/base/react' 
-import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@rerock/base/chains'
+import { createWeb3Modal } from '@reown/base/react' 
+import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@reown/base/chains'
 import React, { type ReactNode } from 'react'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
 
