@@ -13,7 +13,7 @@ Make sure you import `@walletconnect/react-native-compat` before using our packa
 ```tsx
 import '@walletconnect/react-native-compat'
 
-import { createAppKit, defaultConfig, AppKit } from '@appkit/ethers-react-native'
+import { createAppKit, defaultConfig, AppKit } from '@reown/appkit-ethers-react-native'
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -77,7 +77,7 @@ To open AppKit modal you can use our **default** button component or build your 
 You can use default components to open the modal
 
 ```tsx
-import { AppKitButton } from '@appkit/ethers-react-native'
+import { AppKitButton } from '@reown/appkit-ethers-react-native'
 
 export default function ConnectView() {
   return (
@@ -98,7 +98,7 @@ You can trigger the modal by calling the `open` function from `useAppKit` hook.
 
 ```tsx
 import { Pressable, Text } from 'react-native'
-import { useAppKit } from '@appkit/ethers-react-native'
+import { useAppKit } from '@reown/appkit-ethers-react-native'
 
 export default function ConnectView() {
   const { open } = useAppKit()

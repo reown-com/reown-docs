@@ -17,7 +17,7 @@ Control the modal with the `useAppKit` hook
 
 <PlatformTabItem value="wagmi">
 ```ts
-import { useAppKit } from '@appkit/wagmi-react-native'
+import { useAppKit } from '@reown/appkit-wagmi-react-native'
 
 export default function Component() {
   const { open, close } = useAppKit()
@@ -31,7 +31,7 @@ export default function Component() {
 
 <PlatformTabItem value="ethers">
 ```ts
-import { useAppKit } from '@appkit/ethers-react-native'
+import { useAppKit } from '@reown/appkit-ethers-react-native'
 
 export default function Component() {
   const { open, close } = useAppKit()
@@ -46,7 +46,7 @@ export default function Component() {
 
 <PlatformTabItem value="ethers5">
 ```ts
-import { useAppKit } from '@appkit/ethers5-react-native'
+import { useAppKit } from '@reown/appkit-ethers5-react-native'
 
 export default function Component() {
   const { open, close } = useAppKit()
@@ -103,7 +103,7 @@ Get the current value of the modal's state
 
 <PlatformTabItem value="wagmi">
   ```ts
-import { useAppKitState } from '@appkit/wagmi-react-native'
+import { useAppKitState } from '@reown/appkit-wagmi-react-native'
 
 const { open, selectedNetworkId } = useAppKitState()
 ````
@@ -111,7 +111,7 @@ const { open, selectedNetworkId } = useAppKitState()
 
 <PlatformTabItem value="ethers">
 ```ts
-import { useAppKitState } from '@appkit/ethers-react-native'
+import { useAppKitState } from '@reown/appkit-ethers-react-native'
 
 const { open, selectedNetworkId } = useAppKitState()
 ````
@@ -120,7 +120,7 @@ const { open, selectedNetworkId } = useAppKitState()
 
 <PlatformTabItem value="ethers5">
 ```ts
-import { useAppKitState } from '@appkit/ethers5-react-native'
+import { useAppKitState } from '@reown/appkit-ethers5-react-native'
 
 const { open, selectedNetworkId } = useAppKitState()
 ````
@@ -155,7 +155,7 @@ Get the last tracked modal event
 
 <PlatformTabItem value="wagmi">
   ```ts
-import { useAppKitEvents } from '@appkit/wagmi-react-native'
+import { useAppKitEvents } from '@reown/appkit-wagmi-react-native'
 
 const event = useAppKitEvents()
 ````
@@ -164,7 +164,7 @@ const event = useAppKitEvents()
 
 <PlatformTabItem value="ethers">
 ```ts
-import { useAppKitEvents } from '@appkit/ethers-react-native'
+import { useAppKitEvents } from '@reown/appkit-ethers-react-native'
 
 const event = useAppKitEvents()
 ````
@@ -172,7 +172,7 @@ const event = useAppKitEvents()
 
 <PlatformTabItem value="ethers5">
 ```ts
-import { useAppKitEvents } from '@appkit/ethers5-react-native'
+import { useAppKitEvents } from '@reown/appkit-ethers5-react-native'
 
 const event = useAppKitEvents()
 ````
@@ -189,7 +189,7 @@ Get the metadata information from the connected wallet
 
 <PlatformTabItem value="wagmi">
 ```ts
-import { useWalletInfo } from '@appkit/wagmi-react-native'
+import { useWalletInfo } from '@reown/appkit-wagmi-react-native'
 
 const { walletInfo } = useWalletInfo()
 ````
@@ -198,7 +198,7 @@ const { walletInfo } = useWalletInfo()
 
 <PlatformTabItem value="ethers">
 ```ts
-import { useWalletInfo } from '@appkit/ethers-react-native'
+import { useWalletInfo } from '@reown/appkit-ethers-react-native'
 
 const { walletInfo } = useWalletInfo()
 ````
@@ -206,7 +206,7 @@ const { walletInfo } = useWalletInfo()
 
 <PlatformTabItem value="ethers5">
 ```ts
-import { useWalletInfo } from '@appkit/ethers5-react-native'
+import { useWalletInfo } from '@reown/appkit-ethers5-react-native'
 
 const { walletInfo } = useWalletInfo()
 ````

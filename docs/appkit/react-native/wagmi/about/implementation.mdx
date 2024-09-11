@@ -15,7 +15,7 @@ import '@walletconnect/react-native-compat'
 import { WagmiProvider } from 'wagmi'
 import { mainnet, polygon, arbitrum } from '@wagmi/core/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createAppKit, defaultWagmiConfig, Web3Modal } from '@appkit/wagmi-react-native'
+import { createAppKit, defaultWagmiConfig, AppKit } from '@reown/appkit-wagmi-react-native'
 
 // 0. Setup queryClient
 const queryClient = new QueryClient()
@@ -52,7 +52,7 @@ export default function App() {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         // Rest of your app...
-        <Web3Modal />
+        <AppKit />
       </QueryClientProvider>
     </WagmiProvider>
   )
@@ -68,7 +68,7 @@ To open AppKit modal you can use our **default** button component or build your 
 You can use default components to open the modal
 
 ```tsx
-import { AppKitButton } from '@appkit/wagmi-react-native'
+import { AppKitButton } from '@reown/appkit-wagmi-react-native'
 
 export default function ConnectView() {
   return (
@@ -89,7 +89,7 @@ You can trigger the modal by calling the `open` function from `useAppKit` hook.
 
 ```tsx
 import { Pressable, Text } from 'react-native'
-import { useAppKit } from '@appkit/wagmi-react-native'
+import { useAppKit } from '@reown/appkit-wagmi-react-native'
 
 export default function ConnectView() {
   const { open } = useAppKit()

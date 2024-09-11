@@ -5,7 +5,7 @@ import Button from '../../../components/button'
 Hook that returns the client's information.
 
 ```tsx
-import { useAppKitAccount } from '@appkit/ethers-react-native'
+import { useAppKitAccount } from '@reown/appkit-ethers-react-native'
 
 function Components() {
   const { address, chainId, isConnected } = useAppKitAccount()
@@ -20,7 +20,7 @@ Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
 import { BrowserProvider } from 'ethers'
-import { useAppKitProvider } from '@appkit/ethers-react-native'
+import { useAppKitProvider } from '@reown/appkit-ethers-react-native'
 
 function Components() {
   const { walletProvider } = useAppKitProvider()
@@ -40,7 +40,7 @@ function Components() {
 #### useAppKitError
 
 ```ts
-import { useAppKitError } from '@appkit/ethers-react-native'
+import { useAppKitError } from '@reown/appkit-ethers-react-native'
 
 function Components() {
   const { error } = useAppKitError()
