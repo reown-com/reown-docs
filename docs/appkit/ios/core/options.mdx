@@ -5,7 +5,7 @@
 Allows to set default recommended wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define a list of wallets ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
 
 ```swift
-Web3Modal.configure(
+AppKit.configure(
     ...
     recommendedWalletIds: [String]
     ...
@@ -17,7 +17,7 @@ Web3Modal.configure(
 Allows to exclude wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define an array of wallet ids you'd like to exclude. You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
 
 ```swift
-Web3Modal.configure(
+AppKit.configure(
     ...
     excludedWalletIds: [String]
     ...
@@ -29,13 +29,13 @@ Web3Modal.configure(
 If you want to list wallet that is not included in the explorer, you can configure the client as follows:
 
 ```swift
-Web3Modal.configure(
+AppKit.configure(
     ...
     customWallets: [
                 .init(
                     id: "swift-sample",
                     name: "Swift Sample Wallet",
-                    homepage: "https://walletconnect.com/",
+                    homepage: "https://reown.com/",
                     imageUrl: "https://avatars.githubusercontent.com/u/37784886?s=200&v=4",
                     order: 1,
                     mobileLink: "walletapp://",
@@ -48,7 +48,7 @@ Web3Modal.configure(
 
 ### Enable Installed Wallet Detection
 
-To enable Web3Modal to detect wallets installed on the device, you need to make specific changes your project Info.plist.
+To enable AppKit to detect wallets installed on the device, you need to make specific changes your project Info.plist.
 
 #### For iOS:
 
@@ -74,7 +74,7 @@ Example:
 ### Enable Coinbase Wallet
 
 :::info
-Coinbase Wallet is available from Web3Modal **version 1.1.0** and higher
+Coinbase Wallet is available from AppKit **version 1.1.0** and higher
 :::
 
 Since Coinbase Wallet uses its own SDK there are a few simply steps to do if you are planning to include and support it
@@ -99,7 +99,7 @@ Then you need to add the following code to your `AppDelegate.swift` file
 import CoinbaseWalletSDK
 
 override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-    Web3Modal.instance.handleDeeplink(url)
+    AppKit.instance.handleDeeplink(url)
 }
 ```
 
@@ -109,12 +109,12 @@ or for SwiftUI attach `onOpenURL` modifier somewhere in your view hieararchy lik
 WindowGroup {
   YourView()
       .onOpenURL { url in
-          Web3Modal.instance.handleDeeplink(url)
+          AppKit.instance.handleDeeplink(url)
       }
 }
 
 ```
 
 :::note
-If you don't want to include/support Coinbase Wallet you just need to set `coinbaseEnabled` to `false` in your Web3Modal configure call.
+If you don't want to include/support Coinbase Wallet you just need to set `coinbaseEnabled` to `false` in your AppKit configure call.
 :::

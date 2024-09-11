@@ -12,19 +12,19 @@ You can add AppKit to your project with Swift Package Manager. In order to do th
 
 1. Open Xcode
 2. Go to File -> Add Packages
-3. Paste the repo GitHub url: https://github.com/WalletConnect/web3modal-swift
+3. Paste the repo GitHub url: https://github.com/reown-com/reown-swift
 4. Tap Add Package
-5. Choose the Web3Modal products that you want installed in your app.
+5. Choose the AppKit products that you want installed in your app.
 
-### Alternatively, add Web3Modal to a `Package.swift` manifest
+### Alternatively, add AppKit to a `Package.swift` manifest
 
 To integrate via a `Package.swift` manifest instead of Xcode, you can add
-Web3Modal to the dependencies array of your package:
+AppKit to the dependencies array of your package:
 
 ```swift
 dependencies: [
   .package(
-    name: "Web3Modal",
+    name: "AppKit",
     url: "https://github.com/WalletConnectV2/web3modal-swift.git",
     .upToNextMajor(from: "1.0.13")
   ),
@@ -33,15 +33,15 @@ dependencies: [
 ],
 ```
 
-Then, in any target that depends on a Web3Modal product, add it to the `dependencies`
+Then, in any target that depends on a AppKit product, add it to the `dependencies`
 array of that target:
 
 ```swift
 .target(
   name: "MyTargetName",
   dependencies: [
-    // The product(s) you want (most likely Web3Modal).
-    .product(name: "Web3Modal", package: "Web3Modal"),
+    // The product(s) you want (most likely AppKit).
+    .product(name: "AppKit", package: "AppKit"),
   ]
 ),
 ```
@@ -54,14 +54,14 @@ array of that target:
 3. Add pod to your Podfile like this:
 
 ```ruby
-pod 'Web3Modal', '~> 1.0'
+pod 'AppKit', '~> 1.0'
 ```
 
 4. Install pods with `pod install`
    If you encounter any problems during package installation, you can specify the exact path to the repository
 
 ```ruby
-pod 'Web3Modal', :git => 'https://github.com/WalletConnect/web3modal-swift.git', :tag => '1.0.13'
+pod 'AppKit', :git => 'https://github.com/reown-com/reown-swift.git', :tag => '1.0.13'
 ```
 
 </TabItem>
