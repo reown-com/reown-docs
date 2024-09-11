@@ -11,33 +11,43 @@ Add custom connectors for Ethers or Wagmi
 If you already have Wagmi integrated into your application or would like more control over Wagmi's configuration, you can integrate Web3Modal on top of it.
 
 ```ts
-import { createWeb3Modal } from '@web3modal/wagmi'
+import { createWeb3Modal } from '@rerock/base/vue'
+import { EVMWagmiClient } from '@rerock/adapter-wagmi'
 
-import { reconnect, http, createConfig } from '@wagmi/core'
-import { sepolia } from '@wagmi/core/chains'
-import { walletConnect } from '@wagmi/connectors'
+import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
+import { sepolia } from '@rerock/base/chains'
+import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
 
 const projectId = 'YOUR_PROJECT_ID'
 
 const metadata = {
-  //...
+  //....
 }
 
-const config = createConfig({
-  chains: [sepolia],
+// create the connectors (delete the ones you don't need)
+const connectors: CreateConnectorFn[] = []
+connectors.push(walletConnect({ projectId, metadata, showQrModal: false })) // showQrModal must be false
+connectors.push(injected({ shimDisconnect: true }))
+connectors.push(
+  coinbaseWallet({
+    appName: metadata.name,
+    appLogoUrl: metadata.icons[0]
+  })
+)
+
+export const wagmiAdapter = new EVMWagmiClient({
   transports: {
     [sepolia.id]: http()
   },
-  connectors: [
-    walletConnect({ projectId, metadata, showQrModal: false }), // showQrModal must be false.
-    //other connectors...
-  ]
+  connectors
 })
-reconnect(config)
 
-const modal = createWeb3Modal({
-  //...
-  wagmiConfig: config,
+export const config = wagmiAdapter.wagmiConfig
+
+createWeb3Modal({
+  adapters: [wagmiAdapter],
+  projectId,
+  caipNetworks: [sepolia]
 })
 ```
 
@@ -51,43 +61,38 @@ Coming soon...
 Add custom wallet adapters for Solana wallets by first installing the wallet adapter package and then including the adapters in the wallets array. You can find a more Solana wallet adapters [here](https://github.com/anza-xyz/wallet-adapter/tree/master/packages/wallets).
 
 ```bash npm2yarn
-npm install @solana/wallet-adapter-solflare
+npm install @solana/wallet-adapter-wallets
 ```
 
 ```ts
-import { createWeb3Modal, defaultSolanaConfig } from '@web3modal/solana/vue'
-import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
-import { SolflareWalletAdapter } from '@solana/wallet-adapter-solflare'
+import { createWeb3Modal } from '@reown/base/vue'
+import { SolanaWeb3JsClient } from '@reown/adapter-solana/vue'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
 
-// 0. Setup chains
-const chains = [solana, solanaTestnet, solanaDevnet]
+import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+// 0. Set up Solana adapter
+const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Create solanaConfig
+// 2. Set up the metadata
 const metadata = {
   //...
 }
 
-const solanaConfig = defaultSolanaConfig({
-  chains,
-  projectId,
-  metadata
-})
-
-// 3. Create modal
+// 3. Create the modal
 const modal = createWeb3Modal({
-  solanaConfig,
-  projectId: projectId,
+  adapters: [solanaWeb3JsAdapter],
+  caipNetworks: [solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
-  chains,
-  enableAnalytics: true,
-  termsConditionsUrl: 'https://walletconnect.com/terms',
-  privacyPolicyUrl: 'https://walletconnect.com/privacy',
-  wallets: [
-      new SolflareWalletAdapter(),
-    ]
+  projectId,
+  features: {
+    analytics: true,
+  }
 })
 ```
 </PlatformTabItem>
