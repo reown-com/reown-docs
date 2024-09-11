@@ -1,4 +1,5 @@
-For a quick integration you can use `defaultWagmiConfig` function which wraps Wagmi's [`createConfig`](https://wagmi.sh/core/api/createConfig) function with a predefined configuration.
+For a quick integration, you can use the `createWeb3Modal` function with a unified configuration. This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana, so you no longer need to manually configure each one individually. Simply pass the common parameters such as `projectId`, `chains`, `metadata`, etc., and the function will handle the adapter-specific configurations under the hood.
+
 This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api.mdx) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
 
 :::info
@@ -9,15 +10,16 @@ In your `App.vue` file set up the following configuration
 
 ```html
 <script setup>
-  import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/vue'
+  import { createWeb3Modal, useWeb3Modal } from '@reown/base/vue'
 
-  import { mainnet, arbitrum } from 'viem/chains'
-  import { reconnect } from '@wagmi/core'
+  import { WagmiProvider } from 'wagmi'
+  import { arbitrum, mainnet } from '@reown/base/chains'
+  import { EVMWagmiClient } from '@reown/adapter-wagmi'
 
-  // 1. Define constants
+  // 1. Get projectId from https://cloud.walletconnect.com
   const projectId = 'YOUR_PROJECT_ID'
 
-  // 2. Create wagmiConfig
+  // 2. Create a metadata object - optional
   const metadata = {
     name: 'AppKit',
     description: 'AppKit Example',
@@ -25,21 +27,24 @@ In your `App.vue` file set up the following configuration
     icons: ['https://avatars.githubusercontent.com/u/37784886']
   }
 
-  const chains = [mainnet, arbitrum]
-  const config = defaultWagmiConfig({
-    chains,
-    projectId,
-    metadata,
-    ...wagmiOptions // Optional - Override createConfig parameters
+  // 3. Create Wagmi Adapter
+  const wagmiAdapter = new EVMWagmiClient({
+    ssr: true
   })
 
-  reconnect(config)
-  // 3. Create modal
+  // 4. Create modal
   createWeb3Modal({
-    wagmiConfig: config,
+    adapters: [wagmiAdapter],
+    caipNetworks: [mainnet, arbitrum],
+    metadata,
     projectId,
-    enableAnalytics: true // Optional - defaults to your Cloud configuration  
+    features: {
+      analytics: true // Optional - defaults to your Cloud configuration
+    }
   })
+
+  // 5. Use modal composable
+  const modal = useWeb3Modal()
 </script>
 
 <template> // Rest of your app ... </template>

@@ -24,12 +24,6 @@ Web components are global html elements that don't require importing.
 You can trigger the modal by calling the `open` method from `useWeb3Modal` composable.
 
 ```html
-<script setup lang="ts">
-  import { useWeb3Modal } from '@web3modal/solana/vue'
-  // 4. Use modal composable
-  const modal = useWeb3Modal()
-</script>
-
 <template>
   <button @click="modal.open()">Open Connect Modal</button>
   <button @click="modal.open({ view: 'Networks' })">Open Network Modal</button>
