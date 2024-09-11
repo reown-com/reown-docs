@@ -7,6 +7,7 @@ In your `App.vue` file set up the following configuration.
 <script setup lang="ts">
   import { createWeb3Modal, useWeb3Modal} from '@rerock/solana/vue'
   import {PhantomWalletAdapter,SolflareWalletAdapter} from '@solana/wallet-adapter-wallets'
+  import { SolanaWeb3JsClient } from '@reown/adapter-solana/vue'
   import {solana, solanaTestnet, solanaDevnet} from '@rerock/base/chains'
 
   // 0. Set up Solana Adapter
