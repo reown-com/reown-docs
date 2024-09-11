@@ -17,21 +17,10 @@ const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 })
 
-// 1. If Solana does not exist
-export const solanaNotExist = {
-  id: 'solana:chaindoesntexist',
-  chainId: 'chaindoesntexist',
-  name: 'Solana Unsupported',
-  currency: 'SOL',
-  explorerUrl: 'https://explorer.solana.com/?cluster=devnet',
-  rpcUrl: '',
-  chainNamespace: 'solana'
-} as CaipNetwork
-
-// 2. Get projectId from https://cloud.walletconnect.com
+// 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 3. Create a metadata object - optional
+// 2. Create a metadata object - optional
 const metadata = {
   name: 'AppKit',
   description: 'AppKit Solana Example',
@@ -39,10 +28,10 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
-// 4. Create modal
+// 3. Create modal
 createWeb3Modal({
   adapters: [solanaWeb3JsAdapter],
-  caipNetworks: [solana, solanaTestnet, solanaDevnet, solanaNotExist],
+  caipNetworks: [solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
   projectId,
   features: {
