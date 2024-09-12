@@ -20,7 +20,7 @@ Link Mode is currently in **Beta** for Flutter. You should install [v2.4.0-beta0
 3. Set the `linkMode` property to `true`:
 
 ```dart
-final web3wallet = Web3Wallet(
+final web3Wallet = Web3Wallet(
   projectId: '123.....',
   metadata: const PairingMetadata(
     ...
@@ -41,7 +41,7 @@ In Flutter, there are various plugins that can help you integrate Universal/App 
 
 ```dart
 void _onLinkCaptured(String link) async {
-  await walletKit.dispatchEnvelope(link);
+  await web3Wallet.dispatchEnvelope(link);
 }
 ```
 

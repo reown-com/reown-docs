@@ -62,9 +62,9 @@ On flutter you don't need to worry about Namespace Builder as Flutter SDK would 
 
 All you have to do is make sure you are registering
 
-1. **events emitters** with `web3wallet.registerEventEmitter()` for events you want to support on your wallet
-2. **request handlers** with `web3wallet.registerRequestHandler()` for methods you want to support on your wallet
-3. **wallet's accounts** with `web3wallet.registerAccount()` for accounts you want these events and methods to be enabled on
+1. **events emitters** with `web3Wallet.registerEventEmitter()` for events you want to support on your wallet
+2. **request handlers** with `web3Wallet.registerRequestHandler()` for methods you want to support on your wallet
+3. **wallet's accounts** with `web3Wallet.registerAccount()` for accounts you want these events and methods to be enabled on
 
 for every **chain** you want to support.
 
@@ -72,7 +72,7 @@ When a dApp propose a session, with declared required and/or optional namespaces
 
 You can access this object in **SessionProposalEvent** during `onSessionProposal` event by querying `event.params.generatedNamespaces`. (See next section)
 
-However, if you decide not to use `web3wallet.registerRequestHandler()` and, instead, you decide to handle session requests by subscribing to the `web3wallet.onSessionRequest` events then all you have to do is construct your approved namespaces as follows:
+However, if you decide not to use `web3Wallet.registerRequestHandler()` and, instead, you decide to handle session requests by subscribing to the `web3Wallet.onSessionRequest` events then all you have to do is construct your approved namespaces as follows:
 
 ```dart
 final approvedNamespaces = {
@@ -147,11 +147,11 @@ To approve a session, call `approveSession()` and pass in the `event.id` and you
 Either way you decide you would subscribe to the `onSessionProposal` event and use `approveSession()` as follows:
 
 ```dart
-web3wallet.onSessionProposal.subscribe((SessionProposalEvent? event) {
+web3Wallet.onSessionProposal.subscribe((SessionProposalEvent? event) {
   // display a prompt for the user to approve or reject the session
   // ....
   // If approved
-  web3wallet.approveSession(
+  web3Wallet.approveSession(
     id: event.id,
     namespaces: // event.params.generatedNamespaces! or approvedNamespaces,
   );
@@ -167,7 +167,7 @@ Upon the first pairing, you will immediately receive `onSessionProposal` and `on
 
 ```dart
 Uri uri = Uri.parse(scannedUriString);
-await web3wallet.pair(uri: uri);
+await web3Wallet.pair(uri: uri);
 ```
 
 ### Session Rejection
@@ -177,11 +177,11 @@ To reject the request, pass in an error code and reason. They can be found [here
 To reject a session:
 
 ```dart
-web3wallet.onSessionProposal.subscribe((SessionProposalEvent? event) {
+web3Wallet.onSessionProposal.subscribe((SessionProposalEvent? event) {
   // display a prompt for the user to approve or reject the session
   // ....
   // If rejected
-  web3wallet.rejectSession(
+  web3Wallet.rejectSession(
     id: event.id,
     reason: Errors.getSdkError(Errors.USER_REJECTED),
   );
@@ -195,7 +195,7 @@ To handle a session request, such as `personal_sign`, you have two ways and they
 1. The default one is subscribing to onSessionRequest events and handle the request based on the method that is firing the event
 
 ```dart
-web3wallet.onSessionRequest.subscribe(_onSessionRequest);
+web3Wallet.onSessionRequest.subscribe(_onSessionRequest);
 
 void _onSessionRequest(SessionRequestEvent? event) async {
   if (event != null) {
@@ -215,7 +215,7 @@ void _onSessionRequest(SessionRequestEvent? event) async {
       // Your code to sign the message here
       final signature = ...
 
-      return web3wallet.respondSessionRequest(
+      return web3Wallet.respondSessionRequest(
         topic: topic,
         response: JsonRpcResponse(
           id: id,
@@ -225,7 +225,7 @@ void _onSessionRequest(SessionRequestEvent? event) async {
       );
     }
     // if rejected
-    return web3wallet.respondSessionRequest(
+    return web3Wallet.respondSessionRequest(
       topic: topic,
       response: JsonRpcResponse(
         id: id,
@@ -247,7 +247,7 @@ Map<String, dynamic Function(String, dynamic)> supportedMethods = {
 };
 for (var chainId in supportedChains) {
   for (var method in supportedMethods.entries) {
-    web3wallet.registerRequestHandler(
+    web3Wallet.registerRequestHandler(
       chainId: chainId,
       method: method.key,
       handler: method.value,
@@ -256,7 +256,7 @@ for (var chainId in supportedChains) {
 }
 
 Future<void> _personalSignHandler(String topic, dynamic params) async {
-  final id = web3wallet.pendingRequests.getAll().first;
+  final id = web3Wallet.pendingRequests.getAll().first;
 
   // message should arrive encoded
   final decoded = hex.decode(params.first.substring(2));
@@ -268,7 +268,7 @@ Future<void> _personalSignHandler(String topic, dynamic params) async {
     // Your code to sign the message here
     final signature = ...
 
-    return web3wallet.respondSessionRequest(
+    return web3Wallet.respondSessionRequest(
       topic: topic,
       response: JsonRpcResponse(
         id: id,
@@ -278,7 +278,7 @@ Future<void> _personalSignHandler(String topic, dynamic params) async {
     );
   }
   // if rejected
-  return web3wallet.respondSessionRequest(
+  return web3Wallet.respondSessionRequest(
     topic: topic,
     response: JsonRpcResponse(
       id: id,
@@ -305,7 +305,7 @@ You need pass in the `topic` and a new `Namespaces` object that contains all of 
 After you update the session, the dapp connected to your wallet will receive a `SessionUpdate` event.
 
 ```dart
-await web3wallet.updateSession(topic: 'topic', namespaces: '{}')
+await web3Wallet.updateSession(topic: 'topic', namespaces: '{}')
 ```
 
 ### Extending a Session
@@ -313,7 +313,7 @@ await web3wallet.updateSession(topic: 'topic', namespaces: '{}')
 To extend the session, call the `extendSession` method and pass in the new `topic`. The `SessionUpdate` event will be emitted from the wallet.
 
 ```dart
-await web3wallet.extendSession(topic: 'topic')
+await web3Wallet.extendSession(topic: 'topic')
 ```
 
 ### Session Disconnect
@@ -323,7 +323,7 @@ To initiate a session disconnect, call the `disconnectSession` method and pass i
 When either the dapp or the wallet disconnects from a session, a `SessionDelete` event will be emitted. It's important to subscribe to this event so you could keep your state up-to-date.
 
 ```dart
-await web3wallet.disconnectSession(
+await web3Wallet.disconnectSession(
   topic: session.topic,
   reason: Errors.getSdkError(Errors.USER_DISCONNECTED),
 );
@@ -332,7 +332,7 @@ await web3wallet.disconnectSession(
 Using `disconnectSession()` alone will make the pairing topic persist, i.e, it can be re-used until it expires. If you want to disconnect (remove) the pairing topic as well you would have add another call as follows:
 
 ```dart
-await web3wallet.core.pairing.disconnect(
+await web3Wallet.core.pairing.disconnect(
   topic: pairing.topic,
 );
 ```
@@ -346,7 +346,7 @@ final supportedChains = ['eip155:1', 'eip155:137'];
 const supportedEvents = ['chainChanged', 'accountChanged'];
 for (var chainId in supportedChains) {
   for (var event in supportedEvents) {
-    _web3wallet.registerEventEmitter(
+    _web3Wallet.registerEventEmitter(
       chainId: chainId,
       event: event,
     );
@@ -357,7 +357,7 @@ for (var chainId in supportedChains) {
 And to emit an event, call `emitSessionEvent()` as follows:
 
 ```dart
-await web3wallet.emitSessionEvent(
+await web3Wallet.emitSessionEvent(
   topic: session.topic,
   chainId: 'eip155:1',
   event: SessionEventParams(
