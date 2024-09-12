@@ -1,0 +1,213 @@
+---
+title: Multichain
+---
+
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
+
+AppKit is now multichain. The architecture is designed to support both EVM and non-EVM blockchains. This will allow developers and projects to choose and configure multiple blockchain networks within their instance of AppKit, extending beyond just Ethereum-based (EVM) networks. 
+
+Currently, AppKit supports one non-EVM, **Solana**. Soon, AppKit will support Bitcoin, Polkadot, and Cosmos, allowing projects to tap into users from these different blockchain ecosystems. This will enable developers and projects to reach a broader audience and interact with multiple blockchain networks, all through a single wallet provider.
+
+## Installation
+
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi + solana", "ethers + solana","ethers5 + solana","basic"]}>
+<PlatformTabItem value="wagmi + solana">
+
+```bash npm2yarn
+npm install @reown/adapter-wagmi @reown/adapter-solana @solana/wallet-adapter-wallets
+```
+
+</PlatformTabItem>
+<PlatformTabItem value="ethers5 + solana">
+
+```bash npm2yarn
+npm install @reown/adapter-ethers5 @reown/adapter-solana @solana/wallet-adapter-wallets
+```
+
+</PlatformTabItem>
+<PlatformTabItem value="ethers + solana">
+
+```bash npm2yarn
+npm install @reown/adapter-ethers @reown/adapter-solana @solana/wallet-adapter-wallets
+```
+
+</PlatformTabItem>
+<PlatformTabItem value="basic">
+
+```bash npm2yarn
+npm install @reown/base
+```
+
+</PlatformTabItem>
+</PlatformTabs>
+
+
+## Integration
+
+The AppKit instance allows you to support multiple chains by importing the respective chains, creating the respective network adapters and passing these within the `createAppKit()` function.
+
+Depending on the network adapter of your preference (`Wagmi`, `Ethers`, `Ethers5`), the integration may vary. Let's look at what the integration will look like. 
+
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi + solana", "ethers5 + solana", "ethers + solana", "basic"]}>
+<PlatformTabItem value="wagmi + solana">
+```ts
+import { createWeb3Modal } from '@reown/base'
+import { SolanaWeb3JsClient } from '@reown/adapter-solana'
+import { EVMWagmiClient } from '@reown/adapter-wagmi'
+
+import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/base/chains'
+
+import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+// 0. Create the Wagmi adapter
+export const wagmiAdapter = new EVMWagmiClient({
+  ssr: true,
+})
+
+// 1. Create Solana adapter
+const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
+
+// 2. Get projectId from https://cloud.walletconnect.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 3. Set up the metadata - Optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://web3modal.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+// 4. Create the AppKit instance
+const modal = createWeb3Modal({
+  adapters: [wagmiAdapter, solanaWeb3JsAdapter],
+  caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  metadata: metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
+})
+```
+</PlatformTabItem>
+
+<PlatformTabItem value="ethers + solana">
+```ts
+import { createWeb3Modal } from '@reown/base'
+import { SolanaWeb3JsClient } from '@reown/adapter-solana'
+import { EVMEthersClient } from '@reown/adapter-ethers'
+
+import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/base/chains'
+
+import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+// 0. Create the Ethers adapter
+export const ethersAdapter = new EVMEthersClient()
+
+// 1. Create Solana adapter
+const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
+
+// 2. Get projectId from https://cloud.walletconnect.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 3. Set up the metadata - Optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://web3modal.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+// 4. Create the AppKit instance
+const modal = createWeb3Modal({
+  adapters: [ethersAdapter, solanaWeb3JsAdapter],
+  caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  metadata: metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
+})
+```
+</PlatformTabItem>
+
+<PlatformTabItem value="ethers5 + solana">
+```ts
+import { createWeb3Modal } from '@reown/base'
+import { SolanaWeb3JsClient } from '@reown/adapter-solana'
+import { EVMEthersClient } from '@reown/adapter-ethers'
+
+import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/base/chains'
+
+import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+// 0. Create the Ethers adapter
+export const ethersAdapter = new EVMEthersClient()
+
+// 1. Create Solana adapter
+const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
+
+// 2. Get projectId from https://cloud.walletconnect.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 3. Set up the metadata - Optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://web3modal.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+// 4. Create the AppKit instance
+const modal = createWeb3Modal({
+  adapters: [ethersAdapter, solanaWeb3JsAdapter],
+  caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  metadata: metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
+})
+```
+</PlatformTabItem>
+
+<PlatformTabItem value="basic">
+```ts
+import { createWeb3Modal } from '@reown/base'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/base/chains'
+
+// 1. Get projectId from https://cloud.walletconnect.com
+const projectId = '299026629319f442a1a118d6d08dcd50'
+
+// 2. Set up the metadata - Optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://web3modal.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+// 3. Create the AppKit instance
+const modal = createWeb3Modal({
+  caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  metadata: metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
+})
+```
+</PlatformTabItem>
+
+</PlatformTabs>

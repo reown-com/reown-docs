@@ -297,6 +297,7 @@ module.exports = {
             'appkit/react/core/components',
             'appkit/react/core/custom-connectors',
             'appkit/react/core/siwe',
+            'appkit/react/core/multichain',
             'appkit/react/core/theming',
             'appkit/react/core/resources'
           ]
