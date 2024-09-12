@@ -9,57 +9,87 @@ import PlatformTabItem from '../../../components/PlatformTabItem'
 
 ## Import the package:
 
-```dart
-import 'package:web3modal_flutter/web3modal_flutter.dart';
+```javascript
+import 'package:reown_appkit/reown_appkit.dart';
 ```
 
-Create your `W3MService` which is your primary class for opening, closing, disconnecting, etc.
+Create your `ReownAppKitModal()` instance, which is your primary class for opening, closing, disconnecting, etc.
 
-Be sure to update the **project ID** and metadata with your own.
+Be sure to update the _project ID_ and _metadata_ with your own.
 
 <CloudBanner />
 
-## W3MService initialization
+## Initialization
 
-In order to initialize a W3MService instance you must provide a **projectId** and a **metadata**.
+In order to initialize `ReownAppKitModal()` instance you must provide a _projectId_ and a _metadata_.
 
-```dart
-final _w3mService = W3MService(
+```javascript
+final _appKitModal = ReownAppKitModal(
+  context: context,
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
-    name: 'Web3Modal Flutter Example',
-    description: 'Web3Modal Flutter Example',
-    url: 'https://www.walletconnect.com/',
-    icons: ['https://walletconnect.com/walletconnect-logo.png'],
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
     redirect: Redirect(
-      native: 'flutterdapp://',
-      universal: 'https://www.walletconnect.com',
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
     ),
   ),
 );
 
 // Register here the event callbacks on the service you'd like to use. See `Events` section.
 
-await _w3mServices.init();
+await _appKitModal.init();
 ```
 
-The `metadata` object should contain your dApp's name, description, url and icon. Redirect object is optional but **highly recommended**. See next session why.
+Alternatively, `ReownAppKitModal()` allows you to create an instance by passing a `ReownAppKit()` object as follows:
+
+```javascript
+final _appKit = ReownAppKit.createInstance(
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect(
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+    ),
+  ),
+);
+
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  appKit: _appKit,
+);
+
+// Register here the event callbacks on the service you'd like to use. See `Events` section.
+
+await _appKitModal.init();
+```
+
+The `metadata` object should contain your dApp's name, description, url and icon. Redirect object is optional but _highly recommended_. See next session why.
 
 ## Redirect to your dApp
 
 The service's metadata object contains a `redirect` option that serves to the purpose of redirecting back to your dapp from the connected wallet.
 
-```dart
+```javascript
 redirect: Redirect(
-  native: 'flutterdapp://', // your own custom scheme for deep linking
-  universal: 'https://www.walletconnect.com', // your own universal link for deep linking
+  // your own custom scheme for deep linking
+  native: 'exampleapp://',
+  // your own universal link for deep linking, required if you are going to use Link Mode
+  universal: 'https://reown.com/exampleapp',
 ),
 ```
 
 But in order for the redirect mechanism to work you would also need to add the following in the iOS and Android native sides:
 
 <PlatformTabs
-	groupId="w3m_flutter"
+	groupId="appkit_flutter"
 	activeOptions={["ios","android"]}
 >
 <PlatformTabItem value="ios">
@@ -79,7 +109,7 @@ But in order for the redirect mechanism to work you would also need to add the f
     <key>CFBundleURLSchemes</key>
     <array>
       <!-- your own custom scheme. Be mind of removing :// for this step -->
-      <string>flutterdapp</string>
+      <string>exampleapp</string>
     </array>
   </dict>
 </array>
@@ -98,7 +128,7 @@ But in order for the redirect mechanism to work you would also need to add the f
     <category android:name="android.intent.category.DEFAULT" />
     <category android:name="android.intent.category.BROWSABLE" />
     <!-- your own custom scheme. Be mind of removing :// for this step -->
-    <data android:scheme="flutterdapp" />
+    <data android:scheme="exampleapp" />
 </intent-filter>
 ```
 
@@ -107,51 +137,71 @@ But in order for the redirect mechanism to work you would also need to add the f
 
 ## Connection Buttons
 
-You can use the `W3MConnectWalletButton`, which will open the Web3Modal with no prior network selected
+You can use the `AppKitModalConnectButton`, which will open the AppKit modal with no prior network selected
 
-```dart
-W3MConnectWalletButton(service: _w3mService)
+```javascript
+AppKitModalConnectButton(appKit: _appKitModal)
 ```
 
-Or you can use `W3MNetworkSelectButton` which will first show a network selection prompt:
+Or you can use `AppKitModalNetworkSelectButton` which will first show a network selection prompt:
 
-```dart
-W3MNetworkSelectButton(service: _w3mService)
+```javascript
+AppKitModalNetworkSelectButton(appKit: _appKitModal)
 ```
 
-Once session is approved you can use `W3MAccountButton` widget to show basic account data and to open Account data modal:
+Once session is approved you can use `AppKitModalAccountButton` widget to show basic account data and to open Account data modal:
 
-```dart
-W3MAccountButton(service: _w3mService)
+```javascript
+AppKitModalAccountButton(appKit: _appKitModal)
 ```
 
-## Network selection or direct wallet connection
+To connect to a wallet you can either use `AppKitModalNetworkSelectButton`, `AppKitModalConnectButton`. `AppKitModalNetworkSelectButton` will allow the user to pre-select a Network before connecting while `AppKitModalConnectButton` will directly show available wallets.
 
-You can choose either to enable **Connect Wallet** button only after selecting a network (default behaviour) or to not display a **Select Network** button and directly navigate users to connect a wallet.
+Once connected, `AppKitModalConnectButton` will serve as Disconnect button while `AppKitModalAccountButton` will show basic account data such as balance and address and will we used to open Account screen.
 
-If you decide to take first approach of showing a `W3MNetworkSelectButton` **and** `W3MConnectWalletButton` (which is enabled only after selecting a Network) you simple have to add these two buttons on your code:
+Quick example:
 
-For instance:
-
-```dart
+```javascript
 Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
-    W3MNetworkSelectButton(service: _w3mService),
-    W3MConnectWalletButton(service: _w3mService),
+    AppKitModalNetworkSelectButton(appKit: _appKitModal),
+    AppKitModalConnectButton(appKit: _appKitModal),
+    Visibility(
+      visible: _appKitModal.isConnected,
+      child: AppKitModalAccountButton(appKit: _appKitModal),
+    )
   ],
 ),
 ```
 
-and `W3MConnectWalletButton` will handle it's state automatically.
+## Custom Buttons
 
-But, as mentioned before, you can decide to just show the **Connect Wallet** button alone, in this case you would need to set it's state to `ConnectButtonState.none` like so:
+If you like you can also override AppKit's button style by using the `custom:` property as follows
 
-```dart
-W3MConnectWalletButton(
-  service: _w3mService,
-  state: ConnectButtonState.none,
+```javascript
+AppKitModalConnectButton(
+  appKit: _appKitModal,
+  custom: ElevatedButton(
+    onPressed: () {
+      _appKitModal.openModalView();
+    },
+    child: const Text('CONNECT WALLET'),
+  ),
 ),
 ```
 
-this way `W3MConnectWalletButton` will be always enabled.
+`openModalView` method can accept a "startWidget" argument that you can leverage to open specifics screens of the modal:
+
+```javascript
+ // Will open QR Code screen for connection.
+ // Will work only if not yet connected.
+_appKitModal.openModalView(ReownAppKitModalQRCodePage());
+
+ // Will open Network Selection screen
+_appKitModal.openModalView(ReownAppKitModalSelectNetworkPage());
+
+// Will open All Wallets screen for selecting.
+// Will work only if not yet connected.
+_appKitModal.openModalView(ReownAppKitModalAllWalletsPage());
+```
