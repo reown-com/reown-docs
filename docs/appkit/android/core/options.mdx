@@ -12,7 +12,7 @@ val recommendedWalletsIds = listOf<String>(
 
 val initParams = Modal.Params.Init(core = CoreClient, recommendedWalletsIds = recommendedWalletsIds)
 
-Web3Modal.initialize(
+AppKit.initialize(
     init = initParams,
     onSuccess = {
         // Callback will be called if initialization is successful
@@ -35,7 +35,7 @@ val excludedWalletIds = listOf<String>(
 
 val initParams = Modal.Params.Init(core = CoreClient, excludedWalletIds = excludedWalletIds)
 
-Web3Modal.initialize(
+AppKit.initialize(
     init = initParams,
     onSuccess = {
         // Callback will be called if initialization is successful
@@ -76,7 +76,7 @@ Coinbase has been added since version 1.2.0
 ```kotlin
 val initParams = Modal.Params.Init(core = CoreClient, coinbaseEnabled = true)
 
-Web3Modal.initialize(
+AppKit.initialize(
     init = initParams,
     onSuccess = {
         // Callback will be called if initialization is successful
@@ -87,12 +87,12 @@ Web3Modal.initialize(
 )
 ```
 
-Coinbase Wallet SDK requires Web3Modal registration in Activity to receive responses from Coinbase wallet
+Coinbase Wallet SDK requires AppKit registration in Activity to receive responses from Coinbase wallet
 
 ```kotlin
     fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Web3Modal.register(this)
+        AppKit.register(this)
         // Your content
     }
 ```

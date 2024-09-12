@@ -4,16 +4,16 @@
 
 ### Get selected chain
 
-You can get selected chain by calling the `getSelectedChain()` on the `Web3Modal` object.
+You can get selected chain by calling the `getSelectedChain()` on the `AppKit` object.
 
 ```kotlin
-Web3Modal.getSelectedChain()
+AppKit.getSelectedChain()
 ```
 
-## Web3Modal.ModalDelegate
+## AppKit.ModalDelegate
 
 ```kotlin
-val web3ModalModalDelegate = object : Web3Modal.ModalDelegate {
+val appKitModalDelegate = object : AppKit.ModalDelegate {
     override fun onSessionApproved(approvedSession: Modal.Model.ApprovedSession) {
         // Triggered when receives the session approval from wallet
     }
@@ -60,10 +60,10 @@ val web3ModalModalDelegate = object : Web3Modal.ModalDelegate {
 }
 ```
 
-You have set delegate on Web3Modal to start getting updates from Wallet.
+You have set delegate on AppKit to start getting updates from Wallet.
 
 ```kotlin
-    Web3Modal.setDelegate(web3ModalModalDelegate)
+    AppKit.setDelegate(appKitModalDelegate)
 ```
 
 ## Actions
@@ -72,7 +72,7 @@ You have set delegate on Web3Modal to start getting updates from Wallet.
 
 ```kotlin
 
-Web3Modal.disconnect(
+AppKit.disconnect(
     onSuccess = {
     /* callback that letting you know that you have successfully disconnected */
     },
@@ -90,7 +90,7 @@ val requestParams = Modal.Params.Request(
     params = /* Method params  */,
 )
 
-Web3Modal.request(
+AppKit.request(
     request = requestParams,
     onSuccess = {
     /* callback that letting you know that you have successful request */
@@ -103,10 +103,10 @@ Web3Modal.request(
 
 ### Get Active Account
 
-Returns the current active account connected via Web3Modal
+Returns the current active account connected via AppKit
 
 ```kotlin
-Web3Modal.getAccount()
+AppKit.getAccount()
 ```
 
 ### Get Connection type
@@ -114,5 +114,5 @@ Web3Modal.getAccount()
 Return information about the type of our connection
 
 ```kotlin
-Web3Modal.getConnectorType()
+AppKit.getConnectorType()
 ```

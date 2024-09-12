@@ -11,21 +11,21 @@ import TabItem from '@theme/TabItem'
 >
 <TabItem value="compose" label="Compose">
 
-Wrap your composable component with `Web3ModalTheme`
+Wrap your composable component with `AppKitTheme`
 
 ```kotlin
-import com.walletconnect.web3.modal.ui.Web3ModalTheme
+import com.reown.appkit.ui.AppKitTheme
 
-Web3ModalTheme(
-    mode = Web3ModalTheme.Mode.AUTO || Web3ModalTheme.Mode.LIGHT || Web3ModalTheme.Mode.DARK,
-    lightColors = Web3ModalTheme.provideLightWeb3ModalColors(
+AppKitTheme(
+    mode = AppKitTheme.Mode.AUTO || AppKitTheme.Mode.LIGHT || AppKitTheme.Mode.DARK,
+    lightColors = AppKitTheme.provideLightAppKitColors(
         // Override colors
     ),
-    darkColors = Web3ModalTheme.provideDarkWeb3ModalColors(
+    darkColors = AppKitTheme.provideDarkAppKitColors(
         // Override colors
     )
 )    {
-    /* any Web3Modal component or graph */
+    /* any AppKit component or graph */
 }
 
 ```
@@ -34,12 +34,12 @@ Web3ModalTheme(
 
 <TabItem value="view" label="View">
 
-You can define Web3ModalTheme in yours `style.xml` files
+You can define AppKitTheme in yours `style.xml` files
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Web3ModalTheme">
+    <style name="AppKitTheme">
         <item name="modalMode">AUTO || LIGHT || DARK</item>
         /* Override colors */
     </style>
@@ -89,9 +89,9 @@ You can define Web3ModalTheme in yours `style.xml` files
 >
 <TabItem value="compose" label="Compose">
 
-Customizable colors in Web3ModalTheme.
-To override colors you need to use methods `Web3ModalTheme.provideLightWeb3ModalColors` or Web3ModalTheme.provideDarkWeb3ModalColors
-To override foreground or background `ColorPalette` you can define new palette or use one of the Web3ModalTheme methods to provide Palette and override selected colors
+Customizable colors in AppKitTheme.
+To override colors you need to use methods `AppKitTheme.provideLightAppKitColors` or AppKitTheme.provideDarkAppKitColors
+To override foreground or background `ColorPalette` you can define new palette or use one of the AppKitTheme methods to provide Palette and override selected colors
 
 ```kotlin
     interface Colors {
@@ -129,7 +129,7 @@ ColorPalette
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 
-You can override those values in Web3ModalTheme in your style.xml file
+You can override those values in AppKitTheme in your style.xml file
 
 <resources>
     <attr name="modalAccent100" format="color"/>
