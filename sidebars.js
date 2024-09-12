@@ -238,16 +238,25 @@ module.exports = {
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' }
               ]
             },
-            'appkit/upgrade',
+            //'appkit/upgrade',
             {
               type: 'category',
               label: 'Migration',
               collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },
-                { type: 'doc', label: 'From Anza Adapter', id: 'appkit/migration/from-anza-adapter-react' },
-                { type: 'doc', label: 'From Web3Modal React Native', id: 'appkit/migration/from-web3modal-react-native' },
+                /*{ 
+                  type: 'category',
+                  label: 'From Web3Modal v5',
+                  collapsed: true,
+                  collapsible: true,
+                  items: [
+                    { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },    
+                  ]
+                },*/
+                { type: 'doc', label: 'From AppKit v5', id: 'appkit/migration/from-WCv5-to-reown' },
+               // { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },
+               // { type: 'doc', label: 'From Anza Adapter', id: 'appkit/migration/from-anza-adapter-react' },
               ]
             },
           ]
