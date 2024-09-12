@@ -34,7 +34,7 @@ Links to sections on this page. Some sections are platform specific and are only
 To create an instance of Web3Wallet, you need to pass in the `core` and `metadata` parameters.
 
 ```dart
-final web3wallet = await Web3Wallet.createInstance(
+final web3Wallet = await Web3Wallet.createInstance(
   projectId: '123.....',
   metadata: const PairingMetadata(
     name: 'Wallet Name',
@@ -357,7 +357,7 @@ for (var chainId in supportedChains) {
 And to emit an event, call `emitSessionEvent()` as follows:
 
 ```dart
-await web3Wallet.emitSessionEvent(
+await web3wallet.emitSessionEvent(
   topic: session.topic,
   chainId: 'eip155:1',
   event: SessionEventParams(
