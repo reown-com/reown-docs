@@ -5,9 +5,9 @@ This includes WalletConnect, Coinbase and Injected connectors, and the [Blockcha
 In your `main.js` file set up the following configuration.
 
 ```ts
-import { createWeb3Modal } from '@reown/base'
-import { mainnet, arbitrum } from '@reown/base/chains'
-import { EVMWagmiClient } from '@reown/adapter-wagmi'
+import { createWeb3Modal } from '@reown/appkit'
+import { mainnet, arbitrum } from '@reown/appkit/chains'
+import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
 
 // 1. Get a project ID at https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'

@@ -10,11 +10,11 @@ In your `App.vue` file set up the following configuration
 
 ```html
 <script setup>
-  import { createWeb3Modal, useWeb3Modal } from '@reown/base/vue'
+  import { createWeb3Modal, useWeb3Modal } from '@reown/appkit/vue'
 
   import { WagmiProvider } from 'wagmi'
-  import { arbitrum, mainnet } from '@reown/base/chains'
-  import { EVMWagmiClient } from '@reown/adapter-wagmi'
+  import { arbitrum, mainnet } from '@reown/appkit/chains'
+  import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
 
   // 1. Get projectId from https://cloud.walletconnect.com
   const projectId = 'YOUR_PROJECT_ID'

@@ -18,7 +18,7 @@ Control the modal with the `useWeb3Modal` hook
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { useWeb3Modal } from '@reown/base/react'
+import { useWeb3Modal } from '@reown/appkit/react'
 
 export default function Component() {
   const { open, close } = useWeb3Modal()
@@ -33,7 +33,7 @@ export default function Component() {
 <PlatformTabItem value="ethers5">
 
 ```ts
-import { useWeb3Modal } from '@reown/base/react'
+import { useWeb3Modal } from '@reown/appkit/react'
 
 export default function Component() {
   const { open, close } = useWeb3Modal()
@@ -48,7 +48,7 @@ export default function Component() {
 <PlatformTabItem value="ethers">
 
 ```ts
-import { useWeb3Modal } from '@reown/base/react'
+import { useWeb3Modal } from '@reown/appkit/react'
 
 export default function Component() {
   const { open, close } = useWeb3Modal()
@@ -63,7 +63,7 @@ export default function Component() {
 <PlatformTabItem value="solana">
 
 ```ts
-import { useWeb3Modal } from '@reown/base/react'
+import { useWeb3Modal } from '@reown/appkit/react'
 
 export default function Component() {
   const { open, close } = useWeb3Modal()
@@ -124,7 +124,7 @@ List of views you can select
 
 ```ts
 // import useDisconnect from wagmi if on EVM
-//import useDisconnect from @reown/solana/react if on Solana
+//import useDisconnect from @reown/appkit-solana/react if on Solana
 
 const { disconnect } = useDisconnect()
 
@@ -136,7 +136,7 @@ disconnect()
 Metadata information from the connected wallet
 
 ```ts
-import { useWalletInfo } from '@reown/base/react'
+import { useWalletInfo } from '@reown/appkit/react'
 
 
 export default Component(){
@@ -171,7 +171,7 @@ Get the current value of the modal's state
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { useWeb3ModalState } from '@reown/base/react'
+import { useWeb3ModalState } from '@reown/appkit/react'
 
 const { open, selectedNetworkId } = useWeb3ModalState()
 ```
@@ -180,7 +180,7 @@ const { open, selectedNetworkId } = useWeb3ModalState()
 <PlatformTabItem value="wagmi1">
 
 ```ts
-import { useWeb3ModalState } from '@reown/base/react'
+import { useWeb3ModalState } from '@reown/appkit/react'
 
 const { open, selectedNetworkId } = useWeb3ModalState()
 ```
@@ -189,7 +189,7 @@ const { open, selectedNetworkId } = useWeb3ModalState()
 <PlatformTabItem value="ethers5">
 
 ```ts
-import { useWeb3ModalState } from '@reown/base/react'
+import { useWeb3ModalState } from '@reown/appkit/react'
 
 const { open, selectedNetworkId } = useWeb3ModalState()
 ```
@@ -198,7 +198,7 @@ const { open, selectedNetworkId } = useWeb3ModalState()
 <PlatformTabItem value="ethers">
 
 ```ts
-import { useWeb3ModalState } from '@reown/base/react'
+import { useWeb3ModalState } from '@reown/appkit/react'
 
 const { open, selectedNetworkId } = useWeb3ModalState()
 ```
@@ -207,7 +207,7 @@ const { open, selectedNetworkId } = useWeb3ModalState()
 <PlatformTabItem value="solana">
 
 ```ts
-import { useWeb3ModalState } from '@reown/base/react'
+import { useWeb3ModalState } from '@reown/appkit/react'
 
 const { open, selectedNetworkId } = useWeb3ModalState()
 ```
@@ -236,7 +236,7 @@ The modal state consists of two reactive values:
 ## useWeb3ModalTheme
 
 ```ts
-import { useWeb3ModalTheme } from '@reown/base/react'
+import { useWeb3ModalTheme } from '@reown/appkit/react'
 const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useWeb3ModalTheme()
 
 setThemeMode('dark')
@@ -250,7 +250,7 @@ setThemeVariables({
 ## Track modal events
 
 ```ts
-import { useWeb3ModalEvents } from '@reown/base/react'
+import { useWeb3ModalEvents } from '@reown/appkit/react'
 
 const events = useWeb3ModalEvents()
 ```

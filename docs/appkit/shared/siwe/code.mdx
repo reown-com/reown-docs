@@ -12,7 +12,7 @@ import {
     type SIWECreateMessageArgs,
     createSIWEConfig,
     formatMessage,
-  } from '@reown/siwe'
+  } from '@reown/appkit-siwe'
 
 const BASE_URL = 'http://localhost:8080';
 
@@ -161,7 +161,7 @@ Check the github full example to see the full flow working: [siwe-quickstart](ht
 Verify a SIWE signature.
 
 ```ts
-import { verifySignature } from '@reown/siwe'
+import { verifySignature } from '@reown/appkit-siwe'
 
 const isValid = await verifySignature({ address, message, signature, chainId, projectId })
 ```
@@ -177,7 +177,7 @@ The nonce and verification process will be implemented in your backend. [Read mo
 
 ```ts
 import { SiweMessage } from 'siwe'
-import type { SIWECreateMessageArgs, SIWEVerifyMessageArgs } from '@reown/siwe'
+import type { SIWECreateMessageArgs, SIWEVerifyMessageArgs } from '@reown/appkit-siwe'
 
 /* Function that creates a SIWE message */
 function createMessage({ nonce, address, chainId }: SIWECreateMessageArgs){

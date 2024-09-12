@@ -11,11 +11,11 @@ Custom connectors, such as social logins, WalletConnect QR, Coinbasewallet, etc.
 If you already have Wagmi integrated into your application or would like more control over Wagmi's configuration, you can integrate AppKit on top of it.
 
 ```tsx
-import { createWeb3Modal } from '@reown/base/react'
-import { EVMWagmiClient } from '@reown/adapter-wagmi'
+import { createWeb3Modal } from '@reown/appkit/react'
+import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
 
 import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
-import { sepolia } from '@reown/base/chains'
+import { sepolia } from '@reown/appkit/chains'
 import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -70,9 +70,9 @@ Check our React Wagmi demo in [Github](https://github.com/WalletConnect/web-exam
 <PlatformTabItem value="ethers">
 
 ```tsx
-import { createWeb3Modal } from '@reown/base/react'
-import { EVMEthersClient} from '@reown/adapter-ethers'
-import { sepolia } from '@reown/base/chains'
+import { createWeb3Modal } from '@reown/appkit/react'
+import { EVMEthersClient} from '@reown/appkit-adapter-ethers'
+import { sepolia } from '@reown/appkit/chains'
 
 
 const projectId = 'YOUR_PROJECT_ID'
@@ -115,9 +115,9 @@ npm install @solana/wallet-adapter-wallets
 ```
 
 ```ts
-import { createWeb3Modal } from '@reown/base/react'
-import { SolanaWeb3JsClient } from '@reown/adapter-solana/react'
-import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
+import { createWeb3Modal } from '@reown/appkit/react'
+import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/react'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 

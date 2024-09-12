@@ -21,7 +21,7 @@ You can set a desired chain for the initial connection:
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { mainnet } from '@reown/base/chains'
+import { mainnet } from '@reown/appkit/chains'
 
 createWeb3Modal({
   //...
@@ -51,7 +51,7 @@ createWeb3Modal({
 <PlatformTabItem value="solana">
 
 ```ts
-import { solana } from '@reown/base/chains'
+import { solana } from '@reown/appkit/chains'
 
 createWeb3Modal({
   //...
@@ -377,7 +377,7 @@ createWeb3Modal({
 Learn more about the Coinbase connector in the [Wagmi documentation](https://wagmi.sh/react/api/connectors/coinbaseWallet#preference).
 
 ```ts
-import { EVMWagmiClient } from '@reown/adapter-wagmi'
+import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
 
 const adapter = new EVMWagmiClient({
   //...

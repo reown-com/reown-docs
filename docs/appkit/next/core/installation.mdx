@@ -34,28 +34,28 @@ These steps are specific to [Next.js](https://nextjs.org/) app router. For other
 <PlatformTabItem value="wagmi">
 
 ```bash npm2yarn
-npm install @reown/adapter-wagmi wagmi viem @tanstack/react-query
+npm install @reown/appkit-adapter-wagmi wagmi viem @tanstack/react-query
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers5">
 
 ```bash npm2yarn
-npm install @reown/adapter-ethers5 ethers@5.7.2
+npm install @reown/appkit-adapter-ethers5 ethers@5.7.2
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers">
 
 ```bash npm2yarn
-npm install @reown/adapter-ethers ethers
+npm install @reown/appkit-adapter-ethers ethers
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
 
 ```bash npm2yarn
-npm install @reown/adapter-solana
+npm install @reown/appkit-adapter-solana
 ```
 
 </PlatformTabItem>
@@ -147,7 +147,7 @@ Read more about Wagmi hooks for smart contract interaction [here](https://wagmi.
 [Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
 
 ```tsx
-import { useWeb3ModalProvider, useWeb3ModalAccount } from "@reown/base/react"
+import { useWeb3ModalProvider, useWeb3ModalAccount } from "@reown/appkit/react"
 import { BrowserProvider, Contract, formatUnits } from 'ethers'
 
 const USDTAddress = '0x617f3112bf5397D0467D315cC709EF968D9ba546'

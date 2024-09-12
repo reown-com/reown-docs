@@ -17,7 +17,7 @@ Control the modal with the `useWeb3Modal` function
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { useWeb3Modal } from '@reown/base/vue'
+import { useWeb3Modal } from '@reown/appkit/vue'
 
 export default function Component() {
   const { open, close } = useWeb3Modal()
@@ -32,7 +32,7 @@ export default function Component() {
 <PlatformTabItem value="ethers5">
 
 ```ts
-import { useWeb3Modal } from '@reown/base/vue'
+import { useWeb3Modal } from '@reown/appkit/vue'
 
 export default function Component() {
   const { open, close } = useWeb3Modal()
@@ -47,7 +47,7 @@ export default function Component() {
 <PlatformTabItem value="ethers">
 
 ```ts
-import { useWeb3Modal } from '@reown/base/vue'
+import { useWeb3Modal } from '@reown/appkit/vue'
 
 export default function Component() {
   const { open, close } = useWeb3Modal()
@@ -62,7 +62,7 @@ export default function Component() {
 <PlatformTabItem value="solana">
 
 ```ts
-import { useWeb3Modal } from '@reown/base/vue'
+import { useWeb3Modal } from '@reown/appkit/vue'
 
 export default function Component() {
   const { open, close } = useWeb3Modal()
@@ -122,7 +122,7 @@ List of views you can select
 
 ```ts
 // import useDisconnect from wagmi if on EVM
-//import useDisconnect from @reown/solana/vue if on Solana
+//import useDisconnect from @reown/appkit-solana/vue if on Solana
 const { disconnect } = useDisconnect()
 
 disconnect()
@@ -133,7 +133,7 @@ disconnect()
 Metadata information from the connected wallet
 
 ```ts
-import { useWalletInfo } from '@reown/base/vue'
+import { useWalletInfo } from '@reown/appkit/vue'
 
 export default Component(){
   const { walletInfo } = useWalletInfo()
@@ -167,7 +167,7 @@ Get the current value of the modal's state
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { useWeb3ModalState } from '@reown/base/vue'
+import { useWeb3ModalState } from '@reown/appkit/vue'
 
 const { open, selectedNetworkId } = useWeb3ModalState()
 ```
@@ -176,7 +176,7 @@ const { open, selectedNetworkId } = useWeb3ModalState()
 <PlatformTabItem value="ethers5">
 
 ```ts
-import { useWeb3ModalState } from '@reown/base/vue'
+import { useWeb3ModalState } from '@reown/appkit/vue'
 
 const { open, selectedNetworkId } = useWeb3ModalState()
 ```
@@ -185,7 +185,7 @@ const { open, selectedNetworkId } = useWeb3ModalState()
 <PlatformTabItem value="ethers">
 
 ```ts
-import { useWeb3ModalState } from '@reown/base/vue'
+import { useWeb3ModalState } from '@reown/appkit/vue'
 
 const { open, selectedNetworkId } = useWeb3ModalState()
 ```
@@ -214,7 +214,7 @@ The modal state consists of two reactive values:
 ## useWeb3ModalTheme
 
 ```ts
-import { useWeb3ModalTheme } from '@reown/base/react'
+import { useWeb3ModalTheme } from '@reown/appkit/react'
 const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useWeb3ModalTheme()
 
 setThemeMode('dark')
@@ -228,7 +228,7 @@ setThemeVariables({
 ## Track modal events
 
 ```ts
-import { useWeb3ModalEvents } from '@reown/base/react'
+import { useWeb3ModalEvents } from '@reown/appkit/react'
 
 const events = useWeb3ModalEvents()
 ```

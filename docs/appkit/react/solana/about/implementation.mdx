@@ -7,9 +7,9 @@ On top of your app set up the following configuration, making sure that all func
 
 ```tsx
 // App.tsx
-import { createWeb3Modal, type CaipNetwork } from '@reown/base/react'
-import { SolanaWeb3JsClient } from '@reown/adapter-solana/react'
-import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
+import { createWeb3Modal, type CaipNetwork } from '@reown/appkit/react'
+import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/react'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 // 0. Set up Solana Adapter

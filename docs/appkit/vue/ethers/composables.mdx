@@ -5,7 +5,7 @@ import Button from '../../../components/button'
 Hook that returns the client's information.
 
 ```tsx
-import { useWeb3ModalAccount } from '@reown/base/vue'
+import { useWeb3ModalAccount } from '@reown/appkit/vue'
 
 const { address, status, isConnected } = useWeb3ModalAccount()
 ```
@@ -13,8 +13,8 @@ const { address, status, isConnected } = useWeb3ModalAccount()
 ### switchNetwork
 
 ```tsx
-import { createWeb3Modal } from '@reown/base/vue'
-import { mainnet, arbitrum, polygon } from '@reown/base/chains'
+import { createWeb3Modal } from '@reown/appkit/vue'
+import { mainnet, arbitrum, polygon } from '@reown/appkit/chains'
 
 const modal = createWeb3Modal({
   adapters: [wagmiAdapter],
@@ -35,7 +35,7 @@ Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
 import { BrowserProvider } from 'ethers'
-import { useWeb3ModalProvider } from '@reown/base/react'
+import { useWeb3ModalProvider } from '@reown/appkit/react'
 
 function Components() {
   const { walletProvider } = useWeb3ModalProvider()

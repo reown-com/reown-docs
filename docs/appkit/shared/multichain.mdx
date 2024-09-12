@@ -15,28 +15,28 @@ Currently, AppKit supports one non-EVM, **Solana**. Soon, AppKit will support Bi
 <PlatformTabItem value="wagmi + solana">
 
 ```bash npm2yarn
-npm install @reown/adapter-wagmi @reown/adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers5 + solana">
 
 ```bash npm2yarn
-npm install @reown/adapter-ethers5 @reown/adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers + solana">
 
 ```bash npm2yarn
-npm install @reown/adapter-ethers @reown/adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit-adapter-ethers @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="basic">
 
 ```bash npm2yarn
-npm install @reown/base
+npm install @reown/appkit
 ```
 
 </PlatformTabItem>
@@ -52,12 +52,12 @@ Depending on the network adapter of your preference (`Wagmi`, `Ethers`, `Ethers5
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi + solana", "ethers5 + solana", "ethers + solana", "basic"]}>
 <PlatformTabItem value="wagmi + solana">
 ```ts
-import { createWeb3Modal } from '@reown/base'
-import { SolanaWeb3JsClient } from '@reown/adapter-solana'
-import { EVMWagmiClient } from '@reown/adapter-wagmi'
+import { createWeb3Modal } from '@reown/appkit'
+import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
+import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
 
-import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
-import { mainnet, arbitrum, sepolia } from '@reown/base/chains'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
@@ -97,12 +97,12 @@ const modal = createWeb3Modal({
 
 <PlatformTabItem value="ethers + solana">
 ```ts
-import { createWeb3Modal } from '@reown/base'
-import { SolanaWeb3JsClient } from '@reown/adapter-solana'
-import { EVMEthersClient } from '@reown/adapter-ethers'
+import { createWeb3Modal } from '@reown/appkit'
+import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
+import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
 
-import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
-import { mainnet, arbitrum, sepolia } from '@reown/base/chains'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
@@ -140,12 +140,12 @@ const modal = createWeb3Modal({
 
 <PlatformTabItem value="ethers5 + solana">
 ```ts
-import { createWeb3Modal } from '@reown/base'
-import { SolanaWeb3JsClient } from '@reown/adapter-solana'
-import { EVMEthersClient } from '@reown/adapter-ethers'
+import { createWeb3Modal } from '@reown/appkit'
+import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
+import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
 
-import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
-import { mainnet, arbitrum, sepolia } from '@reown/base/chains'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
@@ -183,9 +183,9 @@ const modal = createWeb3Modal({
 
 <PlatformTabItem value="basic">
 ```ts
-import { createWeb3Modal } from '@reown/base'
-import { solana, solanaTestnet, solanaDevnet } from '@reown/base/chains'
-import { mainnet, arbitrum, sepolia } from '@reown/base/chains'
+import { createWeb3Modal } from '@reown/appkit'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = '299026629319f442a1a118d6d08dcd50'
