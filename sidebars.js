@@ -390,6 +390,7 @@ module.exports = {
             'appkit/next/core/components',
             'appkit/next/core/custom-connectors',
             'appkit/next/core/siwe',
+            'appkit/next/core/multichain',
             'appkit/next/core/theming',
             'appkit/next/core/resources'
           ]
@@ -481,6 +482,7 @@ module.exports = {
             'appkit/vue/core/components',
             'appkit/vue/core/custom-connectors',
             'appkit/vue/core/siwe',
+            'appkit/vue/core/multichain',
             'appkit/vue/core/theming',
             'appkit/vue/core/resources'
           ]
@@ -572,6 +574,7 @@ module.exports = {
             'appkit/javascript/core/components',
             'appkit/javascript/core/custom-connectors',
             'appkit/javascript/core/siwe',
+            'appkit/javascript/core/multichain',
             'appkit/javascript/core/theming',
             'appkit/javascript/core/resources'
           ]
