@@ -17,9 +17,9 @@ npx pod-install
 
 ```ts
 /* highlight-add-start */
-import { AuthConnector } from '@reown/appkit-auth-wagmi-react-native'
+import { authConnector } from '@reown/appkit-auth-wagmi-react-native'
 
-const authConnector = AuthConnector({ projectId, metadata })
+const auth = authConnector({ projectId, metadata })
 /* highlight-add-end */
 
 const wagmiConfig = defaultWagmiConfig({
@@ -27,7 +27,7 @@ const wagmiConfig = defaultWagmiConfig({
   projectId,
   metadata,
   /* highlight-add-start */
-  extraConnectors: [authConnector]
+  extraConnectors: [auth]
   /* highlight-add-end */
 })
 ```
