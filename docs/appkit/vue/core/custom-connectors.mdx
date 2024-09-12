@@ -11,11 +11,11 @@ Add custom connectors for Ethers or Wagmi
 If you already have Wagmi integrated into your application or would like more control over Wagmi's configuration, you can integrate Web3Modal on top of it.
 
 ```ts
-import { createWeb3Modal } from '@rerock/base/vue'
-import { EVMWagmiClient } from '@rerock/adapter-wagmi'
+import { createWeb3Modal } from '@reown/base/vue'
+import { EVMWagmiClient } from '@reown/adapter-wagmi'
 
 import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
-import { sepolia } from '@rerock/base/chains'
+import { sepolia } from '@reown/base/chains'
 import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
 
 const projectId = 'YOUR_PROJECT_ID'
