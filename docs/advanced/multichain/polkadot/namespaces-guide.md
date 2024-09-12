@@ -9,7 +9,7 @@
 - [Session Namespace Example](#session-namespace-example)
 - [Chains](#chains), [Methods](#methods) and [Events](#events)
 - [Using Namespaces with the Universal Provider](#dapps-universal-provider-and-namespaces)
-- [Using Namespaces with the Web3Wallet](#wallets-web3wallet-and-namespaces)
+- [Using Namespaces with the WalletKit](#wallets-walletkit-and-namespaces)
 
 ### Understanding Namespaces
 
@@ -195,12 +195,12 @@ const proposalNamespace = {
 const { uri, approval } = await provider.client.connect(proposalNamespace)
 ```
 
-### Wallets: Web3Wallet and Namespaces:
+### Wallets: WalletKit and Namespaces:
 
-When the web3wallet approves and creates a session, it must provide the session proposal `id` as well as the session `namespaces` which are approved for use in the session. An example of what this looks like is below.
+When the WalletKit approves and creates a session, it must provide the session proposal `id` as well as the session `namespaces` which are approved for use in the session. An example of what this looks like is below.
 
 ```js
-const session = await web3wallet.approveSession({
+const session = await walletKit.approveSession({
   id: proposal.id,
   namespaces: {
     polkadot: {

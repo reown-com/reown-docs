@@ -18,14 +18,14 @@ CoreClient.initialize(
     ...
 )
 
-Web3Wallet.initialize(Wallet.Params.Init(core = CoreClient))
+WalletKit.initialize(Wallet.Params.Init(core = CoreClient))
 ```
 
 Once link mode and app link are properly configured and the user interacts with a link mode supporting dApp, your wallet will receive requests over app links. You must pass these requests to WalletKit so it can process them:
 
 ```kotlin
 val url = intent.dataString
-Web3Wallet.dispatchEnvelope(url) { error -> 
+WalletKit.dispatchEnvelope(url) { error -> 
     //handle error
 }
 ```

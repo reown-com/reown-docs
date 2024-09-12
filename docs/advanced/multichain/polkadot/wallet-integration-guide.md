@@ -15,18 +15,18 @@
 
 # WalletConnect Code/Component Setup
 
-2. Import Core and Web3Wallet from WalletConnect.
+2. Import Core and WalletKit from WalletConnect.
 
 ```js
 import { Core } from '@walletconnect/core'
-import { Web3Wallet } from '@walletconnect/web3wallet'
+import { WalletKit } from '@walletconnect/wallekit'
 ```
 
-3. Instantiate and add Core and Web3Wallet to the state of the wallet.
+3. Instantiate and add Core and WalletKit to the state of the wallet.
 
 ```js
 const core = new Core({ projectId: 'fgu234234njbhvhv23525bj' })
-const web3wallet = await Web3Wallet.init({
+const walletKit = await WalletKit.init({
   core: core,
   metadata: {
     name: 'Example WalletConnect Wallet',
@@ -41,14 +41,14 @@ const web3wallet = await Web3Wallet.init({
 
 ```js
 const onConnect = async (uri: string) => {
-  // call web3wallet.core.pairing.pair( { uri: uri })
+  // call walletKit.core.pairing.pair( { uri: uri })
   // with the uri received from the dapp in order to emit the
   // `session_proposal` event
-  const result = await web3wallet.core.pairing.pair({ uri })
+  const result = await walletKit.core.pairing.pair({ uri })
 }
 ```
 
-5. Handle the `session_proposal` event on the `web3wallet`. This event is triggered when the `pair` method is called on `web3wallet.core.pairing` to create a pairing session.
+5. Handle the `session_proposal` event on the `walletKit`. This event is triggered when the `pair` method is called on `walletKit.core.pairing` to create a pairing session.
 
 # Approving a Session Proposal (Example)
 
@@ -73,7 +73,7 @@ walletKit.on('session_proposal', async proposal => {
   // handle user approval case
 
   // create the approved session with selected accounts, supported methods, chains and events for your wallet
-  const session = await web3wallet.approveSession({
+  const session = await walletKit.approveSession({
     id: proposal.id,
     namespaces: {
       polkadot: {
@@ -89,7 +89,7 @@ walletKit.on('session_proposal', async proposal => {
   const response = { id: proposal.id, result: 'session approved', jsonrpc: '2.0' }
 
   // respond to the dapp request with the approved session's topic and response
-  await web3wallet.respondSessionRequest({ topic: session.topic, response })
+  await walletKit.respondSessionRequest({ topic: session.topic, response })
 })
 ```
 
@@ -107,7 +107,7 @@ walletKit.on('session_proposal', async proposal => {
   showWalletConnectModal()
 
   // handle user reject action
-  await web3wallet.rejectSession({
+  await walletKit.rejectSession({
     id: proposal.id,
     reason: getSdkError('USER_REJECTED')
   })
@@ -142,7 +142,7 @@ walletKit.on('session_request', async requestEvent => {
       const response = { id, result: { signature: signature }, jsonrpc: '2.0' }
 
       // respond to the dapp request with the response and topic
-      await web3wallet.respondSessionRequest({ topic, response })
+      await walletKit.respondSessionRequest({ topic, response })
 
     case 'polkadot_signTransaction':
       // call function used by wallet to sign transactions and return the signature
@@ -152,7 +152,7 @@ walletKit.on('session_request', async requestEvent => {
       const response = { id, result: { signature: signature }, jsonrpc: '2.0' }
 
       // respond to the dapp request with the response and topic
-      await web3wallet.respondSessionRequest({ topic, response })
+      await walletKit.respondSessionRequest({ topic, response })
 
     // throw error for methods your wallet doesn't support
     default:
@@ -164,8 +164,8 @@ walletKit.on('session_request', async requestEvent => {
 # Sessions Persistence/Management
 
 - sessions can be saved/stored so users dont have to pair repeatedly
-- sessions can be disconnected from using `await web3wallet.disconnectSession({ topic: topic });` passing the session topic.
-- sessions can be extended using `await web3wallet.extendSession({ topic: topic });` passing the session topic.
+- sessions can be disconnected from using `await walletKit.disconnectSession({ topic: topic });` passing the session topic.
+- sessions can be extended using `await walletKit.extendSession({ topic: topic });` passing the session topic.
 - Default session lifetime is 7 days for WalletConnect v2.0.
 
 # Further Documentation for WalletConnect 2.0

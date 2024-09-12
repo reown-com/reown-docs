@@ -16,7 +16,7 @@ let metadata = AppMetadata(
     )
 )
 
-Web3Wallet.configure(
+WalletKit.configure(
     metadata: metadata,
     ...
 )
@@ -25,7 +25,7 @@ Web3Wallet.configure(
 Once link mode and universal linking are properly configured and the user interacts with a link mode supporting dApp, your wallet will receive requests over universal linking. You must pass these requests to WalletKit so it can process them:
 
 ```swift
-try Web3Wallet.instance.dispatchEnvelope(url.absoluteString)
+try WalletKit.instance.dispatchEnvelope(url.absoluteString)
 ```
 
 Ensure to handle incoming universal links in different methods of `AppDelegate` or `SceneDelegate`. 

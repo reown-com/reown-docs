@@ -32,7 +32,7 @@ The Verify security system will discriminate session proposals & session request
 To check the Verify API validations and whether or not your user is interacting with potentially malicious dapp, you can do so by accessing the `verifyContext` included in the `SessionProposalEvent`:
 
 ```dart
-_web3Wallet!.onSessionProposal.subscribe((SessionProposalEvent? args) {
+_walletKit!.onSessionProposal.subscribe((SessionProposalEvent? args) {
   if (args != null) {
     final scamApp = args.verifyContext?.validation.scam;
     final invalidApp = args.verifyContext?.validation.invalid;

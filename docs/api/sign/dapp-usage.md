@@ -385,7 +385,7 @@ Above method will extend a user's session to a week.
 
 #### Where to go from here
 
-- Try our [Example dApp](https://github.com/WalletConnect/WalletConnectSwiftV2/tree/main/Example) that is part of [WalletConnectSwiftV2 repository](https://github.com/WalletConnect/WalletConnectSwiftV2).
+- Try our [Example dApp](https://github.com/reown-com/reown-swift/tree/main/Example) that is part of [WalletConnectSwiftV2 repository](https://github.com/reown-com/reown-swift).
 - Build API documentation in XCode: go to Product -> Build Documentation
 
 </PlatformTabItem>

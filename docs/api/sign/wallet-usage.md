@@ -252,7 +252,7 @@ const authPayload = populateAuthPayload({
 // Prepare the user's address in CAIP10(https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md) format
 const iss = `eip155:1:0x0Df6d2a56F90e8592B4FfEd587dB3D5F5ED9d6ef`;
 // Now you can use the authPayload to format the authentication message
-const message = web3wallet.formatAuthMessage({
+const message = walletKit.formatAuthMessage({
   request: authPayload,
   iss
 });
@@ -284,7 +284,7 @@ const auth = buildAuthObject(
 )
 
 // Approve
-await web3wallet.approveSessionAuthenticate({
+await walletKit.approveSessionAuthenticate({
   id: payload.id,
   auths: [auth]
 })
@@ -293,7 +293,7 @@ await web3wallet.approveSessionAuthenticate({
 // Note that you can also sign multiple messages for every requested chain/address pair
 const auths = []
 authPayload.chains.forEach(async chain => {
-  const message = web3wallet.formatAuthMessage({
+  const message = walletKit.formatAuthMessage({
     request: authPayload,
     iss: `${chain}:${cryptoWallet.address}`
   })
@@ -310,7 +310,7 @@ authPayload.chains.forEach(async chain => {
 })
 
 // Approve
-await web3wallet.approveSessionAuthenticate({
+await walletKit.approveSessionAuthenticate({
   id: payload.id,
   auths
 })
@@ -323,7 +323,7 @@ If the authentication request cannot be approved or if the user chooses to rejec
 ```typescript
 import { getSdkError } from '@walletconnect/utils'
 
-await web3wallet.rejectSessionAuthenticate({
+await walletKit.rejectSessionAuthenticate({
   id: payload.id,
   reason: getSdkError('USER_REJECTED') // or choose a different reason if applicable
 })
@@ -680,7 +680,7 @@ try await Sign.instance.rejectSession(requestId: requestId)
 
 #### Where to go from here
 
-- Try our example wallet implementation [here](https://github.com/WalletConnect/WalletConnectSwiftV2/tree/main/Example/WalletApp).
+- Try our example wallet implementation [here](https://github.com/reown-com/reown-swift/tree/main/Example/WalletApp).
 <!-- - To dive deeper into protocol concepts check out our [documentation](https://docs.walletconnect.com/protocol/glossary) -->
 - Build API documentation in XCode: go to Product -> Build Documentation
 

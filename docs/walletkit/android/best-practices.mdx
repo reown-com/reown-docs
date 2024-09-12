@@ -12,7 +12,7 @@ A pairing is a connection between a wallet and a dapp that has fixed permissions
 
 ```kotlin
 val pairingParams = Wallet.Params.Pair(pairingUri)
-Web3Wallet.pair(pairingParams, 
+WalletKit.pair(pairingParams, 
     onSuccess = {
         //Subscribed on the pairing topic successfully. Wallet should await for a session proposal
     },
@@ -86,7 +86,7 @@ Whenever user approves or rejects a session proposal, wallet should show loading
 Session approve
 
 ```kotlin
- Web3Wallet.approveSession(approveProposal,
+ WalletKit.approveSession(approveProposal,
     onSuccess = {
         //Session approval response was sent successfully - update your UI
     }
@@ -98,7 +98,7 @@ Session approve
 Session reject
 
 ```kotlin
- Web3Wallet.rejectSession(reject,
+ WalletKit.rejectSession(reject,
     onSuccess = {
         //Session rejection response was sent successfully - update your UI
     },
@@ -112,13 +112,13 @@ Session reject
 A session proposal expiry is 5 mins. It means a given proposal is stored for 5 mins in the SDK storage and user has 5 mins for approval or rejection decision. After that time the below event is emitted and proposal modal should be removed from the app's UI.
 
 ```kotlin
-val walletDelegate = object : Web3Wallet.WalletDelegate {
+val walletDelegate = object : WalletKit.WalletDelegate {
     override fun onProposalExpired(proposal: Wallet.Model.ExpiredProposal) {
             //Here this event is triggered when a proposal expires - update your UI
     }
     ...other callbacks
 }
-Web3Wallet.setWalletDelegate(walletDelegate)
+WalletKit.setWalletDelegate(walletDelegate)
 ```
 
 ### Expected User flow
@@ -153,7 +153,7 @@ A session request represents the request sent by a dapp to a wallet.
 Whenever user approves or rejects a session request, wallet should show loading indicators in a moment of the button press until Relay acknowledgement is received for any of this actions.
 
 ```kotlin
-Web3Wallet.respondSessionRequest(Wallet.Params.SessionRequestResponse,
+WalletKit.respondSessionRequest(Wallet.Params.SessionRequestResponse,
     onSuccess = {
         //Session request response was sent successfully - update your UI
     },
@@ -167,13 +167,13 @@ Web3Wallet.respondSessionRequest(Wallet.Params.SessionRequestResponse,
 A session request expiry is defined by a dapp. It's value must be between now() + 5mins and now() + 7 days. After the session request expires the below event is emitted and session request modal should be removed from the app's UI.
 
 ```kotlin
-val walletDelegate = object : Web3Wallet.WalletDelegate {
+val walletDelegate = object : WalletKit.WalletDelegate {
     override fun onRequestExpired(request: Wallet.Model.ExpiredRequest) {
         //Here this event is triggered when a session request expires - update your UI
     }
     ...other callbacks
 }
-Web3Wallet.setWalletDelegate(walletDelegate)
+WalletKit.setWalletDelegate(walletDelegate)
 ```
 
 ### Expected User flow
@@ -202,13 +202,13 @@ While approving or rejecting a session request the following error might occur:
 The Web Socket connection state tracks the connection with the relay server, event is emitted whenever a connection state changes.
 
 ```kotlin
-val walletDelegate = object : Web3Wallet.WalletDelegate {
+val walletDelegate = object : WalletKit.WalletDelegate {
     override fun onConnectionStateChange(state: Wallet.Model.ConnectionState) {
         //Here this event is triggered when a connection state has changed
     }
     ...other callbacks
 }
-Web3Wallet.setWalletDelegate(walletDelegate)
+WalletKit.setWalletDelegate(walletDelegate)
 ````
 
 ### Expected User flow

@@ -147,7 +147,7 @@ A dapp would call `examplewallet://wc?uri={pairingUri}` from their side when the
 
 ```dart
 // subscribe to onSessionProposal with a handler
-_web3Wallet!.onSessionProposal.subscribe(_onSessionProposal);
+_walletKit!.onSessionProposal.subscribe(_onSessionProposal);
 //
 void _onSessionProposal(SessionProposalEvent? event) async {
   if (event != null) {
@@ -160,7 +160,7 @@ void _onSessionProposal(SessionProposalEvent? event) async {
 }
 
 // If your wallet supports One-Click Auth
-_web3Wallet!.onSessionAuthRequest.subscribe(_onSessionAuthRequest);
+_walletKit!.onSessionAuthRequest.subscribe(_onSessionAuthRequest);
 //
 void _onSessionAuthRequest(SessionAuthRequest? event) async {
   if (event != null) {
@@ -183,7 +183,7 @@ Future<void> personalSignRequestHandler(String topic, dynamic parameters) async 
   // Process signing requests
   // ...
   // With the given topic with retrieve the current session data
-  final session = web3Wallet.sessions.get(topic);
+  final session = walletKit.sessions.get(topic);
   // And we get the peer metadata to trigger dapp's redirect value
   final scheme = session?.peer.metadata.redirect?.native ?? '';
   launchUrlString(scheme, mode: LaunchMode.externalApplication);

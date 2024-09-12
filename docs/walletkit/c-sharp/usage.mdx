@@ -7,13 +7,13 @@ import CloudBanner from '../../components/CloudBanner'
 
 # Usage
 
-This section provides instructions on how to initialize the Web3Wallet client, approve sessions with supported namespaces, and respond to session requests, enabling easy integration of Web3 wallets with dapps through a simple and intuitive interface.
+This section provides instructions on how to initialize the WalletKit client, approve sessions with supported namespaces, and respond to session requests, enabling easy integration of Web3 wallets with dapps through a simple and intuitive interface.
 
 ## Content
 
 Links to sections on this page. Some sections are platform specific and are only visible when the platform is selected. To view a summary of useful platform specific topics, check out **Extra (Platform Specific)** under this section.
 
-**[Initialization](#initialization)**: Creating a new Web3Wallet instance and initializing it with a projectId from [Cloud](https://cloud.walletconnect.com).
+**[Initialization](#initialization)**: Creating a new WalletKit instance and initializing it with a projectId from [Cloud](https://cloud.walletconnect.com).
 
 **Session**: Connection between a dapp and a wallet.
 
@@ -36,7 +36,7 @@ Links to sections on this page. Some sections are platform specific and are only
 
 ## Initialization
 
-First you must setup a `WalletConnectCore` instance with a specific `Name` and `ProjectId`. You may optionally specify other `CoreOption`
+First you must setup a `ReownCore` instance with a specific `Name` and `ProjectId`. You may optionally specify other `CoreOption`
 values, such as `RelayUrl` and `Storage`
 
 ```csharp
@@ -46,7 +46,7 @@ var options = new CoreOptions()
     Name = "my-app",
 }
 
-var core = new WalletConnectCore(options);
+var core = new ReownCore(options);
 ```
 
 Next, you must define a `Metadata` object which describes your Wallet. This includes a `Name`, `Description`, `Url` and `Icons` url.
@@ -54,17 +54,17 @@ Next, you must define a `Metadata` object which describes your Wallet. This incl
 ```csharp
 var metadata = new Metadata()
 {
-    Description = "An example wallet to showcase WalletConnectSharpv2",
+    Description = "An example wallet to showcase ReownSharpv2",
     Icons = new[] { "https://walletconnect.com/meta/favicon.ico" },
     Name = $"wallet-csharp-test",
     Url = "https://walletconnect.com",
 };
 ```
 
-Once you have both the `WalletConnectCore` and `Metadata` objects, you can initialize the `Web3WalletClient`
+Once you have both the `ReownCore` and `Metadata` objects, you can initialize the `WalletKitClient`
 
 ```csharp
-var sdk = await Web3WalletClient.Init(core, metadata, metadata.Name);
+var sdk = await WalletKitClient.Init(core, metadata, metadata.Name);
 ```
 
 ## Session
@@ -232,7 +232,7 @@ sdk.SessionProposed += async (sender, @event) =>
 
 Responding to session requests is very similar to sending session requests. See dApp usage on how sending session requests works. All custom session requests requires a request class **and** response class to be created that matches the `params` field type in the custom session request. C# is a static typed language, so these types must be given whenever you do a session request (or do any querying for session requests).
 
-Currently, **WalletConnectSharp does not automatically assume the object type for `params` is an array**. This is very important, since most EVM RPC requests have `params` as an array type. **Use `List<T>` to workaround this**. For example, for `eth_sendTransaction`, use `List<Transaction>` instead of `Transaction`.
+Currently, **ReownSharp does not automatically assume the object type for `params` is an array**. This is very important, since most EVM RPC requests have `params` as an array type. **Use `List<T>` to workaround this**. For example, for `eth_sendTransaction`, use `List<Transaction>` instead of `Transaction`.
 
 Newtonsoft.Json is used for JSON serialization/deserialization, therefore you can use Newtonsoft.Json attributes when defining fields in your request/response classes.
 
