@@ -1,0 +1,238 @@
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
+
+---
+title: Migration from Web3Modal to AppKit
+pagination_next: 
+
+---
+
+# Migration from Web3Modal to AppKit for React Native
+
+This document outlines the steps to migrate from the old `@web3modal` packages to the new `@reown/appkit` packages in your React Native project.
+
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers"]}>
+
+  <PlatformTabItem value="wagmi">
+  ### Step 1. Replace the corresponding dependencies in your package.json
+
+  ```json
+  {
+    "dependencies": {
+      /* highlight-delete-start */
+      "@web3modal/wagmi-react-native": "2.0.4",
+      "@web3modal/email-wagmi-react-native": "2.0.4",
+      "@web3modal/coinbase-wagmi-react-native": "2.0.4",
+      /* highlight-delete-end */
+      /* highlight-add-start */
+      "@reown/appkit-wagmi-react-native": '1.0.0',
+      "@reown/appkit-auth-wagmi-react-native": '1.0.0',
+      "@reown/appkit-coinbase-wagmi-react-native": '1.0.0',
+      /* highlight-add-end */
+    }
+  }
+  ```
+  * Run `yarn install` after replacing the packages
+
+  ### Step 2. Update your AppKit config
+
+  ```tsx
+  /* highlight-delete-start */
+  import { createWeb3Modal } from '@web3modal/wagmi-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import { createAppKit } from '@reown/appkit-wagmi-react-native';
+  /* highlight-add-end */
+  ```
+
+  ### Step 3. Update your Hooks usage
+  Update your hook imports as follows:
+
+  ```tsx
+  /* highlight-delete-start */
+  import {
+    useWeb3Modal,
+    useWeb3ModalState,
+    useWeb3ModalEvents,
+    useWalletInfo,
+  } from '@web3modal/wagmi-react-native';
+  /* highlight-delete-end */
+
+  /* highlight-add-start */
+  import {
+    useAppKit,
+    useAppKitState,
+    useAppKitEvents,
+    useWalletInfo,
+  } from '@reown/appkit-wagmi-react-native';
+  /* highlight-add-end */
+  ```
+  ### Step 4. Update your Components usage
+  Update your component imports as follows:
+
+  ```tsx
+  /* highlight-delete-start */
+  import {
+    W3mAccountButton,
+    W3mButton,
+    W3mConnectButton,
+    W3mNetworkButton,
+    Web3Modal
+  } from '@web3modal/wagmi-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import {
+    AccountButton,
+    AppKitButton,
+    ConnectButton,
+    NetworkButton,
+    AppKit
+  } from '@reown/appkit-wagmi-react-native';
+  /* highlight-add-end */
+  ```
+
+  ### Step 5. Update your config for Universal Wallets 
+  Update email wallet specific imports as follows:
+
+  ```tsx
+  /* highlight-delete-start */
+  import { emailConnector } from '@web3modal/email-wagmi-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import { authConnector } from '@reown/appkit-auth-wagmi-react-native';
+  /* highlight-add-end */
+  ```
+
+  ### Step 6. Update your import to support Coinbase Wallet 
+  Update coinbase connector import as follows:
+
+  ```tsx
+  /* highlight-delete-start */
+  import { coinbaseConnector } from '@web3modal/coinbase-wagmi-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import { coinbaseConnector } from '@reown/appkit-coinbase-wagmi-react-native';
+  /* highlight-add-end */
+  ```
+
+
+  </PlatformTabItem>
+  <PlatformTabItem value="ethers">
+  * If you are using ethers v5, follow the same steps but replacing `ethers` with `ethers5`
+
+  ### Step 1. Replace the corresponding dependencies in your package.json
+  ```json
+  {
+    "dependencies": {
+      /* highlight-delete-start */
+      "@web3modal/ethers-react-native": "2.0.4",
+      "@web3modal/ethers5-react-native": "2.0.4",
+      "@web3modal/email-ethers-react-native": "2.0.4",
+      "@web3modal/coinbase-ethers-react-native": "2.0.4",
+      /* highlight-delete-end */
+      /* highlight-add-start */
+      "@reown/appkit-ethers-react-native": '1.0.0',
+      "@reown/appkit-auth-ethers-react-native": '1.0.0',
+      "@reown/appkit-coinbase-ethers-react-native": '1.0.0',
+      /* highlight-add-end */
+    }
+  }
+  ```
+  * Replace with `@reown/appkit-ethers5-*` is applies
+  * Run `yarn install` after replacing the packages
+
+  ### Step 2. Update your AppKit config
+
+  ```tsx
+  /* highlight-delete-start */
+  import { createWeb3Modal } from '@web3modal/ethers-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import { createAppKit } from '@reown/appkit-ethers-react-native';
+  /* highlight-add-end */
+  ```
+
+  ### Step 3. Update your Hooks usage
+  Update your hook imports as follows:
+
+  ```tsx
+  /* highlight-delete-start */
+  import {
+    useWeb3Modal,
+    useWeb3ModalState,
+    useWeb3ModalEvents,
+    useWeb3ModalAccount,
+    useWeb3ModalProvider,
+    useWeb3ModalError,
+    useWalletInfo,
+  } from '@web3modal/ethers-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import {
+    useAppKit,
+    useAppKitState,
+    useAppKitEvents,
+    useAppKitAccount,
+    useAppKitProvider,
+    useAppKitError,
+    useWalletInfo,
+  } from '@reown/appkit-ethers-react-native';
+  /* highlight-add-end */
+  ```
+
+  ### Step 4. Update your Components usage
+  Update your component imports as follows:
+
+  ```tsx
+  /* highlight-delete-start */
+  import {
+    W3mAccountButton,
+    W3mButton,
+    W3mConnectButton,
+    W3mNetworkButton,
+    Web3Modal
+  } from '@web3modal/ethers-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import {
+    AccountButton,
+    AppKitButton,
+    ConnectButton,
+    NetworkButton,
+    AppKit
+  } from '@reown/appkit-ethers-react-native';
+  /* highlight-add-end */
+  ```
+
+  ### Step 5. Update email wallet specific imports as follows:
+
+  ```tsx
+  /* highlight-delete-start */
+  import { EmailProvider } from '@web3modal/email-ethers-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import { AuthProvider } from '@reown/appkit-auth-ethers-react-native';
+  /* highlight-add-end */
+  ```
+
+  ### Step 6. Update your import to support Coinbase Wallet 
+  Update coinbase connector import as follows:
+
+  ```tsx
+  /* highlight-delete-start */
+  import { CoinbaseProvider } from '@web3modal/coinbase-ethers-react-native';
+  /* highlight-delete-end */
+  /* highlight-add-start */
+  import { CoinbaseProvider } from '@reown/appkit-coinbase-ethers-react-native';
+  /* highlight-add-end */
+  ```
+
+
+  </PlatformTabItem>
+</PlatformTabs>
+
+### Final notes
+
++ Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from Web3Modal to AppKit.
++ Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
++ Check our [AppKit example for React Native](https://github.com/WalletConnect/react-native-examples/tree/main/dapps/W3MWagmi) to compare with your implementation in case you are having issues 

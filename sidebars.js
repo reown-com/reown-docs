@@ -247,6 +247,7 @@ module.exports = {
               items: [
                 { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },
                 { type: 'doc', label: 'From Anza Adapter', id: 'appkit/migration/from-anza-adapter-react' },
+                { type: 'doc', label: 'From Web3Modal React Native', id: 'appkit/migration/from-web3modal-react-native' },
               ]
             },
           ]
