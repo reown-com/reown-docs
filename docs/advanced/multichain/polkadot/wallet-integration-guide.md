@@ -66,7 +66,7 @@ const walletConnectAccounts = accounts.map(
   account => `polkadot:91b171bb158e2d3848fa23a9f1c25182:${account.address}`
 )
 
-web3wallet.on('session_proposal', async proposal => {
+walletKit.on('session_proposal', async proposal => {
   // optionally show user a modal or way to reject or approve session
   showWalletConnectModal()
 
@@ -102,7 +102,7 @@ If the user does not approve the requested chains, methods, or accounts, or if t
 // import getSdkError to create predefined ErrorResponse types
 import { getSdkError } from '@walletconnect/utils'
 
-web3wallet.on('session_proposal', async proposal => {
+walletKit.on('session_proposal', async proposal => {
   // optionally show user a modal or way to reject or approve session
   showWalletConnectModal()
 
@@ -119,7 +119,7 @@ web3wallet.on('session_proposal', async proposal => {
 A dapp triggers an event when it requires the wallet to carry out a specific action, such as signing a transaction. The event includes a topic and a request object, which will differ based on the requested action. As seen in the [WalletConnect Web Examples](https://github.com/WalletConnect/web-examples/blob/main/advanced/wallets/react-wallet-v2/src/lib/PolkadotLib.ts), two common use cases in polkadot are signing messages and signing transactions. These methods are represented here as `polkadot_signMessage` and `polkadot_signTransaction` respectively and each simply signs the respective payload and returns the signature to the dapp. An example of a `session_request` event handler containing both can be found below.
 
 ```js
-web3wallet.on('session_request', async requestEvent => {
+walletKit.on('session_request', async requestEvent => {
   const { params, id } = requestEvent
   const { request } = params
   const address = request.params?.address

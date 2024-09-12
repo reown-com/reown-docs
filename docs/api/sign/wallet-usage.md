@@ -223,7 +223,7 @@ By incorporating ReCaps, this method extends the utility of SIWE messages, allow
 To handle incoming authentication requests, subscribe to the `session_authenticate` event. This will notify you of any authentication requests that need to be processed, allowing you to either approve or reject them based on your application logic.
 
 ```typescript
-web3wallet.on('session_authenticate', async payload => {
+walletKit.on('session_authenticate', async payload => {
   // Process the authentication request here.
   // Steps include:
   // 1. Populate the authentication payload with the supported chains and methods

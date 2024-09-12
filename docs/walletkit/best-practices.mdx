@@ -10,7 +10,7 @@ import PlatformTabItem from '../components/PlatformTabItem'
 
 # Best Practices for Wallets
 
-To ensure the smoothest and most seamless experience for our users, WalletConnect is committed to working closely with wallet providers to encourage the adoption of our recommended best practices.
+To ensure the smoothest and most seamless experience for our users, Reown is committed to working closely with wallet providers to encourage the adoption of our recommended best practices.
 
 By implementing these guidelines, we aim to optimize performance and minimize potential challenges, even in suboptimal network conditions.
 
@@ -64,14 +64,14 @@ Users often face ambiguity in determining whether their connection or transactio
 
 ### Pairing
 
-A pairing is a connection between a wallet and a dapp that has fixed permissions to only allow a dapp to propose a session through it. Dapp can propose infinite number of sessions on one pairing. Wallet must use a pair method from Web3Wallet client to pair with dapp.
+A pairing is a connection between a wallet and a dapp that has fixed permissions to only allow a dapp to propose a session through it. Dapp can propose infinite number of sessions on one pairing. Wallet must use a pair method from WalletKit client to pair with dapp.
 
 <PlatformTabs activeOptions={["web","ios","android", "react-native"]}>
   <PlatformTabItem value="web" label="Web">
 ```jsx
 const uri = 'xxx'; // pairing uri
 try {
-    await web3Wallet.pair({ uri });
+    await walletKit.pair({ uri });
 } catch (error) {
     // some error happens while pairing - check Expected errors section
 }
@@ -81,7 +81,7 @@ try {
 ```jsx
 const uri = 'xxx'; // pairing uri
 try {
-    await web3Wallet.pair({ uri });
+    await walletKit.pair({ uri });
 } catch (error) {
     // some error happens while pairing - check Expected errors section
 }
@@ -93,7 +93,7 @@ let uri = WalletConnectURI(string: urlString)
 
 if let uri {
 Task {
-try await Web3Wallet.instance.pair(uri: uri)
+try await WalletKit.instance.pair(uri: uri)
 }
 }
 
@@ -102,7 +102,7 @@ try await Web3Wallet.instance.pair(uri: uri)
 <PlatformTabItem value="android" label="Android">
 ```kotlin
 val pairingParams = Wallet.Params.Pair(pairingUri)
-Web3Wallet.pair(pairingParams,
+WalletKit.pair(pairingParams,
     onSuccess = {
         //Subscribed on the pairing topic successfully. Wallet should await for a session proposal
     },
@@ -138,7 +138,7 @@ core.pairing.events.on("pairing_expire", (event) => {
   </PlatformTabItem>
   <PlatformTabItem value="ios" label="iOS">
 ```Swift
-Web3Wallet.instance.pairingExpirationPublisher
+WalletKit.instance.pairingExpirationPublisher
     .receive(on: DispatchQueue.main)
     .sink { pairing in
     guard !pairing.active else { return }
@@ -189,7 +189,7 @@ Whenever user approves or rejects a session proposal, a wallet should show a loa
   <PlatformTabItem value="web" label="Web">
 ```typescript
 try {
-    await web3Wallet.approveSession(params);
+    await walletKit.approveSession(params);
     // update UI -> remove the loader
 } catch (error) {
     // present error to the user
@@ -200,7 +200,7 @@ try {
   <PlatformTabItem value="react-native" label="React Native">
 ```typescript
 try {
-    await web3Wallet.approveSession(params);
+    await walletKit.approveSession(params);
     // update UI -> remove the loader
 } catch (error) {
     // present error to the user
@@ -210,7 +210,7 @@ try {
   <PlatformTabItem value="ios" label="iOS">
 ```swift
 do {
-    try await Web3Wallet.instance.approve(proposalId: proposal.id, namespaces: sessionNamespaces, sessionProperties: proposal.sessionProperties)
+    try await WalletKit.instance.approve(proposalId: proposal.id, namespaces: sessionNamespaces, sessionProperties: proposal.sessionProperties)
     // Update UI, remove loader
 } catch {
     // present error
@@ -219,7 +219,7 @@ do {
   </PlatformTabItem>
   <PlatformTabItem value="android" label="Android">
 ```kotlin
-Web3Wallet.approveSession(approveProposal,
+WalletKit.approveSession(approveProposal,
   onSuccess = {
     //Session approval response was sent successfully - update your UI
   }
@@ -236,7 +236,7 @@ Web3Wallet.approveSession(approveProposal,
   <PlatformTabItem value="web" label="Web">
 ```typescript
 try {
-    await web3Wallet.rejectSession(params);
+    await walletKit.rejectSession(params);
     // update UI -> remove the loader
 } catch (error) {
     // present error to the user
@@ -246,7 +246,7 @@ try {
   <PlatformTabItem value="react-native" label="React Native">
 ```typescript
 try {
-    await web3Wallet.rejectSession(params);
+    await walletKit.rejectSession(params);
     // update UI -> remove the loader
 } catch (error) {
     // present error to the user
@@ -256,7 +256,7 @@ try {
   <PlatformTabItem value="ios" label="iOS">
 ```swift
 do {
-    try await Web3Wallet.instance.reject(proposalId: proposal.id, reason: .userRejected)
+    try await WalletKit.instance.reject(proposalId: proposal.id, reason: .userRejected)
     // Update UI, remove loader
 } catch {
     // present error
@@ -265,7 +265,7 @@ do {
   </PlatformTabItem>
   <PlatformTabItem value="android" label="Android">
 ```kotlin
-Web3Wallet.rejectSession(reject,
+WalletKit.rejectSession(reject,
   onSuccess = {
       //Session rejection response was sent successfully - update your UI
   },
@@ -283,7 +283,7 @@ A session proposal expiry is 5 minutes. It means a given proposal is stored for 
 <PlatformTabs activeOptions={["web","ios","android", "react-native"]}>
   <PlatformTabItem value="web" label="Web">
 ```typescript
-web3wallet.on("proposal_expire", (event) => {
+walletKit.on("proposal_expire", (event) => {
     // proposal expired and any modal displaying it should be removed
     const { id } = event;
 });
@@ -291,7 +291,7 @@ web3wallet.on("proposal_expire", (event) => {
   </PlatformTabItem>
   <PlatformTabItem value="react-native" label="React Native">
 ```typescript
-web3wallet.on("proposal_expire", (event) => {
+walletKit.on("proposal_expire", (event) => {
     // proposal expired and any modal displaying it should be removed
     const { id } = event;
 });
@@ -299,20 +299,20 @@ web3wallet.on("proposal_expire", (event) => {
   </PlatformTabItem>
   <PlatformTabItem value="ios" label="iOS">
 ```swift
-Web3Wallet.instance.sessionProposalExpirationPublisher.sink { _ in
+WalletKit.instance.sessionProposalExpirationPublisher.sink { _ in
     // let user know that session proposal has expired, update UI
 }.store(in: &publishers)
 ```
   </PlatformTabItem>
   <PlatformTabItem value="android" label="Android">
 ```kotlin
-val walletDelegate = object : Web3Wallet.WalletDelegate {
+val walletDelegate = object : WalletKit.WalletDelegate {
   override fun onProposalExpired(proposal: Wallet.Model.ExpiredProposal) {
           // Here this event is triggered when a proposal expires - update your UI
   }
   // ...other callbacks
 }
-Web3Wallet.setWalletDelegate(walletDelegate)
+WalletKit.setWalletDelegate(walletDelegate)
 ```
 </PlatformTabItem>
 </PlatformTabs>
@@ -345,7 +345,7 @@ Whenever user approves or rejects a session request, a wallet should show a load
   <PlatformTabItem value="web" label="Web">
 ```typescript
 try {
-    await web3Wallet.respondSessionRequest(params);
+    await walletKit.respondSessionRequest(params);
     // update UI -> remove the loader
 } catch (error) {
     // present error to the user
@@ -355,7 +355,7 @@ try {
   <PlatformTabItem value="react-native" label="React Native">
 ```typescript
 try {
-    await web3Wallet.respondSessionRequest(params);
+    await walletKit.respondSessionRequest(params);
     // update UI -> remove the loader
 } catch (error) {
     // present error to the user
@@ -365,7 +365,7 @@ try {
   <PlatformTabItem value="ios" label="iOS">
 ```swift
 do {
-    try await Web3Wallet.instance.respond(requestId: request.id, signature: signature, from: account)
+    try await WalletKit.instance.respond(requestId: request.id, signature: signature, from: account)
     // update UI -> remove the loader
 } catch {
     // present error to the user
@@ -374,7 +374,7 @@ do {
   </PlatformTabItem>
   <PlatformTabItem value="android" label="Android">
 ```kotlin
-Web3Wallet.respondSessionRequest(Wallet.Params.SessionRequestResponse,
+WalletKit.respondSessionRequest(Wallet.Params.SessionRequestResponse,
   onSuccess = {
       //Session request response was sent successfully - update your UI
   },
@@ -392,7 +392,7 @@ A session request expiry is defined by a dapp. Its value must be between `now() 
 <PlatformTabs activeOptions={["web","ios","android", "react-native"]}>
   <PlatformTabItem value="web" label="Web">
 ```typescript
-web3wallet.on("session_request_expire", (event) => {
+walletKit.on("session_request_expire", (event) => {
   // request expired and any modal displaying it should be removed
   const { id } = event;
 });
@@ -400,7 +400,7 @@ web3wallet.on("session_request_expire", (event) => {
   </PlatformTabItem>
   <PlatformTabItem value="react-native" label="React Native">
 ```typescript
-web3wallet.on("session_request_expire", (event) => {
+walletKit.on("session_request_expire", (event) => {
   // request expired and any modal displaying it should be removed
   const { id } = event;
 });
@@ -408,20 +408,20 @@ web3wallet.on("session_request_expire", (event) => {
   </PlatformTabItem>
   <PlatformTabItem value="ios" label="iOS">
 ```swift
-Web3Wallet.instance.requestExpirationPublisher.sink { _ in
+WalletKit.instance.requestExpirationPublisher.sink { _ in
     // let user know that request has expired
 }.store(in: &publishers)
 ```
   </PlatformTabItem>
   <PlatformTabItem value="android" label="Android">
 ```kotlin
-val walletDelegate = object : Web3Wallet.WalletDelegate {
+val walletDelegate = object : WalletKit.WalletDelegate {
   override fun onRequestExpired(request: Wallet.Model.ExpiredRequest) {
       // Here this event is triggered when a session request expires - update your UI
   }
   // ...other callbacks
 }
-Web3Wallet.setWalletDelegate(walletDelegate)
+WalletKit.setWalletDelegate(walletDelegate)
 ```
 </PlatformTabItem>
 </PlatformTabs>
@@ -468,7 +468,7 @@ core.relayer.on("relayer_disconnect", () => {
   </PlatformTabItem>
   <PlatformTabItem value="ios" label="iOS">
 ```swift
-Web3Wallet.instance.socketConnectionStatusPublisher
+WalletKit.instance.socketConnectionStatusPublisher
   .receive(on: DispatchQueue.main)
   .sink { status in
   switch status {
@@ -482,13 +482,13 @@ Web3Wallet.instance.socketConnectionStatusPublisher
   </PlatformTabItem>
   <PlatformTabItem value="android" label="Android">
 ```kotlin
-val walletDelegate = object : Web3Wallet.WalletDelegate {
+val walletDelegate = object : WalletKit.WalletDelegate {
   override fun onConnectionStateChange(state: Wallet.Model.ConnectionState) {
     // Here this event is triggered when a connection state has changed
   }
   // ...other callbacks
 }
-Web3Wallet.setWalletDelegate(walletDelegate)
+WalletKit.setWalletDelegate(walletDelegate)
 ```
 </PlatformTabItem>
 </PlatformTabs>
@@ -640,7 +640,7 @@ Check this article for how to simulate slow internet connection on iOS & Android
 
 ## 4. Verify API
 
-Verify API is a security-focused feature that allows wallets to notify end-users when they may be connecting to a suspicious or malicious domain, helping to prevent phishing attacks across the industry. Once a wallet knows whether an end-user is on uniswap.com or eviluniswap.com, it can help them to detect potentially harmful connections through Verify's combined offering of WalletConnect’s domain registry and [Blowfish's domain scanner](https://docs.blowfish.xyz/reference/scan-domain-1). For those looking to enable Verify on the app side, check out our reference guide [here.](https://docs.walletconnect.com/walletkit/web/cloud/verify)
+Verify API is a security-focused feature that allows wallets to notify end-users when they may be connecting to a suspicious or malicious domain, helping to prevent phishing attacks across the industry. Once a wallet knows whether an end-user is on uniswap.com or eviluniswap.com, it can help them to detect potentially harmful connections through Verify's combined offering of WalletConnect’s domain registry and [Blowfish's domain scanner](https://docs.blowfish.xyz/reference/scan-domain-1). For those looking to enable Verify on the app side, check out our reference guide [here.](https://docs.reown.com/walletkit/web/cloud/verify)
 
 When a user initiates a connection with an application, Verify API enables wallets to present their users with four key states that can help them determine whether the domain they’re about to connect to might be malicious.
 
@@ -660,7 +660,7 @@ Verify API is not designed to be bulletproof but to make the impersonation attac
 
 :::
 
-### Domain risk detection[](https://docs.walletconnect.com/walletkit/web/verify#domain-risk-detection)
+### Domain risk detection[](https://docs.rewon.com/walletkit/web/verify#domain-risk-detection)
 
 The Verify security system will discriminate session proposals & session requests with distinct validations that can be either `VALID`, `INVALID` or `UNKNOWN`.
 
@@ -707,7 +707,7 @@ Make sure you are using the latest version of the SDK for your platform
   </PlatformTabItem>
 
   <PlatformTabItem value="react-native" label="React Native">
-  - **AppKit for React Native**: [Latest release](https://github.com/WalletConnect/web3modal-react-native/releases/latest)
+  - **AppKit for React Native**: [Latest release](https://github.com/WalletConnect/reown-react-native/releases/latest)
   </PlatformTabItem>
 </PlatformTabs>
 
@@ -719,6 +719,6 @@ To stay up to date with the latest SDK releases, you can use GitHub's native fea
 
 ## Resources
 
-- [React Wallet](https://react-wallet.walletconnect.com/) - for testing dapps, features, Verify API messages, etc.
-- [React dapp](https://react-app.walletconnect.com/) - for testing wallets
+- [React Wallet](https://react-wallet.reown.com/) - for testing dapps, features, Verify API messages, etc.
+- [React dapp](https://react-app.reown.com/) - for testing wallets
 - [Malicious React dapp](https://malicious-app-verify-simulation.vercel.app/) - for testing Verify API with malicious domain

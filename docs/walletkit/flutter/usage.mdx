@@ -72,7 +72,7 @@ When a dApp propose a session, with declared required and/or optional namespaces
 
 You can access this object in **SessionProposalEvent** during `onSessionProposal` event by querying `event.params.generatedNamespaces`. (See next section)
 
-However, if you decide not to use `web3Wallet.registerRequestHandler()` and, instead, you decide to handle session requests by subscribing to the `web3Wallet.onSessionRequest` events then all you have to do is construct your approved namespaces as follows:
+However, if you decide not to use `web3Wallet.registerRequestHandler()` and, instead, you decide to handle session requests by subscribing to the `walletKit.onSessionRequest` events then all you have to do is construct your approved namespaces as follows:
 
 ```dart
 final approvedNamespaces = {
@@ -147,7 +147,7 @@ To approve a session, call `approveSession()` and pass in the `event.id` and you
 Either way you decide you would subscribe to the `onSessionProposal` event and use `approveSession()` as follows:
 
 ```dart
-web3Wallet.onSessionProposal.subscribe((SessionProposalEvent? event) {
+walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) {
   // display a prompt for the user to approve or reject the session
   // ....
   // If approved
@@ -177,7 +177,7 @@ To reject the request, pass in an error code and reason. They can be found [here
 To reject a session:
 
 ```dart
-web3Wallet.onSessionProposal.subscribe((SessionProposalEvent? event) {
+walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) {
   // display a prompt for the user to approve or reject the session
   // ....
   // If rejected
@@ -195,7 +195,7 @@ To handle a session request, such as `personal_sign`, you have two ways and they
 1. The default one is subscribing to onSessionRequest events and handle the request based on the method that is firing the event
 
 ```dart
-web3Wallet.onSessionRequest.subscribe(_onSessionRequest);
+walletKit.onSessionRequest.subscribe(_onSessionRequest);
 
 void _onSessionRequest(SessionRequestEvent? event) async {
   if (event != null) {

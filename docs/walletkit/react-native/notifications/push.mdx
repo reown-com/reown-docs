@@ -10,7 +10,7 @@ For the push notifications to be forwarded to FCM or APNs, the [Push Server](../
 
 ### Register the device token
 
-To enable a device for push notifications, it's essential to register the device token using `Web3Wallet.registerDeviceToken`. This token can be obtained from either FCM or APNS, depending on the platform used.
+To enable a device for push notifications, it's essential to register the device token using `walletKit.registerDeviceToken`. This token can be obtained from either FCM or APNS, depending on the platform used.
 
 To receive push notifications from WalletConnect's Push Server via Firebase Cloud Messaging, you will need to setup Firebase in your project. 
 You can follow their docummentation - [Firebase documentation](https://rnfirebase.io/messaging/usage#installation). 
@@ -22,13 +22,13 @@ import messaging from '@react-native-firebase/messaging'
 const token = await messaging().getToken()
 ```
 
-The device token will be used to register for WalletConnect push notifications by calling `Web3Wallet.registerDeviceToken` and passing the token as an argument.
+The device token will be used to register for WalletConnect push notifications by calling `walletKit.registerDeviceToken` and passing the token as an argument.
 The `registerDeviceToken` should be called every time the client is initialized.
 
 ```ts
-web3wallet.registerDeviceToken({
+walletKit.registerDeviceToken({
   token: await messaging().getToken(), // device token
-  clientId: await web3wallet.core.crypto.getClientId(), //your instance clientId
+  clientId: await walletKit.core.crypto.getClientId(), //your instance clientId
   notificationType: 'fcm', // notification type
   enableEncrypted: true // flag that enabled detailed notifications
 })
@@ -39,12 +39,12 @@ With that the base setup is complete and you can start receiving push notificati
 Note, that from time to time, the device token is refreshed, so you must make sure to register it again.
 
 ```ts
-impoprt messaging from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 
 messaging().onTokenRefresh(async token => {
-    await web3wallet.registerDeviceToken({
+    await walletKit.registerDeviceToken({
         token: await messaging().getToken(), // device token
-        clientId: await web3wallet.core.crypto.getClientId(), //your instance clientId
+        clientId: await walletKit.core.crypto.getClientId(), //your instance clientId
         notificationType: 'fcm', // notification type
         enableEncrypted: true // flag that enabled detailed notifications
     });
@@ -75,7 +75,7 @@ messaging().setBackgroundMessageHandler(async notification => {
 Now that we have the notifications listeners setup, we can start processing the incoming notifications.
 
 ```ts
-import { Web3Wallet } from '@walletconnect/web3wallet';
+import { walletKit } from '@reown/walletkit';
 import messaging from '@react-native-firebase/messaging';
 
 messaging().onMessage(async notification => {
@@ -83,8 +83,8 @@ messaging().onMessage(async notification => {
     const { topic, message, tag } = notification.data;
 
     // decrypt the message
-    // note this is static method and can be called without initializing the Web3Wallet
-    const decryptedMessage = await Web3wallet.notifications.decryptMessage({
+    // note this is static method and can be called without initializing the walletKit
+    const decryptedMessage = await walletKit.notifications.decryptMessage({
     topic,
     encryptedMessage: message,
   });
@@ -101,7 +101,7 @@ messaging().onMessage(async notification => {
    let metadata
 
    if(tag == 1108) {
-        metadata = await Web3Wallet.notifications.getMetadata({ topic });
+        metadata = await walletKit.notifications.getMetadata({ topic });
    } else {
         // session proposals contain metadata in the request itself
         metadata = decryptedMessage.params.proposer.metadata
