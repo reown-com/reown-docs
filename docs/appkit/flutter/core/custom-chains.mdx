@@ -1,31 +1,42 @@
-# Custom Chains
+# Custom Networks
 
-## Custom Chain addition and selection
+## Custom Networks addition and selection
 
-You can add your own custom chain to the `W3MChainPresets.chains` object **before initialization**:
+AppKit already comes with a list of supported networks inside of `ReownAppKitModalNetworks` class. You can get supported EVM networks by selecting `ReownAppKitModalNetworks.supported['eip155']` and, currently, only EVM Networks are supported (non-EVM support will come soon)
 
-Like so...
+You can also get supported test networks by doing `ReownAppKitModalNetworks.test['eip155']`.
 
-```dart
-W3MChainPresets.chains.putIfAbsent('<chainID>', () => <Your W3MChainInfo>);
-await _w3mService.init();
-```
+Check the list of suppoted networks here https://github.com/reown-com/blockchain-api/blob/master/SUPPORTED_CHAINS.md#list-of-supported-chains
 
-:::info
-If you modify the presets (add/remove chains), it will reflect in the `W3MNetworkSelectButton` widget.
+However, if these chains are not enough or you don't want to support any of them you can modify the list associated to the namespace.
+
+:::info note
+It is important that this is done before AppKitModal configuration.
 :::
 
-Or you can select your own chain by calling the `selectChain()` method from `W3MService` **after initialization**:.
+```javascript
+// Example adding extra and test networks
+final extraNetworks = ReownAppKitModalNetworks.extra['eip155'] ?? [];
+ReownAppKitModalNetworks.addNetworks('eip155', extraNetworks);
 
-```dart
-await _w3mService.init();
-_w3mService.selectChain(<Your W3MChainInfo>);
+final testNetworks = ReownAppKitModalNetworks.test['eip155'] ?? [];
+ReownAppKitModalNetworks.addNetworks('eip155', testNetworks);
+
+// Example removing Aurora network from the list
+ReownAppKitModalNetworks.removeNetworks('eip155', ['1313161554']);
 ```
 
-By using this option, your custom chain is not going to be added to the list of presets, so it's not going to show up in the `W3MNetworkSelectButton`. Use this method if you are not going to display `W3MNetworkSelectButton`.
+You can also create and add a custom network. For instance...
 
-:::note
-The chain must be EVM compatible
-:::
+```javascript
+final customNetwork = ReownAppKitModalNetworkInfo(
+  name: 'Ethereum',
+  chainId: '1',
+  currency: 'ETH',
+  rpcUrl: 'https://ethereum-rpc.publicnode.com',
+  explorerUrl: 'https://etherscan.io',
+  isTestNetwork: false,
+);
 
-The list of chain presets can be found in [w3m_chains_presets.dart](https://github.com/WalletConnect/Web3ModalFlutter/blob/master/lib/utils/w3m_chains_presets.dart) which is already exported for you to use directly from web3modal package.
+ReownAppKitModalNetworks.addNetworks('eip155', [customNetwork]);
+```
