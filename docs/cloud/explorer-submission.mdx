@@ -147,7 +147,7 @@ The following list details our QA flow and how to reproduce it:
     },
     {
       testCase: 'Connect to dapp via web browser',
-      steps: `1. Open the WalletConnect connection page https://lab.web3modal.com/ or https://react-app.walletconnect.com/ from a PC
+      steps: `1. Open the WalletConnect connection page http://appkit-lab.reown.com/ or https://react-app.walletconnect.com/ from a PC
               2. Press on the “Connect Wallet” button and select the “WalletConnect” option.
               3. Open the wallet app and use the scan QR option to connect.
               4. Accept on the wallet the connection request`,
@@ -158,7 +158,7 @@ The following list details our QA flow and how to reproduce it:
     },
     {
       testCase: 'Connect to dapp via mobile browser (Deep-link)',
-      steps: `1. Open https://lab.web3modal.com/ in your mobile device.
+      steps: `1. Open http://appkit-lab.reown.com/ in your mobile device.
               2. Select one of the default options (e.g. Wagmi for EVM chains). Press the "Custom Wallet" button from the navbar. Fill in the wallet’s name and it’s deeplink (Mobile Link) in the “Add a Custom Wallet” form. Press “Add Wallet”. After the website reloads press the “Connect Wallet” button and select the new created wallet.
               3. Accept the connection request in the wallet application.`,
       expectedResults: `1. N/A
@@ -250,7 +250,7 @@ The following test cases only apply for wallets supporting a particular set of c
   data={[
     {
       testCase: 'Supporting solana_signMessage',
-      steps: `1. Connect the wallet to https://lab.web3modal.com/library/solana
+      steps: `1. Connect the wallet to http://appkit-lab.reown.com/library/solana
               2. Press the “Sign Message” button.
               3. Accept the signature request on the wallet.`,
       expectedResults: `1. N/A
@@ -259,7 +259,7 @@ The following test cases only apply for wallets supporting a particular set of c
     },
     {
       testCase: 'Supporting solana_signTransaction',
-      steps: `1. Connect the wallet to https://lab.web3modal.com/library/solana
+      steps: `1. Connect the wallet to http://appkit-lab.reown.com/library/solana
               2. Press the “Sign Transaction”.
               3. Accept the signature request on the wallet.`,
       expectedResults: `1. N/A
@@ -268,7 +268,7 @@ The following test cases only apply for wallets supporting a particular set of c
     },
     {
       testCase: 'Supporting v0 Transactions',
-      steps: `1. Connect the wallet to https://lab.web3modal.com/library/solana
+      steps: `1. Connect the wallet to http://appkit-lab.reown.com/library/solana
               2. Press the “Sign Versioned Transaction" button.
               3. Accept the signature request on the wallet.`,
       expectedResults: `1. N/A
