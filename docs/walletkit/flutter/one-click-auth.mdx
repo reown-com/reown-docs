@@ -26,7 +26,7 @@ To handle incoming authentication requests, subscribe to the `onSessionAuthReque
 
 ```dart
 // subscribe to onSessionAuthRequest with a handler
-_walletKit!.onSessionAuthRequest.subscribe(_onSessionAuthRequest);
+_web3wallet!.onSessionAuthRequest.subscribe(_onSessionAuthRequest);
 //
 void _onSessionAuthRequest(SessionAuthRequest? args) {
   if (args != null) {
@@ -58,7 +58,7 @@ final cacaoRequestPayload = CacaoRequestPayload.fromSessionAuthPayload(
 // Prepare the user's address in CAIP10(https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md) format
 final iss = 'eip155:1:0x59e2f66C0E96803206B6486cDb39029abAE834c0';
 // Now you can use the authPayload to format the authentication message
-final message = _walletKit!.formatAuthMessage(
+final message = _web3wallet!.formatAuthMessage(
   iss: iss,
   cacaoPayload: cacaoRequestPayload,
 );
@@ -95,7 +95,7 @@ final cacao = AuthSignature.buildAuthObject(
 );
 
 // Approve
-await _walletKit!.approveSessionAuthenticate(
+await _web3wallet!.approveSessionAuthenticate(
   id: args.id,
   auths: [cacao],
 );
@@ -104,7 +104,7 @@ await _walletKit!.approveSessionAuthenticate(
 // Note that you can also sign multiple messages for every requested chain/address pair
 final List<Cacao> cacaos = [];
 for (var chain in newAuthPayload.chains) {
-  final message = _walletKit!.formatAuthMessage(
+  final message = _web3wallet!.formatAuthMessage(
     iss: iss,
     cacaoPayload: cacaoRequestPayload,
   );
@@ -125,7 +125,7 @@ for (var chain in newAuthPayload.chains) {
 }
 
 // Approve
-await _walletKit!.approveSessionAuthenticate(
+await _web3wallet!.approveSessionAuthenticate(
   id: args.id,
   auths: cacaos,
 );
@@ -136,7 +136,7 @@ await _walletKit!.approveSessionAuthenticate(
 If the authentication request cannot be approved or if the user chooses to reject it, use the rejectSession method.
 
 ```dart
-await _walletKit!.rejectSessionAuthenticate(
+await _web3wallet!.rejectSessionAuthenticate(
   id: args.id,
   reason: Errors.getSdkError(Errors.USER_REJECTED_AUTH),
 );

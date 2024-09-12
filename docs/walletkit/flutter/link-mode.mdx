@@ -8,7 +8,7 @@ WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth r
 By enabling it, the wallet and dapp will communicate through declared Universal Links on iOS and/or App Links on Android **even without an internet connection.**
 
 :::caution
-Link Mode is currently in **Beta** for Flutter. You should install [v2.4.0-beta01](https://pub.dev/packages/reown_flutter_v2/versions/2.4.0-beta01) to try it out
+Link Mode is currently in **Beta** for Flutter. You should install [v2.4.0-beta01](https://pub.dev/packages/walletconnect_flutter_v2/versions/2.4.0-beta01) to try it out
 :::
 
 ### How to enable it:
@@ -20,7 +20,7 @@ Link Mode is currently in **Beta** for Flutter. You should install [v2.4.0-beta0
 3. Set the `linkMode` property to `true`:
 
 ```dart
-final walletKit = WalletKit(
+final web3wallet = Web3Wallet(
   projectId: '123.....',
   metadata: const PairingMetadata(
     ...
@@ -72,7 +72,7 @@ void _onLinkCaptured(String link) async {
 For more information on how to configure universal links for your app, refer to the [Apple Documentation](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=swift).<br />
 For a debugging guide, visit the [Debugging Universal Links](https://developer.apple.com/documentation/technotes/tn3155-debugging-universal-links) page.<br />
 
-You can check our Flutter Sample Wallet's [AppDelegate file](https://github.com/WalletConnect/ReownFlutterV2/blob/develop/example/wallet/ios/Runner/AppDelegate.swift) as a reference.
+You can check our Flutter Sample Wallet's [AppDelegate file](https://github.com/WalletConnect/WalletConnectFlutterV2/blob/develop/example/wallet/ios/Runner/AppDelegate.swift) as a reference.
 
 </PlatformTabItem>
 <PlatformTabItem value="android">
@@ -97,7 +97,7 @@ For more information on how to configure app links for your app, refer to the [A
 For enabling links to app content check [this](https://developer.android.com/training/app-links/deep-linking) documentation page.<br />
 For more information on how to interact with other apps using intents, see [Android Intent Documentation](https://developer.android.com/training/basics/intents).
 
-You can check out tge Flutter Sample Wallet's [MainActivity file](https://github.com/WalletConnect/ReownFlutterV2/blob/develop/example/wallet/android/app/src/main/kotlin/com/example/wallet/MainActivity.kt) as a reference.
+You can check out tge Flutter Sample Wallet's [MainActivity file](https://github.com/WalletConnect/WalletConnectFlutterV2/blob/develop/example/wallet/android/app/src/main/kotlin/com/example/wallet/MainActivity.kt) as a reference.
 
 </PlatformTabItem>
 </PlatformTabs>
