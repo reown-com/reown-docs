@@ -1,9 +1,9 @@
 # Theming
 
-To theme the `Web3Modal` you must wrap your `MaterialApp` with a `Web3ModalTheme` widget.
+To theme the `AppKitModal` you must wrap your `MaterialApp` with a `ReownAppKitModalTheme` widget.
 
-```dart
-return Web3ModalTheme(
+```javascript
+return ReownAppKitModalTheme(
   child: MaterialApp(
     ...
   ),
@@ -12,13 +12,13 @@ return Web3ModalTheme(
 
 ### Default themes
 
-**Web3ModalTheme** already comes with 2 default themes.<br />
-A light option: `Web3ModalColors.lightMode`<br />
-A dark option: `Web3ModalColors.darkMode`.<br />
-You can switch between them by toggling the `isDarkMode:` parameter in `Web3ModalTheme` like so:
+_ReownAppKitModalTheme_ already comes with 2 default themes.<br />
+A light option: `ReownAppKitModalColors.lightMode`<br />
+A dark option: `ReownAppKitModalColors.darkMode`.<br />
+You can switch between them by toggling the `isDarkMode:` parameter in `ReownAppKitModalTheme` like so:
 
-```dart
-return Web3ModalTheme(
+```javascript
+return ReownAppKitModalTheme(
   isDarkMode: _isDarkMode,
   child: MaterialApp(
     ...
@@ -26,27 +26,29 @@ return Web3ModalTheme(
 );
 ```
 
+You can check [Flutter's doc here](https://api.flutter.dev/flutter/widgets/WidgetsBinding/handlePlatformBrightnessChanged.html) to know how to listen to device's theme changes
+
 ### Custom themes
 
-You can define your own light and dark themes by tweaking `Web3ModalThemeData` parameters. For instance, if you want to change the main foreground and background color you could do:
+You can define your own light and dark themes by tweaking `ReownAppKitModalThemeData` parameters. For instance, if you want to change the main foreground and background color you could do:
 
-```dart
-final _themeData = Web3ModalThemeData(
-  lightColors: Web3ModalColors.lightMode.copyWith(
+```javascript
+final _themeData = ReownAppKitModalThemeData(
+  lightColors: ReownAppKitModalColors.lightMode.copyWith(
     accent100: Colors.red,
     background125: Colors.yellow.shade300,
   ),
-  darkColors: Web3ModalColors.darkMode.copyWith(
+  darkColors: ReownAppKitModalColors.darkMode.copyWith(
     accent100: Colors.green,
     background125: Colors.brown,
   ),
 );
 ```
 
-and pass this object to `Web3ModalTheme`'s `themeData:` parameter:
+and pass this object to `ReownAppKitModalTheme`'s `themeData:` parameter:
 
-```dart
-return Web3ModalTheme(
+```javascript
+return ReownAppKitModalTheme(
   isDarkMode: _isDarkMode,
   themeData: _themeData,
   child: MaterialApp(
@@ -57,48 +59,48 @@ return Web3ModalTheme(
 
 ### Preset theme shortcuts
 
-`Web3ModalTheme` comes with default border radiuses but you can override these values by passing your own values to `Web3ModalRadiuses()` object and then adding this object to `Web3ModalThemeData`'s `radiuses:` parameter.
+`ReownAppKitModalTheme` comes with default border radiuses but you can override these values by passing your own values to `ReownAppKitModalRadiuses()` object and then adding this object to `ReownAppKitModalThemeData`'s `radiuses:` parameter.
 
-But you can also set **no corner radiuses** at all by setting this value to `Web3ModalRadiuses.square` or **everything circular** by using `Web3ModalRadiuses.circular`
+But you can also set _no corner radiuses_ at all by setting this value to `ReownAppKitModalRadiuses.square` or _everything circular_ by using `ReownAppKitModalRadiuses.circular`
 
-```dart
-final _themeData = Web3ModalThemeData(
-  lightColors: Web3ModalColors.lightMode.copyWith(
+```javascript
+final _themeData = ReownAppKitModalThemeData(
+  lightColors: ReownAppKitModalColors.lightMode.copyWith(
     accent100: Colors.red,
     background125: Colors.yellow.shade300,
   ),
-  darkColors: Web3ModalColors.darkMode.copyWith(
+  darkColors: ReownAppKitModalColors.darkMode.copyWith(
     accent100: Colors.green,
     background125: Colors.brown,
   ),
-  // No corner radius, modal will look square, use Web3ModalRadiuses.circular to make everything circular
-  radiuses: Web3ModalRadiuses.square,
+  // No corner radius, modal will look square, use ReownAppKitModalRadiuses.circular to make everything circular
+  radiuses: ReownAppKitModalRadiuses.square,
 );
 ```
 
 :::info
-If you don't wrap your `MaterialApp` with a `Web3ModalTheme` widget, the `Web3Modal` will use the default light theme.
+If you don't wrap your `MaterialApp` with a `ReownAppKitModalTheme` widget, the `ReownAppKitModal` will use the default light theme.
 :::
 
-`Web3ModalTheme` is an InheritedWidget so it comes with a few handy methods for you to use:
+`ReownAppKitModalTheme` is an InheritedWidget so it comes with a few handy methods for you to use:
 
 Check if the current time is dark:
 
-```dart
-final isDarkMode = Web3ModalTheme.of(context).isDarkMode;
-final isMaybeDarkMode = Web3ModalTheme.maybeOf(context)?.isDarkMode;
+```javascript
+final isDarkMode = ReownAppKitModalTheme.of(context).isDarkMode;
+final isMaybeDarkMode = ReownAppKitModalTheme.maybeOf(context)?.isDarkMode;
 ```
 
-Get current `Web3ModalThemeData` object:
+Get current `ReownAppKitModalThemeData` object:
 
-```dart
-final data = Web3ModalTheme.getDataOf(context);
+```javascript
+final data = ReownAppKitModalTheme.getDataOf(context);
 ```
 
-Get current `Web3ModalColors` object:
+Get current `ReownAppKitModalColors` object:
 
-```dart
-final colors = Web3ModalTheme.colorsOf(context);
+```javascript
+final colors = ReownAppKitModalTheme.colorsOf(context);
 ```
 
-You can build your own theme by creating a `Web3ModalThemeData` object. _(More and easier customization options will come in the future)_
+You can build your own theme by creating a `ReownAppKitModalThemeData` object. _(More and easier customization options will come in the future)_

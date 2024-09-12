@@ -8,14 +8,14 @@ import YoutubeEmbed from '../../../components/YoutubeEmbed'
 
 # Flutter
 
-With Web3Modal Flutter, you can easily let people interact with multiple EVM compatible wallets and blockchains.
+With AppKit Flutter, you can easily let people interact with multiple EVM compatible wallets and blockchains.
 
 Let's get started with the installation and configuration!
 
 ## Installation
 
-1.  - Add `web3modal_flutter` as dependency in your `/pubspec.yaml` and run `flutter pub get` (check out the [latest version](https://pub.dev/packages/web3modal_flutter/install))
-    - Or simply run `flutter pub add web3modal_flutter`
+1.  - Add `reown_appkit` as dependency in your `pubspec.yaml` and run `flutter pub get` (check out the [latest version](https://pub.dev/packages/reown_appkit/install))
+    - Or simply run `flutter pub add reown_appkit`
 2.  - Locate your `/ios/Podfile` file and add the following as the first line:
 
 ```ruby
@@ -27,10 +27,10 @@ platform :ios, '13.0'
 
 ### Enable Installed Wallet Detection
 
-To enable Web3Modal to detect wallets installed on the device, you need to make specific changes to the native sides of the project.
+To enable AppKit to detect installed wallets on the device, you need to make specific changes to the native sides of the project.
 
 <PlatformTabs
-	groupId="w3m_flutter"
+	groupId="appkit_flutter"
 	activeOptions={["ios","android"]}
 >
 <PlatformTabItem value="ios">
@@ -38,7 +38,7 @@ To enable Web3Modal to detect wallets installed on the device, you need to make 
 1. Open your `Info.plist` file.
 2. Locate the `<key>LSApplicationQueriesSchemes</key>` section.
 3. Add the desired wallet schemes as string entries within the `<array>`. These schemes represent the wallets you want to detect.
-4. Refer to our [Info.plist example file](https://github.com/WalletConnect/react-native-examples/blob/main/dapps/ModalUProvider/ios/ModalUProvider/Info.plist) for a detailed illustration.
+4. Refer to our [Info.plist example file](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/modal/ios/Runner/Info.plist) for a detailed illustration.
 
 Example:
 
@@ -85,17 +85,11 @@ Example:
 
 ### Enable Coinbase Wallet
 
-:::info VERSION DEPENDENCY
-
-Coinbase Wallet is available from **web3modal_flutter: ^3.1.0** and higher.
-
-:::
-
 Since Coinbase Wallet uses its own SDK, there are a few extra but simply steps to do if you are planning to include and support it.
 
 
 <PlatformTabs
-	groupId="w3m_flutter"
+	groupId="appkit_flutter"
 	activeOptions={["ios","android"]}
 >
 <PlatformTabItem value="ios">
@@ -148,7 +142,7 @@ override func application(_ application: UIApplication, continue userActivity: N
 }
 ```
 
-Checkout out the [AppDelegate.swift](https://github.com/WalletConnect/Web3ModalFlutter/blob/master/example/ios/Runner/AppDelegate.swift) file from our sample dapp for reference.
+Checkout out the [AppDelegate.swift](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/modal/ios/Runner/AppDelegate.swift) file from our sample dapp for reference.
 
 </PlatformTabItem>
 <PlatformTabItem value="android">
