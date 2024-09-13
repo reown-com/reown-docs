@@ -1,0 +1,266 @@
+---
+pagination_next: appkit/react/core/installation
+title: Migrate from AppKit v5 to AppKit v6
+---
+
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+# Upgrade Guide
+
+## AppKit v5 to AppKit v6 Upgrade Guide
+
+This guide will help you migrate from AppKit v5 to the latest reown AppKit v6.
+
+<img src="/img/appkit.png" />
+
+### Installation
+
+<PlatformTabs
+	groupId="w3m"
+	activeOptions={["react", "javascript"]}
+>
+<PlatformTabItem value="react">
+
+To upgrade from AppKit v5 to AppKit v6 start by removing AppKit v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `Wagmi` and `Viem`.
+
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
+```
+
+</PlatformTabItem>
+<PlatformTabItem value="javascript">
+
+To upgrade from AppKit v5 to AppKit v6 start by removing AppKit v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `@wagmi/core` and `Viem`.
+
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-wagmi 
+```
+
+</PlatformTabItem>
+</PlatformTabs>
+
+### Implementation
+
+<PlatformTabs
+	groupId="w3m"
+	activeOptions={["react", "javascript"]}
+>
+<PlatformTabItem value="react">
+
+You can start the AppKit configuration by using either the **default** or **advanced** mode.
+
+Default mode will implement WalletConnect, Browser Wallets (injected) and Coinbase options in addition to Wagmi's public clients and [WalletConnect's provider](../../cloud/blockchain-api.mdx).
+:::note
+Make sure to set your configuration outside React components to avoid unwanted rerenders.
+:::
+
+<Tabs>
+<TabItem value="default" label="Default">
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/chains`
+
+```tsx
+/* highlight-delete-start */
+- import { createWeb3Modal } from '@web3modal/wagmi/react'
+- import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
+- import { WagmiConfig } from 'wagmi'
+- import { arbitrum, mainnet } from 'viem/chains'
+/* highlight-delete-end */
+
+/* highlight-add-start */
++ import { createAppKit } from '@reown/appkit'
++ import { arbitrum, mainnet } from '@reown/appkit/chains'
++ import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+/* highlight-add-end */
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+```
+
+Then create `wagmiAdapter` using `EVMWagmiClient` function as shown below
+
+```tsx
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
+
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://web3modal.com',
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+/* Remove the existing Wagmi Config */
+/* highlight-delete-start */
++ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+/* highlight-delete-end */
+
+/* Create the Wagmi adapter */
+/* highlight-add-start */
+const wagmiAdapter = new EVMWagmiClient({})
+/* highlight-add-end */
+```
+Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
+
+```tsx
+/* Call createWeb3Modal function */
+/* highlight-delete-start */
+- createWeb3Modal({ wagmiConfig, projectId, chains })
+/* highlight-delete-end */
+
+/* highlight-add-start */
++ const modal = createAppKit({
++  adapters: [wagmiAdapter], // optional
++  caipNetworks: [mainnet, arbitrum],
++  metadata: metadata, // optional
++  projectId,
++  features: {
++    analytics: true, // optional - you can also add other features like swaps, onramp, etc
++  }
++ })
+/* highlight-add-end */
+
+export default function App() {
+  return (
+    <>
+/* highlight-delete-start */
+-      <WagmiConfig config={wagmiConfig}>
+/* highlight-delete-end */
+/* highlight-add-start */
++      <WagmiConfig config={wagmiAdapter.wagmiConfig as Config}>
+/* highlight-add-end */
+
+      <QueryClientProvider client={queryClient}>
+          <HomePage />
+       </QueryClientProvider>
+      </WagmiConfig>
+    </>
+  )
+}
+```
+
+</TabItem>
+</Tabs>
+
+</PlatformTabItem>
+<PlatformTabItem value="javascript">
+
+Start by importing AppKit packages, then create wagmiAdapter using your own settings or the default presets as shown below. Finally, pass wagmiAdapter to AppKit as one of the adapters.
+
+<Tabs>
+<TabItem value="default" label="Default">
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/chains`
+
+```ts
+/* highlight-delete-start */
+- import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
+- import { createConfig } from '@wagmi/core'
+- import { arbitrum, mainnet } from 'viem/chains'
+/* highlight-delete-end */
+
+/* highlight-add-start */
++ import { createAppKit } from '@reown/appkit'
++ import { arbitrum, mainnet } from '@reown/appkit/chains'
++ import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+/* highlight-add-end */
+```
+
+Then create `wagmiAdapter` using `EVMWagmiClient` function as shown below
+
+```tsx
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
+
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://web3modal.com',
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+/* Remove the existing Wagmi Config */
+/* highlight-delete-start */
++ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+/* highlight-delete-end */
+
+/* Create the Wagmi adapter */
+/* highlight-add-start */
+const wagmiAdapter = new EVMWagmiClient({})
+/* highlight-add-end */
+/* highlight-add-end */
+```
+
+Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
+
+```ts
+/* highlight-delete-start */
++ createWeb3Modal({
++   wagmiConfig,
++   projectId,
++   enableAnalytics: true // Optional - defaults to your Cloud configuration
++ })
+/* highlight-delete-end */
+
+/* highlight-add-start */
++ const modal = createAppKit({
++  adapters: [wagmiAdapter], // optional
++  caipNetworks: [mainnet, arbitrum],
++  metadata: metadata, // optional
++  projectId,
++  features: {
++    analytics: true, // optional - you can also add other features like swaps, onramp, etc
++  }
++ })
+/* highlight-add-end */
+```
+</TabItem>
+</Tabs>
+
+</PlatformTabItem>
+</PlatformTabs>
+
+### Trigger the modal
+
+<PlatformTabs
+	groupId="w3m"
+	activeOptions={["react", "javascript"]}
+>
+<PlatformTabItem value="react">
+
+```tsx
+/* highlight-delete-start */
+- import { useWeb3Modal } from '@web3modal/wagmi/react'
+/* highlight-delete-end */
+/* highlight-add-start */
++ import { useAppKit } from '@reown/appkit/react'
+/* highlight-add-end */
+
+function HomePage() {
+  const { open } = useAppKit()
+
+  return <button onClick={() => open()}>Connect</button>
+}
+```
+
+Learn more about AppKit v6 [here](../react/core/installation.mdx)
+
+</PlatformTabItem>
+<PlatformTabItem value="javascript">
+
+Use your own button with to open the modal
+
+```js
+document.getElementById('my-button').addEventListener('click', () => {
+    modal.open()
+})
+
+<button id="my-button">Connect Wallet</button>
+```
+
+Learn more about AppKit v6 JavaScript [here](../javascript/core/installation.mdx)
+
+</PlatformTabItem>
+</PlatformTabs>
