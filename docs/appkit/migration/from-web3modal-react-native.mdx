@@ -14,7 +14,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers"]}>
 
   <PlatformTabItem value="wagmi">
-  ### Step 1. Replace the corresponding dependencies in your package.json
+  ### Step 1. Replace the dependencies in your code and `package.json`
 
   ```json
   {
@@ -23,11 +23,13 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
       "@web3modal/wagmi-react-native": "2.0.4",
       "@web3modal/email-wagmi-react-native": "2.0.4",
       "@web3modal/coinbase-wagmi-react-native": "2.0.4",
+      "@web3modal/siwe-react-native": "2.0.4",
       /* highlight-delete-end */
       /* highlight-add-start */
       "@reown/appkit-wagmi-react-native": '1.0.0',
       "@reown/appkit-auth-wagmi-react-native": '1.0.0',
       "@reown/appkit-coinbase-wagmi-react-native": '1.0.0',
+      "@reown/appkit-siwe-react-native": "1.0.0",
       /* highlight-add-end */
     }
   }
@@ -120,7 +122,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   <PlatformTabItem value="ethers">
   * If you are using ethers v5, follow the same steps but replacing `ethers` with `ethers5`
 
-  ### Step 1. Replace the corresponding dependencies in your package.json
+  ### Step 1. Replace the dependencies in your code and `package.json`
   ```json
   {
     "dependencies": {
@@ -129,16 +131,17 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
       "@web3modal/ethers5-react-native": "2.0.4",
       "@web3modal/email-ethers-react-native": "2.0.4",
       "@web3modal/coinbase-ethers-react-native": "2.0.4",
+      "@web3modal/siwe-react-native": "2.0.4",
       /* highlight-delete-end */
       /* highlight-add-start */
       "@reown/appkit-ethers-react-native": '1.0.0',
       "@reown/appkit-auth-ethers-react-native": '1.0.0',
       "@reown/appkit-coinbase-ethers-react-native": '1.0.0',
+      "@reown/appkit-siwe-react-native": "1.0.0",
       /* highlight-add-end */
     }
   }
   ```
-  * Replace with `@reown/appkit-ethers5-*` is applies
   * Run `yarn install` after replacing the packages
 
   ### Step 2. Update your AppKit config
