@@ -244,7 +244,7 @@ module.exports = {
               collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'To Reown AppKit', id: 'appkit/upgrade/from-WCv5-to-reown' },
+                { type: 'doc', label: 'To Reown AppKit', id: 'appkit/upgrade/from-w3m-to-reown' },
                 { type: 'doc', label: 'AppKit v2 to v5', id: 'appkit/upgrade/appkitv2' },
               ]
             },
