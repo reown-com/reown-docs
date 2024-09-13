@@ -101,7 +101,7 @@ messaging().onMessage(async notification => {
    let metadata
 
    if(tag == 1108) {
-        metadata = await walletKit.notifications.getMetadata({ topic });
+        metadata = await WalletKit.notifications.getMetadata({ topic });
    } else {
         // session proposals contain metadata in the request itself
         metadata = decryptedMessage.params.proposer.metadata
