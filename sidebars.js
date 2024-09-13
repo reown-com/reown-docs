@@ -255,6 +255,7 @@ module.exports = {
                   ]
                 },*/
                 { type: 'doc', label: 'To Reown AppKit', id: 'appkit/upgrade/from-WCv5-to-reown' },
+                { type: 'doc', label: 'AppKit v2 to v5', id: 'appkit/upgrade/appkitv2' },
                // { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },
                // { type: 'doc', label: 'From Anza Adapter', id: 'appkit/migration/from-anza-adapter-react' },
               ]
