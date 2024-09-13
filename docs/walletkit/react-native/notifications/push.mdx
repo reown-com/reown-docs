@@ -84,7 +84,7 @@ messaging().onMessage(async notification => {
 
     // decrypt the message
     // note this is static method and can be called without initializing the walletKit
-    const decryptedMessage = await walletKit.notifications.decryptMessage({
+    const decryptedMessage = await WalletKit.notifications.decryptMessage({
     topic,
     encryptedMessage: message,
   });
