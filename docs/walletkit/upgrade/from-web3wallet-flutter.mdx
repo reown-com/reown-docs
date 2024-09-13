@@ -37,7 +37,7 @@ import 'package:reown_walletkit/reown_walletkit.dart';
 /* highlight-add-end */
 ```
 
-### Step 2. Update your AppKit's theme related classes
+### Step 2. Update main classes
 
 <Table
   headers={['Old', 'New']}
@@ -53,10 +53,8 @@ import 'package:reown_walletkit/reown_walletkit.dart';
   ]}
 />
 
-### Step 3. Update your Components usage
-Update your web3app instance within the service:
+### Step 3. Update error definitions
 
-If you use to subscribe to `web3App` events you should now change it to `appKit`. Example:
 ```tsx
 /* highlight-delete-start */
 Errors.getSdkError(Errors.USER_REJECTED);
@@ -65,8 +63,6 @@ Errors.getSdkError(Errors.USER_REJECTED);
 Errors.getSdkError(Errors.USER_REJECTED).toSignError();
 /* highlight-add-end */
 ```
-
-Same for anything related to `_w3mService.web3App!...`
 
 ### Step 5. Update any exception type
 
