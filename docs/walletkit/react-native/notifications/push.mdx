@@ -75,7 +75,7 @@ messaging().setBackgroundMessageHandler(async notification => {
 Now that we have the notifications listeners setup, we can start processing the incoming notifications.
 
 ```ts
-import { walletKit } from '@reown/walletkit';
+import { WalletKit } from '@reown/walletkit';
 import messaging from '@react-native-firebase/messaging';
 
 messaging().onMessage(async notification => {
@@ -84,7 +84,7 @@ messaging().onMessage(async notification => {
 
     // decrypt the message
     // note this is static method and can be called without initializing the walletKit
-    const decryptedMessage = await walletKit.notifications.decryptMessage({
+    const decryptedMessage = await WalletKit.notifications.decryptMessage({
     topic,
     encryptedMessage: message,
   });
@@ -101,7 +101,7 @@ messaging().onMessage(async notification => {
    let metadata
 
    if(tag == 1108) {
-        metadata = await walletKit.notifications.getMetadata({ topic });
+        metadata = await WalletKit.notifications.getMetadata({ topic });
    } else {
         // session proposals contain metadata in the request itself
         metadata = decryptedMessage.params.proposer.metadata

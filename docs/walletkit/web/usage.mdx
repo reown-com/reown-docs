@@ -22,7 +22,7 @@ const core = new Core({
   projectId: process.env.PROJECT_ID
 })
 
-const walletKit = await walletKit.init({
+const walletKit = await WalletKit.init({
   core, // <- pass the shared `core` instance
   metadata: {
     name: 'Demo app',
@@ -39,7 +39,7 @@ A session is a connection between a dapp and a wallet. It is established when a 
 
 ### Namespace Builder
 
-With WalletKit v1.5.1 (and @walletconnect/utils v2.6.1) we've published a helper utility that greatly reduces the complexity of parsing the `required` and `optional` namespaces. It accepts as parameters a `session proposal` along with your user's `chains/methods/events/accounts` and returns ready-to-use `namespaces` object.
+With WalletKit (and @walletconnect/utils) we've published a helper utility that greatly reduces the complexity of parsing the `required` and `optional` namespaces. It accepts as parameters a `session proposal` along with your user's `chains/methods/events/accounts` and returns ready-to-use `namespaces` object.
 
 ```javascript
 // util params
