@@ -286,7 +286,7 @@ module.exports = {
               collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'To Reown WalletKit', id: 'walletkit/upgrade/from-web3wallet-to-reown' },
+                { type: 'doc', label: 'From Web3Wallet', id: 'walletkit/upgrade/from-web3wallet-to-reown' },
               ]
             },
           ]
