@@ -8,7 +8,7 @@ import Button from '../../../components/button'
 
 # Sign In With Ethereum
 
-AppKit provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a new form of authentication that enables users to control their digital identity with their Ethereum account.
+AppKit provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a form of authentication that enables users to control their digital identity with their Ethereum account.
 SIWE is a standard also known as [EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361).
 
 ## One-Click Auth
@@ -32,7 +32,7 @@ import {
   formatMessage,
   type SIWEVerifyMessageArgs,
   type SIWECreateMessageArgs
-} from '@web3modal/siwe-react-native';
+} from '@reown/appkit-siwe-react-native';
 
 export const siweConfig = createSIWEConfig({
   getNonce: async (): Promise<string> => {
@@ -96,12 +96,12 @@ export const siweConfig = createSIWEConfig({
 ```
 
 ## Initialize AppKit with your `siweConfig`
-Add the siwe configuration in `createWeb3Modal` initialization
+Add the siwe configuration in `createAppKit` initialization
 
 ```ts
 import { siweConfig } from './siweConfig.ts'
 
-createWeb3Modal({
+createAppKit({
   //..
   /* highlight-add-start */
   siweConfig
@@ -159,7 +159,7 @@ interface SIWEConfig {
 Verify a SIWE signature. Internally it calls your backend verification method.
 
 ```ts
-import { verifySignature } from '@web3modal/siwe-react-native'
+import { verifySignature } from '@reown/appkit-siwe-react-native'
 
 const isValid = await verifySignature({ address, message, signature, chainId, projectId })
 ```
@@ -169,7 +169,7 @@ const isValid = await verifySignature({ address, message, signature, chainId, pr
 Get the chain ID from the SIWE message.
 
 ```ts
-import { getChainIdFromMessage } from '@web3modal/siwe-react-native'
+import { getChainIdFromMessage } from '@reown/appkit-siwe-react-native'
 
 const chainId = getChainIdFromMessage(message)
 ```
@@ -179,7 +179,7 @@ const chainId = getChainIdFromMessage(message)
 Get the address from the SIWE message.
 
 ```ts
-import { getAddressFromMessage } from '@web3modal/siwe-react-native'
+import { getAddressFromMessage } from '@reown/appkit-siwe-react-native'
 
 const address = getAddressFromMessage(message)
 ```

@@ -13,7 +13,11 @@ Actions are functions that will help you control the modal, subscribe to wallet 
 ## Open and close the modal
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createAppKit({
+   adapters: [wagmiAdapter], 
+   caipNetworks: [mainnet, arbitrum],
+   projectId 
+  })
 
 modal.open()
 
@@ -105,7 +109,11 @@ const { name, icon } = modal.getWalletInfo()
 Get the current value of the modal's state
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createAppKit({
+   adapters: [wagmiAdapter], 
+   caipNetworks: [mainnet, arbitrum],
+   projectId 
+  })
 
 const { open, selectedNetworkId } = modal.getState()
 ```
@@ -131,7 +139,7 @@ The modal state is an object of two properties:
 You can also subscribe to the modal's state changes.
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createAppKit({ wagmiConfig, projectId })
 
 modal.subscribeState(newState => console.log(newState))
 ```
@@ -141,7 +149,7 @@ modal.subscribeState(newState => console.log(newState))
 Set the `themeMode` after creating the modal
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createAppKit({ wagmiConfig, projectId })
 
 modal.setThemeMode('dark')
 ```
@@ -149,7 +157,7 @@ modal.setThemeMode('dark')
 Get the current `themeMode` value by calling the `getThemeMode` function
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createAppKit({ wagmiConfig, projectId })
 
 const themeMode = modal.getThemeMode()
 ```
@@ -159,7 +167,7 @@ const themeMode = modal.getThemeMode()
 Set the `themeVariables` after creating the modal
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createAppKit({ wagmiConfig, projectId })
 
 modal.setThemeVariables({ ... })
 ```
@@ -167,7 +175,7 @@ modal.setThemeVariables({ ... })
 Get the current `themeVariables` value by calling the `getThemeVariables` function
 
 ```ts
-const modal = createWeb3Modal({ wagmiConfig, projectId })
+const modal = createAppKit({ wagmiConfig, projectId })
 
 const themeMode = modal.getThemeVariables()
 ```

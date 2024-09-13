@@ -23,7 +23,7 @@ WalletConnect uses permissions expressed as ReCaps to enable a One-Click Authent
 <TabItem value="one-click-auth" label="One-Click Auth">
 
 ```bash npm2yarn
-npm i @web3modal/siwe
+npm i @reown/appkit-siwe siwe
 ```
 
 </TabItem>
@@ -36,7 +36,7 @@ For a better UX we recommend using One-Click Auth.
 Install the AppKit SIWE package, additionally we also recommend installing [siwe](https://docs.login.xyz/) which will abstract a lot of the required logic.
 
 ```bash npm2yarn
-npm i @web3modal/siwe siwe
+npm i @reown/appkit-siwe siwe
 ```
 
 </TabItem>
@@ -49,10 +49,17 @@ npm i @web3modal/siwe siwe
 ## Initialize AppKit with your `siweConfig`
 
 ```ts
-createWeb3Modal({
-  //..
-  siweConfig
-})
+// Pass your siweConfig inside the createAppKit() function
+  const modal = createAppKit({
+      adapters: [wagmiAdapter], //or your Ethers adapter
+      projectId,
+      caipNetworks: [mainnet, arbitrum],
+      defaultCaipNetwork: mainnet,
+      features: {
+        analytics: true, // Optional - defaults to your Cloud configuration
+      },
+      siweConfig: siweConfig // pass your siweConfig
+  })
 ```
 
 ## SIWE Config Parameters

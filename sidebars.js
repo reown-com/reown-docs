@@ -234,7 +234,8 @@ module.exports = {
                 { type: 'doc', label: 'One-Click Auth', id: 'appkit/features/one-click-auth' },
                 { type: 'doc', label: 'On-Ramp', id: 'appkit/features/onramp' },
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
-                { type: 'doc', label: 'Solana', id: 'appkit/features/solana' }
+                { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
+                { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' }
               ]
             },
             'appkit/upgrade',
@@ -297,6 +298,7 @@ module.exports = {
             'appkit/react/core/components',
             'appkit/react/core/custom-connectors',
             'appkit/react/core/siwe',
+            'appkit/react/core/multichain',
             'appkit/react/core/theming',
             'appkit/react/core/resources'
           ]
@@ -388,6 +390,7 @@ module.exports = {
             'appkit/next/core/components',
             'appkit/next/core/custom-connectors',
             'appkit/next/core/siwe',
+            'appkit/next/core/multichain',
             'appkit/next/core/theming',
             'appkit/next/core/resources'
           ]
@@ -479,6 +482,7 @@ module.exports = {
             'appkit/vue/core/components',
             'appkit/vue/core/custom-connectors',
             'appkit/vue/core/siwe',
+            'appkit/vue/core/multichain',
             'appkit/vue/core/theming',
             'appkit/vue/core/resources'
           ]
@@ -570,6 +574,7 @@ module.exports = {
             'appkit/javascript/core/components',
             'appkit/javascript/core/custom-connectors',
             'appkit/javascript/core/siwe',
+            'appkit/javascript/core/multichain',
             'appkit/javascript/core/theming',
             'appkit/javascript/core/resources'
           ]

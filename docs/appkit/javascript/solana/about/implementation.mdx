@@ -6,16 +6,20 @@ AppKit Solana is built on top of the AppKit library and provides a set of compon
 On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
 
 ```tsx
-import { createWeb3Modal, defaultSolanaConfig } from '@web3modal/solana'
-import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+import { createAppKit, type CaipNetwork } from '@reown/appkit/react'
+import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/react'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
+import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 
-// 0. Setup chains
-const chains = [solana, solanaTestnet, solanaDevnet]
+// 0. Set up Solana Adapter
+const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Create solanaConfig
+// 2. Create a metadata object - optional
 const metadata = {
   name: 'AppKit',
   description: 'AppKit Solana Example',
@@ -23,19 +27,14 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
-const solanaConfig = defaultSolanaConfig({
-  metadata,
-  chains,
-  projectId
-})
-
 // 3. Create modal
-const modal = createWeb3Modal({
-  solanaConfig,
-  chains,
+createAppKit({
+  adapters: [solanaWeb3JsAdapter],
+  caipNetworks: [solana, solanaTestnet, solanaDevnet],
+  metadata: metadata,
   projectId,
-  wallets: [
-      // Solana wallet adapters (check Custom connectors for more info)
-  ]
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  }
 })
 ```

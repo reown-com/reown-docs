@@ -5,21 +5,14 @@ In your `App.vue` file set up the following configuration.
 
 ```html
 <script setup lang="ts">
-  import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/vue'
+  import { createAppKit, useAppKit } from '@reown/appkit/vue'
+  import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
+  import { mainnet, arbitrum } from '@reown/appkit/chains'
 
   // 1. Get projectId from https://cloud.walletconnect.com
   const projectId = 'YOUR_PROJECT_ID'
 
-  // 2. Set chains
-  const mainnet = {
-    chainId: 1,
-    name: 'Ethereum',
-    currency: 'ETH',
-    explorerUrl: 'https://etherscan.io',
-    rpcUrl: 'https://cloudflare-eth.com'
-  }
-
-  // 3. Create your application's metadata object
+  // 2. Create your application's metadata object
   const metadata = {
     name: 'My Website',
     description: 'My Website description',
@@ -27,26 +20,18 @@ In your `App.vue` file set up the following configuration.
     icons: ['https://avatars.mywebsite.com/']
   }
 
-  // 4. Create Ethers config
-  const ethersConfig = defaultConfig({
-    /*Required*/
-    metadata,
-
-    /*Optional*/
-    enableEIP6963: true, // true by default
-    enableInjected: true, // true by default
-    enableCoinbase: true, // true by default
-    rpcUrl: '...', // used for the Coinbase SDK
-    defaultChainId: 1, // used for the Coinbase SDK
-  })
-
-  // 5. Create a AppKit instance
-  const modal = createWeb3Modal({
-    ethersConfig,
-    chains: [mainnet],
+  // 3. Create a AppKit instance
+   createAppKit({
+    adapters: [ethersAdapter],
+    caipNetworks: [mainnet, arbitrum],
     projectId,
-    enableAnalytics: true // Optional - defaults to your Cloud configuration  
+    features: {
+      analytics: true // Optional - defaults to your Cloud configuration
+    }
   })
+
+  // 4. Use modal composable
+  const modal = useAppKit()
 </script>
 
 <template> // Rest of your app ... </template>

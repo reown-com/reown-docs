@@ -21,14 +21,14 @@ Web components are global html elements that don't require importing.
 </TabItem>
 <TabItem value="hooks" label="Hooks">
 
-You can trigger the modal by calling the `open` function from `useWeb3Modal` hook.
+You can trigger the modal by calling the `open` function from `useAppKit` hook.
 
 ```tsx
-import { useWeb3Modal } from '@web3modal/solana/react'
+import { useAppKit } from '@reown/appkit/react'
 
 export default function ConnectButton() {
   // 4. Use modal hook
-  const { open } = useWeb3Modal()
+  const { open } = useAppKit()
 
   return (
     <>

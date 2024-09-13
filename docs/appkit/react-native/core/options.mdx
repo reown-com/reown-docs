@@ -4,10 +4,10 @@ import PlatformTabItem from '../../../components/PlatformTabItem'
 
 # Options
 
-The following options can be passed to the `createWeb3Modal` function:
+The following options can be passed to the `createAppKit` function:
 
 ```ts
-createWeb3Modal({ projectId, chains, ...options })
+createAppKit({ projectId, chains, ...options })
 ```
 
 ## defaultChain
@@ -20,7 +20,7 @@ You can set a desired chain for the initial connection:
 ```ts
 import { mainnet } from '@wagmi/core/chains'
 
-createWeb3Modal({
+createAppKit({
   //...
   defaultChain: mainnet
 })
@@ -37,7 +37,7 @@ const mainnet = {
   rpcUrl: 'https://cloudflare-eth.com',
 };
 
-createWeb3Modal({
+createAppKit({
   //...
   defaultChain: mainnet
 })
@@ -55,7 +55,7 @@ const mainnet = {
   rpcUrl: 'https://cloudflare-eth.com',
 };
 
-createWeb3Modal({
+createAppKit({
   //...
   defaultChain: mainnet
 })
@@ -71,7 +71,7 @@ Use your preferred clipboard library to allow AppKit use the clipboard to copy a
 ```ts
 import * as Clipboard from 'expo-clipboard' // or `@react-native-clipboard/clipboard`
 
-createWeb3Modal({
+createAppKit({
   //...
   clipboardClient: {
     setString: async (value: string) => {
@@ -86,7 +86,7 @@ createWeb3Modal({
 You can select tokens for AppKit to show the user's balance of. Each key represents the chain id of the token's blockchain.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   tokens: {
     1: {
@@ -104,7 +104,7 @@ createWeb3Modal({
 Add custom wallets to the modal's main view. `customWallets` is an array of objects, where each object contains specific information of a custom wallet.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   customWallets: [
     {
@@ -113,6 +113,7 @@ createWeb3Modal({
       homepage: 'www.mycustomwallet.com', // Optional
       image_url: 'my_custom_wallet_image', // Optional
       mobile_link: 'mobile_link', // Optional - Deeplink or universal
+      link_mode: 'universal_link', // Optional - Universal link if the wallet supports link-mode
       desktop_link: 'desktop_link', // Optional - Deeplink
       webapp_link: 'webapp_link', // Optional
       app_store: 'app_store', // Optional
@@ -129,7 +130,7 @@ These wallets will also show up first in `All Wallets` view.
 You can find the wallets ids in [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet)
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   featuredWalletIds: [
     '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369', // Rainbow
@@ -146,7 +147,7 @@ Unlike `featuredWalletIds`, these wallets will be the **only** ones shown in `Al
 You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   includeWalletIds: [
     '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369', // Rainbow
@@ -163,7 +164,7 @@ All other wallets will be shown in respective places.
 You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   excludeWalletIds: [
     '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust
@@ -177,7 +178,7 @@ createWeb3Modal({
 Enable analytics to get more insights on your users activity within your [WalletConnect Cloud's dashboard](https://cloud.walletconnect.com)
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   enableAnalytics: true
 })
@@ -188,7 +189,7 @@ createWeb3Modal({
 Add or override the modal's network images.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   // ...
   chainImages: {
     1: 'https://my.images.com/eth.png'

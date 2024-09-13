@@ -1,30 +1,30 @@
 import Button from '../../../components/button'
 
-### useWeb3ModalAccount
+### useAppKitAccount
 
 Hook that returns the client's information.
 
 ```tsx
-import { useWeb3ModalAccount } from '@web3modal/solana/react'
+import { useAppKitAccount } from '@web3modal/solana/react'
 
 function Components() {
-  const { address, chainId, isConnected } = useWeb3ModalAccount()
+  const { address, chainId, isConnected } = useAppKitAccount()
 
   //...
 }
 ```
 
-### useWeb3ModalProvider
+### useAppKitProvider
 
 Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
-import { useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
+import { useAppKitAccount, useAppKitrovider } from '@web3modal/solana/react'
 
 function SignMessage() {
   // 0. Get account and provider
-  const { address } = useWeb3ModalAccount()
-  const { walletProvider } = useWeb3ModalProvider()
+  const { address } = useAppKitAccount()
+  const { walletProvider } = useAppKitProvider()
 
   // 1. Create a function to sign a message
   async function onSignMessage() {
@@ -48,13 +48,13 @@ function SignMessage() {
 }
 ```
 
-### useWeb3ModalError
+### useAppKitError
 
 ```ts
-import { useWeb3ModalError } from '@web3modal/solana/react'
+import { useAppKitError } from '@web3modal/solana/react'
 
 function Components() {
-  const { error } = useWeb3ModalError()
+  const { error } = useAppKitError()
 
   //...
 }

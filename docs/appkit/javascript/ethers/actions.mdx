@@ -23,9 +23,20 @@ const chainId = modal.getChainId()
 ### switchNetwork
 
 ```ts
-const chainId = 137
+import { createAppKit } from '@reown/appkit/react'
+import { mainnet, arbitrum, polygon } from '@reown/appkit/chains'
 
-modal.switchNetwork(chainId)
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  projectId,
+  caipNetworks: [mainnet, arbitrum],
+  metadata: metadata,
+  features: {
+    analytics: true,
+  }
+})
+
+modal.switchNetwork(polygon)
 ```
 
 ### getIsConnected

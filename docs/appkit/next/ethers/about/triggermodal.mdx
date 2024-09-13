@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-To open AppKit you can use our [**web component**](../../core/components.mdx) or build your own button with AppKit [**hooks**](../../core/hooks.mdx#useweb3modal).
+To open AppKit you can use our [**web component**](../../core/components.mdx) or build your own button with AppKit [**hooks**](../../core/hooks.mdx#useAppKit).
 
 <Tabs>
 <TabItem value="components" label="Web Component">
@@ -21,14 +21,14 @@ Web components are global html elements that don't require importing.
 </TabItem>
 <TabItem value="hooks" label="Hooks">
 
-You can trigger the modal by calling the `open` function from `useWeb3Modal` hook.
+You can trigger the modal by calling the `open` function from `useAppKit` hook.
 
 ```tsx
-import { useWeb3Modal } from '@web3modal/ethers/react'
+import { useAppKit } from '@reown/appkit/react'
 
 export default function ConnectButton() {
   // 4. Use modal hook
-  const { open } = useWeb3Modal()
+  const { open } = useAppKit()
 
   return (
     <>
