@@ -11,7 +11,7 @@ import {
   TransactionInstruction,
   LAMPORTS_PER_SOL
 } from '@solana/web3.js'
-import { useWeb3ModalAccount, useWeb3ModalProvider } from '@reown/appkit/react'
+import { useAppKitAccount, useAppKitProvider } from '@reown/appkit/react'
 
 function deserializeCounterAccount(data?: Buffer): { count: number } {
   if (data?.byteLength !== 8) {
@@ -23,8 +23,8 @@ function deserializeCounterAccount(data?: Buffer): { count: number } {
   }
 }
 
-const { address, currentChain } = useWeb3ModalAccount()
-const { walletProvider, connection } = useWeb3ModalProvider()
+const { address, currentChain } = useAppKitAccount()
+const { walletProvider, connection } = useAppKitProvider()
 
 async function onIncrementCounter() {
   const PROGRAM_ID = new PublicKey('Cb5aXEgXptKqHHWLifvXu5BeAuVLjojQ5ypq6CfQj1hy')

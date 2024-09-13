@@ -142,7 +142,7 @@ Read more about Wagmi actions for smart contract interaction [here](https://wagm
 
 ```html
 <script setup lang="ts">
-  import { useWeb3ModalProvider, useWeb3ModalAccount } from "@reown/appkit/react";
+  import { useWeb3ModalProvider, useAppKitAccount } from "@reown/appkit/react";
   import { BrowserProvider, Contract, formatUnits } from 'ethers'
 
   const USDTAddress = '0x617f3112bf5397D0467D315cC709EF968D9ba546'
@@ -158,8 +158,8 @@ Read more about Wagmi actions for smart contract interaction [here](https://wagm
   ]
 
   function Components() {
-    const { address, isConnected } = useWeb3ModalAccount()
-    const { walletProvider } = useWeb3ModalProvider()
+    const { address, isConnected } = useAppKitAccount()
+    const { walletProvider } = useAppKitProvider()
 
     async function getBalance() {
     if (!isConnected) throw Error('User disconnected')
