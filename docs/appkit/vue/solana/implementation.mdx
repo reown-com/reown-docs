@@ -5,40 +5,41 @@ In your `App.vue` file set up the following configuration.
 
 ```html
 <script setup lang="ts">
-import { createWeb3Modal, defaultSolanaConfig } from '@web3modal/solana/vue'
-import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+  import { createAppKit, useAppKit} from '@reown/appkit-solana/vue'
+  import {PhantomWalletAdapter,SolflareWalletAdapter} from '@solana/wallet-adapter-wallets'
+  import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/vue'
+  import {solana, solanaTestnet, solanaDevnet} from '@reown/appkit/chains'
 
-// 0. Setup chains
-const chains = [solana, solanaTestnet, solanaDevnet]
+  // 0. Set up Solana Adapter
+  const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+  })
 
-// 1. Get projectId from https://cloud.walletconnect.com
-const projectId = 'YOUR_PROJECT_ID'
+  // 1. Get projectId from https://cloud.walletconnect.com
+  const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Create solanaConfig
-const metadata = {
-  name: 'Web3Modal',
-  description: 'Web3Modal Solana Example',
-  url: 'https://web3modal.com', // origin must match your domain & subdomain
-  icons: ['https://avatars.githubusercontent.com/u/37784886']
-}
+  // 2. Set up metadata
+  const metadata = {
+    name: 'Web3Modal',
+    description: 'Web3Modal Solana Example',
+    url: 'https://web3modal.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  }
 
-// 4. Create Solana config
-const solanaConfig = defaultSolanaConfig({
-  metadata,
-  chains,
-  projectId
-})
+  // 3. Create modal
+  createAppKit({
+    adapters: [solanaWeb3JsAdapter],
+    metadata: metadata,
+    caipNetworks: [solana, solanaTestnet, solanaDevnet],
+    projectId,
+    wallets: [
+      new PhantomWalletAdapter(),
+      new SolflareWalletAdapter(),
+    ]
+  })
 
-// 5. Create a Web3Modal instance
-createWeb3Modal({
-  solanaConfig,
-  chains,
-  projectId,
-  wallets: [
-      // Solana wallet adapters (check Custom connectors for more info)
-  ]
-})
-
+  // 4. Use modal composable
+  const modal = useAppKit()
 </script>
 
 <template> // Rest of your app ... </template>

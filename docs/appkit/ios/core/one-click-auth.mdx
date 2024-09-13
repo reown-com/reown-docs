@@ -12,10 +12,10 @@ Connecting a wallet, proving control of an address with an off-chain signature, 
 
 ### Configure your AppKit Client
 
-To integrate SIWE with AppKit, you need to configure your Web3Modal client using `AuthRequestParams`, which are required to create a SIWE message for the user to sign:
+To integrate SIWE with AppKit, you need to configure your AppKit client using `AuthRequestParams`, which are required to create a SIWE message for the user to sign:
 
 ```swift
-Web3Modal.configure(
+AppKit.configure(
     ...
     authRequestParams: authRequestParams,
     ...
@@ -47,12 +47,12 @@ extension AuthRequestParams {
 }
 ```
 
-Configuring your Web3Modal client with AuthRequestParams will prioritize authentication requests over regular session proposals. If the wallet supports One-Click Auth, the session will be created and the user will automatically authenticate without needing to send another SIWE request over personal_sign. If the wallet does not support One-Click Auth, it will fall back to the session proposal. In this case, to authenticate the user, you can send another session request to prove address ownership.
+Configuring your AppKit client with AuthRequestParams will prioritize authentication requests over regular session proposals. If the wallet supports One-Click Auth, the session will be created and the user will automatically authenticate without needing to send another SIWE request over personal_sign. If the wallet does not support One-Click Auth, it will fall back to the session proposal. In this case, to authenticate the user, you can send another session request to prove address ownership.
 
 To check whether the user has signed a SIWE message, subscribe to authResponsePublisher:
 
 ```swift
-Web3Modal.instance.authResponsePublisher.sink { (id, result) in
+AppKit.instance.authResponsePublisher.sink { (id, result) in
     switch result {
     case .success((session, cacaos)):
         // User has authenticated
@@ -74,7 +74,7 @@ let metadata = AppMetadata(
     redirect: try! AppMetadata.Redirect(native: "exampleApp://", universal: "https://example.com/example_dapp", linkMode: true)
 )
 
-Web3Modal.configure(
+AppKit.configure(
     ...
     metadata: metadata,
     ...
@@ -88,8 +88,8 @@ For a debugging guide, visit the [Debugging Universal Links](https://developer.a
 
 Once link mode is configured, your dApp will connect and send requests to wallets via universal links after receiving proof from the wallet that it also supports link mode.
 
-The wallet will also send responses using universal links. Your app needs to pass these responses to the Web3Modal client so it can process them.
+The wallet will also send responses using universal links. Your app needs to pass these responses to the AppKit client so it can process them.
 
 ```swift
-Web3Modal.instance.handleDeeplink(url)
+AppKit.instance.handleDeeplink(url)
 ```

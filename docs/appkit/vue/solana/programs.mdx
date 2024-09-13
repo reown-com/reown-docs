@@ -12,13 +12,13 @@ import {
   TransactionInstruction,
   LAMPORTS_PER_SOL
 } from '@solana/web3.js';
-import { useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react';
+import { useAppKitAccount, useAppKitProvider } from '@reown/appkit/react'
 
 export default {
   setup() {
     const counterMessage = ref('');
-    const { address, currentChain } = useWeb3ModalAccount();
-    const { walletProvider, connection } = useWeb3ModalProvider();
+    const { address, currentChain } = useAppKitAccount();
+    const { walletProvider, connection } = useAppKitProvider();
 
     function deserializeCounterAccount(data) {
       if (data?.byteLength !== 8) {

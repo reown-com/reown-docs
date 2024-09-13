@@ -1,8 +1,8 @@
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-Start by importing `createWeb3Modal`, and wagmi packages, then create your configs as shown below.
-Finally, pass your configuration to `createWeb3Modal`.
+Start by importing `createAppKit`, and wagmi packages, then create your configs as shown below.
+Finally, pass your configuration to `createAppKit`.
 
 :::info Note
 
@@ -15,7 +15,7 @@ import '@walletconnect/react-native-compat'
 import { WagmiProvider } from 'wagmi'
 import { mainnet, polygon, arbitrum } from '@wagmi/core/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createWeb3Modal, defaultWagmiConfig, Web3Modal } from '@web3modal/wagmi-react-native'
+import { createAppKit, defaultWagmiConfig, AppKit } from '@reown/appkit-wagmi-react-native'
 
 // 0. Setup queryClient
 const queryClient = new QueryClient()
@@ -40,7 +40,7 @@ const chains = [mainnet, polygon, arbitrum] as const
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
 
 // 3. Create modal
-createWeb3Modal({
+createAppKit({
   projectId,
   wagmiConfig,
   defaultChain: mainnet, // Optional
@@ -52,7 +52,7 @@ export default function App() {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         // Rest of your app...
-        <Web3Modal />
+        <AppKit />
       </QueryClientProvider>
     </WagmiProvider>
   )
@@ -65,16 +65,16 @@ To open AppKit modal you can use our **default** button component or build your 
 
 <Tabs>
 <TabItem value="components" label="Components">
-You can use default components to open the modal
+You can use our components to open the modal
 
 ```tsx
-import { W3mButton } from '@web3modal/wagmi-react-native'
+import { AppKitButton } from '@reown/appkit-wagmi-react-native'
 
 export default function ConnectView() {
   return (
     <>
       ...rest of your view
-      <W3mButton />
+      <AppKitButton />
     </>
   )
 }
@@ -85,14 +85,14 @@ Learn more about the AppKit components [here](../../core/components.mdx)
 </TabItem>
 <TabItem value="hooks" label="Hooks">
 
-You can trigger the modal by calling the `open` function from `useWeb3Modal` hook.
+You can trigger the modal by calling the `open` function from `useAppKit` hook.
 
 ```tsx
 import { Pressable, Text } from 'react-native'
-import { useWeb3Modal } from '@web3modal/wagmi-react-native'
+import { useAppKit } from '@reown/appkit-wagmi-react-native'
 
 export default function ConnectView() {
-  const { open } = useWeb3Modal()
+  const { open } = useAppKit()
 
   return (
     <>

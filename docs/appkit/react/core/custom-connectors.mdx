@@ -10,12 +10,16 @@ Custom connectors, such as social logins, WalletConnect QR, Coinbasewallet, etc.
 
 If you already have Wagmi integrated into your application or would like more control over Wagmi's configuration, you can integrate AppKit on top of it.
 
-```tsx
-import { createWeb3Modal } from '@web3modal/wagmi/react'
+Adding custom connectors like WalletConnect and Coinbase is optional. 
 
-import { http, createConfig, WagmiProvider } from 'wagmi'
-import { sepolia } from 'wagmi/chains'
-import { walletConnect } from 'wagmi/connectors'
+By default, [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and WC connectors are provided out of the box.
+```tsx
+import { createAppKit } from '@reown/appkit/react'
+import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+
+import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
+import { sepolia } from '@reown/appkit/chains'
+import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -38,27 +42,20 @@ connectors.push(
   })
 )
 
-connectors.push(
-  authConnector({
-    options: { projectId },
-    socials: ['google', 'x', 'github', 'discord', 'apple', 'facebook', 'farcaster'], // add Social logins
-    showWallets: true,
-    email: true,
-    walletFeatures: false
-  })
-)
-
-const config = createConfig({
-  chains: [sepolia],
+export const wagmiAdapter = new EVMWagmiClient({
+  storage:
   transports: {
     [sepolia.id]: http()
   },
   connectors
 })
 
-createWeb3Modal({
-  wagmiConfig: config,
-  projectId
+export const config = wagmiAdapter.wagmiConfig
+
+createAppKit({
+  adapters: [wagmiAdapter],
+  projectId,
+  caipNetworks: [sepolia]
 })
 
 export function ContextProvider({ children }) {
@@ -76,49 +73,30 @@ Check our React Wagmi demo in [Github](https://github.com/WalletConnect/web-exam
 <PlatformTabItem value="ethers">
 
 ```tsx
-import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
+import { createAppKit } from '@reown/appkit/react'
+import { EVMEthersClient} from '@reown/appkit-adapter-ethers'
+import { sepolia } from '@reown/appkit/chains'
+
 
 const projectId = 'YOUR_PROJECT_ID'
-
-// Set chains
-const mainnet = {
-  chainId: 1,
-  name: 'Ethereum',
-  currency: 'ETH',
-  explorerUrl: 'https://etherscan.io',
-  rpcUrl: 'https://cloudflare-eth.com'
-}
 
 // Create a metadata object
 const metadata = {
   //...
 }
 
-// Create Ethers config
-const ethersConfig = defaultConfig({
-  /*Required*/
-  metadata,
-
-  /*Optional*/
-  enableEIP6963: true, // true by default
-  enableInjected: true, // true by default
-  enableCoinbase: true, // true by default
-  rpcUrl: '...', // used for the Coinbase SDK
-  defaultChainId: 1, // used for the Coinbase SDK
-  auth: {
-    email: true,
-    socials: ['google', 'x', 'github', 'discord', 'apple', 'facebook', 'farcaster'], // add social logins
-    showWallets: true,
-    walletFeatures: false
-  }
-})
+// Create Ethers adapter
+const ethersAdapter = new EVMEthersClient()
 
 // Create a AppKit instance
-createWeb3Modal({
-  ethersConfig,
-  chains: [mainnet],
+createAppKit({
+  adapters: [ethersAdapter],
+  caipNetworks: [sepolia],
+  metadata: metadata,
   projectId,
-  enableAnalytics: true // Optional - defaults to your Cloud configuration
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  } 
 })
 
 // Now, you can render connect button
@@ -136,43 +114,38 @@ Check our React ethers demo in [Github](https://github.com/WalletConnect/web-exa
 Add custom wallet adapters for Solana wallets by first installing the wallet adapter package and then including the adapters in the wallets array. You can find a more Solana wallet adapters [here](https://github.com/anza-xyz/wallet-adapter/tree/master/packages/wallets).
 
 ```bash npm2yarn
-npm install @solana/wallet-adapter-solflare
+npm install @solana/wallet-adapter-wallets
 ```
 
 ```ts
-import { createWeb3Modal, defaultSolanaConfig } from '@web3modal/solana/react'
-import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
-import { SolflareWalletAdapter } from '@solana/wallet-adapter-solflare'
+import { createAppKit } from '@reown/appkit/react'
+import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/react'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
 
-// 0. Setup chains
-const chains = [solana, solanaTestnet, solanaDevnet]
+import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+// 0. Set up Solana adapter
+const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Create solanaConfig
+// 2. Set up the metadata
 const metadata = {
   //...
 }
 
-const solanaConfig = defaultSolanaConfig({
-  chains,
-  projectId,
-  metadata
-})
-
-// 3. Create modal
-const modal = createWeb3Modal({
-  solanaConfig,
-  projectId: projectId,
+// 3. Create the modal
+const modal = createAppKit({
+  adapters: [solanaWeb3JsAdapter],
+  caipNetworks: [solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
-  chains,
-  enableAnalytics: true,
-  termsConditionsUrl: 'https://walletconnect.com/terms',
-  privacyPolicyUrl: 'https://walletconnect.com/privacy',
-  wallets: [
-      new SolflareWalletAdapter(),
-    ]
+  projectId,
+  features: {
+    analytics: true,
+  }
 })
 ```
 

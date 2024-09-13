@@ -10,18 +10,18 @@ import SolanaHooks from '../solana/hooks.mdx'
 
 Hooks are functions that will help you control the modal, subscribe to wallet events and interact with them and smart contracts.
 
-## useWeb3Modal
+## useAppKit
 
-Control the modal with the `useWeb3Modal` hook
+Control the modal with the `useAppKit` hook
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers", "solana"]}>
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { useAppKit } from '@reown/appkit/react'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -33,10 +33,10 @@ export default function Component() {
 <PlatformTabItem value="ethers5">
 
 ```ts
-import { useWeb3Modal } from '@web3modal/ethers5/react'
+import { useAppKit } from '@reown/appkit/react'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -48,10 +48,10 @@ export default function Component() {
 <PlatformTabItem value="ethers">
 
 ```ts
-import { useWeb3Modal } from '@web3modal/ethers/react'
+import { useAppKit } from '@reown/appkit/react'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -63,10 +63,10 @@ export default function Component() {
 <PlatformTabItem value="solana">
 
 ```ts
-import { useWeb3Modal } from '@web3modal/solana/react'
+import { useAppKit } from '@reown/appkit/react'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -123,6 +123,9 @@ List of views you can select
 ## useDisconnect
 
 ```ts
+// import useDisconnect from wagmi if on EVM
+//import useDisconnect from @reown/appkit-solana/react if on Solana
+
 const { disconnect } = useDisconnect()
 
 disconnect()
@@ -133,7 +136,7 @@ disconnect()
 Metadata information from the connected wallet
 
 ```ts
-import { useWalletInfo } from '@web3modal/wagmi/react'
+import { useWalletInfo } from '@reown/appkit/react'
 
 
 export default Component(){
@@ -160,7 +163,7 @@ export default Component(){
 </PlatformTabItem>
 </PlatformTabs>
 
-## useWeb3ModalState
+## useAppKitState
 
 Get the current value of the modal's state
 
@@ -168,45 +171,45 @@ Get the current value of the modal's state
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { useWeb3ModalState } from '@web3modal/wagmi/react'
+import { useAppKitState } from '@reown/appkit/react'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="wagmi1">
 
 ```ts
-import { useWeb3ModalState } from '@web3modal/wagmi/react'
+import { useAppKitState } from '@reown/appkit/react'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers5">
 
 ```ts
-import { useWeb3ModalState } from '@web3modal/ethers5/react'
+import { useAppKitState } from '@reown/appkit/react'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers">
 
 ```ts
-import { useWeb3ModalState } from '@web3modal/ethers/react'
+import { useAppKitState } from '@reown/appkit/react'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
 
 ```ts
-import { useWeb3ModalState } from '@web3modal/solana/react'
+import { useAppKitState } from '@reown/appkit/react'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </PlatformTabItem>
@@ -230,10 +233,11 @@ The modal state consists of two reactive values:
   ]}
 />
 
-## useWeb3ModalTheme
+## useAppKitTheme
 
 ```ts
-const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useWeb3ModalTheme()
+import { useAppKitTheme } from '@reown/appkit/react'
+const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useAppKitTheme()
 
 setThemeMode('dark')
 
@@ -246,7 +250,7 @@ setThemeVariables({
 ## Track modal events
 
 ```ts
-import { useWeb3ModalEvents } from '@web3modal/wagmi/react'
+import { useAppKitEvents } from '@reown/appkit/react'
 
-const events = useWeb3ModalEvents()
+const events = useAppKitEvents()
 ```

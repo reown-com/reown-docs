@@ -6,19 +6,15 @@ In this example we will create a new file called `context/web3modal.tsx` outside
 ```tsx
 'use client'
 
-import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
+import { createAppKit } from '@reown/appkit/react'
+import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
+import { mainnet, arbitrum } from '@reown/appkit/chains'
 
-// 1. Get projectId from https://cloud.walletconnect.com
+// 1. Get projectId at https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Set chains
-const mainnet = {
-  chainId: 1,
-  name: 'Ethereum',
-  currency: 'ETH',
-  explorerUrl: 'https://etherscan.io',
-  rpcUrl: 'https://cloudflare-eth.com'
-}
+// 2. Set Ethers adapters
+const ethers5Adapter = new EVMEthers5Client()
 
 // 3. Create a metadata object
 const metadata = {
@@ -27,29 +23,22 @@ const metadata = {
   url: 'https://mywebsite.com', // origin must match your domain & subdomain
   icons: ['https://avatars.mywebsite.com/']
 }
-// 4. Create Ethers config
-const ethersConfig = defaultConfig({
-  /*Required*/
-  metadata,
 
-  /*Optional*/
-  enableEIP6963: true, // true by default
-  enableInjected: true, // true by default
-  enableCoinbase: true, // true by default
-  rpcUrl: '...', // used for the Coinbase SDK
-  defaultChainId: 1 // used for the Coinbase SDK
-})
-
-// 5. Create a AppKit instance
-createWeb3Modal({
-  ethersConfig,
-  chains: [mainnet],
+// 4. Create the AppKit instance
+createAppKit({
+  adapters: [ethers5Adapter],
+  metadata: metadata,
+  caipNetworks: [mainnet, arbitrum],
   projectId,
-  enableAnalytics: true // Optional - defaults to your Cloud configuration
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
 })
 
-export function AppKit({ children }) {
-  return children
+export function AppKit() {
+  return (
+    <YourApp /> //make sure you have configured the <w3m-button> inside
+  )
 }
 ```
 

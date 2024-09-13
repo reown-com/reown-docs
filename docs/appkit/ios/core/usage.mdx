@@ -8,9 +8,9 @@ Make sure that you properly configure Networking and Pair Clients first.
 
 - [Networking](../../../api/core/relay.mdx)
 
-### Initialize Web3Modal Client
+### Initialize AppKit Client
 
-In order to initialize a client just call a `configure` method from the Web3Modal instance wrapper
+In order to initialize a client just call a `configure` method from the AppKit instance wrapper
 
 ```swift
 let metadata = AppMetadata(
@@ -22,7 +22,7 @@ let metadata = AppMetadata(
     verifyUrl: "verify.walletconnect.com"
 )
 
-Web3Modal.configure(
+AppKit.configure(
     projectId: PROJECT_ID,
     metadata: metadata
 )
@@ -58,27 +58,27 @@ let metadata = AppMetadata(...)
 
 let sessionParams = SessionParams(...)
 
-Web3Modal.configure(
+AppKit.configure(
     projectId: PROJECT_ID,
     metadata: metadata,
     sessionParams: sessionParams
 )
 ```
 
-or you can change them later by calling `Web3Modal.set(sessionParams: SessionParams(...))`
+or you can change them later by calling `AppKit.set(sessionParams: SessionParams(...))`
 
 ### Provided UI components
 
-Now you can use the `Web3ModalButton` or `Web3ModalNetworkButton` components. These two components reflect the state of the Web3Modal client,
+Now you can use the `AppKitButton` or `AppKitNetworkButton` components. These two components reflect the state of the AppKit client,
 including the session state, account address and balance, currently selected network, and will automatically update when the state changes.
-More can be found in https://github.com/WalletConnect/web3modal-swift/blob/develop/Sample/Example/ContentView.swift as part of the Sample app.
+More can be found in https://github.com/reown-com/reown-swift/blob/develop/Sample/Example/ContentView.swift as part of the Sample app.
 
 ### Custom UI
 
 If you want to use custom UI you can present the modal by simply calling.
 
 ```swift
-Web3Modal.present()
+AppKit.present()
 ```
 
 It will traverse the view hierarchy and try to present from top most controller. This is meant more towards SwiftUI.
@@ -86,10 +86,10 @@ It will traverse the view hierarchy and try to present from top most controller.
 Otherwise you can specify the viewController to present from.
 
 ```swift
-Web3Modal.present(from: viewController)
+AppKit.present(from: viewController)
 ```
 
-### Subscribe for Web3Modal Publishers
+### Subscribe for AppKit Publishers
 
 The following publishers are available to subscribe:
 
@@ -105,8 +105,8 @@ public var authResponsePublisher: AnyPublisher<(id: RPCID, result: Result<(Sessi
 
 ### Sign methods
 
-Web3Modal is internally using Sign SDK and most of its method are being exposed through Web3Modal interface.
+AppKit is internally using Sign SDK and most of its method are being exposed through AppKit interface.
 
 ### Where to go from here
 
-Check the Web3Modal usage in our Sample app that is part of Web3Modal repository.
+Check the AppKit usage in our Sample app that is part of AppKit repository.

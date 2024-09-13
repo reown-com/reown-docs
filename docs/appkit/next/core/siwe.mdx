@@ -29,7 +29,7 @@ It is designed from the ground up to support Next.js and Serverless. We can use 
 <TabItem value="one-click-auth" label="One-Click Auth">
 
 ```bash npm2yarn
-npm i @web3modal/siwe next-auth
+npm i @reown/appkit-siwe next-auth
 ```
 
 </TabItem>
@@ -42,7 +42,7 @@ For a better UX we recommend using One-Click Auth.
 Install the AppKit SIWE package, additionally we also recommend installing [siwe](https://docs.login.xyz/) which will abstract a lot of the required logic.
 
 ```bash npm2yarn
-npm i @web3modal/siwe siwe next-auth
+npm i @reown/appkit-siwe siwe next-auth
 ```
 
 </TabItem>
@@ -55,9 +55,9 @@ npm i @web3modal/siwe siwe next-auth
 
 ```ts
 import { getCsrfToken, signIn, signOut, getSession } from 'next-auth/react'
-import type { SIWEVerifyMessageArgs, SIWECreateMessageArgs, SIWESession } from '@web3modal/siwe'
-import { createSIWEConfig, formatMessage } from '@web3modal/siwe'
-import { mainnet, sepolia } from 'viem/chains'
+import type { SIWEVerifyMessageArgs, SIWECreateMessageArgs, SIWESession } from '@reown/appkit-siwe'
+import { createSIWEConfig, formatMessage } from '@reown/appkit-siwe'
+import { mainnet, sepolia } from '@reown/appkit/chains'
 
 export const siweConfig = createSIWEConfig({
   getMessageParams: async () => ({
@@ -118,7 +118,7 @@ export const siweConfig = createSIWEConfig({
 Verify a SIWE signature.
 
 ```ts
-import { verifySignature } from '@web3modal/siwe'
+import { verifySignature } from '@reown/appkit-siwe'
 
 const isValid = await verifySignature({ address, message, signature, chainId, projectId })
 ```
@@ -128,7 +128,7 @@ const isValid = await verifySignature({ address, message, signature, chainId, pr
 Get the chain ID from the SIWE message.
 
 ```ts
-import { getChainIdFromMessage } from '@web3modal/siwe'
+import {getChainIdFromMessage} from '@reown/appkit-siwe'
 
 const chainId = getChainIdFromMessage(message)
 ```
@@ -138,7 +138,7 @@ const chainId = getChainIdFromMessage(message)
 Get the address from the SIWE message.
 
 ```ts
-import { getAddressFromMessage } from '@web3modal/siwe'
+import { getAddressFromMessage } from '@reown/appkit-siwe'
 
 const address = getAddressFromMessage(message)
 ```
@@ -159,8 +159,8 @@ import { getCsrfToken, signIn, signOut, getSession } from 'next-auth/react'
 
 import { SiweMessage } from 'siwe'
 
-import type { SIWEVerifyMessageArgs, SIWECreateMessageArgs } from '@web3modal/siwe'
-import { createSIWEConfig } from '@web3modal/siwe'
+import type { SIWEVerifyMessageArgs, SIWECreateMessageArgs } from '@reown/appkit-siwe'
+import { createSIWEConfig, formatMessage } from '@reown/appkit-siwe'
 
 export const siweConfig = createSIWEConfig({
   createMessage: ({ nonce, address, chainId }: SIWECreateMessageArgs) =>
@@ -231,7 +231,7 @@ import {
   verifySignature,
   getChainIdFromMessage,
   getAddressFromMessage
-} from '@web3modal/siwe'
+} from '@reown/appkit-siwe'
 
 declare module 'next-auth' {
   interface Session extends SIWESession {
@@ -326,7 +326,7 @@ import credentialsProvider from 'next-auth/providers/credentials'
 import { getCsrfToken } from 'next-auth/react'
 import NextAuth from 'next-auth/next'
 
-import type { SIWESession } from '@web3modal/siwe'
+import type { SIWESession } from '@reown/appkit-siwe'
 import { SiweMessage } from 'siwe'
 
 declare module 'next-auth' {
@@ -421,10 +421,17 @@ export { handler as GET, handler as POST }
 ## Initialize AppKit with your `siweConfig`.
 
 ```js
-createWeb3Modal({
-  //..
-  siweConfig
-})
+// Pass your siweConfig inside the createAppKit() function
+  const modal = createAppKit({
+      adapters: [wagmiAdapter], //or your Ethers adapter
+      projectId,
+      caipNetworks: [mainnet, arbitrum],
+      defaultCaipNetwork: mainnet,
+      features: {
+        analytics: true, // Optional - defaults to your Cloud configuration
+      },
+      siweConfig: siweConfig // pass your siweConfig
+  })
 ```
 
 ### SIWE Config reference

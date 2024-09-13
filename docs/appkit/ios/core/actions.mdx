@@ -4,24 +4,24 @@
 
 ### Chain selection
 
-You can select your own chain by calling the `selectChain(_ chain: Chain)` static method on the `Web3Modal` object.
+You can select your own chain by calling the `selectChain(_ chain: Chain)` static method on the `AppKit` object.
 
 ### Get selected chain
 
-You can get selected chain by calling the `getSelectedChain()` static method on the `Web3Modal` object.
+You can get selected chain by calling the `getSelectedChain()` static method on the `AppKit` object.
 
 ## Sign Actions
 
 ### Create pairing
 
 ```swift
-let uri: WalletConnectURI = try await Web3Modal.instance.createPairing()
+let uri: WalletConnectURI = try await AppKit.instance.createPairing()
 ```
 
 ### Connect
 
 ```swift
-try await Web3Modal.instance.connect(
+try await AppKit.instance.connect(
     requiredNamespaces: [String: ProposalNamespace],
     optionalNamespaces: [String: ProposalNamespace]?,
     sessionProperties: [String: String]?,
@@ -30,7 +30,7 @@ try await Web3Modal.instance.connect(
 
 // Or without specifying namespaces to stick with default values
 
-try await Web3Modal.instance.connect(
+try await AppKit.instance.connect(
     topic: topic // Can be existing topic or nil to create new one
 )
 ```
@@ -40,13 +40,13 @@ More about optional and required namespaces can be found [here](https://github.c
 ### Disconnect
 
 ```swift
-try await Web3Modal.instance.disconnect(topic: topic)
+try await AppKit.instance.disconnect(topic: topic)
 ```
 
 ### Request
 
 ```swift
-try await Web3Modal.instance.request(
+try await AppKit.instance.request(
     params: .init(
         topic: session.topic,
         method: "some_method",
@@ -59,15 +59,15 @@ try await Web3Modal.instance.request(
 ### Get List of Active Sessions
 
 ```swift
-Web3Modal.instance.getSessions()
+AppKit.instance.getSessions()
 ```
 
-To get a list of active sessions, call `Web3Modal.instance.getSessions()` which will return `[Session]`.
+To get a list of active sessions, call `AppKit.instance.getSessions()` which will return `[Session]`.
 
 ### launch connected wallet
 
 ```swift
-Web3Modal.instance.launchCurrentWallet()
+AppKit.instance.launchCurrentWallet()
 ```
 
 To open a wallet that your dapp is connected to
@@ -75,13 +75,13 @@ To open a wallet that your dapp is connected to
 ### handle deep links
 
 ```swift
-Web3Modal.instance.handleDeeplink(url)
+AppKit.instance.handleDeeplink(url)
 ```
 
 ### Cleanup
 
 ```swift
-Web3Modal.instance.cleanup(topic)
+AppKit.instance.cleanup(topic)
 ```
 
 Delete all stored data such as: pairings, sessions, keys

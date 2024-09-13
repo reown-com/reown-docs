@@ -85,6 +85,22 @@ const PLATFORM_MAP = [
   {
     value: 'solana',
     label: 'Solana'
+  },
+  {
+    value: 'wagmi + solana',
+    label: 'Wagmi + Solana'
+  },
+  {
+    value: 'ethers + solana',
+    label: 'Ethers + Solana'
+  },
+  {
+    value: 'ethers5 + solana',
+    label: 'Ethers5 + Solana'
+  },
+  {
+    value: 'basic',
+    label: 'Basic'
   }
 ]
 

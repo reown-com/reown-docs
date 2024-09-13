@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem'
 
 # Components
 
-You can use predefined Web3ModalComponent and add it in your application. As a view, dialog or modal.
+You can use predefined AppKitComponent and add it in your application. As a view, dialog or modal.
 
 ```kotlin
 import androidx.compose.material.ExperimentalMaterialApi
@@ -20,7 +20,7 @@ setContent {
 
     ModalBottomSheetLayout(
         sheetContent = {
-            Web3ModalComponent(
+            AppKitComponent(
                 shouldOpenChooseNetwork = true | false,
                 closeModal = { coroutineScope.launch { modalSheetState.hide() }
             )
@@ -44,15 +44,15 @@ You can add ready made button components to your application
 <TabItem value="compose" label="Compose">
 
 ```kotlin
-import com.walletconnect.web3.modal.ui.components.button.Web3Button
-import com.walletconnect.web3.modal.ui.components.button.ConnectButtonSize
-import com.walletconnect.web3.modal.ui.components.button.AccountButtonType
-import com.walletconnect.web3.modal.ui.components.button.rememberWeb3ModalState
+import com.reown.appkit.ui.components.button.Web3Button
+import com.reown.appkit.ui.components.button.ConnectButtonSize
+import com.reown.appkit.ui.components.button.AccountButtonType
+import com.reown.appkit.ui.components.button.rememberAppKitState
 
 YourAppScreen(navController: NavController) {
-    val web3ModalState = rememberWeb3ModalState(navController = navController)
+    val appKitState = rememberAppKitState(navController = navController)
     Web3Button(
-        state = web3ModalState,
+        state = appKitState,
         accountButtonType = AccountButtonType.NORMAL || AccountButtonType.MIXED,
         connectButtonSize = ConnectButtonSize.NORMAL || ConnectButtonSize.SMALL
     )
@@ -72,7 +72,7 @@ YourAppScreen(navController: NavController) {
     android:gravity="center"
     android:orientation="vertical">
 
-        <com.walletconnect.web3.modal.ui.components.button.views.Web3Button
+        <com.reown.appkit.ui.components.button.views.Web3Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:connect_button_size="NORMAL" || "SMALL"
@@ -93,12 +93,12 @@ YourAppScreen(navController: NavController) {
 <TabItem value="compose" label="Compose">
 
 ```kotlin
-import com.walletconnect.web3.modal.ui.components.button.NetworkButton
-import com.walletconnect.web3.modal.ui.components.button.rememberWeb3ModalState
+import com.reown.appkit.ui.components.button.NetworkButton
+import com.reown.appkit.ui.components.button.rememberAppKitState
 
 YourAppScreen(navController: NavController) {
-    val web3ModalState = rememberWeb3ModalState(navController = navController)
-    NetworkButton(state = web3ModalState)
+    val appKitState = rememberAppKitState(navController = navController)
+    NetworkButton(state = appKitState)
 }
 ```
 
@@ -114,7 +114,7 @@ YourAppScreen(navController: NavController) {
     android:gravity="center"
     android:orientation="vertical">
 
-        <com.walletconnect.web3.modal.ui.components.button.views.NetworkButton
+        <com.reown.appkit.ui.components.button.views.NetworkButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
         />
@@ -133,14 +133,14 @@ YourAppScreen(navController: NavController) {
 <TabItem value="compose" label="Compose">
 
 ```kotlin
-import com.walletconnect.web3.modal.ui.components.button.ConnectButton
-import com.walletconnect.web3.modal.ui.components.button.ConnectButtonSize
-import com.walletconnect.web3.modal.ui.components.button.rememberWeb3ModalState
+import com.reown.appkit.ui.components.button.ConnectButton
+import com.reown.appkit.ui.components.button.ConnectButtonSize
+import com.reown.appkit.ui.components.button.rememberAppKitState
 
 YourAppScreen(navController: NavController) {
-    val web3ModalState = rememberWeb3ModalState(navController = navController)
+    val appKitState = rememberAppKitState(navController = navController)
     ConnectButton(
-        state = web3ModalState,
+        state = appKitState,
         buttonSize = ConnectButtonSize.NORMAL || ConnectButtonSize.SMALL
     )
 }
@@ -159,7 +159,7 @@ YourAppScreen(navController: NavController) {
     android:gravity="center"
     android:orientation="vertical">
 
-        <com.walletconnect.web3.modal.ui.components.button.views.ConnectButton
+        <com.reown.appkit.ui.components.button.views.ConnectButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:connect_button_size="NORMAL" || "SMALL"
@@ -179,14 +179,14 @@ YourAppScreen(navController: NavController) {
 <TabItem value="compose" label="Compose">
 
 ```kotlin
-import com.walletconnect.web3.modal.ui.components.button.AccountButton
-import com.walletconnect.web3.modal.ui.components.button.AccountButtonType
-import com.walletconnect.web3.modal.ui.components.button.rememberWeb3ModalState
+import com.reown.appkit.ui.components.button.AccountButton
+import com.reown.appkit.ui.components.button.AccountButtonType
+import com.reown.appkit.ui.components.button.rememberAppKitState
 
 YourAppScreen(navController: NavController) {
-    val web3ModalState = rememberWeb3ModalState(navController = navController)
+    val appKitState = rememberAppKitState(navController = navController)
     AccountButton(
-        state = web3ModalState,
+        state = appKitState,
         buttonSize = AccountButtonType.NORMAL || AccountButtonType.MIXED
     )
 }
@@ -205,7 +205,7 @@ YourAppScreen(navController: NavController) {
     android:gravity="center"
     android:orientation="vertical">
 
-        <com.walletconnect.web3.modal.ui.components.button.views.AccountButton
+        <com.reown.appkit.ui.components.button.views.AccountButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:account_button_type="NORMAL" || "MIXED"
@@ -216,28 +216,28 @@ YourAppScreen(navController: NavController) {
 </TabItem>
 </Tabs>
 
-### Web3Modal State
+### AppKit State
 
-Web3modalState is an object that ensures communication between your application and the state of the Web3Modal.
+AppKitState is an object that ensures communication between your application and the state of the AppKit.
 
-#### Create web3ModalState:
+#### Create appKitState:
 
-NavController is required to create Web3ModalState
-
-```kotlin
-    val web3modalState = rememberWeb3ModalState(navController)
-```
-
-#### Web3ModalState methods
+NavController is required to create appKitState
 
 ```kotlin
-    web3ModalState.isOpen
+    val appKitState = rememberAppKitState(navController)
 ```
 
-returns `StateFlow<Boolean>` whose value is updated depending on whether the web3modal component is open
+#### AppKitState methods
 
 ```kotlin
-    web3modalState.isConnected
+    appKitState.isOpen
 ```
 
-returns `StateFlow<Boolean>` whose value depends on the active session in Web3Modal
+returns `StateFlow<Boolean>` whose value is updated depending on whether the appkit component is open
+
+```kotlin
+    appKitState.isConnected
+```
+
+returns `StateFlow<Boolean>` whose value depends on the active session in AppKit

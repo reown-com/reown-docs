@@ -5,7 +5,7 @@ In your `App.vue` file set up the following configuration
 ```html
 <script setup>
   
-  import { createWeb3Modal, defaultSolanaConfig } from '@web3modal/solana/vue'
+  import { createAppKit, defaultSolanaConfig } from '@web3modal/solana/vue'
   import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
   import { reconnect } from '@wagmi/core'
 
@@ -30,7 +30,7 @@ In your `App.vue` file set up the following configuration
   reconnect(solanaConfig)
 
   // 3. Create modal
-  createWeb3Modal({
+  createAppKit({
     solanaConfig,
     chains,
     projectId

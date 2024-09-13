@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem'
 
 # Usage
 
-`Web3Modal` is a singleton that interacts with the WalletConnectModal SDK.
+`AppKit` is a singleton that interacts with the AppKit SDK.
 
 ## Implementation
 
@@ -13,16 +13,16 @@ import TabItem from '@theme/TabItem'
 val connectionType = ConnectionType.AUTOMATIC or ConnectionType.MANUAL
 val projectId = "" // Get Project ID at https://cloud.walletconnect.com/
 val appMetaData = Core.Model.AppMetaData(
-    name = "Kotlin.Web3Modal",
-    description = "Kotlin Web3Modal Implementation",
-    url = "kotlin.walletconnect.com",
-    icons = listOf("https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Icon/Gradient/Icon.png"),
-    redirect = "kotlin-web3modal://request"
+    name = "Kotlin.AppKit",
+    description = "Kotlin AppKit Implementation",
+    url = "kotlin.reown.com",
+    icons = listOf("https://gblobscdn.gitbook.com/spaces%2F-LJJeCjcLrr53DcT1Ml7%2Favatar.png?alt=media"),
+    redirect = "kotlin-modal-wc://request"
 )
 
 CoreClient.initialize(projectId = projectId, connectionType = connectionType, application = this, metaData = appMetaData)
 
-Web3Modal.initialize(
+AppKit.initialize(
     init = Modal.Params.Init(CoreClient),
     onSuccess = {
         // Callback will be called if initialization is successful
@@ -35,16 +35,16 @@ Web3Modal.initialize(
 
 #### Session properties
 
-You can define session properties by calling the `setSessionProperties` method on the `Web3Modal` object.
+You can define session properties by calling the `setSessionProperties` method on the `AppKit` object.
 
 #### Chains
 
 This example of define ethereum chain. You can define the chains you want to use. The chain must be EVM compatible.
 
 ```kotlin
-Example of definition chains: https://github.com/WalletConnect/WalletConnectKotlinV2/blob/master/product/web3modal/src/main/kotlin/com/walletconnect/web3/modal/presets/Web3ModalChainsPresets.kt
+Example of definition chains: https://github.com/reown-com/reown-kotlin/blob/main/product/appkit/src/main/kotlin/com/reown/appkit/presets/AppKitChainsPresets.kt
 
-Web3Modal.setChains(Web3ModalChainsPresets.ethChains.values.toList())
+AppKit.setChains(AppKitChainsPresets.ethChains.values.toList())
 ```
 
 **IMPORTANT**: `Chains` must be set before opening the modal.
@@ -67,7 +67,7 @@ import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.bottomSheet
-import com.walletconnect.web3.modal.ui.web3ModalGraph
+import com.reown.appkit.ui.appKitGraph
 
 setContent {
     val modalSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true)
@@ -82,18 +82,18 @@ setContent {
             composable("home") {
                 HomeScreen()
             }
-            web3ModalGraph(navController)
+            appKitGraph(navController)
         }
     }
 }
 ```
 
-**IMPORTANT**: Web3Modal uses accompanist navigation material inside. `ModalBottomSheetLayout` should be imported from [Accompanist Navigation Material](https://google.github.io/accompanist/navigation-material/)
+**IMPORTANT**: AppKit uses accompanist navigation material inside. `ModalBottomSheetLayout` should be imported from [Accompanist Navigation Material](https://google.github.io/accompanist/navigation-material/)
 
 ```kotlin
-import com.walletconnect.web3.modal.ui.openWeb3Modal
+import com.reown.appkit.ui.openAppKit
 
-navController().openWeb3Modal(
+navController().openAppKit(
     shouldOpenChooseNetwork = true | false
     onError = {  }
 )
@@ -118,7 +118,7 @@ setContent {
 
     ModalBottomSheetLayout(
         sheetContent = {
-            Web3ModalComponent(
+            AppKitComponent(
                 shouldOpenChooseNetwork = true | false,
                 closeModal = { coroutineScope.launch { modalSheetState.hide() }
             )
@@ -136,19 +136,19 @@ setContent {
 ```kotlin
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.fragment
-import com.walletconnect.web3.modal.ui.web3ModalGraph
+import com.reown.appkit.ui.appKitGraph
 
 navController.graph = navController.createGraph("Home") {
     fragment<HomeFragment>("Home")
-    web3Modal()
+    appKit()
 }
 ```
 
 ```kotlin
 import androidx.navigation.fragment.findNavController
-import com.walletconnect.web3.modal.ui.openWeb3Modal
+import com.reown.appkit.ui.openAppKit
 
-findNavController().openWeb3Modal(
+findNavController().openAppKit(
     shouldOpenChooseNetwork = true | false
     onError = {  }
 )
@@ -161,18 +161,18 @@ findNavController().openWeb3Modal(
 <navigation >
     <fragment
         android:id="@+id/HomeFragment"
-        android:name="com.walletconnect.sample.HomeFragment">
+        android:name="com.reown.sample.HomeFragment">
     </fragment>
 
-    <include app:graph ="@navigation/web3modal_graph"/>
+    <include app:graph ="@navigation/appkit_graph"/>
 </navigation>
 ```
 
 ```kotlin
 import androidx.navigation.fragment.findNavController
-import com.walletconnect.web3.modal.ui.openWeb3Modal
+import com.reown.appkit.ui.openAppKit
 
-findNavController().openWeb3Modal(
+findNavController().openAppKit(
     shouldOpenChooseNetwork = true | false
     onError = {  }
 )
