@@ -27,9 +27,9 @@ to adjust it to your needs.
 
 5. Open the TSS Theme File with your code editor and change the first line to:
 ```css
-@import url("/Packages/com.walletconnect.web3modal/UI Toolkit/WUI Base Theme.tss");
+@import url("/Packages/com.reown.appkit.unity/UI Toolkit/AppKit Base Theme.tss");
 ```
-6. Under `Web3Modal` prefab instance in your scene or prefab find `Modal` child object and assign the
+6. Under `Reown AppKit` prefab instance in your scene or prefab find `Modal` child object and assign the
 newly created `Panel Settings Asset` to the `Panel Settings` field of `UI Document` component.
 
 ![unity-appkit-panel-settings](/assets/unity-appkit-panel-settings.webp)
@@ -42,31 +42,31 @@ To override a variable, simply add it to your TSS Theme File and assign a new va
 The example below changes the accent color to a shade of orange and the modal border color to a shade of gray.
 
 ```css
-@import url("/Packages/com.walletconnect.web3modal/UI Toolkit/WUI Base Theme.tss");
+@import url("/Packages/com.reown.appkit.unity/UI Toolkit/AppKit Base Theme.tss");
 
 * {
-    --wui-color-accent-100: rgb(156, 81, 65);
+    --ro-color-accent-100: rgb(156, 81, 65);
 
-    --wui-accent-glass-090: rgba(156, 81, 65, 0.9);
-    --wui-accent-glass-080: rgba(156, 81, 65, 0.8);
-    --wui-accent-glass-020: rgba(156, 81, 65, 0.2);
-    --wui-accent-glass-015: rgba(156, 81, 65, 0.15);
-    --wui-accent-glass-010: rgba(156, 81, 65, 0.1);
-    --wui-accent-glass-005: rgba(156, 81, 65, 0.05);
-    --wui-accent-glass-002: rgba(156, 81, 65, 0.02);
+    --ro-accent-glass-090: rgba(156, 81, 65, 0.9);
+    --ro-accent-glass-080: rgba(156, 81, 65, 0.8);
+    --ro-accent-glass-020: rgba(156, 81, 65, 0.2);
+    --ro-accent-glass-015: rgba(156, 81, 65, 0.15);
+    --ro-accent-glass-010: rgba(156, 81, 65, 0.1);
+    --ro-accent-glass-005: rgba(156, 81, 65, 0.05);
+    --ro-accent-glass-002: rgba(156, 81, 65, 0.02);
 }
 
 Modal {
-    --wui-modal-border-color: #9a9085;
-    --wui-modal-border-width: 3px;
+    --ro-modal-border-color: #9a9085;
+    --ro-modal-border-width: 3px;
 }
 ```
 
-You can find the list of all available variables in the [WUI Base Theme](https://github.com/WalletConnect/Web3ModalUnity/blob/main/Packages/com.walletconnect.web3modal/UI%20Toolkit/WUI%20Base%20Theme.tss)
+You can find the list of all available variables in the [AppKit Base Theme](https://github.com/reown-com/reown-dotnet/blob/main/src/Reown.AppKit.Unity/UI%20Toolkit/AppKit%20Base%20Theme.tss)
 file.
 
 :::info
-If you find that a variable is missing, please [open a GitHub issue](https://github.com/WalletConnect/Web3ModalUnity/issues/new?assignees=&labels=feature-request&projects=&template=feature-request.yml&title=%5Bfeature%5D+).
+If you find that a variable is missing, please [open a GitHub issue](https://github.com/reown-com/reown-dotnet/issues).
 We will be happy to add it for you.
 :::
 
@@ -74,7 +74,7 @@ We will be happy to add it for you.
 
 To override the default font, you need to add a custom font to your project and reference it in the TSS Theme File.
 ```css
-@import url("/Packages/com.walletconnect.web3modal/UI Toolkit/WUI Base Theme.tss");
+@import url("/Packages/com.reown.appkit.unity/UI Toolkit/AppKit Base Theme.tss");
 
 * {
     -unity-font-definition: resource("Custom Fonts/Comic Sans SDF Regular");
@@ -135,7 +135,7 @@ private void CreateOpenSeaButton(VisualElement buttonsListView)
 
 private void OnOpenSeaButtonClick()
 {
-    var address = Web3Modal.AccountController.Address;
+    var address = AppKit.AccountController.Address;
     var url = $"https://opensea.io/{address}";
     Application.OpenURL(url);
 }
@@ -173,7 +173,7 @@ public class CustomAccountPresenter : AccountPresenter
 
     private void OnOpenSeaButtonClick()
     {
-        var address = Web3Modal.AccountController.Address;
+        var address = AppKit.AccountController.Address;
         var url = $"https://opensea.io/{address}";
         Application.OpenURL(url);
     }
@@ -190,7 +190,7 @@ with a custom one, you need to create a custom presenter and pass it to the `Reg
 // Get a reference to ModalController and cast it to ModalControllerUtk.
 // ModalControllerUtk is used by UI Toolkit version of the AppKit.
 // It's used on all platforms except WebGL.
-var modalController = (ModalControllerUtk)Web3Modal.ModalController;
+var modalController = (ModalControllerUtk)AppKit.ModalController;
 if (modalController != null)
 {
     // Get RouterController
@@ -205,7 +205,7 @@ if (modalController != null)
 You can register modal views at any point in the game lifecycle. The `RouterController` will dispose of the previous
 presenter and replace it with the new one.
 
-If you find that some parts of the presenter can't be customized, please [open a GitHub issue](https://github.com/WalletConnect/Web3ModalUnity/issues/new?assignees=&labels=feature-request&projects=&template=feature-request.yml&title=%5Bfeature%5D+).
+If you find that some parts of the presenter can't be customized, please [open a GitHub issue](https://github.com/reown-com/reown-dotnet/issues).
 
 ### Static View Customization
 
@@ -222,8 +222,3 @@ protected override AccountView CreateViewInstance()
 ```
 
 Make sure to link original or custom USS file from your UXML layout file.
-
-## Example
-
-You can find a complete example of the customization in the [Customization](https://github.com/WalletConnect/Web3ModalUnity/tree/main/Samples/Customization)
-sample project.
