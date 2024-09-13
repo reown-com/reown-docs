@@ -5,7 +5,7 @@ In your `App.vue` file set up the following configuration.
 
 ```html
 <script setup lang="ts">
-  import { createAppKit, useWeb3Modal} from '@reown/appkit-solana/vue'
+  import { createAppKit, useAppKit} from '@reown/appkit-solana/vue'
   import {PhantomWalletAdapter,SolflareWalletAdapter} from '@solana/wallet-adapter-wallets'
   import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/vue'
   import {solana, solanaTestnet, solanaDevnet} from '@reown/appkit/chains'
@@ -39,7 +39,7 @@ In your `App.vue` file set up the following configuration.
   })
 
   // 4. Use modal composable
-  const modal = useWeb3Modal()
+  const modal = useAppKit()
 </script>
 
 <template> // Rest of your app ... </template>

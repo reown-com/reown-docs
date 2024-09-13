@@ -9,18 +9,18 @@ import EthersComposables from '../ethers/composables.mdx'
 
 Composables are functions that will help you control the modal, subscribe to wallet events and interact with them and smart contracts.
 
-## useWeb3Modal
+## useAppKit
 
-Control the modal with the `useWeb3Modal` function
+Control the modal with the `useAppKit` function
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers", "solana"]}>
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { useWeb3Modal } from '@reown/appkit/vue'
+import { useAppKit } from '@reown/appkit/vue'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -32,10 +32,10 @@ export default function Component() {
 <PlatformTabItem value="ethers5">
 
 ```ts
-import { useWeb3Modal } from '@reown/appkit/vue'
+import { useAppKit } from '@reown/appkit/vue'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -47,10 +47,10 @@ export default function Component() {
 <PlatformTabItem value="ethers">
 
 ```ts
-import { useWeb3Modal } from '@reown/appkit/vue'
+import { useAppKit } from '@reown/appkit/vue'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -62,10 +62,10 @@ export default function Component() {
 <PlatformTabItem value="solana">
 
 ```ts
-import { useWeb3Modal } from '@reown/appkit/vue'
+import { useAppKit } from '@reown/appkit/vue'
 
 export default function Component() {
-  const { open, close } = useWeb3Modal()
+  const { open, close } = useAppKit()
 
   open()
 
@@ -159,7 +159,7 @@ export default Component(){
 </PlatformTabItem>
 </PlatformTabs>
 
-## useWeb3ModalState
+## useAppKitState
 
 Get the current value of the modal's state
 
@@ -167,27 +167,27 @@ Get the current value of the modal's state
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { useWeb3ModalState } from '@reown/appkit/vue'
+import { useAppKitState } from '@reown/appkit/vue'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers5">
 
 ```ts
-import { useWeb3ModalState } from '@reown/appkit/vue'
+import { useAppKitState } from '@reown/appkit/vue'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers">
 
 ```ts
-import { useWeb3ModalState } from '@reown/appkit/vue'
+import { useAppKitState } from '@reown/appkit/vue'
 
-const { open, selectedNetworkId } = useWeb3ModalState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </PlatformTabItem>
@@ -211,11 +211,11 @@ The modal state consists of two reactive values:
   ]}
 />
 
-## useWeb3ModalTheme
+## useAppKitTheme
 
 ```ts
-import { useWeb3ModalTheme } from '@reown/appkit/react'
-const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useWeb3ModalTheme()
+import { useAppKitTheme } from '@reown/appkit/react'
+const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useAppKitTheme()
 
 setThemeMode('dark')
 
@@ -228,7 +228,7 @@ setThemeVariables({
 ## Track modal events
 
 ```ts
-import { useWeb3ModalEvents } from '@reown/appkit/react'
+import { useAppKitEvents } from '@reown/appkit/react'
 
-const events = useWeb3ModalEvents()
+const events = useAppKitEvents()
 ```

@@ -10,7 +10,7 @@ In your `App.vue` file set up the following configuration
 
 ```html
 <script setup>
-  import { createAppKit, useWeb3Modal } from '@reown/appkit/vue'
+  import { createAppKit, useAppKit } from '@reown/appkit/vue'
 
   import { WagmiProvider } from 'wagmi'
   import { arbitrum, mainnet } from '@reown/appkit/chains'
@@ -44,7 +44,7 @@ In your `App.vue` file set up the following configuration
   })
 
   // 5. Use modal composable
-  const modal = useWeb3Modal()
+  const modal = useAppKit()
 </script>
 
 <template> // Rest of your app ... </template>
