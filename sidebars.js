@@ -241,7 +241,7 @@ module.exports = {
             //'appkit/upgrade',
             {
               type: 'category',
-              label: 'Migration',
+              label: 'Upgrade',
               collapsed: true,
               collapsible: true,
               items: [
@@ -254,9 +254,19 @@ module.exports = {
                     { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },    
                   ]
                 },*/
-                { type: 'doc', label: 'From AppKit v5', id: 'appkit/migration/from-WCv5-to-reown' },
+                { type: 'doc', label: 'To Reown AppKit', id: 'appkit/upgrade/from-WCv5-to-reown' },
                // { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },
                // { type: 'doc', label: 'From Anza Adapter', id: 'appkit/migration/from-anza-adapter-react' },
+              ]
+            },
+            {
+              type: 'category',
+              label: 'Migration',
+              collapsed: true,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },
+                { type: 'doc', label: 'From Anza Adapter', id: 'appkit/migration/from-anza-adapter-react' },
               ]
             },
           ]
