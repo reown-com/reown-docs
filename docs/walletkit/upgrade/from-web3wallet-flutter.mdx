@@ -1,0 +1,87 @@
+---
+title: Migration from Web3Modal to AppKit
+pagination_next: 
+displayed_sidebar: mainSidebar
+---
+import Table from '../../components/Table'
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
+
+# Migration from Web3Modal to Reown AppKit for Flutter
+
+This document outlines the steps to migrate from the old `walletconnect_flutter_v2` package to the new `reown_walletkit` packages in your Flutter project.
+
+### Step 1. Replace the corresponding dependency
+
+Remove `walletconnect_flutter_v2` dependency from pubspec.yaml and add `reown_walletkit`:
+
+```dart
+/* highlight-delete-start */
+walletconnect_flutter_v2: ^X.Y.Z
+/* highlight-delete-end */
+/* highlight-add-start */
+reown_walletkit: ^1.0.0
+/* highlight-add-end */
+```
+
+Run `flutter clean && flutter pub get` after replacing the packages
+
+Then replace the imports...
+
+```dart
+/* highlight-delete-start */
+import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
+/* highlight-delete-end */
+/* highlight-add-start */
+import 'package:reown_walletkit/reown_walletkit.dart';
+/* highlight-add-end */
+```
+
+### Step 2. Update your AppKit's theme related classes
+
+<Table
+  headers={['Old', 'New']}
+  data={[
+    {
+      old: { code: 'Web3Wallet' },
+      new: { code: 'ReownWalletKit' },
+    },
+    {
+      old: { code: 'Core' },
+      new: { code: 'ReownCore' },
+    },
+  ]}
+/>
+
+### Step 3. Update your Components usage
+Update your web3app instance within the service:
+
+If you use to subscribe to `web3App` events you should now change it to `appKit`. Example:
+```tsx
+/* highlight-delete-start */
+Errors.getSdkError(Errors.USER_REJECTED);
+/* highlight-delete-end */
+/* highlight-add-start */
+Errors.getSdkError(Errors.USER_REJECTED).toSignError();
+/* highlight-add-end */
+```
+
+Same for anything related to `_w3mService.web3App!...`
+
+### Step 5. Update any exception type
+
+<Table
+  headers={['Old', 'New']}
+  data={[
+    {
+      old: { code: 'WalletConnectError' },
+      new: { code: 'ReownSignError' },
+    },
+  ]}
+/>
+
+### Final notes
+
++ Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from Web3Wallet to WalletKit.
++ Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
++ Check our [WalletKit example for Flutter](https://github.com/reown-com/reown_flutter/tree/master/packages/reown_walletkit/example/) to compare with your implementation in case you are having issues 

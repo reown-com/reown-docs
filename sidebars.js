@@ -279,7 +279,16 @@ module.exports = {
                 { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' }
               ]
             },
-            'walletkit/best-practices'
+            'walletkit/best-practices',
+            {
+              type: 'category',
+              label: 'Upgrade',
+              collapsed: true,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'To Reown WalletKit', id: 'walletkit/upgrade/from-web3wallet-to-reown' },
+              ]
+            },
           ]
         }
       ]
