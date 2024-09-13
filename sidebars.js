@@ -238,7 +238,16 @@ module.exports = {
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' }
               ]
             },
-            'appkit/upgrade',
+            {
+              type: 'category',
+              label: 'Upgrade',
+              collapsed: true,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'AppKit v2 to v5', id: 'appkit/upgrade/appkitv2' },
+                { type: 'doc', label: 'AppKit v5 to v6', id: 'appkit/upgrade/appkitv6' },
+              ]
+            },
             {
               type: 'category',
               label: 'Migration',
