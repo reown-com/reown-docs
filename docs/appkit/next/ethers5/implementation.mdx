@@ -6,7 +6,7 @@ In this example we will create a new file called `context/web3modal.tsx` outside
 ```tsx
 'use client'
 
-import { createWeb3Modal } from '@reown/appkit/react'
+import { createAppKit } from '@reown/appkit/react'
 import { EVMEthers5Client } from '@reown/appkit-adapter-ethers5'
 import { mainnet, arbitrum } from '@reown/appkit/chains'
 
@@ -25,7 +25,7 @@ const metadata = {
 }
 
 // 4. Create the AppKit instance
-createWeb3Modal({
+createAppKit({
   adapters: [ethers5Adapter],
   metadata: metadata,
   caipNetworks: [mainnet, arbitrum],

@@ -52,7 +52,7 @@ Depending on the network adapter of your preference (`Wagmi`, `Ethers`, `Ethers5
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi + solana", "ethers5 + solana", "ethers + solana", "basic"]}>
 <PlatformTabItem value="wagmi + solana">
 ```ts
-import { createWeb3Modal } from '@reown/appkit'
+import { createAppKit } from '@reown/appkit'
 import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
 import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
 
@@ -83,7 +83,7 @@ const metadata = {
 }
 
 // 4. Create the AppKit instance
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [wagmiAdapter, solanaWeb3JsAdapter],
   caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
@@ -97,7 +97,7 @@ const modal = createWeb3Modal({
 
 <PlatformTabItem value="ethers + solana">
 ```ts
-import { createWeb3Modal } from '@reown/appkit'
+import { createAppKit } from '@reown/appkit'
 import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
 import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
 
@@ -126,7 +126,7 @@ const metadata = {
 }
 
 // 4. Create the AppKit instance
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [ethersAdapter, solanaWeb3JsAdapter],
   caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
@@ -140,7 +140,7 @@ const modal = createWeb3Modal({
 
 <PlatformTabItem value="ethers5 + solana">
 ```ts
-import { createWeb3Modal } from '@reown/appkit'
+import { createAppKit } from '@reown/appkit'
 import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
 import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
 
@@ -169,7 +169,7 @@ const metadata = {
 }
 
 // 4. Create the AppKit instance
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [ethersAdapter, solanaWeb3JsAdapter],
   caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
@@ -183,7 +183,7 @@ const modal = createWeb3Modal({
 
 <PlatformTabItem value="basic">
 ```ts
-import { createWeb3Modal } from '@reown/appkit'
+import { createAppKit } from '@reown/appkit'
 import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
 import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
 
@@ -199,7 +199,7 @@ const metadata = {
 }
 
 // 3. Create the AppKit instance
-const modal = createWeb3Modal({
+const modal = createAppKit({
   caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
   projectId,

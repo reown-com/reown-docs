@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem'
 In your `main.js` file set up the following configuration.
 
 ```ts
-import { createWeb3Modal } from '@reown/appkit'
+import { createAppKit } from '@reown/appkit'
 import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
 import { mainnet, arbitrum } from '@reown/appkit/chains'
 
@@ -23,7 +23,7 @@ const metadata = {
 }
 
 // 4. Create a AppKit instance
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [ethersAdapter],
   caipNetworks: [mainnet, arbitrum],
   metadata,

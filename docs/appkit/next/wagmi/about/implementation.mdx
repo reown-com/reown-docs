@@ -1,4 +1,4 @@
-For a quick integration, you can use the `createWeb3Modal` function with a unified configuration. This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana, so you no longer need to manually configure each one individually. Simply pass the common parameters such as projectId, chains, metadata, etc., and the function will handle the adapter-specific configurations under the hood.
+For a quick integration, you can use the `createAppKit` function with a unified configuration. This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana, so you no longer need to manually configure each one individually. Simply pass the common parameters such as projectId, chains, metadata, etc., and the function will handle the adapter-specific configurations under the hood.
 
 This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api.mdx) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
 
@@ -40,7 +40,7 @@ export const config = wagmiAdapter.wagmiConfig
 
 ### Context Provider
 
-Let's create now a context provider that will wrap our application and initialized AppKit (`createWeb3Modal` needs to be called inside a Next Client Component file).
+Let's create now a context provider that will wrap our application and initialized AppKit (`createAppKit` needs to be called inside a Next Client Component file).
 
 In this example we will create a file called `context/index.tsx` outside our app directory and set up the following configuration
 
@@ -49,7 +49,7 @@ In this example we will create a file called `context/index.tsx` outside our app
 
 import { wagmiAdapter, projectId } from '@/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createWeb3Modal } from '@reown/appkit/react' 
+import { createAppKit } from '@reown/appkit/react' 
 import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@reown/appkit/chains'
 import React, { type ReactNode } from 'react'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
@@ -70,7 +70,7 @@ const metadata = {
 }
 
 // Create the modal
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   caipNetworks: [mainnet, arbitrum, avalanche, base, optimism, polygon],

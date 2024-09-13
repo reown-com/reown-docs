@@ -25,10 +25,10 @@ Swaps is currently in Beta. Users may experience changes or improvements in the 
 
 The Swaps feature is enabled by default, so no additional configuration is required. 
 
-If you prefer to disable it, set the `swaps` flag to `false` in the configuration of the `createWeb3Modal` function.
+If you prefer to disable it, set the `swaps` flag to `false` in the configuration of the `createAppKit` function.
 
 ```ts
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   caipNetworks: [mainnet, arbitrum],

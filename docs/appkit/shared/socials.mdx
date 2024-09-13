@@ -1,13 +1,13 @@
 import PlatformTabs from '../../components/PlatformTabs'
 import PlatformTabItem from '../../components/PlatformTabItem'
 
-To allow users to authenticate using their email or social accounts, you need to configure the `features` parameter in the `createWeb3Modal` function.
+To allow users to authenticate using their email or social accounts, you need to configure the `features` parameter in the `createAppKit` function.
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "solana"]}>
 <PlatformTabItem value="wagmi">
 
 ```ts
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   caipNetworks: [mainnet, arbitrum],
@@ -27,7 +27,7 @@ const modal = createWeb3Modal({
 <PlatformTabItem value="ethers">
 
 ```ts
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   caipNetworks: [mainnet, arbitrum],
@@ -134,7 +134,7 @@ By configuring the `socials` option in the `features` parameter, you can control
   <img width={300} src="/img/w3m/auth/modal_wallets_noemail.webp" />
 </p>
 
-By configuring the `allWallets` option inside the `createWeb3Modal` function, you can control whether if and when you want to display all wallets.
+By configuring the `allWallets` option inside the `createAppKit` function, you can control whether if and when you want to display all wallets.
 
 - **`allWallets: 'HIDE'`**: When you do not want to display all wallets.
 

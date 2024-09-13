@@ -14,7 +14,7 @@ Adding custom connectors like WalletConnect and Coinbase is optional.
 
 By default, [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and WC connectors are provided out of the box.
 ```ts
-import { createWeb3Modal } from '@reown/appkit/react'
+import { createAppKit } from '@reown/appkit/react'
 
 import { reconnect, http, createConfig } from '@wagmi/core'
 import { CreateConnectorFn } from 'wagmi'
@@ -48,7 +48,7 @@ export const wagmiAdapter = new EVMWagmiClient({
 
 export const config = wagmiAdapter.wagmiConfig
 
-createWeb3Modal({
+createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   caipNetworks: [sepolia]
@@ -69,7 +69,7 @@ npm install @solana/wallet-adapter-wallets
 ```
 
 ```ts
-import { createWeb3Modal } from '@reown/appkit/react'
+import { createAppKit } from '@reown/appkit/react'
 import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/react'
 import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
 
@@ -89,7 +89,7 @@ const metadata = {
 }
 
 // 3. Create modal
-const modal = createWeb3Modal({
+const modal = createAppkit({
   adapters: [solanaWeb3JsAdapter],
   caipNetworks: [solana, solanaTestnet, solanaDevnet],
   metadata: metadata,

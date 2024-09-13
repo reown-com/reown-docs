@@ -6,7 +6,7 @@ AppKit Solana is built on top of the AppKit library and provides a set of compon
 On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
 
 ```tsx
-import { createWeb3Modal, type CaipNetwork } from '@reown/appkit/react'
+import { createAppKit, type CaipNetwork } from '@reown/appkit/react'
 import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/react'
 import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
@@ -28,7 +28,7 @@ const metadata = {
 }
 
 // 3. Create modal
-createWeb3Modal({
+createAppKit({
   adapters: [solanaWeb3JsAdapter],
   caipNetworks: [solana, solanaTestnet, solanaDevnet],
   metadata: metadata,

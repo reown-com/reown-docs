@@ -13,10 +13,10 @@ const { address, status, isConnected } = useWeb3ModalAccount()
 ### switchNetwork
 
 ```tsx
-import { createWeb3Modal } from '@reown/appkit/vue'
+import { createAppKit } from '@reown/appkit/vue'
 import { mainnet, arbitrum, polygon } from '@reown/appkit/chains'
 
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   caipNetworks: [mainnet, arbitrum],
