@@ -33,16 +33,16 @@ const modal = createAppKit({
 modal.switchNetwork(polygon)
 ```
 
-### useWeb3ModalProvider
+### useAppKitProvider
 
 Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
 import { BrowserProvider } from 'ethers'
-import { useWeb3ModalProvider } from '@reown/appkit/react'
+import { useAppKitProvider } from '@reown/appkit/react'
 
 function Components() {
-  const { walletProvider } = useWeb3ModalProvider()
+  const { walletProvider } = useAppKitProvider()
 
   async function onSignMessage() {
     const provider = new BrowserProvider(walletProvider)

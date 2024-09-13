@@ -14,7 +14,7 @@ function Components() {
 }
 ```
 
-### useWeb3ModalProvider
+### useAppKitProvider
 
 Hook that returns the `walletProvider` and the `WalletProviderType`.
 
@@ -24,7 +24,7 @@ import { useAppKitAccount, useAppKitProvider } from '@web3modal/solana/react'
 function SignMessage() {
   // 0. Get account and provider
   const { address } = useAppKitAccount()
-  const { walletProvider } = useWeb3ModalProvider()
+  const { walletProvider } = useAppKitProvider()
 
   // 1. Create a function to sign a message
   async function onSignMessage() {
