@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem'
 Allows to set included wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define a list of wallets ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
 
 ```csharp
-await Web3Modal.InitializeAsync(new Web3ModalConfig
+await AppKit.InitializeAsync(new AppKitConfig
 {
     includedWalletIds = new []
     {
@@ -22,7 +22,7 @@ await Web3Modal.InitializeAsync(new Web3ModalConfig
 Allows to set excluded wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
 
 ```csharp
-await Web3Modal.InitializeAsync(new Web3ModalConfig
+await AppKit.InitializeAsync(new AppKitConfig
 {
     excludedWalletIds = new []
     {
@@ -33,7 +33,7 @@ await Web3Modal.InitializeAsync(new Web3ModalConfig
 
 ### Enable Installed Wallet Detection
 
-To enable Web3Modal to detect wallets installed on mobile devices, you need to make specific changes to the native side of the project.
+To enable AppKit to detect wallets installed on mobile devices, you need to make specific changes to the native side of the project.
 
 <Tabs>
 <TabItem value="unity-installed-wallets-android" label="Android">
