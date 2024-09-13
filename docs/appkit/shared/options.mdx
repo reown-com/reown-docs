@@ -7,10 +7,10 @@ import TabItem from '@theme/TabItem'
 
 # Options
 
-The following options can be passed to the `createWeb3Modal` function:
+The following options can be passed to the `createAppKit` function:
 
 ```ts
-createWeb3Modal({ adapters, projectId, caipNetworks, ...options })
+createAppKit({ adapters, projectId, caipNetworks, ...options })
 ```
 
 ## defaultCaipNetwork
@@ -23,7 +23,7 @@ You can set a desired chain for the initial connection:
 ```ts
 import { mainnet } from '@reown/appkit/chains'
 
-createWeb3Modal({
+createAppKit({
   //...
   defaultCaipNetwork: mainnet
 })
@@ -41,7 +41,7 @@ const mainnet = {
   rpcUrl: 'https://cloudflare-eth.com'
 }
 
-createWeb3Modal({
+createAppKit({
   //...
   defaultCaipNetwork: mainnet
 })
@@ -53,7 +53,7 @@ createWeb3Modal({
 ```ts
 import { solana } from '@reown/appkit/chains'
 
-createWeb3Modal({
+createAppKit({
   //...
   defaultCaipNetwork: solana
 })
@@ -70,7 +70,7 @@ These wallets will also show up first in `All Wallets` view.
 You can find the wallets ids in [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet)
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   featuredWalletIds: [
     '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369',
@@ -84,7 +84,7 @@ createWeb3Modal({
 Allow users to switch to an unsupported chain.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   allowUnsupportedChain: true
 })
@@ -95,7 +95,7 @@ createWeb3Modal({
 You can select tokens for AppKit to show the user's balance of. Each key represents the chain id of the token's blockchain.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   tokens: {
     1: {
@@ -117,7 +117,7 @@ If you would like to remove default wallets completely, you can set the `feature
 Add or override the modal's network images.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   // ...
   chainImages: {
     1: 'https://my.images.com/eth.png'
@@ -133,7 +133,7 @@ createWeb3Modal({
 Set or override the images of any [connector](https://wagmi.sh/core/connectors/injected). The key of each property must match the id of the connector.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   connectorImages: {
     coinbaseWallet: 'https://images.mydapp.com/coinbase.png',
     metaMask: 'https://images.mydapp.com/metamask.png'
@@ -147,7 +147,7 @@ createWeb3Modal({
 Set or override the images of any connector.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   connectorImages: {
     coinbaseWallet: 'https://images.mydapp.com/coinbase.png',
     walletConnect: 'https://images.mydapp.com/walletconnect.png'
@@ -161,7 +161,7 @@ createWeb3Modal({
 Set or override the images of any connector.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   connectorImages: {
     coinbaseWallet: 'https://images.mydapp.com/coinbase.png',
     phantom: 'https://images.mydapp.com/phantom.png',
@@ -178,7 +178,7 @@ createWeb3Modal({
 You can add an url for the _terms and conditions_ link.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   termsConditionsUrl: 'https://www.mytermsandconditions.com'
 })
@@ -189,7 +189,7 @@ createWeb3Modal({
 You can add an url for the _privacy policy_ link.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   privacyPolicyUrl: 'https://www.myprivacypolicy.com'
 })
@@ -201,7 +201,7 @@ This allows you to toggle (enable or disable) additional features provided by Ap
 Enable analytics to get more insights on your users activity within your [WalletConnect Cloud's dashboard](https://cloud.walletconnect.com)
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   features: {
     analytics: true,
@@ -215,7 +215,7 @@ createWeb3Modal({
 Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transactions/swaps) feature is enabled by default.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   features: {
     swaps: true,
@@ -228,7 +228,7 @@ createWeb3Modal({
 Enable or disable the onramp feature in your AppKit. [Onramp](/appkit/react/transactions/onramp) feature is enabled by default.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   features: {
     onramp: true,
@@ -242,7 +242,7 @@ createWeb3Modal({
 Add custom wallets to the modal. `CustomWallets` is an array of objects, where each object contains specific information of a custom wallet.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   customWallets: [
     {
@@ -289,7 +289,7 @@ The `allWallets` parameter allows you to add or remove the "All Wallets" button 
 />
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   allWallets: 'ONLY_MOBILE'
 })
@@ -311,7 +311,7 @@ Unlike `featuredWalletIds`, these wallets will be the **only** ones shown in `Al
 You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   includeWalletIds: [
     '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369',
@@ -328,7 +328,7 @@ All other wallets will be shown in respective places.
 You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   excludeWalletIds: [
     '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369',
@@ -362,7 +362,7 @@ Select your preferred configuration mode below:
 <TabItem value="default" label="Default">
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   enableCoinbase: true, // true by default
   /* highlight-add-start */
@@ -401,7 +401,7 @@ export const config = wagmiAdapter.wagmiConfig
 <PlatformTabItem value="ethers">
 
 ```ts
-createWeb3Modal({
+createAppKit({
   //...
   enableCoinbase: true, // true by default
   /* highlight-add-start */

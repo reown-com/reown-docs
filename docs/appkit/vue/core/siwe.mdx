@@ -49,8 +49,8 @@ npm i @reown/appkit-siwe siwe
 ## Initialize AppKit with your `siweConfig`
 
 ```ts
-// Pass your siweConfig inside the createWeb3Modal() function
-  const modal = createWeb3Modal({
+// Pass your siweConfig inside the createAppKit() function
+  const modal = createAppKit({
       adapters: [wagmiAdapter], //or your Ethers adapter
       projectId,
       caipNetworks: [mainnet, arbitrum],

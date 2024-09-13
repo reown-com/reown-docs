@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem'
 On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
 
 ```tsx
-import { createWeb3Modal } from '@reown/appkit/react'
+import { createAppKit } from '@reown/appkit/react'
 import { EVMEthers5Client } from '@reown/appkit-adapters-ethers'
 
 // 1. Get projectId
@@ -47,7 +47,7 @@ const metadata = {
 const ethersAdapter = new EVMEthersClient()
 
 // 5. Create a AppKit instance
-createWeb3Modal({
+createAppKit({
   adapters: [ethersAdapter],
   caipNetworks: chains,
   projectId,

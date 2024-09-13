@@ -12,14 +12,14 @@ On-Ramp is supported in the latest version of AppKit. If you are using an older 
 
 The On-Ramp feature is enabled by default, so no additional configuration is required. 
 
-If you prefer to disable it, set the `onramp` flag to `false` in the configuration of the `createWeb3Modal` function.
+If you prefer to disable it, set the `onramp` flag to `false` in the configuration of the `createAppKit` function.
 
 :::info Note
 On-Ramp is now available on **Solana**. The configuration for On-Ramp on both EVM and Solana is the same. Please refer to the code snippet below.
 :::
 
 ```ts
-const modal = createWeb3Modal({
+const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   caipNetworks: [mainnet, arbitrum],

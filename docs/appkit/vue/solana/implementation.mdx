@@ -5,7 +5,7 @@ In your `App.vue` file set up the following configuration.
 
 ```html
 <script setup lang="ts">
-  import { createWeb3Modal, useWeb3Modal} from '@reown/appkit-solana/vue'
+  import { createAppKit, useWeb3Modal} from '@reown/appkit-solana/vue'
   import {PhantomWalletAdapter,SolflareWalletAdapter} from '@solana/wallet-adapter-wallets'
   import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/vue'
   import {solana, solanaTestnet, solanaDevnet} from '@reown/appkit/chains'
@@ -27,7 +27,7 @@ In your `App.vue` file set up the following configuration.
   }
 
   // 3. Create modal
-  createWeb3Modal({
+  createAppKit({
     adapters: [solanaWeb3JsAdapter],
     metadata: metadata,
     caipNetworks: [solana, solanaTestnet, solanaDevnet],
