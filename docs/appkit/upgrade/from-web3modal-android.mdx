@@ -1,12 +1,83 @@
 ---
-title: Migration from Web3Modal to AppKit
+title: Migration from Web3Modal to AppKit for Android
 pagination_next: 
 displayed_sidebar: mainSidebar
 ---
 
+import Table from '../../components/Table'
 import PlatformTabs from '../../components/PlatformTabs'
 import PlatformTabItem from '../../components/PlatformTabItem'
 
-# Migration from Web3Modal to Reown AppKit for Android
+# Upgrade from Web3Modal to Reown AppKit for Android
 
-This document outlines the steps to migrate from the old `@web3modal` packages to the new `@reown/appkit` packages in your Android project.
+This upgrade guide helps developers transition from using the Web3Modal library to the AppKit within reown-kotlin. The upgrade involves updating imports, modifying class references and updating artefacts dependencies. Follow these steps to ensure a smooth migration.
+
+### Step 1. Update the Repository Dependencies
+
+The Web3Modal library has been deprecated and moved to a new repository under the reown-com organization. Update your dependecies to use AppKit:
+
+```swift
+/* highlight-delete-start */
+- dependencies {
+-    implementation(platform("com.walletconnect:android-bom:{BOM version}"))
+-    implementation("com.walletconnect:android-core")
+-    implementation("com.walletconnect:web3modal")
+- }
+/* highlight-delete-end */
+/* highlight-add-start */
++ dependencies {
++    implementation(platform("com.reown:android-bom:{BOM version}"))
++    implementation("com.reown:android-core")
++    implementation("com.reown:appkit")
++ }
+/* highlight-add-end */
+```
+
+### Step 2. Update Imports in Your Code
+
+All references to Web3Modal in your import statements should be updated to use AppKit.
+
+```swift
+/* highlight-delete-start */
+- import com.walletconnect.android.*
+- import com.walletconnect.web3.modal.*
+/* highlight-delete-end */
+/* highlight-add-start */
++ import com.reown.android.*
++ import com.reown.appkit.*
+/* highlight-add-end */
+```
+
+### Step 3. Update Class Name
+
+The singleton instance for Web3Modal has been replaced with AppKit. Update all instances where Web3Modal is used with AppKit.
+
+```swift
+/* highlight-delete-start */
+- Web3Modal.initialize(Wallet.Params.Init(core = CoreClient), onSuccess, onError)
+- Web3Modal.request(request, onSuccess, onError)
+/* highlight-delete-end */
+/* highlight-add-start */
++ AppKit.initialize(Wallet.Params.Init(core = CoreClient), onSuccess, onError)
++ AppKit.request(request, onSuccess, onError)
+/* highlight-add-end */
+```
+
+### Step 4. Update ProGuard file rules
+
+If you have ProGuard rules defined remember to update them 
+
+```swift
+/* highlight-delete-start */
+- -keep class com.walletconnect.web3.modal.client.Wallet$Model { *; }
+- -keep class com.walletconnect.web3.modal.client.Wallet { *; }
+/* highlight-delete-end */
+/* highlight-add-start */
++ -keep class com.reown.appkit.client.Wallet$Model { *; }
++ -keep class com.reown.appkit.client.Wallet { *; }
+/* highlight-add-end */
+```
+
+### Step 5. Test Your Changes
+
+After updating all references to Web3Modal to use AppKit, thoroughly test your application to ensure that all functionalities work as expected.
