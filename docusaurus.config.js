@@ -173,7 +173,7 @@ const config = {
             },
             {
               label: 'X',
-              href: 'https://twitter.com/walletconnect'
+              href: 'https://x.com/reown_'
             }
           ]
         },
