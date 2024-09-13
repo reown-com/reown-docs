@@ -75,7 +75,7 @@ messaging().setBackgroundMessageHandler(async notification => {
 Now that we have the notifications listeners setup, we can start processing the incoming notifications.
 
 ```ts
-import { walletKit } from '@reown/walletkit';
+import { WalletKit } from '@reown/walletkit';
 import messaging from '@react-native-firebase/messaging';
 
 messaging().onMessage(async notification => {
