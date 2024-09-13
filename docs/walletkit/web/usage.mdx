@@ -22,7 +22,7 @@ const core = new Core({
   projectId: process.env.PROJECT_ID
 })
 
-const walletKit = await walletKit.init({
+const walletKit = await WalletKit.init({
   core, // <- pass the shared `core` instance
   metadata: {
     name: 'Demo app',
