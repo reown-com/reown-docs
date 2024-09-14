@@ -3,3 +3,85 @@ title: Migration from Web3Modal to AppKit
 pagination_next: 
 displayed_sidebar: mainSidebar
 ---
+
+
+# Upgrade from Web3Wallet to Reown WalletKit for iOS
+
+This upgrade guide helps developers transition from using the Web3Wallet library to the WalletKit within reown-swift. The guide involves updating import statements, modifying instance references, changing configuration methods, and updating repository URLs for CocoaPods and Swift Package Manager (SPM). 
+
+### Step 1. Update the Repository URL
+
+The Web3Wallet library has been moved to a new repository under the reown-com organization. If you are using Swift Package Manager (SPM) to manage dependencies, update your Package.swift file to point to the new repository:
+
+```swift
+/* highlight-delete-start */
+- .package(url: "https://github.com/WalletConnect/WalletConnectSwiftV2", from: "1.0.0"),
+/* highlight-delete-end */
+/* highlight-add-start */
++ .package(url: "https://github.com/reown-com/reown-swift", from: "1.0.0"),
+/* highlight-add-end */
+```
+
+### Step 2. Update Imports in Your Code
+
+All references to Web3Wallet in your import statements should be updated to use WalletKit.
+
+```swift
+/* highlight-delete-start */
+- import Web3Wallet
+/* highlight-delete-end */
+/* highlight-add-start */
++ import WalletKit
+/* highlight-add-end */
+```
+
+### Step 3. Update Instance Access and Method Calls
+
+The singleton instance access for Web3Wallet has been replaced with WalletKit. Update all instances where Web3Wallet.instance is used to WalletKit.instance.
+
+```swift
+/* highlight-delete-start */
+- Web3Wallet.instance.authRequestPublisher.sink { (id, result) in
+-    // Your code here
+- }
+/* highlight-delete-end */
+/* highlight-add-start */
++ WalletKit.instance.authRequestPublisher.sink { (id, result) in
++     // Your code here
++ }
+/* highlight-add-end */
+```
+
+### Step 4. Update Configuration Method
+
+The configure method has been updated to reflect the new branding. Replace calls to Web3Wallet.configure with WalletKit.configure.
+
+```swift
+/* highlight-delete-start */
+- Web3Wallet.configure(
+-   ...
+- )
+/* highlight-delete-end */
+/* highlight-add-start */
++ WalletKit.configure(
++   ...
++ )
+/* highlight-add-end */
+```
+
+### Step 5. Update CocoaPods Podspec
+
+If you are using CocoaPods to manage dependencies, update your Podfile to use the new library name.
+
+```swift
+/* highlight-delete-start */
+- pod 'Web3Wallet', '~> 1.0'
+/* highlight-delete-end */
+/* highlight-add-start */
++ pod 'WalletKit', '~> 1.0'
+/* highlight-add-end */
+```
+
+### Step 6. Test Your Changes
+
+After updating all references to Web3Wallet to use WalletKit, thoroughly test your application to ensure that all functionalities work as expected.
