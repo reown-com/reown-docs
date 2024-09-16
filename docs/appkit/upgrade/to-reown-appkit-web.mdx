@@ -37,7 +37,7 @@ npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
 To upgrade from AppKit v5 to AppKit v6 start by removing AppKit v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `@wagmi/core` and `Viem`.
 
 ```bash npm2yarn
-npm install @reown/appkit @reown/appkit-adapter-wagmi 
+npm install @reown/appkit @reown/appkit-adapter-wagmi
 ```
 
 </PlatformTabItem>
@@ -74,13 +74,13 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 /* highlight-add-start */
 + import { createAppKit } from '@reown/appkit'
 + import { arbitrum, mainnet } from '@reown/appkit/chains'
-+ import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
++ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 ```
 
-Then create `wagmiAdapter` using `EVMWagmiClient` function as shown below
+Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
 ```tsx
 const projectId = 'YOUR_PROJECT_ID'
@@ -100,9 +100,10 @@ const metadata = { //optional
 
 /* Create the Wagmi adapter */
 /* highlight-add-start */
-const wagmiAdapter = new EVMWagmiClient({})
+const wagmiAdapter = new WagmiAdapter({})
 /* highlight-add-end */
 ```
+
 Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 
 ```tsx
@@ -114,7 +115,7 @@ Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 /* highlight-add-start */
 + const modal = createAppKit({
 +  adapters: [wagmiAdapter], // optional
-+  caipNetworks: [mainnet, arbitrum],
++  networks: [mainnet, arbitrum],
 +  metadata: metadata, // optional
 +  projectId,
 +  features: {
@@ -165,11 +166,11 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 /* highlight-add-start */
 + import { createAppKit } from '@reown/appkit'
 + import { arbitrum, mainnet } from '@reown/appkit/chains'
-+ import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
++ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
 ```
 
-Then create `wagmiAdapter` using `EVMWagmiClient` function as shown below
+Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
 ```tsx
 const projectId = 'YOUR_PROJECT_ID'
@@ -189,7 +190,7 @@ const metadata = { //optional
 
 /* Create the Wagmi adapter */
 /* highlight-add-start */
-const wagmiAdapter = new EVMWagmiClient({})
+const wagmiAdapter = new WagmiAdapter({})
 /* highlight-add-end */
 /* highlight-add-end */
 ```
@@ -208,7 +209,7 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 /* highlight-add-start */
 + const modal = createAppKit({
 +  adapters: [wagmiAdapter], // optional
-+  caipNetworks: [mainnet, arbitrum],
++  networks: [mainnet, arbitrum],
 +  metadata: metadata, // optional
 +  projectId,
 +  features: {
@@ -217,6 +218,7 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 + })
 /* highlight-add-end */
 ```
+
 </TabItem>
 </Tabs>
 
@@ -268,22 +270,27 @@ Learn more about AppKit v6 JavaScript [here](../javascript/core/installation.mdx
 
 ### Properties
 
-As you may have noticed, some of the properties of Web3Modal have changed as a consequence of the migration to reown AppKit. 
+As you may have noticed, some of the properties of Web3Modal have changed as a consequence of the migration to reown AppKit.
 
 #### adapters
+
 The `adapters` property is a new property that is an array of adapters that can be initialized.
 
-#### caipNetworks
-The `chains` property is now `caipNetworks` in reown AppKit v6. You should import them from `@reown/appkit/chains` package instead of importing these networks from `viem` or other packages.
+#### networks
 
-#### defaultCaipNetwork
-The `defaultChain` property is now `defaultCaipNetwork` in reown AppKit v6. This is a network object that specifies the default network for your Web3 app.
+The `chains` property is now `networks` in reown AppKit v6. You should import them from `@reown/appkit/networks` package instead of importing these networks from `viem` or other packages.
+
+#### defaultNetwork
+
+The `defaultChain` property is now `defaultNetwork` in reown AppKit v6. This is a network object that specifies the default network for your Web3 app.
 
 ### Utility Functions
+
 The following methods are still available with the same nomenclature as before:
 
 #### modal.getAddress()
-This returns the connected address. 
+
+This returns the connected address.
 
 :::note
 It returns the active namespace's address.
@@ -291,10 +298,12 @@ It returns the active namespace's address.
 **Example**: You’ve initialized both the Wagmi and Solana adapters and connected to a dApp with an EVM-only wallet (e.g., Rainbow). In this case, the Solana adapter is still not connected. When your active network is one of the EVM chains, the address will return your wallet address. However, if you manually switch to the Solana network, the address will return `undefined` (unless you connect to a Solana wallet).
 :::
 
-#### modal.getError() 
+#### modal.getError()
+
 This returns the error values.
 
 #### modal.getChainId()
+
 Returns the active network's `chainId`
 
 :::note
@@ -306,7 +315,8 @@ In versions prior to v5, which were single-chain, `getChainId()` returned a sing
 Now, in v6, since both chains can be connected simultaneously, the type definition is `number | string | undefined`.
 :::
 
-#### modal.switchNetwork(caipNetwork)
+#### modal.switchNetwork(network)
+
 This switches the active network to the different network being passed.
 
 :::note
@@ -314,10 +324,11 @@ Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather t
 
 - (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
 - (v6) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/chains`.
-:::
+  :::
 
 #### modal.getIsConnected()
-This returns if the selected network adapter is connected or not. 
+
+This returns if the selected network adapter is connected or not.
 :::note
 It returns the active namespace's connection status as a boolean.
 
@@ -325,12 +336,15 @@ Example: You've initialized both the Wagmi and Solana adapters and connected to 
 :::
 
 #### modal.getWalletProvider()
+
 This returns the active connection provider.
 
 #### modal.getWalletProviderType()
+
 This returns the active connection provider type.
 
 #### modal.subscribeProvider(callback)
+
 This is a listener that detects changes to the AppKit state, such as `address`, `chainId`, `isConnected`, `provider`, and `providerType`.
 
 - `address` - It returns the connected wallet address. The value returned is the same as `modal.getAddress()`
@@ -342,8 +356,8 @@ This is a listener that detects changes to the AppKit state, such as `address`, 
 The following methods and listeners are exactly the same and do not have any specific details related to the multiple chains feature.
 
 - `modal.getState` - it returns the modal state
-    - `open` - it returns boolean that indicates if the modal is open or not
-    - `selectedNetworkId` - it returns active network’s id
+  - `open` - it returns boolean that indicates if the modal is open or not
+  - `selectedNetworkId` - it returns active network’s id
 - `modal.subscribeState`
 - `modal.setThemeMode`
 - `modal.getThemeMode`
