@@ -121,7 +121,8 @@ const advanced = {
       collapsible: true,
       items: ['advanced/security/content-security-policy']
     },
-    'advanced/push-server'
+    'advanced/push-server',
+    'advanced/walletconnect-deprecations'
   ]
 }
 
@@ -244,7 +245,7 @@ module.exports = {
               collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'To Reown AppKit', id: 'appkit/upgrade/from-w3m-to-reown' },
+                { type: 'doc', label: 'To Reown AppKit', id: 'appkit/upgrade/from-w3m-to-reown' }
                 //{ type: 'doc', label: 'AppKit v2 to v5', id: 'appkit/upgrade/appkitv2' },
               ]
             },
@@ -254,10 +255,18 @@ module.exports = {
               collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'From RainbowKit', id: 'appkit/migration/from-rainbowkit-next' },
-                { type: 'doc', label: 'From Anza Adapter', id: 'appkit/migration/from-anza-adapter-react' },
+                {
+                  type: 'doc',
+                  label: 'From RainbowKit',
+                  id: 'appkit/migration/from-rainbowkit-next'
+                },
+                {
+                  type: 'doc',
+                  label: 'From Anza Adapter',
+                  id: 'appkit/migration/from-anza-adapter-react'
+                }
               ]
-            },
+            }
           ]
         },
         {
@@ -286,9 +295,13 @@ module.exports = {
               collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'From Web3Wallet', id: 'walletkit/upgrade/from-web3wallet-to-reown' },
+                {
+                  type: 'doc',
+                  label: 'From Web3Wallet',
+                  id: 'walletkit/upgrade/from-web3wallet-to-reown'
+                }
               ]
-            },
+            }
           ]
         }
       ]
