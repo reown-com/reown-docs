@@ -14,7 +14,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers"]}>
 
   <PlatformTabItem value="wagmi">
-  ### Step 1. Replace the dependencies in your code and `package.json`
+  **Step 1. Replace the dependencies in your code and `package.json`**
 
   ```json
   {
@@ -35,8 +35,8 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   }
   ```
   * Run `yarn install` after replacing the packages
-
-  ### Step 2. Update your AppKit config
+  
+  **Step 2. Update your AppKit config**
 
   ```tsx
   /* highlight-delete-start */
@@ -47,7 +47,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   /* highlight-add-end */
   ```
 
-  ### Step 3. Update your Hooks usage
+  **Step 3. Update your Hooks usage**
   Update your hook imports as follows:
 
   ```tsx
@@ -69,7 +69,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   } from '@reown/appkit-wagmi-react-native';
   /* highlight-add-end */
   ```
-  ### Step 4. Update your Components usage
+  **Step 4. Update your Components usage**
   Update your component imports as follows:
 
   ```tsx
@@ -93,7 +93,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   /* highlight-add-end */
   ```
 
-  ### Step 5. Update your config for Universal Wallets 
+  **Step 5. Update your config for Universal Wallets**
   Update email wallet specific imports as follows:
 
   ```tsx
@@ -105,7 +105,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   /* highlight-add-end */
   ```
 
-  ### Step 6. Update your import to support Coinbase Wallet 
+  **Step 6. Update your import to support Coinbase Wallet**
   Update coinbase connector import as follows:
 
   ```tsx
@@ -122,7 +122,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   <PlatformTabItem value="ethers">
   * If you are using ethers v5, follow the same steps but replacing `ethers` with `ethers5`
 
-  ### Step 1. Replace the dependencies in your code and `package.json`
+  **Step 1. Replace the dependencies in your code and `package.json`**
   ```json
   {
     "dependencies": {
@@ -144,7 +144,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   ```
   * Run `yarn install` after replacing the packages
 
-  ### Step 2. Update your AppKit config
+  **Step 2. Update your AppKit config**
 
   ```tsx
   /* highlight-delete-start */
@@ -155,7 +155,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   /* highlight-add-end */
   ```
 
-  ### Step 3. Update your Hooks usage
+  **Step 3. Update your Hooks usage**
   Update your hook imports as follows:
 
   ```tsx
@@ -183,7 +183,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   /* highlight-add-end */
   ```
 
-  ### Step 4. Update your Components usage
+  **Step 4. Update your Components usage**
   Update your component imports as follows:
 
   ```tsx
@@ -207,7 +207,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   /* highlight-add-end */
   ```
 
-  ### Step 5. Update email wallet specific imports as follows:
+  **Step 5. Update email wallet specific imports as follows:**
 
   ```tsx
   /* highlight-delete-start */
@@ -218,7 +218,7 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   /* highlight-add-end */
   ```
 
-  ### Step 6. Update your import to support Coinbase Wallet 
+  **Step 6. Update your import to support Coinbase Wallet**
   Update coinbase connector import as follows:
 
   ```tsx
