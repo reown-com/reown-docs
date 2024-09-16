@@ -21,7 +21,7 @@ export default function Root({ children }) {
     <>
       <noscript>
         <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-5557TG59"
+          src="https://www.googletagmanager.com/ns.html?id=GTM-56G35T8X"
           height="0"
           width="0"
           style={{
