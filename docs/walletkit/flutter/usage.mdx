@@ -8,7 +8,7 @@ This section provides instructions on how to initialize the WalletKit client, ap
 
 Links to sections on this page. Some sections are platform specific and are only visible when the platform is selected. To view a summary of useful platform specific topics, check out **Extra (Platform Specific)** under this section.
 
-**[Initialization](#initialization)**: Creating a new ReownWalletKit instance and initializing it with a projectId from [Cloud](https://cloud.walletconnect.com).
+**[Initialization](#initialization)**: Creating a new ReownWalletKit instance and initializing it with a projectId from [Cloud](https://cloud.reown.com).
 
 **Session**: Connection between a dapp and a wallet.
 
@@ -26,6 +26,8 @@ Links to sections on this page. Some sections are platform specific and are only
   Extending a session between a dapp and wallet
 - [Session Disconnect](#session-disconnect):
   Disconnecting a session between a dapp and wallet
+- [Formatted Errors](#formatted-errors):
+  A list of useful error objects to be used
 
 <CloudBanner />
 
@@ -150,18 +152,18 @@ await _walletKit.pair(uri: uri);
 
 ### Session Rejection
 
-To reject the request, pass in an error code and reason. They can be found [here](https://specs.walletconnect.com/2.0/specs/clients/sign/error-codes).
+To reject the request, pass in an error code and reason according to [protocol specs](https://specs.walletconnect.com/2.0/specs/clients/sign/error-codes). See also [Formatted Errors](#formatted-errors) section.
 
 To reject a session:
 
 ```javascript
-_walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) {
+_walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) async {
   // display a prompt for the user to approve or reject the session
   // ....
   // If rejected
-  _walletKit.rejectSession(
+  await _walletKit.rejectSession(
     id: event.id,
-    reason: Errors.getSdkError(Errors.USER_REJECTED),
+    reason: Errors.getSdkError(Errors.USER_REJECTED).toSignError(),
   );
 });
 ```
@@ -301,7 +303,7 @@ When either the dapp or the wallet disconnects from a session, a `SessionDelete`
 ```javascript
 await _walletKit.disconnectSession(
   topic: session.topic,
-  reason: Errors.getSdkError(Errors.USER_DISCONNECTED),
+  reason: Errors.getSdkError(Errors.USER_DISCONNECTED).toSignError(),
 );
 ```
 
@@ -344,3 +346,23 @@ await _walletKit.emitSessionEvent(
 ```
 
 For a better understanding please check out the [example wallet](https://github.com/reown-com/reown_flutter/tree/master/packages/reown_walletkit/example/lib) and, in particular, the [EVMService](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_walletkit/example/lib/dependencies/chain_services/evm_service.dart) inside of it.
+
+### Formatted Errors
+
+Our SDK exports a variety of ready-made error objects for you to use in the different situations. Most commonly used are...
+
+```javascript
+// When user rejects session proposal or method request.
+final userRejectedError = Errors.getSdkError(Errors.USER_REJECTED).toSignError();
+
+// When the request coming to your wallet can not be unparsed
+final malformedRequest = Errors.getSdkError(Errors.MALFORMED_REQUEST_PARAMS).toSignError();
+
+// When user disconnects the session
+final userDisconnected = Errors.getSdkError(Errors.USER_DISCONNECTED).toSignError();
+
+// When dapp request an unsupported method to your wallet
+final unsupportedMethods = Errors.getSdkError(Errors.UNSUPPORTED_METHODS).toSignError();
+```
+
+But you can check the full list of [available errors here](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_core/lib/utils/errors.dart)

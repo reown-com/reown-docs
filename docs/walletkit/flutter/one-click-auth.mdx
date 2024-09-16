@@ -138,7 +138,7 @@ If the authentication request cannot be approved or if the user chooses to rejec
 ```javascript
 await _walletKit!.rejectSessionAuthenticate(
   id: args.id,
-  reason: Errors.getSdkError(Errors.USER_REJECTED_AUTH),
+  reason: Errors.getSdkError(Errors.USER_REJECTED_AUTH).toSignError(),
 );
 ```
 

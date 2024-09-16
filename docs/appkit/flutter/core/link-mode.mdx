@@ -1,9 +1,9 @@
-import PlatformTabs from '../../components/PlatformTabs'
-import PlatformTabItem from '../../components/PlatformTabItem'
+import PlatformTabs from '../../../components/PlatformTabs'
+import PlatformTabItem from '../../../components/PlatformTabItem'
 
 # Link Mode
 
-WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth requests and session requests over Universal Links, reducing the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with network connections, especially when the user has an unstable internet connection.
+AppKit Link Mode is a low latency mechanism for transporting One-Click Auth requests and session requests over Universal Links, reducing the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with network connections, especially when the user has an unstable internet connection.
 
 By enabling it, the wallet and dapp will communicate through declared Universal Links on iOS and/or App Links on Android **even without an internet connection.**
 
@@ -16,33 +16,33 @@ By enabling it, the wallet and dapp will communicate through declared Universal 
 3. Set the `linkMode` property to `true`:
 
 ```javascript
-final _walletKit = ReownWalletKit(
-  core: ReownCore(
-    projectId: '{YOUR_PROJECT_ID}',
-  ),
-  metadata: PairingMetadata(
-    name: 'Example Wallet',
-    description: 'Example wallet description',
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
     url: 'https://example.com/',
     icons: ['https://example.com/logo.png'],
     redirect: Redirect(
-      native: 'examplewallet://',
+      native: 'exampleapp://',
       /* highlight-add-start */
-      universal: 'https://example.com/wallet',
+      universal: 'https://reown.com/exampleapp',
       linkMode: true,
       /* highlight-add-end */
     ),
   ),
 );
+
 ```
 
-Once everything is properly configured, and the user interacts with a Link Mode-supporting dApp, your wallet will receive requests through it.
+Once everything is properly configured, and the user interacts with a Link Mode-supporting Wallet, your dApp will receive responses through it.
 
-In Flutter, there are several plugins that can help you integrate Universal/App Links. However, regardless of which one you choose, it is crucial that, when capturing an incoming link, you pass it to WalletKit so it can process the request.
+In Flutter, there are several plugins that can help you integrate Universal/App Links. However, regardless of which one you choose, it is crucial that, when capturing an incoming link, you pass it to AppKit so it can process the request.
 
 ```javascript
 void _onLinkCaptured(String link) async {
-  await _walletKit.dispatchEnvelope(link);
+  await _appKitModal.dispatchEnvelope(link);
 }
 ```
 
@@ -63,7 +63,7 @@ void _onLinkCaptured(String link) async {
 <dict>
   <key>com.apple.developer.associated-domains</key>
   <array>
-    <string>applinks:your_wallet_universal_link.com</string>
+    <string>applinks:your_dapp_universal_link.com</string>
   </array>
 </dict>
 </plist>
@@ -73,7 +73,7 @@ void _onLinkCaptured(String link) async {
 For more information on how to configure universal links for your app, refer to the [Apple Documentation](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=swift).<br />
 For a debugging guide, visit the [Debugging Universal Links](https://developer.apple.com/documentation/technotes/tn3155-debugging-universal-links) page.<br />
 
-You can check our Flutter's WalletKit sample [AppDelegate file](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_walletkit/example/ios/Runner/AppDelegate.swift) as a reference.
+You can check our Flutter's AppKit sample [AppDelegate file](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/base/ios/Runner/AppDelegate.swift) as a reference.
 
 </PlatformTabItem>
 <PlatformTabItem value="android">
@@ -98,7 +98,7 @@ For more information on how to configure app links for your app, refer to the [A
 For enabling links to app content check [this](https://developer.android.com/training/app-links/deep-linking) documentation page.<br />
 For more information on how to interact with other apps using intents, see [Android Intent Documentation](https://developer.android.com/training/basics/intents).
 
-You can check our Flutter's WalletKit sample [MainActivity file](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_walletkit/example/android/app/src/main/kotlin/com/example/wallet/MainActivity.kt) as a reference.
+You can check our Flutter's AppKit sample [MainActivity file](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/base/android/app/src/main/kotlin/com/example/dapp/MainActivity.kt) as a reference.
 
 </PlatformTabItem>
 </PlatformTabs>

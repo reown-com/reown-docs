@@ -47,7 +47,7 @@ await _appKitModal.init();
 Alternatively, `ReownAppKitModal()` allows you to create an instance by passing a `ReownAppKit()` object as follows:
 
 ```javascript
-final _appKit = ReownAppKit.createInstance(
+final appKit = ReownAppKit.createInstance(
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
     name: 'Example App',
@@ -63,7 +63,7 @@ final _appKit = ReownAppKit.createInstance(
 
 final _appKitModal = ReownAppKitModal(
   context: context,
-  appKit: _appKit,
+  appKit: appKit,
 );
 
 // Register here the event callbacks on the service you'd like to use. See `Events` section.

@@ -1,6 +1,6 @@
 # Actions
 
-### Listen to balance change
+### - Listen to balance change
 
 You can subscribe to `_appKitModal.balanceNotifier` to be up to date with balance.
 
@@ -15,7 +15,7 @@ ValueListenableBuilder<String>(
 
 ```
 
-### Launch the current wallet
+### - Launch the current wallet
 
 If you connected your dApp through deep linkining to a Wallet app you can launch that wallet app with the following:
 
@@ -23,7 +23,7 @@ If you connected your dApp through deep linkining to a Wallet app you can launch
 _appKitModal.launchConnectedWallet();
 ```
 
-### Launch block explorer
+### - Launch block explorer
 
 You can open the selected chain's block explorer easily:
 
@@ -31,7 +31,7 @@ You can open the selected chain's block explorer easily:
 _appKitModal.launchBlockExplorer();
 ```
 
-### Send an RPC request
+### - Send an RPC request
 
 ```javascript
 final bytes = utf8.encode(message);
@@ -52,27 +52,27 @@ final result = await _appKitModal.request(
 
 A list of all available methods can be found in [constants.dart](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_core/lib/utils/constants.dart#L70) file, which is already exported for you to use directly from AppKit package.
 
-### List of approved chains by the connected wallet
+### - List of approved chains by the connected wallet
 
 ```javascript
 _appKitModal.getApprovedChains();
 ```
 
-### List of approved methods by connected wallet
+### - List of approved methods by connected wallet
 
 ```javascript
 _appKitModal.getApprovedMethods();
 ```
 
-### List of approved events by the connected wallet
+### - List of approved events by the connected wallet
 
 ```javascript
 _appKitModal.getApprovedEvents();
 ```
 
-### Interact with Smart Contracts
+### - Interact with Smart Contracts
 
-#### Read function:
+### Read function:
 
 ```javascript
 Future<List<dynamic>> requestReadContract({
@@ -87,47 +87,51 @@ Future<List<dynamic>> requestReadContract({
 
 #### Usage:
 
-1. Create a DeployedContract object
+1. Create a `DeployedContract` object
 
 ```javascript
 // Create DeployedContract object using contract's ABI and address
-final deployedContract = DeployedContract(
+final tetherContract = DeployedContract(
   ContractAbi.fromJson(
     jsonEncode([{.....}]), // ABI object
-    'TokenName',
+    'Tether USD',
   ),
-  EthereumAddress.fromHex('0xaddress.......'), // Contract address
+  EthereumAddress.fromHex('0xdAC17F958D2ee523a2206206994597C13D831ec7'), // https://etherscan.io/token/0xdAC17F958D2ee523a2206206994597C13D831ec7
 );
 ```
 
 2. Read from it by calling a read function
 
 ```javascript
-Future<void> getWalletBalance() async {
-  // Get balance of wallet
-  final result = await _appKitModal.requestReadContract(
-    deployedContract: deployedContract,
-    topic: _appKitModal.session!.topic,
-    chainId: _appKitModal.selectedChain!.chainId,
-    functionName: 'balanceOf',
-    parameters: [
-      EthereumAddress.fromHex(_appKitModal.session!.address!),
-    ],
-  );
-}
+// Get token decimals
+final decimals = await _appKitModal.requestReadContract(
+  topic: _appKitModal.session!.topic,
+  chainId: _appKitModal.selectedChain!.chainId,
+  deployedContract: tetherContract,
+  functionName: 'decimals',
+);
 
-Future<void> getTotalSupply() async {
-  // Get token total supply
-  final result = await _appKitModal.requestReadContract(
-    deployedContract: deployedContract,
-    topic: _appKitModal.session!.topic,
-    chainId: _appKitModal.selectedChain!.chainId,
-    functionName: 'balanceOf',
-  );
-}
+// Get balance of wallet
+final balanceOf = await _appKitModal.requestReadContract(
+  deployedContract: tetherContract,
+  topic: _appKitModal.session!.topic,
+  chainId: _appKitModal.selectedChain!.chainId,
+  functionName: 'balanceOf',
+  parameters: [
+    EthereumAddress.fromHex(_appKitModal.session!.address!),
+  ],
+);
+
+// Get token total supply
+final totalSupply = await _appKitModal.requestReadContract(
+  deployedContract: tetherContract,
+  topic: _appKitModal.session!.topic,
+  chainId: _appKitModal.selectedChain!.chainId,
+  functionName: 'totalSupply',
+);
 ```
 
-#### Write function:
+### - Write function:
 
 ```javascript
 Future<dynamic> requestWriteContract({
@@ -143,22 +147,13 @@ Future<dynamic> requestWriteContract({
 
 #### Usage:
 
-1. Create a DeployedContract object (same as before)
+Write to it by calling a write function, for example, `transfer` function from USDC token contract:
 
 ```javascript
-// Create DeployedContract object using contract's ABI and address
-final deployedContract = DeployedContract(
-  ContractAbi.fromJson(
-    jsonEncode([{.....}]), // ABI object
-    'TokenName',
-  ),
-  EthereumAddress.fromHex('0xaddress.......'), // Contract address
-);
-```
+final decimalUnits = (decimals.first as BigInt); // decimals value from `decimals` contract function
+final transferValue = _formatValue(0.23, decimals: decimalUnits); // your format value function
 
-2. Write to it by calling a write function
-
-```javascript
+// Transfer USDT
 Future<void> transferToken() async {
   // Transfer 0.01 amount of Token using Smart Contract's transfer function
   final result = await _appKitModal.requestWriteContract(
@@ -171,13 +166,20 @@ Future<void> transferToken() async {
     ),
     parameters: [
       EthereumAddress.fromHex('0x59e2f66C0E96803206B6486cDb39029abAE834c0'), // recipient address
-      transferValue,
+      transferValue, // == 0.23 USDT
     ],
   );
 }
 
+```
+
+#### Additional example:
+
+Call a `sayHello` function of a smart contract to write a message.
+
+```javascript
+// Write a message data
 Future<void> writeMessage() async {
-  // Write a message data
   final result = await _appKitModal.requestWriteContract(
     topic: _appKitModal.session!.topic,
     chainId: _appKitModal.selectedChain!.chainId,
