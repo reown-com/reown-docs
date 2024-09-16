@@ -12,14 +12,14 @@ import PlatformTabItem from '../components/PlatformTabItem'
 
 :::info Note
 
-Submitting a project to the WalletConnect Cloud Explorer is recommended but optional. You can still use WalletConnect services without submitting your project.
+Submitting a project to the WalletConnect Cloud Explorer is recommended but optional. You can still use Reown services without submitting your project.
 However, doing so ensures that your project is listed under [WalletConnect Explorer](https://walletconnect.com/explorer?utm_source=walletconnect-docs&utm_medium=cloud&utm_campaign=explorer-submission) and [Cloud Explorer API](./explorer.md).
 
 :::
 
 ## Creating a New Project
 
-- Head over to [cloud.walletconnect.com](https://cloud.walletconnect.com/) and create a new project by clicking the "New Project" button in top right corner of the dashboard.
+- Head over to [cloud.reown.com](https://cloud.reown.com/) and create a new project by clicking the "New Project" button in top right corner of the dashboard.
 - Give a suitable name to your project, select whether its an App or Wallet and click the "Create" button. (You can change this later)
   <img className="image-margin" src={useBaseUrl('/img/cloud/1.png')} />
 
@@ -65,13 +65,13 @@ However, doing so ensures that your project is listed under [WalletConnect Explo
     {
       field: 'Supports Sign v2',
       description:
-        'Indicates v2 support for WalletConnect Sign SDK. Detailed testing instructions are provided in the explorer submission form',
+        'Indicates v2 support for Reown Sign SDK. Detailed testing instructions are provided in the explorer submission form',
       required: 'yes'
     },
     {
       field: 'Supports Auth v1',
       description:
-        'Indicates v1 support for WalletConnect Auth SDK. Detailed testing instructions are provided in the explorer submission form',
+        'Indicates v1 support for Reown Auth SDK. Detailed testing instructions are provided in the explorer submission form',
       required: 'yes'
     },
     {
@@ -87,7 +87,7 @@ However, doing so ensures that your project is listed under [WalletConnect Explo
     },
     {
       field: 'Testing Instructions',
-      description: 'Instructions on how to test your WalletConnect Integration',
+      description: 'Instructions on how to test your Reown Integration',
       required: 'yes'
     },
     {
@@ -147,8 +147,8 @@ The following list details our QA flow and how to reproduce it:
     },
     {
       testCase: 'Connect to dapp via web browser',
-      steps: `1. Open the WalletConnect connection page https://appkit-lab.reown.com/ or https://react-app.walletconnect.com/ from a PC
-              2. Press on the “Connect Wallet” button and select the “WalletConnect” option.
+      steps: `1. Open the Reown connection page https://appkit-lab.reown.com/ from a PC
+              2. Press on the “Connect Wallet” button and select the Reown option.
               3. Open the wallet app and use the scan QR option to connect.
               4. Accept on the wallet the connection request`,
       expectedResults: `1. The app has been correctly set-up
@@ -283,7 +283,7 @@ The following test cases only apply for wallets supporting a particular set of c
 
 ## What's Next?
 
-Now depending on whether or not your submission met all parameters, you will receive an email from the WalletConnect team with the status of your submission. This change will also be reflected with more directions in the "Explorer" tab of your project.
+Now depending on whether or not your submission met all parameters, you will receive an email from the Reown team with the status of your submission. This change will also be reflected with more directions in the "Explorer" tab of your project.
 If your submission was not accepted, you can make the necessary changes and resubmit your project for review. The reason for rejection will be mentioned in the email and in the "Explorer" tab of your project.
 
 In case of any questions, feel free to ask on [Github Discussions](https://github.com/orgs/WalletConnect/discussions/categories/explorer-support)
