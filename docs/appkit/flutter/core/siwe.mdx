@@ -104,13 +104,22 @@ final _siweConfig = SIWEConfig(
 Add the siwe configuration in `ReownAppKitModal` initialization
 
 ```javascript
-final _w3mService = W3MService(
+final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
-    ...
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect(
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+    ),
   ),
+  /* highlight-add-start */
   siweConfig: SIWEConfig(...),
+  /* highlight-add-end */
 );
 ```
 

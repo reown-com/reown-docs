@@ -143,10 +143,20 @@ Either you are approving a session proposal or responding to a session request, 
 
 A dapp would call `examplewallet://wc?uri={pairingUri}` from their side when they request to connect with your wallet, and given the fact that `examplewallet` is your registered custom scheme then your wallet will be opened.
 
-**Redirecting back to dapp (proposer) after session approval:**
+### Redirecting back to dapp (proposer) after session approval:
 
-```dart
-// subscribe to onSessionProposal with a handler
+WalletKit SDK exports a handy method for easy redirection back to the requester app, whether it be after a session proposal, a session authentica or a session request.
+
+```javascript
+Future<bool> redirectToDapp({
+  required String topic,
+  required Redirect? redirect,
+})
+```
+
+After Session Proposal:
+
+```javascript
 _walletKit!.onSessionProposal.subscribe(_onSessionProposal);
 //
 void _onSessionProposal(SessionProposalEvent? event) async {
@@ -154,11 +164,21 @@ void _onSessionProposal(SessionProposalEvent? event) async {
     // Process session proposal
     // ....
     // Redirect back to proposer dapp
-    final scheme = event.params.proposer.metadata.redirect?.native ?? '';
-    launchUrlString(scheme, mode: LaunchMode.externalApplication);
+    try {
+      await _walletKit.redirectToDapp(
+        topic: topic,
+        redirect: event.params.proposer.metadata.redirect,
+      );
+    } catch (e) {
+      ...
+    }
   }
 }
+```
 
+After Session Authenticate:
+
+```javascript
 // If your wallet supports One-Click Auth
 _walletKit!.onSessionAuthRequest.subscribe(_onSessionAuthRequest);
 //
@@ -166,9 +186,15 @@ void _onSessionAuthRequest(SessionAuthRequest? event) async {
   if (event != null) {
     // Process session authentication
     // ....
-    // Redirect back to requester dapp
-    final scheme = event.requester.metadata.redirect?.native ?? '';
-    launchUrlString(scheme, mode: LaunchMode.externalApplication);
+    // Redirect back to proposer dapp
+    try {
+      await _walletKit.redirectToDapp(
+        topic: topic,
+        redirect: event.params.proposer.metadata.redirect,
+      );
+    } catch (e) {
+      ...
+    }
   }
 }
 ```
@@ -177,7 +203,7 @@ A dapp would call `examplewallet://` (or even better `session.peer?.metadata.red
 
 **Redirecting back to dapp (proposer) after responding to a sign request:**
 
-```dart
+```javascript
 // Your registered request handler for the given requested method will be triggered
 Future<void> personalSignRequestHandler(String topic, dynamic parameters) async {
   // Process signing requests
@@ -185,8 +211,14 @@ Future<void> personalSignRequestHandler(String topic, dynamic parameters) async 
   // With the given topic with retrieve the current session data
   final session = _walletKit.sessions.get(topic);
   // And we get the peer metadata to trigger dapp's redirect value
-  final scheme = session?.peer.metadata.redirect?.native ?? '';
-  launchUrlString(scheme, mode: LaunchMode.externalApplication);
+  try {
+    await _walletKit.redirectToDapp(
+      topic: topic,
+      redirect: session!.peer.metadata.redirect,
+    );
+  } catch (e) {
+    ...
+  }
 }
 ```
 

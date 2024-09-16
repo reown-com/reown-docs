@@ -175,7 +175,7 @@ Create your `WalletConnectModalService` which is your primary class for opening,
 
 Be sure to update the project ID and metadata with your own.
 
-```dart
+```javascript
 WalletConnectModalService service = WalletConnectModalService(
   projectId: 'YOUR_PROJECT_ID',
   metadata: const PairingMetadata(
@@ -200,7 +200,7 @@ To make things easy, you can use the WalletConnectModalConnect widget to open th
 This is a button that changes its state based on the modal and connection.
 This widget requires the WalletConnectModalService to be passed in.
 
-```dart
+```javascript
 WalletConnectModalConnect(
   walletConnectModalService: _service,
 ),

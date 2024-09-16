@@ -2,31 +2,35 @@
 
 ## Custom Networks addition and selection
 
-AppKit already comes with a list of supported networks inside of `ReownAppKitModalNetworks` class. You can get supported EVM networks by selecting `ReownAppKitModalNetworks.supported['eip155']` and, currently, only EVM Networks are supported (non-EVM support will come soon)
+AppKit already comes with a list of supported networks inside of `ReownAppKitModalNetworks` class. You can get default supported EVM networks by selecting `ReownAppKitModalNetworks.supported['eip155']` and, currently, only EVM Networks are supported (non-EVM support will come soon). Check the list of [suppoted networks](https://github.com/reown-com/blockchain-api/blob/master/SUPPORTED_CHAINS.md#list-of-supported-chains)
 
-You can also get supported test networks by doing `ReownAppKitModalNetworks.test['eip155']`.
+This class also comes with extra networks `ReownAppKitModalNetworks.extra['eip155']` and test networks `ReownAppKitModalNetworks.test['eip155']`, however, these are not included in the supported list by default.
 
-Check the list of suppoted networks here https://github.com/reown-com/blockchain-api/blob/master/SUPPORTED_CHAINS.md#list-of-supported-chains
-
-However, if these chains are not enough or you don't want to support any of them you can modify the list associated to the namespace.
+If these chains are not enough for you or you don't want to support some of them you can modify the list associated to the namespace.
 
 :::info note
 It is important that this is done before AppKitModal configuration.
 :::
 
+### Adding extra and/or test networks to the supported list
+
 ```javascript
-// Example adding extra and test networks
+// Adding extra networks
 final extraNetworks = ReownAppKitModalNetworks.extra['eip155'] ?? [];
 ReownAppKitModalNetworks.addNetworks('eip155', extraNetworks);
 
+// Adding test networks
 final testNetworks = ReownAppKitModalNetworks.test['eip155'] ?? [];
 ReownAppKitModalNetworks.addNetworks('eip155', testNetworks);
+```
 
-// Example removing Aurora network from the list
+### Removing Aurora network from the list
+
+```javascript
 ReownAppKitModalNetworks.removeNetworks('eip155', ['1313161554']);
 ```
 
-You can also create and add a custom network. For instance...
+### Adding a custom network
 
 ```javascript
 final customNetwork = ReownAppKitModalNetworkInfo(
@@ -40,3 +44,4 @@ final customNetwork = ReownAppKitModalNetworkInfo(
 
 ReownAppKitModalNetworks.addNetworks('eip155', [customNetwork]);
 ```
+

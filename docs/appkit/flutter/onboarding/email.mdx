@@ -12,11 +12,21 @@ In order to support Email Wallets creation just set `enableEmail` parameter to `
 
 ```javascript
 final _appKitModal = ReownAppKitModal(
+  context: context,
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
-    ...
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect(
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+    ),
   ),
+  /* highlight-add-start */
   enableEmail: true, // OPTIONAL - false by default
+  /* highlight-add-end */
 );
 ```
 

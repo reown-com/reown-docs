@@ -760,6 +760,7 @@ module.exports = {
             'appkit/flutter/core/installation',
             'appkit/flutter/core/usage',
             'appkit/flutter/core/siwe',
+            'appkit/flutter/core/link-mode',
             'appkit/flutter/core/options',
             'appkit/flutter/core/actions',
             'appkit/flutter/core/events',
