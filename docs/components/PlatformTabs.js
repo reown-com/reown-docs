@@ -44,7 +44,7 @@ const PLATFORM_MAP = [
   },
   {
     value: 'csharp',
-    label: 'C#'
+    label: '.NET'
   },
   {
     value: 'mobile',

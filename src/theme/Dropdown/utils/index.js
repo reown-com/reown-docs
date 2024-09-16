@@ -1,7 +1,7 @@
 export function parseEnvironment(env) {
   if (!env) return ''
   if(env === 'c-sharp'){
-    return "C#"
+    return ".NET"
   }
   if (env === 'ios') {
     return 'iOS'
