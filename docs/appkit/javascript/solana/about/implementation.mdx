@@ -7,12 +7,12 @@ On top of your app set up the following configuration, making sure that all func
 
 ```tsx
 import { createAppKit, type CaipNetwork } from '@reown/appkit/react'
-import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/react'
-import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 // 0. Set up Solana Adapter
-const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+const solanaWeb3JsAdapter = new SolanaAdapter({
   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 })
 
@@ -30,7 +30,7 @@ const metadata = {
 // 3. Create modal
 createAppKit({
   adapters: [solanaWeb3JsAdapter],
-  caipNetworks: [solana, solanaTestnet, solanaDevnet],
+  networks: [solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
   projectId,
   features: {

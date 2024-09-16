@@ -10,7 +10,7 @@ For this example we will create a file called `config/index.tsx` outside our app
 
 ```tsx
 import { cookieStorage, createStorage, http } from '@wagmi/core'
-import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 // Get projectId from https://cloud.walletconnect.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
@@ -20,7 +20,7 @@ if (!projectId) {
 }
 
 //Set up the Wagmi Adapter (Config)
-export const wagmiAdapter = new EVMWagmiClient({
+export const wagmiAdapter = new WagmiAdapter({
   storage: createStorage({
     storage: cookieStorage
   }),
@@ -50,7 +50,7 @@ In this example we will create a file called `context/index.tsx` outside our app
 import { wagmiAdapter, projectId } from '@/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createAppKit } from '@reown/appkit/react' 
-import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@reown/appkit/chains'
+import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@reown/appkit/networks'
 import React, { type ReactNode } from 'react'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
 
@@ -73,8 +73,8 @@ const metadata = {
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  caipNetworks: [mainnet, arbitrum, avalanche, base, optimism, polygon],
-  defaultCaipNetwork: mainnet,
+  networks: [mainnet, arbitrum, avalanche, base, optimism, polygon],
+  defaultNetwork: mainnet,
   metadata: metadata,
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration

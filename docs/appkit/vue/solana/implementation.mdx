@@ -7,11 +7,11 @@ In your `App.vue` file set up the following configuration.
 <script setup lang="ts">
   import { createAppKit, useAppKit} from '@reown/appkit-solana/vue'
   import {PhantomWalletAdapter,SolflareWalletAdapter} from '@solana/wallet-adapter-wallets'
-  import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/vue'
-  import {solana, solanaTestnet, solanaDevnet} from '@reown/appkit/chains'
+  import { SolanaAdapter } from '@reown/appkit-adapter-solana/vue'
+  import {solana, solanaTestnet, solanaDevnet} from '@reown/appkit/networks'
 
   // 0. Set up Solana Adapter
-  const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+  const solanaWeb3JsAdapter = new SolanaAdapter({
     wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
   })
 
@@ -30,7 +30,7 @@ In your `App.vue` file set up the following configuration.
   createAppKit({
     adapters: [solanaWeb3JsAdapter],
     metadata: metadata,
-    caipNetworks: [solana, solanaTestnet, solanaDevnet],
+    networks: [solana, solanaTestnet, solanaDevnet],
     projectId,
     wallets: [
       new PhantomWalletAdapter(),

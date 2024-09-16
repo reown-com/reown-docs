@@ -44,12 +44,12 @@ const metadata = {
 }
 
 // 4. Create Ethers Adapter
-const ethersAdapter = new EVMEthersClient()
+const ethersAdapter = new EthersAdapter()
 
 // 5. Create a AppKit instance
 createAppKit({
   adapters: [ethersAdapter],
-  caipNetworks: chains,
+  networks: chains,
   projectId,
   features: {
     analytics: true // Optional - defaults to your Cloud configuration

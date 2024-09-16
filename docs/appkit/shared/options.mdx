@@ -10,10 +10,10 @@ import TabItem from '@theme/TabItem'
 The following options can be passed to the `createAppKit` function:
 
 ```ts
-createAppKit({ adapters, projectId, caipNetworks, ...options })
+createAppKit({ adapters, projectId, networks, ...options })
 ```
 
-## defaultCaipNetwork
+## defaultNetwork
 
 You can set a desired chain for the initial connection:
 
@@ -21,11 +21,11 @@ You can set a desired chain for the initial connection:
 <PlatformTabItem value="wagmi">
 
 ```ts
-import { mainnet } from '@reown/appkit/chains'
+import { mainnet } from '@reown/appkit/networks'
 
 createAppKit({
   //...
-  defaultCaipNetwork: mainnet
+  defaultNetwork: mainnet
 })
 ```
 
@@ -43,7 +43,7 @@ const mainnet = {
 
 createAppKit({
   //...
-  defaultCaipNetwork: mainnet
+  defaultNetwork: mainnet
 })
 ```
 
@@ -51,11 +51,11 @@ createAppKit({
 <PlatformTabItem value="solana">
 
 ```ts
-import { solana } from '@reown/appkit/chains'
+import { solana } from '@reown/appkit/networks'
 
 createAppKit({
   //...
-  defaultCaipNetwork: solana
+  defaultNetwork: solana
 })
 ```
 
@@ -377,9 +377,9 @@ createAppKit({
 Learn more about the Coinbase connector in the [Wagmi documentation](https://wagmi.sh/react/api/connectors/coinbaseWallet#preference).
 
 ```ts
-import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
-const adapter = new EVMWagmiClient({
+const adapter = new WagmiAdapter({
   //...
   connectors: [
     coinbaseWallet({

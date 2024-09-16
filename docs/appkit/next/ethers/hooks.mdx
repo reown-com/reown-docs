@@ -18,12 +18,12 @@ function Components() {
 
 ```tsx
 import { createAppKit } from '@reown/appkit/react'
-import { mainnet, arbitrum, polygon } from '@reown/appkit/chains'
+import { mainnet, arbitrum, polygon } from '@reown/appkit/networks'
 
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  caipNetworks: [mainnet, arbitrum],
+  networks: [mainnet, arbitrum],
   metadata: metadata,
   features: {
     analytics: true,

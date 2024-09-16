@@ -57,7 +57,7 @@ npm i @reown/appkit-siwe siwe next-auth
 import { getCsrfToken, signIn, signOut, getSession } from 'next-auth/react'
 import type { SIWEVerifyMessageArgs, SIWECreateMessageArgs, SIWESession } from '@reown/appkit-siwe'
 import { createSIWEConfig, formatMessage } from '@reown/appkit-siwe'
-import { mainnet, sepolia } from '@reown/appkit/chains'
+import { mainnet, sepolia } from '@reown/appkit/networks'
 
 export const siweConfig = createSIWEConfig({
   getMessageParams: async () => ({
@@ -425,8 +425,8 @@ export { handler as GET, handler as POST }
   const modal = createAppKit({
       adapters: [wagmiAdapter], //or your Ethers adapter
       projectId,
-      caipNetworks: [mainnet, arbitrum],
-      defaultCaipNetwork: mainnet,
+      networks: [mainnet, arbitrum],
+      defaultNetwork: mainnet,
       features: {
         analytics: true, // Optional - defaults to your Cloud configuration
       },

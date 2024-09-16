@@ -15,7 +15,7 @@ Actions are functions that will help you control the modal, subscribe to wallet 
 ```ts
 const modal = createAppKit({
    adapters: [wagmiAdapter], 
-   caipNetworks: [mainnet, arbitrum],
+   networks: [mainnet, arbitrum],
    projectId 
   })
 
@@ -111,7 +111,7 @@ Get the current value of the modal's state
 ```ts
 const modal = createAppKit({
    adapters: [wagmiAdapter], 
-   caipNetworks: [mainnet, arbitrum],
+   networks: [mainnet, arbitrum],
    projectId 
   })
 

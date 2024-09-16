@@ -15,10 +15,10 @@ Adding custom connectors like WalletConnect and Coinbase is optional.
 By default, [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and WC connectors are provided out of the box.
 ```tsx
 import { createAppKit } from '@reown/appkit/react'
-import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
-import { sepolia } from '@reown/appkit/chains'
+import { sepolia } from '@reown/appkit/networks'
 import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -41,7 +41,7 @@ connectors.push(
   })
 )
 
-export const wagmiAdapter = new EVMWagmiClient({
+export const wagmiAdapter = new WagmiAdapter({
   storage:
   transports: {
     [sepolia.id]: http()
@@ -54,7 +54,7 @@ export const config = wagmiAdapter.wagmiConfig
 createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  caipNetworks: [sepolia]
+  networks: [sepolia]
 })
 
 export function ContextProvider({ children }) {
@@ -81,13 +81,13 @@ npm install @solana/wallet-adapter-wallets
 
 ```ts
 import { createAppKit } from '@reown/appkit/react'
-import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana/react'
-import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 // 0. Set up Solana adapter
-const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+const solanaWeb3JsAdapter = new SolanaAdapter({
   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 })
 
@@ -102,7 +102,7 @@ const metadata = {
 // 3. Create the modal
 const modal = createAppKit({
   adapters: [solanaWeb3JsAdapter],
-  caipNetworks: [solana, solanaTestnet, solanaDevnet],
+  networks: [solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
   projectId,
   features: {

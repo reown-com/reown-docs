@@ -53,21 +53,21 @@ Depending on the network adapter of your preference (`Wagmi`, `Ethers`, `Ethers5
 <PlatformTabItem value="wagmi + solana">
 ```ts
 import { createAppKit } from '@reown/appkit'
-import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
-import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
-import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
-import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 // 0. Create the Wagmi adapter
-export const wagmiAdapter = new EVMWagmiClient({
+export const wagmiAdapter = new WagmiAdapter({
   ssr: true,
 })
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+const solanaWeb3JsAdapter = new SolanaAdapter({
   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 })
 
@@ -85,7 +85,7 @@ const metadata = {
 // 4. Create the AppKit instance
 const modal = createAppKit({
   adapters: [wagmiAdapter, solanaWeb3JsAdapter],
-  caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  networks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
   projectId,
   features: {
@@ -98,19 +98,19 @@ const modal = createAppKit({
 <PlatformTabItem value="ethers + solana">
 ```ts
 import { createAppKit } from '@reown/appkit'
-import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
-import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
+import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 
-import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
-import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 // 0. Create the Ethers adapter
-export const ethersAdapter = new EVMEthersClient()
+export const ethersAdapter = new EthersAdapter()
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+const solanaWeb3JsAdapter = new SolanaAdapter({
   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 })
 
@@ -128,7 +128,7 @@ const metadata = {
 // 4. Create the AppKit instance
 const modal = createAppKit({
   adapters: [ethersAdapter, solanaWeb3JsAdapter],
-  caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  networks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
   projectId,
   features: {
@@ -141,19 +141,19 @@ const modal = createAppKit({
 <PlatformTabItem value="ethers5 + solana">
 ```ts
 import { createAppKit } from '@reown/appkit'
-import { SolanaWeb3JsClient } from '@reown/appkit-adapter-solana'
-import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
+import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 
-import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
-import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 // 0. Create the Ethers adapter
-export const ethersAdapter = new EVMEthersClient()
+export const ethersAdapter = new EthersAdapter()
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaWeb3JsClient({
+const solanaWeb3JsAdapter = new SolanaAdapter({
   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 })
 
@@ -171,7 +171,7 @@ const metadata = {
 // 4. Create the AppKit instance
 const modal = createAppKit({
   adapters: [ethersAdapter, solanaWeb3JsAdapter],
-  caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  networks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
   projectId,
   features: {
@@ -184,8 +184,8 @@ const modal = createAppKit({
 <PlatformTabItem value="basic">
 ```ts
 import { createAppKit } from '@reown/appkit'
-import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/chains'
-import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -200,7 +200,7 @@ const metadata = {
 
 // 3. Create the AppKit instance
 const modal = createAppKit({
-  caipNetworks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  networks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
   metadata: metadata,
   projectId,
   features: {

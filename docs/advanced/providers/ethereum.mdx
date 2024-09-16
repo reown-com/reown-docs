@@ -145,14 +145,14 @@ Upon integrating the below code, you will be able to see the QRModal on your Web
 
 ```tsx
 import { createAppKit } from '@reown/appkit'
-import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 
 // 1. Get projectId from https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 2. Create the AppKit instance
 const modal = createAppKit({
-  caipNetworks: [mainnet, arbitrum, sepolia],
+  networks: [mainnet, arbitrum, sepolia],
   projectId
 })
 ```

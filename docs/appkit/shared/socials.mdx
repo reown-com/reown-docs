@@ -10,7 +10,7 @@ To allow users to authenticate using their email or social accounts, you need to
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  caipNetworks: [mainnet, arbitrum],
+  networks: [mainnet, arbitrum],
   metadata,
   /* highlight-add-start */
   features: {
@@ -30,7 +30,7 @@ const modal = createAppKit({
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  caipNetworks: [mainnet, arbitrum],
+  networks: [mainnet, arbitrum],
   metadata,
   /* highlight-add-start */
   features: {
@@ -55,7 +55,7 @@ AppKit with ethers v5 does not support the `auth` parameter and social logins. I
 const solanaConfig = defaultSolanaConfig({
   adapters: [solanaWeb3JsAdapter],
   projectId,
-  caipNetworks: [solana, solanaTestnet, solanaDevnet, solanaNotExist],
+  networks: [solana, solanaTestnet, solanaDevnet, solanaNotExist],
   metadata,
   /*highlight-add-start*/
   features: {

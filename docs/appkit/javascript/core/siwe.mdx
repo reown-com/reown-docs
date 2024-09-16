@@ -53,8 +53,8 @@ npm i @reown/appkit-siwe siwe
   const modal = createAppKit({
       adapters: [wagmiAdapter], //or your Ethers adapter
       projectId,
-      caipNetworks: [mainnet, arbitrum],
-      defaultCaipNetwork: mainnet,
+      networks: [mainnet, arbitrum],
+      defaultNetwork: mainnet,
       features: {
         analytics: true, // Optional - defaults to your Cloud configuration
       },
