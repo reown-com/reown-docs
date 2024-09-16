@@ -6,7 +6,7 @@ const LargeContainer = ({ href, name, icon, description, isWhite }) => {
   return (
     <Link to={href} className="home__large-container">
       <div className="home__large-container--nofit">
-        <img src={icon} alt={name} className={isWhite ? `white` : undefined} />
+        <img src={icon} style={{ maxHeight: '40px' }} alt={name} className={isWhite ? `white` : undefined} />
       </div>
 
       <div className="home__large-container--text">

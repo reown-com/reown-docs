@@ -1026,8 +1026,8 @@ if (!sessionResumed)
 All features of WalletConnectSharp are accessible in WalletConnectUnity.
 For complex scenarios, the `SignClient` can be accessed directly through `WalletConnect.SignClient`.
 
-Refer to the `C#` documentation for details on using the Sign API within WalletConnectUnity.
-The usage of the WalletConnectSharp.Sign API remains consistent with `C#`.
+Refer to the `.NET` documentation for details on using the Sign API within WalletConnectUnity.
+The usage of the WalletConnectSharp.Sign API remains consistent with `.NET`.
 
 </PlatformTabItem>
 
