@@ -7,8 +7,8 @@ In this example we will create a new file called `context/web3modal.tsx` outside
 'use client'
 
 import { createAppKit } from '@reown/appkit/react'
-import { EVMEthersClient } from '@reown/appkit-adapter-ethers'
-import { mainnet, arbitrum } from '@reown/appkit/chains'
+import { EthersAdapter } from '@reown/appkit-adapter-ethers'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
 
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -28,7 +28,7 @@ const metadata = {
 createAppKit({
   adapters: [ethers5Adapter],
   metadata: metadata,
-  caipNetworks: [mainnet, arbitrum],
+  networks: [mainnet, arbitrum],
   projectId,
   features: {
     analytics: true // Optional - defaults to your Cloud configuration

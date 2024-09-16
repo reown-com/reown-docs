@@ -6,7 +6,7 @@ On top of your app set up the following configuration, making sure that all func
 ```tsx
 import { createAppKit } from '@reown/appkit/react'
 import { EVMEthers5Client } from '@reown/appkit-adapter-ethers5'
-import { mainnet, arbitrum } from '@reown/appkit/chains'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
 
 // 1. Get projectId
 const projectId = 'YOUR_PROJECT_ID'
@@ -26,7 +26,7 @@ const metadata = {
 createAppKit({
   adapters: [ethers5Adapter],
   metadata: metadata,
-  caipNetworks: [mainnet, arbitrum],
+  networks: [mainnet, arbitrum],
   projectId,
   features: {
     analytics: true // Optional - defaults to your Cloud configuration

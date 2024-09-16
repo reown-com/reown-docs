@@ -56,8 +56,8 @@ Add the `siweConfig` to your createAppKit parameters
   const modal = createAppKit({
       adapters: [wagmiAdapter], //or your Ethers adapter
       projectId,
-      caipNetworks: [mainnet, arbitrum],
-      defaultCaipNetwork: mainnet,
+      networks: [mainnet, arbitrum],
+      defaultNetwork: mainnet,
       features: {
         analytics: true, // Optional - defaults to your Cloud configuration
       },

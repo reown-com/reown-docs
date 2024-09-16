@@ -8,9 +8,9 @@ On top of your app set up the following configuration, making sure that all func
 import { createAppKit } from '@reown/appkit/react'
 
 import { WagmiProvider } from 'wagmi'
-import { arbitrum, mainnet } from '@reown/appkit/chains'
+import { arbitrum, mainnet } from '@reown/appkit/networks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 // 0. Setup queryClient
 const queryClient = new QueryClient()
@@ -27,14 +27,14 @@ const metadata = {
 }
 
 // 3. Create Wagmi Adapter
-const wagmiConfig = new EVMWagmiClient({
+const wagmiConfig = new WagmiAdapter({
   ssr: true
 })
 
 // 4. Create modal
 createAppKit({
   adapters: [wagmiConfig],
-  caipNetworks: [mainnet, arbitrum],
+  networks: [mainnet, arbitrum],
   metadata,
   projectId,
   features: {

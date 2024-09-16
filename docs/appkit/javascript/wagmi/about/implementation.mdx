@@ -6,14 +6,14 @@ In your `main.js` file set up the following configuration.
 
 ```ts
 import { createAppKit } from '@reown/appkit'
-import { mainnet, arbitrum } from '@reown/appkit/chains'
-import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 // 1. Get a project ID at https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 2. Set up Wagmi adapter
-const wagmiAdapter = new EVMWagmiClient()
+const wagmiAdapter = new WagmiAdapter()
 
 // 3. Configure the metadata
 const metadata = {
@@ -26,7 +26,7 @@ const metadata = {
 // 3. Create the modal
 createAppKit({
   adapters: [wagmiAdapter],
-  caipNetworks: [mainnet, arbitrum],
+  networks: [mainnet, arbitrum],
   metadata,
   projectId,
   features: {

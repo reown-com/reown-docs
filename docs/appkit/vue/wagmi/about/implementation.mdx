@@ -13,8 +13,8 @@ In your `App.vue` file set up the following configuration
   import { createAppKit, useAppKit } from '@reown/appkit/vue'
 
   import { WagmiProvider } from 'wagmi'
-  import { arbitrum, mainnet } from '@reown/appkit/chains'
-  import { EVMWagmiClient } from '@reown/appkit-adapter-wagmi'
+  import { arbitrum, mainnet } from '@reown/appkit/networks'
+  import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
   // 1. Get projectId from https://cloud.walletconnect.com
   const projectId = 'YOUR_PROJECT_ID'
@@ -28,14 +28,14 @@ In your `App.vue` file set up the following configuration
   }
 
   // 3. Create Wagmi Adapter
-  const wagmiAdapter = new EVMWagmiClient({
+  const wagmiAdapter = new WagmiAdapter({
     ssr: true
   })
 
   // 4. Create modal
   createAppKit({
     adapters: [wagmiAdapter],
-    caipNetworks: [mainnet, arbitrum],
+    networks: [mainnet, arbitrum],
     metadata,
     projectId,
     features: {
