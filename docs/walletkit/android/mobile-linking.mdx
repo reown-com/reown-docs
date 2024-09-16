@@ -119,13 +119,13 @@ val appMetaData = Core.Model.AppMetaData(
 CoreClient.initialize(projectId = projectId, connectionType = connectionType, application = application, metaData = appMetaData)
 
 val init = Wallet.Params.Init(coreClient = CoreClient)
-Web3Wallet.initialize(init)
+WalletKit.initialize(init)
 ```
 
 Redirect when responding to a session proposal:
 
 ```kotlin
- Web3Wallet.approveSession(approveProposal,
+ WalletKit.approveSession(approveProposal,
         onSuccess = {
             // trigger deeplink: proposal.redirect
     }
@@ -135,8 +135,8 @@ Redirect when responding to a session proposal:
 Redirect when responding to a request:
 
 ```kotlin
-val redirect = Web3Wallet.getActiveSessionByTopic(sessionRequest.topic)?.redirect?.toUri()
-Web3Wallet.respondSessionRequest(response,
+val redirect = WalletKit.getActiveSessionByTopic(sessionRequest.topic)?.redirect?.toUri()
+WalletKit.respondSessionRequest(response,
         onSuccess = {
         // trigger deeplink: redirect
     }

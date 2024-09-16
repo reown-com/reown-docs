@@ -33,7 +33,7 @@ To check the Verify API validations and whether or not your user is interacting 
 
 ```javascript
 ...
-web3wallet.on("auth_request", async (authRequest) => {
+walletKit.on("auth_request", async (authRequest) => {
   const { verifyContext } = authRequest
   const validation = verifyContext.verified.validation // can be VALID, INVALID or UNKNOWN
   const origin = verifyContext.verified.origin // the actual verified origin of the request

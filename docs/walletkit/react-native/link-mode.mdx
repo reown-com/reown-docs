@@ -10,7 +10,7 @@ WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth r
 To support Link Mode add a universal link for your wallet in Cloud project configuration [dashboard](https://cloud.walletconnect.com/sign-in), configure your Metadata with a valid universal link and set the `linkMode` property to `true`:
 
 ```ts
-const web3wallet = await Web3Wallet.init({
+const walletKit = await WalletKit.init({
   core,
   metadata: {
     name: 'Demo React Native Wallet',

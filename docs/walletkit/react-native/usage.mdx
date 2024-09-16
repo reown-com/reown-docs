@@ -4,7 +4,7 @@ import CloudBanner from '../../components/CloudBanner'
 
 # Usage
 
-This section provides instructions on how to initialize the Web3Wallet client, approve sessions with supported namespaces, and respond to session requests, enabling easy integration of Web3 wallets with dapps through a simple and intuitive interface.
+This section provides instructions on how to initialize the WalletKit client, approve sessions with supported namespaces, and respond to session requests, enabling easy integration of Web3 wallets with dapps through a simple and intuitive interface.
 
 ## Cloud Configuration
 
@@ -16,7 +16,7 @@ Create a new project on WalletConnect Cloud at https://cloud.walletconnect.com a
 
 :::info Note
 
-`@walletconnect/react-native-compat` must be installed and imported before any `@walletconnect/*` dependencies for proper React Native polyfills.
+`@walletconnect/react-native-compat` must be installed and imported before any `@reown/*` dependencies for proper React Native polyfills.
 
 ```ts
 import '@walletconnect/react-native-compat'
@@ -25,21 +25,20 @@ import '@walletconnect/react-native-compat'
 
 :::
 
-Create a new instance from `Core` and initialize it with your `projectId`. Next, create a Web3Wallet instance by calling `init` on `Web3Wallet`. Passing in the options object containing metadata about the app.
+Create a new instance from `Core` and initialize it with your `projectId`. Next, create a WalletKit instance by calling `init` on `WalletKit`. Passing in the options object containing metadata about the app.
 
-In this code example, we wrapped it in a `createWeb3Wallet` function as this will be easier to call from your `App.tsx` or an initialization function as seen [here.](https://github.com/WalletConnect/react-native-examples/blob/main/wallets/rn_cli_wallet_068_5/src/utils/Web3WalletClient.ts)
 
 The `pair` function will help us pair between the dapp and wallet and will be used shortly.
 
 ```javascript
 import { Core } from '@walletconnect/core'
-import { Web3Wallet } from '@walletconnect/web3wallet'
+import { WalletKit } from '@reown/walletkit'
 
 const core = new Core({
   projectId: process.env.PROJECT_ID
 })
 
-const web3wallet = await Web3Wallet.init({
+const walletKit = await WalletKit.init({
   core, // <- pass the shared `core` instance
   metadata: {
     name: 'Demo React Native Wallet',
@@ -59,7 +58,7 @@ A session is a connection between a dapp and a wallet. It is established when a 
 
 ### Namespace Builder
 
-With Web3Wallet v1.5.1 (and @walletconnect/utils v2.6.1) we've published a helper utility that greatly reduces the complexity of parsing the `required` and `optional` namespaces. It accepts as parameters a `session proposal` along with your user's `chains/methods/events/accounts` and returns ready-to-use `namespaces` object.
+With WalletKit (and @walletconnect/utils) we've published a helper utility that greatly reduces the complexity of parsing the `required` and `optional` namespaces. It accepts as parameters a `session proposal` along with your user's `chains/methods/events/accounts` and returns ready-to-use `namespaces` object.
 
 ```javascript
 // util params
@@ -81,10 +80,10 @@ Example usage
 
 ```javascript
 // import the builder util
-import { Web3Wallet, Web3WalletTypes } from '@walletconnect/web3wallet'
+import { WalletKit, WalletKitTypes } from '@reown/walletkit'
 import { buildApprovedNamespaces, getSdkError } from '@walletconnect/utils'
 
-async function onSessionProposal({ id, params }: Web3WalletTypes.SessionProposal){
+async function onSessionProposal({ id, params }: WalletKitTypes.SessionProposal){
   try{
     // ------- namespaces builder util ------------ //
     const approvedNamespaces = buildApprovedNamespaces({
@@ -103,7 +102,7 @@ async function onSessionProposal({ id, params }: Web3WalletTypes.SessionProposal
     })
     // ------- end namespaces builder util ------------ //
 
-    const session = await web3wallet.approveSession({
+    const session = await walletKit.approveSession({
       id,
       namespaces: approvedNamespaces
     })
@@ -111,7 +110,7 @@ async function onSessionProposal({ id, params }: Web3WalletTypes.SessionProposal
     // use the error.message to show toast/info-box letting the user know that the connection attempt was unsuccessful
    ....
 
-    await web3wallet.rejectSession({
+    await walletKit.rejectSession({
       id: proposal.id,
       reason: getSdkError("USER_REJECTED")
     })
@@ -119,7 +118,7 @@ async function onSessionProposal({ id, params }: Web3WalletTypes.SessionProposal
 }
 
 
-web3wallet.on('session_proposal', onSessionProposal)
+walletKit.on('session_proposal', onSessionProposal)
 ```
 
 If your wallet supports multiple namespaces e.g. `eip155`,`cosmos` & `near`
@@ -143,7 +142,7 @@ const approvedNamespaces = buildApprovedNamespaces({
 You can get the wallet active sessions using the `getActiveSessions` function.
 
 ```js
-const activeSessions = web3wallet.getActiveSessions()
+const activeSessions = walletKit.getActiveSessions()
 ```
 
 ### EVM methods & events
@@ -200,15 +199,15 @@ The `pair` method initiates a WalletConnect pairing process with a dapp using th
 import { getSdkError } from '@walletconnect/utils'
 
 // Approval: Using this listener for sessionProposal, you can accept the session
-web3wallet.on('session_proposal', async proposal => {
-  const session = await web3wallet.approveSession({
+walletKit.on('session_proposal', async proposal => {
+  const session = await walletKit.approveSession({
     id: proposal.id,
     namespaces
   })
 })
 
 // Call this after WCURI is received
-await web3wallet.pair({ wcuri })
+await walletKit.pair({ wcuri })
 ```
 
 ### Session Rejection
@@ -219,15 +218,15 @@ You can use the `getSDKError` function, which is available in the `@walletconnec
 import { getSdkError } from '@walletconnect/utils'
 
 // Reject: Using this listener for sessionProposal, you can reject the session
-web3wallet.on('session_proposal', async proposal => {
-  await web3wallet.rejectSession({
+walletKit.on('session_proposal', async proposal => {
+  await walletKit.rejectSession({
     id: proposal.id,
     reason: getSdkError('USER_REJECTED_METHODS')
   })
 })
 
 // Call this after WCURI is received
-await web3wallet.core.pairing.pair({ wcuri })
+await walletKit.core.pairing.pair({ wcuri })
 ```
 
 ### Responding to Session requests
@@ -245,7 +244,7 @@ To sign the message, the wallet can use the `wallet.signMessage` method and pass
 The wallet then signs the message. `signedMessage`, along with the `id` from the event payload, can then be used to create a `response` object, which can be passed into `respondSessionRequest`.
 
 ```javascript
-web3wallet.on('session_request', async event => {
+walletKit.on('session_request', async event => {
   const { topic, params, id } = event
   const { request } = params
   const requestParamsMessage = request.params[0]
@@ -258,7 +257,7 @@ web3wallet.on('session_request', async event => {
 
   const response = { id, result: signedMessage, jsonrpc: '2.0' }
 
-  await web3wallet.respondSessionRequest({ topic, response })
+  await walletKit.respondSessionRequest({ topic, response })
 })
 ```
 
@@ -280,7 +279,7 @@ const response = {
 The `session_update` event is emitted from the wallet when the session is updated by calling `updateSession`. To update a session, pass in the [topic](../../advanced/glossary#topics) and the new namespace.
 
 ```javascript
-await web3wallet.updateSession({ topic, namespaces: newNs })
+await walletKit.updateSession({ topic, namespaces: newNs })
 ```
 
 ### Extending a Session
@@ -288,7 +287,7 @@ await web3wallet.updateSession({ topic, namespaces: newNs })
 To extend the session, call the `extendSession` method and pass in the new `topic`. The `session_update` event will be emitted from the wallet.
 
 ```javascript
-await web3wallet.extendSession({ topic })
+await walletKit.extendSession({ topic })
 ```
 
 ### Session Disconnect
@@ -298,7 +297,7 @@ When either the dapp or the wallet disconnects from a session, a `session_delete
 To initiate a session disconnect, call the `disconnectSession` method and pass in the `topic` and `reason`. You can use the `getSDKError` utility function, which is available in the `@walletconnect/utils` [library](https://github.com/WalletConnect/walletconnect-monorepo/tree/v2.0/packages/utils).
 
 ```javascript
-await web3wallet.disconnectSession({
+await walletKit.disconnectSession({
   topic,
   reason: getSdkError('USER_DISCONNECTED')
 })
@@ -309,7 +308,7 @@ await web3wallet.disconnectSession({
 To emit session events, call the `emitSessionEvent` and pass in the params. If you wish to switch to chain/account that is not approved (missing from `session.namespaces`) you will have to update the session first. In the following example, the wallet will emit `session_event` that will instruct the dapp to switch the active accounts.
 
 ```javascript
-await web3wallet.emitSessionEvent({
+await walletKit.emitSessionEvent({
   topic,
   event: {
     name: 'accountsChanged',
@@ -322,7 +321,7 @@ await web3wallet.emitSessionEvent({
 In the following example, the wallet will emit `session_event` when the wallet switches chains.
 
 ```javascript
-await web3wallet.emitSessionEvent({
+await walletKit.emitSessionEvent({
   topic,
   event: {
     name: 'chainChanged',

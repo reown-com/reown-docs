@@ -10,14 +10,14 @@ For the push notifications to be forwarded to FCM or APNs, the [Push Server](../
 
 ### Register the device token
 
-To enable a device for push notifications, it's essential to register the device token using `Web3Wallet.registerDeviceToken`. This token can be obtained from either FCM or APNS, depending on the platform used.
+To enable a device for push notifications, it's essential to register the device token using `WalletKit.registerDeviceToken`. This token can be obtained from either FCM or APNS, depending on the platform used.
 
 In your AppDelegate, you need to register your device token for push notifications. To enable encrypted push notifications, set the `enableEncrypted` flag to `true`.
 
 ```Swift
 func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
     Task(priority: .high) {
-        try await Web3Wallet.instance.register(deviceToken: deviceToken, enableEncrypted: true)
+        try await WalletKit.instance.register(deviceToken: deviceToken, enableEncrypted: true)
     }
 }
 ```
@@ -59,7 +59,7 @@ Networking.configure(
 )
 ```
 
-4. Instantiate Web3WalletDecryptionService
+4. Instantiate WalletKitDecryptionService
 
 Use the same group name inside your notification service extension.
 
@@ -73,8 +73,8 @@ override func didReceive(_ request: UNNotificationRequest, withContentHandler co
            let ciphertext = content.userInfo["message"] as? String,
            let tag = content.userInfo["tag"] as? UInt {
 
-            if Web3WalletDecryptionService.canHandle(tag: tag) {
-                let mutableContent = handleWeb3WalletNotification(content: content, topic: topic, tag: tag, ciphertext: ciphertext)
+            if WalletKitDecryptionService.canHandle(tag: tag) {
+                let mutableContent = handleWalletKitNotification(content: content, topic: topic, tag: tag, ciphertext: ciphertext)
                 contentHandler(mutableContent)
             } else if NotifyDecryptionService.canHandle(tag: tag) {
                 let mutableContent = handleNotifyNotification(content: content, topic: topic, ciphertext: ciphertext)
@@ -87,4 +87,4 @@ override func didReceive(_ request: UNNotificationRequest, withContentHandler co
     }
 ```
 
-`handleWeb3WalletNotification` and `handleNotifyNotification` methods can be found in our [Sample App](https://github.com/WalletConnect/WalletConnectSwiftV2/blob/main/Example/PNDecryptionService/NotificationService.swift)
+`handleWalletKitNotification` and `handleNotifyNotification` methods can be found in our [Sample App](https://github.com/reown-com/reown-swift/blob/main/Example/PNDecryptionService/NotificationService.swift)

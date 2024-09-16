@@ -28,7 +28,7 @@ Links to sections on this page. Some sections are platform specific and are only
   Disconnecting a session between a dapp and wallet
 - [Register Device Token](#register-device-token)
   Enabling Wallet Push Notifications by registering a device token.
-- [Subscribe for WalletKit Publishers](#subscribe-for-web3wallet-publishers)
+- [Subscribe for WalletKit Publishers](#subscribe-for-walletkit-publishers)
   Publishers available to subscribe to for WalletKit
 
 <CloudBanner />
@@ -39,7 +39,7 @@ Confirm you have configured the [Network Client](../../api/core/relay.mdx) first
 
 Starting from WalletConnect SDK version 1.9.5, the `redirect` field in the `AppMetadata` object is mandatory. Ensure that the provided value matches your app's URL scheme to prevent redirection-related issues.
 
-Once you're done, in order to initialize a client just call a `configure` method from the Web3Wallet instance wrapper
+Once you're done, in order to initialize a client just call a `configure` method from the WalletKit instance wrapper
 
 ```swift
 let metadata = AppMetadata(
@@ -50,7 +50,7 @@ let metadata = AppMetadata(
     redirect: AppMetadata.Redirect(native: "example://", universal: nil)
 )
 
-Web3Wallet.configure(
+WalletKit.configure(
     metadata: metadata,
     crypto: DefaultCryptoProvider(),
     // Used for the Push: "echo.walletconnect.com" will be used by default if not provided
@@ -63,7 +63,7 @@ Web3Wallet.configure(
 In order to allow users to receive push notifications you have to communicate with Apple Push Notification service and receive unique device token. Register that token with following method:
 
 ```swift
-try await Web3Wallet.instance.register(deviceToken: deviceToken)
+try await WalletKit.instance.register(deviceToken: deviceToken)
 ```
 
 ## Session
@@ -104,7 +104,7 @@ do {
     return
 }
 // approve session with sessionNamespaces
-try await Web3Wallet.instance.approve(proposalId: proposal.id, namespaces: sessionNamespaces)
+try await WalletKit.instance.approve(proposalId: proposal.id, namespaces: sessionNamespaces)
 
 ```
 
@@ -151,7 +151,7 @@ In @walletconnect/ethereum-provider, (our abstracted EVM SDK for apps) we suppor
 ### Session Approval
 
 ```swift
- Web3Wallet.instance.approve(
+ WalletKit.instance.approve(
     proposalId: "proposal_id",
     namespaces: sessionNamespaces
 )
@@ -160,7 +160,7 @@ In @walletconnect/ethereum-provider, (our abstracted EVM SDK for apps) we suppor
 When session is successfully approved `sessionsPublishers` will publish a `Session`
 
 ```swift
-Web3Wallet.instance.sessionsPublishers
+WalletKit.instance.sessionsPublishers
     .receive(on: DispatchQueue.main)
     .sink { [weak self] _ in
         self?.reloadSessions()
@@ -172,7 +172,7 @@ Web3Wallet.instance.sessionsPublishers
 You can always query settled sessions from the client later with:
 
 ```swift
-Web3Wallet.instance.getSessions()
+WalletKit.instance.getSessions()
 ```
 
 #### Connect Clients
@@ -182,13 +182,13 @@ For testing, you can use our test dapp at: https://react-app.walletconnect.com/,
 Once you derive a URI from the QR code call `pair` method:
 
 ```swift
-try await Web3Wallet.instance.pair(uri: uri)
+try await WalletKit.instance.pair(uri: uri)
 ```
 
 if everything goes well, you should handle following event:
 
 ```swift
-Web3Wallet.instance.sessionProposalPublisher
+WalletKit.instance.sessionProposalPublisher
     .receive(on: DispatchQueue.main)
     .sink { [weak self] session in
         self?.verifyDapp(session.context)
@@ -266,12 +266,12 @@ Example session namespaces response:
 
 #### Track Sessions
 
-When your `Web3Wallet` instance receives requests from a peer it will publish a related event. Set a subscription to handle them.
+When your `WalletKit` instance receives requests from a peer it will publish a related event. Set a subscription to handle them.
 
 To track sessions subscribe to `sessionsPublisher` publisher
 
 ```swift
-Web3Wallet.instance.sessionsPublisher
+WalletKit.instance.sessionsPublisher
     .receive(on: DispatchQueue.main)
     .sink { [weak self] sessions in
         // Reload UI
@@ -281,7 +281,7 @@ Web3Wallet.instance.sessionsPublisher
 ### Session Rejection
 
 ```swift
-try await Web3Wallet.instance.reject(requestId: request.id)
+try await WalletKit.instance.reject(requestId: request.id)
 ```
 
 ### Responding to Session requests
@@ -289,7 +289,7 @@ try await Web3Wallet.instance.reject(requestId: request.id)
 After the session is established, a dapp will request your wallet's users to sign a transaction or a message. Requests will be delivered by the following publisher.
 
 ```swift
-Web3Wallet.instance.sessionRequestPublisher
+WalletKit.instance.sessionRequestPublisher
   .receive(on: DispatchQueue.main)
   .sink { [weak self] session in
       self?.verifyDapp(session.context)
@@ -313,7 +313,7 @@ Now, your wallet (as it owns your user’s private keys) is responsible for sign
 
 ```swift
 let response: AnyCodable = sign(request: sessionRequest) // Implement your signing method
-try await Web3Wallet.instance.respond(topic: request.topic, requestId: request.id, response: .response(response))
+try await WalletKit.instance.respond(topic: request.topic, requestId: request.id, response: .response(response))
 ```
 
 ### Updating a Session
@@ -321,7 +321,7 @@ try await Web3Wallet.instance.respond(topic: request.topic, requestId: request.i
 If you want to update user session's chains, accounts, methods or events you can use session update method.
 
 ```swift
-try await Web3Wallet.instance.update(topic: session.topic, namespaces: newNamespaces)
+try await WalletKit.instance.update(topic: session.topic, namespaces: newNamespaces)
 ```
 
 ### Extending a Session
@@ -329,7 +329,7 @@ try await Web3Wallet.instance.update(topic: session.topic, namespaces: newNamesp
 By default, session lifetime is set for 7 days and after that time user's session will expire. But if you consider that a session should be extended you can call:
 
 ```swift
-try await Web3Wallet.instance.extend(topic: session.topic)
+try await WalletKit.instance.extend(topic: session.topic)
 ```
 
 Above method will extend a user's session to a week.
@@ -339,10 +339,10 @@ Above method will extend a user's session to a week.
 For good user experience your wallet should allow users to disconnect unwanted sessions. In order to terminate a session use `disconnect` method.
 
 ```swift
-try await Web3Wallet.instance.disconnect(topic: session.topic)
+try await WalletKit.instance.disconnect(topic: session.topic)
 ```
 
-### Subscribe for Web3Wallet Publishers
+### Subscribe for WalletKit Publishers
 
 The following publishers are available to subscribe:
 
@@ -363,6 +363,6 @@ To register a wallet to receive WalletConnect push notifications, call `register
 
 ```swift
 
-Web3Wallet.instance.register(deviceToken: deviceToken, enableEncrypted: true)
+WalletKit.instance.register(deviceToken: deviceToken, enableEncrypted: true)
 
 ```

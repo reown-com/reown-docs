@@ -13,17 +13,17 @@ For the push notifications to be forwarded to FCM or APNs, the [Push Server](../
 
 ### Register the device token
 
-To enable a device for push notifications, it's essential to register the device token using `Web3Wallet.registerDeviceToken`. This token can be obtained from either FCM or APNS, depending on the platform used.
+To enable a device for push notifications, it's essential to register the device token using `WalletKit.registerDeviceToken`. This token can be obtained from either FCM or APNS, depending on the platform used.
 
 This method enables wallets to receive push notifications from WalletConnect's Push Server via Firebase Cloud Messaging. This means you will have to setup your project with Firebase before being able to call `registerDeviceToken()` method.
 
-To register a wallet to receive WalletConnect push notifications, call `Web3Wallet.registerDeviceToken` and pass the Firebase Access Token.
+To register a wallet to receive WalletConnect push notifications, call `WalletKit.registerDeviceToken` and pass the Firebase Access Token.
 
 ```kotlin
 val firebaseAccessToken: String = //FCM access token received through the Firebase Messaging SDK
 val enableEncrypted: Boolean = true //Flag that enables receiveing the detailed notifications
 
-Web3Wallet.registerDeviceToken(
+WalletKit.registerDeviceToken(
     firebaseAccessToken = firebaseAccessToken,
     enableEncrypted = enableEncrypted,
     onSuccess = {

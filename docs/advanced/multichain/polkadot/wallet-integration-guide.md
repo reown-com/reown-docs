@@ -15,18 +15,18 @@
 
 # WalletConnect Code/Component Setup
 
-2. Import Core and Web3Wallet from WalletConnect.
+2. Import Core and WalletKit from WalletConnect.
 
 ```js
 import { Core } from '@walletconnect/core'
-import { Web3Wallet } from '@walletconnect/web3wallet'
+import { WalletKit } from '@walletconnect/wallekit'
 ```
 
-3. Instantiate and add Core and Web3Wallet to the state of the wallet.
+3. Instantiate and add Core and WalletKit to the state of the wallet.
 
 ```js
 const core = new Core({ projectId: 'fgu234234njbhvhv23525bj' })
-const web3wallet = await Web3Wallet.init({
+const walletKit = await WalletKit.init({
   core: core,
   metadata: {
     name: 'Example WalletConnect Wallet',
@@ -41,14 +41,14 @@ const web3wallet = await Web3Wallet.init({
 
 ```js
 const onConnect = async (uri: string) => {
-  // call web3wallet.core.pairing.pair( { uri: uri })
+  // call walletKit.core.pairing.pair( { uri: uri })
   // with the uri received from the dapp in order to emit the
   // `session_proposal` event
-  const result = await web3wallet.core.pairing.pair({ uri })
+  const result = await walletKit.core.pairing.pair({ uri })
 }
 ```
 
-5. Handle the `session_proposal` event on the `web3wallet`. This event is triggered when the `pair` method is called on `web3wallet.core.pairing` to create a pairing session.
+5. Handle the `session_proposal` event on the `walletKit`. This event is triggered when the `pair` method is called on `walletKit.core.pairing` to create a pairing session.
 
 # Approving a Session Proposal (Example)
 
@@ -66,14 +66,14 @@ const walletConnectAccounts = accounts.map(
   account => `polkadot:91b171bb158e2d3848fa23a9f1c25182:${account.address}`
 )
 
-web3wallet.on('session_proposal', async proposal => {
+walletKit.on('session_proposal', async proposal => {
   // optionally show user a modal or way to reject or approve session
   showWalletConnectModal()
 
   // handle user approval case
 
   // create the approved session with selected accounts, supported methods, chains and events for your wallet
-  const session = await web3wallet.approveSession({
+  const session = await walletKit.approveSession({
     id: proposal.id,
     namespaces: {
       polkadot: {
@@ -89,7 +89,7 @@ web3wallet.on('session_proposal', async proposal => {
   const response = { id: proposal.id, result: 'session approved', jsonrpc: '2.0' }
 
   // respond to the dapp request with the approved session's topic and response
-  await web3wallet.respondSessionRequest({ topic: session.topic, response })
+  await walletKit.respondSessionRequest({ topic: session.topic, response })
 })
 ```
 
@@ -102,12 +102,12 @@ If the user does not approve the requested chains, methods, or accounts, or if t
 // import getSdkError to create predefined ErrorResponse types
 import { getSdkError } from '@walletconnect/utils'
 
-web3wallet.on('session_proposal', async proposal => {
+walletKit.on('session_proposal', async proposal => {
   // optionally show user a modal or way to reject or approve session
   showWalletConnectModal()
 
   // handle user reject action
-  await web3wallet.rejectSession({
+  await walletKit.rejectSession({
     id: proposal.id,
     reason: getSdkError('USER_REJECTED')
   })
@@ -119,7 +119,7 @@ web3wallet.on('session_proposal', async proposal => {
 A dapp triggers an event when it requires the wallet to carry out a specific action, such as signing a transaction. The event includes a topic and a request object, which will differ based on the requested action. As seen in the [WalletConnect Web Examples](https://github.com/WalletConnect/web-examples/blob/main/advanced/wallets/react-wallet-v2/src/lib/PolkadotLib.ts), two common use cases in polkadot are signing messages and signing transactions. These methods are represented here as `polkadot_signMessage` and `polkadot_signTransaction` respectively and each simply signs the respective payload and returns the signature to the dapp. An example of a `session_request` event handler containing both can be found below.
 
 ```js
-web3wallet.on('session_request', async requestEvent => {
+walletKit.on('session_request', async requestEvent => {
   const { params, id } = requestEvent
   const { request } = params
   const address = request.params?.address
@@ -142,7 +142,7 @@ web3wallet.on('session_request', async requestEvent => {
       const response = { id, result: { signature: signature }, jsonrpc: '2.0' }
 
       // respond to the dapp request with the response and topic
-      await web3wallet.respondSessionRequest({ topic, response })
+      await walletKit.respondSessionRequest({ topic, response })
 
     case 'polkadot_signTransaction':
       // call function used by wallet to sign transactions and return the signature
@@ -152,7 +152,7 @@ web3wallet.on('session_request', async requestEvent => {
       const response = { id, result: { signature: signature }, jsonrpc: '2.0' }
 
       // respond to the dapp request with the response and topic
-      await web3wallet.respondSessionRequest({ topic, response })
+      await walletKit.respondSessionRequest({ topic, response })
 
     // throw error for methods your wallet doesn't support
     default:
@@ -164,8 +164,8 @@ web3wallet.on('session_request', async requestEvent => {
 # Sessions Persistence/Management
 
 - sessions can be saved/stored so users dont have to pair repeatedly
-- sessions can be disconnected from using `await web3wallet.disconnectSession({ topic: topic });` passing the session topic.
-- sessions can be extended using `await web3wallet.extendSession({ topic: topic });` passing the session topic.
+- sessions can be disconnected from using `await walletKit.disconnectSession({ topic: topic });` passing the session topic.
+- sessions can be extended using `await walletKit.extendSession({ topic: topic });` passing the session topic.
 - Default session lifetime is 7 days for WalletConnect v2.0.
 
 # Further Documentation for WalletConnect 2.0

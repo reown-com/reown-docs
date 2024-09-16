@@ -13,7 +13,7 @@ A pairing is a connection between a wallet and a dapp that has fixed permissions
 ```typescript
 const uri = 'xxx'; // pairing uri
 try {
-    await web3Wallet.pair({ uri });
+    await walletKit.pair({ uri });
 } catch (error) {
     // some error happens while pairing - check Expected errors section
 }
@@ -61,7 +61,7 @@ Whenever user approves or rejects a session proposal, wallet should show loading
 Approving session
 ```typescript
     try {
-        await web3Wallet.approveSession(params);
+        await walletKit.approveSession(params);
         // update UI -> remove the loader
     } catch (error) {
         // present error to the user
@@ -70,7 +70,7 @@ Approving session
 Rejecting session
 ```typescript
     try {
-        await web3Wallet.rejectSession(params);
+        await walletKit.rejectSession(params);
         // update UI -> remove the loader
     } catch (error) {
         // present error to the user
@@ -82,7 +82,7 @@ Rejecting session
 A session proposal expiry is 5 mins. It means a given proposal is stored for 5 mins in the SDK storage and user has 5 mins for approval or rejection decision. After that time the below event is emitted and proposal modal should be removed from the app's UI.
 
 ```typescript
-web3wallet.on("proposal_expire", (event) => {
+walletKit.on("proposal_expire", (event) => {
     // proposal expired and any modal displaying it should be removed
     const { id } = event;
 });
@@ -121,7 +121,7 @@ Whenever user approves or rejects a session request, wallet should show loading 
 
 ```typescript
     try {
-        await web3Wallet.respondSessionRequest(params);
+        await walletKit.respondSessionRequest(params);
         // update UI -> remove the loader
     } catch (error) {
         // present error to the user
@@ -133,7 +133,7 @@ Whenever user approves or rejects a session request, wallet should show loading 
 A session request expiry is defined by a dapp. It's value must be between now() + 5mins and now() + 7 days. After the session request expires the below event is emitted and session request modal should be removed from the app's UI.
 
 ```typescript
-web3wallet.on("session_request_expire", (event) => {
+walletKit.on("session_request_expire", (event) => {
     // request expired and any modal displaying it should be removed
     const { id } = event;
 });

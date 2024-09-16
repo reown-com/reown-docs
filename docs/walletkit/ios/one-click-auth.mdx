@@ -27,7 +27,7 @@ By incorporating ReCaps, this method extends the utility of SIWE messages, allow
 To handle incoming authentication requests, subscribe to the authenticateRequestPublisher. This will notify you of any authentication requests that need to be processed, allowing you to either approve or reject them based on your application logic.
 
 ```swift
-Web3Wallet.instance.authenticateRequestPublisher
+WalletKit.instance.authenticateRequestPublisher
     .receive(on: DispatchQueue.main)
     .sink { result in
         // Process the authentication request here.
@@ -56,16 +56,16 @@ func buildAuthObjects(request: AuthenticationRequest, account: Account, privateK
     var authObjects = [AuthObject]()
     for chain in commonChains {
         let accountForChain = Account(blockchain: chain, address: account.address)!
-        let supportedAuthPayload = try Web3Wallet.instance.buildAuthPayload(
+        let supportedAuthPayload = try WalletKit.instance.buildAuthPayload(
             payload: request.payload,
             supportedEVMChains: Array(commonChains),
             supportedMethods: supportedMethods
         )
-        let formattedMessage = try Web3Wallet.instance.formatAuthMessage(payload: supportedAuthPayload, account: accountForChain)
+        let formattedMessage = try WalletKit.instance.formatAuthMessage(payload: supportedAuthPayload, account: accountForChain)
         let signature = // Assume `signMessage` is a function you've implemented to sign messages.
             signMessage(message: formattedMessage, privateKey: privateKey)
 
-        let authObject = try Web3Wallet.instance.buildSignedAuthObject(
+        let authObject = try WalletKit.instance.buildSignedAuthObject(
             authPayload: supportedAuthPayload,
             signature: signature,
             account: accountForChain
@@ -89,7 +89,7 @@ func buildAuthObjects(request: AuthenticationRequest, account: Account, privateK
 To approve an authentication request, construct AuthObject instances for each supported blockchain, sign the authentication messages, build AuthObjects and call approveSessionAuthenticate with the request ID and the authentication objects.
 
 ```swift
-let session = try await Web3Wallet.instance.approveSessionAuthenticate(requestId: requestId, auths: authObjects)
+let session = try await WalletKit.instance.approveSessionAuthenticate(requestId: requestId, auths: authObjects)
 ```
 
 ## Rejecting Authentication Requests
@@ -97,7 +97,7 @@ let session = try await Web3Wallet.instance.approveSessionAuthenticate(requestId
 If the authentication request cannot be approved or if the user chooses to reject it, use the rejectSession method.
 
 ```swift
-try await Web3Wallet.instance.rejectSession(requestId: requestId)
+try await WalletKit.instance.rejectSession(requestId: requestId)
 ```
 
 ## Testing One-click Auth

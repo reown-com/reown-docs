@@ -26,8 +26,8 @@ Integrate RPC method support into the example wallets and dapp.
 
 **Example Wallet**
 
-- [Demo](https://react-web3wallet.vercel.app/)
-- [GitHub](https://github.com/WalletConnect/web-examples/tree/main/advanced/wallets/react-web3wallet)
+- [Demo](https://react-walletkit.vercel.app/)
+- [GitHub](https://github.com/WalletConnect/web-examples/tree/main/advanced/wallets/react-walletkit)
 
 **Example Dapp**
 

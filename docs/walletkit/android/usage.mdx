@@ -28,7 +28,7 @@ Links to sections on this page. Some sections are platform specific and are only
   Disconnecting a session between a dapp and wallet
 - [Register Device Token](#register-device-token)
   Enabling Wallet Push Notifications by registering a device token.
-- [Web3Wallet.WalletDelegate](#web3walletwalletdelegate)
+- [WalletKit.WalletDelegate](#walletkitwalletdelegate)
   Setting and overriding functions through WalletKit delegate. Also includes instructions about VerifyContext.
 - [Format Message](#format-message)
   Receiving formatted SIWE message
@@ -55,13 +55,13 @@ CoreClient.initialize(projectId = projectId, connectionType = connectionType, ap
 
 val initParams = Wallet.Params.Init(core = CoreClient)
 
-Web3Wallet.initialize(initParams) { error ->
+WalletKit.initialize(initParams) { error ->
     // Error will be thrown if there's an issue during initialization
 }
 ```
 
 The WalletKit client will always be responsible for exposing accounts (CAIP10 compatible) to a Dapp and therefore is also in charge of signing.
-To initialize the WalletKit client, create a `Wallet.Params.Init` object in the Android Application class with the Core Client. The `Wallet.Params.Init` object will then be passed to the `Web3Wallet`initialize function.
+To initialize the WalletKit client, create a `Wallet.Params.Init` object in the Android Application class with the Core Client. The `Wallet.Params.Init` object will then be passed to the `WalletKit`initialize function.
 
 The telemetry feature aims to improve the reliability and observability of connection flows between decentralized applications (dapps) and wallets.
 It focuses solely on collecting data about code execution and error codes, without tracking any sensitive user information like amounts, accounts etc.
@@ -142,11 +142,11 @@ With WalletKit 1.7.0 we've published a helper utility that greatly reduces the c
 
 ```kotlin
 val supportedNamespaces: Wallet.Model.Namespaces.Session = /* a map of all supported namespaces created by a wallet */
-val sessionProposal: Wallet.Model.SessionProposal =  /* an object received by `fun onSessionProposal(sessionProposal: Wallet.Model.SessionProposal)` in `Web3Wallet.WalletDelegate` */
-val sessionNamespaces = Web3Wallet.generateApprovedNamespaces(sessionProposal, supportedNamespaces)
+val sessionProposal: Wallet.Model.SessionProposal =  /* an object received by `fun onSessionProposal(sessionProposal: Wallet.Model.SessionProposal)` in `WalletKit.WalletDelegate` */
+val sessionNamespaces = WalletKit.generateApprovedNamespaces(sessionProposal, supportedNamespaces)
 
 val approveParams: Wallet.Params.SessionApprove = Wallet.Params.SessionApprove(proposerPublicKey, sessionNamespaces)
-Web3Wallet.approveSession(approveParams) { error -> /*callback for error while approving a session*/ }
+WalletKit.approveSession(approveParams) { error -> /*callback for error while approving a session*/ }
 ```
 
 Examples of supported namespaces:
@@ -236,10 +236,10 @@ val events: List<String> = /*List of events that wallet approves*/
 val namespaces: Map<String, Wallet.Model.Namespaces.Session> = mapOf(namespace, Wallet.Model.Namespaces.Session(accounts, methods, events))
 
 val approveParams: Wallet.Params.SessionApprove = Wallet.Params.SessionApprove(proposerPublicKey, namespaces)
-Web3Wallet.approveSession(approveParams) { error -> /*callback for error while approving a session*/ }
+WalletKit.approveSession(approveParams) { error -> /*callback for error while approving a session*/ }
 ```
 
-To send an approval, pass a Proposer's Public Key along with the map of namespaces to the `Web3Wallet.approveSession` function.
+To send an approval, pass a Proposer's Public Key along with the map of namespaces to the `WalletKit.approveSession` function.
 
 ### Session Rejection
 
@@ -250,11 +250,11 @@ val rejectionCode: String = /*The code for rejecting the Session Proposal*/
 For reference use CAIP-25: https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-25.md
 
 val rejectParams: Wallet.Params.SessionReject = SessionReject(proposerPublicKey, rejectionReason, rejectionCode)
-Web3Wallet.rejectSession(rejectParams) { error -> /*callback for error while rejecting a session*/ }
+WalletKit.rejectSession(rejectParams) { error -> /*callback for error while rejecting a session*/ }
 ```
 
 To send a rejection for the Session Proposal, pass a proposerPublicKey, rejection reason and rejection code to
-the `Web3Wallet.rejectSession` function.
+the `WalletKit.rejectSession` function.
 
 ### Responding to Session requests
 
@@ -263,11 +263,11 @@ val sessionTopic: String = /*Topic of Session*/
 val jsonRpcResponse: Wallet.Model.JsonRpcResponse.JsonRpcResult = /*Active Session Request ID along with request data*/
 val result = Wallet.Params.SessionRequestResponse(sessionTopic = sessionTopic, jsonRpcResponse = jsonRpcResponse)
 
-Web3Wallet.respondSessionRequest(result) { error -> /*callback for error while responding session request*/ }
+WalletKit.respondSessionRequest(result) { error -> /*callback for error while responding session request*/ }
 ```
 
 To respond to JSON-RPC method that were sent from Dapps for a session, submit a `Wallet.Params.SessionRequestResponse` with the session's topic and request
-ID along with the respond data to the `Web3Wallet.respondSessionRequest` function.
+ID along with the respond data to the `WalletKit.respondSessionRequest` function.
 
 ### Updating a Session
 
@@ -283,11 +283,11 @@ val events: List<String> = /*List of events that wallet approves*/
 val namespaces: Map<String, Wallet.Model.Namespaces.Session> = mapOf(namespace, Wallet.Model.Namespaces.Session(accounts, methods, events))
 val updateParams = Wallet.Params.SessionUpdate(sessionTopic, namespaces)
 
-Web3Wallet.updateSession(updateParams) { error -> /*callback for error while sending session update*/ }
+WalletKit.updateSession(updateParams) { error -> /*callback for error while sending session update*/ }
 ```
 
 To update a session with namespaces, submit a `Wallet.Params.SessionUpdate` object with the session's topic and namespaces to update session with
-to `Web3Wallet.updateSession`.
+to `WalletKit.updateSession`.
 
 ### Extending a Session
 
@@ -295,10 +295,10 @@ to `Web3Wallet.updateSession`.
 val sessionTopic: String = /*Topic of Session*/
 val extendParams = Wallet.Params.SessionExtend(sessionTopic = sessionTopic)
 
-Web3Wallet.extendSession(extendParams) { error -> /*callback for error while extending a session*/ }
+WalletKit.extendSession(extendParams) { error -> /*callback for error while extending a session*/ }
 ```
 
-To extend a session, create a `Wallet.Params.SessionExtend` object with the session's topic to update the session with to `Web3Wallet.extendSession`. Session is
+To extend a session, create a `Wallet.Params.SessionExtend` object with the session's topic to update the session with to `WalletKit.extendSession`. Session is
 extended by 7 days.
 
 ### Emitting a Session
@@ -311,7 +311,7 @@ val event: Wallet.Model.SessiomEvent = SessionEvent(name = "accountsChanged", da
 
 val sessionEmit = Wallet.Params.SessionEmit(topic = sessionTopic, chainId = "eip155:1", event = event)
 
-Web3Wallet.emitSessionEvent(sessionEmit) { error -> /*callback for error while emiting an event*/ }
+WalletKit.emitSessionEvent(sessionEmit) { error -> /*callback for error while emiting an event*/ }
 ```
 
 ### Session Disconnect
@@ -323,18 +323,18 @@ val sessionTopic: String = /*Topic from the Session*/
 For reference use CAIP-25: https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-25.md
 val disconnectParams = Wallet.Params.SessionDisconnect(sessionTopic, disconnectionReason, disconnectionCode)
 
-Web3Wallet.disconnectSession(disconnectParams) { error -> /*callback for error while disconnecting a session*/ }
+WalletKit.disconnectSession(disconnectParams) { error -> /*callback for error while disconnecting a session*/ }
 ```
 
-To disconnect from un active session, pass a disconnection reason with code and the Session topic to the `Web3Wallet.disconnectSession`
+To disconnect from un active session, pass a disconnection reason with code and the Session topic to the `WalletKit.disconnectSession`
 function.
 
 ## Extra (Platform Specific)
 
-#### Web3Wallet.WalletDelegate
+#### WalletKit.WalletDelegate
 
 ```kotlin
-val walletDelegate = object : Web3Wallet.WalletDelegate {
+val walletDelegate = object : WalletKit.WalletDelegate {
     override fun onSessionProposal(sessionProposal: Wallet.Model.SessionProposal, verifyContext: Wallet.Model.VerifyContext) {
         // Triggered when wallet receives the session proposal sent by a Dapp
     }
@@ -371,7 +371,7 @@ val walletDelegate = object : Web3Wallet.WalletDelegate {
         // Triggered whenever there is an issue inside the SDK
     }
 }
-Web3Wallet.setWalletDelegate(walletDelegate)
+WalletKit.setWalletDelegate(walletDelegate)
 ```
 
 `Wallet.Event.VerifyContext` provides a domain verification information about SessionProposal, SessionRequest and AuthRequest. It consists of origin of a Dapp from where the request has been sent, validation Enum that says whether origin is VALID, INVALID or UNKNOWN and verify url server.
@@ -389,7 +389,7 @@ enum class Validation {
 }
 ```
 
-The Web3Wallet needs a `Web3Wallet.WalletDelegate` passed to it for it to be able to expose asynchronous updates sent from the Dapp.
+The WalletKit needs a `WalletKit.WalletDelegate` passed to it for it to be able to expose asynchronous updates sent from the Dapp.
 
 #
 
@@ -402,7 +402,7 @@ val payloadParams: Wallet.Params.PayloadParams = //PayloadParams received in the
 val issuer = //MUST be the same as send with the respond methods and follows: https://github.com/w3c-ccg/did-pkh/blob/main/did-pkh-method-draft.md
 val formatMessage = Wallet.Params.FormatMessage(event.payloadParams, issuer)
 
-Web3Wallet.formatMessage(formatMessage)
+WalletKit.formatMessage(formatMessage)
 ```
 
 #### Register Device Token
@@ -411,12 +411,12 @@ This method enables wallets to receive push notifications from WalletConnect's P
 
 Make sure that a service extending the FirebaseMessagingService is added to your manifest as per the [Firebase FCM documentation](https://firebase.google.com/docs/cloud-messaging/android/client#manifest) as well as any other setup Firebase requires [Firebase setup documentation](https://firebase.google.com/docs/android/setup).
 
-To register a wallet to receive WalletConnect push notifications, call `Web3Wallet.registerDeviceToken` and pass the Firebase Access Token.
+To register a wallet to receive WalletConnect push notifications, call `WalletKit.registerDeviceToken` and pass the Firebase Access Token.
 
 ```kotlin
 val firebaseAccessToken: String = //FCM access token received through the Firebase Messaging SDK
 
-Web3Wallet.registerDeviceToken(
+WalletKit.registerDeviceToken(
     firebaseAccessToken,
     onSuccess = {
         // callback triggered once registered successfully with the Push Server
