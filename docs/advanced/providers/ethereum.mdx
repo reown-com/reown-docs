@@ -6,6 +6,10 @@ import Table from '../../components/Table'
 Built on top of [Universal Provider](./universal.mdx) and [WalletConnectModal](../walletconnectmodal/about.mdx).
 You can use this on it's own or pass it down to libraries like ethers, viem or web3js.
 
+:::info
+`showQrModal` has been deprecated as WalletConnect's Web3Modal is now rebranded as Reown's AppKit. If you are looking to use this, please refer to the ["**Use with AppKit**"](#use-with-appkit) section below. 
+:::
+
 ## Installation
 
 ```bash npm2yarn
@@ -61,13 +65,6 @@ The Ethereum Provider's `init` method takes the following parameters:
       description:
         'Your project ID obtained from WalletConnect Cloud: https://cloud.walletconnect.com/',
       type: { code: 'string' },
-      required: 'true'
-    },
-    {
-      value: 'showQrModal',
-      description:
-        'Ethereum Provider integrates WalletConnectModal internally. When set to true it will open the UI modal when the connect function is called.',
-      type: { code: 'boolean' },
       required: 'true'
     },
     {
@@ -135,12 +132,32 @@ The Ethereum Provider's `init` method takes the following parameters:
   ]}
 />
 
-## Use with WalletConnectModal
+## Use with AppKit
+The QRModal is enabled by default on reown's AppKit. In order to use it, all you need to do is to create an AppKit instance. 
 
-When `showQrModal` is enabled, EthereumProvider will automatically show and hide [WalletConnectModal](../walletconnectmodal/about.mdx).
-You can also pass all relevant modal options under `qrModalOptions`. See [WalletConnectModal options](../walletconnectmodal/options.mdx) for all available fields.
+### Installation
+```bash npm2yarn
+npm install @reown/appkit
+```
 
-## Use without WalletConnectModal
+### Setup
+Upon integrating the below code, you will be able to see the QRModal on your Web3 App.
+
+```tsx
+import { createAppKit } from '@reown/appkit'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/chains'
+
+// 1. Get projectId from https://cloud.walletconnect.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 2. Create the AppKit instance
+const modal = createAppKit({
+  caipNetworks: [mainnet, arbitrum, sepolia],
+  projectId
+})
+```
+
+## Use without AppKit
 
 You can subscribe to the `display_uri` event and handle the URI yourself.
 

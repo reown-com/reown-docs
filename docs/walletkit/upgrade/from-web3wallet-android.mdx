@@ -1,0 +1,81 @@
+---
+title: Upgrade from Web3Modal to AppKit for Android
+pagination_next: 
+displayed_sidebar: mainSidebar
+---
+
+
+# Upgrade from Web3Wallet to Reown WalletKit for Android
+
+This upgrade guide helps developers transition from using the Web3Wallet library to the WalletKit within reown-kotlin. The guide involves updating imports, modifying class references and updating artefacts dependencies. Follow these steps to ensure a smooth migration.
+
+### Step 1. Update the Repository Dependencies
+
+The Web3Wallet library has been deprecated and moved to a new repository under the reown-com organization. Update your dependecies to use WalletKit:
+
+```swift
+/* highlight-delete-start */
+- dependencies {
+-     implementation(platform("com.walletconnect:android-bom:{BOM version}"))
+-     implementation("com.walletconnect:android-core")
+-     implementation("com.walletconnect:web3wallet")
+- }
+/* highlight-delete-end */
+/* highlight-add-start */
++ dependencies {
++     implementation(platform("com.reown:android-bom:{BOM version}"))
++     implementation("com.reown:android-core")
++     implementation("com.reown:walletkit")
++ }
+/* highlight-add-end */
+```
+
+### Step 2.  Update Imports in Your Code
+
+All references to Web3Wallet in your import statements should be updated to use WalletKit.
+
+```swift
+/* highlight-delete-start */
+- import com.walletconnect.android.*
+- import com.walletconnect.web3.wallet.*
+/* highlight-delete-end */
+/* highlight-add-start */
++ import com.reown.android.*
++ import com.reown.walletkit.*
+/* highlight-add-end */
+```
+
+
+### Step 3. Update Class Name
+
+The singleton instance for Web3Wallet has been replaced with WalletKit. Update all instances where Web3Wallet is used with WalletKit.
+
+```swift
+/* highlight-delete-start */
+- Web3Wallet.initialize(Wallet.Params.Init(core = CoreClient), onSuccess, onError)
+- Web3Wallet.approveSession(approveProposal, onSuccess, onError)
+/* highlight-delete-end */
+/* highlight-add-start */
++ WalletKit.initialize(Wallet.Params.Init(core = CoreClient), onSuccess, onError)
++ WalletKit.approveSession(approveProposal, onSuccess, onError)
+/* highlight-add-end */
+```
+
+### Step 4. Update ProGuard file rules
+
+If you have ProGuard rules defined remember to update 
+
+```swift
+/* highlight-delete-start */
+- -keep class com.walletconnect.web3.wallet.client.Wallet$Model { *; }
+- -keep class com.walletconnect.web3.wallet.client.Wallet { *; }
+/* highlight-delete-end */
+/* highlight-add-start */
++ -keep class com.reown.walletkit.client.Wallet$Model { *; }
++ -keep class com.reown.walletkit.client.Wallet { *; }
+/* highlight-add-end */
+```
+
+### Step 5. Test Your Changes
+
+After updating all references to Web3Wallet to use WalletKit, thoroughly test your application to ensure that all functionalities work as expected.

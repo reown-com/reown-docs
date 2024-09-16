@@ -7,10 +7,6 @@ WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth r
 
 By enabling it, the wallet and dapp will communicate through declared Universal Links on iOS and/or App Links on Android **even without an internet connection.**
 
-:::caution
-Link Mode is currently in **Beta** for Flutter. You should install [v2.4.0-beta01](https://pub.dev/packages/walletconnect_flutter_v2/versions/2.4.0-beta01) to try it out
-:::
-
 ### How to enable it:
 
 1. Add a Universal Link for your wallet in the **Explorer** tab of your [**Cloud project configuration**](https://cloud.walletconnect.com/sign-in), under the **Mobile Linking** section
@@ -19,15 +15,17 @@ Link Mode is currently in **Beta** for Flutter. You should install [v2.4.0-beta0
 
 3. Set the `linkMode` property to `true`:
 
-```dart
-final web3Wallet = Web3Wallet(
-  projectId: '123.....',
-  metadata: const PairingMetadata(
+```javascript
+final _walletKit = ReownWalletKit(
+  core: ReownCore(
+    projectId: '{YOUR_PROJECT_ID}',
+  ),
+  metadata: PairingMetadata(
     ...
     redirect: Redirect(
-      native: 'yourwalletscheme://',
+      native: 'examplewallet://',
       /* highlight-add-start */
-      universal: 'https://your_wallet_universal_link.com/open',
+      universal: 'https://example.com/wallet',
       linkMode: true,
       /* highlight-add-end */
     ),
@@ -39,9 +37,9 @@ Once everything is properly configured, and the user interacts with a Link Mode-
 
 In Flutter, there are various plugins that can help you integrate Universal/App Links. However, regardless of which one you choose, it is crucial that, when capturing an incoming link, you pass it to WalletKit so it can process the request.
 
-```dart
+```javascript
 void _onLinkCaptured(String link) async {
-  await web3Wallet.dispatchEnvelope(link);
+  await _walletKit.dispatchEnvelope(link);
 }
 ```
 

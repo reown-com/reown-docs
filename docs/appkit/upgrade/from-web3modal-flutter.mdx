@@ -1,0 +1,168 @@
+---
+title: Migration from Web3Modal to AppKit for Flutter
+pagination_next: 
+displayed_sidebar: mainSidebar
+---
+
+import Table from '../../components/Table'
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
+
+# Upgrade from Web3Modal to Reown AppKit for Flutter
+
+This document outlines the steps to migrate from the old `web3modal_flutter` package to the new `reown_appkit` packages in your Flutter project.
+
+### Step 1. Replace the corresponding dependency
+
+Remove `web3modal_flutter` dependency from pubspec.yaml and add `reown_appkit`:
+
+```dart
+/* highlight-delete-start */
+web3modal_flutter: ^X.Y.Z
+/* highlight-delete-end */
+/* highlight-add-start */
+reown_appkit: ^1.0.0
+/* highlight-add-end */
+```
+
+Run `flutter clean && flutter pub get` after replacing the packages
+
+Then replace the imports...
+
+```dart
+/* highlight-delete-start */
+import 'package:web3modal_flutter/web3modal_flutter.dart';
+/* highlight-delete-end */
+/* highlight-add-start */
+import 'package:reown_appkit/reown_appkit.dart';
+/* highlight-add-end */
+```
+
+### Step 2. Update your AppKit's theme related classes
+
+<Table
+  headers={['Old', 'New']}
+  data={[
+    {
+      old: { code: 'Web3ModalThemeData' },
+      new: { code: 'ReownAppKitModalThemeData' },
+    },
+    {
+      old: { code: 'Web3ModalTheme' },
+      new: { code: 'ReownAppKitModalTheme' },
+    },
+    {
+      old: { code: 'Web3ModalColors' },
+      new: { code: 'ReownAppKitModalColors' },
+    },
+    {
+      old: { code: 'Web3ModalRadiuses' },
+      new: { code: 'ReownAppKitModalRadiuses' },
+    },
+  ]}
+/>
+
+### Step 3. Update the main service class
+
+<Table
+  headers={['Old', 'New', 'Notes']}
+  data={[
+    {
+      old: { code: 'W3MService' },
+      new: { code: 'ReownAppKitModal' },
+      notes: '`context` parameter is now required',
+    },
+  ]}
+/>
+
+See more about how to initialize on [Initialization section](../flutter/core/usage#initialization)
+
+### Step 4. Update main buttons
+
+<Table
+  headers={['Old', 'New', 'Notes']}
+  data={[
+    {
+      old: { code: 'W3MNetworkSelectButton' },
+      new: { code: 'AppKitModalNetworkSelectButton' },
+      notes: '`service` parameter is now `appKit`\n`context` parameter is not required anymore but still available',
+    },
+    {
+      old: { code: 'W3MConnectWalletButton' },
+      new: { code: 'AppKitModalConnectButton' },
+      notes: '`service` parameter is now `appKit`\n`context` parameter is not required anymore but still available',
+    },
+    {
+      old: { code: 'W3MAccountButton' },
+      new: { code: 'AppKitModalAccountButton' },
+      notes: '`service` parameter is now `appKit`\n`context` parameter is not required anymore but still available',
+    },
+  ]}
+/>
+
+### Step 5. Networks presets
+The way we used to manipulate the network presets has changed
+
+<Table
+  headers={['Old', 'New', 'Notes']}
+  data={[
+    {
+      old: { code: 'W3MChainPresets' },
+      new: { code: 'ReownAppKitModalNetworks' },
+      notes: '',
+    },
+    {
+      old: { code: 'W3MChainInfo' },
+      new: { code: 'ReownAppKitModalNetworkInfo' },
+      notes: '`chainName` parameter is now `name`\n`tokenName` parameter is now `currency`\n`blockExplorer` parameter is now `explorerUrl`\n`namespace` parameter is not needed anymore',
+    },
+  ]}
+/>
+
+```tsx
+/* highlight-delete-start */
+W3MChainPresets.chains.addAll(W3MChainPresets.extraChains);
+W3MChainPresets.chains.addAll(W3MChainPresets.testChains);
+/* highlight-delete-end */
+/* highlight-add-start */
+final testNetworks = ReownAppKitModalNetworks.test['eip155'] ?? [];
+final extraNetworks = ReownAppKitModalNetworks.extra['eip155'] ?? [];
+ReownAppKitModalNetworks.addNetworks('eip155', testNetworks);
+ReownAppKitModalNetworks.addNetworks('eip155', extraNetworks);
+/* highlight-add-end */
+```
+
+See more on [Custom networks section](../flutter/core/custom-chains)
+
+### Step 4. Update your Components usage
+Update your web3app instance within the service:
+
+If you use to subscribe to `web3App` events you should now change it to `appKit`. Example:
+```tsx
+/* highlight-delete-start */
+_w3mService.web3App!.getActiveSessions();
+/* highlight-delete-end */
+/* highlight-add-start */
+_appKitModal.appKit!.getActiveSessions();
+/* highlight-add-end */
+```
+
+Same for anything related to `_w3mService.web3App!...`
+
+### Step 5. Update any exception type
+
+<Table
+  headers={['Old', 'New']}
+  data={[
+    {
+      old: { code: 'W3MServiceException' },
+      new: { code: 'ReownAppKitModalException' },
+    },
+  ]}
+/>
+
+### Final notes
+
++ Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from Web3Modal to AppKit.
++ Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
++ Check our [AppKit example for Flutter](https://github.com/reown-com/reown_flutter/tree/master/packages/reown_appkit/example/modal/lib) to compare with your implementation in case you are having issues 

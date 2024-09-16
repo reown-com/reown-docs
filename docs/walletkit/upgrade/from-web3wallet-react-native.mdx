@@ -1,0 +1,67 @@
+---
+title: Upgrade from Web3Modal to AppKit
+pagination_next: 
+displayed_sidebar: mainSidebar
+---
+
+
+# Upgrade from Web3Wallet to Reown WalletKit for React Native
+
+This document outlines the steps to migrate from the old `@walletconnect/web3wallet` package to the new `@reown/walletkit` packages in your project.
+
+### Step 1. Update your package.json
+
+Replace your existing `@walletconnect/web3wallet` dependency with `@reown/walletkit`:
+
+```json
+/* highlight-delete-start */
+"@walletconnect/web3wallet": "^x.y.z"
+/* highlight-delete-end */
+/* highlight-add-start */
+"@reown/walletkit": "^1.0.0"
+/* highlight-add-end */
+```
+
+### Step 2. Install `@reown/walletkit`
+
+Run `npm install` (or your prefered package manager command) to install the new package.
+
+### Step 3. Update your imports
+
+Replace the imports in your project:
+
+```javascript
+/* highlight-delete-start */
+import { Web3Wallet } from "@walletconnect/web3wallet";
+/* highlight-delete-end */
+/* highlight-add-start */
+import { WalletKit } from "@reown/walletkit";
+/* highlight-add-end */
+```
+and your initialization to use the new package:
+```javascript
+/* highlight-delete-start */
+await Web3Wallet.init()
+/* highlight-delete-end */
+/* highlight-add-start */
+await WalletKit.init()
+/* highlight-add-end */
+```
+
+
+If you're using additional imports from `@walletconnect/web3wallet`, you can replace them with their corresponding version from `@reown/walletkit` such as:
+```javascript
+/* highlight-delete-start */
+import { IWeb3Wallet } from "@walletconnect/web3wallet";
+/* highlight-delete-end */
+/* highlight-add-start */
+import { IWalletKit } from "@reown/walletkit";
+/* highlight-add-end */
+```
+
+
+## You're all set!
+
+### Final Notes 
++ public API documentation can be found [here](/walletkit/web/usage)
++ `auth_request` is deprecated in favor of `session_authenticate`. Docs can be found [here](/walletkit/web/one-click-auth)

@@ -2,49 +2,36 @@
 
 ### List of events you can subscribe to in order to get connection updates
 
-```dart
-// A connection is settled
-_w3mService.onModalConnect.subscribe((ModalConnect? event) {});
+#### Modal specific events
+
+```javascript
+_appKitModal.onModalConnect.subscribe((ModalConnect? event) {});
+
+_appKitModal.onModalUpdate.subscribe((ModalConnect? event) {});
+
+_appKitModal.onModalNetworkChange.subscribe((ModalNetworkChange? event) {});
+
+_appKitModal.onModalDisconnect.subscribe((ModalDisconnect? event) {});
+
+_appKitModal.onModalError.subscribe((ModalError? event) {});
 ```
 
-```dart
-// Used when SIWEConfig is enabled will be called when SIWE login finishes
-_w3mService.onModalUpdate.subscribe((ModalConnect? event) {});
+#### Session specific events
+
+```javascript
+_appKitModal.onSessionExpireEvent.subscribe((SessionExpire? event) {});
+
+_appKitModal.onSessionUpdateEvent.subscribe((SessionUpdate? event) {});
+
+_appKitModal.onSessionEventEvent.subscribe((SessionEvent? event) {});
 ```
 
-```dart
-// A connection is deleted (disconnected)
-_w3mService.onModalDisconnect.subscribe((ModalDisconnect? event) {});
-```
+#### Relay specific events
 
-```dart
-// An error occurs during connection
-_w3mService.onModalError.subscribe((ModalError? event) {});
-```
+```javascript
+_appKitModal.appKit!.core.relayClient.onRelayClientConnect.subscribe((EventArgs? event) {});
 
-```dart
-// User selectes a different network in the dapp
-_w3mService.onModalNetworkChange.subscribe((ModalNetworkChange? event) {});
-```
+_appKitModal.appKit!.core.relayClient.onRelayClientError.subscribe((EventArgs? event) {});
 
----
-
-:::info note
-These methods are only available when connecting through WalletConnect protocol.
-Since Coinbase Wallet uses it own connection channel, these methods are not available when user connects with it.
-:::
-
-```dart
-// A session expires
-_w3mService.onSessionExpireEvent.subscribe((SessionExpire? event) {});
-```
-
-```dart
-// A session data is updated
-_w3mService.onSessionUpdateEvent.subscribe((SessionUpdate? event) {});
-```
-
-```dart
-// A request event is happening
-_w3mService.onSessionEventEvent.subscribe((SessionEvent? event) {});
+_appKitModal.appKit!.core.relayClient.onRelayClientDisconnect.subscribe((EventArgs? event) {});
 ```
