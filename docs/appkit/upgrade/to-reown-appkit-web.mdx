@@ -13,7 +13,7 @@ import TabItem from '@theme/TabItem'
 
 ## AppKit v5 to Reown AppKit Upgrade Guide
 
-This guide will help you migrate from AppKit v5 to the latest reown AppKit v6.
+**This** guide will help you migrate from AppKit v5 to the latest Reown AppKit.
 
 <img src="/img/appkit.png" />
 
@@ -61,7 +61,7 @@ Make sure to set your configuration outside React components to avoid unwanted r
 <Tabs>
 <TabItem value="default" label="Default">
 
-Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/chains`
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
 ```tsx
 /* highlight-delete-start */
@@ -73,7 +73,7 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 
 /* highlight-add-start */
 + import { createAppKit } from '@reown/appkit'
-+ import { arbitrum, mainnet } from '@reown/appkit/chains'
++ import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
 
@@ -100,7 +100,10 @@ const metadata = { //optional
 
 /* Create the Wagmi adapter */
 /* highlight-add-start */
-const wagmiAdapter = new WagmiAdapter({})
+const wagmiAdapter = new WagmiAdapter({
+  networks: [mainnet, arbitrum],
+  projectId
+})
 /* highlight-add-end */
 ```
 
@@ -114,13 +117,10 @@ Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 
 /* highlight-add-start */
 + const modal = createAppKit({
-+  adapters: [wagmiAdapter], // optional
++  adapters: [wagmiAdapter],
 +  networks: [mainnet, arbitrum],
-+  metadata: metadata, // optional
-+  projectId,
-+  features: {
-+    analytics: true, // optional - you can also add other features like swaps, onramp, etc
-+  }
++  metadata,
++  projectId
 + })
 /* highlight-add-end */
 
@@ -128,12 +128,11 @@ export default function App() {
   return (
     <>
 /* highlight-delete-start */
--      <WagmiConfig config={wagmiConfig}>
+-    <WagmiConfig config={wagmiConfig}>
 /* highlight-delete-end */
 /* highlight-add-start */
-+      <WagmiConfig config={wagmiAdapter.wagmiConfig as Config}>
++    <WagmiConfig config={wagmiAdapter.wagmiConfig}>
 /* highlight-add-end */
-
       <QueryClientProvider client={queryClient}>
           <HomePage />
        </QueryClientProvider>
@@ -154,7 +153,7 @@ Start by importing AppKit packages, then create wagmiAdapter using your own sett
 <Tabs>
 <TabItem value="default" label="Default">
 
-Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/chains`
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
 ```ts
 /* highlight-delete-start */
@@ -165,7 +164,7 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 
 /* highlight-add-start */
 + import { createAppKit } from '@reown/appkit'
-+ import { arbitrum, mainnet } from '@reown/appkit/chains'
++ import { mainnet, arbitrum } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
 ```
@@ -176,7 +175,7 @@ Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 const projectId = 'YOUR_PROJECT_ID'
 const queryClient = new QueryClient()
 
-const metadata = { //optional
+const metadata = {
     name: 'AppKit',
     description: 'AppKit Example',
     url: 'https://web3modal.com',
@@ -190,7 +189,10 @@ const metadata = { //optional
 
 /* Create the Wagmi adapter */
 /* highlight-add-start */
-const wagmiAdapter = new WagmiAdapter({})
+const wagmiAdapter = new WagmiAdapter({
+  networks: [mainnet, arbitrum],
+  projectId
+})
 /* highlight-add-end */
 /* highlight-add-end */
 ```
@@ -202,19 +204,16 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 + createWeb3Modal({
 +   wagmiConfig,
 +   projectId,
-+   enableAnalytics: true // Optional - defaults to your Cloud configuration
++   enableAnalytics: true
 + })
 /* highlight-delete-end */
 
 /* highlight-add-start */
 + const modal = createAppKit({
-+  adapters: [wagmiAdapter], // optional
++  adapters: [wagmiAdapter],
 +  networks: [mainnet, arbitrum],
-+  metadata: metadata, // optional
-+  projectId,
-+  features: {
-+    analytics: true, // optional - you can also add other features like swaps, onramp, etc
-+  }
++  metadata,
++  projectId
 + })
 /* highlight-add-end */
 ```
@@ -244,7 +243,7 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 function HomePage() {
   const { open } = useAppKit()
 
-  return <button onClick={() => open()}>Connect</button>
+  return <button onClick={open}>Connect</button>
 }
 ```
 
@@ -270,7 +269,7 @@ Learn more about AppKit v6 JavaScript [here](../javascript/core/installation.mdx
 
 ### Properties
 
-As you may have noticed, some of the properties of Web3Modal have changed as a consequence of the migration to reown AppKit.
+As you may have noticed, some of the properties of Web3Modal have changed as a consequence of the migration to Reown AppKit.
 
 #### adapters
 
@@ -278,11 +277,11 @@ The `adapters` property is a new property that is an array of adapters that can 
 
 #### networks
 
-The `chains` property is now `networks` in reown AppKit v6. You should import them from `@reown/appkit/networks` package instead of importing these networks from `viem` or other packages.
+The `chains` property is now `networks` in Reown AppKit v6. You should import them from `@reown/appkit/networks` package instead of importing these networks from `viem` or other packages.
 
 #### defaultNetwork
 
-The `defaultChain` property is now `defaultNetwork` in reown AppKit v6. This is a network object that specifies the default network for your Web3 app.
+The `defaultChain` property is now `defaultNetwork` in Reown AppKit v6. This is a network object that specifies the default network for your Web3 app.
 
 ### Utility Functions
 
@@ -323,8 +322,19 @@ This switches the active network to the different network being passed.
 Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather than the chain id.
 
 - (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
-- (v6) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/chains`.
-  :::
+- (v6) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
+
+```tsx
+/* highlight-delete-start */
+switchNetwork(137)
+/* highlight-delete-end */
+/* highlight-add-start */
+import { polygon } from '@reown/appkit/networks'
+switchNetwork(polygon)
+/* highlight-add-end */
+```
+
+:::
 
 #### modal.getIsConnected()
 
