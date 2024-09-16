@@ -15,7 +15,7 @@ Adding custom connectors like WalletConnect and Coinbase is optional.
 By default, [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and WC connectors are provided out of the box.
 ```ts
 import { createAppKit } from '@reown/appkit/react'
-
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { reconnect, http, createConfig } from '@wagmi/core'
 import { CreateConnectorFn } from 'wagmi'
 import { sepolia } from '@reown/appkit/networks'
