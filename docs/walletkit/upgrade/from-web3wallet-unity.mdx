@@ -1,0 +1,101 @@
+---
+title: Upgrade from Web3Wallet to WalletKit
+pagination_next: 
+displayed_sidebar: mainSidebar
+---
+
+import Table from '../../components/Table'
+
+# Upgrade from Web3Wallet to Reown WalletKit for .NET
+
+This document outlines the steps to migrate from the old `WalletConnect.Web3Wallet` package to the new `Reown.WalletKit` package in your .NET project.
+
+### Step 1. Replace the corresponding dependency in your project file
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- ... -->
+
+  <ItemGroup>
+/* highlight-delete-start */
+    <PackageReference Include="WalletConnect.Web3Wallet" Version="2.4.2" />
+/* highlight-delete-end */
+/* highlight-add-start */
+    <PackageReference Include="Reown.WalletKit" Version="1.0.0" />
+/* highlight-add-end */
+  </ItemGroup>
+
+</Project>
+```
+
+Alternatively, you can use the .NET CLI:
+
+```bash
+# Remove the old package
+dotnet remove package WalletConnect.Web3Wallet
+
+# Add the new package
+dotnet add package Reown.WalletKit
+```
+
+### Step 2. Update references to the namespaces
+
+<Table
+  headers={['Old', 'New']}
+  data={[
+    {
+      old: { code: 'WalletConnectSharp.Web3Wallet' },
+      new: { code: 'Reown.WalletKit' },
+    },
+    {
+      old: { code: 'WalletConnectSharp.Sign' },
+      new: { code: 'Reown.Sign' },
+    },
+    {
+      old: { code: 'WalletConnectSharp.Core' },
+      new: { code: 'Reown.Core' },
+    },
+    {
+      old: { code: 'WalletConnectSharp.Storage' },
+      new: { code: 'Reown.Core.Storage' },
+    },
+    {
+      old: { code: 'WalletConnectSharp.Crypto' },
+      new: { code: 'Reown.Core.Crypto' },
+    },
+    {
+      old: { code: 'WalletConnectSharp.Network' },
+      new: { code: 'Reown.Core.Network' },
+    },
+  ]}
+/>
+
+### Step 3. Update references to the classes
+
+<Table
+  headers={['Old', 'New']}
+  data={[
+    {
+      old: { code: 'WalletConnectCore' },
+      new: { code: 'CoreClient' },
+    },
+    {
+      old: { code: 'WalletConnectSignClient' },
+      new: { code: 'SignClient' },
+    },
+    {
+      old: { code: 'Web3WalletClient' },
+      new: { code: 'WalletKitClient' },
+    },
+    {
+      old: { code: 'WCLogger' },
+      new: { code: 'ReownLogger' },
+    },
+  ]}
+/>
+
+### Final notes
+
++ Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from Web3Wallet to WalletKit.
++ Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.

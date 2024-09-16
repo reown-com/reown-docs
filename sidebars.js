@@ -244,8 +244,8 @@ module.exports = {
               collapsed: true,
               collapsible: true,
               items: [
+                { type: 'doc', label: 'To Reown AppKit', id: 'appkit/upgrade/from-w3m-to-reown' },
                 { type: 'doc', label: 'AppKit v2 to v5', id: 'appkit/upgrade/appkitv2' },
-                { type: 'doc', label: 'AppKit v5 to v6', id: 'appkit/upgrade/appkitv6' },
               ]
             },
             {
@@ -279,7 +279,16 @@ module.exports = {
                 { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' }
               ]
             },
-            'walletkit/best-practices'
+            'walletkit/best-practices',
+            {
+              type: 'category',
+              label: 'Upgrade',
+              collapsed: true,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'From Web3Wallet', id: 'walletkit/upgrade/from-web3wallet-to-reown' },
+              ]
+            },
           ]
         }
       ]

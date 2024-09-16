@@ -1,0 +1,77 @@
+---
+title: Migration from Web3Modal to AppKit for iOS
+pagination_next: 
+displayed_sidebar: mainSidebar
+---
+
+import Table from '../../components/Table'
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
+
+# Upgrade from Web3Modal to Reown AppKit for iOS
+
+This upgrade guide is intended to help developers transition their projects from using Web3Modal to the AppKit. The changes involve updating imports, modifying method calls, changing the repository URL for Swift Package Manager (SPM), and adjusting instance and configuration methods. Follow the steps below to migrate smoothly.
+
+### Step 1. Update the Repository URL
+
+The Web3Modal project has moved from the WalletConnect organization to a new repository under the reown-com organization. If you are using Swift Package Manager (SPM) to manage dependencies, update your Package.swift file to point to the new repository:
+
+```swift
+/* highlight-delete-start */
+- .package(url: "https://github.com/WalletConnect/web3modal-swift", from: "1.0.0"),
+/* highlight-delete-end */
+/* highlight-add-start */
++ .package(url: "https://github.com/reown-com/reown-swift", from: "1.0.0"),
+/* highlight-add-end */
+```
+
+### Step 2. Update Imports in Your Code
+
+All references to Web3Modal in your import statements should be changed to AppKit.
+
+```swift
+/* highlight-delete-start */
+- import Web3Modal
+/* highlight-delete-end */
+/* highlight-add-start */
++ import AppKit
+/* highlight-add-end */
+```
+
+### Step 3. Update Instance Access and Method Calls
+
+The singleton instance access for Web3Modal has been replaced with AppKit. Update all instances where Web3Modal.instance is used to AppKit.instance.
+
+```swift
+/* highlight-delete-start */
+- Web3Modal.instance.authResponsePublisher.sink { (id, result) in
+-     // Your code here
+- }
+/* highlight-delete-end */
+/* highlight-add-start */
++ AppKit.instance.authResponsePublisher.sink { (id, result) in
++     // Your code here
++ }
+/* highlight-add-end */
+```
+
+### Step 4. Update Configuration Method
+
+The configure method has also been updated to reflect the new branding. Replace calls to Web3Modal.configure with AppKit.configure. Old Configuration:
+
+```swift
+/* highlight-delete-start */
+- Web3Modal.configure(
+-     ...
+- )
+/* highlight-delete-end */
+/* highlight-add-start */
++ AppKit.configure(
++     ...
++ )
+/* highlight-add-end */
+```
+
+### Step 5. Test Your Changes
+
+After updating all references to Web3Modal to use AppKit, thoroughly test your application to ensure that all functionalities work as expected.

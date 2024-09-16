@@ -1,0 +1,149 @@
+---
+title: Migration from Web3Modal to AppKit
+pagination_next: 
+displayed_sidebar: mainSidebar
+---
+
+import Table from '../../components/Table'
+
+# Upgrade from Web3Modal to AppKit for Unity
+
+This document outlines the steps to migrate from the old `com.walletconnect` packages to the new `com.reown` package in your Unity project.
+
+### Step 1. Replace the corresponding dependency in your manifest.json
+
+```json
+{
+  "dependencies": {
+/* highlight-delete-start */
+      "com.walletconnect.web3modal": "1.0.0",
+/* highlight-delete-end */
+/* highlight-add-start */
+      "com.reown.appkit": "0.4.2"
+/* highlight-add-end */
+  },
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+/* highlight-delete-start */
+        "com.walletconnect",
+/* highlight-delete-end */
+/* highlight-add-start */
+        "com.reown"
+/* highlight-add-end */
+      ]
+    }
+  ]
+}
+
+```
+
+Alternatively, you can use the OpenUPM CLI:
+
+```bash
+# Remove the old package
+openupm remove com.walletconnect.web3modal
+
+# Add the new package
+openupm add com.reown.appkit
+```
+
+If the `com.walletconnect.web3modal` package was installed manually via the Package Manager window or directly from the GitHub repository,
+remove all `com.walletconnect` packages and replace them with the `com.reown` packages. You can find the list of all necessary packages in the
+[Installation Documentation](/appkit/unity/core/installation#package) under `Package Manager with OpenUPM` tab.
+
+### Step 2. Update your AppKit config
+
+The `com.walletconnect.web3modal` package used two configuration objects: `WalletConnectProjectConfig` scriptable object
+and optional `Web3ModalConfig` class.
+
+The Reown AppKit combines these two configurations into a single `AppKitConfig` class that can be passed into AppKit initialization method.
+1. Delete `WalletConnectProjectConfig` scriptable object
+2. Initialize AppKit from your script
+```csharp
+private async void Start()
+{
+    await AppKit.InitializeAsync(
+        new AppKitConfig(
+            projectId: "Your Project ID from WalletConnectProjectConfig",
+            new Metadata(
+                name: "My Game",
+                description: "Example description",
+                url: "https://example.com",
+                iconUrl: "Your icon URL"
+            )
+        )
+    );
+}
+```
+
+### Step 3. Update references to the namespaces
+
+The modern IDE such as Rider or Visual Studio should be able to automatically update the namespaces for you.
+If not, you can manually update the namespaces as follows:
+
+<Table
+  headers={['Old', 'New']}
+  data={[
+    {
+      old: { code: 'WalletConnect.Web3Modal' },
+      new: { code: 'Reown.AppKit.Unity' },
+    },
+    {
+      old: { code: 'WalletConnectUnity.Nethereum' },
+      new: { code: 'Reown.Sign.Nethereum.Unity' },
+    },
+    {
+      old: { code: 'WalletConnectSharp.Sign' },
+      new: { code: 'Reown.Sign' },
+    },
+    {
+      old: { code: 'WalletConnectUnity.Core' },
+      new: { code: 'Reown.Sign.Unity' },
+    },
+  ]}
+/>
+
+Note that some objects from `WalletConnectUnity.Core` were moved into `Reown.AppKit.Unity` namespace, therefore we
+recommend to rely on the IDE to automatically update the namespaces.
+
+### Step 4. Update references to the classes
+
+Change `Web3Modal` to `AppKit` in your codebase. For example:
+
+```csharp
+/* highlight-delete-start */
+Web3Modal.Open();
+/* highlight-delete-end */
+/* highlight-add-start */
+AppKit.Open();
+/* highlight-add-end */
+
+/* highlight-delete-start */
+await Web3Modal.Evm.SendTransactionAsync(address, value);
+/* highlight-delete-end */
+/* highlight-add-start */
+await AppKit.Evm.SendTransactionAsync(address, value);
+/* highlight-add-end */
+```
+
+### Step 5. Rename USS variables
+
+If you customised any AppKit USS variables, simply change `--wui` part of the variable name to `--ro`. For example:
+
+```css
+/* highlight-delete-start */
+--wui-color-accent-100: rgb(156, 81, 65);
+/* highlight-delete-end */
+/* highlight-add-start */
+--ro-color-accent-100: rgb(156, 81, 65);
+/* highlight-add-end */
+```
+
+
+### Final notes
+
++ Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from Web3Modal to AppKit.
++ Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
