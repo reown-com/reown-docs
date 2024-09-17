@@ -15,9 +15,9 @@ export const CloudBanner = props => {
     <div className="cloud__wrapper">
       <div className="cloud__text-container">
         <h2>Don't have a project ID?</h2>
-        <p>Head over to WalletConnect Cloud and create a new project now!</p>
+        <p>Head over to Reown Cloud and create a new project now!</p>
       </div>
-      <Link to="https://cloud.walletconnect.com" target="_blank" onClick={handleAnalytics}>
+      <Link to="https://cloud.reown.com" target="_blank" onClick={handleAnalytics}>
         Get started
         <svg
           xmlns="http://www.w3.org/2000/svg"

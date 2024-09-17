@@ -392,7 +392,7 @@ Session proposal is a handshake sent by a dapp and it's purpose is to define a s
 
 `VerifyContext` provides a domain verification information about `Session.Proposal` and `Request`. It consists of origin of a Dapp from where the request has been sent, validation enum that says whether origin is **unknown**, **valid** or **invalid** and verify URL server.
 
-To enable or disable verification find the **Verify SDK** toggle in your project [cloud](https://cloud.walletconnect.com).
+To enable or disable verification find the **Verify SDK** toggle in your project [cloud](https://cloud.reown.com).
 
 ```swift
 public struct VerifyContext: Equatable, Hashable {
@@ -691,7 +691,7 @@ try await Sign.instance.rejectSession(requestId: requestId)
 #### **Initialization**
 
 ```kotlin
-val projectId = "" // Get Project ID at https://cloud.walletconnect.com/
+val projectId = "" // Get Project ID at https://cloud.reown.com/
 val connectionType = ConnectionType.AUTOMATIC or ConnectionType.MANUAL
 val appMetaData = Core.Model.AppMetaData(
     name = "Wallet Name",

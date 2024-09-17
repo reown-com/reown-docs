@@ -128,13 +128,13 @@ const config = {
         },
         {
           label: 'Dashboard',
-          href: 'https://cloud.walletconnect.com/?utm_source=website&utm_medium=docs&utm_campaign=walletconnectdocs',
+          href: 'https://cloud.reown.com/?utm_source=website&utm_medium=docs',
           position: 'right',
           className: 'header-cloud-link',
           'aria-label': 'Cloud'
         },
         {
-          href: 'https://github.com/walletconnect/',
+          href: 'https://github.com/reown-com/',
           position: 'right',
           className: 'header-github-link',
           'aria-label': 'GitHub repository'

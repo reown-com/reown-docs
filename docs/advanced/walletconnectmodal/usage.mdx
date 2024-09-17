@@ -118,7 +118,7 @@ or you can change them later by calling `WalletConnectModal.set(sessionParams: S
 
 ```kotlin
 val connectionType = ConnectionType.AUTOMATIC or ConnectionType.MANUAL
-val projectId = "" // Get Project ID at https://cloud.walletconnect.com/
+val projectId = "" // Get Project ID at https://cloud.reown.com/
 val appMetaData = Core.Model.AppMetaData(
     name = "Kotlin.WalletConnectModal",
     description = "Kotlin WalletConnectModal Implementation",
@@ -283,7 +283,7 @@ This is a bug in the wallets, not this package.
 
 <PlatformTabItem value="react-native">
 
-Start by importing `@walletconnect/react-native-compat` at the top of your app. Then import the WalletConnect Modal package, replace `YOUR_PROJECT_ID` with your [WalletConnect Cloud](https://cloud.walletconnect.com/sign-in) Project ID and add your Project's info in `providerMetadata`
+Start by importing `@walletconnect/react-native-compat` at the top of your app. Then import the WalletConnect Modal package, replace `YOUR_PROJECT_ID` with your [Reown Cloud](https://cloud.reown.com/sign-in) Project ID and add your Project's info in `providerMetadata`
 
 ```tsx
 import '@walletconnect/react-native-compat'
@@ -316,7 +316,7 @@ function App() {
 <PlatformTabItem value="unity">
 
 1. Fill in the Project ID and Metadata fields in the `Assets/WalletConnectUnity/Resources/WalletConnectProjectConfig` asset.
-   - If you don’t have a Project ID, you can create one at [WalletConnect Cloud](https://cloud.walletconnect.com).
+   - If you don’t have a Project ID, you can create one at [Reown Cloud](https://cloud.reown.com).
    - The `Redirect` fields are optional. They are used to redirect the user back to your app after they approve or reject the session.
 2. Add `WalletConnectModal` prefab from `WalletConnectUnity Modal` package to the first scene in your game.
 
