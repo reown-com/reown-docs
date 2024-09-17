@@ -58,14 +58,14 @@ const config = {
     }
   ],
   title: 'Reown Docs',
-  tagline: 'WalletConnect is an open protocol to communicate securely between Dapps and Wallets.',
-  url: 'https://docs.walletconnect.com/',
+  tagline: 'Reown gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.',
+  url: 'https://docs.reown.com/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
-  organizationName: 'walletconnect',
-  projectName: 'walletconnect-docs',
+  organizationName: 'reown',
+  projectName: 'reown-docs',
   staticDirectories: ['static'],
   scripts: [
     {
@@ -206,7 +206,7 @@ const config = {
           ]
         }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} WalletConnect, Inc.`
+      copyright: `Copyright © ${new Date().getFullYear()} Reown, Inc.`
     },
     colorMode: {
       defaultMode: 'dark',
