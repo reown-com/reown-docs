@@ -971,7 +971,7 @@ article ul li:not([role='tab'])::before {
 }
 
 [data-theme='light'] .cloud__wrapper {
-  background: linear-gradient(135deg, hsl(217.36, 62%, 95%) 0%, hsl(217.36, 62%, 68.5%) 100%);
+  background:#E9E9E9;
   box-shadow: none;
   border: none;
 }
@@ -999,12 +999,11 @@ article ul li:not([role='tab'])::before {
   border: 1px solid var(--ifm-color-primary-lightest);
   border: none;
   color: white;
-  background: rgba(0, 0, 0, 0.15);
   box-shadow:
     rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-  min-width: 11rem;
+  min-width: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
