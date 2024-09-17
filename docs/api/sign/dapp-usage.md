@@ -395,7 +395,7 @@ Above method will extend a user's session to a week.
 #### **Initialization**
 
 ```kotlin
-val projectId = "" // Get Project ID at https://cloud.walletconnect.com/
+val projectId = "" // Get Project ID at https://cloud.reown.com/
 val connectionType = ConnectionType.AUTOMATIC or ConnectionType.MANUAL
 val appMetaData = Core.Model.AppMetaData(
     name = "Dapp Name",
@@ -995,7 +995,7 @@ WalletConnectUnity is a wrapper for WalletConnectSharp. It simplifies managing a
 To use WalletConnectUnity in your project:
 
 1. Fill in the Project ID and Metadata fields in the `Assets/WalletConnectUnity/Resources/WalletConnectProjectConfig` asset.
-   - If you don’t have a Project ID, you can create one at [WalletConnect Cloud](https://cloud.walletconnect.com).
+   - If you don’t have a Project ID, you can create one at [Reown Cloud](https://cloud.reown.com).
    - The `Redirect` fields are optional. They are used to redirect the user back to your app after they approve or reject the session.
 2. Initialize `WalletConnect` and connect the wallet:
 

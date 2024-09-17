@@ -7,7 +7,7 @@ WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth r
 
 ### How to enable it:
 
-To support Link Mode add a universal link for your wallet in Cloud project configuration [dashboard](https://cloud.walletconnect.com/sign-in), configure your Metadata with a valid universal link and set the `linkMode` property to `true`:
+To support Link Mode add a universal link for your wallet in Cloud project configuration [dashboard](https://cloud.reown.com/sign-in), configure your Metadata with a valid universal link and set the `linkMode` property to `true`:
 
 ```ts
 const walletKit = await WalletKit.init({
@@ -15,7 +15,7 @@ const walletKit = await WalletKit.init({
   metadata: {
     name: 'Demo React Native Wallet',
     description: 'Demo RN Wallet to interface with Dapps',
-    url: 'www.reown.com',
+    url: 'www.reown.com/walletkit',
     icons: ['https://your_wallet_icon.png'],
     redirect: {
       native: 'yourwalletscheme://',

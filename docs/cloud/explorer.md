@@ -4,7 +4,7 @@ title: Explorer API
 
 The Cloud Explorer API currently offers the following functionality:
 
-- [Listings](#listings) - Allows for fetching of wallets and dApps listed in the [WalletConnect Cloud Explorer](https://walletconnect.com/explorer).
+- [Listings](#listings) - Allows for fetching of wallets and dApps listed in the [Reown Cloud Explorer](https://walletconnect.com/explorer).
 - [Logos](#logos) - Provides logo assets in different sizes for a given Cloud explorer entry.
 
 ### Listings

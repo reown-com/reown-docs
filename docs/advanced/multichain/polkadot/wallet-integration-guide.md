@@ -11,7 +11,7 @@
 ---
 
 1. **Getting Started:** Generate a unique `projectId` by visiting and creating your project's profile on WalletConnect's project dashboard at:
-   - `https://cloud.walletconnect.com/`
+   - `https://cloud.reown.com/`
 
 # WalletConnect Code/Component Setup
 
