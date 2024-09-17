@@ -206,7 +206,7 @@ const config = {
           ]
         }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} WalletConnect, Inc.`
+      copyright: `Copyright © ${new Date().getFullYear()} Reown, Inc.`
     },
     colorMode: {
       defaultMode: 'dark',
