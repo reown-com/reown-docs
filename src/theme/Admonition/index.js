@@ -121,7 +121,8 @@ const aliases = {
   secondary: 'note',
   important: 'info',
   success: 'tip',
-  warning: 'danger'
+  warning: 'caution',
+  danger: 'danger'
 }
 function getAdmonitionConfig(unsafeType) {
   const type = aliases[unsafeType] ?? unsafeType
