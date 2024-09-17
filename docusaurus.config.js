@@ -39,7 +39,7 @@ const config = {
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-T8KHTQMBG8');
+        gtag('config', 'G-56G35T8X');
       `
     },
     {
