@@ -61,18 +61,22 @@ import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
-// 0. Create the Wagmi adapter
+export const networks = [solana, solanaTestnet, solanaDevnet]
+
+// 0. Get projectId from https://cloud.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 1. Create the Wagmi adapter
 export const wagmiAdapter = new WagmiAdapter({
   ssr: true,
+  projectId, 
+  networks
 })
 
-// 1. Create Solana adapter
+// 2. Create Solana adapter
 const solanaWeb3JsAdapter = new SolanaAdapter({
   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 })
-
-// 2. Get projectId from https://cloud.reown.com
-const projectId = 'YOUR_PROJECT_ID'
 
 // 3. Set up the metadata - Optional
 const metadata = {

@@ -26,9 +26,13 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
+export const networks = [mainnet, arbitrum]
+
 // 3. Create Wagmi Adapter
 const wagmiConfig = new WagmiAdapter({
-  ssr: true
+  ssr: true,
+  networks,
+  projectId
 })
 
 // 4. Create modal

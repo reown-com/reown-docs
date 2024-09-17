@@ -27,9 +27,13 @@ In your `App.vue` file set up the following configuration
     icons: ['https://avatars.githubusercontent.com/u/179229932']
   }
 
+  export const networks = [mainnet, arbitrum]
+
   // 3. Create Wagmi Adapter
   const wagmiAdapter = new WagmiAdapter({
-    ssr: true
+    ssr: true,
+    projectId,
+    networks
   })
 
   // 4. Create modal
