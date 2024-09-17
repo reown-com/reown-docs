@@ -14,7 +14,8 @@ const Banner = () => {
           Start Building
         </Link>
       </div>
-      <img className={styles.banner__image} src='/reown/banner-image.svg' alt="Reown Banner" />
+      <img className={styles.banner__image} src='/reown/banner-image.svg#dark-mode-only' alt="Reown Banner" />
+      <img className={styles.banner__image} src='/reown/banner-image-light.svg#light-mode-only' alt="Reown Banner" />
     </div>
   )
 }
