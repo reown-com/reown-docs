@@ -41,12 +41,16 @@ connectors.push(
   })
 )
 
+export const networks = [sepolia]
+
 export const wagmiAdapter = new WagmiAdapter({
   storage:
   transports: {
     [sepolia.id]: http()
   },
-  connectors
+  connectors,
+  projectId,
+  networks
 })
 
 export const config = wagmiAdapter.wagmiConfig
