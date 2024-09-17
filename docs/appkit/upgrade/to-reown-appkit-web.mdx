@@ -61,7 +61,7 @@ Make sure to set your configuration outside React components to avoid unwanted r
 <Tabs>
 <TabItem value="default" label="Default">
 
-Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/chains`
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
 ```tsx
 /* highlight-delete-start */
@@ -73,7 +73,7 @@ import { arbitrum, mainnet } from 'viem/chains'
 
 /* highlight-add-start */
 import { createAppKit } from '@reown/appkit'
-import { arbitrum, mainnet } from '@reown/appkit/chains'
+import { arbitrum, mainnet } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
 
@@ -157,7 +157,7 @@ Start by importing AppKit packages, then create wagmiAdapter using your own sett
 <Tabs>
 <TabItem value="default" label="Default">
 
-Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/chains`
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
 ```ts
 /* highlight-delete-start */
@@ -168,7 +168,7 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 
 /* highlight-add-start */
 + import { createAppKit } from '@reown/appkit'
-+ import { arbitrum, mainnet } from '@reown/appkit/chains'
++ import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
 ```
@@ -329,7 +329,7 @@ This switches the active network to the different network being passed.
 Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather than the chain id.
 
 - (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
-- (v6) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/chains`.
+- (v6) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
 
 ```tsx
 /* highlight-delete-start */
