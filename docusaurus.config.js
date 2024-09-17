@@ -84,7 +84,7 @@ const config = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           showLastUpdateTime: true,
-          editUrl: 'https://github.com/WalletConnect/walletconnect-docs/blob/main/',
+          editUrl: 'https://github.com/reown-com/reown-docs/blob/main/',
           remarkPlugins: [
             [
               require('@docusaurus/remark-plugin-npm2yarn'),
@@ -128,7 +128,7 @@ const config = {
         },
         {
           label: 'Dashboard',
-          href: 'https://cloud.reown.com/?utm_source=website&utm_medium=docs',
+          href: 'https://cloud.reown.com/?utm_source=website&utm_medium=docs&utm_campaign=walletconnectdocs',
           position: 'right',
           className: 'header-cloud-link',
           'aria-label': 'Cloud'
@@ -167,10 +167,10 @@ const config = {
               label: 'Discord',
               href: 'https://discord.com/invite/kdTQHQ6AFQ'
             },
-            {
+            /*{
               label: 'Telegram',
               href: 'https://t.me/walletconnect'
-            },
+            },*/ //Commenting out for now
             {
               label: 'X',
               href: 'https://x.com/reown_'
@@ -182,15 +182,15 @@ const config = {
           items: [
             {
               label: 'Blog',
-              href: 'https://medium.com/walletconnect'
+              href: 'https://reown.com/blog'
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/walletconnect/walletconnect-docs/'
+              href: 'https://github.com/reown-com/reown-docs'
             },
             {
               label: 'Farcaster',
-              href: 'https://warpcast.com/walletconnect/'
+              href: 'https://warpcast.com/reown/'
             }
           ]
         },
