@@ -25,7 +25,7 @@ const config = {
       attributes: {
         defer: 'true',
         type: 'text/javascript',
-        src: 'https://www.googletagmanager.com/gtag/js?id=G-T8KHTQMBG8'
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-56G35T8X'
       }
     },
     {
@@ -53,7 +53,7 @@ const config = {
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-5557TG59');
+        })(window,document,'script','dataLayer','GTM-56G35T8X');
       `
     }
   ],
