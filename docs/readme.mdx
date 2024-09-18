@@ -1,21 +1,19 @@
----
-title: Welcome
----
+<h1 title="title">Welcome</h1>
 
-import WhatsNewBanner from './components/WhatsNewBanner'
-import Banner from './components/Home/Banner'
-import Wrapper from './components/Home/Wrapper'
-import twitterLogo from '../static/assets/home/logo-white.png'
-import discordLogo from '../static/assets/home/discord.png'
-import telegramLogo from '../static/assets/home/telegram.png'
-import web3inboxLogo from '../static/assets/home/web3inboxLogo.png'
-import bookLogo from '../static/assets/home/bookLogo.png'
-import githubLogo from '../static/assets/home/githubLogo.png'
-import universalProviderLogo from '../static/assets/home/universalProviderLogo.png'
-import ethereumProviderLogo from '../static/assets/home/ethereumProviderLogo.png'
-import wcmLogo from '../static/assets/home/wcmLogo.png'
-import w3iLogo from '../static/assets/home/web3inboxLogo_high.png'
-import Link from '@docusaurus/Link'
+import WhatsNewBanner from '@site/components/WhatsNewBanner';
+import Banner from '../../components/Home/Banner';
+import Wrapper from './components/Home/Wrapper';
+import twitterLogo from '../static/assets/home/logo-white.png';
+import discordLogo from '../static/assets/home/discord.png';
+import telegramLogo from '../static/assets/home/telegram.png';
+import web3inboxLogo from '../static/assets/home/web3inboxLogo.png';
+import bookLogo from '../static/assets/home/bookLogo.png';
+import githubLogo from '../static/assets/home/githubLogo.png';
+import universalProviderLogo from '../static/assets/home/universalProviderLogo.png';
+import ethereumProviderLogo from '../static/assets/home/ethereumProviderLogo.png';
+import wcmLogo from '../static/assets/home/wcmLogo.png';
+import w3iLogo from '../static/assets/home/web3inboxLogo_high.png';
+import Link from '@docusaurus/Link';
 
 <Banner />
 
@@ -46,7 +44,7 @@ Effortlessly integrate our suite of SDKs
 <br />
 :::info
 
-Check our upgrade guides to migrate to our new Reown SDKs > [AppKit](./appkit/upgrade/from-w3m-to-reown) and [WalletKit](./walletkit/upgrade/from-web3wallet-to-reown).
+Check our upgrade guides to migrate to our new Reown SDKs: [AppKit](./appkit/upgrade/from-w3m-to-reown) and [WalletKit](./walletkit/upgrade/from-web3wallet-to-reown).
 
 :::
 
@@ -56,47 +54,30 @@ Check our upgrade guides to migrate to our new Reown SDKs > [AppKit](./appkit/up
 
 Share your experience, contribute, or ask questions
 
-<Wrapper
-  type="small"
+<Wrapper 
+  type="small" 
   items={[
-    {
-      name: 'X',
-      icon: twitterLogo,
-      href: 'https://x.com/reown_',
-      isWhite: true
-    },
-    {
-      name: 'Discord',
-      icon: discordLogo,
-      href: 'https://discord.com/invite/kdTQHQ6AFQ',
-      isWhite: true
-    },
-    /*{
-      name: 'Telegram',
-      icon: telegramLogo,
-      href: 'https://t.me/walletconnect',
-      isWhite: true
-    },*/
-    {
-      name: 'GitHub',
-      icon: githubLogo,
-      href: 'https://github.com/orgs/WalletConnect/discussions/',
-      isWhite: true
-    }
+    { name: 'X', icon: twitterLogo, href: 'https://x.com/reown_', isWhite: true },
+    { name: 'Discord', icon: discordLogo, href: 'https://discord.com/invite/kdTQHQ6AFQ', isWhite: true },
+    { name: 'Telegram', icon: telegramLogo, href: 'https://t.me/walletconnect', isWhite: true },
+    { name: 'GitHub', icon: githubLogo, href: 'https://github.com/orgs/WalletConnect/discussions/', isWhite: true }
   ]}
 />
+
 
 <div className="home__divider" />
 
 ## How to contribute
 
 <div className="cloud__wrapper" style={{ padding: '1.67rem' }}>
-<div>
-  <img src='/assets/home/bookLogo.png' />
-  Every page footer has an "Edit this page" link.
-  <br /> Change the Markdown, open a Pull Request and we’ll merge it!
-</div>
-  <Link to="https://github.com/reown-com/reown-docs/" target="_blank">
+  <div>
+    <img src='../static/assets/home/bookLogo.png' alt='Book Logo' />
+    <p>
+    Every page footer has an "Edit this page" link.
+    <br /> Change the Markdown, open a Pull Request and we’ll merge it!
+    </p>
+  </div>
+  <a href="https://github.com/reown-com/reown-docs/" target="_blank" rel="noopener noreferrer">
     Docs Repo
-  </Link>
+  </a>
 </div>
