@@ -216,7 +216,7 @@ const result = await client.request({
 })
 ```
 
-Once the request resolved, the expected response should be a result object which contains a signature
+Once the request is resolved, the expected response should be a result object which contains a signature
 
 ```js
 {
