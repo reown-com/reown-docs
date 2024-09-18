@@ -29,7 +29,7 @@ const metadata = {
 export const networks = [mainnet, arbitrum]
 
 // 3. Create Wagmi Adapter
-const wagmiConfig = new WagmiAdapter({
+const wagmiAdapter = new WagmiAdapter({
   ssr: true,
   networks,
   projectId
@@ -48,7 +48,7 @@ createAppKit({
 
 export function AppKitProvider({ children }) {
   return (
-    <WagmiProvider config={wagmiConfig}>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </WagmiProvider>
   )
