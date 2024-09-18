@@ -163,7 +163,7 @@ This can be useful in a wallet if a user is adding additional accounts to a sess
 
 ### Using Namespaces
 
-In order to creat a session proposal, call the connect method on the universal provider's sign client. The sign clients `connect` method accepts an object based on the following interface:
+In order to create a session proposal, call the connect method on the universal provider's sign client. The sign clients `connect` method accepts an object based on the following interface:
 
 ```js
 interface ConnectParams {
