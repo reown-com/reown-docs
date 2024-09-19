@@ -51,7 +51,7 @@ For dApps that often sign gas-only transactions, `FunctionCall` access keys can 
 
     1. `Object` - Sign In parameters:
     	1.1. `permission` : `Object` -  Function call key permission parameters
-                1.1.1. `receiverId` : `String` - smart contract for witch the function call access key will be created
+                1.1.1. `receiverId` : `String` - smart contract for which the function call access key will be created
                 1.1.2. `methodNames` : `Array<String>` - list of methods that can be called on the smart contract
     	1.2. `accounts` : `Array` - list of accounts for which a FunctionCall access key will be added:
                 1.2.1. `Object` - Account

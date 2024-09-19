@@ -213,7 +213,7 @@ Most requests that do not change network state can be performed against a [Mirro
 
 ### Returns
 
-    1. `Object` - Result of the Query submitteed to a Hedera consensus node
+    1. `Object` - Result of the Query submitted to a Hedera consensus node
       1.1. `response` : `String` - Base64 encoding of the Hedera API response
 
 

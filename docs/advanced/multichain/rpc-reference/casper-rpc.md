@@ -8,8 +8,8 @@ Use the `casper_sign_deploy` method to request the user to approve or reject the
 
 #### Parameters
 
-- `address`. Type: `string`. The chain namespace and the public key corresponding to the key pair that signs the transaction separated with a colon character.
-- `deploy`. Type: `object`. A Deploy object as per the Casper protocol specificatio.
+- `address`. Type: `string`. The chain namespace and the public key corresponding to the key pair that signs the transaction are separated with a colon character.
+- `deploy`. Type: `object`. A Deploy object as per the Casper protocol specification.
 
 #### Returns
 
