@@ -52,10 +52,10 @@ AppKit with ethers v5 does not support the `auth` parameter and social logins. I
 <PlatformTabItem value="solana">
 
 ```ts
-const solanaConfig = defaultSolanaConfig({
+const modal = createAppKit({
   adapters: [solanaWeb3JsAdapter],
   projectId,
-  networks: [solana, solanaTestnet, solanaDevnet, solanaNotExist],
+  networks: [solana, solanaTestnet, solanaDevnet],
   metadata,
   /*highlight-add-start*/
   features: {
