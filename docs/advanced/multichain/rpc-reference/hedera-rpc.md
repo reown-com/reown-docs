@@ -246,7 +246,7 @@ This method accepts a plain text string value as input. If approved by the user,
   "jsonrpc": "2.0",
   "method": "hedera_signMessage",
   "params": {
-    "signerAccountId": "hedera:testnet:0.0.12345"
+    "signerAccountId": "hedera:testnet:0.0.12345",
     "message": "Co8BKowBCocBChoKDAjchKWmBhDW..."
   }
 }
