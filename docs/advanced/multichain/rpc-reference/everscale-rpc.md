@@ -210,7 +210,7 @@ Sends an internal message from the user account without waiting for the transact
 
     1. hash: string - external message hash;
     2. account: string - destination account address (equals to source_address);
-    3. expireAt: number - мessage expiration timestamp
+    3. expireAt: number - message expiration timestamp
 
 ##### Example:
 
@@ -261,7 +261,7 @@ Sends an external message to the contract without waiting for the transaction.
 
     1. hash: string - external message hash;
     2. account: string - destination account address (equals to source_address);
-    3. expireAt: number - мessage expiration timestamp
+    3. expireAt: number - message expiration timestamp
 
 ##### Example:
 
