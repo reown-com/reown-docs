@@ -58,7 +58,7 @@ This method returns an Array of public keys available to sign from the wallet.
 {
   "id": 1,
   "jsonrpc": "2.0",
-  "method": "solana_getAccounts",
+  "method": "solana_requestAccounts",
   "params": {}
 }
 
