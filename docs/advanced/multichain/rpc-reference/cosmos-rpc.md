@@ -85,7 +85,7 @@ This method returns a signature for the provided document to be signed targeting
         "signerAddress": "cosmos1sguafvgmel6f880ryvq8efh9522p8zvmrzlcrq",
         "signDoc":  {
             "chainId": "cosmoshub-4",
-            "accountNumber": "1"
+            "accountNumber": "1",
             "authInfoBytes": "CgoKABIECgIIARgBEhMKDQoFdWNvc20SBDIwMDAQwJoM",
             "bodyBytes": "CpABChwvY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dTZW5kEnAKLWNvc21vczFwa3B0cmU3ZmRrbDZnZnJ6bGVzamp2aHhobGMzcjRnbW1rOHJzNhItY29zbW9zMXF5cHF4cHE5cWNyc3N6ZzJwdnhxNnJzMHpxZzN5eWM1bHp2N3h1GhAKBXVjb3NtEgcxMjM0NTY3"
         }
@@ -106,7 +106,7 @@ This method returns a signature for the provided document to be signed targeting
         },
         "signed": {
             "chainId": "cosmoshub-4",
-            "accountNumber": "1"
+            "accountNumber": "1",
             "authInfoBytes": "CgoKABIECgIIARgBEhMKDQoFdWNvc20SBDIwMDAQwJoM",
             "bodyBytes": "CpABChwvY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dTZW5kEnAKLWNvc21vczFwa3B0cmU3ZmRrbDZnZnJ6bGVzamp2aHhobGMzcjRnbW1rOHJzNhItY29zbW9zMXF5cHF4cHE5cWNyc3N6ZzJwdnhxNnJzMHpxZzN5eWM1bHp2N3h1GhAKBXVjb3NtEgcxMjM0NTY3"
         }
@@ -175,7 +175,7 @@ This method returns a signature for the provided document to be signed targeting
         "signDoc": {
             "chain_id": "foochain",
             "account_number": "7",
-            "sequence": "54"
+            "sequence": "54",
             "memo": "hello, world",
             "msgs": [],
             "fee": { "amount": [], "gas": "23" }
@@ -198,7 +198,7 @@ This method returns a signature for the provided document to be signed targeting
         "signed": {
             "chain_id": "foochain",
             "account_number": "7",
-            "sequence": "54"
+            "sequence": "54",
             "memo": "hello, world",
             "msgs": [],
             "fee": { "amount": [{"denom": "ufoo", "amount": "10000"}], "gas": "23" }
