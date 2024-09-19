@@ -109,10 +109,10 @@ An example Proposal Namespace for a dapp which supports connecting to Polkadot, 
     ],
     "methods": [
         "polkadot_signMessage",
-        "polkadot_signTransaction"
-        "polkadot_getSignedHex",
+        "polkadot_signTransaction",
+        "polkadot_getSignedHex"
     ],
-    "events": ["accountsChanged"],
+    "events": ["accountsChanged"]
   }
  }
 
