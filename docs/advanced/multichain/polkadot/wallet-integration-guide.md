@@ -19,7 +19,7 @@
 
 ```js
 import { Core } from '@walletconnect/core'
-import { WalletKit } from '@walletconnect/wallekit'
+import { WalletKit } from '@walletconnect/walletkit'
 ```
 
 3. Instantiate and add Core and WalletKit to the state of the wallet.
