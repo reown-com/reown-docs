@@ -54,7 +54,7 @@ The example below specifies a simple transfer of 1.23 LTC (123000000 Litoshi).
     "method": "sendTransfer",
     "params": {
         "account": "ltc1q8c6fshw2dlwun7ekn9qwf37cu2rn755u9ym7p0",
-        "recipient": "ltc1qn9h77dt0s6ar78ptxq58t2ne7tyhvfnruc3e7d",
+        "recipientAddress": "ltc1qn9h77dt0s6ar78ptxq58t2ne7tyhvfnruc3e7d",
         "amount": "123000000",
         "memo": "636861726c6579206c6f766573206865"
     }
