@@ -99,7 +99,7 @@ account, message
     "accountAddress" : "0x003a8278a26f32452f156260d81b93efb0eca126b44df7b005a5b27e2bbc4a64",
     "typedData" : {
           "types" : {
-              "StarkNetDomain ": [
+              "StarkNetDomain": [
                   { "name" : "name", "type" : "felt" },
                   { "name" : "version", "type" : "felt" },
                   { "name" : "chainId", "type" : "felt" }
