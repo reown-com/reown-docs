@@ -4,28 +4,17 @@ import Link from '@docusaurus/Link'
 
 export const CloudBanner = ({ title, description, href, image = wcGlassImage }) => {
   return (
-    <div className="cloud__wrapper cloud__wrapper--special">
+    <div className="cloud__wrapper" style={{ padding: '1.67rem' }}>
       <div className="cloud__text-container">
-        <h2>{title}</h2>
-        <p>{description}</p>
+        <b><p>WalletConnect Inc. is now known as Reown. See walletconnect.network for information about the WalletConnect Network.</p></b>
       </div>
-      <Link to={href}>
+      <Link to={"https://reown.com/blog/walletconnect-is-now-reown"}>
         Learn More
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          height={20}
-          width={20}
-        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
             d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
           />
-        </svg>
       </Link>
       {image === wcGlassImage ? (
         <img
