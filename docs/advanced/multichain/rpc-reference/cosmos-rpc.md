@@ -55,7 +55,7 @@ This method returns a signature for the provided document to be signed targeting
     	1.1. `signerAddress` : `STRING` -  corresponding address for keypair
     	1.2. `signDoc` : `Object` - Document to be signed:
     		1.2.2. `chainId` : `STRING` - identifier of blockchain
-    		1.2.1. `accountNumber` : `STRING` - blockchain account number
+    		1.2.1. `account_number` : `STRING` - blockchain account number
     		1.2.3. `authInfoBytes` : `DATA` - encoded authentication information
     		1.2.4. `bodyBytes` : `DATA` - encoded body of message to sign
 
@@ -85,7 +85,7 @@ This method returns a signature for the provided document to be signed targeting
         "signerAddress": "cosmos1sguafvgmel6f880ryvq8efh9522p8zvmrzlcrq",
         "signDoc":  {
             "chainId": "cosmoshub-4",
-            "accountNumber": "1",
+            "account_number": "1",
             "authInfoBytes": "CgoKABIECgIIARgBEhMKDQoFdWNvc20SBDIwMDAQwJoM",
             "bodyBytes": "CpABChwvY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dTZW5kEnAKLWNvc21vczFwa3B0cmU3ZmRrbDZnZnJ6bGVzamp2aHhobGMzcjRnbW1rOHJzNhItY29zbW9zMXF5cHF4cHE5cWNyc3N6ZzJwdnhxNnJzMHpxZzN5eWM1bHp2N3h1GhAKBXVjb3NtEgcxMjM0NTY3"
         }
