@@ -1,0 +1,75 @@
+---
+pagination_next: appkit/react/core/installation
+title: Migrate from AppKit v5 to Reown AppKit Solana
+displayed_sidebar: mainSidebar
+---
+
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+# Upgrade Guide
+
+## AppKit v5 to Reown AppKit
+
+This guide will help you migrate from AppKit v5 using Solana to the latest Reown AppKit.
+
+### Installation
+
+To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/solana`. 
+
+```bash npm2yarn
+npm uninstall @web3modal/solana
+```
+
+Now you can install the Reown AppKit packages.
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-solana
+```
+
+### Implementation
+
+Make sure to update the imports in your codebase to use the new package names.
+```tsx
+/* highlight-delete-start */
+- import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
+- import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+/* highlight-delete-end */
+
+/* highlight-add-start */
++ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
++ import { createAppKit } from '@reown/appkit/react'
++ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
+/* highlight-add-end */
+```
+
+**Note** Use networks insted of chains.
+  
+```tsx
+/* highlight-delete-start */
+- const solanaConfig = defaultSolanaConfig({ ... });
+- createWeb3Modal( ... });
+/* highlight-delete-end */
+ 
+/* highlight-add-start */
++ createAppKit({
++   networks, // chains -> networks 
++   metadata, 
++   projectId,
++   wallets: [
++     new PhantomWalletAdapter(),
++     new SolflareWalletAdapter(),
++   ],
++   features: {
++     email: true, // default to true
++     socials: ['google', 'x', 'discord', 'farcaster', 'github', 'apple', 'facebook'],
++     emailShowWallets: true, // default to true    
++   }
++ }
+/* highlight-add-end */
+```
+
+### Usage
+
+Run the project and test the functionality to ensure everything is working as expected.
