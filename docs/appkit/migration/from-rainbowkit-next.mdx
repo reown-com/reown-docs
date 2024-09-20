@@ -17,7 +17,7 @@ Follow the steps below to migrate from the default RainbowKit project using Next
 + Run this command to install AppKit and uninstall RainbowKit.
 
 ```bash
-pnpm install @web3modal/wagmi && pnpm uninstall @rainbow-me/rainbowkit
+pnpm install @reown/appkit @reown/appkit-adapter-wagmi && pnpm uninstall @rainbow-me/rainbowkit
 ```
 
 ### Step 3. Change the index.tsx
@@ -48,7 +48,7 @@ AppKit's web components are global HTML elements that don't require importing.
 - import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 /* highlight-delete-end */
 /* highlight-add-start */
-+ import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
++ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
 ```
 
@@ -84,18 +84,14 @@ export const metadata = {
   icons: ["https://example.com/favicon.png"]
 };
 
-// Create wagmiConfig
-export const config = defaultWagmiConfig({
-  chains, // chains are the same
-  projectId, // Use the new project ID
-  metadata,
-  auth: { 
-    email: true, 
-    socials: ["github", "google", "x", "discord", "apple"],
-    showWallets: true, // default to true
-  },
+export const networks = [mainnet, arbitrum]
+
+// Create wagmiAdapter
+onst wagmiAdapter = new WagmiAdapter({
   ssr: true,
-});
+  networks,
+  projectId
+})
 /* highlight-add-end */
 ```
 
