@@ -61,7 +61,7 @@ const params = {
         'polkadot:afdc188f45c71dacbaa0b62e16a91f72', // hydradx
         'polkadot:0f62b701fb12d02237a33b84818c11f6' // turing network
       ],
-      events: ['chainChanged', 'accountsChanged']
+      events: ['chainChanged", "accountsChanged']
     }
   }
 }
