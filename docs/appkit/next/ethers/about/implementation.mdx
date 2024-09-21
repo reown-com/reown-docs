@@ -14,7 +14,7 @@ import { mainnet, arbitrum } from '@reown/appkit/networks'
 const projectId = 'YOUR_PROJECT_ID'
 
 // 2. Set Ethers adapters
-const ethers5Adapter = new EVMEthers5Client()
+const EthersAdapter = new EthersAdapter()
 
 // 3. Create a metadata object
 const metadata = {
@@ -26,7 +26,7 @@ const metadata = {
 
 // 4. Create the AppKit instance
 createAppKit({
-  adapters: [ethers5Adapter],
+  adapters: [EthersAdapter],
   metadata: metadata,
   networks: [mainnet, arbitrum],
   projectId,

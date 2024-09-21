@@ -22,7 +22,7 @@ In your `App.vue` file set up the following configuration.
 
   // 3. Create a AppKit instance
    createAppKit({
-    adapters: [ethersAdapter],
+    adapters: [new EthersAdapter()],
     networks: [mainnet, arbitrum],
     projectId,
     features: {
