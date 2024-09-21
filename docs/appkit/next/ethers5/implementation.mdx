@@ -7,14 +7,14 @@ In this example we will create a new file called `context/web3modal.tsx` outside
 'use client'
 
 import { createAppKit } from '@reown/appkit/react'
-import { EVMEthers5Client } from '@reown/appkit-adapter-ethers5'
+import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5'
 import { mainnet, arbitrum } from '@reown/appkit/networks'
 
 // 1. Get projectId at https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 2. Set Ethers adapters
-const ethers5Adapter = new EVMEthers5Client()
+const ethers5Adapter = new Ethers5Adapter()
 
 // 3. Create a metadata object
 const metadata = {
