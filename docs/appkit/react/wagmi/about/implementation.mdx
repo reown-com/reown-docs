@@ -26,7 +26,10 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/179229932']
 };
 
-// 3. Set general configurations
+// 3. Set the networks
+const networks = [mainnet, arbitrum]
+
+// 4. Set general configurations
 const generalConfig = {
   projectId,
   metadata,
@@ -34,13 +37,19 @@ const generalConfig = {
   ssr: true,
 };
 
-// 4. Create Wagmi Adapter
-const wagmiAdapter = new WagmiAdapter(generalConfig);
+// 5. Create Wagmi Adapter
+const wagmiAdapter = new WagmiAdapter({
+  networks,
+  projectId,
+  ssr: true
+});
 
-// 5. Create modal
+// 6. Create modal
 createAppKit({
   adapters: [wagmiAdapter],
-  ...generalConfig,
+  networks,
+  projectId,
+  metadata,
   features: {
     analytics: true // Optional - defaults to your Cloud configuration
   }
