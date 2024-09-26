@@ -29,22 +29,14 @@ const metadata = {
 // 3. Set the networks
 const networks = [mainnet, arbitrum]
 
-// 4. Set general configurations
-const generalConfig = {
-  projectId,
-  metadata,
-  networks: [mainnet, arbitrum],
-  ssr: true,
-};
-
-// 5. Create Wagmi Adapter
+// 4. Create Wagmi Adapter
 const wagmiAdapter = new WagmiAdapter({
   networks,
   projectId,
   ssr: true
 });
 
-// 6. Create modal
+// 5. Create modal
 createAppKit({
   adapters: [wagmiAdapter],
   networks,
