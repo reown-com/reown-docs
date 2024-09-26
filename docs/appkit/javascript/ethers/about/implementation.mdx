@@ -11,10 +11,7 @@ import { mainnet, arbitrum } from '@reown/appkit/networks'
 // 1. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Set up Ethers adapter
-const ethersAdapter = new EthersAdapter()
-
-// 3. Create your application's metadata object
+// 2. Create your application's metadata object
 const metadata = {
   name: 'AppKit',
   description: 'AppKit Example',
@@ -22,9 +19,9 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-// 4. Create a AppKit instance
+// 3. Create a AppKit instance
 const modal = createAppKit({
-  adapters: [ethersAdapter],
+  adapters: [new EthersAdapter()],
   networks: [mainnet, arbitrum],
   metadata,
   projectId,
