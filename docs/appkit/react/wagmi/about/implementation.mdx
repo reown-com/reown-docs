@@ -24,7 +24,7 @@ const metadata = {
   description: 'AppKit Example',
   url: 'https://example.com', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/179229932']
-};
+}
 
 // 3. Set the networks
 const networks = [mainnet, arbitrum]
@@ -34,7 +34,7 @@ const wagmiAdapter = new WagmiAdapter({
   networks,
   projectId,
   ssr: true
-});
+})
 
 // 5. Create modal
 createAppKit({
@@ -54,4 +54,35 @@ export function AppKitProvider({ children }) {
     </WagmiProvider>
   )
 }
+```
+
+## Like to use Viem chains?
+
+You can also use Viem chains with the `WagmiAdapter`. Viem is providing bunch of chains definitions, while on the other hand, AppKit is providing the network which are supported by the WC protocol.
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { polygon, fantom } from 'viem/chains'
+
+export const networks = [mainnet, arbitrum, polygon, fantom]
+
+const wagmiAdapter = new WagmiAdapter({
+  projectId,
+  networks
+  ...
+})
+```
+
+:::caution
+When you use Viem chains along with AppKit's network objects, you need to make sure that you're passing the WagmiAdapter's `caipNetworks` value to the `createAppKit`'s `networks` parameter like the following.
+:::
+
+```ts
+createAppKit({
+  adapters: [wagmiAdapter],
+  networks: wagmiAdapter.caipNetworks, // <- essential to use `wagmiAdapter.caipNetworks`
+  ..
+})
 ```

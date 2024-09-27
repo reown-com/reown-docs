@@ -53,3 +53,34 @@ In your `App.vue` file set up the following configuration
 
 <template> // Rest of your app ... </template>
 ```
+
+## Like to use Viem chains?
+
+You can also use Viem chains with the `WagmiAdapter`. Viem is providing bunch of chains definitions, while on the other hand, AppKit is providing the network which are supported by the WC protocol.
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { polygon, fantom } from 'viem/chains'
+
+export const networks = [mainnet, arbitrum, polygon, fantom]
+
+const wagmiAdapter = new WagmiAdapter({
+  projectId,
+  networks
+  ...
+})
+```
+
+:::caution
+When you use Viem chains along with AppKit's network objects, you need to make sure that you're passing the WagmiAdapter's `caipNetworks` value to the `createAppKit`'s `networks` parameter like the following.
+:::
+
+```ts
+createAppKit({
+  adapters: [wagmiAdapter],
+  networks: wagmiAdapter.caipNetworks, // <- essential to use `wagmiAdapter.caipNetworks`
+  ..
+})
+```

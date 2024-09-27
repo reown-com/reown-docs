@@ -35,6 +35,37 @@ export const wagmiAdapter = new WagmiAdapter({
 export const config = wagmiAdapter.wagmiConfig
 ```
 
+## Like to use Viem chains?
+
+You can also use Viem chains with the `WagmiAdapter`. Viem is providing bunch of chains definitions, while on the other hand, AppKit is providing the network which are supported by the WC protocol.
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { polygon, fantom } from 'viem/chains'
+
+export const networks = [mainnet, arbitrum, polygon, fantom]
+
+const wagmiAdapter = new WagmiAdapter({
+  projectId,
+  networks
+  ...
+})
+```
+
+:::caution
+When you use Viem chains along with AppKit's network objects, you need to make sure that you're passing the WagmiAdapter's `caipNetworks` value to the `createAppKit`'s `networks` parameter like the following.
+:::
+
+```ts
+createAppKit({
+  adapters: [wagmiAdapter],
+  networks: wagmiAdapter.caipNetworks, // <- essential to use `wagmiAdapter.caipNetworks`
+  ..
+})
+```
+
 :::info
 
 - Using cookies is completely optional and by default Wagmi will use `localStorage` instead if the `storage` param is not defined.
@@ -54,7 +85,7 @@ In this example we will create a file called `context/index.tsx` outside our app
 
 import { wagmiAdapter, projectId } from '@/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createAppKit } from '@reown/appkit/react' 
+import { createAppKit } from '@reown/appkit/react'
 import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@reown/appkit/networks'
 import React, { type ReactNode } from 'react'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
@@ -68,10 +99,10 @@ if (!projectId) {
 
 // Set up metadata
 const metadata = {
-  name: "appkit-example-scroll",
-  description: "AppKit Example - Scroll",
-  url: "https://scrollapp.com", // origin must match your domain & subdomain
-  icons: ["https://avatars.githubusercontent.com/u/179229932"]
+  name: 'appkit-example-scroll',
+  description: 'AppKit Example - Scroll',
+  url: 'https://scrollapp.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
 // Create the modal
@@ -82,7 +113,7 @@ const modal = createAppKit({
   defaultNetwork: mainnet,
   metadata: metadata,
   features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
+    analytics: true // Optional - defaults to your Cloud configuration
   }
 })
 
@@ -106,19 +137,19 @@ Next, in our `app/layout.tsx` file, we will import our `ContextProvider` compone
 The `initialState` returned by `cookieToInitialState`, contains the optimistic values that will populate the Wagmi's store both on the server and client.
 
 ```tsx
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
-import { headers } from "next/headers"; // added
+import { headers } from 'next/headers' // added
 import ContextProvider from '@/context'
 
 export const metadata: Metadata = {
-  title: "AppKit Example App",
-  description: "Powered by WalletConnect"
-};
+  title: 'AppKit Example App',
+  description: 'Powered by WalletConnect'
+}
 
 export default function RootLayout({
   children
