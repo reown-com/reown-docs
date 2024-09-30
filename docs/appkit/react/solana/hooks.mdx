@@ -5,7 +5,7 @@ import Button from '../../../components/button'
 Hook that returns the client's information.
 
 ```tsx
-import { useAppKitAccount } from '@web3modal/solana/react'
+import { useAppKitAccount } from '@reown/solana/react'
 
 function Components() {
   const { address, chainId, isConnected } = useAppKitAccount()
@@ -19,7 +19,7 @@ function Components() {
 Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
-import { useAppKitAccount, useAppKitrovider } from '@web3modal/solana/react'
+import { useAppKitAccount, useAppKitrovider } from '@reown/solana/react'
 
 function SignMessage() {
   // 0. Get account and provider
@@ -51,7 +51,7 @@ function SignMessage() {
 ### useAppKitError
 
 ```ts
-import { useAppKitError } from '@web3modal/solana/react'
+import { useAppKitError } from '@reown/solana/react'
 
 function Components() {
   const { error } = useAppKitError()
