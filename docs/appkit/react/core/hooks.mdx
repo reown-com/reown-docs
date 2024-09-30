@@ -152,6 +152,24 @@ export default Component(){
 }
 ```
 
+
+## useAppKitAccount
+
+Hook for accessing account data and connection status.
+
+List of possible status: "reconnecting" | "connected" | "disconnected" | "connecting" | undefined
+
+```ts
+import { useAppKitAccount } from "@reown/appkit/react";
+
+
+export default Component(){
+  const { address, isConnected, status } = useAppKitAccount()
+
+  //...
+}
+```
+
 ## Ethereum Library
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers"]}>
