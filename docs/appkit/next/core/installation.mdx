@@ -58,6 +58,24 @@ npm install @reown/appkit @reown/appkit-adapter-ethers ethers
 npm install @reown/appkit @reown/appkit-adapter-solana
 ```
 
+## Extra configuration
+
+Next.js relies on [SSR](https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering). This means some specific steps are required to make Web3Modal work properly.
+
+- Add the following code in the `next.config.js` file
+
+```ts
+// Path: next.config.js
+const nextConfig = {
+  webpack: config => {
+    config.externals.push('pino-pretty', 'lokijs', 'encoding')
+    return config
+  }
+}
+```
+
+- [Learn more about SSR with Wagmi](https://wagmi.sh/react/guides/ssr)
+
 </PlatformTabItem>
 </PlatformTabs>
 
@@ -187,21 +205,3 @@ function Components() {
   <SolanaPrograms />
 </PlatformTabItem>
 </PlatformTabs>
-
-## Extra configuration
-
-Next.js relies on [SSR](https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering). This means some specific steps are required to make Web3Modal work properly.
-
-- Add the following code in the `next.config.js` file
-
-```ts
-// Path: next.config.js
-const nextConfig = {
-  webpack: config => {
-    config.externals.push('pino-pretty', 'lokijs', 'encoding')
-    return config
-  }
-}
-```
-
-- [Learn more about SSR with Wagmi](https://wagmi.sh/react/guides/ssr)
