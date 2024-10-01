@@ -35,17 +35,17 @@ export const wagmiAdapter = new WagmiAdapter({
 export const config = wagmiAdapter.wagmiConfig
 ```
 
-## Like to use Viem chains?
+## Would you like to use Viem chains?
 
-You can also use Viem chains with the `WagmiAdapter`. Viem is providing bunch of chains definitions, while on the other hand, AppKit is providing the network which are supported by the WC protocol.
+You can also use Viem chains with the `WagmiAdapter`. Viem is provides a variety of chain definitions, while on the other hand, while AppKit provides networks supported by the WalletConnect protocol.
 
 ```ts
 import { createAppKit } from '@reown/appkit'
 import { mainnet, arbitrum } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { polygon, fantom } from 'viem/chains'
+import { linea, morphSepolia } from 'viem/chains'
 
-export const networks = [mainnet, arbitrum, polygon, fantom]
+export const networks = [mainnet, arbitrum, linea, morphSepolia]
 
 const wagmiAdapter = new WagmiAdapter({
   projectId,
@@ -55,7 +55,7 @@ const wagmiAdapter = new WagmiAdapter({
 ```
 
 :::caution
-When you use Viem chains along with AppKit's network objects, you need to make sure that you're passing the WagmiAdapter's `caipNetworks` value to the `createAppKit`'s `networks` parameter like the following.
+When using Viem chains along with AppKit's network objects, ensure that you pass the `caipNetworks` value from the `WagmiAdapter` to the `networks` parameter in `createAppKit`, as shown below.
 :::
 
 ```ts
@@ -86,7 +86,7 @@ In this example we will create a file called `context/index.tsx` outside our app
 import { wagmiAdapter, projectId } from '@/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createAppKit } from '@reown/appkit/react'
-import { mainnet, arbitrum, avalanche, base, optimism, polygon } from '@reown/appkit/networks'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
 import React, { type ReactNode } from 'react'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
 
@@ -99,9 +99,9 @@ if (!projectId) {
 
 // Set up metadata
 const metadata = {
-  name: 'appkit-example-scroll',
-  description: 'AppKit Example - Scroll',
-  url: 'https://scrollapp.com', // origin must match your domain & subdomain
+  name: 'appkit-example',
+  description: 'AppKit Example',
+  url: 'https://appkitexampleapp.com', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
@@ -109,7 +109,7 @@ const metadata = {
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [mainnet, arbitrum, avalanche, base, optimism, polygon],
+  networks: [mainnet, arbitrum],
   defaultNetwork: mainnet,
   metadata: metadata,
   features: {
@@ -148,7 +148,7 @@ import ContextProvider from '@/context'
 
 export const metadata: Metadata = {
   title: 'AppKit Example App',
-  description: 'Powered by WalletConnect'
+  description: 'Powered by Reown'
 }
 
 export default function RootLayout({
