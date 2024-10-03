@@ -1,0 +1,70 @@
+import Button from '../../../components/button'
+
+### useAppKitAccount
+
+Hook that returns the client's information.
+
+```tsx
+import { useAppKitAccount } from '@reown/appkit/react'
+
+function Components() {
+  const { address, chainId, isConnected } = useAppKitAccount()
+
+  //...
+}
+```
+
+### switchNetwork
+
+```tsx
+import { createAppKit } from '@reown/appkit/react'
+import { mainnet, arbitrum, polygon } from '@reown/appkit/networks'
+
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  projectId,
+  networks: [mainnet, arbitrum],
+  metadata: metadata,
+  features: {
+    analytics: true,
+  }
+})
+
+modal.switchNetwork(polygon)
+```
+
+### useAppKitProvider
+
+Hook that returns the `walletProvider` and the `WalletProviderType`.
+
+```tsx
+import { BrowserProvider } from 'ethers'
+import { useAppKitProvider } from '@reown/appkit/react'
+
+function Components() {
+  const { walletProvider } = useAppKitProvider()
+
+  async function onSignMessage() {
+    const provider = new BrowserProvider(walletProvider)
+    const signer = await provider.getSigner()
+    const signature = await signer?.signMessage('Hello AppKit Ethers')
+    console.log(signature)
+  }
+
+  return <button onClick={() => onSignMessage()}>Sign Message</button>
+}
+```
+
+### getError
+
+```ts
+function Components() {
+  const error = modal.getError();
+  //...
+}
+```
+
+<Button
+  name="Learn More About Ethers"
+  url="https://docs.ethers.org/v6/getting-started/#starting-blockchain"
+/>
