@@ -1,11 +1,10 @@
 ---
-title: Upgrade from Web3Modal to AppKit for Android
+title: Upgrade from Web3Wallet to WalletKit for Android
 pagination_next: 
 displayed_sidebar: mainSidebar
 ---
 
-
-# Upgrade from Web3Wallet to Reown WalletKit for Android
+## Upgrade to Reown WalletKit
 
 This upgrade guide helps developers transition from using the Web3Wallet library to the WalletKit within reown-kotlin. The guide involves updating imports, modifying class references and updating artefacts dependencies. Follow these steps to ensure a smooth migration.
 
@@ -79,3 +78,15 @@ If you have ProGuard rules defined remember to update
 ### Step 5. Test Your Changes
 
 After updating all references to Web3Wallet to use WalletKit, thoroughly test your application to ensure that all functionalities work as expected.
+
+## Pairing Expiry
+
+Currently, Dapps create a new pairing whenever the user selects the **"Connect Wallet"** button, instead of reusing existing pairings. Although pairings were not intended to be reused, they were being persisted for 30 days, causing unnecessary resource usage for both Dapps and wallet clients, including redundant socket connections. 
+
+This led to an accumulation of stale pairings in wallets, resulting in degraded efficiency and increased resource consumption. To address this issue, we have introduced changes to how pairings are managed to ensure more efficient connection handling.
+
+Pairings were never intended to be listed in the wallet, and wallets should only display active sessions to users.
+
+### Steps for Migration
+
+Wallets are no longer expected to handle pairing-related methods. If your wallet has been listing pairings, please replace this with listing active sessions instead.
