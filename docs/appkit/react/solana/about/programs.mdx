@@ -23,7 +23,7 @@ function deserializeCounterAccount(data?: Buffer): { count: number } {
   }
 }
 
-const { address, currentChain } = useAppKitAccount()
+const { address } = useAppKitAccount()
 const { walletProvider, connection } = useAppKitProvider()
 
 async function onIncrementCounter() {
