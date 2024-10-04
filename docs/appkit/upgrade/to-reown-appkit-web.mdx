@@ -21,7 +21,7 @@ This guide will help you migrate from AppKit v5 to the latest Reown AppKit.
 
 <PlatformTabs
 	groupId="w3m"
-	activeOptions={["react", "javascript"]}
+	activeOptions={["react", "javascript", "vue"]}
 >
 <PlatformTabItem value="react">
 
@@ -41,13 +41,22 @@ npm install @reown/appkit @reown/appkit-adapter-wagmi
 ```
 
 </PlatformTabItem>
+<PlatformTabItem value="vue">
+
+To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/ethereum` and `@web3modal/vue`. Now you can install AppKit library and update `Wagmi` and `Viem`.
+
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
+```
+
+</PlatformTabItem>
 </PlatformTabs>
 
 ### Implementation
 
 <PlatformTabs
 	groupId="w3m"
-	activeOptions={["react", "javascript"]}
+	activeOptions={["react", "javascript", "vue"]}
 >
 <PlatformTabItem value="react">
 
@@ -58,23 +67,20 @@ Default mode will implement WalletConnect, Browser Wallets (injected) and Coinba
 Make sure to set your configuration outside React components to avoid unwanted rerenders.
 :::
 
-<Tabs>
-<TabItem value="default" label="Default">
-
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
 ```tsx
 /* highlight-delete-start */
-import { createWeb3Modal } from '@web3modal/wagmi/react'
-import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
-import { WagmiConfig } from 'wagmi'
-import { arbitrum, mainnet } from 'viem/chains'
+- import { createWeb3Modal } from '@web3modal/wagmi/react'
+- import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
+- import { WagmiConfig } from 'wagmi'
+- import { arbitrum, mainnet } from 'viem/chains'
 /* highlight-delete-end */
 
 /* highlight-add-start */
-import { createAppKit } from '@reown/appkit'
-import { arbitrum, mainnet } from '@reown/appkit/networks'
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
++ import { createAppKit } from '@reown/appkit/react'
++ import { arbitrum, mainnet } from '@reown/appkit/networks'
++ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -100,7 +106,7 @@ const metadata = { //optional
 
 /* Create the Wagmi adapter */
 /* highlight-add-start */
-const wagmiAdapter = new WagmiAdapter({
++ const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
@@ -110,13 +116,13 @@ const wagmiAdapter = new WagmiAdapter({
 Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 
 ```tsx
-/* Call createWeb3Modal function */
 /* highlight-delete-start */
 - createWeb3Modal({ wagmiConfig, projectId, chains })
 /* highlight-delete-end */
 
 /* highlight-add-start */
-const modal = createAppKit({
+// import { createAppKit } from '@reown/appkit/react'
++ createAppKit({
  adapters: [wagmiAdapter],
  networks: [mainnet, arbitrum],
  metadata: metadata,
@@ -146,18 +152,109 @@ export default function App() {
 }
 ```
 
-</TabItem>
-</Tabs>
+
+</PlatformTabItem>
+<PlatformTabItem value="vue">
+
+You can start the AppKit configuration by using either the **default** or **advanced** mode.
+
+Default mode will implement WalletConnect, Browser Wallets (injected) and Coinbase options in addition to Wagmi's public clients and [WalletConnect's provider](../../cloud/blockchain-api.mdx).
+:::note
+Make sure to set your configuration outside React components to avoid unwanted rerenders.
+:::
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
+
+```tsx
+/* highlight-delete-start */
+import { createWeb3Modal } from '@web3modal/wagmi/vue'
+import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
+import { WagmiConfig } from 'wagmi'
+import { arbitrum, mainnet } from 'viem/chains'
+/* highlight-delete-end */
+
+/* highlight-add-start */
+import { createAppKit } from '@reown/appkit/vue'
+import { arbitrum, mainnet } from '@reown/appkit/networks'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+/* highlight-add-end */
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+```
+
+Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
+
+```tsx
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
+
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://example.com',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+/* Remove the existing Wagmi Config */
+/* highlight-delete-start */
+- const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+/* highlight-delete-end */
+
+/* Create the Wagmi adapter */
+/* highlight-add-start */
++ const wagmiAdapter = new WagmiAdapter({
+  networks: [mainnet, arbitrum],
+  projectId
+})
+/* highlight-add-end */
+```
+
+Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
+
+```tsx
+/* highlight-delete-start */
+- createWeb3Modal({ wagmiConfig, projectId, chains })
+/* highlight-delete-end */
+
+/* highlight-add-start */
+// import { createAppKit } from '@reown/appkit/vue'
++ const modal = createAppKit({
+ adapters: [wagmiAdapter],
+ networks: [mainnet, arbitrum],
+ metadata: metadata,
+ projectId,
+ features: {
+   analytics: true,
+ }
+})
+/* highlight-add-end */
+
+export default function App() {
+  return (
+    <>
+/* highlight-delete-start */
+-      <WagmiConfig config={wagmiConfig}>
+/* highlight-delete-end */
+/* highlight-add-start */
++      <WagmiConfig config={wagmiAdapter.wagmiConfig}>
+/* highlight-add-end */
+
+      <QueryClientProvider client={queryClient}>
+          <HomePage />
+       </QueryClientProvider>
+      </WagmiConfig>
+    </>
+  )
+}
+```
+
 
 </PlatformTabItem>
 <PlatformTabItem value="javascript">
 
 Start by importing AppKit packages, then create wagmiAdapter using your own settings or the default presets as shown below. Finally, pass wagmiAdapter to AppKit as one of the adapters.
 
-<Tabs>
-<TabItem value="default" label="Default">
-
-Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
+Import `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
 ```ts
 /* highlight-delete-start */
@@ -188,12 +285,12 @@ const metadata = { //optional
 
 /* Remove the existing Wagmi Config */
 /* highlight-delete-start */
-+ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+- const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
 /* highlight-delete-end */
 
 /* Create the Wagmi adapter */
 /* highlight-add-start */
-const wagmiAdapter = new WagmiAdapter({
++ const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
@@ -205,7 +302,7 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 
 ```ts
 /* highlight-delete-start */
-createWeb3Modal({
+- const modal = createWeb3Modal({
   wagmiConfig,
   projectId,
   enableAnalytics: true
@@ -213,7 +310,8 @@ createWeb3Modal({
 /* highlight-delete-end */
 
 /* highlight-add-start */
-const modal = createAppKit({
+// import { createAppKit } from '@reown/appkit'
++ const modal = createAppKit({
   adapters: [wagmiAdapter],
   networks: [mainnet, arbitrum],
   metadata: metadata,
@@ -225,9 +323,6 @@ const modal = createAppKit({
 /* highlight-add-end */
 ```
 
-</TabItem>
-</Tabs>
-
 </PlatformTabItem>
 </PlatformTabs>
 
@@ -235,16 +330,16 @@ const modal = createAppKit({
 
 <PlatformTabs
 	groupId="w3m"
-	activeOptions={["react", "javascript"]}
+	activeOptions={["react", "javascript", "vue" ]}
 >
 <PlatformTabItem value="react">
 
 ```tsx
 /* highlight-delete-start */
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+- import { useWeb3Modal } from '@web3modal/wagmi/react'
 /* highlight-delete-end */
 /* highlight-add-start */
-import { useAppKit } from '@reown/appkit/react'
++ import { useAppKit } from '@reown/appkit/react'
 /* highlight-add-end */
 
 function HomePage() {
@@ -254,7 +349,22 @@ function HomePage() {
 }
 ```
 
-Learn more about AppKit v6 [here](../react/core/installation.mdx)
+Learn more about Reown AppKit [here](../react/core/installation.mdx)
+
+</PlatformTabItem>
+<PlatformTabItem value="vue">
+
+Use your own button with to open the modal
+
+```js
+document.getElementById('my-button').addEventListener('click', () => {
+    modal.open()
+})
+
+<button id="my-button">Connect Wallet</button>
+```
+
+Learn more about Reown AppKit JavaScript [here](../javascript/core/installation.mdx)
 
 </PlatformTabItem>
 <PlatformTabItem value="javascript">
@@ -269,7 +379,7 @@ document.getElementById('my-button').addEventListener('click', () => {
 <button id="my-button">Connect Wallet</button>
 ```
 
-Learn more about AppKit v6 JavaScript [here](../javascript/core/installation.mdx)
+Learn more about Reown AppKit JavaScript [here](../javascript/core/installation.mdx)
 
 </PlatformTabItem>
 </PlatformTabs>
@@ -284,11 +394,11 @@ The `adapters` property is a new property that is an array of adapters that can 
 
 #### networks
 
-The `chains` property is now `networks` in Reown AppKit v6. You should import them from `@reown/appkit/networks` package instead of importing these networks from `viem` or other packages.
+The `chains` property is now `networks` in Reown AppKit. You should import them from `@reown/appkit/networks` package instead of importing these networks from `viem` or other packages.
 
 #### defaultNetwork
 
-The `defaultChain` property is now `defaultNetwork` in Reown AppKit v6. This is a network object that specifies the default network for your Web3 app.
+The `defaultChain` property is now `defaultNetwork` in Reown AppKit. This is a network object that specifies the default network for your Web3 app.
 
 ### Utility Functions
 
@@ -318,7 +428,7 @@ In versions prior to v5, which were single-chain, `getChainId()` returned a sing
 - `@web3modal/wagmi` (along with ethers and ethers5) returned `number | undefined`.
 - `@web3modal/solana` returned `string | undefined`.
 
-Now, in v6, since both chains can be connected simultaneously, the type definition is `number | string | undefined`.
+Now, in Reown AppKit, since both chains can be connected simultaneously, the type definition is `number | string | undefined`.
 :::
 
 #### modal.switchNetwork(network)
@@ -329,7 +439,7 @@ This switches the active network to the different network being passed.
 Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather than the chain id.
 
 - (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
-- (v6) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
+- (Reown AppKit v1) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
 
 ```tsx
 /* highlight-delete-start */
