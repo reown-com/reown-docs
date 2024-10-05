@@ -24,12 +24,9 @@ In your `App.vue` file set up the following configuration.
     icons: ['https://avatars.mywebsite.com/']
   }
 
-  // 3. Create Ethers adapter
-  const ethers5Adapter = new Ethers5Adapter()
-
-  // 4. Create a AppKit instance
+  // 3. Create a AppKit instance
   createAppKit({
-    adapters: [ethers5Adapter],
+    adapters: [new Ethers5Adapter()],
     networks: [mainnet, arbitrum],
     projectId,
     features: {
@@ -37,7 +34,7 @@ In your `App.vue` file set up the following configuration.
     }
   })
 
-  // 5. Use modal composable
+  // 4. Use modal composable
   const modal = useAppKit()
 </script>
 

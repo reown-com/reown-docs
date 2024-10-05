@@ -22,25 +22,26 @@ const projectId = 'YOUR_PROJECT_ID'
 const metadata = {
   name: 'AppKit',
   description: 'AppKit Example',
-  url: 'https://web3modal.com', // origin must match your domain & subdomain
+  url: 'https://example.com', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/179229932']
-}
+};
 
-export const networks = [mainnet, arbitrum]
+// 3. Set the networks
+const networks = [mainnet, arbitrum]
 
-// 3. Create Wagmi Adapter
+// 4. Create Wagmi Adapter
 const wagmiAdapter = new WagmiAdapter({
-  ssr: true,
   networks,
-  projectId
-})
+  projectId,
+  ssr: true
+});
 
-// 4. Create modal
+// 5. Create modal
 createAppKit({
   adapters: [wagmiAdapter],
-  networks: [mainnet, arbitrum],
-  metadata,
+  networks,
   projectId,
+  metadata,
   features: {
     analytics: true // Optional - defaults to your Cloud configuration
   }
