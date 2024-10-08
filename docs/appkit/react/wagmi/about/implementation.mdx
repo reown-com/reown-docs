@@ -56,33 +56,17 @@ export function AppKitProvider({ children }) {
 }
 ```
 
-## Would you like to use Viem chains?
+## Importing networks
 
-You can also use Viem chains with the `WagmiAdapter`. Viem is provides a variety of chain definitions, while on the other hand, while AppKit provides networks supported by the WalletConnect protocol.
+We are using [Viem](https://viem.sh/) networks under the hood which provides wide variety of networks for EVM chains. You can find every network that Viem is supporting within the `@reown/appkit/networks` path.
 
-```ts
+```js
 import { createAppKit } from '@reown/appkit'
-import { mainnet, arbitrum } from '@reown/appkit/networks'
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { linea, morphSepolia } from 'viem/chains'
-
-export const networks = [mainnet, arbitrum, linea, morphSepolia]
-
-const wagmiAdapter = new WagmiAdapter({
-  projectId,
-  networks
-  ...
-})
+/* highlight-add-start */
+import { mainnet, arbitrum, base, base, polygon } from '@reown/appkit/networks'
+/* highlight-add-end */
 ```
 
-:::caution
-When using Viem chains along with AppKit's network objects, ensure that you pass the `caipNetworks` value from the `WagmiAdapter` to the `networks` parameter in `createAppKit`, as shown below.
+:::info
+Looking for adding a custom network? Check out the [custom networks](../../core/custom-networks.mdx) section.
 :::
-
-```ts
-createAppKit({
-  adapters: [wagmiAdapter],
-  networks: wagmiAdapter.caipNetworks, // <- essential to use `wagmiAdapter.caipNetworks`
-  ..
-})
-```
