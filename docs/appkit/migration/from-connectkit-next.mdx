@@ -1,0 +1,147 @@
+---
+title: Migration from ConnectKit to AppKit
+pagination_next: 
+---
+
+# Migration from ConnectKit to AppKit
+
+If you have currently set up ConnectKit as the wallet provider for your Web3 app, you can easily migrate to **Reown AppKit**.
+
+Assuming that your Web3 app is set up similarly to ConnectKit's example app [here](https://github.com/family/connectkit/tree/main/examples/nextjs), let's explore how to migrate from this example app to Reown AppKit.
+
+To migrate from ConnectKit to Reown AppKit, please follow the steps below.
+
+## Step 1. Create a project in Reown Cloud
+
++ Create a new project on [Reown Cloud](https://cloud.reown.com) and obtain a new project ID.
+
+## Step 2. Install & uninstall libraries
+
++ Run this command to install Reown AppKit and uninstall ConnectKit.
+
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-wagmi && npm uninstall connectkit
+```
+
+## Step 3. Change the code in the `/components/Web3Provider.tsx` file
+
++ Navigate to the `/components/Web3Provider.tsx` file inside your ConnectKit example Web3 app directory. 
++ Now, you need to remove the existing configuration that uses ConnectKit and replace it with Reown AppKit. Refer to the code snippet below.
+
+```tsx
+import React from 'react';
+
+import { WagmiProvider, createConfig } from 'wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+/* highlight-delete-start */
+- import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
+/* highlight-delete-end */
+/* highlight-add-start */
++ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+// Include networks from AppKit
++ import { mainnet, arbitrum } from '@reown/appkit/networks'
++ import { createAppKit } from '@reown/appkit';
++ export const networks = [mainnet, arbitrum]
+/* highlight-add-end */
+
+/* highlight-delete-start */
+- const config = createConfig(
+-   getDefaultConfig({
+-     appName: 'ConnectKit Next.js demo',
+-     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+-   })
+- );
+/* highlight-delete-end */
+
+/* highlight-add-start */
+// If you were already using WalletConnect with ConnectKit, you can use the same projectId.
+// If not, then get projectId from https://cloud.reown.com
++ export const projectId = "YOUR_PROJECT_ID";
+
+//Set up the Wagmi Adapter (Config)
++ export const wagmiAdapter = new WagmiAdapter({
++   networks,
++   projectId
++ })
+/* highlight-add-end */
+
+const queryClient = new QueryClient();
+
+/* highlight-add-start */
+// Create the modal
++ const modal = createAppKit({
++   adapters: [wagmiAdapter],
++   projectId,
++   networks: [mainnet, arbitrum],
++   features: {
++     analytics: true, // Optional - defaults to your Cloud configuration
++   }
++ })
+/* highlight-add-end */
+
+
+export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
+  return (
+    /* highlight-delete-start*/
+-    <WagmiProvider config={config}>
+    /* highlight-delete-end */
+    /* highlight-add-start*/
++    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+    /* highlight-add-end */
+      <QueryClientProvider client={queryClient}>
+      /* highlight-delete-start*/
+-        <ConnectKitProvider debugMode>{children}</ConnectKitProvider>
+      /* highlight-delete-end*/
+      /* highlight-add-start*/
++        {children}
+      /* highlight-add-end*/
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+};
+
+```
+
+## Step 4. Change the code in the `/pages/index.tsx` file
+
++ Navigate to the `/pages/index.tsx` file inside your ConnectKit example Web3 app directory. 
++ Now, you need to remove the existing code that uses `<ConnectKitButton />` and replace it with `<w3m-button />`. Refer to the code snippet below.
+
+```tsx
+import type { NextPage } from 'next';
+/* highlight-delete-start*/
+- import { ConnectKitButton } from 'connectkit';
+/* highlight-delete-end*/
+
+const Home: NextPage = () => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+      }}
+    >
+    /* highlight-delete-start*/
+-      <ConnectKitButton />
+    /* highlight-delete-end*/
+    /* highlight-add-start*/
++      <w3m-button />
+    /* highlight-add-end*/
+    </div>
+  );
+};
+
+export default Home;
+
+```
+
+## Final notes
+
++ Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from ConnectKit to Reown AppKit.
++ Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
++ Check our [AppKit Web examples](https://github.com/reown-com/appkit/tree/main/examples) to compare with your implementation in case you are having issues 
++ If you want to start from scratch, please refer to the Installation docs [here](/appkit/overview)
