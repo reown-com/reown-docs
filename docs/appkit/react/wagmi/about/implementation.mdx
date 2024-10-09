@@ -58,15 +58,15 @@ export function AppKitProvider({ children }) {
 
 ## Importing networks
 
-We are using [Viem](https://viem.sh/) networks under the hood which provides wide variety of networks for EVM chains. You can find every network that Viem is supporting within the `@reown/appkit/networks` path.
+We use [Viem](https://viem.sh/) networks under the hood, which provide a wide variety of networks for EVM chains. You can find all the networks supported by Viem within the `@reown/appkit/networks` path.
 
 ```js
 import { createAppKit } from '@reown/appkit'
 /* highlight-add-start */
-import { mainnet, arbitrum, base, base, polygon } from '@reown/appkit/networks'
+import { mainnet, arbitrum, base, scroll, polygon } from '@reown/appkit/networks'
 /* highlight-add-end */
 ```
 
 :::info
-Looking for adding a custom network? Check out the [custom networks](../../core/custom-networks.mdx) section.
+Looking to add a custom network? Check out the [custom networks](../../core/custom-networks.mdx) section.
 :::
