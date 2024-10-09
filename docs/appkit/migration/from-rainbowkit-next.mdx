@@ -74,6 +74,8 @@ AppKit's web components are global HTML elements that don't require importing.
 
 ```tsx
 /* highlight-add-start */
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { arbitrum, mainnet } from '@reown/appkit/networks'
 export const projectId = "YOUR_PROJECT_ID";
 
 export const networks = [mainnet, arbitrum]
