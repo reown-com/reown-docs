@@ -16,8 +16,8 @@ Follow the steps below to migrate from the default RainbowKit project using Next
 
 + Run this command to install AppKit and uninstall RainbowKit.
 
-```bash
-pnpm install @reown/appkit @reown/appkit-adapter-wagmi && pnpm uninstall @rainbow-me/rainbowkit
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-wagmi && npm uninstall @rainbow-me/rainbowkit
 ```
 
 ### Step 3. Change the index.tsx
@@ -77,17 +77,13 @@ AppKit's web components are global HTML elements that don't require importing.
 /* highlight-add-start */
 export const projectId = "YOUR_PROJECT_ID";
 
-export const metadata = {
-  name: "My App",
-  description: "My App description",
-  url: "https://example.com", // origin must match your domain and subdomain
-  icons: ["https://example.com/favicon.png"]
-};
-
 export const networks = [mainnet, arbitrum]
 
-// Create wagmiAdapter
-const wagmiAdapter = new WagmiAdapter({
+//Set up the Wagmi Adapter (Config)
+export const wagmiAdapter = new WagmiAdapter({
+  storage: createStorage({
+    storage: cookieStorage
+  }),
   ssr: true,
   networks,
   projectId
@@ -105,39 +101,53 @@ import '../styles/globals.css';
 /* highlight-delete-start */
 - import '@rainbow-me/rainbowkit/styles.css';
 /* highlight-delete-end */
+
 import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
 
 /* highlight-delete-start */
-- import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
-/* highlight-delete-end */
-/* highlight-add-start */
-+ import { createWeb3Modal } from "@web3modal/wagmi/react"
-/* highlight-add-end */
-
-/* highlight-delete-start */
+- import { WagmiProvider } from 'wagmi';
 - import { config } from '../wagmi';
 /* highlight-delete-end */
 /* highlight-add-start */
-+ import { config, metadata, projectId } from '../wagmi';
++ import { wagmiAdapter, projectId } from '@/config'
 /* highlight-add-end */
+
+/* highlight-delete-start*/
+- import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+/* highlight-delete-end */
+/* highlight-add-start */
++ import { createAppKit } from "@reown/appkit/react"
+/* highlight-add-end */
+
 ```
 
 
-+ Initialize AppKit:
++ Now,  Initialize AppKit:
 ```tsx
 const client = new QueryClient();
 
 /* highlight-add-start */
+// Set up metadata
+const metadata = { //this is optional
+  name: "appkit-example",
+  description: "AppKit Example",
+  url: "https://exampleapp.com", // origin must match your domain & subdomain
+  icons: ["https://avatars.githubusercontent.com/u/37784886"]
+}
+/* highlight-add-end */
+
+/* highlight-add-start */
 // Create modal
-createWeb3Modal({
-  metadata,
-  wagmiConfig: config,
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
   projectId,
-  enableAnalytics: true, // Optional - defaults to your Cloud configuration
-  enableOnramp: true, // Optional - false as default
-});
+  networks: [mainnet, arbitrum],
+  metadata: metadata,
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  }
+})
 /* highlight-add-end */
 ```
 
