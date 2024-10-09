@@ -262,6 +262,11 @@ module.exports = {
                 },
                 {
                   type: 'doc',
+                  label: 'From ConnectKit',
+                  id: 'appkit/migration/from-connectkit-next'
+                },
+                {
+                  type: 'doc',
                   label: 'From Anza Adapter',
                   id: 'appkit/migration/from-anza-adapter-react'
                 }
