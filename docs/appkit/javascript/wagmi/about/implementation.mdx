@@ -48,3 +48,18 @@ openNetworkModalBtn.addEventListener('click', () => modal.open({ view: 'Networks
 
 // 5. Alternatively use w3m component buttons within the index.html file
 ```
+
+## Importing networks
+
+We are using [Viem](https://viem.sh/) networks under the hood which provides wide variety of networks for EVM chains. You can find every network that Viem is supporting within the `@reown/appkit/networks` path.
+
+```js
+import { createAppKit } from '@reown/appkit'
+/* highlight-add-start */
+import { mainnet, arbitrum, base, base, polygon } from '@reown/appkit/networks'
+/* highlight-add-end */
+```
+
+:::info
+Looking for adding a custom network? Check out the [custom networks](../../core/custom-networks.mdx) section.
+:::

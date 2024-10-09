@@ -53,3 +53,18 @@ In your `App.vue` file set up the following configuration
 
 <template> // Rest of your app ... </template>
 ```
+
+## Importing networks
+
+We are using [Viem](https://viem.sh/) networks under the hood which provides wide variety of networks for EVM chains. You can find every network that Viem is supporting within the `@reown/appkit/networks` path.
+
+```js
+import { createAppKit } from '@reown/appkit'
+/* highlight-add-start */
+import { mainnet, arbitrum, base, base, polygon } from '@reown/appkit/networks'
+/* highlight-add-end */
+```
+
+:::info
+Looking for adding a custom network? Check out the [custom networks](../../core/custom-networks.mdx) section.
+:::

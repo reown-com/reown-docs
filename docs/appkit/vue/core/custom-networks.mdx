@@ -1,0 +1,66 @@
+---
+title: Custom networks
+---
+
+# Custom networks
+
+If you cannot find the network you are looking for within the `@reown/appkit/networks` path, you can always add your own network.
+
+Since AppKit v1.1.0, we have two ways to add your network to the AppKit:
+
+### 1. Adding Your Chain to Viem’s Directory (Recommended)
+
+We are using Viem for providing EVM chains to the users under the hood. If your chain is for EVM. We recommend you to open a PR to Viem to add your network to Viem's directory. Once your chain is accepted to Viem, it'll be available on AppKit. No new steps required.
+
+Here is the documentation of how to add new chian to Viem: https://github.com/wevm/viem/blob/main/.github/CONTRIBUTING.md#chains
+
+### 2. Creating Custom Chain Object
+
+You can also create a custom network object without waiting for approval from Viem’s repository.
+
+**Required Information**
+
+You should have the following values to create a custom network:
+
+- **id**: Chain ID of the network.
+- **name**: Name of the network.
+- **caipNetworkId**: CAIP-2 compliant network ID.
+- **chainNamespace**: Chain namespace.
+- **nativeCurrency**: Native currency of the network.
+- **rpcUrls**: Object containing the RPC URLs for the network.
+- **blockExplorers**: Object containing the block explorers for the network.
+
+```js
+import { defineChain } from '@reown/appkit/networks';
+
+// Define the custom network
+const customNetwork = defineChain({
+  id: 123456789,
+  caipNetworkId: 'eip155:123456789',
+  chainNamespace: 'eip155',
+  name: 'Custom Network',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ether',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    default: {
+      http: ['RPC_URL'],
+      webSocket: ['WS_RPC_URL'],
+    },
+  },
+  blockExplorers: {
+    default: { name: 'Explorer', url: 'BLOCK_EXPLORER_URL' },
+  },
+  contracts: {
+    // Add contracts here
+  }
+})
+
+// Then pass it to the AppKit
+createAppKit({
+    adapters: [...],
+    networks: [customNetwork]
+})
+```
