@@ -236,7 +236,8 @@ module.exports = {
                 { type: 'doc', label: 'On-Ramp', id: 'appkit/features/onramp' },
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
                 { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
-                { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' }
+                { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
+                { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'}
               ]
             },
             {
