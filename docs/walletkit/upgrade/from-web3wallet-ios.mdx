@@ -22,6 +22,21 @@ The Web3Wallet library has been moved to a new repository under the reown-com or
 /* highlight-add-end */
 ```
 
+Update product name accordingly:
+
+```swift
+.product(
+/* highlight-delete-start */
+    name: "Web3Wallet",
+    package: "WalletConnectSwiftV2"
+/* highlight-delete-end */
+/* highlight-add-start */
+    name: "ReownWalletKit",
+    package: "reown-swift"
+/* highlight-add-end */
+),
+```
+
 ### Step 2. Update Imports in Your Code
 
 All references to Web3Wallet in your import statements should be updated to use WalletKit.
@@ -31,7 +46,7 @@ All references to Web3Wallet in your import statements should be updated to use 
 - import Web3Wallet
 /* highlight-delete-end */
 /* highlight-add-start */
-+ import WalletKit
++ import ReownWalletKit
 /* highlight-add-end */
 ```
 
