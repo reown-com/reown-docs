@@ -5,8 +5,8 @@ In your `App.vue` file set up the following configuration
 ```html
 <script setup>
   
-  import { createAppKit, defaultSolanaConfig } from '@web3modal/solana/vue'
-  import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+  import { createAppKit } from '@reown/appkit/vue'
+  import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
   import { reconnect } from '@wagmi/core'
 
   // 1. Define constants
@@ -20,20 +20,19 @@ In your `App.vue` file set up the following configuration
     icons: ['https://avatars.githubusercontent.com/u/179229932']
   }
 
-  const chains = [solana, solanaTestnet, solanaDevnet]
-  const solanaConfig = defaultSolanaConfig({
-    metadata,
-    chains,
-    projectId
+  // 3. Create Wagmi Adapter
+  const solanaWeb3JsAdapter = new SolanaAdapter({
+    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
   })
 
   reconnect(solanaConfig)
 
   // 3. Create modal
   createAppKit({
-    solanaConfig,
-    chains,
-    projectId
+    projectId,
+    metadata,
+    networks: [solana, solanaTestnet, solanaDevnet],
+    adapters: [solanaWeb3JsAdapter],
   })
 </script>
 

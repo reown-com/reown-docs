@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-In this example we will create a new file called `context/web3modal.tsx` outside our app directory and set up the following configuration
+In this example we will create a new file called `context/appkit.tsx` outside our app directory and set up the following configuration
 
 ```tsx
 'use client'
@@ -39,12 +39,12 @@ export function AppKit() {
 }
 ```
 
-Next, in your `app/layout.tsx` or `app/layout.jsx` file, import the custom Web3Modal component.
+Next, in your `app/layout.tsx` or `app/layout.jsx` file, import the custom AppKit component.
 
 ```tsx
 import './globals.css'
 
-import { AppKit } from '../context/web3modal'
+import { AppKit } from '../context/appkit'
 
 export const metadata = {
   title: 'AppKit',
