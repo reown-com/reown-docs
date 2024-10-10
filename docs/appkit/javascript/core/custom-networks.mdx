@@ -4,23 +4,24 @@ title: Custom networks
 
 # Custom networks
 
-If you cannot find the network you are looking for within the `@reown/appkit/networks` path, you can always add your own network.
+If you cannot find the network you are looking for within the `@reown/appkit/networks` path, you can always add a custom network.
 
-Since AppKit v1.1.0, we have two ways to add your network to the AppKit:
+Since AppKit v1.1.0, there are two ways to add your network to AppKit:
 
 ### 1. Adding Your Chain to Viem’s Directory (Recommended)
 
-We are using Viem for providing EVM chains to the users under the hood. If your chain is for EVM. We recommend you to open a PR to Viem to add your network to Viem's directory. Once your chain is accepted to Viem, it'll be available on AppKit. No new steps required.
+Reown AppKit use Viem to provide EVM chains to users under the hood. If your chain is EVM-compatible, it is recommended to open a PR to Viem to add your network to Viem’s directory. Once your chain is accepted by Viem, it will automatically be available in AppKit with no additional steps required.
 
-Here is the documentation of how to add new chian to Viem: https://github.com/wevm/viem/blob/main/.github/CONTRIBUTING.md#chains
+**Here is the documentation of how to add new chain to Viem:**
+https://github.com/wevm/viem/blob/main/.github/CONTRIBUTING.md#chains
 
-### 2. Creating Custom Chain Object
+### 2. Creating a Custom Chain Object
 
 You can also create a custom network object without waiting for approval from Viem’s repository.
 
 **Required Information**
 
-You should have the following values to create a custom network:
+You will need the following values to create a custom network:
 
 - **id**: Chain ID of the network.
 - **name**: Name of the network.
@@ -54,7 +55,7 @@ const customNetwork = defineChain({
     default: { name: 'Explorer', url: 'BLOCK_EXPLORER_URL' },
   },
   contracts: {
-    // Add contracts here
+    // Add the contracts here
   }
 })
 
