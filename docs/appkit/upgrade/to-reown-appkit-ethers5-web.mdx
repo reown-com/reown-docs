@@ -1,6 +1,6 @@
 ---
 pagination_next: appkit/react/core/installation
-title: Migrate from AppKit v5 to Reown AppKit Solana
+title: Migrate from Web3Modal v5 to Reown AppKit Solana
 displayed_sidebar: mainSidebar
 ---
 
@@ -11,24 +11,24 @@ import TabItem from '@theme/TabItem'
 
 # Upgrade Guide
 
-## AppKit v5 to Reown Web AppKit | Ethers v5
+## Web3Modal v5 to Reown Web AppKit | Ethers v5
 
-This guide will help you migrate from AppKit v5 using ethers v5 to the latest Reown AppKit.
+This guide will help you migrate from Web3Modal v5 using Ethers v5 to the latest Reown AppKit.
 
-Find here all the upgrades guides: 
-- [To Reown Web AppKit using wagmi](/appkit/upgrade/to-reown-appkit-web).
+**Find here all the upgrades guides:**
+- [To Reown Web AppKit using Wagmi](/appkit/upgrade/to-reown-appkit-web).
 - [To Reown Web AppKit using Solana](/appkit/upgrade/to-reown-appkit-solana-web).
 - [To Reown Web AppKit using Ethers](/appkit/upgrade/to-reown-appkit-ethers-web).
 
 ### Installation
 
-To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/ethers5`. 
+To upgrade from Web3Modal v5 to Reown AppKit, start by removing the Web3Modal v5 dependency `@web3modal/ethers5`. 
 
 ```bash npm2yarn
 npm uninstall @web3modal/ethers5
 ```
 
-Now you can install the Reown AppKit packages.
+Next, install the Reown AppKit and Solana wallet adapter packages.
 ```bash npm2yarn
 npm install @reown/appkit @reown/appkit-adapter-ethers5
 ```
@@ -63,7 +63,7 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 /* highlight-add-end */
 ```
 
-Then remove the defaultConfig from Ethers.
+Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
 
 ```tsx
 const projectId = 'YOUR_PROJECT_ID'
@@ -81,7 +81,7 @@ const metadata = { //optional
 /* highlight-delete-end */
 ```
 
-Finally, create the `Ethers5Adapter` and pass the other parameters to `createAppKit`
+Finally, set up the `Ethers5Adapter` and pass the other parameters to `createAppKit` function.
 
 ```tsx
 /* highlight-delete-start */
@@ -127,7 +127,7 @@ import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5'
 /* highlight-add-end */
 ```
     
-Then remove the defaultConfig.
+Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
 
 ```tsx
 const projectId = 'YOUR_PROJECT_ID'
@@ -145,7 +145,7 @@ const metadata = { //optional
 /* highlight-delete-end */
 ```
 
-Finally, create the `EthersAdapter` and pass other parameters to `createAppKit`
+Finally, set up the `Ethers5Adapter` and pass the other parameters to `createAppKit` function.
 
 ```tsx
 /* highlight-delete-start */
@@ -187,7 +187,7 @@ import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5'
 /* highlight-add-end */
 ```
 
-Then remove the defaultConfig.
+Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
 
 ```tsx
 const projectId = 'YOUR_PROJECT_ID'
@@ -206,7 +206,7 @@ const metadata = { //optional
 /* highlight-delete-end */
 ```
 
-Finally, create the `Ethers5Adapter` and pass other parameters to `createAppKit`.
+Finally, set up the `Ethers5Adapter` and pass the other parameters to `createAppKit` function.
 
 ```ts
 /* highlight-delete-start */
@@ -262,7 +262,7 @@ Learn more about Reown AppKit [here](../react/core/installation.mdx)
 </PlatformTabItem>
 <PlatformTabItem value="vue">
 
-Use your own button with to open the modal
+Use your own button to open the modal.
 
 ```js
 document.getElementById('my-button').addEventListener('click', () => {
@@ -277,7 +277,7 @@ Learn more about Reown AppKit JavaScript [here](../javascript/core/installation.
 </PlatformTabItem>
 <PlatformTabItem value="javascript">
 
-Use your own button with to open the modal
+Use your own button to open the modal.
 
 ```js
 document.getElementById('my-button').addEventListener('click', () => {
@@ -351,11 +351,11 @@ Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather t
 
 ```tsx
 /* highlight-delete-start */
-switchNetwork(137)
+modal.switchNetwork(137)
 /* highlight-delete-end */
 /* highlight-add-start */
 import { polygon } from '@reown/appkit/networks'
-switchNetwork(polygon)
+modal.switchNetwork(polygon)
 /* highlight-add-end */
 ```
 
