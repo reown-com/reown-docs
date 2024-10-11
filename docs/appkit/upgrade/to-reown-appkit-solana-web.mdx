@@ -22,13 +22,13 @@ Find here all the upgrades guides:
 
 ### Installation
 
-To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/solana`. 
+To upgrade from AppKit v5 to Reown AppKit, start by removing the AppKit v5 dependency `@web3modal/solana`. 
 
 ```bash npm2yarn
 npm uninstall @web3modal/solana
 ```
 
-Now you can install the Reown AppKit packages.
+Next, install the Reown AppKit and Solana wallet adapter packages.
 ```bash npm2yarn
 npm install @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
 ```
@@ -40,7 +40,7 @@ npm install @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wa
 	activeOptions={["react", "javascript", "vue"]}
 >
 <PlatformTabItem value="react">
-Make sure to update the imports in your codebase to use the new package names.
+Make sure you update the imports in your codebase to reflect the new package names.
 ```tsx
 /* highlight-delete-start */
 - import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
@@ -54,9 +54,12 @@ Make sure to update the imports in your codebase to use the new package names.
 + import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 /* highlight-add-end */
 ```
+Now, set up the Solana Adapter and the modal. 
 
-Create the Solana Adaptar and the modal. Please note that the propertie `chains` was renamed to `networks`. Also the `metadata` and the `projectId` are the same as before.
-  
+The `chains` property is now `networks` in Reown AppKit. You should import them from `@reown/appkit/networks` package instead of importing these networks other packages.
+
+The `metadata` and the `projectId` are the same as before.  
+
 ```tsx
 /* highlight-delete-start */
 - const solanaConfig = defaultSolanaConfig({ ... });
@@ -68,7 +71,7 @@ Create the Solana Adaptar and the modal. Please note that the propertie `chains`
 +   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 + })
 
-+ createAppKit({
++ const modal = createAppKit({
 +   projectId,
 +   metadata,
 +   networks: [solana, solanaTestnet, solanaDevnet],
@@ -78,7 +81,7 @@ Create the Solana Adaptar and the modal. Please note that the propertie `chains`
 ```
 </PlatformTabItem>
 <PlatformTabItem value="vue">
-Make sure to update the imports in your codebase to use the new package names.
+Make sure you update the imports in your codebase to reflect the new package names.
 ```tsx
 /* highlight-delete-start */
 - import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/vue'
@@ -93,7 +96,11 @@ Make sure to update the imports in your codebase to use the new package names.
 /* highlight-add-end */
 ```
 
-Create the Solana Adaptar and the modal. Please note that the propertie `chains` was renamed to `networks`. Also the `metadata` and the `projectId` are the same as before.
+Now, set up the Solana Adapter and the modal. 
+
+The `chains` property is now `networks` in Reown AppKit. You should import them from `@reown/appkit/networks` package instead of importing these networks other packages.
+
+The `metadata` and the `projectId` are the same as before.
   
 ```tsx
 /* highlight-delete-start */
@@ -106,7 +113,7 @@ Create the Solana Adaptar and the modal. Please note that the propertie `chains`
 +   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 + })
 
-+ createAppKit({
++ const modal = createAppKit({
 +   projectId,
 +   metadata,
 +   networks: [solana, solanaTestnet, solanaDevnet],
@@ -116,7 +123,7 @@ Create the Solana Adaptar and the modal. Please note that the propertie `chains`
 ```
 </PlatformTabItem>
 <PlatformTabItem value="javascript">
-Make sure to update the imports in your codebase to use the new package names.
+Make sure you update the imports in your codebase to reflect the new package names.
 ```tsx
 /* highlight-delete-start */
 - import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
@@ -130,9 +137,12 @@ Make sure to update the imports in your codebase to use the new package names.
 + import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 /* highlight-add-end */
 ```
+Now, set up the Solana Adapter and the modal. 
 
-Create the Solana Adaptar and the modal. Please note that the propertie `chains` was renamed to `networks`. Also the `metadata` and the `projectId` are the same as before.
-  
+The `chains` property is now `networks` in Reown AppKit. You should import them from `@reown/appkit/networks` package instead of importing these networks other packages.
+
+The `metadata` and the `projectId` are the same as before.
+
 ```tsx
 /* highlight-delete-start */
 - const solanaConfig = defaultSolanaConfig({ ... });
@@ -269,16 +279,16 @@ This switches the active network to the different network being passed.
 :::note
 Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather than the chain id.
 
-- (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
-- (Reown AppKit v1) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
+- (v5) - switchNetwork(103) -> switches the chain to Solana Devnet as we are passing Solana Devnet's chain id.
+- (Reown AppKit v1) - switchNetwork(solanaDevnet) -> `solanaDevnet` is imported from `@reown/appkit/networks`.
 
 ```tsx
 /* highlight-delete-start */
-switchNetwork(137)
+modal.switchNetwork(103)
 /* highlight-delete-end */
 /* highlight-add-start */
-import { polygon } from '@reown/appkit/networks'
-switchNetwork(polygon)
+import { solanaDevnet } from '@reown/appkit/networks'
+modal.switchNetwork(solanaDevnet)
 /* highlight-add-end */
 ```
 
