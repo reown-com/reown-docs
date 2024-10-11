@@ -10,11 +10,6 @@ export const CloudBanner = ({ title, description, href, image = wcGlassImage }) 
       </div>
       <Link to={"https://reown.com/blog/walletconnect-is-now-reown"}>
         Learn More
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-          />
       </Link>
       {image === wcGlassImage ? (
         <img
