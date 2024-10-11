@@ -1,6 +1,6 @@
 ---
 pagination_next: appkit/react/core/installation
-title: Migrate from AppKit v5 to Reown AppKit
+title: Migrate from Web3Modal v5 to Reown AppKit
 displayed_sidebar: mainSidebar
 ---
 
@@ -11,11 +11,14 @@ import TabItem from '@theme/TabItem'
 
 # Upgrade Guide
 
-## AppKit v5 to Reown AppKit Upgrade Guide
+## Web3Modal v5 to Reown AppKit - Web | Wagmi
 
-This guide will help you migrate from AppKit v5 to the latest Reown AppKit.
+This guide will help you migrate from Web3Modal v5 using wagmi to the latest Reown AppKit.
 
-<img src="/img/appkit.png" />
+**Find here all the upgrades guides:**
+- [To Reown Web AppKit using Solana](/appkit/upgrade/to-reown-appkit-solana-web).
+- [To Reown Web AppKit using Ethers](/appkit/upgrade/to-reown-appkit-ethers-web).
+- [To Reown Web AppKit using Ethers v5](/appkit/upgrade/to-reown-appkit-ethers5-web).
 
 ### Installation
 
@@ -25,7 +28,7 @@ This guide will help you migrate from AppKit v5 to the latest Reown AppKit.
 >
 <PlatformTabItem value="react">
 
-To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `Wagmi` and `Viem`.
+To upgrade from Web3Modal v5 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `Wagmi` and `Viem`.
 
 ```bash npm2yarn
 npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
@@ -34,7 +37,7 @@ npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
 </PlatformTabItem>
 <PlatformTabItem value="javascript">
 
-To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `@wagmi/core` and `Viem`.
+To upgrade from Web3Modal v5 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `@wagmi/core` and `Viem`.
 
 ```bash npm2yarn
 npm install @reown/appkit @reown/appkit-adapter-wagmi
@@ -43,7 +46,7 @@ npm install @reown/appkit @reown/appkit-adapter-wagmi
 </PlatformTabItem>
 <PlatformTabItem value="vue">
 
-To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/ethereum` and `@web3modal/vue`. Now you can install AppKit library and update `Wagmi` and `Viem`.
+To upgrade from Web3Modal v5 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum` and `@web3modal/vue`. Now you can install AppKit library and update `Wagmi` and `Viem`.
 
 ```bash npm2yarn
 npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
@@ -443,11 +446,11 @@ Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather t
 
 ```tsx
 /* highlight-delete-start */
-switchNetwork(137)
+modal.switchNetwork(137)
 /* highlight-delete-end */
 /* highlight-add-start */
 import { polygon } from '@reown/appkit/networks'
-switchNetwork(polygon)
+modal.switchNetwork(polygon)
 /* highlight-add-end */
 ```
 
