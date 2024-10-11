@@ -11,26 +11,26 @@ import TabItem from '@theme/TabItem'
 
 # Upgrade Guide
 
-## AppKit v5 to Reown Web AppKit | Solana
+## AppKit v5 to Reown Web AppKit | Ethers
 
-This guide will help you migrate from AppKit v5 using Solana to the latest Reown AppKit.
+This guide will help you migrate from AppKit using ethers to the latest Reown AppKit.
 
 Find here all the upgrades guides: 
 - [To Reown Web AppKit using wagmi](/appkit/upgrade/to-reown-appkit-web).
-- [To Reown Web AppKit using Ethers](/appkit/upgrade/to-reown-appkit-ethers-web).
+- [To Reown Web AppKit using Solana](/appkit/upgrade/to-reown-appkit-solana-web).
 - [To Reown Web AppKit using Ethers v5](/appkit/upgrade/to-reown-appkit-ethers5-web).
 
 ### Installation
 
-To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/solana`. 
+To upgrade from AppKit v5 to Reown AppKit start by removing AppKit v5 dependencies `@web3modal/ethers`. 
 
 ```bash npm2yarn
-npm uninstall @web3modal/solana
+npm uninstall @web3modal/ethers
 ```
 
 Now you can install the Reown AppKit packages.
 ```bash npm2yarn
-npm install @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-ethers
 ```
 
 ### Implementation
@@ -40,122 +40,199 @@ npm install @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wa
 	activeOptions={["react", "javascript", "vue"]}
 >
 <PlatformTabItem value="react">
-Make sure to update the imports in your codebase to use the new package names.
+
+You can start the AppKit configuration by using either the **default** or **advanced** mode.
+
+Default mode will implement WalletConnect, Browser Wallets (injected) and Coinbase options in addition to [WalletConnect's provider](../../cloud/blockchain-api.mdx).
+:::note
+Make sure to set your configuration outside React components to avoid unwanted rerenders.
+:::
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
+
 ```tsx
 /* highlight-delete-start */
-- import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
-- import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+- import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
+- import { arbitrum, mainnet } from 'viem/chains'
 /* highlight-delete-end */
 
 /* highlight-add-start */
-+ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 + import { createAppKit } from '@reown/appkit/react'
-+ import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
-+ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
++ import { arbitrum, mainnet } from '@reown/appkit/networks'
++ import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 /* highlight-add-end */
 ```
 
-Create the Solana Adaptar and the modal. Please note that the propertie `chains` was renamed to `networks`. Also the `metadata` and the `projectId` are the same as before.
-  
+Then remove the defaultConfig from Ethers.
+
+```tsx
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
+
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://example.com',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+/* highlight-delete-start */
++ const ethersConfig = defaultConfig({ ... })
+/* highlight-delete-end */
+```
+
+Finally, create the `EthersAdapter` and pass the other parameters to `createAppKit`
+
 ```tsx
 /* highlight-delete-start */
-- const solanaConfig = defaultSolanaConfig({ ... });
-- createWeb3Modal( ... });
+- createWeb3Modal({ ethersConfig, projectId, chains })
 /* highlight-delete-end */
- 
-/* highlight-add-start */
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
 
+/* highlight-add-start */
+// import { createAppKit } from '@reown/appkit/react'
 + createAppKit({
-+   projectId,
-+   metadata,
-+   networks: [solana, solanaTestnet, solanaDevnet],
-+   adapters: [solanaAdapter],
-+ })
+ adapters: [new EthersAdapter()],
+ networks: [mainnet, arbitrum],
+ metadata,
+ projectId,
+ features: {
+   analytics: true,
+ }
+})
 /* highlight-add-end */
 ```
+
+
 </PlatformTabItem>
 <PlatformTabItem value="vue">
-Make sure to update the imports in your codebase to use the new package names.
+
+You can start the AppKit configuration by using either the **default** or **advanced** mode.
+
+Default mode will implement WalletConnect, Browser Wallets (injected) and Coinbase options in addition to [WalletConnect's provider](../../cloud/blockchain-api.mdx).
+:::note
+Make sure to set your configuration outside React components to avoid unwanted rerenders.
+:::
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
+
 ```tsx
 /* highlight-delete-start */
-- import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/vue'
-- import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/vue'
 /* highlight-delete-end */
 
 /* highlight-add-start */
-+ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
-+ import { createAppKit } from '@reown/appkit/vue'
-+ import { SolanaAdapter } from '@reown/appkit-adapter-solana/vue'
-+ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
+import { createAppKit } from '@reown/appkit/vue'
+import { arbitrum, mainnet } from '@reown/appkit/networks'
+import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 /* highlight-add-end */
 ```
+    
+Then remove the defaultConfig from Ethers.
 
-Create the Solana Adaptar and the modal. Please note that the propertie `chains` was renamed to `networks`. Also the `metadata` and the `projectId` are the same as before.
-  
+```tsx
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
+
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://example.com',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+/* highlight-delete-start */
+- const ethersConfig = defaultConfig({ ... })
+/* highlight-delete-end */
+```
+
+Finally, create the `EthersAdapter` and pass other parameters to `createAppKit`
+
 ```tsx
 /* highlight-delete-start */
-- const solanaConfig = defaultSolanaConfig({ ... });
-- createWeb3Modal( ... });
+- createWeb3Modal({ ethersConfig, projectId, chains })
 /* highlight-delete-end */
- 
-/* highlight-add-start */
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
 
-+ createAppKit({
-+   projectId,
-+   metadata,
-+   networks: [solana, solanaTestnet, solanaDevnet],
-+   adapters: [solanaAdapter],
-+ })
+/* highlight-add-start */
+// import { createAppKit } from '@reown/appkit/vue'
+// import { EthersAdapter } from '@reown/appkit-adapter-ethers'
++ const modal = createAppKit({
+ adapters: [new EthersAdapter()],
+ networks: [mainnet, arbitrum],
+ metadata,
+ projectId,
+ features: {
+   analytics: true,
+ }
+})
 /* highlight-add-end */
 ```
+
+
 </PlatformTabItem>
 <PlatformTabItem value="javascript">
-Make sure to update the imports in your codebase to use the new package names.
-```tsx
+
+Start by importing AppKit packages, then create EthersAdapter using your own settings or the default presets as shown below.
+
+Import `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
+
+```ts
 /* highlight-delete-start */
-- import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
-- import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers'
 /* highlight-delete-end */
 
 /* highlight-add-start */
-+ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 + import { createAppKit } from '@reown/appkit'
-+ import { SolanaAdapter } from '@reown/appkit-adapter-solana'
-+ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
++ import { arbitrum, mainnet } from '@reown/appkit/networks'
++ import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 /* highlight-add-end */
 ```
 
-Create the Solana Adaptar and the modal. Please note that the propertie `chains` was renamed to `networks`. Also the `metadata` and the `projectId` are the same as before.
-  
+Then remove the defaultConfig.
+
 ```tsx
-/* highlight-delete-start */
-- const solanaConfig = defaultSolanaConfig({ ... });
-- createWeb3Modal( ... });
-/* highlight-delete-end */
- 
-/* highlight-add-start */
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
 
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://example.com',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+/* Remove the existing Ethers Config */
+/* highlight-delete-start */
+- const ethersConfig = defaultConfig({ ... })
+/* highlight-delete-end */
+```
+
+Finally, create the `EthersAdapter` and pass other parameters to `createAppKit`.
+
+```ts
+/* highlight-delete-start */
+- const modal = createWeb3Modal({
+  ethersConfig,
+  projectId,
+  enableAnalytics: true
+})
+/* highlight-delete-end */
+
+/* highlight-add-start */
+// import { createAppKit } from '@reown/appkit'
 + const modal = createAppKit({
-+   projectId,
-+   metadata,
-+   networks: [solana, solanaTestnet, solanaDevnet],
-+   adapters: [solanaAdapter],
-+ })
+  adapters: [new EthersAdapter()],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: true
+  }
+})
 /* highlight-add-end */
 ```
+
 </PlatformTabItem>
-
 </PlatformTabs>
-
 
 ### Trigger the modal
 
@@ -167,7 +244,7 @@ Create the Solana Adaptar and the modal. Please note that the propertie `chains`
 
 ```tsx
 /* highlight-delete-start */
-- import { useWeb3Modal } from '@web3modal/wagmi/react'
+- import { useWeb3Modal } from '@web3modal/ethers/react'
 /* highlight-delete-end */
 /* highlight-add-start */
 + import { useAppKit } from '@reown/appkit/react'
