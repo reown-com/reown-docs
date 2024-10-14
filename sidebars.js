@@ -790,9 +790,9 @@ module.exports = {
           items: [
             'appkit/flutter/core/installation',
             'appkit/flutter/core/usage',
+            'appkit/flutter/core/options',
             'appkit/flutter/core/siwe',
             'appkit/flutter/core/link-mode',
-            'appkit/flutter/core/options',
             'appkit/flutter/core/actions',
             'appkit/flutter/core/events',
             'appkit/flutter/core/theming',
@@ -802,7 +802,9 @@ module.exports = {
         {
           type: 'category',
           label: 'Onboarding',
-          items: ['appkit/flutter/onboarding/email']
+          items: [
+            { type: 'doc', label: 'Email & Socials', id: 'appkit/flutter/onboarding/email' },
+          ]
         },
         {
           type: 'category',
