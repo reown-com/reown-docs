@@ -28,7 +28,7 @@ import { BrowserProvider } from 'ethers'
 import { useAppKitProvider } from '@reown/appkit/react'
 
 function Components() {
-  const { walletProvider } = useAppKitProvider()
+  const { walletProvider } = useAppKitProvider('eip155')
 
   async function onSignMessage() {
     const provider = new BrowserProvider(walletProvider)
