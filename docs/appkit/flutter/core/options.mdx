@@ -15,7 +15,12 @@ final _appKitModal = ReownAppKitModal(
     ),
   ),
   // enableAnalytics: true, // OPTIONAL - null by default
-  // enableEmail: true, // OPTIONAL - false by default
+  // siweConfig: SIWEConfig(...), // OPTIONAL - null by default
+  // featuresConfig: FeaturesConfig(
+  //   email: true, // OPTIONAL - false by default
+  //   socials: [...], // OPTIONAL - empty by default
+  //   showMainWallets: true, // OPTIONAL - true by default
+  // ),
   // requiredNamespaces: {}, OPTIONAL - null by default
   // optionalNamespaces: {}, OPTIONAL - null by default
   // featuredWalletIds: {}, OPTIONAL - null by default
@@ -24,15 +29,19 @@ final _appKitModal = ReownAppKitModal(
 );
 ```
 
-## enableAnalytics
+### enableAnalytics:
 
 Enable analytics to get more insights on your users activity within your [Reown Cloud's dashboard](https://cloud.reown.com)
 
-## enableEmail
+### siweConfig:
 
-Used to enable/disable [Email Wallets](../onboarding/email.mdx) feature.
+Used to configure [One-Click Auth + SIWE](./siwe.mdx) feature.
 
-## requiredNamespaces and optionalNamespaces
+### featuresConfig:
+
+Used to configure extra features such as Analytics, [Email and Social Login](../onboarding/email.mdx).
+
+### requiredNamespaces: and optionalNamespaces:
 
 These values are optionals and, in most cases, not required since AppKit already defines every required and optional namespace internally based on configured networks. 
 
@@ -40,7 +49,7 @@ However, if you would want to override that definition with your own, these are 
 
 These are the set of namespaces that will be requested to the wallet you are connecting to.
 
-## featuredWalletIds
+### featuredWalletIds:
 
 Allows to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the [Reown Explorer](https://reown.com/explorer?type=wallet) by clicking on the copy icon of desired wallet card.
 
@@ -52,7 +61,7 @@ final Set<String> featuredWalletIds = {
 }
 ```
 
-## includedWalletIds
+### includedWalletIds:
 
 Similar to `featuredWalletIds` this option allows you to determine exactly which wallets do you want to show. If `includedWalletIds` is set then only the wallets listed in this object are going to be displayed in the modal.
 
@@ -64,7 +73,7 @@ final Set<String> includedWalletIds = {
 }
 ```
 
-## excludedWalletIds
+### excludedWalletIds:
 
 Similar to `includedWalletIds` this option allows you to exclude a list of wallets from the API response.
 

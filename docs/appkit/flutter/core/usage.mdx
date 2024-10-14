@@ -75,7 +75,7 @@ The `metadata` object should contain your dApp's name, description, url and icon
 
 ## Redirect to your dApp
 
-The service's metadata object contains a `redirect` option that serves to the purpose of redirecting back to your dapp from the connected wallet.
+AppKit's metadata object contains a `redirect` option that should be used by the wallet to redirected back to your dapp after connection.
 
 ```javascript
 redirect: Redirect(
@@ -137,27 +137,29 @@ But in order for the redirect mechanism to work you would also need to add the f
 
 ## Connection Buttons
 
-You can use the `AppKitModalConnectButton`, which will open the AppKit modal with no prior network selected
+`AppKitModalConnectButton` to open modal and connect to a wallet or through social options
 
 ```javascript
 AppKitModalConnectButton(appKit: _appKitModal)
 ```
 
-Or you can use `AppKitModalNetworkSelectButton` which will first show a network selection prompt:
+`AppKitModalNetworkSelectButton` to select an available network
 
 ```javascript
 AppKitModalNetworkSelectButton(appKit: _appKitModal)
 ```
 
-Once session is approved you can use `AppKitModalAccountButton` widget to show basic account data and to open Account data modal:
+`AppKitModalAccountButton` to open account screen once connected
 
 ```javascript
 AppKitModalAccountButton(appKit: _appKitModal)
 ```
 
-To connect to a wallet you can either use `AppKitModalNetworkSelectButton`, `AppKitModalConnectButton`. `AppKitModalNetworkSelectButton` will allow the user to pre-select a Network before connecting while `AppKitModalConnectButton` will directly show available wallets.
+To connect to a wallet you can either use `AppKitModalConnectButton` or `AppKitModalNetworkSelectButton`.
 
-Once connected, `AppKitModalConnectButton` will serve as Disconnect button while `AppKitModalAccountButton` will show basic account data such as balance and address and will we used to open Account screen.
+`AppKitModalNetworkSelectButton` will allow the user to pre-select a Network before connecting while `AppKitModalConnectButton` will directly show available wallets and social options.
+
+Once connected, `AppKitModalConnectButton` will serve as Disconnect button while `AppKitModalAccountButton` will show basic account data such as balance and address and will be used to open Account screen.
 
 Quick example:
 
@@ -175,33 +177,47 @@ Column(
 ),
 ```
 
+`AppKitModalAccountButton` is composed by `AppKitModalBalanceButton` and `AppKitModalAddressButton` and you can use these separatedly from `AppKitModalAccountButton`
+
+```javascript
+AppKitModalBalanceButton(appKitModal: _appKitModal, onTap: _appKitModal.openModalView);
+
+AppKitModalAddressButton(appKitModal: _appKitModal, onTap: _appKitModal.openModalView);
+```
+
 ## Custom Buttons
 
-If you like you can also override AppKit's button style by using the `custom:` property as follows
+If you like you can also override AppKit's buttons by using the `custom:` property as follows
 
 ```javascript
 AppKitModalConnectButton(
   appKit: _appKitModal,
-  custom: ElevatedButton(
+  /* highlight-add-start */
+  custom: MyCustomButton(
     onPressed: () {
       _appKitModal.openModalView();
     },
     child: const Text('CONNECT WALLET'),
   ),
+  /* highlight-add-end */
 ),
 ```
 
-`openModalView` method can accept a "startWidget" argument that you can leverage to open specifics screens of the modal:
+`openModalView()` method can accept a "startWidget" argument that you can leverage to open specifics screens of the modal:
 
 ```javascript
+// With no options will open default screen depending on the connection status
+_appKitModal.openModalView();
+
+ // Will open Network Selection screen independently of the connection status
+ // This option is not needed if you use AppKitModalNetworkSelectButton()
+_appKitModal.openModalView(ReownAppKitModalSelectNetworkPage());
+
  // Will open QR Code screen for connection.
  // Will work only if not yet connected.
 _appKitModal.openModalView(ReownAppKitModalQRCodePage());
 
- // Will open Network Selection screen
-_appKitModal.openModalView(ReownAppKitModalSelectNetworkPage());
-
-// Will open All Wallets screen for selecting.
+// Will open All Wallets screen for connection
 // Will work only if not yet connected.
 _appKitModal.openModalView(ReownAppKitModalAllWalletsPage());
 ```

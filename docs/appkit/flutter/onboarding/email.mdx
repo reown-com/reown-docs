@@ -1,14 +1,23 @@
 import PlatformTabs from '../../../components/PlatformTabs'
 import PlatformTabItem from '../../../components/PlatformTabItem'
 
-# Email Wallets
+# Email & Social Wallets
 
-AppKit enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails.
+AppKit enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social accounts.
 
+:::caution important
+
+Remember to whitelist your dapp's iOS's bundleId and Android's packageName in your cloud configuration.
+
+1. LogIn into https://cloud.reown.com
+2. Open Dashboard and scroll down to _Mobile Application IDs_ menu
+3. Add your iOS Bundle ID and your Android Package Name
+
+:::
 
 ## Integration
 
-In order to support Email Wallets creation just set `enableEmail` parameter to `true` in `ReownAppKitModal` initialization.
+In order to support Email and Social Wallets creation just set `featuresConfig:` parameter in `ReownAppKitModal` initialization.
 
 ```javascript
 final _appKitModal = ReownAppKitModal(
@@ -25,20 +34,40 @@ final _appKitModal = ReownAppKitModal(
     ),
   ),
   /* highlight-add-start */
-  enableEmail: true, // OPTIONAL - false by default
+  featuresConfig: FeaturesConfig(
+    email: true,
+    socials: [
+      AppKitSocialOption.Farcaster,
+      AppKitSocialOption.X,
+      AppKitSocialOption.Apple,
+      AppKitSocialOption.Discord,
+    ],
+    showMainWallets: false,
+  ),
   /* highlight-add-end */
 );
 ```
 
-:::caution note
+## Options
 
-Remember to whitelist your dapp's iOS's bundleId and Android's packageName in your cloud configuration.
+- **_email: `bool`_** : This boolean defines whether you want to enable email login. Default `true`
+- **_socials: `List<AppKitSocialOption>`_** : This list contains the list of social platforms that you want to enable for user authentication. The platforms in the example include Farcaster, X, Discord. Is empty by default, it means that no social options is enabled.
+- **showMainWallets `bool`_** : This boolean defines whether you want to show the main wallet options on the first connect screen. If this is `false` it will show a button that directs you to a new screen displaying all avaiable wallets. Default `true`.
 
-1. LogIn into https://cloud.reown.com
-2. Open Dashboard and scroll down to _Mobile Application IDs_ menu
-3. Add your iOS Bundle ID and your Android Package Name
+:::note
 
+In order for Email Wallet to work propertly, `AppKitModalConnectButton()` has to be instantiated during the whole lifetime of the app. 
+
+If you already use `AppKitModalConnectButton()` then nothing else has to be done, but in case you don't use it but still want to support Email Wallets you can instantiate and hide it as follows:
+
+```javascript
+AppKitModalConnectButton(
+  appKit: _appKitModal,
+  custom: SizedBox.shrink(), // Will make the button invisible
+),
+```
 :::
+
 
 ## User Flow
 

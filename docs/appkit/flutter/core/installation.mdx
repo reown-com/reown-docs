@@ -171,31 +171,6 @@ Example:
 </PlatformTabs>
 
 
-:::info note
-
-If you encounter issue related to `coinbase_wallet_sdk` in regards of _AGP 8.x Compatibility_, please override `coinbase_wallet_sdk` dependency in you pubspec.yaml file as follows:
-
-```javascript
-environment:
-  ...
-
-dependencies:
-  ...
-
-dependency_overrides:
-  coinbase_wallet_sdk:
-    git:
-      url: https://github.com/WalletConnect/wallet-mobile-sdk.git
-      path: flutter
-      ref: beba5b377e32554f5c00ee08c4df509d9078dbf1
-
-dev_dependencies:
-  ...
-  
-```
-:::
-
-
 ### Disable Coinbase Wallet
 
 Coinbase Wallet is enabled by default even if, in order to function properly, a few steps has to be done as described in the previous section. However, if you don't want to include/support Coinbase Wallet on your app you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to [excludedWalletIds](./options#excludedwalletids) options Array.
