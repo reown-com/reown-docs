@@ -73,7 +73,7 @@ const modal = createAppKit({
 ## Options
 
 - **_email [boolean]_** : This boolean defines whether you want to enable email login. Default `true`
-- **_socials [array]_** : This array contains the list of social platforms that you want to enable for user authentication. The platforms in the example include Google, X, GitHub, Discord, Apple, Facebook and Farcaster. Default `undefined`
+- **_socials [array]_** : This array contains the list of social platforms that you want to enable for user authentication. The platforms in the example include Google, X, GitHub, Discord, Apple, Facebook and Farcaster. The default value of `undefined` displays everything. Set it to `false` to disable this feature. You can also pass an empty array to disable it.
 - **_emailShowWallets [boolean]_** : This boolean defines whether you want to show the wallet options on the first connect screen. If this is false and `socials` are enabled, it will show a button that directs you to a new screen displaying the wallet options. Default `true`
 
 ## User flow
@@ -122,7 +122,7 @@ By configuring the `socials` option in the `features` parameter, you can control
   <img width={300} src="/img/w3m/auth/modal_wallets.webp" />
 </p>
 
-- **` socials: []`**: When you want to disable social logins.
+- **`socials: []` or `socials: false`**: When you want to disable social logins.
 
 <p align="center">
   <img width={300} src="/img/w3m/auth/modal_wallets_nosocial.webp" />
