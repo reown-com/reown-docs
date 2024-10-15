@@ -1,9 +1,19 @@
 import Button from '../../../components/button'
 
+### useAppKitAccount
+
+Hook that returns the client's information.
+
+```tsx
+import { useAppKitAccount } from '@reown/appkit/vue'
+
+const { address, status, isConnected } = useAppKitAccount()
+```
+
 ### switchNetwork
 
 ```tsx
-import { createAppKit } from '@reown/appkit/react'
+import { createAppKit } from '@reown/appkit/vue'
 import { mainnet, arbitrum, polygon } from '@reown/appkit/networks'
 
 const modal = createAppKit({
@@ -24,15 +34,18 @@ modal.switchNetwork(polygon)
 Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
-import { BrowserProvider } from 'ethers'
-import { useAppKitProvider } from '@reown/appkit/react'
+import { useAppKitAccount, useAppKitProvider, useAppKitNetwork  } from '@reown/appkit/vue'
+import { ethers } from 'ethers'
+import { useAppKitProvider } from '@reown/appkit/vue'
 
 function Components() {
   const { walletProvider } = useAppKitProvider('eip155')
+  const { address } = useAppKitAccount()
+  const { chainId } = useAppKitNetwork()
 
   async function onSignMessage() {
-    const provider = new BrowserProvider(walletProvider)
-    const signer = await provider.getSigner()
+    const provider = new ethers.providers.Web3Provider(walletProvider, chainId)
+    const signer = provider.getSigner(address)
     const signature = await signer?.signMessage('Hello AppKit Ethers')
     console.log(signature)
   }

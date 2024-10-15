@@ -5,7 +5,7 @@ import Button from '../../../components/button'
 Hook that returns the client's information.
 
 ```tsx
-import { useAppKitAccount } from '@reown/appkit/react'
+import { useAppKitAccount } from '@reown/appkit/vue'
 
 function Components() {
   const { address, caipAddress, isConnected } = useAppKitAccount();
@@ -19,7 +19,7 @@ function Components() {
 Hook that returns the `walletProvider` and the `WalletProviderType`.
 
 ```tsx
-import { useAppKitAccount, useAppKitProvider } from '@reown/appkit/react'
+import { useAppKitAccount, useAppKitrovider } from '@reown/appkit/vue'
 import type { Provider } from '@reown/appkit-adapter-solana'
 
 function SignMessage() {
@@ -54,7 +54,7 @@ function SignMessage() {
 Hook that returns the connection object. More info about [Connection Class](https://solana-labs.github.io/solana-web3.js/classes/Connection.html)
 
 ```tsx
-import { useAppKitConnection } from '@reown/appkit-adapter-solana/react'
+import { useAppKitConnection } from '@reown/appkit-adapter-solana/vue'
 
 ...
 

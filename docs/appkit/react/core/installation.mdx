@@ -166,7 +166,7 @@ const USDTAbi = [
 
 function Components() {
   const { address, isConnected } = useAppKitAccount()
-  const { walletProvider } = useAppKitProvider()
+  const { walletProvider } = useAppKitProvider('eip155')
 
   async function getBalance() {
     if (!isConnected) throw Error('User disconnected')
