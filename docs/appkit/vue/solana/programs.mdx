@@ -13,12 +13,13 @@ import {
   LAMPORTS_PER_SOL
 } from '@solana/web3.js';
 import { useAppKitAccount, useAppKitProvider } from '@reown/appkit/vue'
+import type { Provider } from '@reown/appkit-adapter-solana'
 
 export default {
   setup() {
     const counterMessage = ref('');
     const { address } = useAppKitAccount();
-    const { walletProvider, connection } = useAppKitProvider();
+    const { walletProvider, connection } = useAppKitProvider<Provider>('solana')
 
     function deserializeCounterAccount(data) {
       if (data?.byteLength !== 8) {
