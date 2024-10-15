@@ -13,6 +13,21 @@ The following options can be passed to the `createAppKit` function:
 createAppKit({ adapters, projectId, networks, ...options })
 ```
 
+## networks
+
+You can set an array of networks that can be chosen from the `@reown/appkit/networks` library. This library retrieves the list of EVM networks from Viem and also includes the Solana networks.
+
+```ts
+import { mainnet, solana } from '@reown/appkit/networks'
+
+createAppKit({
+  // ...
+  networks: [mainnet, solana]
+})
+```
+
+For custom networks, refer to this [doc page](/appkit/react/core/custom-networks).
+
 ## defaultNetwork
 
 You can set a desired network for the initial connection as default:
