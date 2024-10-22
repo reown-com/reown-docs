@@ -109,9 +109,9 @@ Upon successful execution, the response will include the granted permissions and
 
 ## How to use the permissions
 
-The dApp must call the following two API endpoints from the wallet services to use these permissions.
-    1. `PrepareCalls` - Accepts an EIP-5792 `wallet_sendCalls` request.
-    Responds with the prepared calls (in the case of Appkit Embedded Wallet, a v0.7 user operation), some context, and a signature request.
+The dApp must call the following two endpoints from the [wallet services API](https://docs.reown.com/walletkit/overview)to use these permissions.
+    1. `prepareCalls` - Accepts an EIP-5792 `wallet_sendCalls` request.
+    Responds with the prepared calls (in the case of Appkit Embedded Wallet, an Entrypoint v0.7 user operation), some context, and a signature request.
     2. `sendPreparedCalls` - Accepts prepared calls, a signature, and the context returned from prepareCalls if present. Returns an EIP-5792 calls ID.
     
 ### Steps to follow for executing any async action by the dApp backend.
@@ -151,7 +151,7 @@ Dapp makes the `wallet_prepareCalls` JSON rpc call to wallet service. Accepts an
             }],
             capabilities: {
                 permissions: {
-                context: '...' // Importantly for session keys, wallets will likely need the ERC-7715 permissions context for userOp construction
+                context: '...' // Importantly for session keys, wallets will likely need the ERC-7715 (https://eip.tools/eip/7715) permissions context for userOp construction
                 }
             }
         }])
@@ -202,7 +202,14 @@ Dapp makes the `wallet_prepareCalls` JSON rpc call to wallet service. Accepts an
 
     . App developers are expected to Sign the `signatureRequest.hash` returned from `wallet_prepareCalls` call using the dApp key (secp256k1 or secp256r1)
     
-    . Dapps makes the `wallet_sendPreparedCalls` JSON rpc call to wallet service. The RPC accepts prepared calls from the response to a `wallet_prepareCalls` request along with a signature, and returns an EIP-5792 call bundle ID.
+    . Dapps makes the `wallet_sendPreparedCalls` JSON rpc call to wallet service. The RPC accepts prepared calls from the response to a `wallet_prepareCalls` request along with a signature, and returns an [EIP-5792](https://eip.tools/eip/5792) call bundle ID.
+
+## Reference
+
+- ERC-7715: Grant Permissions from Wallets | https://eip.tools/eip/7715
+- EIP-5792: Wallet Call API | https://eip.tools/eip/5792
+- ERC-4337 Entry Point | https://github.com/ethereum/ercs/blob/master/ERCS/erc-4337.md#entrypoint-definition
+
 
 ## Currently supported Permission types
 
@@ -241,29 +248,3 @@ Dapp makes the `wallet_prepareCalls` JSON rpc call to wallet service. Accepts an
     }
     ```
     
-#### NativeTokenRecurringAllowancePermission
-    
-    ```jsx
-    export type NativeTokenRecurringAllowancePermission = {
-      type: 'native-token-recurring-allowance'
-      data: {
-        allowance: `0x${string}`
-        start: number
-        period: number
-      }
-    }
-    ```
- 
-#### ERC20RecurringAllowancePermission
-    
-    ```jsx
-    type ERC20RecurringAllowancePermission = {
-      type: 'erc20-recurring-allowance'
-      data: {
-        token: `0x${string}`
-        allowance: `0x${string}`
-        start: number
-        period: number
-      }
-    }
-    ```
