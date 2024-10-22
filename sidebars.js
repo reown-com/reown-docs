@@ -344,6 +344,12 @@ module.exports = {
           type: 'category',
           label: 'Onboarding',
           items: ['appkit/react/onboarding/socials', 'appkit/react/onboarding/smart-accounts']
+        }
+        ,
+        {
+          type: 'category',
+          label: 'Experimental',
+          items: ['appkit/react/experimental/smart-session']
         },
         {
           type: 'category',
@@ -440,6 +446,11 @@ module.exports = {
         },
         {
           type: 'category',
+          label: 'Experimental',
+          items: ['appkit/next/experimental/smart-session']
+        },
+        {
+          type: 'category',
           label: 'Transactions',
           items: ['appkit/next/transactions/onramp', 'appkit/next/transactions/swaps']
         },
@@ -533,6 +544,11 @@ module.exports = {
         },
         {
           type: 'category',
+          label: 'Experimental',
+          items: ['appkit/vue/experimental/smart-session']
+        },
+        {
+          type: 'category',
           label: 'Transactions',
           items: ['appkit/vue/transactions/onramp', 'appkit/vue/transactions/swaps']
         },
@@ -618,6 +634,11 @@ module.exports = {
             'appkit/javascript/core/theming',
             'appkit/javascript/core/resources'
           ]
+        },
+        {
+          type: 'category',
+          label: 'Experimental',
+          items: ['appkit/javascript/experimental/smart-session']
         },
         {
           type: 'category',
