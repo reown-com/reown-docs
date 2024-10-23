@@ -109,100 +109,101 @@ Upon successful execution, the response will include the granted permissions and
 
 ## How to use the permissions
 
-The dApp must call the following two endpoints from the [wallet services API](https://docs.reown.com/walletkit/overview)to use these permissions.
-    1. `prepareCalls` - Accepts an EIP-5792 `wallet_sendCalls` request.
+The dApp must call the following two endpoints from the wallet services API to use these permissions.
+
+    1. `https://rpc.walletconnect.org/v1/wallets/prepareCalls` - Accepts an EIP-5792 `wallet_sendCalls` request.
     Responds with the prepared calls (in the case of Appkit Embedded Wallet, an Entrypoint v0.7 user operation), some context, and a signature request.
-    2. `sendPreparedCalls` - Accepts prepared calls, a signature, and the context returned from prepareCalls if present. Returns an EIP-5792 calls ID.
+    2. `https://rpc.walletconnect.org/v1/wallets/sendPreparedCalls` - Accepts prepared calls, a signature, and the context returned from prepareCalls if present. Returns an EIP-5792 calls ID.
     
 ### Steps to follow for executing any async action by the dApp backend.
 
 <img src="/assets/smart-sessions.jpg" />
 
-Dapp makes the `wallet_prepareCalls` JSON rpc call to wallet service. Accepts an EIP-5792 `wallet_sendCalls` request, and returns the prepared calls according to the account's implementation.
+1. Dapp makes the `wallet_prepareCalls` JSON RPC call to the wallet service API. Accepts an EIP-5792 `wallet_sendCalls` request, and returns the prepared calls according to the account's implementation.
 
-#### Parameter 
-<Tabs
-	groupId=""
-	activeOptions={["Parameter","Example Value"]}
->
-<TabItem value="Parameter">
-        ```tsx
-        type PrepareCallsParams = [{
-        from: `0x${string}`
-        chainId: `0x${string}`
-        calls: {
-            to: `0x${string}`
-            data: `0x${string}`
-            value: `0x${string}`
-        }[];
-        capabilities: Record<string, any>
-        }]
-        ```
-</TabItem>
-<TabItem value="Example Value">
-        ```tsx
-        wallet_prepareCalls([{
-            from: '0x...',
-            chainId: '0x...',
-            calls: [{
-                to: '0x...'
-                data: '0x...'
-                value: '0x...'
-            }],
-            capabilities: {
-                permissions: {
-                context: '...' // Importantly for session keys, wallets will likely need the ERC-7715 (https://eip.tools/eip/7715) permissions context for userOp construction
+    #### Parameter 
+    <Tabs
+        groupId=""
+        activeOptions={["Parameter","Example Value"]}
+    >
+    <TabItem value="Parameter">
+            ```tsx
+            type PrepareCallsParams = [{
+            from: `0x${string}`
+            chainId: `0x${string}`
+            calls: {
+                to: `0x${string}`
+                data: `0x${string}`
+                value: `0x${string}`
+            }[];
+            capabilities: Record<string, any>
+            }]
+            ```
+    </TabItem>
+    <TabItem value="Example Value">
+            ```tsx
+            wallet_prepareCalls([{
+                from: '0x...',
+                chainId: '0x...',
+                calls: [{
+                    to: '0x...'
+                    data: '0x...'
+                    value: '0x...'
+                }],
+                capabilities: {
+                    permissions: {
+                    context: '...' // Importantly for session keys, wallets will likely need the ERC-7715 (https://eip.tools/eip/7715) permissions context for userOp construction
+                    }
                 }
-            }
-        }])
-        ```
-</TabItem>
-</Tabs>
+            }])
+            ```
+    </TabItem>
+    </Tabs>
 
 
-#### Return value 
-<Tabs
-	groupId=""
-	activeOptions={["Return value","Return value Example"]}
->
-<TabItem value="Return value">
-        ```tsx
-        type PrepareCallsReturnValue = [{
-            preparedCalls: {
-                type: string
-                data: any
-                chainId: `0x${string}`
-            }
-            signatureRequest: {  
-                hash: `0x${string}`
-            }
-            context: `0x${string}`
-        }]
-        ```
-</TabItem>
-<TabItem value="Return value Example">
-        ```tsx
-        [{
-            preparedCalls: {
-                type: 'user-operation-v07', type
-                data: { // ...userOp
-                sender: '0x...',
-                ...
+    #### Return value 
+    <Tabs
+        groupId=""
+        activeOptions={["Return value","Return value Example"]}
+    >
+    <TabItem value="Return value">
+            ```tsx
+            type PrepareCallsReturnValue = [{
+                preparedCalls: {
+                    type: string
+                    data: any
+                    chainId: `0x${string}`
+                }
+                signatureRequest: {  
+                    hash: `0x${string}`
+                }
+                context: `0x${string}`
+            }]
+            ```
+    </TabItem>
+    <TabItem value="Return value Example">
+            ```tsx
+            [{
+                preparedCalls: {
+                    type: 'user-operation-v07', type
+                    data: { // ...userOp
+                    sender: '0x...',
+                    ...
+                    },
+                    chainId: '0x01'
                 },
-                chainId: '0x01'
-            },
-            signatureRequest: {  
-                hash: '0x...' // user op hash in our case
-            },
-            context: '...' // params.capabilities.permissions.context in our case
-        }]
-        ```
-</TabItem>
-</Tabs>
+                signatureRequest: {  
+                    hash: '0x...' // user op hash in our case
+                },
+                context: '...' // params.capabilities.permissions.context in our case
+            }]
+            ```
+    </TabItem>
+    </Tabs>
 
-    . App developers are expected to Sign the `signatureRequest.hash` returned from `wallet_prepareCalls` call using the dApp key (secp256k1 or secp256r1)
-    
-    . Dapps makes the `wallet_sendPreparedCalls` JSON rpc call to wallet service. The RPC accepts prepared calls from the response to a `wallet_prepareCalls` request along with a signature, and returns an [EIP-5792](https://eip.tools/eip/5792) call bundle ID.
+2. App developers are expected to Sign the `signatureRequest.hash` returned from `wallet_prepareCalls` call using the dApp key (secp256k1 or secp256r1)
+
+3. dApps makes the `wallet_sendPreparedCalls` JSON RPC call to wallet service API. The RPC accepts the prepared response from `wallet_prepareCalls` request along with a signature, and returns an [EIP-5792](https://eip.tools/eip/5792) call bundle ID.
 
 ## Reference
 
@@ -247,4 +248,4 @@ Dapp makes the `wallet_prepareCalls` JSON rpc call to wallet service. Accepts an
       }
     }
     ```
-    
+ 
