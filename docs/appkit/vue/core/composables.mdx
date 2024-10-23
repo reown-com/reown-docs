@@ -4,6 +4,8 @@ import PlatformTabItem from '../../../components/PlatformTabItem'
 
 import WagmiComposables from '../wagmi/composables.mdx'
 import EthersComposables from '../ethers/composables.mdx'
+import Ethers5Composables from '../ethers5/composables.mdx'
+import SolanaComposables from '../solana/composables.mdx'
 import OpenModal from './open.mdx'
 
 # Composables
@@ -114,9 +116,9 @@ export default Component(){
 }
 ```
 
-## Ethereum Library
+## Ethereum/Solana Library
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "ethers5", "solana"]}>
 <PlatformTabItem value="wagmi">
 
 <WagmiComposables />
@@ -125,6 +127,16 @@ export default Component(){
 <PlatformTabItem value="ethers">
 
 <EthersComposables />
+
+</PlatformTabItem>
+<PlatformTabItem value="ethers5">
+
+<Ethers5Composables />
+
+</PlatformTabItem>
+<PlatformTabItem value="solana">
+
+<SolanaComposables />
 
 </PlatformTabItem>
 </PlatformTabs>

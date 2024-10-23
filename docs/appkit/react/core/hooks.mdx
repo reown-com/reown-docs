@@ -4,6 +4,8 @@ import PlatformTabItem from '../../../components/PlatformTabItem'
 
 import WagmiHooks from '../wagmi/hooks.mdx'
 import EthersHooks from '../ethers/hooks.mdx'
+import Ethers5Hooks from '../ethers5/hooks.mdx'
+import SolanaHooks from '../solana/hooks.mdx'
 
 import OpenModal from './open.mdx'
 
@@ -116,9 +118,9 @@ export default Component(){
 ```
 
 
-## Ethereum Library
+## Ethereum/Solana Library
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "ethers5", "solana"]}>
 <PlatformTabItem value="wagmi">
 
 <WagmiHooks />
@@ -127,6 +129,16 @@ export default Component(){
 <PlatformTabItem value="ethers">
 
 <EthersHooks />
+
+</PlatformTabItem>
+<PlatformTabItem value="ethers5">
+
+<Ethers5Hooks />
+
+</PlatformTabItem>
+<PlatformTabItem value="solana">
+
+<SolanaHooks />
 
 </PlatformTabItem>
 </PlatformTabs>
