@@ -1,0 +1,251 @@
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## Overview
+
+:::note
+💡 The support for smart-session is included in the Appkit SDK in the `experimental` package.
+:::
+
+Smart Sessions allow developers to easily integrate session-based permission handling within their decentralized applications (dApps). Using the `grantPermissions` method, can send permission requests to wallets.
+
+This guide will walk you through on how to use the `grantPermissions` method, including the basic setup and an example of how to request permissions from a wallet.
+
+## Implementations
+
+The `grantPermissions` method provides an easy way to interact with the smart wallet to request permissions.
+
+### Step 1 | Import the method
+First, import the grantPermissions method from the `@reown/appkit-experimental/smart-session` package.
+
+```javascript
+import { grantPermissions, type SmartSessionGrantPermissionsRequest } from '@reown/appkit-experimental/smart-session'
+```
+
+### Step 2 | Define the Permission Request
+
+Create an object adhering to the `SmartSessionGrantPermissionsRequest` type. This object specifies details like the `address`, `chainID`, `signer`, `policies`, `permissions`, and `expiry` time.
+    
+Example request object:
+
+```tsx
+const request: SmartSessionGrantPermissionsRequest = {
+      expiry: Math.floor(Date.now() / 1000) + 24 * 60 * 60, // 24 hours
+      chainId: toHex(baseSepolia.id),
+      address: address,
+      signer: {
+        type: 'keys',
+        data: {
+          keys :[{
+          type: 'secp256k1',
+          publicKey: '0x...' //public key of dapp signer
+        }]
+        }
+      },
+      permissions: [ {
+        type: 'contract-call',
+        data: {
+          address: '0x2E65BAfA07238666c3b239E94F32DaD3cDD6498D', // sample donut contract address
+          abi: [
+            {
+              inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+              name: 'purchase',
+              outputs: [],
+              stateMutability: 'payable',
+              type: 'function'
+            }
+          ],
+          functions: [ {
+            functionName: 'purchase'
+          } ]
+        }
+      }],
+      policies: []
+    }
+```
+
+### Step 3 | Invoke the Method
+
+Call the `grantPermissions` function, passing the request object. This will trigger the permission request via the connected wallet.
+
+```tsx
+ const response = await grantPermissions(request)
+```
+
+### Step 4 | Handle the Response
+
+Upon successful execution, the response will include the granted permissions and the session context. So the response can be handled as needed.
+
+#### Response Format
+
+```tsx
+{
+	chainId: `0x14a34`
+  address: `0x...`
+  expiry: 1727824386
+  permissions: [
+    {
+      type: 'contract-call',
+      data: {
+        address: '0x2E65BAfA07238666c3b239E94F32DaD3cDD6498D', // sample donut contract address
+        abi: [
+          {
+            inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+            name: 'purchase',
+            outputs: [],
+            stateMutability: 'payable',
+            type: 'function'
+          }
+        ],
+        functions: [ {
+          functionName: 'purchase'
+        } ]
+      }
+    }
+  ],
+  context: '...'  // Context identifier for the session
+}
+```
+
+## How to use the permissions
+
+The dApp must call the following two endpoints from the wallet services API to use these permissions.
+
+    1. `https://rpc.walletconnect.org/v1/wallets/prepareCalls` - Accepts an EIP-5792 `wallet_sendCalls` request.
+    Responds with the prepared calls (in the case of Appkit Embedded Wallet, an Entrypoint v0.7 user operation), some context, and a signature request.
+    2. `https://rpc.walletconnect.org/v1/wallets/sendPreparedCalls` - Accepts prepared calls, a signature, and the context returned from prepareCalls if present. Returns an EIP-5792 calls ID.
+    
+### Steps to follow for executing any async action by the dApp backend.
+
+<img src="/assets/smart-sessions.jpg" />
+
+1. Dapp makes the `wallet_prepareCalls` JSON RPC call to the wallet service API. Accepts an EIP-5792 `wallet_sendCalls` request, and returns the prepared calls according to the account's implementation.
+
+    #### Parameter 
+    <Tabs
+        groupId=""
+        activeOptions={["Parameter","Example Value"]}
+    >
+    <TabItem value="Parameter">
+            ```tsx
+            type PrepareCallsParams = [{
+            from: `0x${string}`
+            chainId: `0x${string}`
+            calls: {
+                to: `0x${string}`
+                data: `0x${string}`
+                value: `0x${string}`
+            }[];
+            capabilities: Record<string, any>
+            }]
+            ```
+    </TabItem>
+    <TabItem value="Example Value">
+            ```tsx
+            wallet_prepareCalls([{
+                from: '0x...',
+                chainId: '0x...',
+                calls: [{
+                    to: '0x...'
+                    data: '0x...'
+                    value: '0x...'
+                }],
+                capabilities: {
+                    permissions: {
+                    context: '...' // Importantly for session keys, wallets will likely need the ERC-7715 (https://eip.tools/eip/7715) permissions context for userOp construction
+                    }
+                }
+            }])
+            ```
+    </TabItem>
+    </Tabs>
+
+
+    #### Return value 
+    <Tabs
+        groupId=""
+        activeOptions={["Return value","Return value Example"]}
+    >
+    <TabItem value="Return value">
+            ```tsx
+            type PrepareCallsReturnValue = [{
+                preparedCalls: {
+                    type: string
+                    data: any
+                    chainId: `0x${string}`
+                }
+                signatureRequest: {  
+                    hash: `0x${string}`
+                }
+                context: `0x${string}`
+            }]
+            ```
+    </TabItem>
+    <TabItem value="Return value Example">
+            ```tsx
+            [{
+                preparedCalls: {
+                    type: 'user-operation-v07', type
+                    data: { // ...userOp
+                    sender: '0x...',
+                    ...
+                    },
+                    chainId: '0x01'
+                },
+                signatureRequest: {  
+                    hash: '0x...' // user op hash in our case
+                },
+                context: '...' // params.capabilities.permissions.context in our case
+            }]
+            ```
+    </TabItem>
+    </Tabs>
+
+2. App developers are expected to Sign the `signatureRequest.hash` returned from `wallet_prepareCalls` call using the dApp key (secp256k1 or secp256r1)
+
+3. dApps makes the `wallet_sendPreparedCalls` JSON RPC call to wallet service API. The RPC accepts the prepared response from `wallet_prepareCalls` request along with a signature, and returns an [EIP-5792](https://eip.tools/eip/5792) call bundle ID.
+
+## Reference
+
+- ERC-7715: Grant Permissions from Wallets | https://eip.tools/eip/7715
+- EIP-5792: Wallet Call API | https://eip.tools/eip/5792
+- ERC-4337 Entry Point | https://github.com/ethereum/ercs/blob/master/ERCS/erc-4337.md#entrypoint-definition
+
+
+## Currently supported Permission types
+
+#### ContractCallPermission
+    
+    ```jsx
+    export enum ParamOperator {
+      EQUAL = 'EQUAL',
+      GREATER_THAN = 'GREATER_THAN',
+      LESS_THAN = 'LESS_THAN'
+    }
+    
+    export enum Operation {
+      Call = 'Call',
+      DelegateCall = 'DelegateCall'
+    }
+    
+    export type ArgumentCondition = {
+      operator: ParamOperator
+      value: `0x${string}`
+    }
+    
+    export type FunctionPermission = {
+      functionName: string
+      args?: ArgumentCondition[]
+      valueLimit?: `0x${string}`
+      operation?: Operation
+    }
+    export type ContractCallPermission = {
+      type: 'contract-call'
+      data: {
+        address: `0x${string}`
+        abi: Record<string, unknown>[]
+        functions: FunctionPermission[]
+      }
+    }
+    ```
+ 
