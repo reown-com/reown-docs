@@ -23,7 +23,8 @@ const cloud = {
     'cloud/verify',
     'cloud/relay',
     'cloud/blockchain-api',
-    'cloud/analytics'
+    'cloud/analytics',
+    'cloud/paymaster'
   ]
 }
 
