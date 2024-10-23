@@ -28,6 +28,24 @@ createAppKit({
 
 For custom networks, refer to this [doc page](/appkit/react/core/custom-networks).
 
+## metadata
+
+You can set the metadata for your AppKit. We are using `name`, `description`, `icons`, and `url` at certain places like the wallet connection, sign message, etc screens. If not provided, we will use the metadata of your website's document object.
+
+```ts
+createAppKit({
+  // ...
+  metadata: {
+    name: 'My App',
+    description: 'My App Description',
+    icons: ['https://myapp.com/icon.png'],
+    url: 'https://myapp.com'
+  }
+})
+```
+
+For custom networks, refer to this [doc page](/appkit/react/core/custom-networks).
+
 ## defaultNetwork
 
 You can set a desired network for the initial connection as default:
@@ -224,8 +242,11 @@ createAppKit({
   privacyPolicyUrl: 'https://www.myprivacypolicy.com'
 })
 ```
+
 ## features
+
 This allows you to toggle (enable or disable) additional features provided by AppKit. Features such as analytics, email and social logins, On-ramp, swaps, etc., can be enabled using this parameter.
+
 ### analytics
 
 Enable analytics to get more insights on your users activity within your [Reown Cloud's dashboard](https://cloud.reown.com)
@@ -234,10 +255,11 @@ Enable analytics to get more insights on your users activity within your [Reown 
 createAppKit({
   //...
   features: {
-    analytics: true,
+    analytics: true
   }
 })
 ```
+
 <Button name="Learn More" url="/cloud/analytics" />
 
 ### swaps
@@ -248,7 +270,7 @@ Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transac
 createAppKit({
   //...
   features: {
-    swaps: true,
+    swaps: true
   }
 })
 ```
@@ -261,11 +283,10 @@ Enable or disable the onramp feature in your AppKit. [Onramp](/appkit/react/tran
 createAppKit({
   //...
   features: {
-    onramp: true,
+    onramp: true
   }
 })
 ```
-
 
 ## customWallets
 
@@ -418,7 +439,7 @@ const adapter = new WagmiAdapter({
       preference: 'smartWalletOnly'
       /* highlight-add-end */
     }),
-    projectId, 
+    projectId,
     networks
   ]
 })
