@@ -9,11 +9,10 @@ title: Paymaster
 ## Accessing Reown Paymaster
 
 1. Log In to your Cloud Account [here](https://cloud.reown.com/sign-in).
-2. Click on your Project.
-3. Click the Paymaster Tab.
+2. Click on your Project -> Paymaster Tab.
 
 ## Creating a Policy
-Click add policy and then follow the steps within the policy creation screen.
+Click Add Policy and then follow the steps within the policy creation screen.
 
 ### 1. Select Plan
 
@@ -25,8 +24,9 @@ If you select the free plan, you will have *unlimited* access to sponsoring on t
 
 With the pay as you go plan, you will be asked to enter credit card information. *You will not be billed anything immediately*.
 
-Instead you will be charged based on usage, with Paymaster Credits. This is calculated using a simple formula where it is the amount of 
-gas sponsored  with a 10% commission for fees.
+Instead you will be charged based on usage, with Paymaster Credits. This is
+calculated using a simple formula: 
+  * amount of gas sponsored  with a 10% commission for fees.
 
 Billing occurs monthly, however if a threshhold of 100 USD is passed there will be an immediate charge and the billing cycle will be reset.
 
@@ -39,20 +39,21 @@ policy's start date with a campaign or similar.
 
 ### 3. Select Chains
 
-All our supported chains will be enabled by default, but it is possible to deselect someone to only sponsor transactions on selected chains
+All our supported chains will be enabled by default, but it is possible to
+deselect a chain to only sponsor transactions on selected chains
 
 ### 4. Add Policy Logic
 
 Policy logic can be updated in one of two ways:
 1. JSON editor
-2. No-code builder (Not Currently Available)
+2. No-code builder (Will be available soon)
 
 There are distinct advantages to this:
 1. You can maintain an auditable history of your policies by storing the JSONs for your policy
 2. You can autogenerate policies for your campaigns since it's a simple JSON schema
 3. The policies can be extremely flexible as you can chain conditional checks for which smart contract to target, which method within the contract, the expected gas, etc.
 
-After this the policy will be created and if its start date is in the past, then it will be active and ready to be used.
+After, the policy will be created and if its start date is in the past, then it will be active and ready to be used.
 
 ## Sponsoring transactions
 
@@ -68,7 +69,7 @@ By default, all policies will be validated in succession until one returns true.
 ## JSON Schema: A Practical Example Walkthrough
 
 ### Basics
-The schema at its core is a simple object representation of the following
+The schema itself is a simple object representation of the following
 > Is some key from a user operation equivelant to _(or some other comparision)_  some value?
 
 This is defined in `params` as such:
@@ -106,7 +107,7 @@ Essentially, we want to combine the following two conditions:
 }
 ```
 
-To do this, we need to zoom out and see how the `params` are set:
+To do this, we need to zoom out and see how to set the `params`:
 
 ```json
 {
