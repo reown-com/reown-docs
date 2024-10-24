@@ -574,6 +574,14 @@ article ul li:not([role='tab'])::before {
   margin-right: 0.5em;
 }
 
+.navbar-sidebar {
+  z-index: 99999;
+}
+
+.navbar__toggle {
+  z-index: 9999;
+}
+
 .navbar__item.dropdown {
   background-color: rgba(51, 150, 255, 0.2);
   border-radius: 40px;
