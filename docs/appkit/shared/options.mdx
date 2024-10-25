@@ -15,7 +15,7 @@ createAppKit({ adapters, projectId, networks, ...options })
 
 ## networks
 
-You can set an array of networks that can be chosen from the `@reown/appkit/networks` library. This library retrieves the list of EVM networks from Viem and also includes the Solana networks.
+Array of networks that can be chosen from the `@reown/appkit/networks` library. This library retrieves the list of EVM networks from Viem and also includes the Solana networks.
 
 ```ts
 import { mainnet, solana } from '@reown/appkit/networks'
@@ -28,9 +28,27 @@ createAppKit({
 
 For custom networks, refer to this [doc page](/appkit/react/core/custom-networks).
 
+## metadata
+
+Metadata for your AppKit. The `name`, `description`, `icons`, and `url` are used at certain places like the wallet connection, sign message, etc screens. If not provided, they will be fetched from the metadata of your website's document object.
+
+```ts
+createAppKit({
+  // ...
+  metadata: {
+    name: 'My App',
+    description: 'My App Description',
+    icons: ['https://myapp.com/icon.png'],
+    url: 'https://myapp.com'
+  }
+})
+```
+
+For custom networks, refer to this [doc page](/appkit/react/core/custom-networks).
+
 ## defaultNetwork
 
-You can set a desired network for the initial connection as default:
+Desired network for the initial connection as default:
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi","ethers","solana"]}>
 <PlatformTabItem value="wagmi">
@@ -107,7 +125,7 @@ createAppKit({
 
 ## tokens
 
-You can select tokens for AppKit to show the user's balance of. Each key represents the chain id of the token's blockchain.
+Tokens for AppKit to show the user's balance of. Each key represents the chain id of the token's blockchain.
 
 ```ts
 createAppKit({
@@ -216,7 +234,7 @@ createAppKit({
 
 ## privacyPolicyUrl
 
-You can add an url for the _privacy policy_ link.
+A URL for the _privacy policy_ link.
 
 ```ts
 createAppKit({
@@ -224,8 +242,11 @@ createAppKit({
   privacyPolicyUrl: 'https://www.myprivacypolicy.com'
 })
 ```
+
 ## features
-This allows you to toggle (enable or disable) additional features provided by AppKit. Features such as analytics, email and social logins, On-ramp, swaps, etc., can be enabled using this parameter.
+
+Allows you to toggle (enable or disable) additional features provided by AppKit. Features such as analytics, email and social logins, On-ramp, swaps, etc., can be enabled using this parameter.
+
 ### analytics
 
 Enable analytics to get more insights on your users activity within your [Reown Cloud's dashboard](https://cloud.reown.com)
@@ -234,10 +255,11 @@ Enable analytics to get more insights on your users activity within your [Reown 
 createAppKit({
   //...
   features: {
-    analytics: true,
+    analytics: true
   }
 })
 ```
+
 <Button name="Learn More" url="/cloud/analytics" />
 
 ### swaps
@@ -248,7 +270,7 @@ Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transac
 createAppKit({
   //...
   features: {
-    swaps: true,
+    swaps: true
   }
 })
 ```
@@ -261,15 +283,14 @@ Enable or disable the onramp feature in your AppKit. [Onramp](/appkit/react/tran
 createAppKit({
   //...
   features: {
-    onramp: true,
+    onramp: true
   }
 })
 ```
 
-
 ## customWallets
 
-Add custom wallets to the modal. `CustomWallets` is an array of objects, where each object contains specific information of a custom wallet.
+Adds custom wallets to the modal. `customWallets` is an array of objects, where each object contains specific information of a custom wallet.
 
 ```ts
 createAppKit({
@@ -353,8 +374,7 @@ createAppKit({
 ### excludeWalletIds
 
 Exclude wallets that are fetched from [WalletConnect explorer](https://walletconnect.com/explorer?type=wallet).
-Array of wallet ids defined will be excluded.
-All other wallets will be shown in respective places.
+Array of wallet ids defined will be excluded. All other wallets will be shown in respective places.
 You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
 
 ```ts
@@ -418,7 +438,7 @@ const adapter = new WagmiAdapter({
       preference: 'smartWalletOnly'
       /* highlight-add-end */
     }),
-    projectId, 
+    projectId,
     networks
   ]
 })
