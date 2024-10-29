@@ -84,6 +84,7 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 + import { createAppKit } from '@reown/appkit/react'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
++ import { WagmiProvider } from 'wagmi'
 /* highlight-add-end */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -143,13 +144,19 @@ export default function App() {
 -      <WagmiConfig config={wagmiConfig}>
 /* highlight-delete-end */
 /* highlight-add-start */
-+      <WagmiConfig config={wagmiAdapter.wagmiConfig}>
++      <WagmiProvider config={wagmiAdapter.wagmiConfig}>
 /* highlight-add-end */
 
       <QueryClientProvider client={queryClient}>
           <HomePage />
        </QueryClientProvider>
-      </WagmiConfig>
+
+/* highlight-delete-start */
+-      </WagmiConfig>
+/* highlight-delete-end */
+/* highlight-add-start */
+      </WagmiProvider>
+/* highlight-add-end */
     </>
   )
 }
