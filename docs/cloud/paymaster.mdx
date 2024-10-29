@@ -42,6 +42,21 @@ policy's start date with a campaign or similar.
 All our supported chains will be enabled by default, but it is possible to
 deselect a chain to only sponsor transactions on selected chains
 
+#### Currently Mainnet Supported Chains
+- Ethereum
+- Polygon 
+- Avalanche
+- Mantle 
+- Celo 
+- Optimism 
+- Base 
+- Zora 
+- Gnosis 
+- Metis
+
+#### Currently Supported Testnet Chains 
+- Sepolia
+
 ### 4. Add Policy Logic
 
 Policy logic can be updated in one of two ways:
@@ -53,7 +68,7 @@ There are distinct advantages to this:
 2. You can autogenerate policies for your campaigns since it's a simple JSON schema
 3. The policies can be extremely flexible as you can chain conditional checks for which smart contract to target, which method within the contract, the expected gas, etc.
 
-After, the policy will be created and if its start date is in the past, then it will be active and ready to be used.
+Once the policy is created, it will become active immediately if its start date has already passed, making it ready for use.
 
 ## Sponsoring transactions
 
