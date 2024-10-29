@@ -8,7 +8,7 @@ Hook that returns the client's information.
 import { useAppKitAccount } from '@reown/appkit/react'
 
 function Components() {
-  const { address, chainId, isConnected } = useAppKitAccount()
+  const { address, caipAddress, isConnected } = useAppKitAccount();
 
   //...
 }
@@ -42,7 +42,7 @@ import { BrowserProvider } from 'ethers'
 import { useAppKitProvider } from '@reown/appkit/react'
 
 function Components() {
-  const { walletProvider } = useAppKitProvider()
+  const { walletProvider } = useAppKitProvider('eip155')
 
   async function onSignMessage() {
     const provider = new BrowserProvider(walletProvider)
