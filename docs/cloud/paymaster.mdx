@@ -79,6 +79,32 @@ The Paymaster screen includes an `RPC URL` selector for chain-specific URLs. All
 
 By default, all policies will be validated in succession until one returns true.
 
+There is the option of passing `policyId` in the optional to the RPC.
+However, please note that as Dapp can not send this policyId directly, as that
+is within the control of the Wallets since they make the call to the Paymaster's
+RPC per [ERC 7677](https://github.com/ethereum/ERCs/blob/master/ERCS/erc-7677.md). 
+
+```sh
+curl --location <YOUR_PAYMASTER_URL> \
+--header 'Content-Type: application/json' \
+--data '{"method":"pm_getPaymasterData","params":[{
+      "sender": "0xb56e8f33dc5d32be80c32b8eb97081fa272488bb",
+      "nonce": "0x3b",
+      "initCode": "0x",
+      "callData": "0xc32b8eb97081fa272488bb058bb8eb970870f0728eb97081fa272488bb058bb8eb970870f072445675",
+      "callGasLimit": "0x0",
+      "verificationGasLimit": "0x0",
+      "preVerificationGas": "0x0",
+      "maxFeePerGas": "0x0",
+      "maxPriorityFeePerGas": "0x0"
+    }, "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789", "0x24B44",
+    {
+      "policyId": "298191-ff1719-5a9c-abb4-40911aa123"
+    }],"jsonrpc":"2.0", "id": 1}'
+```
+
+
+
 ## JSON Schema: A Practical Example Walkthrough
 
 ### Basics
