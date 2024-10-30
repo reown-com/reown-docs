@@ -3,46 +3,44 @@ title: Paymaster
 ---
 
 :::warning
-  Paymaster feature is still currently in beta and not available to all users.
+  The Paymaster feature is currently in beta and not yet available to all users.
 :::
 
 ## Accessing Reown Paymaster
 
-1. Log In to your Cloud Account [here](https://cloud.reown.com/sign-in).
-2. Click on your Project -> Paymaster Tab.
+1. Log in to your Cloud Account [here](https://cloud.reown.com/sign-in).
+2. Click on your Project, then select the "Paymaster" Tab.
 
 ## Creating a Policy
-Click Add Policy and follow the steps within the policy creation screen.
+Click on "Add Policy" and follow the steps within the policy creation screen.
 
-### 1. Select Plan
+### 1. Select a Plan
 
 #### Free Plan
 
-If you select the free plan, you will have *unlimited* access to sponsoring on testnet. Currently, only Sepolia is supported.
+If you select the free plan, you will have *unlimited* access to sponsoring on testnets. Currently, only Sepolia is supported.
 
-#### Pay as you go
+#### Pay-as-you-go
 
-With the pay as you go plan, you will be asked to enter credit card information. *You will not be billed immediately*.
+With the Pay-as-you-go plan, you will be asked to enter credit card information. *You will not be billed immediately*.
 
 Instead you will be charged based on usage, with Paymaster Credits. This is
 calculated using a simple formula: 
   * amount of gas sponsored + fee
 
-Billing occurs monthly, however if a threshhold of 100 USD is passed there will be an immediate charge and the billing cycle will be reset.
+Billing occurs monthly; however, if a threshold of 100 USD is reached, an immediate charge will occur, and the billing cycle will reset.
 
 ### 2. Add Policy Basic Info 
 
 1. Write a descriptive name for your policy
-2. Add a start date for your policy. The current day and time is selected as a default. However, you can set a time in the future to align your 
-policy's start date with a campaign or similar. 
-3. Optionally, add an end date and your policy will automatically lapse on the end date
+2. Add a start date for your policy. The current date and time are selected by default. However, you can set a future date and time to align your policy's start with a campaign or similar event.
+3. Optionally, add an end date, and your policy will automatically lapse on that date.
 
 ### 3. Select Chains
 
-All our supported chains will be enabled by default, but it is possible to
-deselect a chain to only sponsor transactions on selected chains
+All supported chains are enabled by default, but you can deselect any chain to sponsor transactions only on specific chains.
 
-#### Currently Mainnet Supported Chains
+#### Currently Supported Mainnet Chains
 - Ethereum
 - Polygon 
 - Avalanche
@@ -61,21 +59,20 @@ deselect a chain to only sponsor transactions on selected chains
 
 Policy logic can be updated in one of two ways:
 1. JSON editor
-2. No-code builder (Will be available soon)
+2. No-code builder (coming soon)
 
 There are distinct advantages to this:
-1. You can maintain an auditable history of your policies by storing the JSONs for your policy
-2. You can autogenerate policies for your campaigns since it's a simple JSON schema
-3. The policies can be extremely flexible as you can chain conditional checks for which smart contract to target, which method within the contract, the expected gas, etc.
+1. You can maintain an auditable history of your policies by storing the JSON files for each policy.
+2. You can auto-generate policies for your campaigns, as it’s a straightforward JSON schema.
+3. Policies are highly flexible, allowing you to chain conditional checks to target specific smart contracts, particular methods within a contract, expected gas limits, and more.
 
-Once the policy is created, it will become active immediately if its start date has already passed, making it ready for use.
+Once created, the policy will become active immediately if the start date has already passed, making it ready for use.
 
 ## Sponsoring transactions
 
-Based on [EIP 5792](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-5792.md) and [ERC 7677](https://github.com/ethereum/ERCs/blob/master/ERCS/erc-7677.md), the 
-way to utilize a paymaster is simply providing the paymaster RPC URL. 
+Based on [EIP 5792](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-5792.md) and [ERC 7677](https://github.com/ethereum/ERCs/blob/master/ERCS/erc-7677.md), utilizing a paymaster is as simple as providing the paymaster RPC URL.
 
-There is an `RPC URL` selector in the Paymaster screen to get chain-specific URLs. All the URLs follow the same format with only the chain ID, so you can generate the URL on your dApp based on the active chain.
+The Paymaster screen includes an `RPC URL` selector for chain-specific URLs. All URLs follow the same format, varying only by chain ID, so you can generate the URL in your dApp based on the active chain.
 
 ### Policy Selection
 
@@ -98,11 +95,9 @@ This is defined in `params` as such:
 
 ### Chaining Conditionals
 
-However, where this becomes flexible is the ability to chain different conditionals together. A more concrete example is 
-checking if the User Op targets a smart contract you specify and a specific function within that contract's ABI. Since those fields
-are encoded within a UserOp's `callData`, we will need to use two different methods to access this information.
-1. `callDataMethodEquals`: Verify that the callData targets a specific function
-2. `callDataToEquals`: Verify that the callData targets a specific contract
+The flexibility here lies in the ability to chain different conditionals together. For example, you can check if the User Op targets a specific smart contract and a particular function within that contract's ABI. Since these fields are encoded within a UserOp’s `callData`, two different methods are needed to access this information:
+1. `callDataMethodEquals`: Verifies that the `callData` targets a specific function
+2. `callDataToEquals`: Verifies that the `callData` targets a specific contract
 
 Essentially, we want to combine the following two conditions:
 
