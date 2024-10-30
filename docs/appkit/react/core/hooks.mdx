@@ -13,13 +13,30 @@ import OpenModal from './open.mdx'
 
 Hooks are functions that will help you control the modal, subscribe to wallet events and interact with them and smart contracts.
 
+## useAppKit
+
+Hook for controlling the modal.
+
+```ts
+import { useAppKit } from '@reown/appkit/react'
+
+export default function Component() {
+  const { open, close } = useAppKit()
+}
+```
+
+### Returns
+
+- `open`: Function to open the modal
+- `close`: Function to close the modal
+
+### Parameters
+
+<OpenModal />
+
 ## useAppKitAccount
 
 Hook for accessing account data and connection status.
-
-List of possible `status: "reconnecting" | "connected" | "disconnected" | "connecting" | undefined`
-
-The `caipAddress` is composed by `network:chainId:address`. An Example for an Ethereum mainnet address is `eip155:1:0xab16a96D359eC26a11e2C2b3d8f8B8942d5Bfcdb`
 
 ```ts
 import { useAppKitAccount } from "@reown/appkit/react";
@@ -29,39 +46,81 @@ export default Component(){
 }
 ```
 
-## useAppKit
+### Returns
 
-Control the modal with the `useAppKit` hook
+- `address`: The current account address
+- `caipAddress`: The current account address in CAIP format
+- `isConnected`: Boolean that indicates if the user is connected
+- `status`: The current connection status
+
+## useAppKitNetwork
+
+Hook for accessing network data and methods.
 
 ```ts
-import { useAppKit } from '@reown/appkit/react';
+import { useAppKitNetwork } from "@reown/appkit/react";
 
-export default function Component() {
-  const { open, close } = useAppKit()
+export default Component(){
+  const { caipNetwork, caipNetworkId, chainId, switchNetwork, addNetwork } = useAppKitNetwork()
 }
 ```
 
-<OpenModal />
+### Returns
+
+- `caipNetwork`: The current network object
+- `caipNetworkId`: The current network id in CAIP format
+- `chainId`: The current chain id
+- `switchNetwork`: Function to switch the network. Accepts a `caipNetwork` object as argument.
+- `addNetwork`: Function to add a new network. Accepts a `caipNetwork` object as argument.
+
+:::info
+See how to import or create a networks [here](/appkit/react/core/custom-networks).
+:::
+
+## useAppKitState
+
+Hook for getting the current value of the modal's state.
+
+```ts
+import { useAppKitState } from '@reown/appkit/react'
+
+const { open, selectedNetworkId } = useAppKitState()
+```
+
+### Returns
+
+- `open`: Boolean that indicates if the modal is open
+- `selectedNetworkId`: The current chain id selected by the user
+
+## useAppKitTheme
+
+Hook for controlling the modal's theme.
+
+```ts
+import { useAppKitTheme } from '@reown/appkit/react'
+const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useAppKitTheme()
+
+setThemeMode('dark')
+
+setThemeVariables({
+  '--w3m-color-mix': '#00BB7F',
+  '--w3m-color-mix-strength': 40
+})
+```
+
+## useAppKitEvents
+
+Hook for subscribing to modal events.
+
+```ts
+import { useAppKitEvents } from '@reown/appkit/react'
+
+const events = useAppKitEvents()
+```
 
 ## useDisconnect
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana"]}>
-
-<PlatformTabItem value="wagmi">
-
-To disconnect the session call the wagmi hook:
-
-```ts
-import { useDisconnect } from 'wagmi'
-
-const { disconnect } = useDisconnect()
-
-disconnect()
-```
-</PlatformTabItem>
-<PlatformTabItem value="ethers5">
-
-To disconnect the session call:
+Hook for disconnecting the session.
 
 ```ts
 import { useDisconnect } from '@reown/appkit/react'
@@ -70,39 +129,10 @@ const { disconnect } = useDisconnect()
 
 disconnect()
 ```
-
-</PlatformTabItem>
-<PlatformTabItem value="ethers">
-
-To disconnect the session call:
-
-```ts
-import { useDisconnect } from '@reown/appkit/react'
-
-const { disconnect } = useDisconnect()
-
-disconnect()
-```
-
-</PlatformTabItem>
-<PlatformTabItem value="solana">
-
-To disconnect the session call:
-
-```ts
-import { useDisconnect } from '@reown/appkit/react'
-
-const { disconnect } = useDisconnect()
-
-disconnect()
-```
-
-</PlatformTabItem>
-</PlatformTabs>
 
 ## useWalletInfo
 
-Metadata information from the connected wallet
+Hook for accessing wallet information.
 
 ```ts
 import { useWalletInfo } from '@reown/appkit/react'
@@ -110,13 +140,8 @@ import { useWalletInfo } from '@reown/appkit/react'
 
 export default Component(){
   const { walletInfo } = useWalletInfo()
-
-  console.log(walletInfo.name, walletInfo.icon)
-
-  //...
 }
 ```
-
 
 ## Ethereum/Solana Library
 
@@ -142,95 +167,3 @@ export default Component(){
 
 </PlatformTabItem>
 </PlatformTabs>
-
-## useAppKitState
-
-Get the current value of the modal's state
-
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "wagmi1", "ethers5","ethers", "solana"]}>
-<PlatformTabItem value="wagmi">
-
-```ts
-import { useAppKitState } from '@reown/appkit/react'
-
-const { open, selectedNetworkId } = useAppKitState()
-```
-
-</PlatformTabItem>
-<PlatformTabItem value="wagmi1">
-
-```ts
-import { useAppKitState } from '@reown/appkit/react'
-
-const { open, selectedNetworkId } = useAppKitState()
-```
-
-</PlatformTabItem>
-<PlatformTabItem value="ethers5">
-
-```ts
-import { useAppKitState } from '@reown/appkit/react'
-
-const { open, selectedNetworkId } = useAppKitState()
-```
-
-</PlatformTabItem>
-<PlatformTabItem value="ethers">
-
-```ts
-import { useAppKitState } from '@reown/appkit/react'
-
-const { open, selectedNetworkId } = useAppKitState()
-```
-
-</PlatformTabItem>
-<PlatformTabItem value="solana">
-
-```ts
-import { useAppKitState } from '@reown/appkit/react'
-
-const { open, selectedNetworkId } = useAppKitState()
-```
-
-</PlatformTabItem>
-</PlatformTabs>
-
-The modal state consists of two reactive values:
-
-<Table
-  headers={['State', 'Description', 'Type']}
-  data={[
-    {
-      variable: { code: 'open' },
-      description: 'Open state will be true when the modal is open and false when closed.',
-      type: { code: 'boolean' }
-    },
-    {
-      variable: { code: 'selectedNetworkId' },
-      description: 'The current chain id selected by the user',
-      type: { code: 'number' }
-    }
-  ]}
-/>
-
-## useAppKitTheme
-
-```ts
-import { useAppKitTheme } from '@reown/appkit/react'
-const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useAppKitTheme()
-
-setThemeMode('dark')
-
-setThemeVariables({
-  '--w3m-color-mix': '#00BB7F',
-  '--w3m-color-mix-strength': 40
-})
-```
-
-## Track modal events
-
-```ts
-import { useAppKitEvents } from '@reown/appkit/react'
-
-const events = useAppKitEvents()
-```
