@@ -91,7 +91,7 @@ Pairings were never intended to be listed in the wallet, and wallets should only
 
 We've optimized the WebSocket connection management to improve performance and resource utilization. The SDK will now establish a WebSocket connection only when there's an explicit intention to send a request or subscribe to a topic. If none of these conditions are met, the WebSocket connection will remain closed by default.
 
-What's Changed?
+### What's Changed?
 Previous Behavior: The SDK automatically initiated a WebSocket connection upon startup, regardless of active sessions or pending actions.
 New Behavior: The SDK delays establishing a WebSocket connection until it's necessary based on the app's activities.
 
