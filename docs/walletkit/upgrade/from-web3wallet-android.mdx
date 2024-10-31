@@ -95,7 +95,7 @@ We've optimized the WebSocket connection management to improve performance and r
 Previous Behavior: The SDK automatically initiated a WebSocket connection upon startup, regardless of active sessions or pending actions.
 New Behavior: The SDK delays establishing a WebSocket connection until it's necessary based on the app's activities.
 
-Why This Change?
+### Why This Change?
 This adjustment reduces unnecessary network traffic and conserves device resources, leading to better performance and battery life, especially important for mobile applications.
 
 Impact on Your Application
