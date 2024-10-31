@@ -87,6 +87,22 @@ This led to an accumulation of stale pairings in wallets, resulting in degraded 
 
 Pairings were never intended to be listed in the wallet, and wallets should only display active sessions to users.
 
+## WebSocket Connection Handling
+
+We've optimized the WebSocket connection management to improve performance and resource utilization. The SDK will now establish a WebSocket connection only when there's an explicit intention to send a request or subscribe to a topic. If none of these conditions are met, the WebSocket connection will remain closed by default.
+
+### What's Changed?
+Previous Behavior: The SDK automatically initiated a WebSocket connection upon startup, regardless of active sessions or pending actions.
+
+New Behavior: The SDK delays establishing a WebSocket connection until it's necessary based on the app's activities.
+
+### Why This Change?
+This adjustment reduces unnecessary network traffic and conserves device resources, leading to better performance and battery life, especially important for mobile applications.
+
+### Impact on Your Application
+Disconnected State on Launch: Apps without active sessions at launch will start with the WebSocket in a disconnected state.
+UI Elements Depending on WebSocket: Buttons or features that rely on an active WebSocket connection may not function until the connection is established.
+
 ### Steps for Migration
 
 Wallets are no longer expected to handle pairing-related methods. If your wallet has been listing pairings, please replace this with listing active sessions instead.
