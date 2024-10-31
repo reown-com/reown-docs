@@ -99,7 +99,7 @@ New Behavior: The SDK delays establishing a WebSocket connection until it's nece
 ### Why This Change?
 This adjustment reduces unnecessary network traffic and conserves device resources, leading to better performance and battery life, especially important for mobile applications.
 
-Impact on Your Application
+### Impact on Your Application
 Disconnected State on Launch: Apps without active sessions at launch will start with the WebSocket in a disconnected state.
 UI Elements Depending on WebSocket: Buttons or features that rely on an active WebSocket connection may not function until the connection is established.
 
