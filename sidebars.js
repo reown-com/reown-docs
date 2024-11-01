@@ -333,6 +333,8 @@ module.exports = {
             'appkit/react/core/hooks',
             'appkit/react/core/options',
             'appkit/react/core/components',
+            'appkit/react/onboarding/socials', 
+            'appkit/react/onboarding/smart-accounts',
             'appkit/react/core/custom-connectors',
             'appkit/react/core/custom-networks',
             'appkit/react/core/siwe',
@@ -341,12 +343,6 @@ module.exports = {
             'appkit/react/core/resources'
           ]
         },
-        {
-          type: 'category',
-          label: 'Onboarding',
-          items: ['appkit/react/onboarding/socials', 'appkit/react/onboarding/smart-accounts']
-        }
-        ,
         {
           type: 'category',
           label: 'Experimental',
@@ -432,6 +428,8 @@ module.exports = {
             'appkit/next/core/hooks',
             'appkit/next/core/options',
             'appkit/next/core/components',
+            'appkit/react/onboarding/socials', 
+            'appkit/react/onboarding/smart-accounts',
             'appkit/next/core/custom-connectors',
             'appkit/next/core/custom-networks',
             'appkit/next/core/siwe',
@@ -439,11 +437,6 @@ module.exports = {
             'appkit/next/core/theming',
             'appkit/next/core/resources'
           ]
-        },
-        {
-          type: 'category',
-          label: 'Onboarding',
-          items: ['appkit/next/onboarding/socials', 'appkit/next/onboarding/smart-accounts']
         },
         {
           type: 'category',
@@ -530,6 +523,8 @@ module.exports = {
             'appkit/vue/core/composables',
             'appkit/vue/core/options',
             'appkit/vue/core/components',
+            'appkit/react/onboarding/socials', 
+            'appkit/react/onboarding/smart-accounts',
             'appkit/vue/core/custom-connectors',
             'appkit/vue/core/custom-networks',
             'appkit/vue/core/siwe',
@@ -537,11 +532,6 @@ module.exports = {
             'appkit/vue/core/theming',
             'appkit/vue/core/resources'
           ]
-        },
-        {
-          type: 'category',
-          label: 'Onboarding',
-          items: ['appkit/vue/onboarding/socials', 'appkit/vue/onboarding/smart-accounts']
         },
         {
           type: 'category',
@@ -628,6 +618,8 @@ module.exports = {
             'appkit/javascript/core/actions',
             'appkit/javascript/core/options',
             'appkit/javascript/core/components',
+            'appkit/react/onboarding/socials', 
+            'appkit/react/onboarding/smart-accounts',
             'appkit/javascript/core/custom-connectors',
             'appkit/javascript/core/custom-networks',
             'appkit/javascript/core/siwe',
@@ -640,14 +632,6 @@ module.exports = {
           type: 'category',
           label: 'Experimental',
           items: ['appkit/javascript/experimental/smart-session']
-        },
-        {
-          type: 'category',
-          label: 'Onboarding',
-          items: [
-            'appkit/javascript/onboarding/socials',
-            'appkit/javascript/onboarding/smart-accounts'
-          ]
         },
         {
           type: 'category',
@@ -729,15 +713,11 @@ module.exports = {
             'appkit/react-native/core/options',
             'appkit/react-native/core/hooks',
             'appkit/react-native/core/components',
+            'appkit/react-native/onboarding/email',
             'appkit/react-native/core/siwe',
             'appkit/react-native/core/link-mode',
             'appkit/react-native/core/resources'
           ]
-        },
-        {
-          type: 'category',
-          label: 'Onboarding',
-          items: ['appkit/react-native/onboarding/email']
         },
         {
           type: 'category',
@@ -813,19 +793,13 @@ module.exports = {
             'appkit/flutter/core/installation',
             'appkit/flutter/core/usage',
             'appkit/flutter/core/options',
+            'appkit/flutter/onboarding/email',
             'appkit/flutter/core/siwe',
             'appkit/flutter/core/link-mode',
             'appkit/flutter/core/actions',
             'appkit/flutter/core/events',
             'appkit/flutter/core/theming',
             'appkit/flutter/core/custom-chains'
-          ]
-        },
-        {
-          type: 'category',
-          label: 'Onboarding',
-          items: [
-            { type: 'doc', label: 'Email & Socials', id: 'appkit/flutter/onboarding/email' },
           ]
         },
         {
