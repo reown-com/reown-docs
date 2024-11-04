@@ -69,7 +69,7 @@ export default function App() {
   const isSubscribed = Boolean(subscription)
 
   // Note: We are using AppKit for the dapp <> wallet connection.
-  // The <w3m-button /> module is from AppKit. Check AppKit Docs for further info.
+  // The <appkit-button /> module is from AppKit. Check AppKit Docs for further info.
   return (
     <>
       <main className={styles.main}>
@@ -78,7 +78,7 @@ export default function App() {
         ) : (
           <div>
             <h1>W3I QuickStart</h1>
-            <w3m-button />
+            <appkit-button />
             <div className={styles.flexColumn}>
               <button onClick={handleRegistration} disabled={isRegistered}>
                 {isRegistered ? 'Registered' : 'Register'}
