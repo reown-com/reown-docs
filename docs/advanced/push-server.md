@@ -44,7 +44,7 @@ If you already have FCM Legacy enabled and then enable FCM v1, push notification
     ![Create new key](/assets/push-fcmv1-sa-new-key.png)
   - Select _JSON_ and click _Create_
   - A `.json` file containing the service account credentials will be automatically downloaded to your computer
-- Upload the credentaials JSON file to your Cloud project's FCM V1 settings and click _Save_
+- Upload the credentials JSON file to your Cloud project's FCM V1 settings and click _Save_
 
 You should now see a green checkbox indicating that FCM V1 has been enabled! Now any clients that register themselves on the Push Server will receive FCM push notifications for relay messages to that client.
 
