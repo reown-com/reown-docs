@@ -149,7 +149,7 @@ const welcome = {
   items: [
     {
       type: 'link',
-      label: 'Welcome',
+      label: 'Overview',
       href: '/'
     }
   ]
@@ -167,7 +167,7 @@ module.exports = {
     },
     {
       type: 'link',
-      label: 'Welcome',
+      label: 'Overview',
       href: '/'
     },
     {
@@ -199,7 +199,7 @@ module.exports = {
       items: [
         {
           type: 'link',
-          label: 'Welcome',
+          label: 'Overview',
           href: '/'
         },
         {
@@ -230,13 +230,13 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Swaps', id: 'appkit/features/swaps' },
-                { type: 'doc', label: 'Email & Socials', id: 'appkit/features/socials' },
-                { type: 'doc', label: 'Smart Accounts', id: 'appkit/features/smart-accounts' },
-                { type: 'doc', label: 'One-Click Auth', id: 'appkit/features/one-click-auth' },
+                { type: 'doc', label: 'Email & Social Login', id: 'appkit/features/socials' },
                 { type: 'doc', label: 'On-Ramp', id: 'appkit/features/onramp' },
-                { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
+                { type: 'doc', label: 'One-Click Auth', id: 'appkit/features/one-click-auth' },
+                { type: 'doc', label: 'Smart Accounts', id: 'appkit/features/smart-accounts' },
                 { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
+                { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
                 { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'}
               ]
             },
