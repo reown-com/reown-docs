@@ -9,9 +9,10 @@ final _appKitModal = ReownAppKitModal(
     description: 'Example app description',
     url: 'https://example.com/',
     icons: ['https://example.com/logo.png'],
-    redirect: Redirect(
+    redirect: Redirect( // OPTIONAL
       native: 'exampleapp://',
       universal: 'https://reown.com/exampleapp',
+      linkMode: false,
     ),
   ),
   // enableAnalytics: true, // OPTIONAL - null by default
@@ -21,6 +22,7 @@ final _appKitModal = ReownAppKitModal(
   //   socials: [...], // OPTIONAL - empty by default
   //   showMainWallets: true, // OPTIONAL - true by default
   // ),
+  // getBalanceFallback: () async { }, OPTIONAL - null by default
   // requiredNamespaces: {}, OPTIONAL - null by default
   // optionalNamespaces: {}, OPTIONAL - null by default
   // featuredWalletIds: {}, OPTIONAL - null by default
@@ -35,19 +37,25 @@ Enable analytics to get more insights on your users activity within your [Reown 
 
 ### siweConfig:
 
-Used to configure [One-Click Auth + SIWE](./siwe.mdx) feature.
+Used to configure [One-Click Auth + Sign In With Ethereum](./siwe.mdx) feature. 
+
+Will be disabled automatically if you decide to support/include non-EVM blockchains.
 
 ### featuresConfig:
 
-Used to configure extra features such as Analytics, [Email and Social Login](../core/email.mdx).
+Used to configure extra features such [Email and Social Login](../core/email.mdx).
+
+### getBalanceFallback:
+
+This callback method will be triggered if getting the balance from our blockchain API fails due to unsupported network. You should place here your own getBalance() method if you want.
 
 ### requiredNamespaces: and optionalNamespaces:
 
-These values are optionals and, in most cases, not required since AppKit already defines every required and optional namespace internally based on configured networks. 
-
-However, if you would want to override that definition with your own, these are the object yout should use.
-
 These are the set of namespaces that will be requested to the wallet you are connecting to.
+
+These values are optionals and, in most cases, not required since AppKit already defines every required and optional namespace internally based on configured networks.
+
+However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) these are the object yout should modify. See [non-EVM support](../core/email.mdx). section.
 
 ### featuredWalletIds:
 

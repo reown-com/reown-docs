@@ -24,6 +24,7 @@ Be sure to update the _project ID_ and _metadata_ with your own.
 In order to initialize `ReownAppKitModal()` instance you must provide a _projectId_ and a _metadata_.
 
 ```javascript
+// AppKit Modal instance
 final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
@@ -32,9 +33,10 @@ final _appKitModal = ReownAppKitModal(
     description: 'Example app description',
     url: 'https://example.com/',
     icons: ['https://example.com/logo.png'],
-    redirect: Redirect(
+    redirect: Redirect(  // OPTIONAL
       native: 'exampleapp://',
       universal: 'https://reown.com/exampleapp',
+      linkMode: true|false,
     ),
   ),
 );
@@ -47,6 +49,7 @@ await _appKitModal.init();
 Alternatively, `ReownAppKitModal()` allows you to create an instance by passing a `ReownAppKit()` object as follows:
 
 ```javascript
+// AppKit instance
 final appKit = ReownAppKit.createInstance(
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
@@ -57,10 +60,12 @@ final appKit = ReownAppKit.createInstance(
     redirect: Redirect(
       native: 'exampleapp://',
       universal: 'https://reown.com/exampleapp',
+      linkMode: true|false,
     ),
   ),
 );
 
+// AppKit Modal instance
 final _appKitModal = ReownAppKitModal(
   context: context,
   appKit: appKit,
@@ -83,6 +88,9 @@ redirect: Redirect(
   native: 'exampleapp://',
   // your own universal link for deep linking, required if you are going to use Link Mode
   universal: 'https://reown.com/exampleapp',
+  // enable or disable relay-less communication, see `Link Mode` section
+  // won't be used if you decide to support/include non-EVM blockchains
+  linkMode: true|false,
 ),
 ```
 
@@ -108,7 +116,9 @@ But in order for the redirect mechanism to work you would also need to add the f
     <string>com.example.yourBundleId</string> <!-- Bundle ID of your app -->
     <key>CFBundleURLSchemes</key>
     <array>
-      <!-- your own custom scheme. Be mind of removing :// for this step -->
+      <!-- your own custom scheme -->
+      <!-- Should be the same you set on Redirect.native on Flutter side -->
+      <!-- Be mind of removing :// for this step -->
       <string>exampleapp</string>
     </array>
   </dict>
@@ -127,7 +137,9 @@ But in order for the redirect mechanism to work you would also need to add the f
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT" />
     <category android:name="android.intent.category.BROWSABLE" />
-    <!-- your own custom scheme. Be mind of removing :// for this step -->
+    <!-- your own custom scheme -->
+    <!-- Should be the same you set on Redirect.native on Flutter side -->
+    <!-- Be mind of removing :// for this step -->
     <data android:scheme="exampleapp" />
 </intent-filter>
 ```
