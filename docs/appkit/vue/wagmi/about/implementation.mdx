@@ -9,17 +9,16 @@ If you're using Nuxt, you can set wagmi's `ssr` option to true and call the `rec
 In your `App.vue` file set up the following configuration
 
 ```html
-<script setup>
-  import { createAppKit, useAppKit } from '@reown/appkit/vue'
-
-  import { WagmiProvider } from 'wagmi'
-  import { arbitrum, mainnet } from '@reown/appkit/networks'
+<script lang="ts" setup>
+  import { createAppKit } from '@reown/appkit/vue'
+  import { useAccount } from '@wagmi/vue'
+  import { arbitrum, mainnet, type AppKitNetwork } from '@reown/appkit/networks'
   import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
   // 1. Get projectId from https://cloud.reown.com
   const projectId = 'YOUR_PROJECT_ID'
 
-  // 2. Create a metadata object - optional
+  // 2. Create a metadata object
   const metadata = {
     name: 'AppKit',
     description: 'AppKit Example',
@@ -27,28 +26,25 @@ In your `App.vue` file set up the following configuration
     icons: ['https://avatars.githubusercontent.com/u/179229932']
   }
 
-  export const networks = [mainnet, arbitrum]
+  // 3. Set the networks
+  const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, polygon, base]
 
-  // 3. Create Wagmi Adapter
+  // 4. Create Wagmi Adapter
   const wagmiAdapter = new WagmiAdapter({
-    ssr: true,
-    projectId,
-    networks
+    networks,
+    projectId
   })
 
-  // 4. Create modal
-  createAppKit({
+  // 5. Create the modal
+  const modal = createAppKit({
     adapters: [wagmiAdapter],
-    networks: [mainnet, arbitrum],
-    metadata,
+    networks,
     projectId,
+    metadata,
     features: {
       analytics: true // Optional - defaults to your Cloud configuration
     }
-  })
-
-  // 5. Use modal composable
-  const modal = useAppKit()
+  )
 </script>
 
 <template> // Rest of your app ... </template>
@@ -59,7 +55,7 @@ In your `App.vue` file set up the following configuration
 Reown AppKit use [Viem](https://viem.sh/) networks under the hood, which provide a wide variety of networks for EVM chains. You can find all the networks supported by Viem within the `@reown/appkit/networks` path.
 
 ```js
-import { createAppKit } from '@reown/appkit'
+import { createAppKit } from '@reown/appkit/vue'
 /* highlight-add-start */
 import { mainnet, arbitrum, base, scroll, polygon } from '@reown/appkit/networks'
 /* highlight-add-end */
