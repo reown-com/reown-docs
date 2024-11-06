@@ -1,6 +1,6 @@
 ---
 title: Migration from ConnectKit to AppKit
-pagination_next:
+pagination_next: 
 ---
 
 # Migration from ConnectKit to AppKit
@@ -13,11 +13,11 @@ To migrate from ConnectKit to Reown AppKit, please follow the steps below.
 
 ## Step 1. Create a project in Reown Cloud
 
-- Create a new project on [Reown Cloud](https://cloud.reown.com) and obtain a new project ID.
++ Create a new project on [Reown Cloud](https://cloud.reown.com) and obtain a new project ID.
 
 ## Step 2. Install & uninstall libraries
 
-- Run this command to install Reown AppKit and uninstall ConnectKit.
++ Run this command to install Reown AppKit and uninstall ConnectKit.
 
 ```bash npm2yarn
 npm install @reown/appkit @reown/appkit-adapter-wagmi && npm uninstall connectkit
@@ -25,8 +25,8 @@ npm install @reown/appkit @reown/appkit-adapter-wagmi && npm uninstall connectki
 
 ## Step 3. Change the code in the `/components/Web3Provider.tsx` file
 
-- Navigate to the `/components/Web3Provider.tsx` file inside your ConnectKit example Web3 app directory.
-- Now, you need to remove the existing configuration that uses ConnectKit and replace it with Reown AppKit. Refer to the code snippet below.
++ Navigate to the `/components/Web3Provider.tsx` file inside your ConnectKit example Web3 app directory. 
++ Now, you need to remove the existing configuration that uses ConnectKit and replace it with Reown AppKit. Refer to the code snippet below.
 
 ```tsx
 import React from 'react';
@@ -106,8 +106,8 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
 
 ## Step 4. Change the code in the `/pages/index.tsx` file
 
-- Navigate to the `/pages/index.tsx` file inside your ConnectKit example Web3 app directory.
-- Now, you need to remove the existing code that uses `<ConnectKitButton />` and replace it with `<appkit-button />`. Refer to the code snippet below.
++ Navigate to the `/pages/index.tsx` file inside your ConnectKit example Web3 app directory. 
++ Now, you need to remove the existing code that uses `<ConnectKitButton />` and replace it with `<w3m-button />`. Refer to the code snippet below.
 
 ```tsx
 import type { NextPage } from 'next';
@@ -129,7 +129,7 @@ const Home: NextPage = () => {
 -      <ConnectKitButton />
     /* highlight-delete-end*/
     /* highlight-add-start*/
-+      <appkit-button />
++      <w3m-button />
     /* highlight-add-end*/
     </div>
   );
@@ -141,7 +141,7 @@ export default Home;
 
 ## Final notes
 
-- Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from ConnectKit to Reown AppKit.
-- Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
-- Check our [AppKit Web examples](https://github.com/reown-com/appkit/tree/main/examples) to compare with your implementation in case you are having issues
-- If you want to start from scratch, please refer to the Installation docs [here](/appkit/overview)
++ Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from ConnectKit to Reown AppKit.
++ Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
++ Check our [AppKit Web examples](https://github.com/reown-com/appkit/tree/main/examples) to compare with your implementation in case you are having issues 
++ If you want to start from scratch, please refer to the Installation docs [here](/appkit/overview)
