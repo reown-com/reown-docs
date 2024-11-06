@@ -17,7 +17,7 @@ Composables are functions that will help you control the modal, subscribe to wal
 Composable function for controlling the modal.
 
 ```ts
-import { useAppKit } from '@reown/appkit/react'
+import { useAppKit } from '@reown/appkit/vue'
 
 export default function Component() {
   const { open, close } = useAppKit()
@@ -38,7 +38,7 @@ export default function Component() {
 Composable function for accessing account data and connection status.
 
 ```ts
-import { useAppKitAccount } from "@reown/appkit/react";
+import { useAppKitAccount } from "@reown/appkit/vue";
 
 export default Component(){
   const { address, isConnected, caipAddress, status } = useAppKitAccount()
@@ -57,10 +57,10 @@ export default Component(){
 Composable function for accessing network data and methods.
 
 ```ts
-import { useAppKitNetwork } from "@reown/appkit/react";
+import { useAppKitNetwork } from "@reown/appkit/vue";
 
 export default Component(){
-  const { caipNetwork, caipNetworkId, chainId, switchNetwork, addNetwork } = useAppKitNetwork()
+  const { caipNetwork, caipNetworkId, chainId, switchNetwork } = useAppKitNetwork()
 }
 ```
 
@@ -70,10 +70,9 @@ export default Component(){
 - `caipNetworkId`: The current network id in CAIP format
 - `chainId`: The current chain id
 - `switchNetwork`: Function to switch the network. Accepts a `caipNetwork` object as argument.
-- `addNetwork`: Function to add a new network. Accepts a `caipNetwork` object as argument.
 
 :::info
-See how to import or create a networks [here](/appkit/react/core/custom-networks).
+See how to import or create a networks [here](/appkit/vue/core/custom-networks).
 :::
 
 ## useAppKitState
@@ -81,7 +80,7 @@ See how to import or create a networks [here](/appkit/react/core/custom-networks
 Composable function for getting the current value of the modal's state.
 
 ```ts
-import { useAppKitState } from '@reown/appkit/react'
+import { useAppKitState } from '@reown/appkit/vue'
 
 const { open, selectedNetworkId } = useAppKitState()
 ```
@@ -96,7 +95,7 @@ const { open, selectedNetworkId } = useAppKitState()
 Composable function for controlling the modal's theme.
 
 ```ts
-import { useAppKitTheme } from '@reown/appkit/react'
+import { useAppKitTheme } from '@reown/appkit/vue'
 const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useAppKitTheme()
 
 setThemeMode('dark')
@@ -112,7 +111,7 @@ setThemeVariables({
 Composable function for subscribing to modal events.
 
 ```ts
-import { useAppKitEvents } from '@reown/appkit/react'
+import { useAppKitEvents } from '@reown/appkit/vue'
 
 const events = useAppKitEvents()
 ```
@@ -122,7 +121,7 @@ const events = useAppKitEvents()
 Composable function for disconnecting the session.
 
 ```ts
-import { useDisconnect } from '@reown/appkit/react'
+import { useDisconnect } from '@reown/appkit/vue'
 
 const { disconnect } = useDisconnect()
 
@@ -134,7 +133,7 @@ disconnect()
 Composable function for accessing wallet information.
 
 ```ts
-import { useWalletInfo } from '@reown/appkit/react'
+import { useWalletInfo } from '@reown/appkit/vue'
 
 
 export default Component(){

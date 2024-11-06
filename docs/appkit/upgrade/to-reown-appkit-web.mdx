@@ -49,7 +49,7 @@ npm install @reown/appkit @reown/appkit-adapter-wagmi
 To upgrade from Web3Modal v5 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum` and `@web3modal/vue`. Now you can install AppKit library and update `Wagmi` and `Viem`.
 
 ```bash npm2yarn
-npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
+npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue
 ```
 
 </PlatformTabItem>
@@ -116,7 +116,7 @@ const metadata = { //optional
 /* highlight-add-end */
 ```
 
-Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
+Finally, pass `wagmiAdapter` and other parameters to `createAppKit`
 
 ```tsx
 /* highlight-delete-start */
@@ -181,8 +181,6 @@ import { createAppKit } from '@reown/appkit/vue'
 import { arbitrum, mainnet } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
@@ -231,24 +229,6 @@ Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
  }
 })
 /* highlight-add-end */
-
-export default function App() {
-  return (
-    <>
-/* highlight-delete-start */
--      <WagmiConfig config={wagmiConfig}>
-/* highlight-delete-end */
-/* highlight-add-start */
-+      <WagmiConfig config={wagmiAdapter.wagmiConfig}>
-/* highlight-add-end */
-
-      <QueryClientProvider client={queryClient}>
-          <HomePage />
-       </QueryClientProvider>
-      </WagmiConfig>
-    </>
-  )
-}
 ```
 
 
@@ -297,7 +277,6 @@ const metadata = { //optional
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 /* highlight-add-end */
 ```
 
