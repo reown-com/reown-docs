@@ -60,7 +60,7 @@ Hook for accessing network data and methods.
 import { useAppKitNetwork } from "@reown/appkit/react";
 
 export default Component(){
-  const { caipNetwork, caipNetworkId, chainId, switchNetwork, addNetwork } = useAppKitNetwork()
+  const { caipNetwork, caipNetworkId, chainId, switchNetwork } = useAppKitNetwork()
 }
 ```
 
@@ -70,7 +70,6 @@ export default Component(){
 - `caipNetworkId`: The current network id in CAIP format
 - `chainId`: The current chain id
 - `switchNetwork`: Function to switch the network. Accepts a `caipNetwork` object as argument.
-- `addNetwork`: Function to add a new network. Accepts a `caipNetwork` object as argument.
 
 :::info
 See how to import or create a networks [here](/appkit/react/core/custom-networks).
