@@ -16,6 +16,12 @@ _appKitModal.onModalDisconnect.subscribe((ModalDisconnect? event) {});
 _appKitModal.onModalError.subscribe((ModalError? event) {});
 ```
 
+------
+
+:::info
+The following events are available only through WalletConnect protocol, meaning that they won't be throwing events when connected to Coinbase Wallet nor Email or Social Login.
+:::
+
 #### Session specific events
 
 ```javascript
