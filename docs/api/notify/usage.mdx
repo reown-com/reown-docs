@@ -385,7 +385,7 @@ func onSign(message: String) -> SigningResult {
 
 To enable seamless communication between a Dapp and a wallet, the wallet must first establish a Notify Subscription. This crucial step allows the Dapp and its associated services to publish notify messages directly to the wallet. Upon granting permission for the wallet's iOS application to display Push Notifications, users will experience real-time updates in the form of push notifications on their devices. For an enhanced user experience, consider subscribing to the `notifyMessagePublisher` channel. This option ensures that notify messages are delivered promptly when the app is active and a web socket connection is established, keeping users informed and engaged.
 
-To subscribe to dapp's notify messages first fetch publicly discoverable dapps with WalletConnet explorer:
+To subscribe to dapp's notify messages first fetch publicly discoverable dapps with WalletGuide :
 
 https://explorer-api.walletconnect.com/v3/dapps?projectId={your_project_id}&is_notify_enabled=true
 
@@ -395,7 +395,7 @@ and request a subscription directly from the wallet:
 public func subscribe(metadata: AppMetadata, account: Account, onSign: @escaping SigningCallback) async throws {
 ```
 
-`metadata` - metadata object of publicly discoverable dapp fetched from WalletConnect explorer
+`metadata` - metadata object of publicly discoverable dapp fetched from WalletGuide
 
 `account` - an account you want to associate a sebscription with
 
