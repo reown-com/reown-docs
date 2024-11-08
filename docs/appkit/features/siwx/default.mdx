@@ -1,0 +1,142 @@
+---
+title: SIWX Default
+---
+
+# SIWX Default Implementation
+
+## Quick Start
+
+### Installation
+
+```bash npm2yarn
+npm install @reown/appkit-siwx
+```
+
+### Usage
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { DefaultSIWX } from '@reown/appkit-siwx'
+
+createAppKit({
+  // ... your configuration
+  siwx: new DefaultSIWX()
+})
+```
+
+## Customizing the Default Implementation
+
+The default implementation of **SIWX** is divided in three main components: `SIWXMessenger`, `SIWXVerifier` and `SIWXStorage`. The `@reown/appkit-siwx` package have defined options to fulfill the parts when initializing the `DefaultSIWX` configuration and you are also able to setup your own parts as required.
+
+### SIWXMessenger
+
+The `SIWXMessenger` component is responsible for formating the data into a message that will be later signed by the user. It expects to have a method `stringify` that will receive the input for the message and return the message as a `string`.
+
+```ts
+import { SIWXMessenger } from '@reown/appkit-siwx'
+import type { SIWXMessage } from '@reown/appkit-core'
+
+export class MyMessenger extends SIWXMessenger {
+  protected readonly version = '1'
+
+  protected override stringify(params: SIWXMessage.Data): string {
+    // Implement your message format here
+    return `My message for ${params.accountAddress} on ${params.chainId}`
+  }
+}
+```
+
+### SIWXVerifier
+
+The `SIWXVerifier` component is responsible for verifying the signature of the message signed by the user. It expects to have a method `verify` that will receive the input for the message and the signature and return a `boolean` indicating if the signature is valid.
+
+```ts
+import { SIWXVerifier } from '@reown/appkit-siwx'
+import type { SIWXSession } from '@reown/appkit-core'
+
+export class MyVerifier extends SIWXVerifier {
+  public readonly chainNamespace = 'eip155' // set the chain namespace for your verifier
+
+  public async verify(session: SIWXSession): Promise<boolean> {
+    // Implement your verification logic here
+    return true
+  }
+}
+```
+
+### SIWXStorage
+
+`SIWXStorage` is a interface that defines how the session data will be stored.
+
+```ts
+import type { SIWXSession } from '@reown/appkit-core'
+import type { SIWXStorage } from '@reown/appkit-siwx'
+
+export class MyStorage implements SIWXStorage {
+  add(session: SIWXSession): Promise<void> {
+    // Implement your logic to add a session
+  }
+
+  set(sessions: SIWXSession[]): Promise<void> {
+    // Implement your logic to set sessions
+  }
+
+  get(chainId: CaipNetworkId, address: string): Promise<SIWXSession[]> {
+    // Implement your logic to get sessions
+    return []
+  }
+
+  delete(chainId: string, address: string): Promise<void> {
+    // Implement your logic to delete a session
+  }
+}
+```
+
+- `add`: This method will be called to store a new single session that is verified;
+- `set`: This method must replace all the sessions in the storage with the new ones;
+- `get`: This method must return all the sessions stored for a specific chain and address. Is expected that the sessions are already verified;
+- `delete`: This method must delete all the sessions stored for a specific chain and address.
+
+## Predefined Components
+
+The `@reown/appkit-siwx` package provides some predefined components that you can use to quickly setup the `DefaultSIWX` configuration.
+
+Check the latest components over the [SIWX repository](https://github.com/reown-com/appkit/tree/main/packages/siwx)
+
+## Usage Examples
+
+### Using predefined components
+
+```ts
+import {
+  DefaultSIWX,
+  InformalMessenger,
+  EIP155Verifier,
+  SolanaVerifier,
+  LocalStorage
+} from '@reown/appkit-siwx'
+
+const siwx = new DefaultSIWX({
+  messenger: new InformalMessenger({
+    domain: 'reown.com',
+    uri: 'https://reown.com',
+    getNonce: async () => Math.round(Math.random() * 10000).toString()
+  }),
+  verifiers: [new EIP155Verifier(), new SolanaVerifier()],
+  storage: new LocalStorage({ key: '@appkit/siwx' })
+})
+```
+
+### Using custom components
+
+```ts
+import { DefaultSIWX, type SIWXStorage } from '@reown/appkit-siwx'
+
+class MyDatabaseStorage implements SIWXStorage {
+  // ...
+}
+
+const siwx = new DefaultSIWX({
+  storage: new MyDatabaseStorage()
+})
+```

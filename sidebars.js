@@ -238,7 +238,22 @@ module.exports = {
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
                 { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
-                { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'}
+                {
+                  type: 'doc',
+                  label: 'Telegram Mini Apps',
+                  id: 'appkit/features/telegram-mini-apps'
+                },
+                {
+                  type: 'category',
+                  label: 'SIWX',
+                  collapsed: false,
+                  collapsible: true,
+                  items: [
+                    { type: 'doc', label: 'Introduction', id: 'appkit/features/siwx/index' },
+                    { type: 'doc', label: 'Default Usage', id: 'appkit/features/siwx/default' },
+                    { type: 'doc', label: 'Custom Usage', id: 'appkit/features/siwx/custom' }
+                  ]
+                }
               ]
             },
             {
@@ -334,7 +349,7 @@ module.exports = {
             'appkit/react/core/hooks',
             'appkit/react/core/options',
             'appkit/react/core/components',
-            'appkit/react/core/socials', 
+            'appkit/react/core/socials',
             'appkit/react/core/smart-accounts',
             'appkit/react/core/custom-connectors',
             'appkit/react/core/custom-networks',
@@ -429,7 +444,7 @@ module.exports = {
             'appkit/next/core/hooks',
             'appkit/next/core/options',
             'appkit/next/core/components',
-            'appkit/next/core/socials', 
+            'appkit/next/core/socials',
             'appkit/next/core/smart-accounts',
             'appkit/next/core/custom-connectors',
             'appkit/next/core/custom-networks',
@@ -524,7 +539,7 @@ module.exports = {
             'appkit/vue/core/composables',
             'appkit/vue/core/options',
             'appkit/vue/core/components',
-            'appkit/vue/core/socials', 
+            'appkit/vue/core/socials',
             'appkit/vue/core/smart-accounts',
             'appkit/vue/core/custom-connectors',
             'appkit/vue/core/custom-networks',
@@ -619,7 +634,7 @@ module.exports = {
             'appkit/javascript/core/actions',
             'appkit/javascript/core/options',
             'appkit/javascript/core/components',
-            'appkit/javascript/core/socials', 
+            'appkit/javascript/core/socials',
             'appkit/javascript/core/smart-accounts',
             'appkit/javascript/core/custom-connectors',
             'appkit/javascript/core/custom-networks',

@@ -1,0 +1,39 @@
+---
+title: SIWX
+---
+
+# Sign In With X
+
+## Introduction
+
+The **Sign In With X** feature enables decentralized applications (Dapps) to authenticate users seamlessly across multiple blockchain networks, such as Ethereum, Polygon or Solana. This feature allows developers using our SDK to implement authentication by having users sign a unique string message with their blockchain wallets. The **Sign In With X** feature is designed in accordance with the [CAIP-122](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-122.md) standard, which establishes a chain-agnostic framework for blockchain-based authentication and authorization on off-chain services.
+
+## Getting Started
+
+**SIWX** works as a plugin system for AppKit and you are going to add the plugin in the AppKit configuration. There are two ways to get started, you can either use the default implementation provided by AppKit or create a custom implementation to suit your specific requirements.
+
+To initialize the **SIWX** feature, you need to add the `siwx` parameter to the `createAppKit` function.
+
+### Default Implementation
+
+By using the default implementation, you can quickly integrate the **SIWX** feature into your Dapp. The default implementation provides a set of pre-built components that allow you to have the feature up and running in no time.
+
+#### Exemple
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { DefaultSIWX } from '@reown/appkit-siwx'
+
+createAppKit({
+  // ... your configuration
+  siwx: new DefaultSIWX()
+})
+```
+
+Read more about the [Default Implementation](./default).
+
+### Custom Implementation
+
+The `siwx` param expects to receive a defined interface from which you are able to create your own implementation. This is what allows you to customize the feature to suit your specific requirements.
+
+The defined interface must follow specific rules to make sure that AppKit can interact with it correctly. Read more about how to have your [Custom Implementation](./custom).
