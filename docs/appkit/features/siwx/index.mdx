@@ -4,6 +4,10 @@ title: SIWX
 
 # Sign In With X
 
+:::warning
+This feature is currently under experimental stage.
+:::
+
 ## Introduction
 
 The **Sign In With X** feature enables decentralized applications (Dapps) to authenticate users seamlessly across multiple blockchain networks, such as Ethereum, Polygon or Solana. This feature allows developers using our SDK to implement authentication by having users sign a unique string message with their blockchain wallets. The **Sign In With X** feature is designed in accordance with the [CAIP-122](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-122.md) standard, which establishes a chain-agnostic framework for blockchain-based authentication and authorization on off-chain services.
@@ -37,3 +41,24 @@ Read more about the [Default Implementation](./default).
 The `siwx` param expects to receive a defined interface from which you are able to create your own implementation. This is what allows you to customize the feature to suit your specific requirements.
 
 The defined interface must follow specific rules to make sure that AppKit can interact with it correctly. Read more about how to have your [Custom Implementation](./custom).
+
+## SIWX Expected Behavior
+
+- **SIWX** will prompt to get the user signature and verify his identity every time a connection happen;
+- In case a SIWX session is already stored, the user will be automatically signed in and the prompt step will be skipped;
+- If the user changes the connected network, **SIWX** will prompt to get the user signature and verify his identity again;
+- If the user disconnects from the Dapp, **SIWX** will revoke the session and the user will need to sign in again.
+
+## One Click Auth
+
+The **SIWX** feature is designed to work seamlessly with the **One Click Auth** feature. If the wallet being used to connect already supports **One Click Auth**, **SIWX** will use it by default. By combining both features, you can provide a seamless and secure authentication experience for your users.
+
+## Migrating from SIWE to SIWX
+
+If you are currently already using **SIWE** from `@reown/appkit-siwe`, after AppKit version X.X.X, you will be migrated into **SIWX**. The migration process is automatic and your `siweConfig` from `createAppKit` function will be mapped internally.
+
+:::warning
+It is important to note that if you cannot use `siweConfig` and `siwx` at the same time, `createAppKit` will throw an error in case this happens.
+
+You may replace `siweConfig` with your own `siwx` configuration mannually if you would like to do so.
+:::
