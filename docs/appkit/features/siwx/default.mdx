@@ -2,9 +2,11 @@
 title: SIWX Default
 ---
 
-# SIWX Default Implementation
+# SIWX Default Usage
 
 ## Quick Start
+
+Here is a quick guide to get started with the **SIWX** feature using the default implementation.
 
 ### Installation
 
@@ -18,19 +20,64 @@ npm install @reown/appkit-siwx
 import { createAppKit } from '@reown/appkit'
 import { DefaultSIWX } from '@reown/appkit-siwx'
 
-createAppKit({
+const appkit = createAppKit({
   // ... your configuration
   siwx: new DefaultSIWX()
 })
 ```
 
+You should now have the **SIWX** feature up and running in your Dapp.
+
+The `DefaultSIWX` configuration will use the predefined components to handle the message generation, verification and storage of the sessions. You can customize the default implementation by providing your own components as in the following sections.
+
 ## Customizing the Default Implementation
 
 The default implementation of **SIWX** is divided in three main components: `SIWXMessenger`, `SIWXVerifier` and `SIWXStorage`. The `@reown/appkit-siwx` package have defined options to fulfill the parts when initializing the `DefaultSIWX` configuration and you are also able to setup your own parts as required.
 
-### SIWXMessenger
+### Predefined Components
 
-The `SIWXMessenger` component is responsible for formating the data into a message that will be later signed by the user. It expects to have a method `stringify` that will receive the input for the message and return the message as a `string`.
+The `@reown/appkit-siwx` package provides some predefined components that you can use to quickly setup the `DefaultSIWX` configuration.
+
+Check the latest components over the [SIWX repository](https://github.com/reown-com/appkit/tree/main/packages/siwx)
+
+#### Customizing components
+
+You may provide the parts to the `DefaultSIWX` configuration using the predefined components exposed by `@reown/appkit-siwx` package and customize the component params as needed.
+
+```ts
+import {
+  DefaultSIWX,
+  InformalMessenger,
+  EIP155Verifier,
+  SolanaVerifier,
+  LocalStorage
+} from '@reown/appkit-siwx'
+
+const siwx = new DefaultSIWX({
+  messenger: new InformalMessenger({
+    domain: 'reown.com',
+    uri: 'https://reown.com',
+    getNonce: async () => Math.round(Math.random() * 10000).toString()
+  }),
+  verifiers: [new EIP155Verifier(), new SolanaVerifier()],
+  storage: new LocalStorage({ key: '@appkit/siwx' })
+})
+```
+
+### Custom Components
+
+You may create your own components to handle the message generation, verification and storage of the sessions. The following sections will guide you through the process of creating your own components.
+
+#### `SIWXMessenger`
+
+The [`SIWXMessenger`](https://github.com/reown-com/appkit/blob/main/packages/siwx/src/core/SIWXMessenger.ts) is an abstract class which holds methods for generating the message to be signed.
+
+##### Creating a Custom Messenger:
+
+You may extend the `SIWXMessenger` class adding the public attributes:
+
+- `version`: a string that represents the version of the messenger;
+- `stringify`: a method that receives the message data and returns a string to be signed.
 
 ```ts
 import { SIWXMessenger } from '@reown/appkit-siwx'
@@ -46,9 +93,16 @@ export class MyMessenger extends SIWXMessenger {
 }
 ```
 
-### SIWXVerifier
+#### `SIWXVerifier`
 
-The `SIWXVerifier` component is responsible for verifying the signature of the message signed by the user. It expects to have a method `verify` that will receive the input for the message and the signature and return a `boolean` indicating if the signature is valid.
+The [`SIWXVerifier`](https://github.com/reown-com/appkit/blob/main/packages/siwx/src/core/SIWXVerifier.ts) is an abstract class that defines the verification logic for the signed message.
+
+##### Creating a Custom Verifier:
+
+You may extend the `SIWXVerifier` class adding the public attributes:
+
+- `chainNamespace`: a string that represents the chain namespace for the verifier;
+- `verify`: a method that receives the session data and returns a boolean indicating if the session is valid.
 
 ```ts
 import { SIWXVerifier } from '@reown/appkit-siwx'
@@ -64,9 +118,18 @@ export class MyVerifier extends SIWXVerifier {
 }
 ```
 
-### SIWXStorage
+#### `SIWXStorage`
 
-`SIWXStorage` is a interface that defines how the session data will be stored.
+[`SIWXStorage`](https://github.com/reown-com/appkit/blob/main/packages/siwx/src/core/SIWXStorage.ts) is a interface that defines how the session data will be stored.
+
+##### Creating a Custom Storage:
+
+You may implement the `SIWXStorage` interface with the following methods:
+
+- `add`: This method will be called to store a new single session that is verified;
+- `set`: This method must replace all the sessions in the storage with the new ones;
+- `get`: This method must return all the sessions stored for a specific chain and address. Is expected that the sessions are already verified;
+- `delete`: This method must delete all the sessions stored for a specific chain and address.
 
 ```ts
 import type { SIWXSession } from '@reown/appkit-core'
@@ -92,42 +155,11 @@ export class MyStorage implements SIWXStorage {
 }
 ```
 
-- `add`: This method will be called to store a new single session that is verified;
-- `set`: This method must replace all the sessions in the storage with the new ones;
-- `get`: This method must return all the sessions stored for a specific chain and address. Is expected that the sessions are already verified;
-- `delete`: This method must delete all the sessions stored for a specific chain and address.
+#### Using custom components
 
-## Predefined Components
+You may provide your custom components to the `DefaultSIWX` configuration.
 
-The `@reown/appkit-siwx` package provides some predefined components that you can use to quickly setup the `DefaultSIWX` configuration.
-
-Check the latest components over the [SIWX repository](https://github.com/reown-com/appkit/tree/main/packages/siwx)
-
-## Usage Examples
-
-### Using predefined components
-
-```ts
-import {
-  DefaultSIWX,
-  InformalMessenger,
-  EIP155Verifier,
-  SolanaVerifier,
-  LocalStorage
-} from '@reown/appkit-siwx'
-
-const siwx = new DefaultSIWX({
-  messenger: new InformalMessenger({
-    domain: 'reown.com',
-    uri: 'https://reown.com',
-    getNonce: async () => Math.round(Math.random() * 10000).toString()
-  }),
-  verifiers: [new EIP155Verifier(), new SolanaVerifier()],
-  storage: new LocalStorage({ key: '@appkit/siwx' })
-})
-```
-
-### Using custom components
+If you omit any of the components, the default implementation will be used. Check [here](https://github.com/reown-com/appkit/blob/main/packages/siwx/src/configs/DefaultSIWX.ts) the default components.
 
 ```ts
 import { DefaultSIWX, type SIWXStorage } from '@reown/appkit-siwx'
