@@ -1,0 +1,94 @@
+---
+title: SIWX Custom
+---
+
+# SIWX Custom Usage
+
+Alternatively from the [Default Implementation](./default), you can create your own implementation of the **SIWX** feature to suit your specific requirements.
+
+**SIWX** is developed to work as a plugin system for AppKit and to enable correctly it you need to fulfill the expected interface within the `createAppKit` function.
+
+## SWIXConfig interface
+
+This is the interface that you need to implement to create your own **SIWX** feature.
+
+```ts
+interface SIWXConfig {
+  createMessage: (input: SIWXMessage.Input) => Promise<SIWXMessage>
+  addSession: (session: SIWXSession) => Promise<void>
+  revokeSession: (chainId: CaipNetworkId, address: string) => Promise<void>
+  setSessions: (sessions: SIWXSession[]) => Promise<void>
+  getSessions: (chainId: CaipNetworkId, address: string) => Promise<SIWXSession[]>
+}
+```
+
+All the typings used are exposed by `@reown/appkit-core` package. You may check the source code [here](https://github.com/reown-com/appkit/blob/main/packages/core/src/utils/SIWXUtil.ts).
+
+## Constraints
+
+You are able to implement the `SIWXConfig` in the way you would like, but some constraints MUST be followed to make sure that AppKit can interact with it correctly and it will work as expected:
+
+### `createMessage`
+
+This method will be called to create a new message to be signed by the user.
+
+- The message MUST be unique and contain all the necessary information to verify the user's identity.
+
+### `addSession`
+
+This method will be called to store a new single session.
+
+- This method MUST verify if the session is valid and store it in the storage succesfully.
+
+### `revokeSession`
+
+This method will be called to revoke all the sessions stored for a specific chain and address.
+
+- This method MUST delete all the sessions stored for the specific chain and address succesfully.
+
+### `setSessions`
+
+This method will be called to replace all the sessions in the storage with the new ones.
+
+- This method MUST verify all the sessions before storing them in the storage;
+- This method MUST replace all the sessions in the storage with the new ones succesfully otherwise it MUST throw an error.
+
+### `getSessions`
+
+This method will be called to get all the sessions stored for a specific chain and address.
+
+- This method MUST return only sessions that are verified and valid;
+- This method MUST NOT return expired sessions.
+
+## Example
+
+Here is an example of how you can implement use your `SWIXConfig` interface:
+
+```ts
+import { createAppKit, type SIWXConfig } from '@reown/appkit'
+
+const siwx: SIWXConfig = {
+  createMessage: async (input) => {
+    // Implement your logic to create a message
+    return 'my message'
+  }
+  addSession: async (session) => {
+    // Implement your logic to add a session
+  },
+  revokeSession: async (chainId, address) => {
+    // Implement your logic to revoke a session
+  },
+  setSessions: async (sessions) => {
+    // Implement your logic to set sessions
+  },
+  getSessions: async (chainId, address) => {
+    // Implement your logic to get sessions
+    return []
+  }
+}
+
+createAppKit({
+  // ... your configuration
+  siwx
+})
+```
