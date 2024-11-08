@@ -4,6 +4,7 @@ import Table from '../../components/Table'
 import Button from '../../components/button'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
+import useBaseUrl from '@docusaurus/useBaseUrl'
 
 # Options
 
@@ -276,6 +277,25 @@ createAppKit({
   }
 })
 ```
+
+### legalCheckbox
+
+Enable or disable the terms of service and/or privacy policy checkbox.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    legalCheckbox: true
+  }
+})
+```
+
+<img
+  className="image-margin"
+  width={300}
+  src={useBaseUrl('/img/w3m/features/legal-checkbox.png')}
+/>
 
 ## customWallets
 
