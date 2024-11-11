@@ -61,7 +61,7 @@ async function getSession(){
 // Check the full example for signOut and getNonce functions ... 
 
 /* Create a SIWE configuration object */
-const siweConfig = createSIWEConfig({
+export const siweConfig = createSIWEConfig({
   getMessageParams: async () => ({
     domain: window.location.host,
     uri: window.location.origin, 
@@ -76,12 +76,13 @@ const siweConfig = createSIWEConfig({
       throw new Error('Failed to get nonce!')
     }
     return nonce
-  }
+  },
   getSession,
   verifyMessage,
   signOut: async () => { //Example
     // Implement your Sign out function
   }
+});
 ```
 
 ## Server Side 
@@ -211,7 +212,7 @@ async function verifyMessage({ message, signature }: SIWEVerifyMessageArgs){
 },
 
 /* Create a SIWE configuration object */
-const siweConfig = createSIWEConfig({
+export const siweConfig = createSIWEConfig({
   createMessage,
   getNonce: async () => { //This is only an example, substitute it with your actual nonce getter.
     const nonce = "YOUR_NONCE_GETTER"
