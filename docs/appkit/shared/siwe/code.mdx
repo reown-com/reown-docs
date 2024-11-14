@@ -99,7 +99,12 @@ Setting up a backend server using Express for a web application that interacts w
 import cors from 'cors';
 import express from 'express';
 import Session from 'express-session';
-import { generateNonce,  SiweMessage } from 'siwe';
+import { generateNonce } from 'siwe';
+import {
+  verifySignature,
+  getAddressFromMessage,
+  getChainIdFromMessage,
+} from '@reown/appkit-siwe'
 
 const app = express();
 
@@ -119,7 +124,6 @@ app.use(Session({
 
 app.get('/nonce', function (_, res) {
     res.setHeader('Content-Type', 'text/plain');
-    console.log("/nonce");
     res.send(generateNonce());
 });
 
@@ -129,11 +133,28 @@ app.post('/verify', async (req, res) => {
       if (!req.body.message) {
         return res.status(400).json({ error: 'SiweMessage is undefined' });
       }
-      let SIWEObject = new SiweMessage(req.body.message);
-      const { data: message } = await SIWEObject.verify({ signature: req.body.signature, nonce: req.session.nonce });
+
+      // save the session with the address and chainId (SIWESession)
+      req.session.siwe = { address, chainId };
+      req.session.save(() => res.status(200).send(true));
+
       
-      const address = message.address;
-      const chainId = message.chainId;
+      const message = req.body.message;
+      const singnature = req.body.signature;
+      const address = getAddressFromMessage(message);
+      const chainId = getChainIdFromMessage(message);
+      
+      const isValid = await verifySignature({
+        address,
+        message,
+        signature,
+        chainId,
+        projectId,
+      });
+      if (!isValid) {
+        // throw an error if the signature is invalid
+        throw new Error('Invalid signature');
+      }
       
       // save the session with the address and chainId (SIWESession)
       req.session.siwe = { address, chainId };

@@ -19,6 +19,7 @@ import EthersModal from '../ethers/about/triggermodal.mdx'
 import SolanaImplementation from '../solana/about/implementation.mdx'
 import SolanaModal from '../solana/about/triggermodal.mdx'
 import SolanaPrograms from '../solana/about/programs.mdx'
+import GithubBox from '../../../components/GithubBox'
 
 # React
 
@@ -73,21 +74,25 @@ Create a new project on reown Cloud at https://cloud.reown.com and obtain a new 
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana"]}>
 <PlatformTabItem value="wagmi">
+<GithubBox name="wagmi Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-wagmi" description="Check the React wagmi example"></GithubBox>
 
 <WagmiImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers5">
+<GithubBox name="Ethers v5 Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-ethers5" description="Check the React ethers v5 example"></GithubBox>
 
 <Ethers5Implementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers">
+<GithubBox name="Ethers Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-ethers" description="Check the React ethers example"></GithubBox>
 
 <EthersImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
+<GithubBox name="Solana Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-solana" description="Check the React Solana example"></GithubBox>
 
 <SolanaImplementation />
 

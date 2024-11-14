@@ -534,6 +534,20 @@ img[alt='web3modal-customisation'] {
   transition: all 0.2s ease-in-out;
 }
 
+.githubbox {
+  min-height: 23%;
+  border: 1px solid var(--ifm-border-color);
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--ifm-box-bg-color) 0, transparent 100%);
+  padding:15px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  
+}
+
 .box h1 {
   transition: all 0.2s ease-in-out;
 }
