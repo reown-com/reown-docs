@@ -91,7 +91,7 @@ async function onSessionProposal({ id, params }: WalletKitTypes.SessionProposal)
     // use the error.message to show toast/info-box letting the user know that the connection attempt was unsuccessful
     ....
     await walletKit.rejectSession({
-      id: proposal.id,
+      id: params.id,
       reason: getSdkError("USER_REJECTED")
     })
   }
