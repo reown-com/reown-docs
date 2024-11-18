@@ -11,8 +11,9 @@ import TabItem from '@theme/TabItem'
 
 Chain abstraction simplifies interactions across different blockchains, allowing users to transact seamlessly without worrying about network-specific tokens.
 
-To take full advantage of it, wallets need to support an implementation of Chain Abstraction, and slight changes are required on the Dapp side.
-Dapps may not always be aware of balances across different chains or accounts that wallets can access. Because of this, it’s important to ensure the call doesn’t fail on the Dapp side.
+To fully leverage chain abstraction, wallets need to support its implementation, and minor adjustments are required on the Dapp side.
+
+Dapps may not always be aware of the balances across different chains or accounts that wallets can access. Therefore, it’s crucial to ensure that the call does not fail on the Dapp side.
 
 This guide focuses on the most common ways Dapps interact with wallets using the Wagmi library.
 
