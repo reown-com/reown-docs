@@ -62,9 +62,9 @@ function App() {
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi"]}>
 <PlatformTabItem value="wagmi">
 
-`useSendTransaction` hook will try to estimate gas dapp side before forwarding the call to the wallet. Gas estimation might fail because the dapp may not be able to account for all the funds availalbe to the wallet across different chains.
+The `useSendTransaction` hook attempts to estimate gas on the Dapp side before forwarding the call to the wallet. However, gas estimation might fail because the Dapp may not account for all the funds available to the wallet across different chains.
 
-In order to send the call successfully, wallet must be responsible for gas estimations. You need to pas `gas: null` to the sendTransaction method.
+To ensure the call is sent successfully, the wallet must handle gas estimation. You need to pass `gas: null` to the sendTransaction method.
 
 ```tsx
 import { useSendTransaction } from 'wagmi'
