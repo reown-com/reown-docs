@@ -1,0 +1,83 @@
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## Overview
+
+:::note
+💡 Support for Chain Abstraction is currently in experimental phase
+:::
+
+Chain abstraction simplifies interactions across different blockchains, allowing users to transact seamlessly without worrying about network-specific tokens.
+
+To take full advantage of it, wallets need to support an implementation of Chain Abstraction, and slight changes are required on the Dapp side.
+Dapps may not always be aware of balances across different chains or accounts that wallets can access. Because of this, it’s important to ensure the call doesn’t fail on the Dapp side.
+
+This guide focuses on the most common ways Dapps interact with wallets using the Wagmi library.
+
+## Implementations
+
+### useWriteContract
+
+This is the basic example of `useWriteContract` hook. You need to add `__mode: “prepared”` param when you call the `writeContract` or `writeContractAsync` method
+
+Example:
+
+```tsx
+import { useWriteContract } from 'wagmi'
+import { abi } from './abi'
+
+function App() {
+  const { writeContract } = useWriteContract()
+
+  return (
+    <button
+      onClick={() =>
+        writeContract({
+          abi,
+          address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+          functionName: 'transferFrom',
+          args: [
+            '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            123n
+          ],
+          __mode: 'prepared' // <- Add this
+        })
+      }
+    >
+      Transfer
+    </button>
+  )
+}
+```
+
+### useSendTransaction
+
+`useSendTransaction` hook will try to estimate gas dapp side before forwarding the call to the wallet. Gas estimation might fail because the dapp may not be able to account for all the funds availalbe to the wallet across different chains.
+
+In order to send the call successfully, wallet must be responsible for gas estimations. You need to pas `gas: null` to the sendTransaction method.
+
+Example:
+
+```tsx
+import { useSendTransaction } from 'wagmi'
+import { parseEther } from 'viem'
+
+function App() {
+  const { sendTransaction } = useSendTransaction()
+
+  return (
+    <button
+      onClick={() =>
+        sendTransaction({
+          to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+          value: parseEther('0.01'),
+          gas: null // <- Add this
+        })
+      }
+    >
+      Send transaction
+    </button>
+  )
+}
+```
