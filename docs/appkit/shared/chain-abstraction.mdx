@@ -1,3 +1,5 @@
+import PlatformTabs from '../../components/PlatformTabs'
+import PlatformTabItem from '../../components/PlatformTabItem'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
@@ -18,9 +20,9 @@ This guide focuses on the most common ways Dapps interact with wallets using the
 
 ### useWriteContract
 
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi"]}>
+<PlatformTabItem value="wagmi">
 This is the basic example of `useWriteContract` hook. You need to add `__mode: “prepared”` param when you call the `writeContract` or `writeContractAsync` method
-
-Example:
 
 ```tsx
 import { useWriteContract } from 'wagmi'
@@ -51,13 +53,17 @@ function App() {
 }
 ```
 
+</PlatformTabItem>
+</PlatformTabs>
+
 ### useSendTransaction
+
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi"]}>
+<PlatformTabItem value="wagmi">
 
 `useSendTransaction` hook will try to estimate gas dapp side before forwarding the call to the wallet. Gas estimation might fail because the dapp may not be able to account for all the funds availalbe to the wallet across different chains.
 
 In order to send the call successfully, wallet must be responsible for gas estimations. You need to pas `gas: null` to the sendTransaction method.
-
-Example:
 
 ```tsx
 import { useSendTransaction } from 'wagmi'
@@ -81,3 +87,6 @@ function App() {
   )
 }
 ```
+
+</PlatformTabItem>
+</PlatformTabs>
