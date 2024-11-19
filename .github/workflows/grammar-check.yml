@@ -9,8 +9,10 @@ jobs:
     steps:
       # Checkout the code
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      # Run Vale using the latest GitHub Action
+      # Run Vale with default configuration
       - name: Grammar Check
         uses: errata-ai/vale-action@v2.1.1
+        with:
+          args: --no-config # Explicitly tell Vale to skip .vale.ini
