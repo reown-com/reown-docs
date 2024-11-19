@@ -1,4 +1,4 @@
-name: Proselint Grammar Check for .mdx Files
+name: Proselint Grammar Check for .mdx Files 
 
 on:
   pull_request:
