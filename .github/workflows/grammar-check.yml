@@ -9,8 +9,8 @@ jobs:
     steps:
       # Checkout the code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Run Vale using default rules (no .vale.ini)
+      # Run Vale using the latest GitHub Action
       - name: Grammar Check
-        uses: errata-ai/vale-action@v1
+        uses: errata-ai/vale-action@v2.1.1
