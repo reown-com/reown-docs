@@ -347,7 +347,10 @@ module.exports = {
         {
           type: 'category',
           label: 'Experimental',
-          items: ['appkit/react/experimental/smart-session']
+          items: [
+            'appkit/react/experimental/smart-session',
+            'appkit/react/experimental/chain-abstraction'
+          ]
         },
         {
           type: 'category',
@@ -442,7 +445,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Experimental',
-          items: ['appkit/next/experimental/smart-session']
+          items: ['appkit/next/experimental/smart-session','appkit/next/experimental/chain-abstraction']
         },
         {
           type: 'category',
