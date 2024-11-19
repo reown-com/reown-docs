@@ -25,12 +25,23 @@ When integrating a wallet with a mobile application, it's essential to understan
 
 **Developers should prefer Deep Linking over Universal Linking.**
 
-In the case of Universal Linking, the user may be redirected to the browser, which may not be the desired behavior. Deep Linking ensures that the user is redirected to the app, providing a seamless experience.
+Universal Linking may redirect the user to a browser, which might not provide the intended user experience. Deep Linking ensures the user is taken directly to the app.
 
 :::
 
+### Key Behavior to Address
+In some scenarios, wallets use redirect metadata provided in session proposals to open applications. This can cause unintended behavior, such as:
+
+Redirecting to the wrong app when multiple apps share the same redirect metadata (e.g., a desktop and mobile version of the same Dapp).
+Opening an unrelated application if a QR code is scanned on a different device than where the wallet is installed.
+
+#### Recommended Approach
+To avoid this behavior, wallets should:
+
+Restrict Redirect Metadata to Deep Link Use Cases: Redirect metadata should only be used when the session proposal is initiated through a deep link. QR code scans should not trigger app redirects using session proposal metadata.
+Ensure Unique Redirect URIs for Cross-Platform Apps: Cross-platform Dapps should use distinct redirect URIs for their mobile and desktop versions to avoid conflicts.
+
 The connection and sign request flows are similar across platforms.
-The next section provides a high-level overview of both flows.
 
 ### Connection Flow
 
