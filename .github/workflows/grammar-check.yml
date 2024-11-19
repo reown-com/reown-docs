@@ -15,4 +15,4 @@ jobs:
       - name: Grammar Check
         uses: errata-ai/vale-action@v2.1.1
         with:
-          args: --no-config # Explicitly tell Vale to skip .vale.ini
+          vale_flags: --no-config
