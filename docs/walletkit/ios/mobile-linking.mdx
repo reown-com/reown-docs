@@ -29,11 +29,10 @@ Universal Linking may redirect the user to a browser, which might not provide th
 
 :::
 
-### Key Behavior to Address
-In some scenarios, wallets use redirect metadata provided in session proposals to open applications. This can cause unintended behavior, such as:
+#### Recommended Approach
+To avoid this behavior, wallets should:
 
-Redirecting to the wrong app when multiple apps share the same redirect metadata (e.g., a desktop and mobile version of the same Dapp).
-Opening an unrelated application if a QR code is scanned on a different device than where the wallet is installed.
+- **Restrict Redirect Metadata to Deep Link Use Cases**: Redirect metadata should only be used when the session proposal is initiated through a deep link. QR code scans should not trigger app redirects using session proposal metadata.
 
 #### Recommended Approach
 To avoid this behavior, wallets should:

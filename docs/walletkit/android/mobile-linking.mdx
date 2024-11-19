@@ -38,8 +38,7 @@ Opening an unrelated application if a QR code is scanned on a different device t
 #### Recommended Approach
 To avoid this behavior, wallets should:
 
-Restrict Redirect Metadata to Deep Link Use Cases: Redirect metadata should only be used when the session proposal is initiated through a deep link. QR code scans should not trigger app redirects using session proposal metadata.
-Ensure Unique Redirect URIs for Cross-Platform Apps: Cross-platform Dapps should use distinct redirect URIs for their mobile and desktop versions to avoid conflicts.
+- **Restrict Redirect Metadata to Deep Link Use Cases**: Redirect metadata should only be used when the session proposal is initiated through a deep link. QR code scans should not trigger app redirects using session proposal metadata.
 
 The connection and sign request flows are similar across platforms.
 
