@@ -15,4 +15,4 @@ jobs:
       - name: Grammar Check
         uses: errata-ai/vale-action@v2.1.1
         with:
-          vale_flags: --no-config
+          vale_flags: --no-global
