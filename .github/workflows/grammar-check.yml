@@ -1,0 +1,32 @@
+name: Proselint Grammar Check for .mdx Files 
+
+on:
+  pull_request:
+    paths:
+      - '**/*.mdx'  # Target all .mdx files in the repository
+
+jobs:
+  proselint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Use the appropriate Python version
+
+      # Step 3: Install Proselint
+      - name: Install Proselint
+        run: |
+          python -m pip install --upgrade pip
+          pip install proselint
+
+      # Step 4: Run Proselint on .mdx files
+      - name: Run Proselint
+        run: |
+          proselint $(find . -type f -name "*.mdx")
