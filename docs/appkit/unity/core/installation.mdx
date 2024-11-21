@@ -96,7 +96,8 @@ await AppKit.InitializeAsync(
 ```csharp
 public async void Start()
 {
-    await AppKit.InitializeAsync();
+    var config = new AppKitConfig(...);
+    await AppKit.InitializeAsync(config);
 }
 ```
 
@@ -108,3 +109,9 @@ public void OpenAppKitModal()
     AppKit.OpenModal();
 }
 ```
+
+## Getting Support 🙋
+
+Reown is committed to delivering the best developer experience.
+
+If you have any questions, feature requests, or bug reports, feel free to open an issue on [GitHub](https://github.com/reown-com/reown-dotnet/issues)!
