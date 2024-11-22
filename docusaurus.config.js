@@ -127,8 +127,15 @@ const config = {
             '<a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/docs-logo.svg"  alt="Docs Logo"></a>'
         },
         {
-          label: 'Dashboard',
-          href: 'https://cloud.reown.com/?utm_source=website&utm_medium=docs&utm_campaign=walletconnectdocs',
+          label: 'Cloud Dashboard',
+          href: 'https://cloud.reown.com/?utm_source=website&utm_medium=docs&utm_campaign=docs',
+          position: 'right',
+          className: 'header-cloud-link',
+          'aria-label': 'Cloud'
+        },
+        {
+          label: 'AppKit Demo',
+          href: 'https://appkit-lab.reown.com/?utm_source=website&utm_medium=docs&utm_campaign=docs',
           position: 'right',
           className: 'header-cloud-link',
           'aria-label': 'Cloud'
