@@ -19,43 +19,9 @@ This guide focuses on the most common ways Dapps interact with wallets using the
 
 ## Implementations
 
-### useWriteContract
-
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi"]}>
-<PlatformTabItem value="wagmi">
-This is the basic example of the `useWriteContract` hook. You need to include the `__mode: “prepared”` parameter when calling the `writeContract` or `writeContractAsync` method
-
-```tsx
-import { useWriteContract } from 'wagmi'
-import { abi } from './abi'
-
-function App() {
-  const { writeContract } = useWriteContract()
-
-  return (
-    <button
-      onClick={() =>
-        writeContract({
-          abi,
-          address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-          functionName: 'transferFrom',
-          args: [
-            '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-            123n
-          ],
-          __mode: 'prepared' // <- Add this
-        })
-      }
-    >
-      Transfer
-    </button>
-  )
-}
-```
-
-</PlatformTabItem>
-</PlatformTabs>
+:::note
+To ensure compatibility and optimal performance with the Chain Abstraction feature, please use Wagmi 2.13.0 or later.
+:::
 
 ### useSendTransaction
 
