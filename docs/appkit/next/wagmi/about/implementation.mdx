@@ -9,9 +9,9 @@ Create a new file for your Wagmi configuration, since we are going to be calling
 For this example we will create a file called `config/index.tsx` outside our app directory and set up the following configuration
 
 ```tsx
-import { cookieStorage, createStorage, http } from '@wagmi/core'
+import { cookieStorage, createStorage, http } from 'wagmi'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { mainnet, arbitrum } from '@reown/appkit/networks'
+import { mainnet, polygon } from 'wagmi/chains'
 
 // Get projectId from https://cloud.reown.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
