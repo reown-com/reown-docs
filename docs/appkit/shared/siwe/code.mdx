@@ -37,7 +37,7 @@ async function getSession(){
   
   const data = await res.json();
   
-  const isValidData = typeof data === 'object' && typeof data.address === 'string' && (typeof data.chainId === 'number' ||  typeof data.chainId === 'string' && !isNaN(Number(data.chainId)));
+  const isValidData = typeof data === 'object' && typeof data.address === 'string' && typeof data.chainId === 'number';
 
   return isValidData ? data as SIWESession : null;
 }
@@ -166,6 +166,13 @@ app.post('/verify', async (req, res) => {
       }
       if (chainId.includes(":")) {
         chainId = chainId.split(":")[1];
+      }
+      
+      // Convert chainId to a number
+      chainId = Number(chainId);
+
+      if (isNaN(chainId)) {
+          throw new Error("Invalid chainId");
       }
       
       // save the session with the address and chainId (SIWESession)
