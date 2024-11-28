@@ -36,7 +36,10 @@ async function getSession(){
   }
   
   const data = await res.json();
-  return data == "{}" ?  null : data as SIWESession;
+  
+  const isValidData = typeof data === 'object' && typeof data.address === 'string' && typeof data.chainId === 'number';
+
+  return isValidData ? data as SIWESession : null;
 }
 
 /* Use your SIWE server to verify if the message and the signature are valid */
@@ -148,7 +151,7 @@ app.post('/verify', async (req, res) => {
       const message = req.body.message;
       const singnature = req.body.signature;
       const address = getAddressFromMessage(message);
-      const chainId = getChainIdFromMessage(message);
+      let chainId = getChainIdFromMessage(message);
       
       const isValid = await verifySignature({
         address,
@@ -160,6 +163,16 @@ app.post('/verify', async (req, res) => {
       if (!isValid) {
         // throw an error if the signature is invalid
         throw new Error('Invalid signature');
+      }
+      if (chainId.includes(":")) {
+        chainId = chainId.split(":")[1];
+      }
+      
+      // Convert chainId to a number
+      chainId = Number(chainId);
+
+      if (isNaN(chainId)) {
+          throw new Error("Invalid chainId");
       }
       
       // save the session with the address and chainId (SIWESession)
