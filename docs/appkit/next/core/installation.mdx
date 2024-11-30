@@ -207,6 +207,19 @@ const nextConfig = {
 }
 ```
 
+- For new nextjs [turbopack](https://nextjs.org/docs/architecture/turbopack) bundler add the following code in the `next.config.js` file as webpack not used
+
+```ts
+// Path: next.config.js
+const nextConfig = {
+  serverExternalPackages: [
+    'pino-pretty',
+    'lokijs',
+    'encoding'
+  ],
+}
+```
+
 - [Learn more about SSR with Wagmi](https://wagmi.sh/react/guides/ssr)
 
 ## Video Tutorial
