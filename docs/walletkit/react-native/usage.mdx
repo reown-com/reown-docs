@@ -207,7 +207,7 @@ walletKit.on('session_proposal', async proposal => {
 })
 
 // Call this after WCURI is received
-await walletKit.pair({ wcuri })
+await walletKit.pair({ uri: wcuri })
 ```
 
 ### Session Rejection
@@ -226,7 +226,7 @@ walletKit.on('session_proposal', async proposal => {
 })
 
 // Call this after WCURI is received
-await walletKit.core.pairing.pair({ wcuri })
+await walletKit.pair({ uri: wcuri })
 ```
 
 ### Responding to Session requests
