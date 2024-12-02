@@ -2,46 +2,84 @@
 
 ## Custom Networks addition and selection
 
-AppKit already comes with a list of supported networks inside of `ReownAppKitModalNetworks` class. You can get default supported EVM networks by selecting `ReownAppKitModalNetworks.supported['eip155']` and, currently, only EVM Networks are supported (non-EVM support will come soon). Check the list of [supported networks](https://github.com/walletconnect/blockchain-api/blob/master/SUPPORTED_CHAINS.md#list-of-supported-chains)
+AppKit includes a predefined list of supported mainnets, (such as the Solana mainnet) and testnets ( also Solana testnet) within the ReownAppKitModalNetworks class. This means that if you intend to support both EVM chains and Solana, no further adjustments are necessary.
 
-This class also comes with extra networks `ReownAppKitModalNetworks.extra['eip155']` and test networks `ReownAppKitModalNetworks.test['eip155']`, however, these are not included in the supported list by default.
+However, this class can be modified in order to achieve the following results, and more:
 
-If these chains are not enough for you or you don't want to support some of them you can modify the list associated to the namespace.
-
-:::info note
-It is important that this is done before AppKitModal configuration.
+:::info
+non-EVM blockchains are supported from version `1.2.0-beta01`
 :::
 
-### Adding extra and/or test networks to the supported list
-
 ```javascript
-// Adding extra networks
-final extraNetworks = ReownAppKitModalNetworks.extra['eip155'] ?? [];
-ReownAppKitModalNetworks.addNetworks('eip155', extraNetworks);
-
-// Adding test networks
-final testNetworks = ReownAppKitModalNetworks.test['eip155'] ?? [];
-ReownAppKitModalNetworks.addNetworks('eip155', testNetworks);
+// You can add more EVM networks
+List<ReownAppKitModalNetworkInfo> extraChains = [...];
+ReownAppKitModalNetworks.addSupportedNetworks('eip155', extraChains);
 ```
 
-### Removing Aurora network from the list
+_Note: If you are adding a test network, set `isTestNetwork` property of `ReownAppKitModalNetworkInfo` to `true`_
 
 ```javascript
-ReownAppKitModalNetworks.removeNetworks('eip155', ['1313161554']);
+// Remove Solana networks (supports only EVM networks):
+ReownAppKitModalNetworks.removeSupportedNetworks('solana');
 ```
-
-### Adding a custom network
 
 ```javascript
-final customNetwork = ReownAppKitModalNetworkInfo(
-  name: 'Ethereum',
-  chainId: '1',
-  currency: 'ETH',
-  rpcUrl: 'https://ethereum-rpc.publicnode.com',
-  explorerUrl: 'https://etherscan.io',
-  isTestNetwork: false,
-);
-
-ReownAppKitModalNetworks.addNetworks('eip155', [customNetwork]);
+// Remove every test network
+ReownAppKitModalNetworks.removeTestNetworks();
 ```
 
+```javascript
+// Add more non-EVM networks, such as Polkadot
+ReownAppKitModalNetworks.addSupportedNetworks('polkadot', [
+  ReownAppKitModalNetworkInfo(
+    name: 'Polkadot',
+    chainId: '91b171bb158e2d3848fa23a9f1c25182',
+    chainIcon: 'https://cryptologos.cc/logos/polkadot-new-dot-logo.png',
+    currency: 'DOT',
+    rpcUrl: 'https://rpc.polkadot.io',
+    explorerUrl: 'https://polkadot.subscan.io',
+  ),
+  ReownAppKitModalNetworkInfo(
+    name: 'Westend',
+    chainId: 'e143f23803ac50e8f6f8e62695d1ce9e',
+    currency: 'DOT',
+    rpcUrl: 'https://westend-rpc.polkadot.io',
+    explorerUrl: 'https://westend.subscan.io',
+    isTestNetwork: true,
+  ),
+]);
+```
+
+As said before, if you plan to support just EVM and Solana networks you should already have everything in place, out of the box, inside AppKit configuration. However, if you are looking to support more non-EVM networks, such as Polkadot, then further configuration must be done:
+
+Example: If you want to support EVM + Solana + Polkadot then, along with the networks list modification, you should also pass the the following `optionalNamespaces:` in AppKit instance:
+
+```javascript
+optionalNamespaces: {
+  'eip155': RequiredNamespace.fromJson({
+    'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
+      namespace: 'eip155',
+    ).map((chain) => 'eip155:${chain.chainId}').toList(),
+    'methods': NetworkUtils.defaultNetworkMethods['eip155']!.toList(),
+    'events': NetworkUtils.defaultNetworkEvents['eip155']!.toList(),
+  }),
+  'solana': RequiredNamespace.fromJson({
+    'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
+      namespace: 'solana',
+    ).map((chain) => 'solana:${chain.chainId}').toList(),
+    'methods': NetworkUtils.defaultNetworkMethods['solana']!.toList(),
+    'events': [],
+  }),
+  'polkadot': RequiredNamespace.fromJson({
+    'chains': [
+      'polkadot:91b171bb158e2d3848fa23a9f1c25182',
+      'polkadot:e143f23803ac50e8f6f8e62695d1ce9e'
+    ],
+    'methods': [
+      'polkadot_signMessage',
+      'polkadot_signTransaction',
+    ],
+    'events': []
+  }),
+},
+```

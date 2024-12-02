@@ -121,7 +121,7 @@ const metadata = { //optional
 /* highlight-add-end */
 ```
 
-Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
+Finally, pass `wagmiAdapter` and other parameters to `createAppKit`
 
 ```tsx
 /* highlight-delete-start */
@@ -186,7 +186,6 @@ import { createAppKit } from '@reown/appkit/vue'
 import { arbitrum, mainnet } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 /* highlight-add-end */
-
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
@@ -236,20 +235,6 @@ Pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
  }
 })
 /* highlight-add-end */
-
-export default function App() {
-  return (
-    <>
-/* highlight-add-start */
-+      <WagmiPlugin config="{{ wagmiAdapter.wagmiConfig }}">
-/* highlight-add-end */
-            <HomePage />
-/* highlight-add-start */
-      </WagmiPlugin>
-/* highlight-add-end */
-    </>
-  )
-}
 ```
 
 Finally, you need to initialized Vue Query in the `main.ts`
@@ -317,7 +302,6 @@ const metadata = { //optional
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 /* highlight-add-end */
 ```
 

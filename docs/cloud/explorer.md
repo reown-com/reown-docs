@@ -4,7 +4,7 @@ title: Explorer API
 
 The Cloud Explorer API currently offers the following functionality:
 
-- [Listings](#listings) - Allows for fetching of wallets and dApps listed in the [Reown Cloud Explorer](https://walletconnect.com/explorer).
+- [Listings](#listings) - Allows for fetching of wallets and dApps listed in the [WalletGuide](https://walletguide.walletconnect.network/).
 - [Logos](#logos) - Provides logo assets in different sizes for a given Cloud explorer entry.
 
 ### Listings
@@ -60,7 +60,7 @@ Examples:
 #### `GET /v3/all?projectId=YOUR_PROJECT_ID&ids=LISTING_ID1,LISTING_ID2`
 
 Returns a JSON object containing the entry listings by ID, which can be useful for allowlisting purposes. <br/>
-You can find and copy listing ids from our [Explorer](https://walletconnect.com/explorer)
+You can find and copy listing ids from our [WalletGuide](https://walletguide.walletconnect.network/)
 
 Examples:
 

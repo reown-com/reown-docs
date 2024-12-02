@@ -23,7 +23,8 @@ const cloud = {
     'cloud/verify',
     'cloud/relay',
     'cloud/blockchain-api',
-    'cloud/analytics'
+    'cloud/analytics',
+    'cloud/paymaster'
   ]
 }
 
@@ -346,7 +347,10 @@ module.exports = {
         {
           type: 'category',
           label: 'Experimental',
-          items: ['appkit/react/experimental/smart-session']
+          items: [
+            'appkit/react/experimental/smart-session',
+            'appkit/react/experimental/chain-abstraction'
+          ]
         },
         {
           type: 'category',
@@ -441,7 +445,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Experimental',
-          items: ['appkit/next/experimental/smart-session']
+          items: ['appkit/next/experimental/smart-session','appkit/next/experimental/chain-abstraction']
         },
         {
           type: 'category',
@@ -910,6 +914,7 @@ module.exports = {
             'appkit/unity/core/usage',
             'appkit/unity/core/options',
             'appkit/unity/core/actions',
+            'appkit/unity/core/siwe',
             'appkit/unity/core/events',
             'appkit/unity/core/customization'
           ]

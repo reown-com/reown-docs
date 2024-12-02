@@ -6,14 +6,9 @@ In your `App.vue` file set up the following configuration.
 ```html
 <script setup lang="ts">
   import { createAppKit, useAppKit} from '@reown/appkit-solana/vue'
-  import {PhantomWalletAdapter,SolflareWalletAdapter} from '@solana/wallet-adapter-wallets'
+  import { PhantomWalletAdapter,SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
   import { SolanaAdapter } from '@reown/appkit-adapter-solana/vue'
   import {solana, solanaTestnet, solanaDevnet} from '@reown/appkit/networks'
-
-  // 0. Set up Solana Adapter
-  const solanaWeb3JsAdapter = new SolanaAdapter({
-    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-  })
 
   // 1. Get projectId from https://cloud.reown.com
   const projectId = 'YOUR_PROJECT_ID'
@@ -26,10 +21,15 @@ In your `App.vue` file set up the following configuration.
     icons: ['https://avatars.githubusercontent.com/u/179229932']
   }
 
-  // 3. Create modal
+  // 3. Set up Solana Adapter
+  const solanaWeb3JsAdapter = new SolanaAdapter({
+    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+  })
+
+  // 4. Create modal
   createAppKit({
     adapters: [solanaWeb3JsAdapter],
-    metadata: metadata,
+    metadata,
     networks: [solana, solanaTestnet, solanaDevnet],
     projectId,
     wallets: [
@@ -37,9 +37,6 @@ In your `App.vue` file set up the following configuration.
       new SolflareWalletAdapter(),
     ]
   })
-
-  // 4. Use modal composable
-  const modal = useAppKit()
 </script>
 
 <template> // Rest of your app ... </template>

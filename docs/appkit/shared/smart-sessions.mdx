@@ -15,14 +15,20 @@ This guide will walk you through on how to use the `grantPermissions` method, in
 
 The `grantPermissions` method provides an easy way to interact with the smart wallet to request permissions.
 
-### Step 1 | Import the method
+### Step 1 | Install the library
+
+```bash npm2yarn
+npm install @reown/appkit-experimental
+```
+
+### Step 2 | Import the method
 First, import the grantPermissions method from the `@reown/appkit-experimental/smart-session` package.
 
 ```javascript
 import { grantPermissions, type SmartSessionGrantPermissionsRequest } from '@reown/appkit-experimental/smart-session'
 ```
 
-### Step 2 | Define the Permission Request
+### Step 3 | Define the Permission Request
 
 Create an object adhering to the `SmartSessionGrantPermissionsRequest` type. This object specifies details like the `address`, `chainID`, `signer`, `policies`, `permissions`, and `expiry` time.
     
@@ -64,7 +70,7 @@ const request: SmartSessionGrantPermissionsRequest = {
     }
 ```
 
-### Step 3 | Invoke the Method
+### Step 4 | Invoke the Method
 
 Call the `grantPermissions` function, passing the request object. This will trigger the permission request via the connected wallet.
 
@@ -72,7 +78,7 @@ Call the `grantPermissions` function, passing the request object. This will trig
  const response = await grantPermissions(request)
 ```
 
-### Step 4 | Handle the Response
+### Step 5 | Handle the Response
 
 Upon successful execution, the response will include the granted permissions and the session context. So the response can be handled as needed.
 
@@ -80,7 +86,7 @@ Upon successful execution, the response will include the granted permissions and
 
 ```tsx
 {
-	chainId: `0x14a34`
+  chainId: `0x14a34`
   address: `0x...`
   expiry: 1727824386
   permissions: [

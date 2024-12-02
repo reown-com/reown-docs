@@ -88,7 +88,7 @@ new WalletConnectModal({
 
 #### projectId (required)
 
-Your project’s unique identifier that can be obtained at [cloud.reown.com](https://cloud.reown.com). Enables following functionalities within WalletConnectModal: wallet and chain logos, optional WalletConnect RPC, support for all v2 wallets from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet&version=2). Defaults to `undefined`.
+Your project’s unique identifier that can be obtained at [cloud.reown.com](https://cloud.reown.com). Enables following functionalities within WalletConnectModal: wallet and chain logos, optional WalletConnect RPC, support for all v2 wallets from [WalletGuide](https://walletguide.walletconnect.network/). Defaults to `undefined`.
 
 ```ts
 projectId: string
@@ -151,7 +151,7 @@ const onCopyClipboard = (value: string) => {
 
 #### explorerRecommendedWalletIds (optional)
 
-Allows to override default recommended wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. If you want to completely disable recommended wallets, you can set this option to `NONE`. Defaults to `undefined`.
+Allows to override default recommended wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. If you want to completely disable recommended wallets, you can set this option to `NONE`. Defaults to `undefined`.
 
 ```ts
 explorerRecommendedWalletIds: string[] | 'NONE'
@@ -165,7 +165,7 @@ explorerRecommendedWalletIds={[
 
 #### explorerExcludedWalletIds (optional)
 
-Allows to exclude wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define an array of wallet ids you'd like to exclude. You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. If you want to exclude all wallets, you can set this option to `ALL`, however if `explorerRecommendedWalletIds` were defined, they will still be fetched. Defaults to `undefined`.
+Allows to exclude wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define an array of wallet ids you'd like to exclude. You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. If you want to exclude all wallets, you can set this option to `ALL`, however if `explorerRecommendedWalletIds` were defined, they will still be fetched. Defaults to `undefined`.
 
 ```ts
 explorerExcludedWalletIds: string[] | 'ALL'
@@ -194,7 +194,7 @@ accentColor = '#9090FF'
 
 #### Explorer recommended wallets
 
-Allows to set default recommended wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define a list of wallets ids you'd like to prioritise (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
+Allows to set default recommended wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define a list of wallets ids you'd like to prioritise (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
 
 ```kotlin
 val recommendedWalletsIds = listOf<String>(
@@ -217,7 +217,7 @@ WalletConnectModal.initialize(
 
 #### Explorer excluded wallets
 
-Allows to exclude wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define an array of wallet ids you'd like to exclude. You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
+Allows to exclude wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define an array of wallet ids you'd like to exclude. You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
 
 ```kotlin
 val excludedWalletIds = listOf<String>(
@@ -324,7 +324,7 @@ You can change it at any time with the `setOptionalNamespaces` method.
 
 #### recommendedWalletIds (optional)
 
-Allows to override default recommended wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. Defaults to `null`.
+Allows to override default recommended wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. Defaults to `null`.
 
 ```javascript
 final Set<String> recommendedWalletIds = {
@@ -337,7 +337,7 @@ final Set<String> recommendedWalletIds = {
 
 The `excludedWalletState` Determines the state of the excluded wallets. Defaults to `ExcludedWalletState.list`.
 
-If the `excludedWalletState` is `ExcludedWalletState.list`, the `excludedWalletIds` will be used to remove items from the list of wallets returned from the [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). If the `excludedWalletState` is `ExcludedWalletState.all`, all wallets will be excluded except for the ones defined in `recommendedWalletIds`.
+If the `excludedWalletState` is `ExcludedWalletState.list`, the `excludedWalletIds` will be used to remove items from the list of wallets returned from the [WalletGuide](https://walletguide.walletconnect.network/). If the `excludedWalletState` is `ExcludedWalletState.all`, all wallets will be excluded except for the ones defined in `recommendedWalletIds`.
 
 </PlatformTabItem>
 
@@ -378,7 +378,7 @@ ConnectOptions = new ConnectOptions
 
 #### IncludedWalletIds
 
-Allows to override default recommended wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. Defaults to `null`.
+Allows to override default recommended wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. Defaults to `null`.
 
 ```csharp
 IncludedWalletIds = new[]
@@ -390,7 +390,7 @@ IncludedWalletIds = new[]
 
 #### ExcludedWalletIds
 
-Allows to exclude wallets that are fetched from [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet). You can define an array of wallet ids you'd like to exclude. You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. Defaults to `null`.
+Allows to exclude wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define an array of wallet ids you'd like to exclude. You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card. Defaults to `null`.
 
 ```csharp
 ExcludedWalletIds = new[]

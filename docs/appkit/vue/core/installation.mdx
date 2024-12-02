@@ -16,6 +16,7 @@ import EthersModal from '../ethers/about/triggermodal.mdx'
 import SolanaImplementation from '../solana/implementation.mdx'
 import SolanaModal from '../solana/triggermodal.mdx'
 import SolanaPrograms from '../solana/programs.mdx'
+import GithubBox from '../../../components/GithubBox'
 
 # Vue
 
@@ -30,7 +31,7 @@ AppKit has support for [Wagmi](https://wagmi.sh/), [Ethers](https://docs.ethers.
 <PlatformTabItem value="wagmi">
 
 ```bash npm2yarn
-npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue viem
 ```
 
 </PlatformTabItem>
@@ -51,7 +52,7 @@ npm install @reown/appkit @reown/appkit-adapter-ethers ethers
 <PlatformTabItem value="solana">
 
 ```bash npm2yarn
-npm install @reown/appkit @reown/appkit-adapter-solana
+npm install @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
 ```
 
 </PlatformTabItem>
@@ -67,6 +68,7 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana"]}>
 <PlatformTabItem value="wagmi">
+<GithubBox name="wagmi Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/vue-wagmi" description="Check the Vue wagmi example"></GithubBox>
 
 <WagmiImplementation />
 
@@ -82,7 +84,7 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
-
+<GithubBox name="Solana Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/vue-solana" description="Check the Vue Solana example"></GithubBox>
 <SolanaImplementation />
 
 </PlatformTabItem>

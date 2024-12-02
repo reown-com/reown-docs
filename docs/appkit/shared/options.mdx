@@ -4,6 +4,7 @@ import Table from '../../components/Table'
 import Button from '../../components/button'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
+import useBaseUrl from '@docusaurus/useBaseUrl'
 
 # Options
 
@@ -100,7 +101,7 @@ createAppKit({
 Select wallets that are going to be shown on the modal's main view. Default wallets are MetaMask and Trust Wallet.
 Array of wallet ids defined will be prioritized (order is respected).
 These wallets will also show up first in `All Wallets` view.
-You can find the wallets ids in [WalletConnect Explorer](https://walletconnect.com/explorer?type=wallet)
+You can find the wallets ids in [WalletGuide](https://walletguide.walletconnect.network/)
 
 ```ts
 createAppKit({
@@ -109,17 +110,6 @@ createAppKit({
     '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369',
     '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0'
   ]
-})
-```
-
-## allowUnsupportedChain
-
-Allow users to switch to an unsupported chain.
-
-```ts
-createAppKit({
-  //...
-  allowUnsupportedChain: true
 })
 ```
 
@@ -288,6 +278,25 @@ createAppKit({
 })
 ```
 
+### legalCheckbox
+
+Enable or disable the terms of service and/or privacy policy checkbox.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    legalCheckbox: true
+  }
+})
+```
+
+<img
+  className="image-margin"
+  width={300}
+  src={useBaseUrl('/img/w3m/features/legal-checkbox.png')}
+/>
+
 ## customWallets
 
 Adds custom wallets to the modal. `customWallets` is an array of objects, where each object contains specific information of a custom wallet.
@@ -356,7 +365,7 @@ Wallets that are either not included or excluded **won't** be able to connect to
 
 ### includeWalletIds
 
-Override default recommended wallets that are fetched from [WalletConnect explorer](https://walletconnect.com/explorer?type=wallet).
+Override default recommended wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/).
 Array of wallet ids defined will be shown (order is respected).
 Unlike `featuredWalletIds`, these wallets will be the **only** ones shown in `All Wallets` view and as recommended wallets.
 You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
@@ -373,7 +382,7 @@ createAppKit({
 
 ### excludeWalletIds
 
-Exclude wallets that are fetched from [WalletConnect explorer](https://walletconnect.com/explorer?type=wallet).
+Exclude wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/).
 Array of wallet ids defined will be excluded. All other wallets will be shown in respective places.
 You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
 

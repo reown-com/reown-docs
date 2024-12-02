@@ -4,15 +4,17 @@ import PlatformTabItem from '../../../components/PlatformTabItem'
 # Custom connectors
 
 Custom connectors, such as social logins, WalletConnect QR, Coinbasewallet, etc., can be integrated into your Modal. A simple example of how to incorporate them for Wagmi or Ethers library.
+
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "solana"]}>
 
 <PlatformTabItem value="wagmi">
 
 If you already have Wagmi integrated into your application or would like more control over Wagmi's configuration, you can integrate AppKit on top of it.
 
-Adding custom connectors like WalletConnect and Coinbase is optional. 
+Adding custom connectors like WalletConnect and Coinbase is optional.
 
 By default, [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and WC connectors are provided out of the box.
+
 ```tsx
 import { createAppKit } from '@reown/appkit/react'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
@@ -78,9 +80,8 @@ Check our React Wagmi demo in [Github](https://github.com/reown-com/web-examples
 
 ```tsx
 import { createAppKit } from '@reown/appkit/react'
-import { EthersAdapter} from '@reown/appkit-adapter-ethers'
+import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 import { sepolia } from '@reown/appkit/networks'
-
 
 const projectId = 'YOUR_PROJECT_ID'
 
@@ -99,14 +100,14 @@ createAppKit({
   metadata,
   projectId,
   features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
-  } 
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
 })
 
 // Now, you can render connect button
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <w3m-button />
+    <appkit-button />
   </React.StrictMode>
 )
 ```
@@ -148,7 +149,7 @@ const modal = createAppKit({
   metadata: metadata,
   projectId,
   features: {
-    analytics: true,
+    analytics: true
   }
 })
 ```

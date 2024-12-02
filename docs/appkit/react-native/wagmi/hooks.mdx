@@ -1,21 +1,16 @@
 import Button from '../../../components/button'
 
-You can use [Wagmi hooks](https://wagmi.sh/react/api/hooks) to sign messages, interact with smart contracts, and much more.
+### useAppKitAccount
 
-#### useAccount
-
-Hook for accessing account data and connection status.
+Hook that returns the client's information.
 
 ```tsx
-import { Text } from 'react-native'
-import { useAccount } from 'wagmi'
+import { useAppKitAccount } from '@reown/appkit/react'
 
-function App() {
-  const { address, isConnecting, isDisconnected } = useAccount()
+function Components() {
+  const { address, caipAddress, isConnected } = useAppKitAccount();
 
-  if (isConnecting) return <Text>Connecting…</Text>
-  if (isDisconnected) return <Text>Disconnected</Text>
-  return <Text>{address}</Text>
+  //...
 }
 ```
 
