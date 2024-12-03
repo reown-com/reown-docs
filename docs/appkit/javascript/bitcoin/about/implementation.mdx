@@ -1,3 +1,5 @@
+import BitcoinProvicerInterface from "../../../shared/bitcoin-provider.mdx"
+
 AppKit Bitcoin is built on top of the AppKit library and provides a set of components and actions to easily connect Bitcoin wallets with your decentralized application.
 
 On top of your app set up the following configuration.
@@ -48,3 +50,6 @@ const openNetworkModalBtn = document.getElementById('open-network-modal')
 openConnectModalBtn.addEventListener('click', () => modal.open())
 openNetworkModalBtn.addEventListener('click', () => modal.open({ view: 'Networks' }))
 ```
+
+
+<BitcoinProvicerInterface />

@@ -1,6 +1,8 @@
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
+import BitcoinProvicerInterface from "../../../shared/bitcoin-provider.mdx"
+
 AppKit Bitocin provides a set of React components and hooks to easily connect Bitcoin wallets with your application.
 
 On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
@@ -51,71 +53,4 @@ createAppKit({
 <template> // Rest of your app ... </template>
 ```
 
-## Bitcoin Provider Interface
-
-```ts
-export interface BitcoinConnector extends ChainAdapterConnector, Provider {
-  getAccountAddresses(): Promise<BitcoinConnector.AccountAddress[]>
-  signMessage(params: BitcoinConnector.SignMessageParams): Promise<string>
-  sendTransfer(params: BitcoinConnector.SendTransferParams): Promise<string>
-  signPSBT(params: BitcoinConnector.SignPSBTParams): Promise<BitcoinConnector.SignPSBTResponse>
-}
-```
-
-### Parameters
-<Tabs>
-<TabItem value="bb" label="SignMessageParams">
-```ts
-  export type SignMessageParams = {
-    message: string
-    address: string
-  }
-```
-</TabItem>
-<TabItem value="cc" label="SignMessageParams">
-```ts
-  export type SendTransferParams = {
-    amount: string
-    recipient: string
-  }
-```
-</TabItem>
-<TabItem value="dd" label="SignPSBTParams">
-```ts
-  export type SignPSBTParams = {
-    psbt: string
-    signInputs: {
-      address: string
-      index: number
-      sighashTypes: number[]
-    }[]
-    broadcast?: boolean
-  }
-```
-</TabItem>
-</Tabs>
-
-### Responces
-
-<Tabs>
-<TabItem value="aa" label="AccountAddress">
-```ts
-  export type AccountAddress = {
-    // Public address belonging to the account.
-    address: string
-    // Public key for the derivation path in hex, without 0x prefix
-    publicKey?: string
-    // Derivation path of the address e.g. "m/84'/0'/0'/0/0"
-    path?: string
-    purpose: 'payment' | 'ordinal' | 'stx'
-  }
-```
-</TabItem>
-<TabItem value="ee" label="SignPSBTResponse">
-```ts
-  export type SignPSBTResponse = {
-    psbt: string
-    txid?
-```
-</TabItem>
-</Tabs>
+<BitcoinProvicerInterface />
