@@ -235,6 +235,7 @@ module.exports = {
                 { type: 'doc', label: 'On-Ramp', id: 'appkit/features/onramp' },
                 { type: 'doc', label: 'One-Click Auth', id: 'appkit/features/one-click-auth' },
                 { type: 'doc', label: 'Smart Accounts', id: 'appkit/features/smart-accounts' },
+                { type: 'doc', label: 'Bitcoin', id: 'appkit/features/bitcoin' },
                 { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
