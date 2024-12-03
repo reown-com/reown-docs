@@ -8,13 +8,13 @@ On top of your app set up the following configuration, making sure that all func
 // App.tsx
 import { createAppKit } from '@reown/appkit/react'
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
-import { bitcoin, bitcoinTestnet } from '@reown/appkit/networks'
+import { bitcoin  } from '@reown/appkit/networks'
 
 // 1. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 2. Set the networks
-const networks = [bitcoin, bitcoinTestnet] as [AppKitNetwork, ...AppKitNetwork[]]
+const networks = [bitcoin] as [AppKitNetwork, ...AppKitNetwork[]]
 
 // 3. Set up Bitcoin Adapter
 const bitcoinAdapter = new BitcoinAdapter({
