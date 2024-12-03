@@ -28,7 +28,7 @@ const GithubBox = ({ name, description, url }) => {
     <div>
       <Link to={url} onClick={() => console.log('Link clicked')}>
         <h3 style={{ fontSize: '20px', margin: '0' }}>{name}</h3>
-        <p style={{ margin: '0', fontSize: '14px', color: '#555' }}>{description}</p>
+        <p style={{ margin: '0', fontSize: '14px', color: '#7b7878' }}>{description}</p>
       </Link>
     </div>
   </div>
