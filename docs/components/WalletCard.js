@@ -11,8 +11,9 @@ const ChainCard = ({ walletName, namespace, imgSrc }) => {
   }
   return (
     <button style={{width:'100%', textAlign: 'center', padding: '5px'}} onClick={handleCopy}>
-      {copied ? <span>Wallet ID copied!</span> : <span ><img style={{verticalAlign: 'middle'}} src={imgSrc} width="40" height="40"/> <div width="100px">{walletName}</div></span>}
+      {copied ? <span>Wallet ID copied!</span> : <span ><img style={{verticalAlign: 'middle', margin:"7px"}} src={imgSrc} width="40" height="40"/><br/> <span width="100px">{walletName}</span></span>}
     </button>
+    
   )
 }
 
