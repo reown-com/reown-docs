@@ -20,6 +20,11 @@ const cloud = {
       label: 'Explorer Chains',
       items: ['cloud/chains/overview', 'cloud/chains/chain-list']
     },
+    {
+      type: 'category',
+      label: 'Explorer Wallets',
+      items: ['cloud/wallets/wallet-list']
+    },
     'cloud/verify',
     'cloud/relay',
     'cloud/blockchain-api',
