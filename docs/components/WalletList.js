@@ -14,7 +14,6 @@ const WalletList = () => {
     )
       .then(response => response.json())
       .then(data => {
-        console.log(data.listings);
         setChains(data.listings)
         setOriginalChainsArray(
           Object.keys(data.listings).map(key => ({ ...data.listings[key], namespace: key }))
