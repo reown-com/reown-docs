@@ -246,7 +246,7 @@ module.exports = {
                 {
                   type: 'doc',
                   label: 'SIWX',
-                  id: 'appkit/features/siwx/index'
+                  id: 'appkit/features/siwx/default'
                 }
               ]
             },
