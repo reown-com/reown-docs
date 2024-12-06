@@ -6,6 +6,10 @@ AppKit includes a predefined list of supported mainnets, (such as the Solana mai
 
 However, this class can be modified in order to achieve the following results, and more:
 
+:::info
+non-EVM blockchains are supported from version `1.2.0-beta01`
+:::
+
 ```javascript
 // You can add more EVM networks
 List<ReownAppKitModalNetworkInfo> extraChains = [...];
@@ -25,7 +29,7 @@ ReownAppKitModalNetworks.removeTestNetworks();
 ```
 
 ```javascript
-// Add more non-EVM networls, such as Polkadot
+// Add more non-EVM networks, such as Polkadot
 ReownAppKitModalNetworks.addSupportedNetworks('polkadot', [
   ReownAppKitModalNetworkInfo(
     name: 'Polkadot',

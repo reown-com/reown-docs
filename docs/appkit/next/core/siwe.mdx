@@ -5,6 +5,7 @@ title: One-Click Auth / SIWE
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 import Button from '../../../components/button'
+import GithubBox from '../../../components/GithubBox'
 
 # Sign In With Ethereum
 
@@ -49,6 +50,7 @@ npm i @reown/appkit-siwe siwe next-auth
 </Tabs>
 
 ## Configure your SIWE Client
+<GithubBox name="Next.js SIWE Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit-siwe/next" description="Check the Next.js example using NextAuth"></GithubBox>
 
 <Tabs groupId="version">
 <TabItem value="one-click-auth" label="One-Click Auth">
@@ -76,14 +78,17 @@ export const siweConfig = createSIWEConfig({
     return nonce
   },
   getSession: async () => {
-    const session = await getSession()
+    const session = await getSession();
     if (!session) {
-      throw new Error('Failed to get session!')
+      return null;
+    }
+    
+    // Validate address and chainId types
+    if (typeof session.address !== "string" || typeof session.chainId !== "number") {
+      return null;
     }
 
-    const { address, chainId } = session as unknown as SIWESession
-
-    return { address, chainId }
+    return { address: session.address, chainId: session.chainId } satisfies SIWESession;
   },
   verifyMessage: async ({ message, signature }: SIWEVerifyMessageArgs) => {
     try {

@@ -47,6 +47,10 @@ Used to configure extra features such [Email and Social Login](../core/email.mdx
 
 ### getBalanceFallback:
 
+:::info
+Available from version `1.2.0-beta01`
+:::
+
 This callback method will be triggered if getting the balance from our blockchain API fails due to unsupported network. You may replace this with your own `getBalance()` method if desired.
 
 ### requiredNamespaces: and optionalNamespaces:
@@ -59,7 +63,8 @@ However, if you would want to override that definition with your own or support 
 
 ### featuredWalletIds:
 
-Allows to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the [Reown Explorer](https://reown.com/explorer?type=wallet) by clicking on the copy icon of desired wallet card.
+Allows to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). 
+You can find the wallets IDs in our [Wallets List](/cloud/wallets/wallet-list).
 
 ```javascript
 final Set<String> featuredWalletIds = {

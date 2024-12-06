@@ -25,12 +25,22 @@ When integrating a wallet with a mobile application, it's essential to understan
 
 **Developers should prefer Deep Linking over Universal Linking.**
 
-In the case of Universal Linking, the user may be redirected to the browser, which may not be the desired behavior. Deep Linking ensures that the user is redirected to the app, providing a seamless experience.
+Universal Linking may redirect the user to a browser, which might not provide the intended user experience. Deep Linking ensures the user is taken directly to the app.
 
 :::
 
+#### Recommended Approach
+To avoid this behavior, wallets should:
+
+- **Restrict Redirect Metadata to Deep Link Use Cases**: Redirect metadata should only be used when the session proposal is initiated through a deep link. QR code scans should not trigger app redirects using session proposal metadata.
+
+#### Recommended Approach
+To avoid this behavior, wallets should:
+
+Restrict Redirect Metadata to Deep Link Use Cases: Redirect metadata should only be used when the session proposal is initiated through a deep link. QR code scans should not trigger app redirects using session proposal metadata.
+Ensure Unique Redirect URIs for Cross-Platform Apps: Cross-platform Dapps should use distinct redirect URIs for their mobile and desktop versions to avoid conflicts.
+
 The connection and sign request flows are similar across platforms.
-The next section provides a high-level overview of both flows.
 
 ### Connection Flow
 
@@ -102,7 +112,7 @@ Dapps developers must do the same for their own custom schemes if they want the 
 
 ### iOS Wallet Support
 
-iOS has some more caveats to the integration but we ensure to make it as straightforward as possible. Since its operating system is not designed to handle multiple applications subscribing to the same deep linking schema, we've designed the AppKit to list supporting wallets on our [Explorer](https://walletconnect.com/explorer) and target specific deep links or universal links for each wallet.
+iOS has some more caveats to the integration but we ensure to make it as straightforward as possible. Since its operating system is not designed to handle multiple applications subscribing to the same deep linking schema, we've designed the AppKit to list supporting wallets on our [WalletGuide](https://walletguide.walletconnect.network/) and target specific deep links or universal links for each wallet.
 
 To add your own wallet to the Explorer, login to your [Reown Cloud](https://cloud.reown.com/sign-in) account.
 

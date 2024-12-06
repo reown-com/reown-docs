@@ -4,6 +4,12 @@ import TabItem from '@theme/TabItem'
 <Tabs groupId="version">
 <TabItem value="one-click-auth" label="One-Click Auth">
 
+:::info
+
+If you are not using our library on the server-side, please normalize the address with eip-55 in the createMessage function. You can check our example for that funcionality.
+
+:::
+
 ```ts
 import { SiweMessage } from 'siwe'
 import {
@@ -30,7 +36,10 @@ async function getSession(){
   }
   
   const data = await res.json();
-  return data == "{}" ?  null : data as SIWESession;
+  
+  const isValidData = typeof data === 'object' && typeof data.address === 'string' && typeof data.chainId === 'number';
+
+  return isValidData ? data as SIWESession : null;
 }
 
 /* Use your SIWE server to verify if the message and the signature are valid */
@@ -61,7 +70,7 @@ async function getSession(){
 // Check the full example for signOut and getNonce functions ... 
 
 /* Create a SIWE configuration object */
-const siweConfig = createSIWEConfig({
+export const siweConfig = createSIWEConfig({
   getMessageParams: async () => ({
     domain: window.location.host,
     uri: window.location.origin, 
@@ -76,12 +85,13 @@ const siweConfig = createSIWEConfig({
       throw new Error('Failed to get nonce!')
     }
     return nonce
-  }
+  },
   getSession,
   verifyMessage,
   signOut: async () => { //Example
     // Implement your Sign out function
   }
+});
 ```
 
 ## Server Side 
@@ -98,7 +108,12 @@ Setting up a backend server using Express for a web application that interacts w
 import cors from 'cors';
 import express from 'express';
 import Session from 'express-session';
-import { generateNonce,  SiweMessage } from 'siwe';
+import { generateNonce } from 'siwe';
+import {
+  verifySignature,
+  getAddressFromMessage,
+  getChainIdFromMessage,
+} from '@reown/appkit-siwe'
 
 const app = express();
 
@@ -118,7 +133,6 @@ app.use(Session({
 
 app.get('/nonce', function (_, res) {
     res.setHeader('Content-Type', 'text/plain');
-    console.log("/nonce");
     res.send(generateNonce());
 });
 
@@ -128,11 +142,38 @@ app.post('/verify', async (req, res) => {
       if (!req.body.message) {
         return res.status(400).json({ error: 'SiweMessage is undefined' });
       }
-      let SIWEObject = new SiweMessage(req.body.message);
-      const { data: message } = await SIWEObject.verify({ signature: req.body.signature, nonce: req.session.nonce });
+
+      // save the session with the address and chainId (SIWESession)
+      req.session.siwe = { address, chainId };
+      req.session.save(() => res.status(200).send(true));
+
       
-      const address = message.address;
-      const chainId = message.chainId;
+      const message = req.body.message;
+      const singnature = req.body.signature;
+      const address = getAddressFromMessage(message);
+      let chainId = getChainIdFromMessage(message);
+      
+      const isValid = await verifySignature({
+        address,
+        message,
+        signature,
+        chainId,
+        projectId,
+      });
+      if (!isValid) {
+        // throw an error if the signature is invalid
+        throw new Error('Invalid signature');
+      }
+      if (chainId.includes(":")) {
+        chainId = chainId.split(":")[1];
+      }
+      
+      // Convert chainId to a number
+      chainId = Number(chainId);
+
+      if (isNaN(chainId)) {
+          throw new Error("Invalid chainId");
+      }
       
       // save the session with the address and chainId (SIWESession)
       req.session.siwe = { address, chainId };
@@ -211,7 +252,7 @@ async function verifyMessage({ message, signature }: SIWEVerifyMessageArgs){
 },
 
 /* Create a SIWE configuration object */
-const siweConfig = createSIWEConfig({
+export const siweConfig = createSIWEConfig({
   createMessage,
   getNonce: async () => { //This is only an example, substitute it with your actual nonce getter.
     const nonce = "YOUR_NONCE_GETTER"
