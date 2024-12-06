@@ -155,7 +155,7 @@ A dapp would call `examplewallet://wc?uri={pairingUri}` from their side when the
 
 ### Redirecting back to dapp (proposer) after session approval:
 
-WalletKit SDK exports a handy method for easy redirection back to the requester app, whether it be after a session proposal, a session authentica or a session request.
+WalletKit SDK exports a handy method for easy redirection back to the requester app, whether it be after a session proposal, a session authentication or a session request.
 
 ```javascript
 Future<bool> redirectToDapp({
@@ -234,6 +234,6 @@ Future<void> personalSignRequestHandler(String topic, dynamic parameters) async 
 
 :::note
 
-`launchUrlString()` from [url_launcher](https://pub.dev/packages/url_launcher) oficial package was used as an example to explain the mechanism, you can choose whatever other package you would like.
+`launchUrlString()` from [url_launcher](https://pub.dev/packages/url_launcher) official package was used as an example to explain the mechanism, you can choose whatever other package you would like.
 
 :::

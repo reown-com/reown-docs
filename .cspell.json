@@ -1,0 +1,71 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "ignorePaths": ["node_modules", "dist", "build", 
+                "docs/advanced/multichain/polkadot/dapp-integration-guide.md", "docs/web3modal/v2/_partials/themeVariablesTable.mdx", 
+                "docs/web3modal/v2/_partials/wcModalThemeVariablesTable.mdx", "docs/advanced/multichain/polkadot/wallet-integration-guide.md",
+                "docs/advanced/multichain/rpc-reference/bitcoin-rpc.md", "docs/advanced/multichain/rpc-reference/dogecoin-rpc.md",
+                "docs/advanced/multichain/rpc-reference/everscale-rpc.md", "docs/advanced/multichain/rpc-reference/litecoin-rpc.md"
+
+            ],
+    "overrides": [
+      {
+        "filename": "**/*.md",
+        "languageId": "markdown",
+        "ignoreRegExpList": [
+            "/`[^`]*`/",  // Ignore inline code,
+          "/```[\\s\\S]*?```/"  // Ignore everything between triple backticks
+        ]
+      },
+      {
+        "filename": "**/*.mdx",
+        "languageId": "markdown",
+        "ignoreRegExpList": [
+          "/`[^`]*`/",  // Ignore inline code
+          "/```[\\s\\S]*?```/"  // Ignore everything between triple backticks
+        ]
+      }
+    ],
+    "words": [
+      "npm",
+      "webpack",
+      "prettier",
+      "markdownlint",
+      "mdx",
+      "appkit",
+      "reown",
+      "solana",
+      "wagmi",
+      "siwe",
+      "viem",
+      "Farcaster",
+      "Nethereum",
+      "walletconnect",
+      "CAIP",
+      "deeplink",
+      "RDNS",
+      "siws",
+      "siwx",
+      "walletkit",
+      "Cocoapods",
+      "Podfile",
+      "Multichain",
+      "devnet",
+      "testflight",
+      "nuxt",
+      "jitpack",
+      "Linea",
+      "polkadot",
+      "anza",
+      "kadena",
+      "keccak",
+      "XRPL",
+      "keypair","tezos","Starknet", "utxos", "litecoin", "hedera", "satoshi", "kusama", "westend", "statemint", "passwordless",
+      "Blockhash", "UTXO", "PSBT", "keypair", "keypairs", "deeplinking", "chainlist", "pubspec","artefacts","artefact","artefactId", "WCURI",
+      "qrcode", "ECDH", "ciphertext", "HMAC", "mutez", "rebranded", "clickjacking", "openupm", "walletids", "walletid", "Keyserver", "CAPI",
+      "Newtonsoft", "mainnets", "Netherum's", "Starscream", "lokijs", "linkining", "themself", "triggermodal", "Coinbasewallet", "bera", "UXML", "preconfigured",
+      "Rebalancing", "hackathons", "eviluniswap", "permissioned", "Diffie", "prioritise", "synchronise", "scriptable", "dedup", "Zora", "Fraximal", "Podspec", "Wormfare",
+      "johnsmith", "secp", "reimagined"
+    ]
+  }
+  

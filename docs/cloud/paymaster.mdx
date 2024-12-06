@@ -111,7 +111,7 @@ curl --location <YOUR_PAYMASTER_URL> \
 
 ### Basics
 The schema itself is a simple object representation of the following
-> Is some key from a user operation equivelant to _(or some other comparision)_  some value?
+> Is some key from a user operation equivalent to _(or some other comparison)_  some value?
 
 This is defined in `params` as such:
 ```json
@@ -174,9 +174,9 @@ accompanied with an `ands` OR an `ors` field which is an array of more params th
 either all pass as true, or only one of them is true, respectively.
 
 A `params` object can not have both an `ors` and
-an `ands` simultanousely. However, its "children" (the params in an `ands` or `ors`) can have different conditonals than their parent.
+an `ands` simultaneously. However, its "children" (the params in an `ands` or `ors`) can have different conditionals than their parent.
 
-For example, to make it so that the above policy also passes for `methodBar` and `methodBaz`, it can be ammended as follows:
+For example, to make it so that the above policy also passes for `methodBar` and `methodBaz`, it can be amended as follows:
 
 ```json
 {
@@ -259,7 +259,7 @@ However, the <span style={{color: 'red'}}>following is incorrect </span>:
 }
 ```
 
-***In this case, the `ors` will be completely ignored. If both `ors` and `ands` are present, then the `ands` will take presedence.***
+***In this case, the `ors` will be completely ignored. If both `ors` and `ands` are present, then the `ands` will take precedence.***
 
 ### ABI Parsing
 
@@ -268,7 +268,7 @@ For the policy to actually know how to read the `callData` it needs to know the 
 For this we introduce 2 new fields. `policyStaticProps` and `metadata`. Both are essentially free range key-value 
 dictionaries used to store information within the policy to be accessed later. The key thing to note is that
 values within `policyStaticProps` can be accessed from within `metadata`. This becomes invaluable with policies
-that have multiple conditonals like the one above.
+that have multiple conditionals like the one above.
 
 ```json
   "policyStaticProps": {
@@ -466,11 +466,11 @@ The operation to apply within the params. Currently available:
 The value to be compared to. Can be a string, number or boolean.
 
 ### `ands`
-Array consistening of policies (with `policyType` and `policyStaticProps`
+Array consisting of policies (with `policyType` and `policyStaticProps`
 omitted)
 
 ### `ors`
-Array consistening of policies (with `policyType` and `policyStaticProps`
+Array consisting of policies (with `policyType` and `policyStaticProps`
 omitted)
 
 ### `metadata`

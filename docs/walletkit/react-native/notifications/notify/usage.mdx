@@ -92,7 +92,7 @@ notifyClient.on('notify_subscriptions_changed', ({ params }) => {
 
 ## Account login
 
-In order to register account in Notify API to be able to subscribe to any dapp to start receving notifications, account needs to sign SIWE message to prove ownership. Developers can check if an account is registered by calling **`isRegistered()`** function. If the account is not registered, developers should call **`prepareRegistration()`** and then **`register()`** function to register the account.
+In order to register account in Notify API to be able to subscribe to any dapp to start receiving notifications, account needs to sign SIWE message to prove ownership. Developers can check if an account is registered by calling **`isRegistered()`** function. If the account is not registered, developers should call **`prepareRegistration()`** and then **`register()`** function to register the account.
 
 :::note
 This is a one-time action per account. It does not need to be repeated after initial registration of the new account.
@@ -213,7 +213,7 @@ await notifyClient.unregister({
 
 ## Fetch notification history (Pagination)
 
-There might be different approaces to implement pagination in your app depending on your needs. You can see the following example implemented with `FlatList` which introduces infinite scroll functionality with a basic example:
+There might be different approaches to implement pagination in your app depending on your needs. You can see the following example implemented with `FlatList` which introduces infinite scroll functionality with a basic example:
 
 Please make sure you have better handling of the notify client instance which handles worst cases by checking initialization status, account status, for production ready apps.
 

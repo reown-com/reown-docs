@@ -5,7 +5,8 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "dev": "docusaurus start",
-    "start": "docusaurus start",
+    "spell": "cspell '**/*.md' '**/*.mdx' ",
+    "start": " pnpm run spell && docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
@@ -41,6 +42,7 @@
     "@docusaurus/module-type-aliases": "^3.4.0",
     "@docusaurus/tsconfig": "^3.4.0",
     "@docusaurus/types": "^3.4.0",
+    "cspell": "^8.16.1",
     "prettier": "3.2.2",
     "typedoc-plugin-markdown": "3.17.1",
     "typescript": "5.3.3"
