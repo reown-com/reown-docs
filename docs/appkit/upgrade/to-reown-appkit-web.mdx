@@ -81,7 +81,6 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 /* highlight-delete-start */
 - import { createWeb3Modal } from '@web3modal/wagmi/react'
 - import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
-- import { WagmiConfig } from 'wagmi'
 - import { arbitrum, mainnet } from 'viem/chains'
 /* highlight-delete-end */
 
@@ -145,22 +144,20 @@ export default function App() {
   return (
     <>
 /* highlight-delete-start */
--      <WagmiConfig config={wagmiConfig}>
+-      <WagmiProvider config={wagmiConfig}>
 /* highlight-delete-end */
 /* highlight-add-start */
-+      <WagmiConfig config={wagmiAdapter.wagmiConfig}>
++      <WagmiProvider config={wagmiAdapter.wagmiConfig}>
 /* highlight-add-end */
 
       <QueryClientProvider client={queryClient}>
           <HomePage />
        </QueryClientProvider>
-      </WagmiConfig>
+      </WagmiProvider>
     </>
   )
 }
 ```
-
-
 </PlatformTabItem>
 <PlatformTabItem value="vue">
 
@@ -585,6 +582,7 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 + import { createAppKit } from '@reown/appkit/react'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
++ import { WagmiProvider } from 'wagmi'
 /* highlight-add-end */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -644,13 +642,18 @@ export default function App() {
 -      <WagmiConfig config={wagmiConfig}>
 /* highlight-delete-end */
 /* highlight-add-start */
-+      <WagmiConfig config={wagmiAdapter.wagmiConfig}>
++      <WagmiProvider config={wagmiAdapter.wagmiConfig}>
 /* highlight-add-end */
 
       <QueryClientProvider client={queryClient}>
           <HomePage />
        </QueryClientProvider>
-      </WagmiConfig>
+/* highlight-delete-start */
+-      <WagmiConfig />
+/* highlight-delete-end */
+/* highlight-add-start */
++      </WagmiProvider>
+/* highlight-add-end */
     </>
   )
 }
@@ -976,14 +979,15 @@ Start by importing `createAppKit` from `@reown/appkit` and the necessary chains 
 ```tsx
 /* highlight-delete-start */
 - import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
-- import { WagmiConfig } from 'wagmi'
 - import { arbitrum, mainnet } from 'wagmi/chains'
+- import { WagmiConfig } from 'wagmi'
 /* highlight-delete-end */
 
 /* highlight-add-start */
 + import { createAppKit } from '@reown/appkit/react'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
++ import { WagmiProvider } from 'wagmi'
 /* highlight-add-end */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -1043,13 +1047,18 @@ export default function App() {
 -      <WagmiConfig config={wagmiConfig}>
 /* highlight-delete-end */
 /* highlight-add-start */
-+      <WagmiConfig config={wagmiAdapter.wagmiConfig}>
++      <WagmiProvider config={wagmiAdapter.wagmiConfig}>
 /* highlight-add-end */
 
       <QueryClientProvider client={queryClient}>
           <HomePage />
        </QueryClientProvider>
-      </WagmiConfig>
+/* highlight-delete-start */
+-      </WagmiConfig>
+/* highlight-delete-end */
+/* highlight-add-start */
++      </WagmiProvider>
+/* highlight-add-end */
     </>
   )
 }
