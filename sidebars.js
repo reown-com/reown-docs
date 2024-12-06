@@ -244,15 +244,9 @@ module.exports = {
                   id: 'appkit/features/telegram-mini-apps'
                 },
                 {
-                  type: 'category',
+                  type: 'doc',
                   label: 'SIWX',
-                  collapsed: false,
-                  collapsible: true,
-                  items: [
-                    { type: 'doc', label: 'Introduction', id: 'appkit/features/siwx/index' },
-                    { type: 'doc', label: 'Default Usage', id: 'appkit/features/siwx/default' },
-                    { type: 'doc', label: 'Custom Usage', id: 'appkit/features/siwx/custom' }
-                  ]
+                  id: 'appkit/features/siwx/index'
                 }
               ]
             },
@@ -354,6 +348,7 @@ module.exports = {
             'appkit/react/core/custom-connectors',
             'appkit/react/core/custom-networks',
             'appkit/react/core/siwe',
+            'appkit/react/core/siwx',
             'appkit/react/core/multichain',
             'appkit/react/core/theming',
             'appkit/react/core/resources'
@@ -449,6 +444,7 @@ module.exports = {
             'appkit/next/core/custom-connectors',
             'appkit/next/core/custom-networks',
             'appkit/next/core/siwe',
+            'appkit/next/core/siwx',
             'appkit/next/core/multichain',
             'appkit/next/core/theming',
             'appkit/next/core/resources'
@@ -544,6 +540,7 @@ module.exports = {
             'appkit/vue/core/custom-connectors',
             'appkit/vue/core/custom-networks',
             'appkit/vue/core/siwe',
+            'appkit/vue/core/siwx',
             'appkit/vue/core/multichain',
             'appkit/vue/core/theming',
             'appkit/vue/core/resources'
@@ -639,6 +636,7 @@ module.exports = {
             'appkit/javascript/core/custom-connectors',
             'appkit/javascript/core/custom-networks',
             'appkit/javascript/core/siwe',
+            'appkit/javascript/core/siwx',
             'appkit/javascript/core/multichain',
             'appkit/javascript/core/theming',
             'appkit/javascript/core/resources'
