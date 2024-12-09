@@ -60,7 +60,7 @@ Notify.initialize(init = Notify.Params.Init(core = CoreClient) { error: Notify.M
 
 ## Account login
 
-In order to register account in Notify API to be able to subscribe to any dapp to start receving notifications, account needs to sign SIWE message to prove ownership. Developers can check if an account is registered by calling **`isRegistered()`** function. If the account is not registered, developers should call **`prepareRegistration()`** and then **`register()`** function to register the account.
+In order to register account in Notify API to be able to subscribe to any dapp to start receiving notifications, account needs to sign SIWE message to prove ownership. Developers can check if an account is registered by calling **`isRegistered()`** function. If the account is not registered, developers should call **`prepareRegistration()`** and then **`register()`** function to register the account.
 
 Snippet below shows how to check if an account is registered and how to register an account if it's not registered yet. Developers could use `CacaoSigner` to sign the message or use their own signing method.
 
