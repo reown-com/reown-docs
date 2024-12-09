@@ -30,6 +30,7 @@ export const FrameworksMenu = () => {
     location.pathname.includes('/walletkit/upgrade') ||
     location.pathname.includes('/walletkit/overview') ||
     location.pathname.includes('/walletkit/features') ||
+    location.pathname.includes('/appkit/recipes') ||
     location.pathname.includes('/walletkit/best-practices')
   ) {
     return
