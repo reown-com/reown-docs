@@ -54,8 +54,17 @@ paymasters. The rest would be handled wallet side. If the calls match the
 criteria set in the paymaster's policy, then the calls' gas would be sponsored.
 However, if it does not, then the transaction would be cancelled. 
 
+Example implementation can be found [here](https://github.com/reown-com/appkit/blob/main/apps/laboratory/src/components/Wagmi/WagmiSendCallsWithPaymasterServiceTest.tsx#L137). 
+
 ### A Note on Wallets 
 
 As of right now, not many smart account wallets support paymasters, however
 AppKit's embedded smart account covers full compatiblity with paymasters.
 
+### A Note on Paymasters 
+
+Reown is developing a paymaster service (currently in beta) which will allow
+very flexible policy management, reducing the need for writing complex code to
+verify whether or not a sponsorship should go through.
+
+Read more about it [here](../../../cloud/paymaster).
