@@ -243,7 +243,8 @@ module.exports = {
                 { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
-                { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'}
+                { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'},
+                { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
               ]
             },
             {
@@ -370,7 +371,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/react/transactions/onramp', 'appkit/react/transactions/swaps']
+          items: ['appkit/react/transactions/onramp', 'appkit/react/transactions/swaps', 'appkit/react/transactions/sponsored-transactions']
         },
         {
           type: 'category',
@@ -465,7 +466,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/next/transactions/onramp', 'appkit/next/transactions/swaps']
+          items: ['appkit/next/transactions/onramp', 'appkit/next/transactions/swaps', 'appkit/next/transactions/sponsored-transactions']
         },
         {
           type: 'category',
@@ -560,7 +561,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/vue/transactions/onramp', 'appkit/vue/transactions/swaps']
+          items: ['appkit/vue/transactions/onramp', 'appkit/vue/transactions/swaps', 'appkit/vue/transactions/sponsored-transactions']
         },
         {
           type: 'category',
@@ -655,7 +656,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/javascript/transactions/onramp', 'appkit/javascript/transactions/swaps']
+          items: ['appkit/javascript/transactions/onramp', 'appkit/javascript/transactions/swaps', 'appkit/javascript/transactions/sponsored-transactions']
         },
         {
           type: 'category',
