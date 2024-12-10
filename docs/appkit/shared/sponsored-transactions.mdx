@@ -1,0 +1,52 @@
+Sponsored transactions is an umbrella term for multiple methods of utilizing
+[ERC 7677](https://eips.ethereum.org/EIPS/eip-7677) paymasters. There are 2
+types of paymasters that AppKit supports:
+- ERC 20 Paymasters
+- Verifying Paymasters
+
+## ERC 20 Paymasters
+
+ERC 20 paymasters allow end users (smart account wallets) to cover transaction fees without
+using a network's native gas token. In essence, this gives the ability to 
+cover transaction fees using ERC 20 tokens like USDC.
+
+## Verifying Paymasters 
+
+Verifying Paymasters are more involved, in that they are typically used
+alongside some policies that determine whether or not a transaction's 
+entire gas fee will be covered by the paymaster. For example, only sponsor
+transactions that interact with a specific smart account, accessing a particular
+method. 
+
+### Using A Verifying Paymaster 
+
+Using a verifying paymaster as a dapp involves leveraging the `capabilities`
+field present in [EIP 5792](https://eips.ethereum.org/EIPS/eip-5792) calls.
+Setting a field like so:
+
+```ts
+sendCalls({
+  calls: ...callsToSend,
+  capabilities: {
+    paymasterService: {
+      url: paymasterServiceUrl,
+    }
+  }
+})
+```
+
+Where `calls` is an array of 5792 calls to send, and `paymasterServiceUrl` is a
+string containing the paymaster URL. 
+
+---
+
+As a Dapp, that is all that is required to take advantage of verifying
+paymasters. The rest would be handled wallet side. If the calls match the
+criteria set in the paymaster's policy, then the calls' gas would be sponsored.
+However, if it does not, then the transaction would be cancelled. 
+
+### A Note on Wallets 
+
+As of right now, not many smart account wallets support paymasters, however
+AppKit's embedded smart account covers full compatiblity with paymasters.
+

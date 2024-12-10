@@ -243,7 +243,8 @@ module.exports = {
                 { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
-                { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'}
+                { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'},
+                { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
               ]
             },
             {
