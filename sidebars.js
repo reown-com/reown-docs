@@ -248,6 +248,17 @@ module.exports = {
             },
             {
               type: 'category',
+              label: 'Recipes',
+              collapsed:false,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' }
+              //{ type: 'doc', label: 'AppKit v2 to v5', id: 'appkit/upgrade/appkitv2' },
+      
+              ]
+            },
+            {
+              type: 'category',
               label: 'Upgrade',
               collapsed: true,
               collapsible: true,
