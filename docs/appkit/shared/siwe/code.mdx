@@ -149,7 +149,7 @@ app.post('/verify', async (req, res) => {
 
       
       const message = req.body.message;
-      const singnature = req.body.signature;
+      const signature = req.body.signature;
       const address = getAddressFromMessage(message);
       let chainId = getChainIdFromMessage(message);
       
