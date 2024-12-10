@@ -1,10 +1,16 @@
+---
+title: Build a Telegram Mini App with AppKit
+---
+import ReactPlayer from 'react-player'
+import useBaseUrl from '@docusaurus/useBaseUrl'
+
 # How to Build a Telegram Mini App with Reown AppKit?
 
 Learn how to use Reown AppKit to enable wallet interactions on your Telegram mini app directly from your Telegram bot.
 
 ---
 
-In this tutorial, you will learn how to:
+In this recipe, you will learn how to:
 
 1. Create a Telegram mini app and a Telegram bot. 
 2. Configure your Telegram mini app with Reown AppKit.
@@ -25,19 +31,19 @@ Navigate to the [**BotFather Telegram bot**](https://t.me/BotFather). This bot w
 
 Type `/newbot` to start the creation process. You’ll be prompted to set a name for your bot—please enter your desired name. Next, you’ll be asked to set a unique username for the bot. Once you've completed these steps, your new Telegram bot will be ready to use!
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/27fe92ea-7238-4794-bb67-d2908a2ec53c/bc144034-2b57-477a-ac73-f3496992340a/image.png)
+![image.png](../../../static/img/recipes/tg1.png)
 
 Now, enter `/mybots` and it will show you a list of bots that you created. Select the bot you just created and click on “**Edit Bot**”. You will now be able to edit the bot’s info such as its description, picture, etc. 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/27fe92ea-7238-4794-bb67-d2908a2ec53c/a7fe49f9-d0cb-4ef1-ac62-d4aaf51b5352/image.png)
+![image.png](../../../static/img/recipes/tg2.png)
 
 Now, go back to the bot menu and click on “**Bot Settings**”. Click on “**Configure Mini App**” and enter the URL you want to set for your mini app. In my case, I am setting it to https://reown-appkit-evm.vercel.app/. 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/27fe92ea-7238-4794-bb67-d2908a2ec53c/b4a2c14d-d9d1-4307-9f90-87bccb4417d8/image.png)
+![image.png](../../../static/img/recipes/tg3.png)
 
 Go back to the bot menu and click on “**Menu Button**”. You will now be able to set the URL that will be opened when a user clicks on the menu button. After this, you can also the title to be displayed on the button instead of 'Menu’.
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/27fe92ea-7238-4794-bb67-d2908a2ec53c/c41918c9-2bc4-4b0c-9dc8-690eac956e39/image.png)
+![image.png](../../../static/img/recipes/tg4.png)
 
 Your Telegram bot is now all set up! When a user opens the bot and clicks on “**Open App**” or “**Menu**,” the Telegram mini-app will open with the URL you configured.
 
@@ -57,21 +63,19 @@ You can also check out the GitHub repository below, which powers the URL configu
 
 ## Run your Telegram Mini App
 
-Now, open your Telegram bot and click “**Start**.” The bot will open your mini-app within Telegram.
-
-![Screenshot_20241107-193821.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/27fe92ea-7238-4794-bb67-d2908a2ec53c/b143e8a5-2a21-424b-bdd4-72fb4e5a4605/Screenshot_20241107-193821.png)
-
-As you can see, the mini-app opened by my Telegram bot is the Web3 app configured with Reown AppKit. You’ll notice a “**Connect Wallet**” button, which allows you to connect your Web3 wallet to the mini-app.
-
-![Screenshot_20241107-194000~2.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/27fe92ea-7238-4794-bb67-d2908a2ec53c/cf3bdb9c-6396-4693-a886-684e851b312a/Screenshot_20241107-1940002.png)
+Now, open your Telegram bot and click “**Start**.” The bot will open your mini-app within Telegram. As you can see, the mini-app opened by my Telegram bot is the Web3 app configured with Reown AppKit. You’ll notice a “**Connect Wallet**” button, which allows you to connect your Web3 wallet to the mini-app.
 
 When you click “**Connect Wallet**”, the AppKit modal will open, prompting you to choose your preferred connection method. You’ll also notice that the mini-app supports social login, which could be a game changer for onboarding a large number of users to various mini-apps.
 
-![Screenshot_20241107-194004~2.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/27fe92ea-7238-4794-bb67-d2908a2ec53c/627329ab-6cab-4c3b-ab19-70be3c50ed61/Screenshot_20241107-1940042.png)
-
 After you select your preferred wallet and connect it, you should be able to see that your wallet was successfully connected to the mini app. 
 
-![Screenshot_20241107-193949~2.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/27fe92ea-7238-4794-bb67-d2908a2ec53c/2031b2f1-3b70-41ac-a48d-edf8aa946b97/Screenshot_20241107-1939492.png)
+<div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+}}>
+<ReactPlayer url={useBaseUrl('/img/recipes/tgvideo.mp4')} playing controls width="40%" height="40%"/>
+</div>
 
 ## Conclusion
 
