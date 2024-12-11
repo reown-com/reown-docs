@@ -9,14 +9,18 @@ import javascriptLogo from '../../../static/assets/home/javascriptLogo.png'
 
 # Chain Abstraction
 
-Chain Abstraction enables users with stablecoins on any network to spend on-the-fly on a different network. 
-Our Chain Abstraction solution provides a toolkit for wallet developers to integrate this complex functionality using WalletKit.
+Chain Abstraction allows users to spend stablecoins across different networks seamlessly. 
+This solution provides wallet developers with a toolkit to integrate cross-chain functionality using WalletKit.
 
 ## How it works
 
-The application first sends `wallet_sendTransaction` for an ERC-20 transfer to the wallet. Let's say in our case it's USDC. 
-The wallet enables the users to complete the transaction with the available tokens from other networks. 
-The user approves the transaction and the transaction completes within seconds. 
+When an application sends a `wallet_sendTransaction` request for an ERC-20 transfer (such as USDC), 
+the wallet checks for available tokens across all supported networks. If the user has sufficient funds on any supported network,
+they can complete the transaction instantly, regardless of which network holds their tokens.
+
+For example, consider a scenario where an app requests a transfer of 225 USDC on the Polygon Network. 
+Even if the user doesn't have USDC on Polygon, their wallet can automatically source the funds from other networks,
+making the experience seamless for both the user and the application.
 
 The diagram below shows an example scenario where a user is interacting with an app and is asked to transfer 225 USDC to the app on Polygon Network. 
 The user does not have any USDC on Polygon Network, but their wallet seamlessly allows them to source the funds from other networks. 
