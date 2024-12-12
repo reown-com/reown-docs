@@ -13,9 +13,9 @@ Gas Abstraction enables existing EOA accounts to execute transactions without ne
 
 ## How it works
 
-When your wallet receives a `wallet_sendTransaction` request, the wallet will automatically sponsor the transaction for the user using the Reown paymaster.
+When your wallet receives a `wallet_sendTransaction` request, the wallet will automatically sponsor the transaction for the user using the Reown paymaster. Native gas tokens are not needed.
 
-This works by upgrading the EOA to a smart account that supports paymasters and sending a sponsored User Operation. Specifically, a 7579 modular Safe smart account is deployed and delegated to in a 7702 transaction. The smart account has the same address as the EOA, and the EOA is the only signer on the account.
+This works by upgrading the EOA to a smart account that supports verifying paymasters and sending a sponsored User Operation. Specifically, a 7579 modular Safe smart account is deployed and delegated to in a 7702 transaction. The smart account has the same address as the EOA, and the EOA is the only signer on the account.
 
 ## Get Started
 
@@ -52,11 +52,13 @@ This works by upgrading the EOA to a smart account that supports paymasters and 
 
 ### What are the available networks for Gas Abstraction?
 
-Gas Abstraction is currently available on any network where 4337 bundlers and paymasters are available.
+Gas Abstraction is available on any network where 4337 bundlers and paymasters are available.
+
+Click [here](TODO) to see what networks the Reown paymaster supports for seamless operation.
 
 ### What types of paymasters are supported?
 
-Only sponsoring paymasters are supported (by default the Reown paymaster). ERC-20 paymasters are not yet supported.
+Only verifying paymasters are currently supported (by default the Reown paymaster). ERC-20 paymasters are not yet supported.
 
 ### What are the limitations?
 
@@ -66,3 +68,9 @@ Only sponsoring paymasters are supported (by default the Reown paymaster). ERC-2
 ### What apps does this support?
 
 Any app that supports smart contract accounts. Specifically, EIP-1271 must now be used for signing.
+
+### Are more smart account features available or just gas abstraction?
+
+In the future more features will be supported such as:
+- Sending user operations directly instead of transactions
+- Smart sessions

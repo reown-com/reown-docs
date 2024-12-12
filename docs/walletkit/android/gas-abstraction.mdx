@@ -1,17 +1,17 @@
 # Gas Abstraction (experimental)
 
-WalletKit provides a toolkit for wallet developers to integrate gas abstraction into their wallets.
+WalletKit provides a toolkit for wallet developers to integrate verifying paymaster gas abstraction into their wallets.
 
-`GasAbstractionClient` is instantiated with some basic RPC URL and API key information.
+`GasAbstractionClient` is instantiated with some basic RPC URL and API key information. This client is long-lived and should be reused between transactions as it will reuse network connections for improved latency.
 
 When receiving a transaction request, send the transaction to the `prepare_gas_abstraction(txn)` method. This will do some thinking and will prepare a set of operations and return a couple of hashes to be signed.
 
 The operations are:
 
-1. Deploying the 7702 account and delegating to it
+1. Deploying the 7702 account and delegating to it, if needed
 2. Sending a sponsored UserOperation for the initial transaction.
 
-The user will then approve signatures for these transactions and the wallet will then call `execute_transaction(txn, signatures)` with the same initial transaction and the signatures.
+The user will then approve signatures for these operations and the wallet will then call `execute_transaction(txn, signatures)` with the same initial transaction and the signatures.
 
 The function will send the transactions and return status information of them to you.
 
@@ -42,10 +42,22 @@ async fn main() {
 
 ```rust
 impl GasAbstractionClient {
-    async fn new(rpc_url: Url, bundler_url: Url, paymaster_url: Url) -> Self;
+    /// Just provide a project ID
+    async fn new(project_id: String) -> Self;
+
+    /// Or you can make chain-specific clients if you want to do it manually
+    async fn new(chain_id: Caip10, rpc_url: Url, bundler_url: Url, paymaster_url: Url) -> Self;
+
+    // Prepare and send gas-abstracted transactions
     async fn bool prepare_gas_abstraction(Transaction transaction) -> PreparedGasAbstraction;
     async fn bool execute_transaction(Transaction transaction, params: Params) -> B256;
+
+    // Signature creation
     async fn ..... COPY signature creation functions from current SDK
+    
+    // == Future APIs ==
+    async fn send_user_operation(?) - ?;
+    async fn create_smart_session(?) -> ?;
 }
 
 enum PreparedGasAbstraction {
