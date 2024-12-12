@@ -305,6 +305,11 @@ module.exports = {
                   label: 'Chain Abstraction',
                   id: 'walletkit/features/chain-abstraction'
                 },
+                {
+                  type: 'doc',
+                  label: 'Gas Abstraction (experimental)',
+                  id: 'walletkit/features/gas-abstraction'
+                },
                 { type: 'doc', label: 'Notifications', id: 'walletkit/features/notifications' },
                 { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' }
               ]

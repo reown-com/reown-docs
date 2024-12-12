@@ -1,0 +1,60 @@
+# Gas Abstraction (experimental)
+
+WalletKit provides a toolkit for wallet developers to integrate gas abstraction into their wallets.
+
+`GasAbstractionClient` is instantiated with some basic RPC URL and API key information.
+
+When receiving a transaction request, send the transaction to the `prepare_gas_abstraction(txn)` method. This will do some thinking and will prepare a set of operations and return a couple of hashes to be signed.
+
+The operations are:
+
+1. Deploying the 7702 account and delegating to it
+2. Sending a sponsored UserOperation for the initial transaction.
+
+The user will then approve signatures for these transactions and the wallet will then call `execute_transaction(txn, signatures)` with the same initial transaction and the signatures.
+
+The function will send the transactions and return status information of them to you.
+
+The below is an example psudo-Rust code of the usage of `GasAbstractionClient`:
+
+```rust
+async fn main() {
+    let eoa = LocalSigner::random();
+    let client = GasAbstractionClient::new(...);
+    let txn = Transaction { to: vitalik.eth, amount: 1 ETH };
+
+    let PreparedGasAbstraction {
+        hashes_to_sign,
+        fields
+    } = client.prepare_gas_abstraction(txn).await?;
+
+    ask_user_for_approval(fields).await?;
+
+    let signatures = hashes_to_sign.iter().map(|hash| account.sign(hash)).collect();
+
+    let receipt = client.execute_transaction(txn, Params {
+        signatures
+    }).await?;
+
+    display_success(receipt)
+}
+```
+
+```rust
+impl GasAbstractionClient {
+    async fn new(rpc_url: Url, bundler_url: Url, paymaster_url: Url) -> Self;
+    async fn bool prepare_gas_abstraction(Transaction transaction) -> PreparedGasAbstraction;
+    async fn bool execute_transaction(Transaction transaction, params: Params) -> B256;
+    async fn ..... COPY signature creation functions from current SDK
+}
+
+enum PreparedGasAbstraction {
+    hashes_to_sign: Vec<B256>,
+    fees: GasAbstractionFees, // similar to RouteUiFields -> fee and other UI info for user display
+}
+
+enum Params {
+    /// EOA signatures by the transaction's sender of `hashes_to_sign`
+    signatures: Vec<Signature>,
+}
+```
