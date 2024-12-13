@@ -1,14 +1,195 @@
 ---
-title: Send a Transaction in AppKit with wagmi
+title: Send a Transaction in AppKit Web with wagmi
 ---
 
-# How to send a transaction in AppKit with Wagmi
+import GithubBox from '../../components/GithubBox'
 
-Learn how to use Reown AppKit to enable wallet interactions on your Telegram mini app directly from your Telegram bot.
+# How to Sign Messages, Send Transactions, and Get Balance in EVM using AppKit with Wagmi
+
+Learn how to use Reown AppKit for essential wallet functionalities such as signing messages, sending transactions, and retrieving wallet balances.
 
 ---
 
 In this recipe, you will learn how to:
 
-1. 
-2. 
+- Retrieve the balance of the connected wallet. 
+- Sign a message using a connected wallet.
+- Send a transaction to the EVM blockchain.
+
+
+This guide takes approximately 20 minutes to complete.
+
+Let’s dive in!
+
+![](/assets/animatedGuideTx.gif)
+
+## Prerequisites
+- A fundamental understanding of JavaScript and React.
+- A minimal installation of AppKit in react.
+- Obtain a new project Id on reown Cloud at https://cloud.reown.com
+
+## Final project
+<GithubBox name="Appkit wagmi Example with blockchain interactions" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-wagmi" description="Download the full project to try directly in your computer"></GithubBox>
+
+
+## AppKit Minimal Installation
+
+You can start an small project following the guidelines from our [installation React docs using Wagmi](https://docs.reown.com/appkit/react/core/installation?platform=wagmi)
+
+## Start building
+
+In this guide we are going to use the library [Wagmi](https://wagmi.sh/) to make the calls to the blockchain and to interact with the wallet.
+
+### Get Balance
+
+Fetching a user's balance is straightforward using the `useBalance` hook from wagmi.
+
+1. Start by importing the useBalance hook, the AppKit hook to get the account information and the Address type.
+```jsx
+import { useBalance } from 'wagmi'
+import { useAppKitAccount } from '@reown/appkit/react'
+import { type Address } from 'viem'
+```
+
+2. Use the `useAppKitAccount` hook to retrieve the user's address and check if they are connected. Also call the `useBalance` hook.
+
+```jsx
+// AppKit hook to get the address and check if the user is connected
+const { address, isConnected } = useAppKitAccount() 
+
+// Call the useBalance hook with the user's address to prepare for fetching the balance.
+const { refetch } = useBalance({
+    address: address as Address
+}); 
+
+```
+
+3. Create a function to fetch and display (in console) the balance when triggered
+
+```jsx
+// function to get the balance
+const getBalance = async () => {
+    const balance = await refetch();
+    console.log(`${balance?.data?.value.toString()} ${balance?.data?.symbol.toString()}`);
+}
+
+```
+
+4. Finally, In order to call the function you can show the button in a component when `isConnected` is `true`
+
+```jsx
+return (
+    isConnected && (
+    <div >
+        <button onClick={() => getBalance()}>Get Balance</button>  
+    </div>
+    )
+  )
+```
+
+### Sign a message
+
+In order to raise the modal to sign a message with your wallet. You can follow these steps:
+
+1. Start by importing the `useSignMessage` hook.
+
+```jsx
+import { useSignMessage } from 'wagmi'
+```
+
+2. Extract the `signMessageAsync` function from the `useSignMessage` hook. This function allows you to prompt the connected wallet to sign a specific message. Also get the address and isConnected as explain before.
+```jsx
+// Wagmi hook to sign a message
+const { signMessageAsync } = useSignMessage() 
+
+// AppKit hook to get the address and check if the user is connected
+const { address, isConnected } = useAppKitAccount() 
+```
+
+3. Generate the function to raise the modal to sign the message
+
+```jsx
+ // function to sing a msg 
+const signMsg = async () => {
+    // message to sign
+    const msg = "Hello Reown AppKit!" 
+    const sig = await signMessageAsync({ message: msg, account: address as Address }); 
+}
+```
+
+4. Finally, In order to call the function:
+
+```jsx
+return (
+    isConnected && (
+    <div >
+        <button onClick={() => signMsg()}>Sign Message</button>  
+    </div>
+    )
+  )
+```
+
+### Send a transaction in EVM
+
+In order to raise the modal to sign and send a transaction with your wallet. You can follow these steps:
+
+1. Start by importing `useEstimateGas` and `useSendTransaction` hooks.
+
+```jsx
+import { useEstimateGas, useSendTransaction } from 'wagmi'
+import { parseGwei, type Address } from 'viem'
+```
+
+2. Use the `useEstimateGas` hook to calculate the gas required for the transaction, then proceed to send the transaction and get the user's connection status with the provided hooks.
+```jsx
+
+// test transaction
+const TEST_TX = {
+  to: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045" as Address, // vitalik address
+  value: parseGwei('0.0001')
+}
+
+ // Wagmi hook to estimate gas
+const { data: gas } = useEstimateGas({...TEST_TX});
+
+// Wagmi hook to send a transaction
+const { data: hash, sendTransaction, } = useSendTransaction(); 
+
+// AppKit hook to check if the user is connected
+const { isConnected } = useAppKitAccount() 
+```
+
+3. Generate the function to raise the modal to send the transaction
+
+```jsx
+// function to send a TX
+const sendTx = () => {
+    try {
+    sendTransaction({
+        ...TEST_TX,
+        gas // Add the gas to the transaction
+    });
+    } catch (err) {
+        console.log('Error sending transaction:', err);
+    }
+}
+```
+
+4. Finally, In order to call the function:
+
+```jsx
+return (
+    isConnected && (
+    <div >
+        <button onClick={() => sendTx()}>Send Transaction</button>  
+    </div>
+    )
+  )
+```
+
+## Conclusion
+
+By following this guide, you’ve learned how to integrate Reown AppKit and Wagmi in your React application to perform essential wallet operations. 
+You can now fetch wallet balances, sign messages, and send transactions seamlessly in an EVM-compatible blockchain environment. 
+
+Keep exploring AppKit to enhance your dApp’s functionality and user experience!

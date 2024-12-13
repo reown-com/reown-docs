@@ -253,7 +253,8 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
-                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'}      
+                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},      
+                { type: 'doc', label: 'Interact with EVM usign wagmi', id: 'appkit/recipes/wagmi-send-transaction'}      
               ]
             },
             {
