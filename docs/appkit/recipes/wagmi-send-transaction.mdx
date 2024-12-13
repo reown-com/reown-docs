@@ -68,7 +68,7 @@ const { refetch } = useBalance({
 
 ```jsx
 // function to get the balance
-const getBalance = async () => {
+const handleGetBalance = async () => {
     const balance = await refetch();
     console.log(`${balance?.data?.value.toString()} ${balance?.data?.symbol.toString()}`);
 }
@@ -81,7 +81,7 @@ const getBalance = async () => {
 return (
     isConnected && (
     <div >
-        <button onClick={() => getBalance()}>Get Balance</button>  
+        <button onClick={getBalance}>Get Balance</button>  
     </div>
     )
   )
@@ -109,8 +109,8 @@ const { address, isConnected } = useAppKitAccount()
 3. Generate the function to raise the modal to sign the message
 
 ```jsx
- // function to sing a msg 
-const signMsg = async () => {
+// function to sing a msg 
+const handleSignMsg = async () => {
     // message to sign
     const msg = "Hello Reown AppKit!" 
     const sig = await signMessageAsync({ message: msg, account: address as Address }); 
@@ -123,7 +123,7 @@ const signMsg = async () => {
 return (
     isConnected && (
     <div >
-        <button onClick={() => signMsg()}>Sign Message</button>  
+        <button onClick={handleSignMsg}>Sign Message</button>  
     </div>
     )
   )
@@ -163,7 +163,7 @@ const { isConnected } = useAppKitAccount()
 
 ```jsx
 // function to send a TX
-const sendTx = () => {
+const handleSendTx = () => {
     try {
     sendTransaction({
         ...TEST_TX,
@@ -181,7 +181,7 @@ const sendTx = () => {
 return (
     isConnected && (
     <div >
-        <button onClick={() => sendTx()}>Send Transaction</button>  
+        <button onClick={handleSendTx}>Send Transaction</button>  
     </div>
     )
   )
