@@ -1,4 +1,3 @@
-
 :::warning
 This feature is currently under experimental stage and only available for web SDKs.
 :::
@@ -7,13 +6,16 @@ This feature is currently under experimental stage and only available for web SD
 
 The **Sign In With X** feature enables decentralized applications (Dapps) to authenticate users seamlessly across multiple blockchain networks, such as Ethereum, Polygon or Solana. This feature allows developers using our SDK to implement authentication by having users sign a unique string message with their blockchain wallets. The **Sign In With X** feature is designed in accordance with the [CAIP-122](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-122.md) standard, which establishes a chain-agnostic framework for blockchain-based authentication and authorization on off-chain services.
 
- <img src='/assets/siwe-connect.gif' /><br />
+{' '}
+<img src="/assets/siwe-connect.gif" />
+<br />
 
 ## Getting Started
 
 **SIWX** works as a plugin system for AppKit and you are going to add the plugin in the AppKit configuration. There are two ways to get started:
- + Use the default implementation provided by AppKit
- + Create a custom implementation to suit your specific requirements.
+
+- Use the default implementation provided by AppKit
+- Create a custom implementation to suit your specific requirements.
 
 To initialize the **SIWX** feature, you need to add the `siwx` parameter to the `createAppKit` function.
 
@@ -38,7 +40,7 @@ The defined interface must follow specific rules to make sure that AppKit can in
 
 ## Migrating from SIWE to SIWX
 
-If you are currently already using **SIWE** from `@reown/appkit-siwe`, after AppKit version X.X.X, you will be migrated into **SIWX**. The migration process is automatic and your `siweConfig` from `createAppKit` function will be mapped internally.
+If you are currently already using **SIWE** from `@reown/appkit-siwe`, after AppKit version 1.5.0, you will be migrated into **SIWX**. The migration process is automatic and your `siweConfig` from `createAppKit` function will be mapped internally.
 
 :::warning
 It is important to note that if you cannot use `siweConfig` and `siwx` at the same time, `createAppKit` will throw an error in case this happens.
