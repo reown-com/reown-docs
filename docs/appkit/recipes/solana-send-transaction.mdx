@@ -37,7 +37,7 @@ You can start a small project following the guidelines from our [installation Re
 
 ## Start building
 
-In this guide we are going to use the library [@solana/web3.js](https://solana.com/docs/clients/javascript-reference) to make the calls to the Solana blockchain and to interact with the wallet.
+In this guide, we are going to use the library [@solana/web3.js](https://solana.com/docs/clients/javascript-reference) to make the calls to the Solana blockchain and to interact with the wallet.
 
 ### Get Balance
 
@@ -134,9 +134,9 @@ return (
 
 ### Send a transaction in Solana
 
-In order to raise the modal to sign and send a transaction with your wallet. Is a bit more complex but you can follow these steps:
+In order to raise the modal to sign and send a transaction with your wallet. It's a bit more complex, but you can follow these steps:
 
-1. Start by importing very similar packages from the previous examples and algo the Transaction and SystemProgram object from solana/web3.js library.
+1. Start by importing very similar packages from the previous examples and also the Transaction and SystemProgram object from solana/web3.js library.
 
 ```js
 import { useAppKitConnection } from '@reown/appkit-adapter-solana/react';
@@ -152,7 +152,7 @@ const { connection } = useAppKitConnection();
 const { walletProvider } = useAppKitProvider<Provider>('solana');
 ```
 
-3. Generate the function to raise the modal to send the transaction
+3. Create the function to raise the modal to send the transaction
 
 ```js
 // function to send a TX
@@ -193,7 +193,7 @@ return (
 
 ## Conclusion
 
-By following this guide, you’ve learned how to integrate Reown AppKit and Solana in your React application to perform essential wallet operations. 
+By following this guide, you’ve learned how to integrate Reown AppKit and Solana into your React application to perform essential wallet operations. 
 You can now fetch wallet balances, sign messages, and send transactions in the Solana blockchain. 
 
 Keep exploring AppKit to enhance your dApp’s functionality and user experience!
