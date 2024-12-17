@@ -18,6 +18,15 @@ import javascriptLogo from '../../../static/assets/home/javascriptLogo.png'
 
 The AppKit SDK supports Bitcoin, allowing users to connect their Bitcoin wallets to applications. AppKit provides a simple, secure, and seamless in-app experience for users looking to transact within web3.
 
+### Bitcoin Standards and supported wallets
+
+The AppKit Bitcoin integration aims to support connections through WBIPs and the Bitcoin Wallet Standard. However, most wallets have their own proprietary connection interfaces. To address this, we will gradually expand the list of supported wallets.
+
+Currently, the following extension wallets are supported: **Xverse, OKX, Leather AND Phantom**.
+
+While we provide a standardized interface for Bitcoin connector methods, not all wallets support every method. As a result, you may encounter a **MethodNotSupportedError** when attempting to use methods that are not supported by a specific wallet.
+If your wallet supports a mentioned standard but you cannot connect, please reach out to our development team for assistance via [Github issues](https://github.com/reown-com/appkit/issues/new/choose).
+
 <Button name="Try Demo" url="https://appkit-lab.reown.com/library/bitcoin/" />
 
 ## Get Started
