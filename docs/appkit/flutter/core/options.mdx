@@ -59,11 +59,12 @@ These are the set of namespaces that will be requested to the wallet you are con
 
 These values are optionals and, in most cases, not required since AppKit already defines every required and optional namespace internally based on configured networks.
 
-However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) these are the object yout should modify. See [Custom Networks](../core/custom-chains.mdx). section.
+However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) these are the object you should modify. See [Custom Networks](../core/custom-chains.mdx). section.
 
 ### featuredWalletIds:
 
-Allows to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). You can get these ids from the [WalletGuide](https://walletguide.walletconnect.network/) by clicking on the copy icon of desired wallet card.
+Allows to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). 
+You can find the wallets IDs in our [Wallets List](/cloud/wallets/wallet-list).
 
 ```javascript
 final Set<String> featuredWalletIds = {

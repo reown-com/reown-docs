@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem'
 
 :::info
 
-If you are not using our library on the server-side, please normalize the address with eip-55 in the createMessage function. You can check our example for that funcionality.
+If you are not using our library on the server-side, please normalize the address with eip-55 in the createMessage function. You can check our example for that Functionality.
 
 :::
 
@@ -149,7 +149,7 @@ app.post('/verify', async (req, res) => {
 
       
       const message = req.body.message;
-      const singnature = req.body.signature;
+      const signature = req.body.signature;
       const address = getAddressFromMessage(message);
       let chainId = getChainIdFromMessage(message);
       

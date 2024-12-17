@@ -14,6 +14,10 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 Create a new instance from Core and initialize it with a projectId created from installation. Next, create WalletKit instance by calling init on walletKit. Passing in the options object containing metadata about the app and an optional relay URL.
 
+:::note
+Make sure you initialize `walletKit` globally and use the same instance for all your sessions. For React-based apps, you can initialize it in the root component and export it to use in other components.
+:::
+
 ```javascript
 import { Core } from '@walletconnect/core'
 import { WalletKit } from '@reown/walletkit'
@@ -172,7 +176,7 @@ The `session_proposal` event is emitted when a dapp initiates a new session with
 The `pair` method initiates a WalletConnect pairing process with a dapp using the given `uri` (QR code from the dapps). To learn more about pairing, checkout out the [docs](../../api/core/pairing.mdx).
 
 ```javascript
-walletKit.on('session_proposal', async proposal => {
+walletKit.on('session_proposal', async (proposal: WalletKitTypes.SessionProposal) => {
   const session = await walletKit.approveSession({
     id: proposal.id,
     namespaces
@@ -210,7 +214,7 @@ Additionally, we highly recommend you to use our `namespace` builder utility tha
 In the event you want to reject the session proposal, call the `rejectSession` method. The `getSDKError` function comes from the `@walletconnect/utils` [library](https://github.com/WalletConnect/walletconnect-monorepo/tree/v2.0/packages/utils).
 
 ```javascript
-walletKit.on('session_proposal', async proposal => {
+walletKit.on('session_proposal', async (proposal: WalletKitTypes.SessionProposal) => {
   await walletKit.rejectSession({
     id: proposal.id,
     reason: getSdkError('USER_REJECTED_METHODS')
@@ -247,7 +251,7 @@ As an example, if the dapp requests a `personal_sign` method, you can extract th
 To sign the message, you can use your wallet's `signMessage` method and pass in the message. The signed message, along with the `id` from the event payload, can then be used to create a `response` object, which can be passed into `respondSessionRequest`.
 
 ```javascript
-walletKit.on('session_request', async event => {
+walletKit.on('session_request', async (event: WalletKitTypes.SessionRequest) => {
   const { topic, params, id } = event
   const { request } = params
   const requestParamsMessage = request.params[0]
