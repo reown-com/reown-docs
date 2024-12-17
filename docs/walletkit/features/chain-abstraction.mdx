@@ -12,20 +12,35 @@ import javascriptLogo from '../../../static/assets/home/javascriptLogo.png'
 Chain Abstraction allows users to spend stablecoins across different networks seamlessly. 
 This solution provides wallet developers with a toolkit to integrate cross-chain functionality using WalletKit.
 
+:::note
+💡 Support for Chain Abstraction is currently in experimental phase.
+:::
+
 ## How it works
 
 When an application sends a `wallet_sendTransaction` request for an ERC-20 transfer (such as USDC), 
 the wallet checks for available tokens across all supported networks. If the user has sufficient funds on any supported network,
 they can complete the transaction instantly, regardless of which network holds their tokens.
 
-For example, consider a scenario where an app requests a transfer of 225 USDC on the Polygon Network. 
-Even if the user doesn't have USDC on Polygon, their wallet can automatically source the funds from other networks,
+For example, consider a scenario where an app requests a transfer of 225 USDC on the Base Network. 
+Even if the user doesn't have USDC on Base, their wallet can automatically source the funds from other networks,
 making the experience seamless for both the user and the application.
 
-The diagram below shows an example scenario where a user is interacting with an app and is asked to transfer 225 USDC to the app on Polygon Network. 
-The user does not have any USDC on Polygon Network, but their wallet seamlessly allows them to source the funds from other networks. 
+:::note
+💡 Make sure you have enough gas fees in other networks from which bridging will happen. 
+For example, in given scenario, you need to have enough gas fees on OP Mainnet and Arbitrum. 
+:::
+
+The diagram below shows an example scenario where a user is interacting with an app and is asked to transfer 225 USDC to the app on Base Network. 
+The user does not have any USDC on Base, but their wallet seamlessly allows them to source the funds from other networks. 
     
 ![Chain Abstraction Example](/assets/chain_abstraction_demo.png)
+
+## Testing 
+
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending USDC with any chain abstraction supported wallet. 
+
+{/* TODO: Add a demo video here */}
 
 ## Get Started
 

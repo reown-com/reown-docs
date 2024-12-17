@@ -1,3 +1,233 @@
 # Chain Abstraction
 
-WalletKit provides a toolkit for wallet developers to integrate chain abstraction into their wallets.
+Chain Abstraction in WalletKit enables users with stablecoins on any network to spend them on-the-fly on a different network. Our Chain Abstraction solution provides a toolkit for wallet developers to integrate this complex functionality using WalletKit.
+
+For example, when an app requests a 100 USDC payment on Base network but the user only has USDC on Arbitrum, WalletKit offers methods to detect this mismatch, generate necessary transactions, track the cross-chain transfer, and complete the original transaction after bridging finishes.
+
+:::note
+Chain abstraction is currently in experimental phase and requires the `@ChainAbstractionExperimentalApi` annotation.
+:::
+
+## How It Works
+
+When a dapp requests a transaction through `eth_sendTransaction`, you need to:
+1. Detect if chain abstraction is needed
+2. Generate necessary bridging transactions
+3. Handle transaction execution and monitoring
+4. Complete the original transaction once bridging is done
+
+The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
+
+![Chain Abstraction Flow](/assets/chain-abstraction-flow.png)
+
+## Methods
+
+Following are the methods from WalletKit that you will use in implementing chain abstraction.
+
+### Prepare 
+
+This method is used to check if chain abstraction is needed. If it is, it will return a `FulfilmentSuccess.Available` object with the necessary transactions and funding information. 
+If it is not, it will return a `FulfilmentSuccess.NotRequired` object with the original transaction. 
+
+```kotlin 
+@ChainAbstractionExperimentalApi
+fun prepare(
+  transaction: Wallet.Model.Transaction,
+  onSuccess: (Wallet.Model.FulfilmentSuccess) -> Unit,
+  onError: (Wallet.Model.FulfilmentError) -> Unit
+)
+```
+
+### Status 
+
+This method is used to check the status of the fulfillment operation. It will return a `FulfilmentStatus.Completed` object if the operation completed successfully or a `FulfilmentStatus.Error` object if it encountered an error.
+
+```kotlin
+@ChainAbstractionExperimentalApi
+fun status(
+  fulfilmentId: String,
+  checkIn: Long,
+  onSuccess: (Wallet.Model.FulfilmentStatus.Completed) -> Unit,
+  onError: (Wallet.Model.FulfilmentStatus.Error) -> Unit
+)
+```
+
+### Estimate Fees
+
+This method is used to estimate the fees for the fulfillment operation.
+
+```kotlin
+@Throws(Exception::class)
+@ChainAbstractionExperimentalApi
+fun estimateFees(chainId: String): Wallet.Model.EstimatedFees
+```
+
+### Get ERC20 Balance
+
+This method is used to get the balance of an ERC20 token on a specific chain.
+
+```kotlin
+@Throws(Exception::class)
+@ChainAbstractionExperimentalApi
+fun getERC20Balance(chainId: String, tokenAddress: String, ownerAddress: String): String 
+```
+
+### Get Fulfilment Details
+
+This method is used to get the details of the fulfillment operation.
+
+```kotlin
+@ChainAbstractionExperimentalApi
+fun getFulfilmentDetails(
+  available: Wallet.Model.FulfilmentSuccess.Available,
+  initTransaction: Wallet.Model.Transaction,
+  onSuccess: (Wallet.Model.FulfilmentDetails) -> Unit,
+  onError: (Wallet.Model.Error) -> Unit
+)
+``` 
+
+### Usage
+
+When your wallet receives an `eth_sendTransaction` request, first check if chain abstraction is needed using the `prepare` method, if it is, you need to sign all the fulfilment transactions and broadcast them in parallel. 
+After that, you need to call the `status` method to check the status of the fulfillment operation. 
+
+If the operation is successful, you need to broadcast the initial transaction and await for the transaction hash and receipt. 
+If the operation is not successful, you need to send the JsonRpcError to the dapp and display the error to the user. 
+
+```kotlin
+override fun onSessionRequest(sessionRequest: Wallet.Model.SessionRequest, verifyContext: Wallet.Model.VerifyContext) {
+  if (sessionRequest.request.method == "eth_sendTransaction") {
+    val initialTransaction = Wallet.Model.Transaction(...)
+    
+    WalletKit.prepare(
+      initialTransaction,
+      onSuccess = { fulfilmentSuccess ->
+        when (fulfilmentSuccess) {
+          is Wallet.Model.FulfilmentSuccess.Available -> {
+            //Sign all the fulfilment transactions
+            //Broadcast the fulfilment transactions in parallel
+            //Await for the transaction hashes and receipts
+            
+            //Call the fulfillmentStatus
+            WalletKit.status(fulfilmentId, checkIn,
+                onSuccess = {
+                    //Successfull filfilment
+                    //Broadcast the inittial transaction
+                    //Await for the tx hash ande receipt
+                    //Send the response to the Dapp
+                },
+                onError = {
+                    //Fulfilment error - wallet should send the JsonRpcError to a dapp for given request and display error to the user
+                }
+            )
+          }
+
+          is Wallet.Model.FulfilmentSuccess.NotRequired -> {
+              //Chain abstraction is not required, handle transaction as usual
+          }
+        }
+      },
+      onError = { fulfilmentError ->
+            // One of the possible errors: NoRoutesAvailable, InsufficientFunds, InsufficientGasFunds - wallet should send the JsonRpcError to a dapp for given request and display error to the user
+      }
+   )
+  } else {
+    // Handle transaction as usual
+  }
+}
+```
+## Types
+
+Following are the types that are used in the chain abstraction methods.
+
+```kotlin
+data class Transaction(
+  var from: String,
+  var to: String,
+  var value: String,
+  var gas: String,
+  var gasPrice: String,
+  var data: String,
+  var nonce: String,
+  var maxFeePerGas: String,
+  var maxPriorityFeePerGas: String,
+  var chainId: String
+)
+
+sealed class FulfilmentSuccess : Model() {
+  data class Available(
+    val fulfilmentId: String,
+    val checkIn: Long,
+    val transactions: List<Transaction>,
+    val initialTransaction: Transaction,
+    val initialTransactionMetadata: InitialTransactionMetadata,
+    val funding: List<FundingMetadata>
+  ) : FulfilmentSuccess()
+
+  data class NotRequired(val initialTransaction: Transaction) : FulfilmentSuccess()
+}
+
+data class InitialTransactionMetadata(
+  var symbol: String,
+  var amount: String,
+  var decimals: Int,
+  var tokenContract: String,
+  var transferTo: String
+)
+
+data class FundingMetadata(
+  var chainId: String,
+  var tokenContract: String,
+  var symbol: String,
+  var amount: String,
+  var bridgingFee: String,
+  var decimals: Int
+)
+
+sealed class FulfilmentError : Model() {
+  data object NoRoutesAvailable : FulfilmentError()
+  data object InsufficientFunds : FulfilmentError()
+  data object InsufficientGasFunds : FulfilmentError()
+  data class Unknown(val message: String) : FulfilmentError()
+}
+
+sealed class FulfilmentStatus : Model() {
+  data class Completed(val createdAt: Long) : FulfilmentStatus()
+  data class Error(val reason: String) : FulfilmentStatus()
+}
+
+sealed class FulfilmentStatus : Model() {
+  data class Completed(val createdAt: Long) : FulfilmentStatus()
+  data class Error(val reason: String) : FulfilmentStatus()
+}
+
+data class FulfilmentDetails(
+  var fulfilmentDetails: List<TransactionDetails>,
+  var initialDetails: TransactionDetails,
+  var bridgeDetails: List<TransactionFee>,
+  var localTotal: Amount
+)
+
+data class TransactionDetails(
+  var transaction: Transaction,
+  var eip1559: EstimatedFees,
+  var transactionFee: TransactionFee
+)
+
+data class TransactionFee(
+  var fee: Amount,
+  var localFee: Amount
+)
+
+data class Amount(
+  var symbol: String,
+  var amount: String,
+  var unit: String,
+  var formatted: String,
+  var formattedAlt: String
+)
+```
+
+{/* TODO: update sample wallet link */}
+For implementation examples, check our [sample wallet implementation](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/master/sample/wallet) with Kotlin. 
+

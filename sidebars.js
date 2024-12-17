@@ -968,6 +968,7 @@ module.exports = {
         'walletkit/android/link-mode',
         'walletkit/android/verify',
         'walletkit/android/eip5792',
+        'walletkit/android/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
@@ -1020,6 +1021,7 @@ module.exports = {
         'walletkit/ios/link-mode',
         'walletkit/ios/verify',
         'walletkit/ios/eip5792',
+        'walletkit/ios/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
@@ -1104,6 +1106,7 @@ module.exports = {
         'walletkit/react-native/link-mode',
         'walletkit/react-native/verify',
         'walletkit/react-native/eip5792',
+        'walletkit/react-native/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
