@@ -25,12 +25,14 @@ export const FrameworksMenu = () => {
   if (
     location.pathname.includes('/appkit/overview') ||
     location.pathname.includes('/appkit/features') ||
+    location.pathname.includes('/appkit/networks') ||
+    location.pathname.includes('/appkit/authentication') ||
+    location.pathname.includes('/appkit/recipes') ||
     location.pathname.includes('/appkit/migration') ||
     location.pathname.includes('/appkit/upgrade') ||
     location.pathname.includes('/walletkit/upgrade') ||
     location.pathname.includes('/walletkit/overview') ||
     location.pathname.includes('/walletkit/features') ||
-    location.pathname.includes('/appkit/recipes') ||
     location.pathname.includes('/walletkit/best-practices')
   ) {
     return
