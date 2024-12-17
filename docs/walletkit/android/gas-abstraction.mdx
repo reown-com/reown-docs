@@ -1,0 +1,72 @@
+# Gas Abstraction (experimental)
+
+WalletKit provides a toolkit for wallet developers to integrate verifying paymaster gas abstraction into their wallets.
+
+`GasAbstractionClient` is instantiated with some basic RPC URL and API key information. This client is long-lived and should be reused between transactions as it will reuse network connections for improved latency.
+
+When receiving a transaction request, send the transaction to the `prepare_gas_abstraction(txn)` method. This will do some thinking and will prepare a set of operations and return a couple of hashes to be signed.
+
+The operations are:
+
+1. Deploying the 7702 account and delegating to it, if needed
+2. Sending a sponsored UserOperation for the initial transaction.
+
+The user will then approve signatures for these operations and the wallet will then call `execute_transaction(txn, signatures)` with the same initial transaction and the signatures.
+
+The function will send the transactions and return status information of them to you.
+
+The below is an example psudo-Rust code of the usage of `GasAbstractionClient`:
+
+```rust
+async fn main() {
+    let eoa = LocalSigner::random();
+    let client = GasAbstractionClient::new(...);
+    let txn = Transaction { to: vitalik.eth, amount: 1 ETH };
+
+    let PreparedGasAbstraction {
+        hashes_to_sign,
+        fields
+    } = client.prepare_gas_abstraction(txn).await?;
+
+    ask_user_for_approval(fields).await?;
+
+    let signatures = hashes_to_sign.iter().map(|hash| account.sign(hash)).collect();
+
+    let receipt = client.execute_transaction(txn, Params {
+        signatures
+    }).await?;
+
+    display_success(receipt)
+}
+```
+
+```rust
+impl GasAbstractionClient {
+    /// Just provide a project ID
+    async fn new(project_id: String) -> Self;
+
+    /// Or you can make chain-specific clients if you want to do it manually
+    async fn new(chain_id: Caip10, rpc_url: Url, bundler_url: Url, paymaster_url: Url) -> Self;
+
+    // Prepare and send gas-abstracted transactions
+    async fn bool prepare_gas_abstraction(Transaction transaction) -> PreparedGasAbstraction;
+    async fn bool execute_transaction(Transaction transaction, params: Params) -> B256;
+
+    // Signature creation
+    async fn ..... COPY signature creation functions from current SDK
+    
+    // == Future APIs ==
+    async fn send_user_operation(?) - ?;
+    async fn create_smart_session(?) -> ?;
+}
+
+enum PreparedGasAbstraction {
+    hashes_to_sign: Vec<B256>,
+    fees: GasAbstractionFees, // similar to RouteUiFields -> fee and other UI info for user display
+}
+
+enum Params {
+    /// EOA signatures by the transaction's sender of `hashes_to_sign`
+    signatures: Vec<Signature>,
+}
+```
