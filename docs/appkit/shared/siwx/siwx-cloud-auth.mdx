@@ -1,0 +1,29 @@
+Cloud Auth SIWX is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions.
+
+With Cloud Auth SIWX you will be able to see and control the sessions of your users using Cloud Dashboard.
+
+:::caution
+
+For now, Cloud Auth SIWX will only work for `eip155` compatible networks.
+
+:::
+
+### Installation
+
+```bash npm2yarn
+npm install @reown/appkit-siwx
+```
+
+### Usage
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { CloudAuthSIWX } from '@reown/appkit-siwx'
+
+const appkit = createAppKit({
+  // ... your configuration
+  siwx: new CloudAuthSIWX()
+})
+```
+
+Now you are ready to use the **SIWX** feature in your Dapp.
