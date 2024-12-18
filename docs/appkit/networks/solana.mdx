@@ -1,22 +1,30 @@
 ---
-pagination_next: appkit/react/core/installation
 title: Solana
 ---
 
-import Button from '../../components/button'
-import Container from '../../components/Container.js'
-import Wrapper from '../../components/Home/Wrapper'
-import W3MQuickStart from '../../components/W3MQuickStart'
+import Button from '../../components/button/index.js'
+import Wrapper from '../../components/Home/Wrapper.js'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 
 import reactLogo from '../../../static/assets/home/reactLogo.png'
 import nextjsLogo from '../../../static/assets/home/nextjsLogo.png'
 import vueLogo from '../../../static/assets/home/vueLogo.png'
 import javascriptLogo from '../../../static/assets/home/javascriptLogo.png'
+import ReactPlayer from 'react-player'
 
 # Solana
 
-The AppKit SDK supports Solana, allowing users to connect their Solana wallets to applications. AppKit provides a simple, secure, and seamless in-app experience for users looking to transact within web3.
+The AppKit SDK supports Solana, allowing users to connect their Solana wallets to applications.
+
+<div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+}}>
+<ReactPlayer url={useBaseUrl('/img/Solana.mp4')} loop playing width="100%" height="100%"/>
+</div>
+
+**AppKit provides a simple, secure, and seamless in-app experience for users looking to transact within web3.**
 
 <Button name="Try Demo" url="https://appkit-lab.reown.com/library/solana/" />
 

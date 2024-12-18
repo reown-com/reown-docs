@@ -236,15 +236,31 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Swaps', id: 'appkit/features/swaps' },
-                { type: 'doc', label: 'Email & Social Login', id: 'appkit/features/socials' },
                 { type: 'doc', label: 'On-Ramp', id: 'appkit/features/onramp' },
-                { type: 'doc', label: 'One-Click Auth', id: 'appkit/features/one-click-auth' },
-                { type: 'doc', label: 'Smart Accounts', id: 'appkit/features/smart-accounts' },
-                { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
+                { type: 'doc', label: 'Smart Accounts', id: 'appkit/features/smart-accounts' },
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
                 { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'}
               ]
+            },
+            {
+              type: 'category',
+              label: "Networks",
+              collapsed: false,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm'},
+                { type: 'doc', label: 'Solana', id: 'appkit/networks/solana' },
+              ]
+            },
+            {
+              type: 'category',
+              label: "Authentication",
+              collapsed: false,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'Email & Social Login', id: 'appkit/authentication/socials' },
+                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' },              ]
             },
             {
               type: 'category',
@@ -254,8 +270,8 @@ module.exports = {
               items: [
                 { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
                 { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},      
-                { type: 'doc', label: 'Interact with EVM usign wagmi', id: 'appkit/recipes/wagmi-send-transaction'},
-                { type: 'doc', label: 'Interact with Solana', id: 'appkit/recipes/solana-send-transaction'},
+                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'} ,   
+                { type: 'doc', label: 'EVM Transactions using Solana', id: 'appkit/recipes/solana-send-transaction'}    
               ]
             },
             {
