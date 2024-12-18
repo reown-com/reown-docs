@@ -236,27 +236,27 @@ Here is an example of how you can implement use your `SWIXConfig` interface:
 import { createAppKit, type SIWXConfig } from '@reown/appkit'
 
 const siwx: SIWXConfig = {
-createMessage: async (input) => {
-// Implement your logic to create a message
-return 'my message'
-}
-addSession: async (session) => {
-// Implement your logic to add a session
-},
-revokeSession: async (chainId, address) => {
-// Implement your logic to revoke a session
-},
-setSessions: async (sessions) => {
-// Implement your logic to set sessions
-},
-getSessions: async (chainId, address) => {
-// Implement your logic to get sessions
-return []
-}
+  createMessage: async (input) => {
+    // Implement your logic to create a message
+    return 'my message'
+  }
+  addSession: async (session) => {
+    // Implement your logic to add a session
+  },
+  revokeSession: async (chainId, address) => {
+    // Implement your logic to revoke a session
+  },
+  setSessions: async (sessions) => {
+    // Implement your logic to set sessions
+  },
+  getSessions: async (chainId, address) => {
+    // Implement your logic to get sessions
+    return []
+  }
 }
 
 createAppKit({
-// ... your configuration
-siwx
+  // ... your configuration
+  siwx
 })
 ````
