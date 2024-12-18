@@ -14,7 +14,7 @@ Adding custom connectors like WalletConnect and Coinbase is optional.
 
 By default, [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and WC connectors are provided out of the box.
 ```ts
-import { createAppKit } from '@reown/appkit/react'
+import { createAppKit } from '@reown/appkit'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { reconnect, http, createConfig } from '@wagmi/core'
 import { CreateConnectorFn } from 'wagmi'
@@ -73,8 +73,8 @@ npm install @solana/wallet-adapter-wallets
 ```
 
 ```ts
-import { createAppKit } from '@reown/appkit/react'
-import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
+import { createAppKit } from '@reown/appkit'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
 import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
