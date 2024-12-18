@@ -2,8 +2,54 @@
 title: Components
 ---
 
+import Table from '../../../components/Table'
 import Components from '../../shared/components.mdx'
 
 # Web Components
 
 <Components />
+
+### `<appkit-wallet-button  />`
+
+<img src="/assets/walletButtons.jpg" />
+
+Using the wallet button components you may call directly to the top 20 wallets, WalletConnect QR and also all the social logins. 
+This component allows to customize dApps, allowing users to connect their wallets effortlessly, all without the need for the traditional modal.
+
+Follow this steps to use the component:
+
+1. Install the package: 
+```bash npm2yarn
+npm i @reown/appkit-wallet-button
+```
+
+2. Import the library in your project:
+```tsx
+import '@reown/appkit-wallet-button/react'
+```
+
+3. use the component in your project:
+```tsx
+<appkit-wallet-button wallet="metamask" />
+```
+
+#### Options for wallet property
+<Table
+  headers={['Type', 'Options']}
+  data={[
+    {
+    type: 'QR Code',
+      Options: 'walletConnect' ,
+      
+    },
+    {
+      type: 'Wallets',
+      Options: "metamask, trust, coinbase, rainbow, coinbase, jupiter, solflare, coin98, magic-eden, backpack, frontier and phantom" ,
+    },
+    {
+      type: 'Social logins',
+      Options: "google, github, apple, facebook, x, discord and farcaster" ,
+    }
+  ]}
+/>
+

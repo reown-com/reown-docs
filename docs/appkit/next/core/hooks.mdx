@@ -141,6 +141,60 @@ export default Component(){
 }
 ```
 
+## useAppKitWallet
+
+Using the wallet button hooks you may call directly to the top 20 wallets, WalletConnect QR and also all the social logins. 
+This hook allows to customize dApps, allowing users to connect their wallets effortlessly, all without the need to open the traditional modal.
+Execute this command to install the library in order to use it:
+
+```bash npm2yarn
+npm i @reown/appkit-wallet-button
+```
+
+Then you have to import the hook in your project:
+
+```tsx
+import { useAppKitWallet } from '@reown/appkit-wallet-button/react'
+```
+
+And finally, you can use the hook in your project:
+
+```tsx
+const { isReady, isPending, connect } = useAppKitWallet({
+    onSuccess() {
+      // ...
+    },
+    onError(error) {
+      // ...
+    }
+  })
+
+...
+
+// Connect to a wallet
+<Button onClick={() => connect("walletConnect")} />
+```
+
+#### Options for connect paramater
+<Table
+  headers={['Type', 'Options']}
+  data={[
+    {
+    type: 'QR Code',
+      Options: 'walletConnect' ,
+      
+    },
+    {
+      type: 'Wallets',
+      Options: "metamask, trust, coinbase, rainbow, coinbase, jupiter, solflare, coin98, magic-eden, backpack, frontier and phantom" ,
+    },
+    {
+      type: 'Social logins',
+      Options: "google, github, apple, facebook, x, discord and farcaster" ,
+    }
+  ]}
+/>
+
 ## Ethereum/Solana Library
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "ethers5","solana"]}>
