@@ -1,4 +1,3 @@
-
 ## Introduction
 
 The **Sign In With X** feature enables decentralized applications (Dapps) to authenticate users seamlessly across multiple blockchain networks, such as Ethereum, Polygon or Solana. This feature allows developers using our SDK to implement authentication by having users sign a unique string message with their blockchain wallets. The **Sign In With X** feature is designed in accordance with the [CAIP-122](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-122.md) standard, which establishes a chain-agnostic framework for blockchain-based authentication and authorization on off-chain services.
@@ -8,9 +7,10 @@ The **Sign In With X** feature enables decentralized applications (Dapps) to aut
 
 ## Getting Started
 
-**SIWX** works as a plugin system for AppKit and you are going to add the plugin in the AppKit configuration. There are two ways to get started:
+**SIWX** works as a plugin system for AppKit and you are going to add the plugin in the AppKit configuration. There are some ways to implement the **SIWX** feature:
 
 - Use the default implementation provided by AppKit
+- Use Cloud Auth SIWX to manage the sessions in the Cloud Dashboard
 - Create a custom implementation to suit your specific requirements.
 
 To initialize the **SIWX** feature, you need to add the `siwx` parameter to the `createAppKit` function.
@@ -20,6 +20,12 @@ To initialize the **SIWX** feature, you need to add the `siwx` parameter to the 
 By using the default implementation, you can quickly integrate the **SIWX** feature into your Dapp. The default implementation provides a set of pre-built components that allow you to have the feature up and running in no time.
 
 Read more about the [Default Implementation](./siwx-default).
+
+### Cloud Auth Implementation
+
+The Cloud Auth SIWX is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions. With Cloud Auth SIWX, you will be able to see and control the sessions of your users using the Cloud Dashboard.
+
+Read more about the [Cloud Auth Implementation](./siwx-cloud-auth).
 
 ### Custom Implementation
 
