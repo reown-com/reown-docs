@@ -240,7 +240,16 @@ module.exports = {
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
                 { type: 'doc', label: 'Smart Accounts', id: 'appkit/features/smart-accounts' },
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
-                { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'}
+                {
+                  type: 'doc',
+                  label: 'Telegram Mini Apps',
+                  id: 'appkit/features/telegram-mini-apps'
+                },
+                {
+                  type: 'doc',
+                  label: 'SIWX',
+                  id: 'appkit/features/siwx/default'
+                }
               ]
             },
             {
@@ -366,11 +375,12 @@ module.exports = {
             'appkit/react/core/hooks',
             'appkit/react/core/options',
             'appkit/react/core/components',
-            'appkit/react/core/socials', 
+            'appkit/react/core/socials',
             'appkit/react/core/smart-accounts',
             'appkit/react/core/custom-connectors',
             'appkit/react/core/custom-networks',
             'appkit/react/core/siwe',
+            'appkit/react/core/siwx',
             'appkit/react/core/multichain',
             'appkit/react/core/theming',
             'appkit/react/core/resources'
@@ -464,11 +474,12 @@ module.exports = {
             'appkit/next/core/hooks',
             'appkit/next/core/options',
             'appkit/next/core/components',
-            'appkit/next/core/socials', 
+            'appkit/next/core/socials',
             'appkit/next/core/smart-accounts',
             'appkit/next/core/custom-connectors',
             'appkit/next/core/custom-networks',
             'appkit/next/core/siwe',
+            'appkit/next/core/siwx',
             'appkit/next/core/multichain',
             'appkit/next/core/theming',
             'appkit/next/core/resources'
@@ -559,11 +570,12 @@ module.exports = {
             'appkit/vue/core/composables',
             'appkit/vue/core/options',
             'appkit/vue/core/components',
-            'appkit/vue/core/socials', 
+            'appkit/vue/core/socials',
             'appkit/vue/core/smart-accounts',
             'appkit/vue/core/custom-connectors',
             'appkit/vue/core/custom-networks',
             'appkit/vue/core/siwe',
+            'appkit/vue/core/siwx',
             'appkit/vue/core/multichain',
             'appkit/vue/core/theming',
             'appkit/vue/core/resources'
@@ -654,11 +666,12 @@ module.exports = {
             'appkit/javascript/core/actions',
             'appkit/javascript/core/options',
             'appkit/javascript/core/components',
-            'appkit/javascript/core/socials', 
+            'appkit/javascript/core/socials',
             'appkit/javascript/core/smart-accounts',
             'appkit/javascript/core/custom-connectors',
             'appkit/javascript/core/custom-networks',
             'appkit/javascript/core/siwe',
+            'appkit/javascript/core/siwx',
             'appkit/javascript/core/multichain',
             'appkit/javascript/core/theming',
             'appkit/javascript/core/resources'
