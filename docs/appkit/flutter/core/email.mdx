@@ -16,7 +16,7 @@ Remember to whitelist your dapp's iOS's bundleId and Android's packageName in yo
 :::
 
 :::info
-Social Login are avaiable from version `1.2.0-beta01`
+Social Login are available from version `1.2.0-beta01`
 :::
 
 ## Integration
@@ -56,11 +56,11 @@ final _appKitModal = ReownAppKitModal(
 
 - **_email `bool`_** : This boolean defines whether you want to enable email login. Default `true`
 - **_socials `List<AppKitSocialOption>`_** : This list contains the list of social platforms that you want to enable for user authentication. The platforms in the example include Farcaster, X, Discord. Is empty by default, it means that no social options is enabled.
-- **showMainWallets `bool`_** : This boolean defines whether you want to show the main wallet options on the first connect screen. If this is `false` it will show a button that directs you to a new screen displaying all avaiable wallets. Default `true`.
+- **showMainWallets `bool`_** : This boolean defines whether you want to show the main wallet options on the first connect screen. If this is `false` it will show a button that directs you to a new screen displaying all available wallets. Default `true`.
 
 :::note
 
-In order for Email Wallet to work propertly, `AppKitModalConnectButton()` has to be instantiated during the whole lifetime of the app. 
+In order for Email Wallet to work properly, `AppKitModalConnectButton()` has to be instantiated during the whole lifetime of the app. 
 
 If you already use `AppKitModalConnectButton()` then nothing else has to be done, but in case you don't use it but still want to support Email Wallets you can instantiate and hide it as follows:
 

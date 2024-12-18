@@ -1,0 +1,87 @@
+---
+title: Build a Telegram Mini App with AppKit
+---
+import ReactPlayer from 'react-player'
+import useBaseUrl from '@docusaurus/useBaseUrl'
+import GithubBox from '../../components/GithubBox'
+
+# How to Build a Telegram Mini App with Reown AppKit?
+
+Learn how to use Reown AppKit to enable wallet interactions on your Telegram mini app directly from your Telegram bot.
+
+---
+
+In this recipe, you will learn how to:
+
+1. Create a Telegram mini app and a Telegram bot. 
+2. Configure your Telegram mini app with Reown AppKit.
+
+This guide takes approximately 20 minutes to complete.
+
+Let’s get started!
+
+## Setup
+
+In this section, you’ll learn how to set up a Telegram bot to host your Telegram mini-app, powered by Reown AppKit.
+
+The first step is to create a Telegram bot. Let’s learn how we can do this.
+
+### Create a Telegram Bot
+
+Navigate to the [**BotFather Telegram bot**](https://t.me/BotFather). This bot will help you create, fully customize, and configure your new Telegram bot.
+
+Type `/newbot` to start the creation process. You’ll be prompted to set a name for your bot—please enter your desired name. Next, you’ll be asked to set a unique username for the bot. Once you've completed these steps, your new Telegram bot will be ready to use!
+
+![image.png](../../../static/img/recipes/tg1.png)
+
+Now, enter `/mybots` and it will show you a list of bots that you created. Select the bot you just created and click on “**Edit Bot**”. You will now be able to edit the bot’s info such as its description, picture, etc. 
+
+![image.png](../../../static/img/recipes/tg2.png)
+
+Now, go back to the bot menu and click on “**Bot Settings**”. Click on “**Configure Mini App**” and enter the URL you want to set for your mini app. In my case, I am setting it to https://reown-appkit-evm.vercel.app/. 
+
+![image.png](../../../static/img/recipes/tg3.png)
+
+Go back to the bot menu and click on “**Menu Button**”. You will now be able to set the URL that will be opened when a user clicks on the menu button. After this, you can also the title to be displayed on the button instead of 'Menu’.
+
+![image.png](../../../static/img/recipes/tg4.png)
+
+Your Telegram bot is now all set up! When a user opens the bot and clicks on “**Open App**” or “**Menu**,” the Telegram mini-app will open with the URL you configured.
+
+## Configure the Telegram Mini App with Reown AppKit
+
+The URL I configured for my Telegram mini-app is [this](https://reown-appkit-evm.vercel.app/). As you can see, it’s a simple web app that allows users to connect their wallets and switch to any of the pre-configured networks available on the app.
+
+If you’re using Reown AppKit to power wallet interactions on your Web3 app or Telegram mini-app, there’s nothing extra you need to do. Reown AppKit works with Telegram bots and mini-apps right out of the box. As long as you’re running the latest versions of Reown AppKit, no further setup is required.
+
+If you’d like to learn how to integrate Reown AppKit, please refer to the in-depth guide linked below:
+
+[**How to Get Started with Reown AppKit on Any EVM Chain**](https://reown.com/blog/how-to-get-started-with-reown-appkit-on-any-evm-chain)
+
+You can also check out the GitHub repository below, which powers the URL configured for my Telegram mini-app:
+
+<GithubBox name="AppKit EVM Example" url="https://github.com/rohit-710/reown-appkit-evm" description="Check out the complete AppKit example on this Github repo."></GithubBox>
+
+## Run your Telegram Mini App
+
+Now, open your Telegram bot and click “**Start**.” The bot will open your mini-app within Telegram. As you can see, the mini-app opened by my Telegram bot is the Web3 app configured with Reown AppKit. You’ll notice a “**Connect Wallet**” button, which allows you to connect your Web3 wallet to the mini-app.
+
+When you click “**Connect Wallet**”, the AppKit modal will open, prompting you to choose your preferred connection method. You’ll also notice that the mini-app supports social login, which could be a game changer for onboarding a large number of users to various mini-apps.
+
+After you select your preferred wallet and connect it, you should be able to see that your wallet was successfully connected to the mini app. 
+
+<div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+}}>
+<ReactPlayer url={useBaseUrl('/img/recipes/tgvideo.mp4')} playing loop width="40%" height="40%"/>
+</div>
+
+## Conclusion
+
+And that’s it! You have now learned how to create a simple Telegram bot and configure it with your Telegram mini app using Reown AppKit.
+
+## Need help?
+
+For support, please join the official [Reown Discord Server](https://discord.com/invite/kdTQHQ6AFQ).

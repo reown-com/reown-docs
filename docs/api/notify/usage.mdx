@@ -276,7 +276,7 @@ try Notify.configure(environment: APNSEnvironment, crypto: CryptoProvider)
 ```
 
 environment - Use `debug` environment for debug builds and `release` for release and TestFlight builds
-crypto - CruptoProvider is a protocol, you are required to provide an implementation of two methods recoverPubKey and keccak256.
+crypto - CryptoProvider is a protocol, you are required to provide an implementation of two methods recoverPubKey and keccak256.
 
 #### Register for Push Notifications
 
@@ -397,7 +397,7 @@ public func subscribe(metadata: AppMetadata, account: Account, onSign: @escaping
 
 `metadata` - metadata object of publicly discoverable dapp fetched from WalletGuide
 
-`account` - an account you want to associate a sebscription with
+`account` - an account you want to associate a subscription with
 
 `onSign` - callback that requires a signature from a user
 
