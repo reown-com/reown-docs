@@ -26,8 +26,8 @@ Following are the methods from WalletKit that you will use in implementing chain
 
 ### Prepare 
 
-This method is used to check if chain abstraction is needed. If it is, it will return a `FulfilmentSuccess.Available` object with the necessary transactions and funding information. 
-If it is not, it will return a `FulfilmentSuccess.NotRequired` object with the original transaction. 
+This method is used to check if chain abstraction is needed. If it is, it will return a `PrepareSuccess.Available` object with the necessary transactions and funding information. 
+If it is not, it will return a `PrepareSuccess.NotRequired` object with the original transaction. 
 
 ```kotlin 
 @ChainAbstractionExperimentalApi
@@ -40,7 +40,7 @@ fun prepare(
 
 ### Status 
 
-This method is used to check the status of the fulfillment operation. It will return a `FulfilmentStatus.Completed` object if the operation completed successfully or a `FulfilmentStatus.Error` object if it encountered an error.
+This method is used to check the status of the fulfillment operation. It will return a `Status.Completed` object if the operation completed successfully or a `Status.Error` object if it encountered an error.
 
 ```kotlin
 @ChainAbstractionExperimentalApi
@@ -78,7 +78,7 @@ This method is used to get the details of the fulfillment operation.
 
 ```kotlin
 @ChainAbstractionExperimentalApi
-fun getFulfilmentDetails(
+fun getTransactionsDetails(
   available: Wallet.Model.PrepareSuccess.Available,
   onSuccess: (Wallet.Model.TransactionsDetails) -> Unit,
   onError: (Wallet.Model.Error) -> Unit
