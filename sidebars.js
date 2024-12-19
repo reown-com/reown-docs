@@ -236,16 +236,43 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Swaps', id: 'appkit/features/swaps' },
-                { type: 'doc', label: 'Email & Social Login', id: 'appkit/features/socials' },
                 { type: 'doc', label: 'On-Ramp', id: 'appkit/features/onramp' },
-                { type: 'doc', label: 'One-Click Auth', id: 'appkit/features/one-click-auth' },
-                { type: 'doc', label: 'Smart Accounts', id: 'appkit/features/smart-accounts' },
-                { type: 'doc', label: 'Solana', id: 'appkit/features/solana' },
                 { type: 'doc', label: 'Multichain', id: 'appkit/features/multichain' },
+                { type: 'doc', label: 'Smart Accounts', id: 'appkit/features/smart-accounts' },
                 { type: 'doc', label: 'Notifications', id: 'appkit/features/notifications' },
                 { type: 'doc', label: 'Telegram Mini Apps', id:'appkit/features/telegram-mini-apps'},
+                {
+                  type: 'doc',
+                  label: 'Telegram Mini Apps',
+                  id: 'appkit/features/telegram-mini-apps'
+                },
+                {
+                  type: 'doc',
+                  label: 'SIWX',
+                  id: 'appkit/features/siwx/default'
+                },
                 { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
               ]
+            },
+            {
+              type: 'category',
+              label: "Networks",
+              collapsed: false,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm'},
+                { type: 'doc', label: 'Solana', id: 'appkit/networks/solana' },
+                { type: 'doc', label: 'Bitcoin', id: 'appkit/networks/bitcoin' },
+              ]
+            },
+            {
+              type: 'category',
+              label: "Authentication",
+              collapsed: false,
+              collapsible: true,
+              items: [
+                { type: 'doc', label: 'Email & Social Login', id: 'appkit/authentication/socials' },
+                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' },              ]
             },
             {
               type: 'category',
@@ -254,9 +281,9 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
+                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},    
+                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'},
                 { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' }
-              //{ type: 'doc', label: 'AppKit v2 to v5', id: 'appkit/upgrade/appkitv2' },
-      
               ]
             },
             {
@@ -352,11 +379,12 @@ module.exports = {
             'appkit/react/core/hooks',
             'appkit/react/core/options',
             'appkit/react/core/components',
-            'appkit/react/core/socials', 
+            'appkit/react/core/socials',
             'appkit/react/core/smart-accounts',
             'appkit/react/core/custom-connectors',
             'appkit/react/core/custom-networks',
             'appkit/react/core/siwe',
+            'appkit/react/core/siwx',
             'appkit/react/core/multichain',
             'appkit/react/core/theming',
             'appkit/react/core/resources'
@@ -450,11 +478,12 @@ module.exports = {
             'appkit/next/core/hooks',
             'appkit/next/core/options',
             'appkit/next/core/components',
-            'appkit/next/core/socials', 
+            'appkit/next/core/socials',
             'appkit/next/core/smart-accounts',
             'appkit/next/core/custom-connectors',
             'appkit/next/core/custom-networks',
             'appkit/next/core/siwe',
+            'appkit/next/core/siwx',
             'appkit/next/core/multichain',
             'appkit/next/core/theming',
             'appkit/next/core/resources'
@@ -545,11 +574,12 @@ module.exports = {
             'appkit/vue/core/composables',
             'appkit/vue/core/options',
             'appkit/vue/core/components',
-            'appkit/vue/core/socials', 
+            'appkit/vue/core/socials',
             'appkit/vue/core/smart-accounts',
             'appkit/vue/core/custom-connectors',
             'appkit/vue/core/custom-networks',
             'appkit/vue/core/siwe',
+            'appkit/vue/core/siwx',
             'appkit/vue/core/multichain',
             'appkit/vue/core/theming',
             'appkit/vue/core/resources'
@@ -640,11 +670,12 @@ module.exports = {
             'appkit/javascript/core/actions',
             'appkit/javascript/core/options',
             'appkit/javascript/core/components',
-            'appkit/javascript/core/socials', 
+            'appkit/javascript/core/socials',
             'appkit/javascript/core/smart-accounts',
             'appkit/javascript/core/custom-connectors',
             'appkit/javascript/core/custom-networks',
             'appkit/javascript/core/siwe',
+            'appkit/javascript/core/siwx',
             'appkit/javascript/core/multichain',
             'appkit/javascript/core/theming',
             'appkit/javascript/core/resources'
@@ -736,6 +767,7 @@ module.exports = {
             'appkit/react-native/core/hooks',
             'appkit/react-native/core/components',
             'appkit/react-native/core/email',
+            'appkit/react-native/core/smart-accounts',
             'appkit/react-native/core/siwe',
             'appkit/react-native/core/link-mode',
             'appkit/react-native/core/resources'
