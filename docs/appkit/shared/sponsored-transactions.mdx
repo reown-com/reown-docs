@@ -52,6 +52,14 @@ string containing the paymaster URL and `context` is an optional configuration o
 
 The `context` field is paymaster specific and it might be required depending on the Paymaster implementation.
 
+:::info 
+Naturally, since interacting with paymasters requires using `sendCalls` as
+opposed to `writeContractAsync` or similar, this will require code changes. 
+
+A general guide on adapting existing code can be found
+[here](../../recipes/switching-to-send-calls)
+:::
+
 ---
 
 As a Dapp, that is all that is required to take advantage of verifying

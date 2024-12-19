@@ -253,7 +253,8 @@ module.exports = {
               collapsed:false,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' }
+                { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
+                { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' }
               //{ type: 'doc', label: 'AppKit v2 to v5', id: 'appkit/upgrade/appkitv2' },
       
               ]
