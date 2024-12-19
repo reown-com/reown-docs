@@ -32,9 +32,9 @@ If it is not, it will return a `FulfilmentSuccess.NotRequired` object with the o
 ```kotlin 
 @ChainAbstractionExperimentalApi
 fun prepare(
-  transaction: Wallet.Model.Transaction,
-  onSuccess: (Wallet.Model.FulfilmentSuccess) -> Unit,
-  onError: (Wallet.Model.FulfilmentError) -> Unit
+  initialTransaction: Wallet.Model.InitialTransaction,
+  onSuccess: (Wallet.Model.PrepareSuccess) -> Unit,
+  onError: (Wallet.Model.PrepareError) -> Unit
 )
 ```
 
@@ -47,8 +47,8 @@ This method is used to check the status of the fulfillment operation. It will re
 fun status(
   fulfilmentId: String,
   checkIn: Long,
-  onSuccess: (Wallet.Model.FulfilmentStatus.Completed) -> Unit,
-  onError: (Wallet.Model.FulfilmentStatus.Error) -> Unit
+  onSuccess: (Wallet.Model.Status.Completed) -> Unit,
+  onError: (Wallet.Model.Status.Error) -> Unit
 )
 ```
 
@@ -79,9 +79,8 @@ This method is used to get the details of the fulfillment operation.
 ```kotlin
 @ChainAbstractionExperimentalApi
 fun getFulfilmentDetails(
-  available: Wallet.Model.FulfilmentSuccess.Available,
-  initTransaction: Wallet.Model.Transaction,
-  onSuccess: (Wallet.Model.FulfilmentDetails) -> Unit,
+  available: Wallet.Model.PrepareSuccess.Available,
+  onSuccess: (Wallet.Model.TransactionsDetails) -> Unit,
   onError: (Wallet.Model.Error) -> Unit
 )
 ``` 
@@ -95,62 +94,77 @@ If the operation is successful, you need to broadcast the initial transaction an
 If the operation is not successful, you need to send the JsonRpcError to the dapp and display the error to the user. 
 
 ```kotlin
-override fun onSessionRequest(sessionRequest: Wallet.Model.SessionRequest, verifyContext: Wallet.Model.VerifyContext) {
-  if (sessionRequest.request.method == "eth_sendTransaction") {
     val initialTransaction = Wallet.Model.Transaction(...)
     
     WalletKit.prepare(
       initialTransaction,
-      onSuccess = { fulfilmentSuccess ->
-        when (fulfilmentSuccess) {
-          is Wallet.Model.FulfilmentSuccess.Available -> {
+      onSuccess = { prepareSuccess ->
+        when (prepareSuccess) {
+          is Wallet.Model.PrepareSuccess.Available -> {
             //Sign all the fulfilment transactions
             //Broadcast the fulfilment transactions in parallel
             //Await for the transaction hashes and receipts
             
-            //Call the fulfillmentStatus
+            //Call the status
             WalletKit.status(fulfilmentId, checkIn,
                 onSuccess = {
-                    //Successfull filfilment
+                    //Successfull filfilment operation
                     //Broadcast the inittial transaction
                     //Await for the tx hash ande receipt
                     //Send the response to the Dapp
                 },
                 onError = {
-                    //Fulfilment error - wallet should send the JsonRpcError to a dapp for given request and display error to the user
+                    //Status error - wallet should send the JsonRpcError to a dapp for given request and display error to the user
                 }
             )
           }
 
-          is Wallet.Model.FulfilmentSuccess.NotRequired -> {
+          is Wallet.Model.PrepareSuccess.NotRequired -> {
               //Chain abstraction is not required, handle transaction as usual
           }
         }
       },
-      onError = { fulfilmentError ->
+      onError = { prepareError ->
             // One of the possible errors: NoRoutesAvailable, InsufficientFunds, InsufficientGasFunds - wallet should send the JsonRpcError to a dapp for given request and display error to the user
       }
    )
-  } else {
-    // Handle transaction as usual
-  }
-}
 ```
 ## Types
 
 Following are the types that are used in the chain abstraction methods.
 
 ```kotlin
-data class Transaction(
-  var from: String,
-  var data: String,
-  var nonce: String,
-  var maxFeePerGas: String,
-  var maxPriorityFeePerGas: String,
-  var chainId: String
+ data class Transaction(
+    var from: String,
+    var to: String,
+    var value: String,
+    var gasLimit: String,
+    var input: String,
+    var nonce: String,
+    var chainId: String
 )
 
-sealed class FulfilmentSuccess : Model() {
+data class InitialTransaction(
+    var from: String,
+    var to: String,
+    var value: String,
+    var input: String,
+    var chainId: String
+)
+
+data class FeeEstimatedTransaction(
+    var from: String,
+    var to: String,
+    var value: String,
+    var gasLimit: String,
+    var input: String,
+    var nonce: String,
+    var maxFeePerGas: String,
+    var maxPriorityFeePerGas: String,
+    var chainId: String
+)
+
+sealed class PrepareSuccess {
   data class Available(
     val fulfilmentId: String,
     val checkIn: Long,
@@ -158,9 +172,9 @@ sealed class FulfilmentSuccess : Model() {
     val initialTransaction: Transaction,
     val initialTransactionMetadata: InitialTransactionMetadata,
     val funding: List<FundingMetadata>
-  ) : FulfilmentSuccess()
+  ) : PrepareSuccess()
 
-  data class NotRequired(val initialTransaction: Transaction) : FulfilmentSuccess()
+  data class NotRequired(val initialTransaction: Transaction) : PrepareSuccess()
 }
 
 data class InitialTransactionMetadata(
@@ -180,33 +194,29 @@ data class FundingMetadata(
   var decimals: Int
 )
 
-sealed class FulfilmentError : Model() {
-  data object NoRoutesAvailable : FulfilmentError()
-  data object InsufficientFunds : FulfilmentError()
-  data object InsufficientGasFunds : FulfilmentError()
-  data class Unknown(val message: String) : FulfilmentError()
+sealed class PrepareError : Model() {
+  data object NoRoutesAvailable : PrepareError()
+  data object InsufficientFunds : PrepareError()
+  data object InsufficientGasFunds : PrepareError()
+  data class Unknown(val message: String) : PrepareError()
 }
 
-sealed class FulfilmentStatus : Model() {
-  data class Completed(val createdAt: Long) : FulfilmentStatus()
-  data class Error(val reason: String) : FulfilmentStatus()
+sealed class Status : Model() {
+  data class Completed(val createdAt: Long) : Status()
+  data class Error(val reason: String) : Status()
 }
 
-sealed class FulfilmentStatus : Model() {
-  data class Completed(val createdAt: Long) : FulfilmentStatus()
-  data class Error(val reason: String) : FulfilmentStatus()
-}
-
-data class FulfilmentDetails(
+data class TransactionsDetails(
   var fulfilmentDetails: List<TransactionDetails>,
   var initialDetails: TransactionDetails,
-  var bridgeDetails: List<TransactionFee>,
+  var bridgeFees: List<TransactionFee>,
+  var localBridgeTotal: Amount,
+  var localFulfilmentTotal: Amount,
   var localTotal: Amount
 )
 
 data class TransactionDetails(
-  var transaction: Transaction,
-  var eip1559: EstimatedFees,
+  var transaction: FeeEstimatedTransaction,
   var transactionFee: TransactionFee
 )
 
