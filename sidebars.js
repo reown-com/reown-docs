@@ -254,32 +254,45 @@ module.exports = {
             },
             {
               type: 'category',
-              label: "Networks",
+              label: 'Networks',
               collapsed: false,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm'},
-                { type: 'doc', label: 'Solana', id: 'appkit/networks/solana' },
+                { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm' },
+                { type: 'doc', label: 'Solana', id: 'appkit/networks/solana' }
               ]
             },
             {
               type: 'category',
-              label: "Authentication",
+              label: 'Authentication',
               collapsed: false,
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Email & Social Login', id: 'appkit/authentication/socials' },
-                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' },              ]
+                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' }
+              ]
             },
             {
               type: 'category',
               label: 'Recipes',
-              collapsed:false,
+              collapsed: false,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
-                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},      
-                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'}      
+                {
+                  type: 'doc',
+                  label: 'Build a Telegram Mini App',
+                  id: 'appkit/recipes/telegram-mini-app'
+                },
+                {
+                  type: 'doc',
+                  label: 'Configure Virtual TestNets',
+                  id: 'appkit/recipes/tenderly-virtual-testnets'
+                },
+                {
+                  type: 'doc',
+                  label: 'EVM Transactions using Wagmi',
+                  id: 'appkit/recipes/wagmi-send-transaction'
+                }
               ]
             },
             {
@@ -332,6 +345,11 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'One-Click Auth', id: 'walletkit/features/one-click-auth' },
+                {
+                  type: 'doc',
+                  label: 'Chain Abstraction',
+                  id: 'walletkit/features/chain-abstraction'
+                },
                 { type: 'doc', label: 'Notifications', id: 'walletkit/features/notifications' },
                 { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' }
               ]
@@ -488,7 +506,10 @@ module.exports = {
         {
           type: 'category',
           label: 'Experimental',
-          items: ['appkit/next/experimental/smart-session','appkit/next/experimental/chain-abstraction']
+          items: [
+            'appkit/next/experimental/smart-session',
+            'appkit/next/experimental/chain-abstraction'
+          ]
         },
         {
           type: 'category',
@@ -997,6 +1018,7 @@ module.exports = {
         'walletkit/android/link-mode',
         'walletkit/android/verify',
         'walletkit/android/eip5792',
+        'walletkit/android/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
@@ -1049,6 +1071,7 @@ module.exports = {
         'walletkit/ios/link-mode',
         'walletkit/ios/verify',
         'walletkit/ios/eip5792',
+        'walletkit/ios/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
@@ -1133,6 +1156,7 @@ module.exports = {
         'walletkit/react-native/link-mode',
         'walletkit/react-native/verify',
         'walletkit/react-native/eip5792',
+        'walletkit/react-native/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
