@@ -17,11 +17,11 @@ Click on "Add Policy" and follow the steps within the policy creation screen.
 
 ### 1. Select a Plan
 
-#### Free Plan
+#### <span style={{fontSize: "1.25em"}}>Free Plan</span>
 
 If you select the free plan, you will have *unlimited* access to sponsoring on testnets. Currently, only Sepolia is supported.
 
-#### Pay-as-you-go
+#### <span style={{fontSize: "1.25em"}}>Pay-As-You-Go</span>
 
 With the Pay-as-you-go plan, you will be asked to enter credit card information. *You will not be billed immediately*.
 
@@ -29,7 +29,11 @@ Instead you will be charged based on usage, with Paymaster Credits. This is
 calculated using a simple formula: 
   * amount of gas sponsored + fee
 
-Billing occurs monthly; however, if a threshold of 100 USD is reached, an immediate charge will occur, and the billing cycle will reset.
+
+:::info
+Billing occurs monthly; however, <ins>if a threshold of 100 USD is reached, an
+immediate charge will occur</ins>, and the billing cycle will reset.
+:::
 
 ### 2. Add Policy Basic Info 
 
@@ -60,7 +64,7 @@ All supported chains are enabled by default, but you can deselect any chain to s
 
 Policy logic can be updated in one of two ways:
 1. JSON editor
-2. No-code builder (coming soon)
+2. No-code builder (In development, coming soon)
 
 There are distinct advantages to this:
 1. You can maintain an auditable history of your policies by storing the JSON files for each policy.
@@ -73,7 +77,9 @@ Once created, the policy will become active immediately if the start date has al
 
 Based on [EIP 5792](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-5792.md) and [ERC 7677](https://github.com/ethereum/ERCs/blob/master/ERCS/erc-7677.md), utilizing a paymaster is as simple as providing the paymaster RPC URL.
 
-The Paymaster screen includes an `RPC URL` selector for chain-specific URLs. All URLs follow the same format, varying only by chain ID, so you can generate the URL in your dApp based on the active chain.
+The Paymaster screen includes an `RPC URL` selector for chain-specific URLs. All
+URLs follow the same format, varying only by chain ID, so you can generate the
+URL in your Dapp based on the active chain.
 
 <img src="/img/paymasters/rpc-selector.png" />
 
@@ -81,10 +87,10 @@ The Paymaster screen includes an `RPC URL` selector for chain-specific URLs. All
 
 By default, all policies will be validated in succession until one returns true.
 
-There is the option of passing `policyId` in the optional to the RPC.
-However, please note that as Dapp can not send this policyId directly, as that
-is within the control of the Wallets since they make the call to the Paymaster's
-RPC per [ERC 7677](https://github.com/ethereum/ERCs/blob/master/ERCS/erc-7677.md). 
+There is the option of passing `policyId` in the optional to the RPC. This can 
+be sent by the dapp via the the `context` field per [ERC 7677](https://github.com/ethereum/ERCs/blob/master/ERCS/erc-7677.md). 
+However - please note that different paymasters may accept `policyId` with a
+different key or format. For Reown's Paymaster, that key is `policyId`.
 
 ```sh
 curl --location <YOUR_PAYMASTER_URL> \
@@ -361,6 +367,14 @@ The final bit to making a valid policy is adding `metadata` to the root of your 
   }
 }
 ```
+
+:::info 
+<ins>These only need to be manually set when communicating with the API</ins>. 
+
+By design, certain elements of the JSON policy are not editable in the UI. Those
+being: `startTime`, `endTime` and `chainIds`. This is because they are edited in
+the previous UI panels.
+:::
 
 Adding this to the above gives us a complete and working policy.
 
