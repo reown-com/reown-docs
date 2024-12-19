@@ -237,3 +237,28 @@ data class Amount(
 {/* TODO: update sample wallet link */}
 For implementation examples, check our [sample wallet implementation](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/master/sample/wallet) with Kotlin. 
 
+## ProGuard rules
+
+If you encounter issues with minification, add the below rules to your application:
+
+```
+-keepattributes *Annotation*
+
+-keep class com.sun.jna.** { *; }
+-keepclassmembers class com.sun.jna.** {
+    native <methods>;
+    *;
+}
+
+-keep class uniffi.** { *; }
+
+# Preserve all public and protected fields and methods
+-keepclassmembers class ** {
+    public *;
+    protected *;
+}
+
+-dontwarn uniffi.**
+-dontwarn com.sun.jna.**
+```
+
