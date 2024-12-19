@@ -278,6 +278,21 @@ createAppKit({
 })
 ```
 
+### connectMethodsOrder
+
+Order of the connection methods in the modal. The default order is `['wallet', 'email', 'social']`.
+
+<img src="/assets/connectMethodsOrder.jpg" />
+
+```ts
+createAppKit({
+  //...
+  features: {
+    connectMethodsOrder: ['social', 'email', 'wallet'],
+  }
+})
+```
+
 ### legalCheckbox
 
 Enable or disable the terms of service and/or privacy policy checkbox.
