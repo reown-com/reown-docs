@@ -1,14 +1,19 @@
 # Chain Abstraction
 
+:::note
+💡 Chain Abstraction is currently in experimental phase. 
+:::
+
 Chain Abstraction in WalletKit enables users with stablecoins on any network to spend them on-the-fly on a different network. Our Chain Abstraction solution provides a toolkit for wallet developers to integrate this complex functionality using WalletKit.
 
 For example, when an app requests a 100 USDC payment on Base network but the user only has USDC on Arbitrum, WalletKit offers methods to detect this mismatch, generate necessary transactions, track the cross-chain transfer, and complete the original transaction after bridging finishes.
 
-:::note
-Chain abstraction is currently in experimental phase and requires the `@ChainAbstractionExperimentalApi` annotation.
-:::
 
 ## How It Works
+
+:::note
+Apps need to pass `gas` as null, while sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../appkit/next/experimental/chain-abstraction.mdx) for more details.
+:::
 
 When a dapp requests a transaction through `eth_sendTransaction`, you need to:
 1. Detect if chain abstraction is needed
