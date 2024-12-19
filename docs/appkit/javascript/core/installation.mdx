@@ -18,10 +18,13 @@ import SolanaImplementation from '../solana/about/implementation.mdx'
 import SolanaModal from '../solana/about/triggermodal.mdx'
 import SolanaPrograms from '../solana/about/programs.mdx'
 
+import BitcoinImplementation from '../bitcoin/about/implementation.mdx'
+import BitcoinModal from '../bitcoin/about/triggermodal.mdx'
+
 # JavaScript
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum and [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana.
-Choose one of these Ethereum Libraries or 'Solana' to get started.
+AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
+Choose one of these to get started.
 
 :::info Note
 We recommend using [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to get started with AppKit JavaScript.
@@ -29,7 +32,7 @@ We recommend using [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-
 
 ## Installation
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5", "ethers","solana"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5", "ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
 
 ```bash npm2yarn
@@ -58,6 +61,12 @@ npm install @reown/appkit @reown/appkit-adapter-solana
 ```
 
 </PlatformTabItem>
+<PlatformTabItem value="bitcoin">
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+</PlatformTabItem>
 </PlatformTabs>
 
 ## Cloud Configuration
@@ -68,7 +77,7 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 ## Implementation
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5", "ethers","solana"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5", "ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
 
 <WagmiImplementation />
@@ -89,11 +98,16 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 <SolanaImplementation />
 
 </PlatformTabItem>
+<PlatformTabItem value="bitcoin">
+
+<BitcoinImplementation />
+
+</PlatformTabItem>
 </PlatformTabs>
 
 ## Trigger the modal
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi","ethers5", "ethers","solana"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi","ethers5", "ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
 
 <WagmiModal />
@@ -112,6 +126,11 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 <PlatformTabItem value="solana">
 
 <SolanaModal />
+
+</PlatformTabItem>
+<PlatformTabItem value="bitcoin">
+
+<BitcoinModal />
 
 </PlatformTabItem>
 </PlatformTabs>
@@ -145,7 +164,7 @@ Read more about Wagmi actions for smart contract interaction [here](https://wagm
 [Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
 
 ```tsx
-import { useAppKitProvider, useAppKitAccount } from "@reown/appkit/react";
+import { useAppKitProvider, useAppKitAccount } from "@reown/appkit";
 import { BrowserProvider, Contract, formatUnits } from 'ethers'
 
 const USDTAddress = '0x617f3112bf5397D0467D315cC709EF968D9ba546'
