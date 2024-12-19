@@ -3,11 +3,11 @@ import TabItem from '@theme/TabItem'
 
 AppKit Solana is built on top of the AppKit library and provides a set of components and actions to easily connect Solana wallets with your application.
 
-On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
+On top of your app set up the following configuration.
 
 ```tsx
-import { createAppKit } from '@reown/appkit/react'
-import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
+import { createAppKit } from '@reown/appkit'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
 import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 
