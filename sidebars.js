@@ -280,7 +280,8 @@ module.exports = {
               items: [
                 { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
                 { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},      
-                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'}      
+                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'} ,   
+                { type: 'doc', label: 'EVM Transactions using Solana', id: 'appkit/recipes/solana-send-transaction'}    
               ]
             },
             {
