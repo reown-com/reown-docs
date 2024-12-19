@@ -18,15 +18,19 @@ import SolanaModal from '../solana/triggermodal.mdx'
 import SolanaPrograms from '../solana/programs.mdx'
 import GithubBox from '../../../components/GithubBox'
 
+import BitcoinImplementation from '../bitcoin/about/implementation.mdx'
+import BitcoinModal from '../bitcoin/about/triggermodal.mdx'
+
 # Vue
 
 ## Introduction
 
-AppKit has support for [Wagmi](https://wagmi.sh/), [Ethers](https://docs.ethers.org/v6/) and @solana/web3.js on Solana. Choose one of these ethereum libraries or solana to get started.
+AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
+Choose one of these to get started.
 
 ## Installation
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 
 <PlatformTabItem value="wagmi">
 
@@ -56,6 +60,12 @@ npm install @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wa
 ```
 
 </PlatformTabItem>
+<PlatformTabItem value="bitcoin">
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+</PlatformTabItem>
 </PlatformTabs>
 
 <CloudBanner />
@@ -66,7 +76,7 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 ## Implementation
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
 <GithubBox name="wagmi Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/vue-wagmi" description="Check the Vue wagmi example"></GithubBox>
 
@@ -88,11 +98,16 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 <SolanaImplementation />
 
 </PlatformTabItem>
+<PlatformTabItem value="bitcoin">
+
+<BitcoinImplementation />
+
+</PlatformTabItem>
 </PlatformTabs>
 
 ## Trigger the modal
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
 
 <WagmiModal />
@@ -110,6 +125,9 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
   <SolanaModal />
+</PlatformTabItem>
+<PlatformTabItem value="bitcoin">
+  <BitcoinModal />
 </PlatformTabItem>
 </PlatformTabs>
 

@@ -260,6 +260,7 @@ module.exports = {
               items: [
                 { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm'},
                 { type: 'doc', label: 'Solana', id: 'appkit/networks/solana' },
+                { type: 'doc', label: 'Bitcoin', id: 'appkit/networks/bitcoin' },
               ]
             },
             {
