@@ -94,23 +94,19 @@ walletkit.on("session_request", async (event) => {
         const signedTransaction = await wallet.signTransaction(transaction);
         await wallet.sendTransaction(signedTransaction);
       }
+      // await for the completed fulfilment status 
+      await statusResult = await wallet.status({
+        fulfilmentId
+      });
 
-      // Monitor bridging status
-      const statusInterval = setInterval(async () => {
-        const statusReponse = await wallet.status({ fulfilmentId });
-        
-        if (statusResponse.status === "completed") {
-          clearInterval(statusInterval);
-          // Proceed with original transaction
-          const signedTransaction = await wallet.signTransaction(originalTransaction);
-          const result = await wallet.sendTransaction(signedTransaction);
-          
-          await wallet.respondSessionRequest({
-            topic,
-            response: formatJsonRpcResult(id, result)
-          });
-        }
-      }, checkIn);
+      // Proceed with original transaction
+      const signedTransaction = await wallet.signTransaction(originalTransaction);
+      const result = await wallet.sendTransaction(signedTransaction);
+      
+      await wallet.respondSessionRequest({
+        topic,
+        response: formatJsonRpcResult(id, result)
+      });
     } else {
       // No bridging required, process transaction normally
       const signedTransaction = await wallet.signTransaction(originalTransaction);
