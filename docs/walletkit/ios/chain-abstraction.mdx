@@ -1,4 +1,139 @@
 # Chain Abstraction
 
-WalletKit provides a toolkit for wallet developers to integrate chain abstraction into their wallets.
+Chain Abstraction in WalletKit enables users with stablecoins on any network to spend them on-the-fly on a different network. Our Chain Abstraction solution provides a toolkit for wallet developers to integrate this complex functionality using WalletKit.
 
+For example, when an app requests a 100 USDC payment on Base network but the user only has USDC on Arbitrum, WalletKit offers methods to detect this mismatch, generate necessary transactions, track the cross-chain transfer, and complete the original transaction after bridging finishes.
+
+## How It Works
+
+:::note
+Apps need to pass `gas` as null, while sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../appkit/next/experimental/chain-abstraction.mdx) for more details.
+:::
+
+When a app requests a transaction through `eth_sendTransaction`, you need to:
+1. Detect if chain abstraction is needed
+2. Generate necessary bridging transactions
+3. Handle transaction execution and monitoring
+4. Complete the original transaction once bridging is done
+
+The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
+
+![Chain Abstraction Flow](/assets/chain-abstraction-flow.png)
+
+## Methods
+
+Following are the methods from WalletKit that you will use in implementing chain abstraction.
+
+:::note
+💡 Chain abstraction is currently in experimental phase
+:::
+
+### Prepare 
+
+This method is used to check if chain abstraction is needed. If it is, it will return a response with the necessary transactions. 
+If it is not, it will return a response with the original transaction. 
+
+```swift
+@available(*, message: "This method is experimental. Use with caution.")
+public func prepare(transaction: InitialTransaction) async throws -> PrepareResponse {
+}
+```
+
+### Wait For Success With Timeout
+
+This method is used to wait for the all transactions to complete successfully. It will return a response with the transaction hash and receipt if the operation completed successfully. 
+If the operation did not complete successfully, it will throw an error.
+
+```swift
+@available(*, message: "This method is experimental. Use with caution.")
+public func waitForSuccessWithTimeout(orchestrationId: String, checkIn: UInt64, timeout: UInt64 = 180) async throws -> StatusResponseCompleted {
+}
+```
+
+### Estimate Fees
+
+This method is used to estimate fees on a specific chain. 
+
+```swift
+@available(*, message: "This method is experimental. Use with caution.")
+public func estimateFees(chainId: String) async throws -> Eip1559Estimation {
+}
+```
+
+### Get UI Fields
+
+Get UI fields that you can use to display like estimated fees in user's local currency for specific chain.
+
+```swift
+@available(*, message: "This method is experimental. Use with caution.")
+public func getUIFields(chainId: String) async throws -> UIFields {
+}
+```
+
+## Usage
+
+When your wallet receives an `eth_sendTransaction` request, first check if chain abstraction is needed using the `prepare` method, if it is, you need to sign all the fulfilment transactions and broadcast them in parallel. 
+After that, you need to call the `status` method to check the status of the fulfillment operation. 
+
+If the operation is successful, you need to broadcast the initial transaction and await for the transaction hash and receipt. 
+If the operation is not successful, you need to send the JsonRpcError to the dapp and display the error to the user. 
+
+```swift
+guard request.method == "eth_sendTransaction" else {
+    return
+}
+
+let tx = try request.params.get([Tx].self)[0]
+
+let transaction = InitTransaction(
+    from: tx.from,
+    to: tx.to,
+    value: "0",
+    gas: "0",
+    gasPrice: "0",
+    data: tx.data,
+    nonce: "0",
+    maxFeePerGas: "0",
+    maxPriorityFeePerGas: "0",
+    chainId: request.chainId.absoluteString
+)
+
+let routeResponseSuccess = try await WalletKit.instance.prepare(transaction: transaction)
+
+switch routeResponseSuccess {
+case .success(let routeResponseSuccess):
+    switch routeResponseSuccess {
+    case .available(let routeResponseAvailable):
+        // sign and broadcast routing transactions and then the initial transaction
+    case .notRequired(let routeResponseNotRequired):
+        // user does not need to move funds from other chains, sign and broadcast original transaction
+    case .error(let routeResponseError):
+        // error has occured, respod with an error to a dapp
+    }
+```
+
+After broadcasting the transactions, use the `waitForSuccessWithTimeout` method to monitor their completion. Once all transactions are successful, you can proceed with broadcasting the initial transaction.
+
+```swift 
+let orchestrationId = routeResponseAvailable.orchestrationId
+print("📋 Orchestration ID: \(orchestrationId)")
+
+print("🔄 Starting status checking...")
+
+let completed = try await WalletKit.instance.waitForSuccessWithTimeout(orchestrationId: orchestrationId, checkIn: 5, timeout: 180)
+print("✅ Routing Transactions completed successfully!")
+print("📊 Completion details: \(completed)")
+AlertPresenter.present(message: "Routing transactions completed", type: .success)
+
+print("🚀 Initiating initial transaction...")
+try await sendInitialTransaction(initialTransaction: routeResponseAvailable.initialTransaction)
+```
+
+For example, check out implementation of chain abstraction in [sample wallet](https://github.com/reown-com/reown-swift/blob/develop/Example/WalletApp/PresentationLayer/Wallet/CATransactionModal/CATransactionPresenter.swift) with Swift. 
+
+## Testing 
+
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending USDC with any chain abstraction supported wallet. 
+You can also use this [sample wallet](https://testflight.apple.com/join/09bTAryp) for testing. 
+
+{/* TODO: Add a demo video here */}

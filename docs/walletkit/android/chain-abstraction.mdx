@@ -10,7 +10,7 @@ For example, when an app requests a 100 USDC payment on Base network but the use
 Apps need to pass `gas` as null, while sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../appkit/next/experimental/chain-abstraction.mdx) for more details.
 :::
 
-When a dapp requests a transaction through `eth_sendTransaction`, you need to:
+When a app requests a transaction through `eth_sendTransaction`, you need to:
 1. Detect if chain abstraction is needed
 2. Generate necessary bridging transactions
 3. Handle transaction execution and monitoring
@@ -133,6 +133,17 @@ If the operation is not successful, you need to send the JsonRpcError to the dap
       }
    )
 ```
+
+For example, check out implementation of chain abstraction in [sample wallet](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/master/sample/wallet) with Kotlin. 
+
+## Testing 
+
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending USDC with any chain abstraction supported wallet. 
+You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076a3bc9669d3bee) for testing. 
+
+{/* TODO: Add a demo video here */}
+
+
 ## Types
 
 Following are the types that are used in the chain abstraction methods.
@@ -238,9 +249,6 @@ data class Amount(
 )
 ```
 
-{/* TODO: update sample wallet link */}
-For implementation examples, check our [sample wallet implementation](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/master/sample/wallet) with Kotlin. 
-
 ## ProGuard rules
 
 If you encounter issues with minification, add the below rules to your application:
@@ -265,4 +273,3 @@ If you encounter issues with minification, add the below rules to your applicati
 -dontwarn uniffi.**
 -dontwarn com.sun.jna.**
 ```
-
