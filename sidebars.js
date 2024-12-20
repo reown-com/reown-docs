@@ -258,9 +258,9 @@ module.exports = {
               collapsed: false,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm'},
+                { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm' },
                 { type: 'doc', label: 'Solana', id: 'appkit/networks/solana' },
-                { type: 'doc', label: 'Bitcoin', id: 'appkit/networks/bitcoin' },
+                { type: 'doc', label: 'Bitcoin', id: 'appkit/networks/bitcoin' }
               ]
             },
             {
@@ -279,10 +279,26 @@ module.exports = {
               collapsed: false,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
-                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},      
-                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'} ,   
-                { type: 'doc', label: 'EVM Transactions using Solana', id: 'appkit/recipes/solana-send-transaction'}    
+                {
+                  type: 'doc',
+                  label: 'Build a Telegram Mini App',
+                  id: 'appkit/recipes/telegram-mini-app'
+                },
+                {
+                  type: 'doc',
+                  label: 'Configure Virtual TestNets',
+                  id: 'appkit/recipes/tenderly-virtual-testnets'
+                },
+                {
+                  type: 'doc',
+                  label: 'EVM Transactions using Wagmi',
+                  id: 'appkit/recipes/wagmi-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'EVM Transactions using Solana',
+                  id: 'appkit/recipes/solana-send-transaction'
+                }
               ]
             },
             {
@@ -335,13 +351,13 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'One-Click Auth', id: 'walletkit/features/one-click-auth' },
-                {
-                  type: 'doc',
-                  label: 'Chain Abstraction',
-                  id: 'walletkit/features/chain-abstraction'
-                },
                 { type: 'doc', label: 'Notifications', id: 'walletkit/features/notifications' },
-                { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' }
+                { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' },
+                {
+                  type: 'category',
+                  label: 'Experimental',
+                  items: ['walletkit/features/experimental/chain-abstraction']
+                }
               ]
             },
             'walletkit/best-practices',
@@ -1008,7 +1024,6 @@ module.exports = {
         'walletkit/android/link-mode',
         'walletkit/android/verify',
         'walletkit/android/eip5792',
-        'walletkit/android/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
@@ -1026,6 +1041,11 @@ module.exports = {
             },
             'walletkit/android/notifications/push'
           ]
+        },
+        {
+          type: 'category',
+          label: 'Experimental',
+          items: ['walletkit/android/experimental/chain-abstraction']
         },
         'walletkit/android/best-practices',
         'walletkit/android/resources',
@@ -1061,7 +1081,6 @@ module.exports = {
         'walletkit/ios/link-mode',
         'walletkit/ios/verify',
         'walletkit/ios/eip5792',
-        'walletkit/ios/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
@@ -1079,6 +1098,11 @@ module.exports = {
             },
             'walletkit/ios/notifications/push'
           ]
+        },
+        {
+          type: 'category',
+          label: 'Experimental',
+          items: ['walletkit/ios/experimental/chain-abstraction']
         },
         'walletkit/ios/best-practices',
         'walletkit/ios/resources',
@@ -1146,7 +1170,6 @@ module.exports = {
         'walletkit/react-native/link-mode',
         'walletkit/react-native/verify',
         'walletkit/react-native/eip5792',
-        'walletkit/react-native/chain-abstraction',
         {
           type: 'category',
           label: 'Notifications',
@@ -1177,6 +1200,11 @@ module.exports = {
             'walletkit/react-native/cloud/relay',
             'walletkit/react-native/cloud/analytics'
           ]
+        },
+        {
+          type: 'category',
+          label: 'Experimental',
+          items: ['walletkit/react-native/experimental/chain-abstraction']
         }
       ]
     },
