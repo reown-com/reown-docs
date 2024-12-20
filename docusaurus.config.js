@@ -137,14 +137,14 @@ const config = {
         },
         {
           label: 'Cloud Dashboard',
-          href: 'https://cloud.reown.com/?utm_source=website&utm_medium=docs&utm_campaign=docs',
+          href: 'https://cloud.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks',
           position: 'right',
           className: 'header-cloud-link',
           'aria-label': 'Cloud'
         },
         {
           label: 'AppKit Demo',
-          href: 'https://appkit-lab.reown.com/?utm_source=website&utm_medium=docs&utm_campaign=docs',
+          href: 'https://demo.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks',
           position: 'right',
           className: 'header-cloud-link',
           'aria-label': 'Cloud'
