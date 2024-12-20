@@ -1,0 +1,50 @@
+import BitcoinProviderInterface from "../../../shared/bitcoin-provider.mdx"
+
+AppKit Bitcoin provides a set of React components and hooks to easily connect Bitcoin wallets with your application.
+
+On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
+
+```tsx
+// App.tsx
+import { createAppKit } from '@reown/appkit/react'
+import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
+import { bitcoin } from '@reown/appkit/networks'
+
+// 1. Get projectId from https://cloud.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 2. Set the networks
+const networks = [bitcoin]
+
+// 3. Set up Bitcoin Adapter
+const bitcoinAdapter = new BitcoinAdapter({
+  projectId
+})
+
+// 4. Create a metadata object - optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Bitcoin Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+// 5. Create modal
+createAppKit({
+  adapters: [bitcoinAdapter],
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration,
+    email: false,
+    socials: []
+  }
+})
+
+export default function App() {
+  return <YourApp />
+}
+```
+
+<BitcoinProviderInterface />

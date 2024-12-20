@@ -101,6 +101,10 @@ const PLATFORM_MAP = [
   {
     value: 'basic',
     label: 'Basic'
+  },
+  {
+    value: 'bitcoin',
+    label: 'Bitcoin'
   }
 ]
 
