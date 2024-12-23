@@ -144,7 +144,7 @@ export default function RootLayout({
 }>) {
 
   const headersObj = await headers();
-  const cookies = headersObj().get('cookie')
+  const cookies = headersObj.get('cookie')
 
   return (
     <html lang="en">
