@@ -249,7 +249,8 @@ module.exports = {
                   type: 'doc',
                   label: 'SIWX',
                   id: 'appkit/features/siwx/default'
-                }
+                },
+                { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
               ]
             },
             {
@@ -279,9 +280,10 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
-                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},      
-                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'} ,   
-                { type: 'doc', label: 'Solana Transactions using AppKit', id: 'appkit/recipes/solana-send-transaction'}    
+                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},    
+                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'},
+                { type: 'doc', label: 'Solana Transactions using AppKit', id: 'appkit/recipes/solana-send-transaction'},
+                { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' } 
               ]
             },
             {
@@ -399,7 +401,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/react/transactions/onramp', 'appkit/react/transactions/swaps']
+          items: ['appkit/react/transactions/onramp', 'appkit/react/transactions/swaps', 'appkit/react/transactions/sponsored-transactions']
         },
         {
           type: 'category',
@@ -495,7 +497,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/next/transactions/onramp', 'appkit/next/transactions/swaps']
+          items: ['appkit/next/transactions/onramp', 'appkit/next/transactions/swaps', 'appkit/next/transactions/sponsored-transactions']
         },
         {
           type: 'category',
@@ -591,7 +593,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/vue/transactions/onramp', 'appkit/vue/transactions/swaps']
+          items: ['appkit/vue/transactions/onramp', 'appkit/vue/transactions/swaps', 'appkit/vue/transactions/sponsored-transactions']
         },
         {
           type: 'category',
@@ -687,7 +689,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/javascript/transactions/onramp', 'appkit/javascript/transactions/swaps']
+          items: ['appkit/javascript/transactions/onramp', 'appkit/javascript/transactions/swaps', 'appkit/javascript/transactions/sponsored-transactions']
         },
         {
           type: 'category',
