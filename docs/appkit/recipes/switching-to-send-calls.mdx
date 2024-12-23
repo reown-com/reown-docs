@@ -2,8 +2,8 @@
 
 With Smart Account wallets on the rise, new standards are being adopted by Dapps
 and Wallets that take advantage of their capabilities. One of these standards
-being [EIP 5792](https://eips.ethereum.org/EIPS/eip-5792). In short, it
-introduces a few methods that smart accounts would support that enable a couple
+is [EIP 5792](https://eips.ethereum.org/EIPS/eip-5792). In short, it
+introduces a few methods that smart accounts would support, that enable a couple
 of cool features including:
 1. **Batched Transactions**: This allows to batch multiple transactions into a
 single one that will be executed. 
@@ -13,20 +13,20 @@ use of Paymasters, which are defined in [ERC 7677](https://eips.ethereum.org/EIP
 
 ### A note on Smart Accounts and EOAs
 
-Not all users will be using Smart Accounts and will be using EOAs (Externally
-Owned Accounts) and will be using EOAs (Externally Owned Accounts). These
+Not all users will be using Smart Accounts; Some will be using EOAs (Externally
+Owned Accounts). These
 wallets do not support EIP 5792 and will be incompatible with `sendCalls`.
 
 This means that before using `sendCalls`, there needs to be a check on whether
-or not it is compatible. Thankfully, this can be achieved using
+the account is compatible or not. Thankfully, this can be achieved using
 `getCapabilities`. 
 
 An example custom hook that leverages Wagmi's hooks for `getCapabilities` can be
 found
-[here](https://github.com/reown-com/appkit/blob/main/apps/laboratory/src/hooks/useWagmiActiveCapabilities.ts#L22).
+[in our lab](https://github.com/reown-com/appkit/blob/main/apps/laboratory/src/hooks/useWagmiActiveCapabilities.ts#L22).
 This hook is then used
-[here](https://github.com/reown-com/appkit/blob/main/apps/laboratory/src/components/Wagmi/WagmiSendCallsTest.tsx#L40).
-Essentially - the Wallet will inform the Dapp if it supports EIP 5792.
+also [in our lab](https://github.com/reown-com/appkit/blob/main/apps/laboratory/src/components/Wagmi/WagmiSendCallsTest.tsx#L40).
+Essentially - the Wallet will inform the Dapp if it supports EIP 5792 or not.
 Regardless of whether `wagmi` or `ethers` is used, once capabilities are
 fetched, you can then check:
 
@@ -66,6 +66,6 @@ Instead, `sendCalls` will return an identifier for the transaction which can be
 queried via getting the calls' status. In Wagmi's case, this is done using
 [`useCallsStatus`](https://wagmi.sh/react/api/hooks/useCallsStatus#usecallsstatus).
 
-An example of using that can be found
-[here](https://github.com/reown-com/appkit/blob/main/apps/laboratory/src/components/Wagmi/WagmiGetCallsStatusTest.tsx#L52).
+An example can be found
+[in our lab](https://github.com/reown-com/appkit/blob/main/apps/laboratory/src/components/Wagmi/WagmiGetCallsStatusTest.tsx#L52).
 
