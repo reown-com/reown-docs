@@ -25,6 +25,7 @@ const cloud = {
       label: 'Explorer Wallets',
       items: ['cloud/wallets/wallet-list']
     },
+    'cloud/user-management',
     'cloud/verify',
     'cloud/relay',
     'cloud/blockchain-api',
