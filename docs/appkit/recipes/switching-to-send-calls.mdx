@@ -60,7 +60,7 @@ encodes the calls itself.
 
 Typically, alongside `writeContractAsync` or similar calls, there would be a
 `waitForTransactionReceipt` used to wait for the transaction. Sending calls via
-the EIP 5792 standars by design does not return a transaction hash by design. 
+the EIP 5792 standards by design does not return a transaction hash by design. 
 
 Instead, `sendCalls` will return an identifier for the transaction which can be
 queried via getting the calls' status. In Wagmi's case, this is done using
