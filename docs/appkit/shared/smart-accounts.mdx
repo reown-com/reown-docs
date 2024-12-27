@@ -26,13 +26,13 @@ Smart Accounts are available on the following networks:
 
 ### User Eligibility
 
-Smart Accounts are exclusively available for users utilizing email or social logins (any Magic login)
+Smart Accounts are exclusively available for embedded wallet users (email and social login)
 
 ## FAQ
 
 ### What is a Smart Account?
 
-A Smart Account in improves the traditional account experience by replacing Externally Owned Accounts (EOAs) with a Smart Contract that follows the [ERC-4337 standard](https://eips.ethereum.org/EIPS/eip-4337). This opens up many use cases that were previously unavailable. 
+A Smart Account improves the traditional account experience by replacing Externally Owned Accounts (EOAs) with a Smart Contract that follows the [ERC-4337 standard](https://eips.ethereum.org/EIPS/eip-4337). This opens up many use cases that were previously unavailable. 
 
 Smart Accounts do no require Private Keys or Seed Phrases, instead they rely on a key or multiple keys from designated signers to access the smart account and perform actions on chain. The keys can take multiple forms including passkeys and EOA signatures.
 
@@ -57,15 +57,23 @@ New AppKit Universal Wallet Users will be given smart accounts by default when t
 
 There is a small additional cost for activating your smart account. The activation fee is added to the first transaction and covers the network fees required for deploying the new smart contract onchain.
 
-# What are account names?
+### Can I export my Smart Account?
 
-Smart account addresses start with ’0x’ followed by 42 characters, this is the unique address of your smart account on the network. ‘0x’ addresses like this are long, unwieldy and unmemorable. AppKit allows you to assign a more memorable name for your smart account using [ENS](https://ens.domains/). 
+No, you cannot export your Smart Account. The Smart Account (SA) is deployed by the EOA and is owned by the EOA. Your EOA account will always be exportable.
+Also is good to know that SA don't have seedphrases.
 
-You can assign a name to your account and this will act as an alias for your account that can be shared publicly and provide a better user experience. AppKit account names are followed by the wcn.id. 
- 
+### Can I withdraw all my funds from my Smart Account?
 
-## What can I do with my account name?
+Yes, you can withdraw all your funds from your Smart Account.
 
-As AppKit smart account addresses are the same across the supported networks, you only need one account name which can then be used across the networks. 
+### What are account names?
 
-For example if you want someone to send you USDC on Polygon they can send it to “johnsmith.wcn.id”. If you want someone wants to send you USDC on Optimism they can also use “johnsmith.wcn.id”.
+Smart account addresses start with ’0x’ followed by 42 characters, this is the unique address of your smart account on the network. ‘0x’ addresses like this are long, unwieldy and unmemorable. AppKit allows you to assign a more memorable name for your smart account using [ENS Resolvers](https://docs.ens.domains/resolvers/ccip-read). 
+
+You can assign a name to your account and this will act as an alias for your account that can be shared publicly and provide a better user experience. AppKit account names are followed by the "reown.id" domain. 
+
+### What can I do with my account name?
+
+As AppKit smart account addresses are the same across the supported networks by [Pimlico](https://docs.pimlico.io/infra/platform/supported-chains), you only need one account name which can then be used across the networks. 
+
+For example if you want someone to send you USDC on Polygon they can send it to “johnsmith.reown.id”. If you want someone wants to send you USDC on Optimism they can also use “johnsmith.reown.id”.
