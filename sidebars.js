@@ -283,6 +283,7 @@ module.exports = {
                 { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
                 { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},    
                 { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'},
+                { type: 'doc', label: 'EVM Transactions using Ethers', id: 'appkit/recipes/ethers-send-transaction'},
                 { type: 'doc', label: 'Solana Transactions using AppKit', id: 'appkit/recipes/solana-send-transaction'},
                 { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' } 
               ]
