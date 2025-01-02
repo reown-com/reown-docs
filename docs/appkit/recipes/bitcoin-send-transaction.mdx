@@ -4,9 +4,9 @@ title: Send a Bitcoin Transaction Using AppKit Web
 
 import GithubBox from '../../components/GithubBox'
 
-# How to Sign Messages and Send Transactions on Bitcoin using AppKit
+# How to Sign Messages, get the balance and send transactions on Bitcoin using AppKit
 
-Learn how to use Reown AppKit for essential wallet functionalities such as signing messages and sending transactions.
+Learn how to use Reown AppKit for essential wallet functionalities such as signing messages, getting the balance and sending transactions.
 
 ---
 
@@ -14,10 +14,11 @@ In this recipe, you will learn how to:
 
 - Sign a message using a connected wallet.
 - Send a transaction to the Bitcoin blockchain.
+- Get the balance from an Address.
 
 This guide takes approximately 20 minutes to complete.
 
-Let’s dive in!
+Let's dive in!
 
 ## Prerequisites
 - A fundamental understanding of JavaScript and React.
@@ -42,7 +43,7 @@ import { useAppKitProvider, useAppKitAccount } from '@reown/appkit/react';
 import type { BitcoinConnector } from '@reown/appkit-adapter-bitcoin';
 ```
 
-2. Extract the `walletProvider` function from the `useAppKitProvider` hook. This function allows you to prompt the connected wallet to sign a specific message. Also we are using `useAppKitAccount` to get the address and isConnected as explain before.
+2. Extract the `walletProvider` function from the `useAppKitProvider` hook. This function allows you to prompt the connected wallet to sign a specific message. Also, we are using `useAppKitAccount` to get the address and isConnected as explain before.
 ```js
 // Get the wallet provider with the AppKit hook
 const { walletProvider } = useAppKitProvider<BitcoinConnector>('bip122');
@@ -58,7 +59,7 @@ In order to raise the modal to sign a message with your wallet continue with the
 3. Create a function to prompt the modal for signing the message.
 
 ```js
-// function to sing a msg 
+// function to sing a message
 const handleSignMsg = async () => {
     // raise the modal to sign the message
     const signature = await walletProvider.signMessage({
@@ -112,9 +113,46 @@ return (
   )
 ```
 
+### Get Balance
+
+3. Create the function to get the balance
+
+```js
+
+const handleGetBalance = () => {
+    const isTestnet = true; // change to false if you want to get the balance in mainnet
+
+    // get all the utxos from the address
+    const response = await fetch(
+        `https://mempool.space${isTestnet ? '/testnet' : ''}/api/address/${address}/utxo`
+    );
+    const data = await response.json();
+
+    // get the utxos - the list of unspent transactions that the sender has
+    const utxos = await getUTXOs(address, isTestnet(caipNetwork.caipNetworkId))
+    // return the sum of the utxos ... The balance of the sender
+    const balance = utxos.reduce((sum, utxo) => sum + utxo.value, 0)
+
+    // print the balance in console
+    console.log(balance);
+}
+```
+
+4. Finally, in order to call the function:
+
+```jsx
+return (
+    isConnected && (
+    <div >
+        <button onClick={handleGetBalance}>Get Balance</button>  
+    </div>
+    )
+  )
+```
+
 ## Conclusion
 
-By following this guide, you’ve learned how to integrate Reown AppKit and Bitcoin into your React application to perform essential wallet operations. 
-You can now sign messages and send transactions in the Bitcoin blockchain. 
+By following this guide, you've learned how to integrate Reown AppKit and Bitcoin into your React application to perform essential wallet operations. 
+You can now sign messages, get the balance and send transactions in the Bitcoin blockchain. 
 
-Keep exploring AppKit to enhance your dApp’s functionality and user experience!
+Keep exploring AppKit to enhance your dApp's functionality and user experience!
