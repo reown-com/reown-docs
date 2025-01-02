@@ -1503,7 +1503,6 @@ article ul li:not([role='tab'])::before {
   justify-content: center; /* Center content vertically */
   align-items: center; /* Center content horizontally */
   padding: 64px 28px; /* Padding from Figma */
-  gap: 28px; /* Space between elements */
   width: 392.5px; /* Width from Figma */
   height: 324px; /* Height from Figma */
   background-color: var(--ifm-container-background-color); /* Same background as large container */
@@ -1512,7 +1511,6 @@ article ul li:not([role='tab'])::before {
   color: white; /* Text color */
   overflow: hidden;
   transition: background-color 0.3s ease, transform 0.2s ease; /* Add smooth transitions for hover effects */
-
 }
 
 .home__centered-container:hover {
@@ -1526,24 +1524,22 @@ article ul li:not([role='tab'])::before {
   border-radius: 50%; /* Optional: Make the image circular */
   object-fit: cover; /* Ensure the image scales properly */
   flex-shrink: 0;
-}
-
-.home__centered-container h4,
-.home__centered-container p {
-  margin: 0;
-  font-family: inherit; /* Use the same font as the large container */
+  margin-bottom: 28px; /* Gap between logo and name */
 }
 
 .home__centered-container h4 {
   font-size: 1.5rem; /* Same as large container */
-  margin-bottom: 0.25rem;
+  margin: 0 0 12px; /* Gap between name and description */
+  font-family: inherit;
+  text-align: center;
 }
 
 .home__centered-container p {
   line-height: 1.333; /* Same as large container */
-  font-size: 0.875rem; /* Same as large container */
+  font-size: 14px; /* Same as large container */
   color: var(--ifm-color-gray-600); /* Same text color as large container */
   text-align: center;
+  margin: 0;
 }
 
 .home__support-container {
