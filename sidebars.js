@@ -248,7 +248,7 @@ module.exports = {
                 },
                 {
                   type: 'doc',
-                  label: 'SIWX',
+                  label: 'Authentication (SIWX)',
                   id: 'appkit/features/siwx/default'
                 },
                 { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
