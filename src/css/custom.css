@@ -1407,6 +1407,101 @@ article ul li:not([role='tab'])::before {
   font-size: 0.875rem;
 }
 
+.home__centered-container {
+  display: flex;
+  flex-direction: column; /* Vertical stacking */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  padding: 64px 28px; /* Padding from Figma */
+  gap: 28px; /* Space between elements */
+  width: 392.5px; /* Width from Figma */
+  height: 324px; /* Height from Figma */
+  background-color: var(--ifm-container-background-color); /* Same background as large container */
+  border-radius: 28px; /* Border radius from Figma */
+  border: 1.5px solid var(--ifm-border-color);
+  color: white; /* Text color */
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Add smooth transitions for hover effects */
+
+}
+
+.home__centered-container:hover {
+  border-color: gray; /* Change border color to gray on hover */
+  transform: scale(1.02); /* Slight scaling on hover */
+}
+
+.home__centered-container img {
+  height: 56px; /* Set the height to 56px as requested */
+  width: 56px; /* Set the width to 56px as requested */
+  border-radius: 50%; /* Optional: Make the image circular */
+  object-fit: cover; /* Ensure the image scales properly */
+  flex-shrink: 0;
+}
+
+.home__centered-container h4,
+.home__centered-container p {
+  margin: 0;
+  font-family: inherit; /* Use the same font as the large container */
+}
+
+.home__centered-container h4 {
+  font-size: 1.5rem; /* Same as large container */
+  margin-bottom: 0.25rem;
+}
+
+.home__centered-container p {
+  line-height: 1.333; /* Same as large container */
+  font-size: 0.875rem; /* Same as large container */
+  color: var(--ifm-color-gray-600); /* Same text color as large container */
+  text-align: center;
+}
+
+.home__support-container {
+  display: flex;
+  flex-direction: column; /* Vertical stacking */
+  justify-content: flex-start; /* Align content to the top */
+  align-items: flex-start; /* Align content to the left */
+  padding: 16px 28px; /* Adjusted padding for a shorter height */
+  gap: 10px; /* Adjusted gap between elements */
+  width: 801px; /* Double the width of CenteredContainer */
+  height: 152px; /* Updated height as requested */
+  background-color: var(--ifm-container-background-color); /* Same background color as other containers */
+  border-radius: 28px; /* Rounded corners */
+  border: 1.5px solid var(--ifm-border-color); /* Consistent border styling */
+  color: white; /* Text color */
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transitions */
+}
+
+.home__support-container:hover {
+  border-color: gray; /* Change border color to gray on hover */
+}
+
+.home__support-container img {
+  height: 40px; /* Updated image height */
+  width: 40px; /* Updated image width */
+  border-radius: 50%; /* Optional: Circular image */
+  object-fit: cover; /* Ensure the image scales properly */
+  flex-shrink: 0;
+}
+
+.home__support-container h4,
+.home__support-container p {
+  margin: 0;
+  text-align: left; /* Align text to the left */
+  font-family: inherit; /* Same font family as other containers */
+}
+
+.home__support-container h4 {
+  font-size: 1.5rem; /* Consistent font size */
+}
+
+.home__support-container p {
+  line-height: 1.333; /* Consistent line height */
+  font-size: 0.875rem; /* Consistent font size */
+  color: var(--ifm-color-gray-600); /* Consistent text color */
+}
+
 .home__wrapper {
   display: flex;
   align-items: center;
