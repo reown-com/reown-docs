@@ -1321,6 +1321,94 @@ article ul li:not([role='tab'])::before {
   filter: invert(1);
 }
 
+.home__medium-container {
+  border-radius: 1rem;
+  border: 1.5px solid var(--ifm-border-color);
+  padding: 0;
+  padding-left: 0;
+  width: 24.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--ifm-container-background-color);
+  color: white;
+  overflow: hidden;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.home__medium-container:hover {
+  border-color: gray; /* Change border color to gray on hover */
+}
+
+.home__medium-container img {
+  border: none;
+  height: 7rem;
+  width: 7rem;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.home__medium-container--nofit {
+  width: 7rem;
+  height: 7rem;
+  display: grid;
+  place-items: center;
+  position: relative;
+  isolation: isolate;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.home__medium-container--nofit img {
+  height: fit-content;
+  width: fit-content;
+  position: relative;
+  z-index: 1;
+}
+
+.home__medium-container--nofit img.blur {
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+[data-theme='light'] .home__medium-container--nofit img.white {
+  filter: invert(1);
+}
+
+[data-theme='light'] .home__medium-container--nofit img.white.blur {
+  display: none;
+}
+
+.home__medium-container--text {
+  padding-right: 1rem;
+  width: 100%;
+}
+
+.home__medium-container--text h4,
+.home__medium-container--text p {
+  margin: 0;
+  letter-spacing: -0.06em; /* Set letter-spacing to -6% of font size */
+}
+
+.home__medium-container--text h4 {
+  font-size: 20px;
+  margin-bottom: 0.25rem;
+}
+
+.home__medium-container--text p {
+  line-height: 1.333;
+  color: var(--ifm-color-gray-600);
+  font-size: 15px;
+}
+
+
 .home__large-container {
   border-radius: 1rem;
   border: 1.5px solid var(--ifm-border-color);
@@ -1394,6 +1482,8 @@ article ul li:not([role='tab'])::before {
 .home__large-container--text h4,
 .home__large-container--text p {
   margin: 0;
+  letter-spacing: -0.01em; /* Set letter-spacing to -6% of font size */
+
 }
 
 .home__large-container--text h4 {
@@ -1498,8 +1588,56 @@ article ul li:not([role='tab'])::before {
 
 .home__support-container p {
   line-height: 1.333; /* Consistent line height */
-  font-size: 0.875rem; /* Consistent font size */
+  font-size: 14px; /* Consistent font size */
   color: var(--ifm-color-gray-600); /* Consistent text color */
+}
+
+.home__recipe-container {
+  display: flex;
+  flex-direction: row; /* Horizontal layout as per Figma */
+  align-items: center; /* Align items vertically */
+  padding: 24px 28px; /* Padding from Figma */
+  gap: 20px; /* Space between elements */
+  position: relative; /* Ensure positioning consistency */
+  width: 400px; /* Width from Figma */
+  height: 96px; /* Height from Figma */
+  background: #252525; /* Background color from Figma */
+  border-radius: 28px; /* Border radius from Figma */
+  border: 1.5px solid var(--ifm-border-color); /* Add consistent border styling */
+  color: white; /* Text color */
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for hover effects */
+}
+
+.home__recipe-container:hover {
+  border-color: gray; /* Change border color to gray on hover */
+}
+
+.home__recipe-container img {
+  height: 40px; /* Image size as per Figma and consistent with MediumContainer */
+  width: 40px; /* Image size */
+  border-radius: 50%; /* Circular image */
+  object-fit: cover; /* Ensure proper scaling of the image */
+  flex-shrink: 0;
+}
+
+.home__recipe-container h4,
+.home__recipe-container p {
+  margin: 0;
+  text-align: left; /* Left-align text */
+  font-family: inherit; /* Use consistent font styling */
+  letter-spacing: -0.03em; /* Consistent letter-spacing */
+}
+
+.home__recipe-container h4 {
+  font-size: 20px; /* Font size consistent with MediumContainer */
+  margin-bottom: 0.25rem;
+}
+
+.home__recipe-container p {
+  line-height: 1.333; /* Line height consistent with MediumContainer */
+  font-size: 0.875rem; /* Font size consistent with MediumContainer */
+  color: var(--ifm-color-gray-600); /* Text color consistent with other containers */
 }
 
 .home__wrapper {

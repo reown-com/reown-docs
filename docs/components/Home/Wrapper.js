@@ -3,6 +3,8 @@ import SmallContainer from './SmallContainer'
 import LargeContainer from './LargeContainer'
 import CenteredContainer from './CenteredContainer'
 import SupportContainer from './SupportContainer'
+import MediumContainer from './MediumContainer'
+import RecipeContainer from './RecipeContainer'
 
 const Wrapper = ({ items, type, fit = true, ...props }) => {
   return (
@@ -59,6 +61,30 @@ const Wrapper = ({ items, type, fit = true, ...props }) => {
             name={item.name}
             icon={item.icon}
             description={item.description}
+          />
+        ))}
+
+      {type === 'medium' &&
+        items.map((item, index) => (
+          <MediumContainer
+            key={index}
+            href={item.href}
+            name={item.name}
+            icon={item.icon}
+            description={item.description}
+            isWhite={item.isWhite || false}
+          />
+        ))}
+
+        {type === 'recipe' &&
+        items.map((item, index) => (
+          <RecipeContainer
+            key={index}
+            href={item.href}
+            name={item.name}
+            icon={item.icon}
+            description={item.description}
+            isWhite={item.isWhite || false}
           />
         ))}
     </div>
