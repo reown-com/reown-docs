@@ -24,7 +24,7 @@ AppKit.CloseModal();
 ## Chain Actions
 
 ### Set active chain
-
+Note: The chain must be added to the list of [supported chains in the AppKit configuration](https://docs.reown.com/appkit/unity/core/options#supported-chains).
 ```csharp
 Chain newChain = ChainConstants.Chains.Ethereum;
 await AppKit.NetworkController.ChangeActiveChainAsync(newChain);
@@ -54,3 +54,141 @@ Debug.Log(account.AccountId); // e.g. 'eip155:1:0x12345...'
 ```csharp
 await AppKit.DisconnectAsync();
 ```
+
+## EVM Actions
+
+### Get Balance
+Get the native token balance for an address.
+```csharp
+BigInteger balance = await AppKit.EVM.GetBalanceAsync("0x123...");
+```
+
+### Sign Message
+Sign a message with the active account's private key.
+```csharp
+// Sign a string message
+string signature = await AppKit.EVM.SignMessageAsync("Hello World");
+
+// Sign raw bytes
+byte[] rawMessage = System.Text.Encoding.UTF8.GetBytes("Hello World");
+string signature = await AppKit.EVM.SignMessageAsync(rawMessage);
+```
+
+### Sign Typed Data
+Sign typed data following EIP-712 standard.
+```csharp
+string typedData = "{ /* Your EIP-712 typed data structure */ }";
+string signature = await AppKit.EVM.SignTypedDataAsync(typedData);
+```
+
+### Verify Message Signature
+Verify if a message was signed by a specific address.
+```csharp
+bool isValid = await AppKit.EVM.VerifyMessageSignatureAsync(
+    "0x123...", // address
+    "Hello World", // original message
+    "0xabc..." // signature
+);
+```
+
+### Verify Typed Data Signature
+Verify if typed data was signed by a specific address.
+```csharp
+bool isValid = await AppKit.EVM.VerifyTypedDataSignatureAsync(
+    "0x123...", // address
+    "{ /* Your typed data */ }", // original typed data
+    "0xabc..." // signature
+);
+```
+
+### Read Contract
+Read data from a smart contract (no gas required).
+```csharp
+string contractAbi = "[ /* Your contract ABI */ ]";
+string tokenSymbol = await AppKit.EVM.ReadContractAsync<string>(
+    "0x123...", // contract address
+    contractAbi,
+    "symbol" // method name
+);
+```
+
+### Write Contract
+Write data to a smart contract (requires gas).
+```csharp
+string contractAbi = "[ /* Your contract ABI */ ]";
+
+// Basic write
+string txHash = await AppKit.EVM.WriteContractAsync(
+    "0x123...", // contract address
+    contractAbi,
+    "transfer", // method name
+    "0x456...", // recipient
+    1000 // amount
+);
+
+// Write with custom gas
+string txHash = await AppKit.EVM.WriteContractAsync(
+    "0x123...", // contract address
+    contractAbi,
+    "transfer", // method name
+    gas: 100000, // custom gas limit
+    "0x456...", // recipient
+    1000 // amount
+);
+
+// Write with value and gas
+string txHash = await AppKit.EVM.WriteContractAsync(
+    "0x123...", // contract address
+    contractAbi,
+    "stake", // method name
+    value: 1000000000000000000, // 1 ETH in wei
+    gas: 100000,
+    true // other arguments
+);
+```
+
+### Send Transaction
+Send a native token transaction.
+```csharp
+string txHash = await AppKit.EVM.SendTransactionAsync(
+    "0x123...", // recipient address
+    1000000000000000000, // 1 ETH in wei
+    "0x" // optional data
+);
+```
+
+### Send Raw Transaction
+Send a pre-signed transaction.
+```csharp
+string txHash = await AppKit.EVM.SendRawTransactionAsync(
+    "0x123..." // signed transaction data
+);
+```
+
+### Estimate Gas
+Estimate gas required for a transaction.
+```csharp
+// Estimate for native token transfer
+BigInteger gasLimit = await AppKit.EVM.EstimateGasAsync(
+    "0x123...", // recipient address
+    1000000000000000000 // 1 ETH in wei
+);
+
+// Estimate for contract interaction
+string contractAbi = "[ /* Your contract ABI */ ]";
+BigInteger gasLimit = await AppKit.EVM.EstimateGasAsync(
+    "0x123...", // contract address
+    contractAbi,
+    "transfer", // method name
+    0, // value in wei
+    "0x456...", // method arguments
+    1000
+);
+```
+
+### Get Gas Price
+Get the current gas price in wei.
+```csharp
+BigInteger gasPrice = await AppKit.EVM.GetGasPriceAsync();
+```
+
