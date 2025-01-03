@@ -68,7 +68,7 @@ This operation requires a transaction and gas fees because it changes the state 
 ```csharp
 const string contractAddress = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
 const string recipientAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045";
-const string abi = "...";  // ABI of the ERC20 token contract
+const string abi = "..."; // ABI of the ERC20 token contract
 
 BigInteger amount = 1;
 
@@ -79,5 +79,10 @@ var arguments = new object[]
     recipientAddress,
     amount
 };
-var result = await AppKit.Evm.WriteContractAsync(contractAddress, abi, "transfer", arguments);
+
+// Estimate gas amount
+var gasAmount = await AppKit.Evm.EstimateGasAsync(contractAddress, abi, "transfer", arguments: arguments);
+
+// Send transaction
+var result = await AppKit.Evm.WriteContractAsync(contractAddress, abi, "transfer", gasAmount, arguments);
 ```
