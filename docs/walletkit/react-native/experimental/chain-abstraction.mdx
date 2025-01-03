@@ -15,7 +15,7 @@ For example, when an app requests a 100 USDC payment on Base network but the use
 Apps need to pass `gas` as null, while sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../../appkit/next/experimental/chain-abstraction.mdx) for more details.
 :::
 
-When an app sends a transaction request to your wallet, you need to:
+When sending a transaction, you need to:
 1. Check if the required chain has enough funds to complete the transaction or not
 2. If not, use the `prepare` method to generate necessary bridging transactions
 3. Check the status of the bridging transactions and wait for them to be completed
