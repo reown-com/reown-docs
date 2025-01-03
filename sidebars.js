@@ -256,28 +256,29 @@ module.exports = {
             },
             {
               type: 'category',
-              label: "Networks",
+              label: 'Networks',
               collapsed: false,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm'},
+                { type: 'doc', label: 'EVM Chains', id: 'appkit/networks/evm' },
                 { type: 'doc', label: 'Solana', id: 'appkit/networks/solana' },
-                { type: 'doc', label: 'Bitcoin', id: 'appkit/networks/bitcoin' },
+                { type: 'doc', label: 'Bitcoin', id: 'appkit/networks/bitcoin' }
               ]
             },
             {
               type: 'category',
-              label: "Authentication",
+              label: 'Authentication',
               collapsed: false,
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Email & Social Login', id: 'appkit/authentication/socials' },
-                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' },              ]
+                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' }
+              ]
             },
             {
               type: 'category',
               label: 'Recipes',
-              collapsed:false,
+              collapsed: false,
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
@@ -339,7 +340,12 @@ module.exports = {
               items: [
                 { type: 'doc', label: 'One-Click Auth', id: 'walletkit/features/one-click-auth' },
                 { type: 'doc', label: 'Notifications', id: 'walletkit/features/notifications' },
-                { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' }
+                { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' },
+                {
+                  type: 'category',
+                  label: 'Experimental',
+                  items: ['walletkit/features/experimental/chain-abstraction']
+                }
               ]
             },
             'walletkit/best-practices',
@@ -494,7 +500,10 @@ module.exports = {
         {
           type: 'category',
           label: 'Experimental',
-          items: ['appkit/next/experimental/smart-session','appkit/next/experimental/chain-abstraction']
+          items: [
+            'appkit/next/experimental/smart-session',
+            'appkit/next/experimental/chain-abstraction'
+          ]
         },
         {
           type: 'category',
@@ -1021,6 +1030,11 @@ module.exports = {
             'walletkit/android/notifications/push'
           ]
         },
+        {
+          type: 'category',
+          label: 'Experimental',
+          items: ['walletkit/android/experimental/chain-abstraction']
+        },
         'walletkit/android/best-practices',
         'walletkit/android/resources',
         {
@@ -1072,6 +1086,11 @@ module.exports = {
             },
             'walletkit/ios/notifications/push'
           ]
+        },
+        {
+          type: 'category',
+          label: 'Experimental',
+          items: ['walletkit/ios/experimental/chain-abstraction']
         },
         'walletkit/ios/best-practices',
         'walletkit/ios/resources',
@@ -1169,6 +1188,11 @@ module.exports = {
             'walletkit/react-native/cloud/relay',
             'walletkit/react-native/cloud/analytics'
           ]
+        },
+        {
+          type: 'category',
+          label: 'Experimental',
+          items: ['walletkit/react-native/experimental/chain-abstraction']
         }
       ]
     },

@@ -117,6 +117,14 @@ const config = {
       indexName: 'walletconnect',
       contextualSearch: true
     },
+    mermaid: {
+      theme: {
+        dark: 'forest'
+      },
+      options: {
+        maxTextSize: 50
+      }
+    },
     image: 'img/Docs-OG.png',
     metadata: [{ name: 'twitter:card', content: 'summary_large_image' }],
     navbar: {
