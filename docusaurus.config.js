@@ -58,8 +58,7 @@ const config = {
     }
   ],
   title: 'Reown Docs',
-  tagline:
-    'Reown gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.',
+  tagline: 'Reown gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.',
   url: 'https://docs.reown.com/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
