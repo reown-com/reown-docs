@@ -8,33 +8,36 @@
   justify-content: space-between;
   border: 1px solid transparent;
   overflow: hidden;
-  min-height: 15rem;
+  min-height: 15rem; /* Adjusted slightly to better fit proportions */
   max-height: 25rem;
   width: 100%;
   margin-top: 1rem;
   position: relative;
   isolation: isolate;
+  box-sizing: border-box; /* Ensure padding is accounted for in dimensions */
 }
 
 .banner__text {
   position: relative;
   z-index: 2;
-  min-height: 15rem;
+  min-height: auto; /* Let content determine height */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
 }
 
-.banner__text h2,
-.banner__text p,
-.banner__text a {
+.banner__text h2 {
+  font-size: 2.75rem; /* Increased font size for better scaling */
   margin: 0 !important;
+  line-height: 1.2; /* Adjusted line height for better spacing */
 }
 
 .banner__text p {
   margin-top: 0.5rem !important;
-  max-width: 24rem;
+  max-width: 28rem; /* Increased max-width to better fit the dimensions */
+  font-size: 1rem; /* Adjusted font size */
+  line-height: 1.5; /* Adjusted for readability and spacing */
 }
 
 .banner__text a {
@@ -50,7 +53,7 @@
   letter-spacing: 0.25px;
   display: flex;
   align-items: center;
-  gap: 5rem;
+  gap: 0.5rem; /* Adjusted gap for better alignment */
   margin-top: 1.25rem !important;
   transition: background 0.2s ease-in-out;
 }
@@ -67,10 +70,6 @@
 
 .banner__text a:hover > svg {
   transform: translateX(0.25rem);
-}
-
-.banner__text h2 {
-  font-size: 2.5rem;
 }
 
 .banner__backdrop {
@@ -99,6 +98,7 @@
 @media screen and (max-width: 996px) {
   .banner__container {
     height: fit-content;
+    padding: 1rem; /* Adjusted padding for smaller screens */
   }
   .container {
     padding-left: 1rem !important;
