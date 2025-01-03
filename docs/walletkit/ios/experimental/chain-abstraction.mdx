@@ -73,7 +73,7 @@ public func getUIFields(chainId: String) async throws -> UIFields {
 ## Usage
 
 When your wallet receives an `eth_sendTransaction` request, first check if chain abstraction is needed using the `prepare` method, if it is, you need to sign all the fulfilment transactions and broadcast them in parallel. 
-After that, you need to call the `status` method to check the status of the fulfillment operation. 
+After that, you need to call the `waitForSuccessWithTimeout ` method to check the status of the fulfillment operation. 
 
 If the operation is successful, you need to broadcast the initial transaction and await for the transaction hash and receipt. 
 If the operation is not successful, you need to send the JsonRpcError to the dapp and display the error to the user. 
@@ -85,17 +85,12 @@ guard request.method == "eth_sendTransaction" else {
 
 let tx = try request.params.get([Tx].self)[0]
 
-let transaction = InitTransaction(
+let transaction = InitialTransaction(
+    chainId: request.chainId.absoluteString
     from: tx.from,
     to: tx.to,
     value: "0",
-    gas: "0",
-    gasPrice: "0",
-    data: tx.data,
-    nonce: "0",
-    maxFeePerGas: "0",
-    maxPriorityFeePerGas: "0",
-    chainId: request.chainId.absoluteString
+    input: tx.data,
 )
 
 let routeResponseSuccess = try await WalletKit.instance.prepare(transaction: transaction)
@@ -123,7 +118,6 @@ print("🔄 Starting status checking...")
 let completed = try await WalletKit.instance.waitForSuccessWithTimeout(orchestrationId: orchestrationId, checkIn: 5, timeout: 180)
 print("✅ Routing Transactions completed successfully!")
 print("📊 Completion details: \(completed)")
-AlertPresenter.present(message: "Routing transactions completed", type: .success)
 
 print("🚀 Initiating initial transaction...")
 try await sendInitialTransaction(initialTransaction: routeResponseAvailable.initialTransaction)
