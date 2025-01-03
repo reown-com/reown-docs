@@ -44,7 +44,6 @@ In this guide, we are going to use the library [@solana/web3.js](https://solana.
 Fetching a user's balance is straightforward using the Connection object from Solana.
 
 
-
 1. Start by importing the `useAppKitConnection` hook from the solana Adapter, the `useAppKitAccount` AppKit hook to get the account information and `PublicKey` from the solana/web3 library.
 ```js
 import { useAppKitConnection } from '@reown/appkit-adapter-solana/react'
@@ -95,7 +94,7 @@ import { useAppKitProvider } from '@reown/appkit/react';
 import type { Provider } from '@reown/appkit-adapter-solana/react';
 ```
 
-2. Extract the `walletProvider` function from the `useAppKitProvider` hook. This function allows you to prompt the connected wallet to sign a specific message. Also get the address and isConnected as explain before.
+2. Extract the `walletProvider` function from the `useAppKitProvider` hook. This function allows you to prompt the connected wallet to sign a specific message. Also the `useAppKitAccount` AppKit hook to get the address and isConnected as explain before.
 ```js
 // Get the wallet provider with the AppKit hook
 const { walletProvider } = useAppKitProvider<Provider>('solana');
