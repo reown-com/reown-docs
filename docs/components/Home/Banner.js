@@ -6,16 +6,10 @@ const Banner = () => {
   return (
     <div className={styles.banner__container}>
       <div className={styles.banner__text}>
-        <h2>Reown Docs</h2>
+        <h2>Reown</h2>
         <p>
-        Reown gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.
-        </p>
-        <Link className=".blue__button" to="appkit/overview">
-          Start Building
-        </Link>
+        Reown is a UX-focused company that provides toolkits – AppKit and WalletKit – for anyone building onchain to leverage and unlock better UX.        </p>
       </div>
-      <img className={styles.banner__image} src='/reown/banner-image.svg#dark-mode-only' alt="Reown Banner" />
-      <img className={styles.banner__image} src='/reown/banner-image-light.svg#light-mode-only' alt="Reown Banner" />
     </div>
   )
 }

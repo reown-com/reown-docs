@@ -278,7 +278,7 @@ module.exports = {
             {
               type: 'category',
               label: 'Recipes',
-              collapsed: false,
+              collapsed:true,
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
@@ -304,6 +304,10 @@ module.exports = {
               label: 'Migration',
               collapsed: true,
               collapsible: true,
+              link:{
+                type: 'doc',
+                id: 'appkit/migration/index'
+              },
               items: [
                 {
                   type: 'doc',

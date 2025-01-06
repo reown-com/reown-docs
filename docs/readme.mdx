@@ -21,38 +21,117 @@ import Link from '@docusaurus/Link'
 
 <Banner />
 
-<div className="home__divider" />
+<Wrapper
+  type="medium"
+  items={[
+    {
+      name: 'Get Started',
+      icon: 'reown/get-started.svg',
+      href: '/appkit/overview',
+      description: 'Get started with Reown AppKit',
+    },
+    {
+      name: 'Upgrade to Reown',
+      icon: 'reown/upgrade.svg',
+      href: '/appkit/upgrade/from-w3m-to-reown',
+      description: 'Upgrade to latest version of Reown AppKit',
+    },
+     {
+      name: 'Features',
+      icon: 'reown/features.svg',
+      href: '/appkit/features/swaps',
+      description: 'Learn about the features Reown has to offer',
+    },
+    {
+      name: 'Try AppKit Demo',
+      icon: 'reown/demo.svg',
+      href: 'https://demo.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks',
+      description: 'Try out the powerful Reown AppKit today',
+    },
+     {
+      name: 'Migrate from Alternatives',
+      icon: 'reown/migrate.svg',
+      href: '/appkit/migration/',
+      description: 'Migrate from other solutions to Reown AppKit',
+    },
+    {
+      name: 'Browse our repositories',
+      icon: 'reown/browse.svg',
+      href: 'https://github.com/reown-com',
+      description: 'Browse all our open-source repos',
+    }
+  ]}
+/>
+
 
 ## Reown SDKs
 
 Effortlessly integrate our suite of SDKs. 
 
 <Wrapper
-  type="large"
+  type="centered"
   items={[
     {
       name: 'AppKit',
       icon: 'reown/appkit-logo.svg',
       href: '/appkit/overview',
-      description: 'The all-in-one stack to build apps for the new internet.',
+      description: 'AppKit is a comprehensive SDK for creating seamless onchain UX, offering features like login (email & social), gas fee sponsorship, multi-chain support, onramps, swaps, user insights, and access to more than 600 wallets.',
     },
     {
       name: 'WalletKit',
       icon: 'reown/walletkit-logo.svg',
       href: '/walletkit/overview',
-      description: 'The ultimate toolkit for building and connecting wallets.',
+      description: 'WalletKit is an open-source SDK for seamless wallet connections across blockchains. It offers one-click authentication, secure transaction signing, phishing protection, advanced on-chain configurations like batch transactions and paymasters.',
     }
   ]}
 />
 
 <br />
-:::info
 
-Check our upgrade guides to migrate to our new Reown SDKs -> [AppKit](./appkit/upgrade/from-w3m-to-reown) and [WalletKit](./walletkit/upgrade/from-web3wallet-to-reown).
+<Wrapper
+  type="support"
+  items={[
+    {
+      name: 'Get Support',
+      icon: 'reown/support.svg',
+      href: 'https://discord.com/invite/kdTQHQ6AFQ',
+      description: 'Reown offers free unlimited support for builders 24/7. Feel free to read our FAQ or get in touch.',
+    },
+  ]}
+  />
 
-:::
+## Recipes
 
-<br />
+Step-by-step guides and ready-to-use code examples designed to help you quickly implement common features and solve specific use cases using the SDK. Perfect for tackling real-world scenarios with ease.
+
+**Click on the "Recipes" tab in the sidebar to explore more.**
+
+<Wrapper
+  type="recipe"
+  items={[
+    {
+      name: 'Build a Telegram Mini App',
+      icon: 'reown/recipes.svg',
+      href: '/appkit/recipes/telegram-mini-app',
+    },
+    {
+      name: 'Configure Tenderly Virtual TestNets',
+      icon: 'reown/recipes.svg',
+      href: '/appkit/recipes/tenderly-virtual-testnets',
+    },
+    {
+      name: 'Initiate EVM Transactions',
+      icon: 'reown/recipes.svg',
+      href: '/appkit/recipes/wagmi-send-transaction',
+    },
+    {
+      name: 'Initiate Solana Transactions',
+      icon: 'reown/recipes.svg',
+      href: '/appkit/recipes/solana-send-transaction',
+    }
+  ]}
+/>
+
 
 ## Join our community
 
@@ -88,7 +167,6 @@ Share your experience, contribute, or ask questions
   ]}
 />
 
-<div className="home__divider" />
 
 ## How to contribute
 
