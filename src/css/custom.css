@@ -1597,7 +1597,7 @@ article ul li:not([role='tab'])::before {
   position: relative; /* Ensure positioning consistency */
   width: 391px; /* Width from Figma */
   height: 96px; /* Height from Figma */
-  background: #252525; /* Background color from Figma */
+  background: var(--ifm-container-background-color); /* Background color from Figma */
   border-radius: 28px; /* Border radius from Figma */
   border: 1.5px solid var(--ifm-border-color); /* Add consistent border styling */
   color: white; /* Text color */
