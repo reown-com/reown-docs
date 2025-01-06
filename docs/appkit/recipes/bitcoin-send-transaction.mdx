@@ -16,7 +16,7 @@ In this recipe, you will learn how to:
 - Send a transaction to the Bitcoin blockchain.
 - Get the balance from an Address.
 
-This guide takes approximately 20 minutes to complete.
+This guide will take approximately 20 minutes to complete.
 
 Let's dive in!
 
@@ -43,7 +43,7 @@ import { useAppKitProvider, useAppKitAccount } from '@reown/appkit/react';
 import type { BitcoinConnector } from '@reown/appkit-adapter-bitcoin';
 ```
 
-2. Extract the `walletProvider` function from the `useAppKitProvider` hook. This function allows you to prompt the connected wallet to sign a specific message. Also, we are using `useAppKitAccount` to get the address and isConnected as explain before.
+2. Extract the `walletProvider` function from the `useAppKitProvider` hook. This function allows you to prompt the connected wallet to sign a specific message. Also, we are using `useAppKitAccount` to get the address and isConnected as explained before.
 ```js
 // Get the wallet provider with the AppKit hook
 const { walletProvider } = useAppKitProvider<BitcoinConnector>('bip122');
@@ -59,7 +59,7 @@ In order to raise the modal to sign a message with your wallet continue with the
 3. Create a function to prompt the modal for signing the message.
 
 ```js
-// function to sing a message
+// function to sign a message
 const handleSignMsg = async () => {
     // raise the modal to sign the message
     const signature = await walletProvider.signMessage({
@@ -72,7 +72,7 @@ const handleSignMsg = async () => {
 }
 ```
 
-4. Finally, in order to call the function:
+4. Finally, to call the function:
 
 ```jsx
 return (
@@ -86,7 +86,7 @@ return (
 
 ### Send a transaction in Bitcoin
 
-3. Create the function to raise the modal to send the transaction
+3. Create a function to raise the modal to send the transaction
 
 ```js
 // function to send a TX
@@ -101,7 +101,7 @@ const handleSendTx = () => {
 }
 ```
 
-4. Finally, in order to call the function:
+4. Finally, to call the function:
 
 ```jsx
 return (
@@ -120,7 +120,7 @@ return (
 ```js
 
 const handleGetBalance = () => {
-    const isTestnet = true; // change to false if you want to get the balance in mainnet
+    const isTestnet = true; // change to false if you want to get the balance on mainnet
 
     // get all the utxos from the address
     const response = await fetch(
@@ -138,7 +138,7 @@ const handleGetBalance = () => {
 }
 ```
 
-4. Finally, in order to call the function:
+4. Finally, to call the function:
 
 ```jsx
 return (
@@ -155,4 +155,4 @@ return (
 By following this guide, you've learned how to integrate Reown AppKit and Bitcoin into your React application to perform essential wallet operations. 
 You can now sign messages, get the balance and send transactions in the Bitcoin blockchain. 
 
-Keep exploring AppKit to enhance your dApp's functionality and user experience!
+Keep exploring AppKit to enhance your dApp functionality and user experience!
