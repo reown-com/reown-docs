@@ -235,6 +235,10 @@ module.exports = {
               label: 'Features',
               collapsed: false,
               collapsible: true,
+              link:{
+                type: 'doc',
+                id: 'appkit/features/index'
+              },
               items: [
                 { type: 'doc', label: 'Swaps', id: 'appkit/features/swaps' },
                 { type: 'doc', label: 'On-Ramp', id: 'appkit/features/onramp' },
