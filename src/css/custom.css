@@ -1503,7 +1503,7 @@ article ul li:not([role='tab'])::before {
   justify-content: center; /* Center content vertically */
   align-items: center; /* Center content horizontally */
   padding: 64px 28px; /* Padding from Figma */
-  width: 392.5px; /* Width from Figma */
+  width: 391.5px; /* Width from Figma */
   height: 324px; /* Height from Figma */
   background-color: var(--ifm-container-background-color); /* Same background as large container */
   border-radius: 28px; /* Border radius from Figma */
@@ -1595,7 +1595,7 @@ article ul li:not([role='tab'])::before {
   padding: 24px 28px; /* Padding from Figma */
   gap: 20px; /* Space between elements */
   position: relative; /* Ensure positioning consistency */
-  width: 400px; /* Width from Figma */
+  width: 391px; /* Width from Figma */
   height: 96px; /* Height from Figma */
   background: #252525; /* Background color from Figma */
   border-radius: 28px; /* Border radius from Figma */
