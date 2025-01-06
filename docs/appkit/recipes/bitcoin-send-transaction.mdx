@@ -119,6 +119,7 @@ return (
 
 ```js
 
+
 const handleGetBalance = () => {
     const isTestnet = true; // change to false if you want to get the balance on mainnet
 
@@ -129,12 +130,33 @@ const handleGetBalance = () => {
     const data = await response.json();
 
     // get the utxos - the list of unspent transactions that the sender has
-    const utxos = await getUTXOs(address, isTestnet(caipNetwork.caipNetworkId))
+    const utxos = await getUTXOs(address, isTestnet)
     // return the sum of the utxos ... The balance of the sender
     const balance = utxos.reduce((sum, utxo) => sum + utxo.value, 0)
 
     // print the balance in console
     console.log(balance);
+}
+
+// Get the utxos ... List of unspent transactions that the sender has
+const getUTXOs = async (address: string, isTestnet: boolean = false): Promise<UTXO[]> => {
+    const response = await fetch(
+        `https://mempool.space${isTestnet ? '/testnet' : ''}/api/address/${address}/utxo`
+    )
+    return await response.json();
+}
+
+// Type of the UTXO ... List of unspent transactions that the sender has
+type UTXO = {
+    txid: string
+    vout: number
+    value: number
+    status: {
+        confirmed: boolean
+        block_height: number
+        block_hash: string
+        block_time: number
+    }
 }
 ```
 
