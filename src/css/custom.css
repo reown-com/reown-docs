@@ -1588,6 +1588,12 @@ article ul li:not([role='tab'])::before {
   color: var(--ifm-color-gray-600); /* Consistent text color */
 }
 
+table {
+  width: 80%;
+  
+}
+
+
 .home__recipe-container {
   display: flex;
   flex-direction: row; /* Horizontal layout as per Figma */
