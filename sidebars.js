@@ -250,11 +250,6 @@ module.exports = {
                   label: 'Telegram Mini Apps',
                   id: 'appkit/features/telegram-mini-apps'
                 },
-                {
-                  type: 'doc',
-                  label: 'Authentication (SIWX)',
-                  id: 'appkit/features/siwx/default'
-                },
                 { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
               ]
             },
@@ -276,7 +271,12 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Email & Social Login', id: 'appkit/authentication/socials' },
-                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' }
+                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' },
+                {
+                  type: 'doc',
+                  label: 'Sign in with X (SIWX)',
+                  id: 'appkit/features/siwx/default'
+                },
               ]
             },
             {
