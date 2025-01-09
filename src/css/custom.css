@@ -366,6 +366,13 @@ table {
   width: 100%;
 }
 
+@media screen and (max-width: 768px) {
+  table {
+    display: block;
+    width: 100%; 
+  }
+}
+
 table tr,
 table th,
 table td {
@@ -1587,12 +1594,6 @@ article ul li:not([role='tab'])::before {
   font-size: 14px; /* Consistent font size */
   color: var(--ifm-color-gray-600); /* Consistent text color */
 }
-
-table {
-  width: 80%;
-  
-}
-
 
 .home__recipe-container {
   display: flex;
