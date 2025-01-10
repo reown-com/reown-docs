@@ -2,34 +2,16 @@
 
 ## Custom Networks addition and selection
 
-AppKit includes a predefined list of supported mainnets, (such as the Solana mainnet) and testnets ( also Solana testnet) within the ReownAppKitModalNetworks class. This means that if you intend to support both EVM chains and Solana, no further adjustments are necessary.
+AppKit Flutter supports EVM and Solana networks by default since *version 1.2.0*, meaning that you can connect to these networks with no extra configuration and it already comes with a predefined list of chains within the [ReownAppKitModalNetworks class](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/lib/modal/utils/public/appkit_modal_default_networks.dart). 
 
-However, this class can be modified in order to achieve the following results, and more:
+This means that if you intend to support just EVM and Solana networks then no further adjustments are necessary.
 
-:::info
-non-EVM blockchains are supported from version `1.2.0-beta01`
-:::
+However, with extra configuration to `ReownAppKitModalNetworks` and `optionalNamespaces` you can connect to whatever other network you'd like.
 
-```javascript
-// You can add more EVM networks
-List<ReownAppKitModalNetworkInfo> extraChains = [...];
-ReownAppKitModalNetworks.addSupportedNetworks('eip155', extraChains);
-```
-
-_Note: If you are adding a test network, set `isTestNetwork` property of `ReownAppKitModalNetworkInfo` to `true`_
+For instance, if you want to support also Polkadot blockchain then first add Polkadot to the supported networks list:
 
 ```javascript
-// Remove Solana networks (supports only EVM networks):
-ReownAppKitModalNetworks.removeSupportedNetworks('solana');
-```
-
-```javascript
-// Remove every test network
-ReownAppKitModalNetworks.removeTestNetworks();
-```
-
-```javascript
-// Add more non-EVM networks, such as Polkadot
+// Add more non-EVM nor Solana networks, such as Polkadot
 ReownAppKitModalNetworks.addSupportedNetworks('polkadot', [
   ReownAppKitModalNetworkInfo(
     name: 'Polkadot',
@@ -50,9 +32,9 @@ ReownAppKitModalNetworks.addSupportedNetworks('polkadot', [
 ]);
 ```
 
-As said before, if you plan to support just EVM and Solana networks you should already have everything in place, out of the box, inside AppKit configuration. However, if you are looking to support more non-EVM networks, such as Polkadot, then further configuration must be done:
+_Remember to do this before `ReownAppKitModal` instance configuration and to set `isTestNetwork: true` if you are adding a testnet_
 
-Example: If you want to support EVM + Solana + Polkadot then, along with the networks list modification, you should also pass the the following `optionalNamespaces:` in AppKit instance:
+Then modify/add `optionalNamespaces:` property in ReownAppKitModal instance as follows:
 
 ```javascript
 optionalNamespaces: {
@@ -71,10 +53,9 @@ optionalNamespaces: {
     'events': [],
   }),
   'polkadot': RequiredNamespace.fromJson({
-    'chains': [
-      'polkadot:91b171bb158e2d3848fa23a9f1c25182',
-      'polkadot:e143f23803ac50e8f6f8e62695d1ce9e'
-    ],
+    'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
+      namespace: 'polkadot',
+    ).map((chain) => 'polkadot:${chain.chainId}').toList(),
     'methods': [
       'polkadot_signMessage',
       'polkadot_signTransaction',
@@ -83,3 +64,32 @@ optionalNamespaces: {
   }),
 },
 ```
+
+_When you set `optionalNamespaces` property you are overwriting the internal definition of it so it is important that you also include `eip155` and `solana` in this case. If you plan to support only EVM + Solana then this extra step is not needed as mentioned before_
+
+
+`ReownAppKitModalNetworks` class also comes with handy methods to change the configuration of the supported networks list:
+
+- You can add more EVM networks
+
+```javascript
+List<ReownAppKitModalNetworkInfo> extraChains = [...];
+ReownAppKitModalNetworks.addSupportedNetworks('eip155', extraChains);
+// The same applies for other namespaces
+```
+
+- You can remove Solana networks if you don't want to support it
+
+```javascript
+ReownAppKitModalNetworks.removeSupportedNetworks('solana');
+// The same applies for other namespaces
+```
+
+- You can remove test networks altogether
+
+```javascript
+// Remove every test network
+ReownAppKitModalNetworks.removeTestNetworks();
+```
+
+
