@@ -57,7 +57,6 @@ export default Component(){
 
 
 ```typescript
-
 type EmbeddedWalletInfo {
   user: {
     username: string
@@ -78,25 +77,6 @@ type UseAppKitAccountReturnType = {
   embeddedWalletInfo?: EmbeddedWalletInfo
 }
 ```
-
-Hook for accessing account data and connection status.
-
-```ts
-import { useAppKitAccount } from "@reown/appkit/react";
-
-export default Component(){
-  const { address, isConnected, caipAddress, status, embeddedWalletInfo } = useAppKitAccount()
-}
-```
-
-### Returns
-
-- `allAccounts`: A list of connected accounts
-- `address`: The current account address
-- `caipAddress`: The current account address in CAIP format
-- `isConnected`: Boolean that indicates if the user is connected
-- `status`: The current connection status
-- `embeddedWalletInfo`: The current embedded wallet information 
 
 ## useAppKitNetwork
 
