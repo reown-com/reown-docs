@@ -42,16 +42,41 @@ Hook for accessing account data and connection status.
 import { useAppKitAccount } from "@reown/appkit/react";
 
 export default Component(){
-  const { address, isConnected, caipAddress, status } = useAppKitAccount()
+  const { address, isConnected, caipAddress, status, embeddedWalletInfo } = useAppKitAccount()
 }
 ```
 
 ### Returns
 
+- `allAccounts`: A list of connected accounts
 - `address`: The current account address
 - `caipAddress`: The current account address in CAIP format
 - `isConnected`: Boolean that indicates if the user is connected
 - `status`: The current connection status
+- `embeddedWalletInfo`: The current embedded wallet information 
+
+
+```typescript
+type EmbeddedWalletInfo {
+  user: {
+    username: string
+    email: string
+  },
+  accountType: 'eoa' | 'smartAccount',
+  isSmartAccountDeployed: boolean
+}
+
+type ConnectionStatus = 'connected' | 'disconnected' | 'connecting' | 'reconnecting'
+
+type UseAppKitAccountReturnType = {
+  isConnected: boolean
+  allAccounts: Account[]
+  status?: ConnectionStatus
+  address?: string
+  caipAddress?: `${string}:${string}`
+  embeddedWalletInfo?: EmbeddedWalletInfo
+}
+```
 
 ## useAppKitNetwork
 
