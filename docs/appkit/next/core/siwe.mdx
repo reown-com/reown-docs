@@ -43,7 +43,7 @@ For a better UX we recommend using One-Click Auth.
 Install the AppKit SIWE package, additionally we also recommend installing [siwe](https://docs.login.xyz/) which will abstract a lot of the required logic.
 
 ```bash npm2yarn
-npm i @reown/appkit-siwe siwe next-auth
+npm i @reown/appkit-siwe siwe next-auth viem
 ```
 
 </TabItem>
@@ -123,9 +123,25 @@ export const siweConfig = createSIWEConfig({
 Verify a SIWE signature.
 
 ```ts
-import { verifySignature } from '@reown/appkit-siwe'
+import { createPublicClient, http } from 'viem'
 
-const isValid = await verifySignature({ address, message, signature, chainId, projectId })
+const publicClient = createPublicClient(
+  {
+    transport: http(
+      `https://rpc.walletconnect.org/v1/?chainId=${chainId}&projectId=${projectId}`
+    )
+  }
+);
+const isValid = await publicClient.verifyMessage({
+  message,
+  address: address as `0x${string}`,
+  signature: signature as `0x${string}`
+});
+
+// The verifySignature is not working with social logins and emails with non deployed smart accounts 
+// for this reason we recommend using the viem to verify the signature
+// import { verifySignature } from '@reown/appkit-siwe'
+// const isValid = await verifySignature({ address, message, signature, chainId, projectId })
 ```
 
 ### `getChainIdFromMessage`
