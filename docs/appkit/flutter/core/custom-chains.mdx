@@ -99,6 +99,10 @@ A list of different ways of configure `ReownAppKitModal()` instance to give supp
 #### 1. Default support (EVM + Solana blockchains)
 
 ```javascript
+// Nothing more is required to support EVM + Solana networks besides adding more EVM or Solana networks
+// ReownAppKitModalNetworks.addSupportedNetworks('eip155', extraChains);
+// ReownAppKitModalNetworks.addSupportedNetworks('solana', extraChains);
+
 final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
@@ -125,6 +129,7 @@ final _appKitModal = ReownAppKitModal(
 #### 2. Only EVM blockchains support
 
 ```javascript
+// first remove support for Solana networks
 ReownAppKitModalNetworks.removeSupportedNetworks('solana');
 
 final _appKitModal = ReownAppKitModal(
@@ -155,6 +160,7 @@ final _appKitModal = ReownAppKitModal(
 #### 3. Only Solana blockchain support
 
 ```javascript
+// first remove support for EVM networks
 ReownAppKitModalNetworks.removeSupportedNetworks('eip155');
 
 final _appKitModal = ReownAppKitModal(
