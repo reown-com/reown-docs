@@ -92,4 +92,202 @@ ReownAppKitModalNetworks.removeSupportedNetworks('solana');
 ReownAppKitModalNetworks.removeTestNetworks();
 ```
 
+## Configuration examples
 
+A list of different ways of configure `ReownAppKitModal()` instance to support different blockchains.
+
+#### 1. Default support (EVM + Solana blockchains)
+
+```javascript
+// Nothing more is required to support EVM + Solana networks besides adding more EVM or Solana networks
+// ReownAppKitModalNetworks.addSupportedNetworks('eip155', extraChains);
+// ReownAppKitModalNetworks.addSupportedNetworks('solana', extraChains);
+
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect( // OPTIONAL
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+      linkMode: false,
+    ),
+  ),
+  // With default configuration you can enable Email + Social Login
+  featuresConfig: FeaturesConfig(
+    email: true,
+    socials: [...],
+    showMainWallets: true|false,
+  ),
+);
+```
+
+#### 2. Only EVM blockchains support
+
+```javascript
+// first remove support for Solana networks
+ReownAppKitModalNetworks.removeSupportedNetworks('solana');
+
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect( // OPTIONAL
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+      linkMode: false,
+    ),
+  ),
+  // With only EVM support configuration you can enable Link Mode + SIWE feature
+  siweConfig: SIWEConfig(...),
+  // With only EVM support configuration you can enable Email + Social Login
+  featuresConfig: FeaturesConfig(
+    email: true,
+    socials: [...],
+    showMainWallets: true|false,
+  ),
+);
+```
+
+#### 3. Only Solana blockchain support
+
+```javascript
+// first remove support for EVM networks
+ReownAppKitModalNetworks.removeSupportedNetworks('eip155');
+
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect( // OPTIONAL
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+      linkMode: false,
+    ),
+  ),
+  // With only Solana support configuration you can enable Email + Social Login
+  featuresConfig: FeaturesConfig(
+    email: true,
+    socials: [...],
+    showMainWallets: true|false,
+  ),
+);
+```
+
+#### 4. Default support (EVM + Solana blockchains) + Polkadot + Tron
+
+```javascript
+// Add Polkadot and Tron before instantiating ReownAppKitModal()
+ReownAppKitModalNetworks.addSupportedNetworks('polkadot', [
+  ReownAppKitModalNetworkInfo(
+    name: 'Polkadot',
+    chainId: '91b171bb158e2d3848fa23a9f1c25182',
+    chainIcon: 'https://cryptologos.cc/logos/polkadot-new-dot-logo.png',
+    currency: 'DOT',
+    rpcUrl: 'https://rpc.polkadot.io',
+    explorerUrl: 'https://polkadot.subscan.io',
+  ),
+  ReownAppKitModalNetworkInfo(
+    name: 'Westend',
+    chainId: 'e143f23803ac50e8f6f8e62695d1ce9e',
+    currency: 'DOT',
+    rpcUrl: 'https://westend-rpc.polkadot.io',
+    explorerUrl: 'https://westend.subscan.io',
+    isTestNetwork: true,
+  ),
+]);
+
+ReownAppKitModalNetworks.addSupportedNetworks('tron', [
+  ReownAppKitModalNetworkInfo(
+    name: 'Tron',
+    chainId: '0x2b6653dc',
+    chainIcon: 'https://cryptologos.cc/logos/tron-trx-logo.png',
+    currency: 'TRX',
+    rpcUrl: 'https://api.trongrid.io',
+    explorerUrl: 'https://tronscan.org',
+  ),
+  ReownAppKitModalNetworkInfo(
+    name: 'Tron testnet',
+    chainId: '0xcd8690dc',
+    chainIcon: 'https://cryptologos.cc/logos/tron-trx-logo.png',
+    currency: 'TRX',
+    rpcUrl: 'https://nile.trongrid.io',
+    explorerUrl: 'https://test.tronscan.org',
+    isTestNetwork: true,
+  ),
+]);
+
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect( // OPTIONAL
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+      linkMode: false,
+    ),
+  ),
+  // With this configuration you can enable Email + Social Login but it will only work with EVM and Solana blockchains
+  featuresConfig: FeaturesConfig(
+    email: true,
+    socials: [...],
+    showMainWallets: true|false,
+  ),
+  // optionalNamespaces are mandatory with this kind of configuration 
+  optionalNamespaces: {
+    'eip155': RequiredNamespace.fromJson({
+      'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
+        namespace: 'eip155',
+      ).map((chain) => 'eip155:${chain.chainId}').toList(),
+      'methods':
+          NetworkUtils.defaultNetworkMethods['eip155']!.toList(),
+      'events':
+          NetworkUtils.defaultNetworkEvents['eip155']!.toList(),
+    }),
+    'solana': RequiredNamespace.fromJson({
+      'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
+        namespace: 'solana',
+      ).map((chain) => 'solana:${chain.chainId}').toList(),
+      'methods':
+          NetworkUtils.defaultNetworkMethods['solana']!.toList(),
+      'events': [],
+    }),
+    'polkadot': RequiredNamespace.fromJson({
+      'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
+        namespace: 'polkadot',
+      ).map((chain) => 'polkadot:${chain.chainId}').toList(),
+      'methods': [
+        'polkadot_signMessage',
+        'polkadot_signTransaction',
+      ],
+      'events': []
+    }),
+    'tron': RequiredNamespace.fromJson({
+      'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
+        namespace: 'tron',
+      ).map((chain) => 'tron:${chain.chainId}').toList(),
+      'methods': [
+        'tron_signMessage',
+        'tron_signTransaction',
+      ],
+      'events': []
+    }),
+  },
+);
+```

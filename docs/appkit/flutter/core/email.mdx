@@ -5,7 +5,7 @@ import PlatformTabItem from '../../../components/PlatformTabItem'
 
 AppKit enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social accounts.
 
-:::caution important
+:::caution important note 1
 
 Remember to whitelist your dapp's iOS's bundleId and Android's packageName in your cloud configuration.
 
@@ -15,10 +15,8 @@ Remember to whitelist your dapp's iOS's bundleId and Android's packageName in yo
 
 :::
 
-:::info
-Social Login are available from version `1.2.0`
-
-Email and Social wallets only supports EVM and Solana networks
+:::caution important note 2
+Email and Social login are supported only on EVM networks and Solana.
 :::
 
 ## Integration
@@ -62,12 +60,16 @@ final _appKitModal = ReownAppKitModal(
 
 :::note
 
-In order for Email Wallet to work properly, `AppKitModalConnectButton()` has to be instantiated during the whole lifetime of the app. 
+In order for Email Wallet to work properly, either `AppKitModalConnectButton()` or `AppKitModalAccountButton()` has to be instantiated during the whole lifetime of the app. 
 
-If you already use `AppKitModalConnectButton()` then nothing else has to be done, but in case you don't use it but still want to support Email Wallets you can instantiate and hide it as follows:
+If you already use them then nothing else has to be done, but in case you don't use them but still want to support Email & Social Wallets you would have to instantiate and hide them as follows:
 
 ```javascript
 AppKitModalConnectButton(
+  appKit: _appKitModal,
+  custom: SizedBox.shrink(), // Will make the button invisible
+),
+AppKitModalAccountButton(
   appKit: _appKitModal,
   custom: SizedBox.shrink(), // Will make the button invisible
 ),
