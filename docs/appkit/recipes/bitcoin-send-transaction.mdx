@@ -15,6 +15,7 @@ In this recipe, you will learn how to:
 - Sign a message using a connected wallet.
 - Send a transaction to the Bitcoin blockchain.
 - Get the balance from an Address.
+- Get the Public Key.
 
 This guide will take approximately 20 minutes to complete.
 
@@ -49,7 +50,7 @@ import type { BitcoinConnector } from '@reown/appkit-adapter-bitcoin';
 const { walletProvider } = useAppKitProvider<BitcoinConnector>('bip122');
 
 // AppKit hook to get the address and check if the user is connected
-const { address, isConnected } = useAppKitAccount() 
+const { allAccounts, address, isConnected } = useAppKitAccount() 
 ```
 
 ### Sign a message
@@ -172,9 +173,36 @@ return (
   )
 ```
 
+### Get the Public Key
+
+3. Create the function to get the public key
+
+```js
+const handleGetPublicKey = async () => {
+    // get the public key from the account
+    const bip122Account = allAccounts?.find(a => a.address === address)
+    let publicKey = bip122Account?.publicKey || ''
+    
+    // print the public key in console
+    console.log(publicKey);
+}
+```
+
+4. Finally, to call the function:
+
+```jsx
+return (
+    isConnected && (
+    <div >
+        <button onClick={handleGetPublicKey}>Get Public Key</button>  
+    </div>
+    )
+  )
+```
+
 ## Conclusion
 
 By following this guide, you've learned how to integrate Reown AppKit and Bitcoin into your React application to perform essential wallet operations. 
-You can now sign messages, get the balance and send transactions in the Bitcoin blockchain. 
+You can now sign messages, get the balance, get the public key and send transactions in the Bitcoin blockchain. 
 
 Keep exploring AppKit to enhance your dApp functionality and user experience!
