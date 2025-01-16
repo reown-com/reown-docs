@@ -790,6 +790,7 @@ module.exports = {
             'appkit/react-native/core/smart-accounts',
             'appkit/react-native/core/siwe',
             'appkit/react-native/core/link-mode',
+            'appkit/react-native/core/theming',
             'appkit/react-native/core/resources'
           ]
         },

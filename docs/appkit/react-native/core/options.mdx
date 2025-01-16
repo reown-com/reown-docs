@@ -1,6 +1,7 @@
 import Table from '../../../components/Table'
 import PlatformTabs from '../../../components/PlatformTabs'
 import PlatformTabItem from '../../../components/PlatformTabItem'
+import Button from '../../../components/button'
 
 # Options
 
@@ -183,6 +184,62 @@ createAppKit({
 })
 ```
 
+## features
+
+Allows you to toggle (enable or disable) additional features provided by AppKit. Features such as email and social logins, swaps, etc., can be enabled using this parameter.
+
+### swaps
+
+Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transactions/swaps) feature is enabled by default.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    swaps: true
+  }
+})
+```
+
+### email
+
+This boolean defines whether you want to enable email login. This feature is enabled by default.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    email: true
+  }
+})
+```
+
+### socials
+
+This array contains the list of social platforms that you want to enable for user authentication. The platforms supported are X, Discord and Apple. The default value of undefined displays everything. Set it to false to disable this feature. You can also pass an empty array to disable it.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    socials: ['x', 'discord', 'apple']
+  }
+})
+```
+
+### emailShowWallets
+
+This boolean defines whether you want to show the wallet options on the first connect screen. If this is false and socials are enabled, it will show a button that directs you to a new screen displaying the wallet options. This feature is enabled by default.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    emailShowWallets: false
+  }
+})
+```
+
 
 ## enableAnalytics
 
@@ -194,6 +251,8 @@ createAppKit({
   enableAnalytics: true
 })
 ```
+
+<Button name="Learn More" url="/cloud/analytics" />
 
 ## chainImages
 
