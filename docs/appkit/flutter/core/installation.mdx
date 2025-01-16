@@ -86,13 +86,13 @@ Example:
 
 ### Enable Coinbase Wallet
 
-:::info note
-Coinbase Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet. This means that pairing topic, session topic, and other session data are not used when connected to Coinbase Wallet.
+Coinbase Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet. 
+
+This means that pairing topic, session topic, session events and other session-related features are not available when connecting to Coinbase Wallet.
+
 However, you can still enable it to seamlessly connect with your dApp with these additional steps.
-:::
 
-
-On your iOS and Android native side make the following changes:
+If you still want to support it, on your iOS and Android native side make the following changes:
 
 <PlatformTabs
 	groupId="appkit_flutter"
@@ -181,9 +181,26 @@ Example:
 
 Coinbase Wallet is enabled by default even if, in order to function properly, a few steps has to be done as described in the previous section. However, if you don't want to include/support Coinbase Wallet on your app you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to [excludedWalletIds](./options#excludedwalletids) options Array.
 
+
+### Phantom Wallet
+
+Phantom Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet, instead it provides an internal API mechanism. 
+
+This means that pairing topic, session topic, session events and other session-related features are not available when connecting to Phantom Wallet.
+
+Furthermore, Phantom Wallet API only supports interaction with Solana blockachains.
+
+However, there are no extra steps for you to support Phantom Wallet on your dApp.
+
+:::caution important note
+
+Phantom Wallet support is available from `reown_appkit: ^1.4.0-beta01` and is currently in beta. Any feedback is appreciated.
+
+:::
+
 ## Example
 
-<GithubBox name="AppKit with Flutter example" url="https://github.com/reown-com/reown_flutter/tree/master/packages/reown_appkit/example/modal" description="Check the Flutter example" />
+<GithubBox name="AppKit with Flutter example" url="https://github.com/reown-com/reown_flutter/tree/master/packages/reown_appkit/example/base/lib" description="Check the Flutter example" />
 
 ## Test Apps
 
