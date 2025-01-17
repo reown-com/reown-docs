@@ -91,6 +91,10 @@ const PLATFORM_MAP = [
     label: 'Wagmi + Solana'
   },
   {
+    value: 'wagmi + bitcoin',
+    label: 'Wagmi + Bitcoin'
+  },
+  {
     value: 'ethers + solana',
     label: 'Ethers + Solana'
   },
