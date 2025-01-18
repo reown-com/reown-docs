@@ -184,19 +184,26 @@ Coinbase Wallet is enabled by default even if, in order to function properly, a 
 
 ### Phantom Wallet
 
-Phantom Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet, instead it provides an internal API mechanism. 
-
-This means that pairing topic, session topic, session events and other session-related features are not available when connecting to Phantom Wallet.
-
-Furthermore, Phantom Wallet API only supports interaction with Solana blockchains.
-
-However, there are no extra steps for you to support Phantom Wallet on your dApp.
-
 :::caution important note
-
 Phantom Wallet support is available from `reown_appkit: ^1.4.0-beta01` and is currently in beta. Any feedback is appreciated.
-
 :::
+
+Phantom Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet, instead it provides an internal API mechanism based on deep/universal links.
+
+This means that pairing topic, session topic, session events and other session-related features are not available when connecting to Phantom Wallet and the interaction is really basic. Dapp sends a request, Phantom Wallet responds. That's all.
+
+Furthermore, Phantom Wallet  deep/universal links mechanism supports interaction only with Solana blockchain.
+
+In order to support Phantom Wallet interactions a few extra steps has to be performed, only if you haven't implemented [Link Mode](./link-mode.mdx) already.
+
+1. First, be sure you already have your redirection back configuration properly set in place. See [Redirect to your dApp](./usage#redirect-to-your-dapp)
+2. Then, you will have to implement platform specific steps in order to be able to catch Phantom Wallet callback links. See [Link Mode Platform specific steps](./link-mode#platform-specifics)
+3. Finally, you will have to implement your own Depp Link mechanism on Flutter side and when a link is received through it, you just call `await _appKitModal.dispatchEnvelope(link);`
+    
+    As an example you can see how we do it on our Sample Dapp by following...
+    - [Android's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/android/app/src/main/kotlin/com/example/dapp/MainActivity.kt)
+    - [iOS's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/ios/Runner/AppDelegate.swift)
+    - [Dart's specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/deep_link_handler.dart)
 
 ## Example
 
