@@ -200,10 +200,10 @@ In order to support Phantom Wallet interactions a few extra steps has to be perf
 2. Then, you will have to implement platform specific steps in order to be able to catch Phantom Wallet callback links. See [Link Mode Platform specific steps](./link-mode#platform-specifics)
 3. Finally, you will have to implement your own Depp Link mechanism on Flutter side and when a link is received through it, you just call `await _appKitModal.dispatchEnvelope(link);`
     
-    As an example you can see how we do it on our Sample Dapp by following...
-    - [Android's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/android/app/src/main/kotlin/com/example/dapp/MainActivity.kt)
-    - [iOS's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/ios/Runner/AppDelegate.swift)
-    - [Dart's specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/deep_link_handler.dart)
+    As an example you can see how we do it on our Sample Dapp by following ->
+    - [Android's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/android/app/src/main/kotlin/com/example/dapp/MainActivity.kt) (only the eventsChannel is important for this specific case)
+    - [iOS's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/ios/Runner/AppDelegate.swift) (only the eventsChannel is important for this specific case)
+    - [Dart's specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/deep_link_handler.dart) (only the eventsChannel is important for this specific case)
 
 ## Example
 
