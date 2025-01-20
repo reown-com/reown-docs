@@ -42,6 +42,7 @@ Starting from WalletConnect SDK version 1.9.5, the `redirect` field in the `AppM
 Once you're done, in order to initialize a client just call a `configure` method from the WalletKit instance wrapper
 
 ```swift
+let telemetryEnabled = true;
 let metadata = AppMetadata(
     name: "Example Wallet",
     description: "Wallet description",
@@ -56,7 +57,8 @@ WalletKit.configure(
     // Used for the Push: "echo.walletconnect.com" will be used by default if not provided
     pushHost: "echo.walletconnect.com",
     // Used for the Push: "APNSEnvironment.production" will be used by default if not provided
-    environment: .production
+    environment: .production,
+    telemetryEnabled: telemetryEnabled
 )
 ```
 
@@ -64,6 +66,74 @@ In order to allow users to receive push notifications you have to communicate wi
 
 ```swift
 try await WalletKit.instance.register(deviceToken: deviceToken)
+```
+
+The telemetry feature aims to enhance the reliability and observability of connection flows between decentralized applications (dApps) and wallets. It focuses solely on collecting data related to code execution and error codes, without tracking any sensitive user information such as amounts, accounts, etc.
+
+It provides a comprehensive tracing system for three key use cases:
+
+- Subscribing to a Pairing Topic
+- Approving a Session
+- Approving an Authenticated Session
+
+Each execution trace consists of:
+
+- Trace Events: Collected to verify the proper execution of code.
+- Error Events: Captured when errors occur during the trace, halting the execution trace.
+
+When an error event is encountered, it is stored locally within the SDK along with all preceding trace events.
+These stored events are then transmitted to the server whenever the SDK is initialized.
+
+Error event tracing is enabled by default.
+
+**Telemetry Enabled (telemetryEnabled = true):**
+
+- The SDK stores events and sends them to the server.
+
+**Telemetry Disabled (telemetryEnabled = false):**
+
+- The SDK stops storing new events and deletes all unsent events from local storage upon the next initialization.
+
+Important Note: Since the SDK only stores abstract trace and error data, user identification is not possible.
+
+Example of the error events:
+
+```json
+[
+  {
+    "eventId": "69e53f11-fd4b-4efc-8d36-1f60a9ac8207",
+    "bundleId": "com.wallet.example",
+    "timestamp": 1689611327943,
+    "props": {
+      "event": "ERROR",
+      "type": "pairing_already_exists",
+      "properties": {
+        "topic": "topic1",
+        "trace": [
+          "pairing_started",
+          "pairing_uri_validation_success",
+          "pairing_uri_not_expired",
+          "existing_pairing",
+          "pairing_not_expired",
+          "pairing_not_expired"
+        ]
+      }
+    }
+  },
+  {
+    "eventId": "69e53f11-fd4b-4efc-8d36-2321312fds",
+    "bundleId": "com.wallet.example",
+    "timestamp": 16896113234323,
+    "props": {
+      "event": "ERROR",
+      "type": "session_approve_namespace_validation_failure",
+      "properties": {
+        "topic": "topic2",
+        "trace": ["session_approve_started", "proposal_not_expired"]
+      }
+    }
+  }
+]
 ```
 
 ## Session
