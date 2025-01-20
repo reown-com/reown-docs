@@ -7,32 +7,40 @@ import PlatformTabItem from '../../components/PlatformTabItem'
 
 AppKit is now multichain. The architecture is designed to support both EVM and non-EVM blockchains. This will allow developers and projects to choose and configure multiple blockchain networks within their instance of AppKit, extending beyond just Ethereum-based (EVM) networks. 
 
-Currently, AppKit supports one non-EVM, **Solana**. Soon, AppKit will support Bitcoin, Polkadot, and Cosmos, allowing projects to tap into users from these different blockchain ecosystems. This will enable developers and projects to reach a broader audience and interact with multiple blockchain networks, all through a single wallet provider.
+Currently, AppKit supports two non-EVM networks, they are, **Solana** and **Bitcoin**. Soon, AppKit will support Polkadot and Cosmos, allowing projects to tap into users from these different blockchain ecosystems. This will enable developers and projects to reach a broader audience and interact with multiple blockchain networks, all through a single wallet provider.
 
 ## Installation
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi + solana", "ethers + solana","ethers5 + solana","basic"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi + solana", "wagmi + bitcoin","ethers + solana","ethers5 + solana","basic"]}>
 <PlatformTabItem value="wagmi + solana">
 
 ```bash npm2yarn
-npm install @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+```
+
+</PlatformTabItem>
+<PlatformTabItem value="wagmi + bitcoin">
+
+```bash npm2yarn
+npm install @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-bitcoin
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers5 + solana">
 
 ```bash npm2yarn
-npm install @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
 ```
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers + solana">
 
 ```bash npm2yarn
-npm install @reown/appkit-adapter-ethers @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
 ```
 
 </PlatformTabItem>
+
 <PlatformTabItem value="basic">
 
 ```bash npm2yarn
@@ -49,19 +57,19 @@ The AppKit instance allows you to support multiple chains by importing the respe
 
 Depending on the network adapter of your preference (`Wagmi`, `Ethers`, `Ethers5`), the integration may vary. Let's look at what the integration will look like. 
 
-<PlatformTabs groupId="eth-lib" activeOptions={["wagmi + solana", "ethers5 + solana", "ethers + solana", "basic"]}>
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi + solana", "wagmi + bitcoin","ethers5 + solana", "ethers + solana", "basic"]}>
 <PlatformTabItem value="wagmi + solana">
 ```ts
 import { createAppKit } from '@reown/appkit'
 import { SolanaAdapter } from '@reown/appkit-adapter-solana'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
-import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
-import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
+import { mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
+import type { AppKitNetwork } from '@reown/appkit/types'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 
-export const networks = [solana, solanaTestnet, solanaDevnet]
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet]
 
 // 0. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -89,8 +97,54 @@ const metadata = {
 // 4. Create the AppKit instance
 const modal = createAppKit({
   adapters: [wagmiAdapter, solanaWeb3JsAdapter],
-  networks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
-  metadata: metadata,
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
+})
+```
+</PlatformTabItem>
+
+<PlatformTabItem value="wagmi + bitcoin">
+```ts
+import { createAppKit } from '@reown/appkit'
+import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+import { mainnet, arbitrum, sepolia, bitcoin } from '@reown/appkit/networks'
+
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, bitcoin]
+
+// 0. Get projectId from https://cloud.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 1. Create the Wagmi adapter
+export const wagmiAdapter = new WagmiAdapter({
+  ssr: true,
+  projectId, 
+  networks
+})
+
+// 2. Set up Bitcoin Adapter
+const bitcoinAdapter = new BitcoinAdapter({
+  projectId
+})
+
+// 3. Set up the metadata - Optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+// 4. Create the AppKit instance
+const modal = createAppKit({
+  adapters: [wagmiAdapter, bitcoinAdapter],
+  networks,
+  metadata,
   projectId,
   features: {
     analytics: true,
@@ -109,6 +163,8 @@ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 
 import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet]
 
 // 0. Create the Ethers adapter
 export const ethersAdapter = new EthersAdapter()
@@ -132,7 +188,7 @@ const metadata = {
 // 4. Create the AppKit instance
 const modal = createAppKit({
   adapters: [ethersAdapter, solanaWeb3JsAdapter],
-  networks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  networks,
   metadata,
   projectId,
   features: {
