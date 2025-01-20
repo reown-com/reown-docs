@@ -84,7 +84,9 @@ Example:
 </PlatformTabItem>
 </PlatformTabs>
 
-### Enable Coinbase Wallet
+<hr />
+
+### Coinbase Wallet support
 
 Coinbase Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet. 
 
@@ -177,15 +179,16 @@ Example:
 </PlatformTabs>
 
 
-### Disable Coinbase Wallet
+#### Disable Coinbase Wallet
 
 Coinbase Wallet is enabled by default even if, in order to function properly, a few steps has to be done as described in the previous section. However, if you don't want to include/support Coinbase Wallet on your app you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to [excludedWalletIds](./options#excludedwalletids) options Array.
 
+<hr />
 
-### Phantom Wallet
+### Phantom Wallet support
 
 :::caution important note
-Phantom Wallet support is available from `reown_appkit: ^1.4.0-beta01` and is currently in beta. Any feedback is appreciated.
+Phantom Wallet support is available from `reown_appkit: ^1.4.0-beta02` and is currently in beta. Any feedback is appreciated.
 :::
 
 Phantom Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet, instead it provides an internal API mechanism based on deep/universal links.
@@ -203,6 +206,14 @@ In order to support Phantom Wallet interactions a few extra steps has to be perf
     - [Android's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/android/app/src/main/kotlin/com/example/dapp/MainActivity.kt) (only `eventsChannel` is important Phantom wise)
     - [iOS's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/ios/Runner/AppDelegate.swift)  (only `eventsChannel` is important Phantom wise)
     - [Dart's specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/deep_link_handler.dart)  (only `eventsChannel` is important Phantom wise)
+
+
+
+_Constructing a Solana transaction would depend of the library/package of your choice but in [*our sample dApp's code*](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/crypto/helpers.dart#L170) you can see how we do it using `solana_web3` package._
+
+#### Disable Phantom Wallet
+
+Phantom Wallet is enabled by default even if, in order to function properly, a few steps has to be done as described in the previous section. However, if you don't want to include/support Phantom Wallet on your app you just need to pass Coinbase Wallet id `a797aa35c0fadbfc1a53e7f675162ed5226968b44a19ee3d24385c64d1d3c393` to [excludedWalletIds](./options#excludedwalletids) options Array.
 
 ## Example
 
