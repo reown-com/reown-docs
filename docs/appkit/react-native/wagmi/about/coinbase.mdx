@@ -4,7 +4,7 @@
 import { coinbaseConnector } from '@reown/appkit-coinbase-wagmi-react-native'
 
 const coinbase = coinbaseConnector({
-  redirect: 'YOUR_APP_SCHEME://'
+  redirect: 'https://your-app-universal-link.com' || 'YOUR_APP_SCHEME://'
 })
 
 const wagmiConfig = defaultWagmiConfig({
@@ -14,3 +14,5 @@ const wagmiConfig = defaultWagmiConfig({
   extraConnectors: [coinbase]
 })
 ```
+
+* Prefer universal links over custom schemes to avoid an app verification warning on Coinbase Wallet
