@@ -23,6 +23,8 @@ import SolanaPrograms from '../solana/about/programs.mdx'
 import BitcoinImplementation from '../bitcoin/about/implementation.mdx'
 import BitcoinModal from '../bitcoin/about/triggermodal.mdx'
 
+import GithubBox from '../../../components/GithubBox'
+
 # Next.js
 
 AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
@@ -35,6 +37,30 @@ These steps are specific to [Next.js](https://nextjs.org/) app router. For other
 ## Installation
 
 **If you prefer referring to a video tutorial for this, please [click here](#video-tutorial).**
+
+### AppKit CLI
+
+Reown offers a dedicated CLI to set up a minimal version of AppKit in the easiest and quickest way possible.
+
+To do this, please run the command below. 
+
+```bash
+npx @reown/appkit-cli
+```
+
+After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
+
+1. **Project Name**: Enter the name for your project.
+2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
+3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
+
+After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`. 
+
+To fully configure your project, please obtain a `projectId` from the Reown Cloud Dashboard and update your project accordingly.
+
+**Refer to [this section](#cloud-configuration) for more information.**
+
+### Custom Installation
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
@@ -83,6 +109,7 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
+<GithubBox name="wagmi Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-wagmi-app-router" description="Check the Next wagmi example"></GithubBox>
 
 <WagmiImplementation />
 
@@ -93,17 +120,19 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers">
+<GithubBox name="ethers Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-ethers-app-router" description="Check the Next ethers example"></GithubBox>
 
 <EthersImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
+<GithubBox name="Solana Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-solana-app-router" description="Check the Next Solana example"></GithubBox>
 
 <SolanaImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="bitcoin">
-
+<GithubBox name="Bitcoin Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-bitcoin-app-router" description="Check the Next Bitcoin example"></GithubBox>
 <BitcoinImplementation />
 
 </PlatformTabItem>

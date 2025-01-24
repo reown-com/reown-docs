@@ -34,6 +34,30 @@ Choose one of these to get started.
 
 **If you prefer referring to a video tutorial for this, please [click here](#video-tutorial).**
 
+### AppKit CLI
+
+Reown offers a dedicated CLI to set up a minimal version of AppKit in the easiest and quickest way possible.
+
+To do this, please run the command below. 
+
+```bash
+npx @reown/appkit-cli
+```
+
+After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
+
+1. **Project Name**: Enter the name for your project.
+2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
+3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
+
+After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`. 
+
+To fully configure your project, please obtain a `projectId` from the Reown Cloud Dashboard and update your project accordingly.
+
+**Refer to [this section](#cloud-configuration) for more information.**
+
+### Custom Installation
+
 :::warning
 If you are setting up your React app, please **do not use** `npx create-react-app`, as it has been deprecated. Using it may cause dependency issues. 
 Instead, please use [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to create your React app. You can set it up by running `npm create vite@latest`.
@@ -87,30 +111,31 @@ Create a new project on reown Cloud at https://cloud.reown.com and obtain a new 
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
-<GithubBox name="wagmi Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-wagmi" description="Check the React wagmi example"></GithubBox>
+<GithubBox name="wagmi Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi" description="Check the React wagmi example"></GithubBox>
 
 <WagmiImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers5">
-<GithubBox name="Ethers v5 Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-ethers5" description="Check the React ethers v5 example"></GithubBox>
+<GithubBox name="Ethers v5 Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-ethers5" description="Check the React ethers v5 example"></GithubBox>
 
 <Ethers5Implementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers">
-<GithubBox name="Ethers Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-ethers" description="Check the React ethers example"></GithubBox>
+<GithubBox name="Ethers Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-ethers" description="Check the React ethers example"></GithubBox>
 
 <EthersImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
-<GithubBox name="Solana Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/react-solana" description="Check the React Solana example"></GithubBox>
+<GithubBox name="Solana Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-solana" description="Check the React Solana example"></GithubBox>
 
 <SolanaImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="bitcoin">
+<GithubBox name="Bitcoin Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-bitcoin" description="Check the React Bitcoin example"></GithubBox>
 
 <BitcoinImplementation />
 

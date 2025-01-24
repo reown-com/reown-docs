@@ -30,6 +30,30 @@ Choose one of these to get started.
 
 ## Installation
 
+### AppKit CLI
+
+Reown offers a dedicated CLI to set up a minimal version of AppKit in the easiest and quickest way possible.
+
+To do this, please run the command below. 
+
+```bash
+npx @reown/appkit-cli
+```
+
+After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
+
+1. **Project Name**: Enter the name for your project.
+2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
+3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
+
+After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`. 
+
+To fully configure your project, please obtain a `projectId` from the Reown Cloud Dashboard and update your project accordingly.
+
+**Refer to [this section](#cloud-configuration) for more information.**
+
+### Custom Installation
+
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 
 <PlatformTabItem value="wagmi">
@@ -78,7 +102,7 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
-<GithubBox name="wagmi Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/vue-wagmi" description="Check the Vue wagmi example"></GithubBox>
+<GithubBox name="wagmi Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/vue/vue-wagmi" description="Check the Vue wagmi example"></GithubBox>
 
 <WagmiImplementation />
 
@@ -89,16 +113,18 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers">
+<GithubBox name="ethers Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/vue/vue-ethers" description="Check the Vue ethers example"></GithubBox>
 
 <EthersImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
-<GithubBox name="Solana Example" url="https://github.com/reown-com/web-examples/tree/main/dapps/appkit/vue-solana" description="Check the Vue Solana example"></GithubBox>
+<GithubBox name="Solana Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/vue/vue-solana" description="Check the Vue Solana example"></GithubBox>
 <SolanaImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="bitcoin">
+<GithubBox name="Bitcoin Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/vue/vue-bitcoin" description="Check the Vue Bitcoin example"></GithubBox>
 
 <BitcoinImplementation />
 
