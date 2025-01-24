@@ -34,6 +34,30 @@ Choose one of these to get started.
 
 **If you prefer referring to a video tutorial for this, please [click here](#video-tutorial).**
 
+### AppKit CLI
+
+Reown offers a dedicated CLI to set up a minimal version of AppKit in the easiest and quickest way possible.
+
+To do this, please run the command below. 
+
+```bash
+npx @reown/appkit-cli
+```
+
+After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
+
+1. **Project Name**: Enter the name for your project.
+2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
+3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
+
+After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`. 
+
+To fully configure your project, please obtain a `projectId` from the Reown Cloud Dashboard and update your project accordingly.
+
+**Refer to [this section](#cloud-configuration) for more information.**
+
+### Custom Installation
+
 :::warning
 If you are setting up your React app, please **do not use** `npx create-react-app`, as it has been deprecated. Using it may cause dependency issues. 
 Instead, please use [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to create your React app. You can set it up by running `npm create vite@latest`.
