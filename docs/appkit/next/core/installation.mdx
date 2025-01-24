@@ -23,6 +23,8 @@ import SolanaPrograms from '../solana/about/programs.mdx'
 import BitcoinImplementation from '../bitcoin/about/implementation.mdx'
 import BitcoinModal from '../bitcoin/about/triggermodal.mdx'
 
+import GithubBox from '../../../components/GithubBox'
+
 # Next.js
 
 AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
@@ -107,6 +109,7 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">
+<GithubBox name="wagmi Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-wagmi-app-router" description="Check the Next wagmi example"></GithubBox>
 
 <WagmiImplementation />
 
@@ -117,17 +120,19 @@ Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new 
 
 </PlatformTabItem>
 <PlatformTabItem value="ethers">
+<GithubBox name="ethers Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-ethers-app-router" description="Check the Next ethers example"></GithubBox>
 
 <EthersImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="solana">
+<GithubBox name="Solana Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-solana-app-router" description="Check the Next Solana example"></GithubBox>
 
 <SolanaImplementation />
 
 </PlatformTabItem>
 <PlatformTabItem value="bitcoin">
-
+<GithubBox name="Bitcoin Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-bitcoin-app-router" description="Check the Next Bitcoin example"></GithubBox>
 <BitcoinImplementation />
 
 </PlatformTabItem>
