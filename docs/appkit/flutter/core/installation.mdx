@@ -188,28 +188,206 @@ Coinbase Wallet is enabled by default even if, in order to function properly, a 
 ### Phantom Wallet support
 
 :::caution important note
-Phantom Wallet support is available from `reown_appkit: ^1.4.0-beta02` and is currently in beta. Any feedback is appreciated.
+Phantom Wallet support is available from `reown_appkit: ^1.4.0-beta03` and is currently in beta. Any feedback is appreciated.
 :::
 
 Phantom Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet, instead it provides an internal API mechanism based on deep/universal links.
 
 This means that pairing topic, session topic, session events and other session-related features are not available when connecting to Phantom Wallet and the interaction is really basic. Dapp sends a request, Phantom Wallet responds. That's all.
 
-Furthermore, Phantom Wallet  deep/universal links mechanism supports interaction only with Solana blockchain.
+Furthermore, Phantom Wallet's deep/universal linking mechanism supports interaction exclusively with the Solana network. This means that if you have EVM networks configured in your AppKit instance, they will not be available for use after connecting with Phantom.
 
-In order to support Phantom Wallet interactions a few extra steps has to be performed, only if you haven't implemented [Link Mode](./link-mode.mdx) already.
+In order to support Phantom Wallet interactions a few extra steps has to be performed (only if you haven't implemented [Link Mode](./link-mode.mdx) already).
 
-1. First, be sure you already have your redirection back configuration properly set in place. See [Redirect to your dApp](./usage#redirect-to-your-dapp)
-2. Then you will have to implement your own Depp Link mechanism on Flutter side and when a link is received through it, you just call `await _appKitModal.dispatchEnvelope(link);`
+1. First, be sure you already have your redirection back property configure in your dApp's metadata. See [Redirect to your dApp](./usage#redirect-to-your-dapp)
+2. Then you will have to implement your own Deep Link mechanism on Flutter (and native) side so when a link is received through it, you would just call `await _appKitModal.dispatchEnvelope(link);`
     
-    As an example you can see how we do it on our Sample Dapp by following...
-    - [Android's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/android/app/src/main/kotlin/com/example/dapp/MainActivity.kt) (only `eventsChannel` is important Phantom wise)
-    - [iOS's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/ios/Runner/AppDelegate.swift)  (only `eventsChannel` is important Phantom wise)
-    - [Dart's specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/deep_link_handler.dart)  (only `eventsChannel` is important Phantom wise)
+As a guidance, here you can see how it's done in our sample dApp:
+
+##### First, on Flutter side we create an `EventChannel` where links are going to be received and passed to `dispatchEnvelope()`.
+
+<PlatformTabs
+	groupId="appkit_flutter_links"
+	activeOptions={["flutter"]}
+>
+<PlatformTabItem value="flutter">
+```javascript
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:reown_appkit/modal/i_appkit_modal_impl.dart';
+
+class DeepLinkHandler {
+  static const _eventChannel = EventChannel('com.exampledapp/events');
+  static late IReownAppKitModal _appKitModal;
+
+  static void init(IReownAppKitModal appKitModal) {
+    if (kIsWeb) return;
+
+    try {
+      _appKitModal = appKitModal;
+      _eventChannel.receiveBroadcastStream().listen(_onLink, onError: _onError);
+    } catch (e) {
+      debugPrint('[SampleDapp] checkInitialLink $e');
+    }
+  }
+
+  static void _onLink(dynamic link) async {
+    try {
+      _appKitModal.dispatchEnvelope(link);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static void _onError(dynamic error) {
+    print(error);
+  }
+}
+```
+</PlatformTabItem>
+</PlatformTabs>
+
+##### Then, on both native sides we leverage native APIs to capture the app opening link and send it to Flutter side.
+
+<PlatformTabs
+	groupId="appkit_flutter_links"
+	activeOptions={["ios","android"]}
+>
+<PlatformTabItem value="ios">
+```swift
+import Flutter
+import UIKit
+
+@main
+@objc class AppDelegate: FlutterAppDelegate {
+  private static let EVENTS_CHANNEL = "com.exampledapp/events"
+  private var eventsChannel: FlutterEventChannel?
+  private let linkStreamHandler = LinkStreamHandler()
+  
+  override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    GeneratedPluginRegistrant.register(with: self)
+    
+    let controller = window.rootViewController as! FlutterViewController
+    eventsChannel = FlutterEventChannel(name: AppDelegate.EVENTS_CHANNEL, binaryMessenger: controller.binaryMessenger)
+    eventsChannel?.setStreamHandler(linkStreamHandler)
+    
+    if let userActivityDictionary = launchOptions?[.userActivityDictionary] as? [String: Any],
+      let userActivity = userActivityDictionary["UIApplicationLaunchOptionsUserActivityKey"] as? NSUserActivity,
+      userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+      
+      handleIncomingUniversalLink(userActivity: userActivity)
+    }
+    
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+  
+  override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    return linkStreamHandler.handleLink(url.absoluteString)
+  }
+  
+  override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+      handleIncomingUniversalLink(userActivity: userActivity)
+      return true
+    }
+    
+    return false
+  }
+  
+  private func handleIncomingUniversalLink(userActivity: NSUserActivity) {
+    if let url = userActivity.webpageURL {
+      print("App launched with Universal Link: \(url.absoluteString)")
+      let _ = linkStreamHandler.handleLink(url.absoluteString)
+    }
+  }
+}
+
+class LinkStreamHandler: NSObject, FlutterStreamHandler {
+  var eventSink: FlutterEventSink?
+  var queuedLinks = [String]()
+  
+  func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+    self.eventSink = events
+    queuedLinks.forEach({ events($0) })
+    queuedLinks.removeAll()
+    return nil
+  }
+  
+  func onCancel(withArguments arguments: Any?) -> FlutterError? {
+    self.eventSink = nil
+    return nil
+  }
+  
+  func handleLink(_ link: String) -> Bool {
+    guard let eventSink = eventSink else {
+      queuedLinks.append(link)
+      return false
+    }
+    eventSink(link)
+    return true
+  }
+}
+```
+</PlatformTabItem>
+<PlatformTabItem value="android">
+```kt
+package dapp.example
+
+import io.flutter.embedding.android.FlutterActivity
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import io.flutter.plugin.common.EventChannel
+
+class MainActivity: FlutterActivity() {
+  private val eventsChannel = "com.exampledapp/events"
+  private var linksReceiver: BroadcastReceiver? = null
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    EventChannel(flutterEngine?.dartExecutor?.binaryMessenger, eventsChannel).setStreamHandler(
+      object : EventChannel.StreamHandler {
+        override fun onListen(args: Any?, events: EventChannel.EventSink) {
+          linksReceiver = createChangeReceiver(events)
+        }
+        override fun onCancel(args: Any?) {
+          linksReceiver = null
+        }
+      }
+    )
+  }
+
+  override fun onNewIntent(intent: Intent) {
+    super.onNewIntent(intent)
+    if (intent.action === Intent.ACTION_VIEW) {
+      linksReceiver?.onReceive(this.applicationContext, intent)
+    }
+  }
+
+  fun createChangeReceiver(events: EventChannel.EventSink): BroadcastReceiver? {
+    return object : BroadcastReceiver() {
+      override fun onReceive(context: Context, intent: Intent) {
+        val dataString = intent.dataString ?:
+        events.error("UNAVAILABLE", "Link unavailable", null)
+        events.success(dataString)
+      }
+    }
+  }
+}
+```
+</PlatformTabItem>
+</PlatformTabs>
+
+Links to full examples:
+
+- [Android's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/android/app/src/main/kotlin/com/example/dapp/MainActivity.kt) (only `eventsChannel` is important Phantom wise)
+- [iOS's platform specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/ios/Runner/AppDelegate.swift)  (only `eventsChannel` is important Phantom wise)
+- [Dart's specific code](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/deep_link_handler.dart)  (only `eventsChannel` is important Phantom wise)
 
 
-
-_Constructing a Solana transaction would depend of the library/package of your choice but in [*our sample dApp's code*](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/crypto/helpers.dart#L170) you can see how we do it using `solana_web3` package._
+_Constructing a Solana transaction would depend on the library/package of your choice but in [*our sample dApp's code*](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/base/lib/utils/crypto/helpers.dart#L170) you can see how we do it using `solana_web3` package._
 
 #### Disable Phantom Wallet
 
