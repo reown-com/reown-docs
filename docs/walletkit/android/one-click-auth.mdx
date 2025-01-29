@@ -46,7 +46,7 @@ To interact with authentication requests, build authentication objects (Wallet.M
 Example:
 
 ```kotlin
-ooverride val onSessionAuthenticate: ((Wallet.Model.SessionAuthenticate, Wallet.Model.VerifyContext) -> Unit)
+override val onSessionAuthenticate: ((Wallet.Model.SessionAuthenticate, Wallet.Model.VerifyContext) -> Unit)
   get() = { sessionAuthenticate, verifyContext ->
   val auths = mutableListOf<Wallet.Model.Cacao>()
 
@@ -96,7 +96,7 @@ WalletKit.approveSessionAuthenticate(approveProposal,
 If the authentication request cannot be approved or if the user chooses to reject it, use the rejectSessionAuthenticate method.
 
 ```kotlin
-val rejectParams = Wallet.Params.rejectSessionAuthenticate(
+val rejectParams = Wallet.Params.RejectSessionAuthenticate(
     id = sessionAuthenticate.id,
     reason = "Reason"
 )
