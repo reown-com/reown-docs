@@ -3,21 +3,13 @@ import wcGlassImage from '../../static/assets/wc-logo-glass.png'
 import Link from '@docusaurus/Link'
 
 export const CloudBanner = props => {
-  const handleAnalytics = () => {
-    const props = {
-      path: window.location.pathname
-    }
-    plausible('cloud-banner-click', {
-      props
-    })
-  }
   return (
     <div className="cloud__wrapper">
       <div className="cloud__text-container">
         <h2>Don't have a project ID?</h2>
         <p>Head over to Reown Cloud and create a new project now!</p>
       </div>
-      <Link to="https://cloud.reown.com" target="_blank" onClick={handleAnalytics}>
+      <Link to="https://cloud.reown.com/?utm_source=cloud_banner&utm_medium=docs&utm_campaign=backlinks" target="_blank">
         Get started
         <svg
           xmlns="http://www.w3.org/2000/svg"
