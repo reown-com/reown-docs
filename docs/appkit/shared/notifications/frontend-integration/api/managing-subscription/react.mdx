@@ -13,7 +13,7 @@ const { unsubscribe, isLoading: isUnsubscribing } = useUnsubscribe()
 // get subscription of current user to current dapp
 const { data: subscription, getSubscription } = useSubscription()
 
-// getSubscription can be used to get information about different dapps programatically
+// getSubscription can be used to get information about different dapps programmatically
 const subscriptionToSameDappFromDifferentAccount = getSubscription(differentAccount)
 const subscriptionToDifferentDappFromSameAccount = getSubscription(undefined, differentDappDomain)
 const subscriptionToDifferentDappFromDifferentAccount = getSubscription(
