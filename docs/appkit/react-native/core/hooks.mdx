@@ -26,7 +26,7 @@ export default function Component() {
 
   //...
 }
-````
+```
 </PlatformTabItem>
 
 <PlatformTabItem value="ethers">
@@ -40,7 +40,7 @@ export default function Component() {
 
   //...
 }
-````
+```
 
 </PlatformTabItem>
 
@@ -55,7 +55,7 @@ export default function Component() {
 
   //...
 }
-````
+```
 </PlatformTabItem>
 
 </PlatformTabs>
@@ -64,7 +64,7 @@ You can also select the modal's view when calling the `open` function
 
 ```ts
 open({ view: 'Account' })
-````
+```
 
 List of views you can select
 
@@ -102,7 +102,7 @@ Get the current value of the modal's state
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "ethers5"]}>
 
 <PlatformTabItem value="wagmi">
-  ```ts
+```ts
 import { useAppKitState } from '@reown/appkit-wagmi-react-native'
 
 const { open, selectedNetworkId } = useAppKitState()
@@ -114,7 +114,7 @@ const { open, selectedNetworkId } = useAppKitState()
 import { useAppKitState } from '@reown/appkit-ethers-react-native'
 
 const { open, selectedNetworkId } = useAppKitState()
-````
+```
 
 </PlatformTabItem>
 
@@ -123,7 +123,7 @@ const { open, selectedNetworkId } = useAppKitState()
 import { useAppKitState } from '@reown/appkit-ethers5-react-native'
 
 const { open, selectedNetworkId } = useAppKitState()
-````
+```
 </PlatformTabItem>
 
 </PlatformTabs>
@@ -146,19 +146,20 @@ The modal state consists of two reactive values:
   ]}
 />
 
-
 ## useAppKitEvents
 
-Get the last tracked modal event
+Get the last tracked modal event. The hook accepts an optional callback function that is executed when the event is triggered.
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "ethers5"]}>
 
 <PlatformTabItem value="wagmi">
-  ```ts
+```ts
 import { useAppKitEvents } from '@reown/appkit-wagmi-react-native'
 
-const event = useAppKitEvents()
-````
+const event = useAppKitEvents(event => {
+  // your code here
+})
+```
 
 </PlatformTabItem>
 
@@ -166,16 +167,61 @@ const event = useAppKitEvents()
 ```ts
 import { useAppKitEvents } from '@reown/appkit-ethers-react-native'
 
-const event = useAppKitEvents()
-````
+const event = useAppKitEvents(event => {
+  // your code here
+})
+```
+
 </PlatformTabItem>
 
 <PlatformTabItem value="ethers5">
 ```ts
 import { useAppKitEvents } from '@reown/appkit-ethers5-react-native'
 
-const event = useAppKitEvents()
-````
+const event = useAppKitEvents(event => {
+  // your code here
+})
+```
+
+</PlatformTabItem>
+
+</PlatformTabs>
+
+## useAppKitEventSubscription
+
+Subscribe to modal specific events
+
+<PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers", "ethers5"]}>
+
+<PlatformTabItem value="wagmi">
+```ts
+import { useAppKitEventSubscription } from '@reown/appkit-wagmi-react-native'
+
+useAppKitEventSubscription('MODAL_OPEN', newEvent => {
+  // your code here
+});
+```
+
+</PlatformTabItem>
+
+<PlatformTabItem value="ethers">
+```ts
+import { useAppKitEventSubscription } from '@reown/appkit-ethers-react-native'
+
+useAppKitEventSubscription('MODAL_OPEN', newEvent => {
+  // your code here
+});
+```
+</PlatformTabItem>
+
+<PlatformTabItem value="ethers5">
+```ts
+import { useAppKitEventSubscription } from '@reown/appkit-ethers5-react-native'
+
+useAppKitEventSubscription('MODAL_OPEN', newEvent => {
+  // your code here
+});
+```
 
 </PlatformTabItem>
 
