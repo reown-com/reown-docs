@@ -156,7 +156,9 @@ Get the last tracked modal event. The hook accepts an optional callback function
 ```ts
 import { useAppKitEvents } from '@reown/appkit-wagmi-react-native'
 
-const event = useAppKitEvents()
+const event = useAppKitEvents(event => {
+  // your code here
+})
 ```
 
 </PlatformTabItem>
@@ -165,7 +167,9 @@ const event = useAppKitEvents()
 ```ts
 import { useAppKitEvents } from '@reown/appkit-ethers-react-native'
 
-const event = useAppKitEvents()
+const event = useAppKitEvents(event => {
+  // your code here
+})
 ```
 
 </PlatformTabItem>
@@ -174,7 +178,9 @@ const event = useAppKitEvents()
 ```ts
 import { useAppKitEvents } from '@reown/appkit-ethers5-react-native'
 
-const event = useAppKitEvents()
+const event = useAppKitEvents(event => {
+  // your code here
+})
 ```
 
 </PlatformTabItem>
