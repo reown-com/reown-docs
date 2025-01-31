@@ -48,9 +48,10 @@ const advanced = {
           type: 'category',
           label: 'RPC Reference',
           items: [
-            'advanced/multichain/rpc-reference/cosmos-rpc',
             'advanced/multichain/rpc-reference/ethereum-rpc',
             'advanced/multichain/rpc-reference/solana-rpc',
+            'advanced/multichain/rpc-reference/polkadot-sdk-rpc',
+            'advanced/multichain/rpc-reference/cosmos-rpc',
             'advanced/multichain/rpc-reference/near-rpc',
             'advanced/multichain/rpc-reference/starknet-rpc',
             'advanced/multichain/rpc-reference/stellar-rpc',
@@ -235,7 +236,7 @@ module.exports = {
               label: 'Features',
               collapsed: false,
               collapsible: true,
-              link:{
+              link: {
                 type: 'doc',
                 id: 'appkit/features/index'
               },
@@ -250,7 +251,11 @@ module.exports = {
                   label: 'Telegram Mini Apps',
                   id: 'appkit/features/telegram-mini-apps'
                 },
-                { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
+                {
+                  type: 'doc',
+                  label: 'Sponsored Transactions',
+                  id: 'appkit/features/sponsored-transactions'
+                }
               ]
             },
             {
@@ -271,28 +276,64 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Email & Social Login', id: 'appkit/authentication/socials' },
-                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' },
+                {
+                  type: 'doc',
+                  label: 'One-Click Auth',
+                  id: 'appkit/authentication/one-click-auth'
+                },
                 {
                   type: 'doc',
                   label: 'Sign in with X (SIWX)',
                   id: 'appkit/features/siwx/default'
-                },
+                }
               ]
             },
             {
               type: 'category',
               label: 'Recipes',
-              collapsed:true,
+              collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
-                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},    
-                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'},
-                { type: 'doc', label: 'EVM Transactions using Ethers', id: 'appkit/recipes/ethers-send-transaction'},
-                { type: 'doc', label: 'Solana Transactions using AppKit', id: 'appkit/recipes/solana-send-transaction'},
-                { type: 'doc', label: 'Bitcoin Transactions using AppKit', id: 'appkit/recipes/bitcoin-send-transaction'},
-                { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' },
-                { type: 'doc', label: 'Sponsoring Transaction with our Paymaster', id: 'appkit/recipes/sponsoring-first-transaction' } 
+                {
+                  type: 'doc',
+                  label: 'Build a Telegram Mini App',
+                  id: 'appkit/recipes/telegram-mini-app'
+                },
+                {
+                  type: 'doc',
+                  label: 'Configure Virtual TestNets',
+                  id: 'appkit/recipes/tenderly-virtual-testnets'
+                },
+                {
+                  type: 'doc',
+                  label: 'EVM Transactions using Wagmi',
+                  id: 'appkit/recipes/wagmi-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'EVM Transactions using Ethers',
+                  id: 'appkit/recipes/ethers-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'Solana Transactions using AppKit',
+                  id: 'appkit/recipes/solana-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'Bitcoin Transactions using AppKit',
+                  id: 'appkit/recipes/bitcoin-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'Support Send Calls',
+                  id: 'appkit/recipes/switching-to-send-calls'
+                },
+                {
+                  type: 'doc',
+                  label: 'Sponsoring Transaction with our Paymaster',
+                  id: 'appkit/recipes/sponsoring-first-transaction'
+                }
               ]
             },
             {
@@ -310,7 +351,7 @@ module.exports = {
               label: 'Migration',
               collapsed: true,
               collapsible: true,
-              link:{
+              link: {
                 type: 'doc',
                 id: 'appkit/migration/index'
               },
@@ -419,7 +460,11 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/react/transactions/onramp', 'appkit/react/transactions/swaps', 'appkit/react/transactions/sponsored-transactions']
+          items: [
+            'appkit/react/transactions/onramp',
+            'appkit/react/transactions/swaps',
+            'appkit/react/transactions/sponsored-transactions'
+          ]
         },
         {
           type: 'category',
@@ -518,7 +563,11 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/next/transactions/onramp', 'appkit/next/transactions/swaps', 'appkit/next/transactions/sponsored-transactions']
+          items: [
+            'appkit/next/transactions/onramp',
+            'appkit/next/transactions/swaps',
+            'appkit/next/transactions/sponsored-transactions'
+          ]
         },
         {
           type: 'category',
@@ -614,7 +663,11 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/vue/transactions/onramp', 'appkit/vue/transactions/swaps', 'appkit/vue/transactions/sponsored-transactions']
+          items: [
+            'appkit/vue/transactions/onramp',
+            'appkit/vue/transactions/swaps',
+            'appkit/vue/transactions/sponsored-transactions'
+          ]
         },
         {
           type: 'category',
@@ -710,7 +763,11 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/javascript/transactions/onramp', 'appkit/javascript/transactions/swaps', 'appkit/javascript/transactions/sponsored-transactions']
+          items: [
+            'appkit/javascript/transactions/onramp',
+            'appkit/javascript/transactions/swaps',
+            'appkit/javascript/transactions/sponsored-transactions'
+          ]
         },
         {
           type: 'category',
