@@ -82,24 +82,6 @@ createAppKit({
 })
 ```
 
-## tokens
-
-You can select tokens for AppKit to show the user's balance of. Each key represents the chain id of the token's blockchain.
-
-```ts
-createAppKit({
-  //...
-  tokens: {
-    1: {
-      address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
-    },
-    137: {
-      address: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
-    }
-  }
-})
-```
-
 ## customWallets
 
 Add custom wallets to the modal's main view. `customWallets` is an array of objects, where each object contains specific information of a custom wallet.
