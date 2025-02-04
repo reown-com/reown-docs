@@ -6,6 +6,7 @@ In this example we will create a new file called `context/appkit.tsx` outside ou
 ```tsx
 'use client'
 
+import { createContext } from 'react'
 import { createAppKit } from '@reown/appkit/react'
 import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5'
 import { mainnet, arbitrum } from '@reown/appkit/networks'
@@ -22,7 +23,7 @@ const metadata = {
 }
 
 // 3. Create the AppKit instance
-createAppKit({
+const appkit = createAppKit({
   adapters: [new Ethers5Adapter()],
   metadata: metadata,
   networks: [mainnet, arbitrum],
@@ -32,10 +33,12 @@ createAppKit({
   }
 })
 
-export function AppKit() {
+const AppKitContext = createContext(appkit);
+
+export function AppKit({ children }: { children: React.ReactNode }) {
   return (
-    <YourApp /> //make sure you have configured the <appkit-button> inside
-  )
+    <AppKitContext.Provider value={appkit}>{children}</AppKitContext.Provider>
+  );
 }
 ```
 
