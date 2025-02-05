@@ -76,3 +76,219 @@ const modal = createAppKit({
 </PlatformTabItem>
 
 </PlatformTabs>
+
+## Ethereum Provider
+
+The Ethereum Provider implementation remains the same as before. Below is an example of how you can configure it:
+
+```javascript
+import { EthereumProvider } from '@walletconnect/ethereum-provider'
+
+const provider = await EthereumProvider.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+  showQrModal: true,
+  optionalChains: [1, 137, 2020],
+
+  /*Optional - Add custom RPCs for each supported chain*/
+  rpcMap: {
+    1: 'mainnet.rpc...',
+    137: 'polygon.rpc...'
+  }
+})
+
+
+// Connect EthereumProvider, this will open modal
+await provider.connect()
+```
+
+### Changes Required
+
+Projects and developers don’t need to change anything in their configuration - upgrading the Ethereum Provider is sufficient. Projects will automatically receive the new QR modal UI.
+
+:::note
+Not all `themeVariables`will be compatible with the new UI, as `AppKit` uses a different design system than `walletConnectModal`
+:::
+
+### Examples
+
+Below are the examples for the corresponding library/programming language. 
+
+
+1. [**HTML**](https://github.com/reown-com/appkit/tree/main/examples/html-ep)
+2. [**React**](https://github.com/reown-com/appkit/tree/main/examples/react-ep)
+3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ep-app-router)
+4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ep)
+
+## UniversalProvider with AppKit 
+
+Here's how you can configure AppKit with `UniversalProvider`.
+
+```javascript
+// NEW IMPLEMENTATION
+
+import { UniversalProvider } from '@walletconnect/universal-provider'
+import { createAppKit) from '@reown/appkit'
+
+const provider = await UniversalProvider.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+})
+
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [mainnet, solana]
+})
+
+
+// listen to display_uri event and feed modal with uri
+provider.on('display_uri', (uri: string) => {
+  modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+})
+
+// Connect provider, this will trigger display_uri event
+await provider.connect({
+  optionalNamespaces: {
+    eip155: {
+      methods: [
+        'eth_sendTransaction',
+        'eth_signTransaction',
+        'eth_sign',
+        'personal_sign',
+        'eth_signTypedData'
+      ],
+      chains: ['eip155:1'],
+      events: ['chainChanged', 'accountsChanged']
+    },
+    solana: {
+      methods: ['solana_signMessage', 'solana_signTransaction'],
+      chains: ['solana:mainnet'],
+      events: ['chainChanged', 'accountsChanged']
+    }
+  }
+})
+
+// OLD IMPLEMENTATION
+
+import { UniversalProvider } from '@walletconnect/universal-provider'
+import { WalletConnectModal } from '@walletconnect/modal'
+
+
+const provider = await UniversalProvider.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+})
+
+const modal = new WalletConnectModal({
+  projectId: 'YOUR_PROJECT_ID',
+  chains: ['eip155:1', 'solana:mainnet']
+})
+
+
+// listen to display_uri event and feed modal with uri
+provider.on('display_uri', (uri: string) => {
+  modal.openModal({ uri })
+})
+
+// Connect provider, this will trigger display_uri event
+await provider.connect({
+  optionalNamespaces: {
+    eip155: {
+      methods: [
+        'eth_sendTransaction',
+        'eth_signTransaction',
+        'eth_sign',
+        'personal_sign',
+        'eth_signTypedData'
+      ],
+      chains: ['eip155:1'],
+      events: ['chainChanged', 'accountsChanged']
+    },
+    solana: {
+      methods: ['solana_signMessage', 'solana_signTransaction'],
+      chains: ['solana:mainnet'],
+      events: ['chainChanged', 'accountsChanged']
+    }
+  }
+})
+```
+
+### Changes
+
+For projects that are currently using the `UniversalProvider` with `WalletConnectModal` there are two options for you to upgrade. 
+
+#### Option 1
+
+Upgrade to AppKit Basic and pass in the `UniversalProvider`. 
+
+```javascript
+const provider = await UniversalProvider.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+})
+
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [mainnet, solana]
+  universalProvider: provider
+})
+```
+
+#### Option 2
+
+Replace `WalletConnectModal` with `AppKit`. 
+
+```javascript
+//Old Code
+/* highlight-delete-start */
+const modal = new WalletConnectModal({
+  projectId: 'YOUR_PROJECT_ID',
+  chains: ['eip155:1', 'solana:mainnet']
+})
+
+provider.on('display_uri', (uri: string) => {
+  modal.openModal({ uri })
+})
+/* highlight-delete-end */
+
+//New Code
+/* highlight-add-start */
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [mainnet, solana]
+})
+
+provider.on('display_uri', (uri: string) => {
+  modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+})
+/* highlight-add-end */
+```
+
+### Examples
+
+Below are the examples for the corresponding library/programming language. 
+
+1. [**HTML**](https://github.com/reown-com/appkit/tree/main/examples/html-ak-basic-up)
+2. [**React**](https://github.com/reown-com/appkit/tree/main/examples/react-ak-basic-up)
+3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-up-app-router)
+4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-up)
