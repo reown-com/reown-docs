@@ -217,12 +217,12 @@ return (
 For more information on sponsoring calls, read more in [our docs](../features/sponsored-transactions.mdx).
 
 
-# Troubleshooting
+## Troubleshooting
 
 If you're running into issues getting a transaction to be successfully
 sponsored, it's best to isolate issues. So to get started, first: 
 
-## Setup Environment
+### Setup Environment
 
 1. Use AppKit's Embedded Smart Wallet: Login using social login (Eg gmail) or
 your email
@@ -232,7 +232,7 @@ the `capabilities` object and remove any extra conditional logic.
 
 3. Keep the network tab on your browser console open
 
-## Ensure a call to the paymaster is being made
+### Ensure a call to the paymaster is being made
 
 Since the embedded wallet lives on your browser, you can observe the network
 calls it makes.
@@ -249,16 +249,16 @@ paymasterService: {
 }
 ```
 
-## Paymaster is called but returns an error
+### Paymaster is called but returns an error
 
-### No calls to specified contract made
+#### No calls to specified contract made
 
 1. Ensure that the chain ID provided in the paymaster URL matches the network
 you are on
 
 2. Ensure you are targetting the contract and method specified in your policy
 
-## Not sure if everything's set up correctly?
+### Not sure if everything's set up correctly?
 
 1. Ensure a call to the Paymaster is being made via the network tab
 2. Ensure the response from the call is not `0x` or an `error`. 
