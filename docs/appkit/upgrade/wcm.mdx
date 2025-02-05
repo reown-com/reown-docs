@@ -8,7 +8,22 @@ import TabItem from '@theme/TabItem'
 
 **WalletConnect Modal will soon be deprecated.** Consequently, projects and developers need to upgrade to Reown AppKit Basic. The most basic version of Reown AppKit will contain the traditional WalletConnect Modal with a QR code that users can scan and connect their wallets to. 
 
-This guide will show you how to upgrade to the most basic version of Reown AppKit.
+<img src="/img/appkit-basic.gif" />
+
+This guide will show you how to upgrade to the most basic version of Reown AppKit. There are three different categories that this guide will be addressing, they are:
+
+1. [**AppKit Basic**](#appkit-basic)
+2. [**Ethereum Provider**](#ethereum-provider)
+3. [**Universal Provider with AppKit**](#universalprovider-with-appkit)
+4. [**Sign Client with AppKit**](#sign-client-with-appkit)
+
+## Installation
+
+You first need to install the AppKit package in order to get started. You can do this by running the command below.
+
+```bash npm2yarn
+npm install @reown/appkit
+```
 
 ## AppKit Basic
 
@@ -77,6 +92,8 @@ const modal = createAppKit({
 
 </PlatformTabs>
 
+You can also refer to the "Multichain" section under AppKit "Core" for installation. [Click here](/appkit/react/core/multichain?platform=basic) to learn more.
+
 ### Examples
 
 Below are the examples for the corresponding library/programming language. 
@@ -142,7 +159,7 @@ Here's how you can configure AppKit with `UniversalProvider`.
 // NEW IMPLEMENTATION
 
 import { UniversalProvider } from '@walletconnect/universal-provider'
-import { createAppKit) from '@reown/appkit'
+import { createAppKit } from '@reown/appkit'
 
 const provider = await UniversalProvider.init({
   projectId: 'YOUR_PROJECT_ID',
@@ -357,7 +374,7 @@ const { uri, approval } = await signClient.connect({
 // New Implementation
 
 import { SignClient } from '@walletconnect/sign-client'
-import { createAppKit) from '@reown/appkit'
+import { createAppKit } from '@reown/appkit'
 
 const signClient = await SignClient.init({
   projectId: 'YOUR_PROJECT_ID',
