@@ -292,3 +292,181 @@ Below are the examples for the corresponding library/programming language.
 2. [**React**](https://github.com/reown-com/appkit/tree/main/examples/react-ak-basic-up)
 3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-up-app-router)
 4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-up)
+
+## Sign Client with AppKit
+
+Below is how you can use `SignClient` with AppKit**.
+
+```javascript
+// Old Implementation
+/*highlight-delete-start*/
+import { SignClient } from '@walletconnect/sign-client'
+import { WalletConnectModal } from '@walletconnect/modal'
+
+
+const signClient = await SignClient.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+})
+
+const modal = new WalletConnectModal({
+  projectId: 'YOUR_PROJECT_ID',
+  chains: ['eip155:1']
+})
+
+// connect signClient and feed uri to modal
+const { uri, approval } = await signClient.connect({
+    requiredNamespaces: {
+      eip155: {
+        methods: [
+          'eth_sendTransaction',
+          'eth_signTransaction',
+          'eth_sign',
+          'personal_sign',
+          'eth_signTypedData'
+        ],
+        chains: ['eip155:1'],
+        events: ['chainChanged', 'accountsChanged']
+      }
+    }
+  })
+
+  if (uri) {
+    modal.openModal({ uri })
+    const session = await approval()
+    modal.closeModal()
+  }
+/*highlight-delete-end*/
+
+/*highlight-add-start*/
+
+// New Implementation
+
+import { SignClient } from '@walletconnect/sign-client'
+import { createAppKit) from '@reown/appkit'
+
+const signClient = await SignClient.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+})
+
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [mainnet]
+})
+
+
+// connect signClient and feed uri to modal
+const { uri, approval } = await signClient.connect({
+    requiredNamespaces: {
+      eip155: {
+        methods: [
+          'eth_sendTransaction',
+          'eth_signTransaction',
+          'eth_sign',
+          'personal_sign',
+          'eth_signTypedData'
+        ],
+        chains: ['eip155:1'],
+        events: ['chainChanged', 'accountsChanged']
+      }
+    }
+  })
+
+  if (uri) {
+    modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+    const session = await approval()
+    modal.close()
+  }
+  /*highlight-add-end*/
+```
+
+### Changes
+
+For projects and developers that are currently using the `SignClient` with `WalletConnectModal` there is one option for you to upgrade. 
+
+#### Option 1
+
+Replace `WalletConnectModal` with AppKit. Below is what the implementation would look like. 
+
+```javascript
+// Old Code
+/*highlight-delete-start*/
+const modal = new WalletConnectModal({
+  projectId: 'YOUR_PROJECT_ID',
+  chains: ['eip155:1', 'solana:mainnet']
+})
+
+const { uri, approval } = await signClient.connect({
+    requiredNamespaces: {
+      eip155: {
+        methods: [
+          'eth_sendTransaction',
+          'eth_signTransaction',
+          'eth_sign',
+          'personal_sign',
+          'eth_signTypedData'
+        ],
+        chains: ['eip155:1'],
+        events: ['chainChanged', 'accountsChanged']
+      }
+    }
+  })
+
+  if (uri) {
+    modal.openModal({ uri })
+    const session = await approval()
+    modal.closeModal()
+  }
+/*highlight-delete-end*/
+
+// New Code
+/*highlight-add-start*/
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [mainnet]
+})
+
+// connect signClient and feed uri to modal
+const { uri, approval } = await signClient.connect({
+    requiredNamespaces: {
+      eip155: {
+        methods: [
+          'eth_sendTransaction',
+          'eth_signTransaction',
+          'eth_sign',
+          'personal_sign',
+          'eth_signTypedData'
+        ],
+        chains: ['eip155:1'],
+        events: ['chainChanged', 'accountsChanged']
+      }
+    }
+  })
+
+  if (uri) {
+    modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+    const session = await approval()
+    modal.close()
+  }
+/*highlight-add-end*/
+```
+
+### Examples
+
+Below are the examples for the corresponding library/programming language. 
+
+1. [HTML](https://github.com/reown-com/appkit/tree/main/examples/html-ak-basic-sign-client)
+2. [React](https://github.com/reown-com/appkit/tree/main/examples/react-ak-basic-sign-client)
+3. [NextJS](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-sign-client-app-router)
+4. [Vue](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-sign-client)
