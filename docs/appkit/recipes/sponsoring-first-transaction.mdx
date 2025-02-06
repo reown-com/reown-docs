@@ -217,6 +217,57 @@ return (
 For more information on sponsoring calls, read more in [our docs](../features/sponsored-transactions.mdx).
 
 
+## Troubleshooting
+
+If you're running into issues getting a transaction to be successfully
+sponsored, it's best to isolate issues. So to get started, first: 
+
+### Setup Environment
+
+1. Use AppKit's Embedded Smart Wallet: Login using social login (Ex. Gmail) or
+your email
+
+2. Ensure the code performs send calls as simply as possible., eg: hardcode
+the `capabilities` object and remove any extra conditional logic.
+
+3. Keep the network tab on your browser console open
+
+### Ensure a call to the paymaster is being made
+
+Since the embedded wallet lives on your browser, you can observe the network
+calls it makes.
+
+If after performing the `sendCalls` and approving it in the AppKit Embedded
+Wallet, there is no call to the paymaster URL provided. It likely means
+that the `capabilities` were not filled in properly.
+
+Ensure the capabilities object you're sending looks like this:
+
+```ts
+paymasterService: {
+  url: 'https://paymaster-api.reown.com/<CHAIN_ID>/rpc?projectId=<YOUR_PROJECT_ID>',
+}
+```
+
+### Paymaster was called but returned an error
+
+#### No calls were made to the specified contract.
+
+1. Ensure that the chain ID provided in the paymaster URL matches the network
+you are on
+
+2. Ensure you are targeting the contract and method specified in your policy
+
+### Not sure if everything's set up correctly?
+
+1. Confirm a call to the Paymaster is being made via the network tab
+2. Ensure the response from the call is not `0x` or an `error`. 
+3. Verify the call to the `bundler` (also viewed in the network tab) that is
+performing `sendUserOperation` has filled the `paymasterData` field
+4. Grab the user op hash (result from `sendUserOperation`) and paste it into a
+block explorer that supports searching by User Op Hashes like BlockScout 
+5. Ensure the paymaster sponsor field is filled
+
 ---
 
 ## Links
