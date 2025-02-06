@@ -13,8 +13,7 @@ Apps need to pass `gas` as null, while sending a transaction to allow proper gas
 When sending a transaction, you need to:
 1. Check if the required chain has enough funds to complete the transaction
 2. If not, use the `prepare` method to generate necessary bridging transactions
-3. Check the status of the bridging transactions and wait for them to be completed
-4. Once the bridging transactions are completed, execute the initial transaction
+3. Use `execute` method to broadcast bridging and initial transactions and wait for it to be completed
 
 The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
 
