@@ -302,7 +302,7 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Web3Modal to Reown AppKit', id: 'appkit/upgrade/from-w3m-to-reown' },
-                { type: 'doc', label: 'WalletConnect Modal to AppKit Basic', id: 'appkit/upgrade/wcm' }
+                //{ type: 'doc', label: 'WalletConnect Modal to AppKit Basic', id: 'appkit/upgrade/wcm' }
               ]
             },
             {
