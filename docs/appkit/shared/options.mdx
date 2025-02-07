@@ -96,6 +96,26 @@ createAppKit({
 </PlatformTabItem>
 </PlatformTabs>
 
+## defaultAccountTypes
+
+`defaultAccountTypes` allows you to configure the default account selected for the specified networks in AppKit. For example, if you want your EVM networks to use an EOA account by default, you can configure it as shown in the code below.
+
+```ts
+createAppKit({
+  //...
+  defaultAccountTypes: {eip155:'eoa'}
+})
+```
+Here are all the options you have for each network identifier or networks. Network identifier or networks available are `eip155` for EVM chains, `solana` for Solana, `bip122` for Bitcoin, and `polkadot` for Polkadot.
+```ts
+type DefaultAccountTypes = {
+    eip155: "eoa" | "smartAccount";
+    solana: "eoa";
+    bip122: "payment" | "ordinal" | "stx";
+    polkadot: "eoa";
+}
+```
+
 ## featuredWalletIds
 
 Select wallets that are going to be shown on the modal's main view. Default wallets are MetaMask and Trust Wallet.
