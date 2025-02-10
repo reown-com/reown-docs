@@ -144,7 +144,7 @@ data class FeeEstimatedTransaction(
 
 sealed class PrepareSuccess {
   data class Available(
-    val fulfilmentId: String,
+    val orchestratorId: String,
     val checkIn: Long,
     val transactions: List<Transaction>,
     val initialTransaction: Transaction,
@@ -181,7 +181,7 @@ sealed class PrepareError : Model() {
 }
 
 data class TransactionsDetails(
-  var fulfilmentDetails: List<TransactionDetails>,
+  var details: List<TransactionDetails>,
   var initialDetails: TransactionDetails,
   var bridgeFees: List<TransactionFee>,
   var localBridgeTotal: Amount,
