@@ -179,7 +179,7 @@ const modal = createAppKit({
 
 // listen to display_uri event and feed modal with uri
 provider.on('display_uri', (uri: string) => {
-  modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+  modal.open({ uri })
 })
 
 // Connect provider, this will trigger display_uri event
@@ -305,7 +305,7 @@ const modal = createAppKit({
 })
 
 provider.on('display_uri', (uri: string) => {
-  modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+  modal.open({ uri })
 })
 /* highlight-add-end */
 ```
@@ -410,7 +410,7 @@ const { uri, approval } = await signClient.connect({
   })
 
   if (uri) {
-    modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+    modal.open({ uri })
     const session = await approval()
     modal.close()
   }
@@ -481,7 +481,7 @@ const { uri, approval } = await signClient.connect({
   })
 
   if (uri) {
-    modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+    modal.open({ uri })
     const session = await approval()
     modal.close()
   }
