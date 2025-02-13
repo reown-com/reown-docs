@@ -58,7 +58,8 @@ const config = {
     }
   ],
   title: 'Reown Docs',
-  tagline: 'Reown gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.',
+  tagline:
+    'Reown gives developers the tools to build user experiences that make digital ownership effortless, intuitive, and secure.',
   url: 'https://docs.reown.com/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -112,9 +113,9 @@ const config = {
   themeConfig: {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     algolia: {
-      appId: 'KEO8ND6AUT',
-      apiKey: '5921626237dc9040afc258af25d4e77d',
-      indexName: 'walletconnect',
+      appId: 'FNT2FF5Z1N',
+      apiKey: '858103ff345e1d20a487ee99ea8fa03a',
+      indexName: 'reown',
       contextualSearch: true
     },
     mermaid: {
@@ -227,7 +228,6 @@ const config = {
       defaultMode: 'dark',
       disableSwitch: true,
       respectPrefersColorScheme: false
-      
     },
     prism: {
       darkTheme: darkCodeTheme,
