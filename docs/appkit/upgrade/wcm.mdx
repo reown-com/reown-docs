@@ -1,12 +1,12 @@
 ---
-title: WalletConnect Modal to Reown AppKit Basic
+title: WalletConnect Modal to Reown AppKit Core
 ---
 import PlatformTabs from '../../components/PlatformTabs'
 import PlatformTabItem from '../../components/PlatformTabItem'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-**WalletConnect Modal will soon be deprecated.** Consequently, projects and developers need to upgrade to Reown AppKit Basic. The most basic version of Reown AppKit will contain the traditional WalletConnect Modal with a QR code that users can scan and connect their wallets to. 
+**WalletConnect Modal will soon be deprecated.** Consequently, projects and developers need to upgrade to Reown AppKit Core. The most basic version of Reown AppKit will contain the traditional WalletConnect Modal with a QR code that users can scan and connect their wallets to. 
 
 <img src="/img/appkit-basic.gif" />
 
@@ -179,7 +179,7 @@ const modal = createAppKit({
 
 // listen to display_uri event and feed modal with uri
 provider.on('display_uri', (uri: string) => {
-  modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+  modal.open({ uri })
 })
 
 // Connect provider, this will trigger display_uri event
@@ -305,7 +305,7 @@ const modal = createAppKit({
 })
 
 provider.on('display_uri', (uri: string) => {
-  modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+  modal.open({ uri })
 })
 /* highlight-add-end */
 ```
@@ -410,7 +410,7 @@ const { uri, approval } = await signClient.connect({
   })
 
   if (uri) {
-    modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+    modal.open({ uri })
     const session = await approval()
     modal.close()
   }
@@ -481,7 +481,7 @@ const { uri, approval } = await signClient.connect({
   })
 
   if (uri) {
-    modal.open({ uri, view: 'ConnectingWalletConnectBasic' })
+    modal.open({ uri })
     const session = await approval()
     modal.close()
   }
