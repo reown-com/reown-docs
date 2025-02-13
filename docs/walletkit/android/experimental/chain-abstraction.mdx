@@ -17,7 +17,7 @@ When sending a transaction, you need to:
 
 The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
 
-![Chain Abstraction Flow](/assets/chain-abstraction-flow.png)
+![Chain Abstraction Flow](/assets/chain-abstraction-sequence.png)
 
 ## Methods
 
@@ -43,7 +43,8 @@ fun prepare(
 
 ### Execute
 
-This method is used to execute the fulfillment operation.
+This method is used to execute the chain abstraction operation. It broadcasts the bridging and initial transactions and waits for them to be completed.
+The method returns a `ExecuteSuccess` object with the transaction hash and receipt.
 
 ```kotlin
 @ChainAbstractionExperimentalApi

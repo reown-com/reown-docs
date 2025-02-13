@@ -18,7 +18,7 @@ When sending a transaction, you need to:
 
 The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
 
-![Chain Abstraction Flow](/assets/chain-abstraction-flow.png)
+![Chain Abstraction Flow](/assets/chain-abstraction-sequence.png)
 
 ## Methods
 
@@ -41,7 +41,7 @@ public func prepare(transaction: InitialTransaction) async throws -> PrepareResp
 
 ### Execute
 
-This method is used to execute the fulfillment operations, including transactions broadcasting. 
+This method is used to execute the chain abstraction operation. The method will handle broadcasting all transactions in the correct order and monitor the cross-chain transfer process. It returns an `ExecuteDetails` object with the transaction status and results.
 
 ```swift
 @available(*, message: "This method is experimental. Use with caution.")
