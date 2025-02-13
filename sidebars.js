@@ -289,6 +289,7 @@ module.exports = {
                 { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},    
                 { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'},
                 { type: 'doc', label: 'EVM Transactions using Ethers', id: 'appkit/recipes/ethers-send-transaction'},
+                { type: 'doc', label: 'EVM Smart Contract Interaction', id: 'appkit/recipes/EVM-smart-contract-interaction'},
                 { type: 'doc', label: 'Solana Transactions using AppKit', id: 'appkit/recipes/solana-send-transaction'},
                 { type: 'doc', label: 'Bitcoin Transactions using AppKit', id: 'appkit/recipes/bitcoin-send-transaction'},
                 { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' },
@@ -302,7 +303,7 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Web3Modal to Reown AppKit', id: 'appkit/upgrade/from-w3m-to-reown' },
-                { type: 'doc', label: 'WalletConnect Modal to AppKit Basic', id: 'appkit/upgrade/wcm' }
+                //{ type: 'doc', label: 'WalletConnect Modal to AppKit Basic', id: 'appkit/upgrade/wcm' }
               ]
             },
             {
