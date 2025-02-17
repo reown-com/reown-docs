@@ -13,12 +13,12 @@ Apps need to pass `gas` as null, while sending a transaction to allow proper gas
 When sending a transaction, you need to:
 1. Check if the required chain has enough funds to complete the transaction
 2. If not, use the `prepare` method to generate necessary bridging transactions
-3. Check the status of the bridging transactions and wait for them to be completed
-4. Once the bridging transactions are completed, execute the initial transaction
+3. Sign routing and initial transaction hashes, prepared by the prepare method
+4. Use `execute` method to broadcast routing and initial transactions and wait for it to be completed
 
 The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
 
-![Chain Abstraction Flow](/assets/chain-abstraction-flow.png)
+![Chain Abstraction Flow](/assets/chain-abstraction-sequence.png)
 
 ## Methods
 
@@ -42,83 +42,47 @@ fun prepare(
 )
 ```
 
-### Status 
+### Execute
 
-This method is used to check the status of the fulfillment operation. It will return a `Status.Completed` object if the operation completed successfully or a `Status.Error` object if it encountered an error.
-
-```kotlin
-@ChainAbstractionExperimentalApi
-fun status(
-  fulfilmentId: String,
-  checkIn: Long,
-  onSuccess: (Wallet.Model.Status.Completed) -> Unit,
-  onError: (Wallet.Model.Status.Error) -> Unit
-)
-```
-
-### Estimate Fees
-
-This method is used to estimate the fees for the fulfillment operation.
-
-```kotlin
-@Throws(Exception::class)
-@ChainAbstractionExperimentalApi
-fun estimateFees(chainId: String): Wallet.Model.EstimatedFees
-```
-
-### Get ERC20 Balance
-
-This method is used to get the balance of an ERC20 token on a specific chain.
-
-```kotlin
-@Throws(Exception::class)
-@ChainAbstractionExperimentalApi
-fun getERC20Balance(chainId: String, tokenAddress: String, ownerAddress: String): String 
-```
-
-### Get Fulfilment Details
-
-This method is used to get the details of the fulfillment operation.
+This method is used to execute the chain abstraction operation. It broadcasts the bridging and initial transactions and waits for them to be completed.
+The method returns a `ExecuteSuccess` object with the transaction hash and receipt.
 
 ```kotlin
 @ChainAbstractionExperimentalApi
-fun getTransactionsDetails(
-  available: Wallet.Model.PrepareSuccess.Available,
-  onSuccess: (Wallet.Model.TransactionsDetails) -> Unit,
+fun execute(
+  prepareAvailable: Wallet.Model.PrepareSuccess.Available,
+  prepareSignedTxs: List<String>,
+  initSignedTx: String,
+  onSuccess: (Wallet.Model.ExecuteSuccess) -> Unit,
   onError: (Wallet.Model.Error) -> Unit
 )
 ``` 
 
 ### Usage
 
-When sending a transaction, first check if chain abstraction is needed using the `prepare` method. If it is needed, you must sign all the fulfillment transactions and broadcast them in parallel. 
-After that, you need to call the `status` method to check the status of the fulfillment operation. 
+When sending a transaction, first check if chain abstraction is needed using the `prepare` method. If it is needed, you must sign all the fulfillment transactions and use the `execute` method. 
 
-If the operation is successful, broadcast the initial transaction and await the transaction hash and receipt. 
+If the operation is successful, use `execute` method and await the transaction hash and receipt. 
 If the operation is unsuccessful, send the JsonRpcError to the dapp and display the error to the user. 
 
 ```kotlin
     val initialTransaction = Wallet.Model.Transaction(...)
-    
-    WalletKit.prepare(
+    WalletKit.ChainAbstraction.prepare(
       initialTransaction,
       onSuccess = { prepareSuccess ->
         when (prepareSuccess) {
           is Wallet.Model.PrepareSuccess.Available -> {
-            //Sign all the fulfilment transactions
-            //Broadcast the fulfilment transactions in parallel
-            //Await for the transaction hashes and receipts
+            //Sign all the fulfilment transactions and init transaction
+            //Use execute method
             
-            //Call the status
-            WalletKit.status(fulfilmentId, checkIn,
+            //Call the execute
+            WalletKit.ChainAbstraction.execute(prepareSuccess, prepareSignedTxs, initSignedTx
                 onSuccess = {
-                    //Successfull filfilment operation
-                    //Broadcast the inittial transaction
-                    //Await for the tx hash ande receipt
+                    //The execution of the Chain Abstraction is successfull
                     //Send the response to the Dapp
                 },
                 onError = {
-                    //Status error - wallet should send the JsonRpcError to a dapp for given request and display error to the user
+                    //Execute error - wallet should send the JsonRpcError to a dapp for given request and display error to the user
                 }
             )
           }
@@ -138,7 +102,7 @@ For example, check out implementation of chain abstraction in [sample wallet](ht
 
 ## Testing 
 
-To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending USDC/USDT with any chain abstraction supported wallet. 
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/experimental/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
 You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076a3bc9669d3bee) for testing. 
 
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
@@ -182,12 +146,13 @@ data class FeeEstimatedTransaction(
 
 sealed class PrepareSuccess {
   data class Available(
-    val fulfilmentId: String,
+    val orchestratorId: String,
     val checkIn: Long,
     val transactions: List<Transaction>,
     val initialTransaction: Transaction,
     val initialTransactionMetadata: InitialTransactionMetadata,
-    val funding: List<FundingMetadata>
+    val funding: List<FundingMetadata>,
+    val transactionsDetails: TransactionsDetails
   ) : PrepareSuccess()
 
   data class NotRequired(val initialTransaction: Transaction) : PrepareSuccess()
@@ -217,13 +182,8 @@ sealed class PrepareError : Model() {
   data class Unknown(val message: String) : PrepareError()
 }
 
-sealed class Status : Model() {
-  data class Completed(val createdAt: Long) : Status()
-  data class Error(val reason: String) : Status()
-}
-
 data class TransactionsDetails(
-  var fulfilmentDetails: List<TransactionDetails>,
+  var details: List<TransactionDetails>,
   var initialDetails: TransactionDetails,
   var bridgeFees: List<TransactionFee>,
   var localBridgeTotal: Amount,

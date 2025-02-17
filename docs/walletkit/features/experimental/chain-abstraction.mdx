@@ -2,6 +2,7 @@ import Wrapper from '../../../components/Home/Wrapper'
 import androidLogo from '../../../../static/assets/home/androidLogo.png'
 import iosLogo from '../../../../static/assets/home/iosLogo.png'
 import rnLogo from '../../../../static/assets/home/rnLogo.png'
+import Table from '../../../components/Table'
 
 # Chain Abstraction
 
@@ -77,10 +78,28 @@ Chain Abstraction is available on the following networks:
 - Arbitrum
 - OP Mainnet 
 
-### What are the supported tokens for Chain Abstraction?
+### What are the supported tokens and networks?
 
-Currently, Chain Abstraction supports USDC and USDT but we are working on adding support for more tokens. 
+Chain Abstraction supports the following stablecoins across different networks:
+
+<Table
+  headers={['Network', 'Supported tokens']}
+  data={[
+    {
+      network: 'OP Mainnet',
+      stablecoins: 'USDC, USDT'
+    },
+    {
+      network: 'Base',
+      stablecoins: 'USDC'
+    },
+    {
+      network: 'Arbitrum',
+      stablecoins: 'USDC'
+    },
+  ]}
+/>
 
 ### What are the limitations?
 
-We currently support 1:1 transfers i.e. sourcing funds from one address to another. Make sure that you're transferring minimum 0.55 USDC/USDT and have enough gas to pay bridging fees. 
+We currently support 1:1 transfers i.e. sourcing funds from one address to another. Make sure that you're transferring minimum 0.6 [USDC/USDT](../../../walletkit/features/experimental/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) and have enough gas to pay bridging fees. 
