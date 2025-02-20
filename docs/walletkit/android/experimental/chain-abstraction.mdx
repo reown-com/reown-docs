@@ -14,7 +14,7 @@ When sending a transaction, you need to:
 1. Check if the required chain has enough funds to complete the transaction
 2. If not, use the `prepare` method to generate necessary bridging transactions
 3. Sign routing and initial transaction hashes, prepared by the prepare method
-4. Use `execute` method to broadcast routing and initial transactions and wait for it to be completed
+4. Invoke `execute` method to broadcast routing and initial transactions and wait for it to be completed
 
 The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
 
@@ -22,23 +22,30 @@ The following sequence diagram illustrates the complete flow of a chain abstract
 
 ## Methods
 
-The following methods from WalletKit are used in implementing chain abstraction.
+Following are the methods from WalletKit that you will use in implementing chain abstraction.
 
 :::note
-Chain abstraction is currently in an experimental phase and requires the `@ChainAbstractionExperimentalApi` annotation.
+💡 Chain abstraction is currently in the experimental phase and requires the `@ChainAbstractionExperimentalApi` annotation
 :::
 
 ### Prepare 
 
-This method is used to check if chain abstraction is needed. If it is, it will return a `PrepareSuccess.Available` object with the necessary transactions and funding information. 
-If it is not, it will return a `PrepareSuccess.NotRequired` object with the original transaction. 
+This method checks if chain abstraction is needed. If it is, it returns a `PrepareSuccess.Available` object with the necessary transactions. If not, it returns a `PrepareSuccess.NotRequired` object with the original transaction.
+The `TransactionsDetails` object, accessible from `PrepareSuccess.Available`, provides information about the transaction costs and details:
 
-```kotlin 
+- `details`: `List<TransactionDetails>` - List of all bridging transactions required for the cross-chain transfer
+- `initialDetails`: `TransactionDetails` - Details of the final transaction that will be executed on the target chain
+- `bridgeFees`: `List<TransactionFee>` - Breakdown of fees for each bridging operation
+- `localBridgeTotal`: `Amount` - Aggregate cost of all bridging operations 
+- `localFulfilmentTotal`: `Amount` - Total gas fees for transaction execution 
+- `localTotal`: `Amount` - Combined total of all fees (bridging + gas)
+
+```kotlin
 @ChainAbstractionExperimentalApi
 fun prepare(
-  initialTransaction: Wallet.Model.InitialTransaction,
-  onSuccess: (Wallet.Model.PrepareSuccess) -> Unit,
-  onError: (Wallet.Model.PrepareError) -> Unit
+    initialTransaction: Wallet.Model.InitialTransaction,
+    onSuccess: (Wallet.Model.PrepareSuccess) -> Unit,
+    onError: (Wallet.Model.PrepareError) -> Unit
 )
 ```
 
@@ -47,18 +54,20 @@ fun prepare(
 This method is used to execute the chain abstraction operation. It broadcasts the bridging and initial transactions and waits for them to be completed.
 The method returns a `ExecuteSuccess` object with the transaction hash and receipt.
 
+Available 
+
 ```kotlin
 @ChainAbstractionExperimentalApi
 fun execute(
-  prepareAvailable: Wallet.Model.PrepareSuccess.Available,
-  prepareSignedTxs: List<String>,
-  initSignedTx: String,
-  onSuccess: (Wallet.Model.ExecuteSuccess) -> Unit,
-  onError: (Wallet.Model.Error) -> Unit
+    prepareAvailable: Wallet.Model.PrepareSuccess.Available,
+    prepareSignedTxs: List<String>,
+    initSignedTx: String,
+    onSuccess: (Wallet.Model.ExecuteSuccess) -> Unit,
+    onError: (Wallet.Model.Error) -> Unit
 )
-``` 
+```
 
-### Usage
+## Usage
 
 When sending a transaction, first check if chain abstraction is needed using the `prepare` method. If it is needed, you must sign all the fulfillment transactions and use the `execute` method. 
 
@@ -98,7 +107,7 @@ If the operation is unsuccessful, send the JsonRpcError to the dapp and display 
    )
 ```
 
-For example, check out implementation of chain abstraction in [sample wallet](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/master/sample/wallet) with Kotlin. 
+For example, check out implementation of chain abstraction in [sample wallet](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/master/sample/wallet) with Kotlin.
 
 ## Testing 
 
@@ -111,10 +120,10 @@ You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076
 
 ## Types
 
-Following are the types that are used in the chain abstraction methods.
+The following data classes are used in the chain abstraction methods:
 
 ```kotlin
- data class Transaction(
+data class Transaction(
     var from: String,
     var to: String,
     var value: String,
@@ -214,7 +223,7 @@ data class Amount(
 
 If you encounter issues with minification, add the below rules to your application:
 
-```
+```proguard
 -keepattributes *Annotation*
 
 -keep class com.sun.jna.** { *; }
