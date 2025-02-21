@@ -24,7 +24,9 @@ You first need to install the AppKit package in order to get started. You can do
 ```bash npm2yarn
 npm install @reown/appkit
 ```
-
+:::important
+When you upgrade, please make sure that you remove the `@walletconnect/modal` package from your project. Ensure that this is also removed from your `package.json` file.
+:::
 ## AppKit Basic
 
 This is the easiest way for developers to go multi-chain. AppKit Basic utilizes the `UniversalProvider` underneath and is a ready-to-use solution with hooks and methods.
@@ -156,8 +158,59 @@ Below are the examples for the corresponding library/programming language.
 Here's how you can configure AppKit with `UniversalProvider`.
 
 ```javascript
-// NEW IMPLEMENTATION
 
+// OLD IMPLEMENTATION - Remove the Code Below
+/*highlight-delete-start*/
+import { UniversalProvider } from '@walletconnect/universal-provider'
+import { WalletConnectModal } from '@walletconnect/modal'
+
+
+const provider = await UniversalProvider.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+})
+
+const modal = new WalletConnectModal({
+  projectId: 'YOUR_PROJECT_ID',
+  chains: ['eip155:1', 'solana:mainnet']
+})
+
+
+// listen to display_uri event and feed modal with uri
+provider.on('display_uri', (uri: string) => {
+  modal.openModal({ uri })
+})
+
+// Connect provider, this will trigger display_uri event
+await provider.connect({
+  optionalNamespaces: {
+    eip155: {
+      methods: [
+        'eth_sendTransaction',
+        'eth_signTransaction',
+        'eth_sign',
+        'personal_sign',
+        'eth_signTypedData'
+      ],
+      chains: ['eip155:1'],
+      events: ['chainChanged', 'accountsChanged']
+    },
+    solana: {
+      methods: ['solana_signMessage', 'solana_signTransaction'],
+      chains: ['solana:mainnet'],
+      events: ['chainChanged', 'accountsChanged']
+    }
+  }
+})
+/*highlight-delete-end*/
+
+// NEW IMPLEMENTATION - Add the Code Below
+/*highlight-add-start*/
 import { UniversalProvider } from '@walletconnect/universal-provider'
 import { createAppKit } from '@reown/appkit'
 
@@ -203,55 +256,7 @@ await provider.connect({
     }
   }
 })
-
-// OLD IMPLEMENTATION
-
-import { UniversalProvider } from '@walletconnect/universal-provider'
-import { WalletConnectModal } from '@walletconnect/modal'
-
-
-const provider = await UniversalProvider.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-})
-
-const modal = new WalletConnectModal({
-  projectId: 'YOUR_PROJECT_ID',
-  chains: ['eip155:1', 'solana:mainnet']
-})
-
-
-// listen to display_uri event and feed modal with uri
-provider.on('display_uri', (uri: string) => {
-  modal.openModal({ uri })
-})
-
-// Connect provider, this will trigger display_uri event
-await provider.connect({
-  optionalNamespaces: {
-    eip155: {
-      methods: [
-        'eth_sendTransaction',
-        'eth_signTransaction',
-        'eth_sign',
-        'personal_sign',
-        'eth_signTypedData'
-      ],
-      chains: ['eip155:1'],
-      events: ['chainChanged', 'accountsChanged']
-    },
-    solana: {
-      methods: ['solana_signMessage', 'solana_signTransaction'],
-      chains: ['solana:mainnet'],
-      events: ['chainChanged', 'accountsChanged']
-    }
-  }
-})
+/*highlight-add-end*/
 ```
 
 ### Changes
@@ -285,7 +290,7 @@ const modal = createAppKit({
 Replace `WalletConnectModal` with `AppKit`. 
 
 ```javascript
-//Old Code
+//Old Code - Remove the Code Below
 /* highlight-delete-start */
 const modal = new WalletConnectModal({
   projectId: 'YOUR_PROJECT_ID',
@@ -297,7 +302,7 @@ provider.on('display_uri', (uri: string) => {
 })
 /* highlight-delete-end */
 
-//New Code
+//New Code - Add the Code Below
 /* highlight-add-start */
 const modal = createAppKit({
   projectId: 'YOUR_PROJECT_ID',
@@ -324,7 +329,7 @@ Below are the examples for the corresponding library/programming language.
 Below is how you can use `SignClient` with AppKit**.
 
 ```javascript
-// Old Implementation
+// Old Implementation - Remove the Code Below
 /*highlight-delete-start*/
 import { SignClient } from '@walletconnect/sign-client'
 import { WalletConnectModal } from '@walletconnect/modal'
@@ -369,10 +374,8 @@ const { uri, approval } = await signClient.connect({
   }
 /*highlight-delete-end*/
 
+// New Implementation - Add the Code Below
 /*highlight-add-start*/
-
-// New Implementation
-
 import { SignClient } from '@walletconnect/sign-client'
 import { createAppKit } from '@reown/appkit'
 
@@ -426,7 +429,7 @@ For projects and developers that are currently using the `SignClient` with `Wall
 Replace `WalletConnectModal` with AppKit. Below is what the implementation would look like. 
 
 ```javascript
-// Old Code
+// Old Code - Remove the Code Below
 /*highlight-delete-start*/
 const modal = new WalletConnectModal({
   projectId: 'YOUR_PROJECT_ID',
@@ -456,7 +459,7 @@ const { uri, approval } = await signClient.connect({
   }
 /*highlight-delete-end*/
 
-// New Code
+// New Code - Add the Code Below
 /*highlight-add-start*/
 const modal = createAppKit({
   projectId: 'YOUR_PROJECT_ID',
