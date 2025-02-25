@@ -41,7 +41,16 @@ public func prepare(transaction: InitialTransaction) async throws -> PrepareResp
 
 ### Execute
 
-This method is used to execute the chain abstraction operation. The method will handle broadcasting all transactions in the correct order and monitor the cross-chain transfer process. It returns an `ExecuteDetails` object with the transaction status and results.
+This method executes the chain abstraction operation by broadcasting all transactions in the correct order and monitoring the cross-chain transfer process. It returns an `ExecuteDetails` object containing the transaction status and results.
+
+The `UiFields` struct contains the following fields for displaying the chain abstraction UI:
+
+- `initial`: `TxnDetails` - Details of the initial transaction, including transaction fees
+- `route`: `TxnDetails[]` - Array of routing transaction details, including transaction fees
+- `bridge`: `TransactionFees[]` - Array of bridging transaction fees
+- `localRouteTotal`: `Amount` - Total fees for route transactions (approve + bridge)
+- `localBridgeTotal`: `Amount` - Total fees for bridging transactions
+- `localTotal`: `Amount` - Combined total of all fees (route + initial transactions)
 
 ```swift
 @available(*, message: "This method is experimental. Use with caution.")
