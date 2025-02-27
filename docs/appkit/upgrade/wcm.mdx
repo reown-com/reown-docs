@@ -1,18 +1,18 @@
 ---
-title: WalletConnect Modal to Reown AppKit Basic
+title: WalletConnect Modal to Reown AppKit Core
 ---
 import PlatformTabs from '../../components/PlatformTabs'
 import PlatformTabItem from '../../components/PlatformTabItem'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-**WalletConnect Modal will soon be deprecated.** Consequently, projects and developers need to upgrade to Reown AppKit Basic. The most basic version of Reown AppKit will contain the traditional WalletConnect Modal with a QR code that users can scan and connect their wallets to. 
+**WalletConnect Modal will soon be deprecated.** Consequently, projects and developers need to upgrade to Reown AppKit Core. The most basic version of Reown AppKit will contain the traditional WalletConnect Modal with a QR code that users can scan and connect their wallets to. 
 
 <img src="/img/appkit-basic.gif" />
 
 This guide will show you how to upgrade to the most basic version of Reown AppKit. There are three different categories that this guide will be addressing, they are:
 
-1. [**AppKit Basic**](#appkit-basic)
+1. [**AppKit Core**](#appkit-basic)
 2. [**Ethereum Provider**](#ethereum-provider)
 3. [**Universal Provider with AppKit**](#universalprovider-with-appkit)
 4. [**Sign Client with AppKit**](#sign-client-with-appkit)
@@ -22,12 +22,16 @@ This guide will show you how to upgrade to the most basic version of Reown AppKi
 You first need to install the AppKit package in order to get started. You can do this by running the command below.
 
 ```bash npm2yarn
-npm install @reown/appkit
+npm install @reown/appkit@1.6.7-core-2.0
 ```
 
-## AppKit Basic
+:::note
+The version number may vary. Make sure to check the latest canary version on the [npm page](https://www.npmjs.com/package/@reown/appkit?activeTab=versions).
+:::
 
-This is the easiest way for developers to go multi-chain. AppKit Basic utilizes the `UniversalProvider` underneath and is a ready-to-use solution with hooks and methods.
+## AppKit Core
+
+This is the easiest way for developers to go multi-chain. AppKit Core utilizes the `UniversalProvider` underneath and is a ready-to-use solution with hooks and methods.
 
 <PlatformTabs
 	groupId="wcm"
@@ -35,7 +39,7 @@ This is the easiest way for developers to go multi-chain. AppKit Basic utilizes 
 >
 <PlatformTabItem value="react">
 ```javascript
-import { createAppKit } from '@reown/appkit/react'
+import { createAppKit } from '@reown/appkit/basic'
 import { mainnet } from '@reown/appkit/networks'
 
 const modal = createAppKit({
@@ -54,7 +58,7 @@ const modal = createAppKit({
 
 <PlatformTabItem value="javascript">
 ```javascript
-import { createAppKit } from '@reown/appkit'
+import { createAppKit } from '@reown/appkit/basic'
 import { mainnet } from '@reown/appkit/networks'
 
 const modal = createAppKit({
@@ -73,7 +77,7 @@ const modal = createAppKit({
 
 <PlatformTabItem value="vue">
 ```javascript
-import { createAppKit } from '@reown/appkit/vue'
+import { createAppKit } from '@reown/appkit/basic'
 import { mainnet } from '@reown/appkit/networks'
 
 const modal = createAppKit({
@@ -260,7 +264,7 @@ For projects that are currently using the `UniversalProvider` with `WalletConnec
 
 #### Option 1
 
-Upgrade to AppKit Basic and pass in the `UniversalProvider`. 
+Upgrade to AppKit Core and pass in the `UniversalProvider`. 
 
 ```javascript
 const provider = await UniversalProvider.init({
