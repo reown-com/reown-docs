@@ -41,21 +41,21 @@ optionalNamespaces: {
   'eip155': RequiredNamespace.fromJson({
     'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
       namespace: 'eip155',
-    ).map((chain) => 'eip155:${chain.chainId}').toList(),
+    ).map((chain) => '${chain.chainId}').toList(),
     'methods': NetworkUtils.defaultNetworkMethods['eip155']!.toList(),
     'events': NetworkUtils.defaultNetworkEvents['eip155']!.toList(),
   }),
   'solana': RequiredNamespace.fromJson({
     'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
       namespace: 'solana',
-    ).map((chain) => 'solana:${chain.chainId}').toList(),
+    ).map((chain) => '${chain.chainId}').toList(),
     'methods': NetworkUtils.defaultNetworkMethods['solana']!.toList(),
     'events': [],
   }),
   'polkadot': RequiredNamespace.fromJson({
     'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
       namespace: 'polkadot',
-    ).map((chain) => 'polkadot:${chain.chainId}').toList(),
+    ).map((chain) => '${chain.chainId}').toList(),
     'methods': [
       'polkadot_signMessage',
       'polkadot_signTransaction',
@@ -254,7 +254,7 @@ final _appKitModal = ReownAppKitModal(
     'eip155': RequiredNamespace.fromJson({
       'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
         namespace: 'eip155',
-      ).map((chain) => 'eip155:${chain.chainId}').toList(),
+      ).map((chain) => '${chain.chainId}').toList(),
       'methods':
           NetworkUtils.defaultNetworkMethods['eip155']!.toList(),
       'events':
@@ -263,7 +263,7 @@ final _appKitModal = ReownAppKitModal(
     'solana': RequiredNamespace.fromJson({
       'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
         namespace: 'solana',
-      ).map((chain) => 'solana:${chain.chainId}').toList(),
+      ).map((chain) => '${chain.chainId}').toList(),
       'methods':
           NetworkUtils.defaultNetworkMethods['solana']!.toList(),
       'events': [],
@@ -271,7 +271,7 @@ final _appKitModal = ReownAppKitModal(
     'polkadot': RequiredNamespace.fromJson({
       'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
         namespace: 'polkadot',
-      ).map((chain) => 'polkadot:${chain.chainId}').toList(),
+      ).map((chain) => '${chain.chainId}').toList(),
       'methods': [
         'polkadot_signMessage',
         'polkadot_signTransaction',
@@ -281,7 +281,7 @@ final _appKitModal = ReownAppKitModal(
     'tron': RequiredNamespace.fromJson({
       'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
         namespace: 'tron',
-      ).map((chain) => 'tron:${chain.chainId}').toList(),
+      ).map((chain) => '${chain.chainId}').toList(),
       'methods': [
         'tron_signMessage',
         'tron_signTransaction',

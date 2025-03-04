@@ -147,7 +147,7 @@ But in order for the redirect mechanism to work you would also need to add the f
 </PlatformTabItem>
 </PlatformTabs>
 
-## Connection Buttons
+## Available Buttons
 
 `AppKitModalConnectButton` to open modal and connect to a wallet or through social options
 
@@ -164,7 +164,19 @@ AppKitModalNetworkSelectButton(appKit: _appKitModal)
 `AppKitModalAccountButton` to open account screen once connected
 
 ```javascript
-AppKitModalAccountButton(appKit: _appKitModal)
+AppKitModalAccountButton(appKitModal: _appKitModal)
+```
+
+`AppKitModalAddressButton` shows the address on the current selected network
+
+```javascript
+AppKitModalAddressButton(appKitModal: _appKitModal)
+```
+
+`AppKitModalBalanceButton` shows wallet balance on the current selected network
+
+```javascript
+AppKitModalBalanceButton(appKitModal: _appKitModal)
 ```
 
 To connect to a wallet you can either use `AppKitModalConnectButton` or `AppKitModalNetworkSelectButton`.
