@@ -8,14 +8,16 @@ import TabItem from '@theme/TabItem'
 
 **WalletConnect Modal will soon be deprecated.** Consequently, projects and developers need to upgrade to Reown AppKit Core. The most basic version of Reown AppKit will contain the traditional WalletConnect Modal with a QR code that users can scan and connect their wallets to. 
 
-<img src="/img/appkit-basic.gif" />
+For a fresh install you can redirect to our Installation guide of [AppKit Core + Universal Provider](/appkit/react/core/multichain?platform=basic).
 
-This guide will show you how to upgrade to the most basic version of Reown AppKit. There are three different categories that this guide will be addressing, they are:
+<img src="/img/appkit-core.gif" />
 
-1. [**AppKit Core**](#appkit-core)
-2. [**Ethereum Provider**](#ethereum-provider)
-3. [**Universal Provider with AppKit**](#universalprovider-with-appkit)
-4. [**Sign Client with AppKit**](#sign-client-with-appkit)
+Please, follow to the different sections depending on which package you were using before:
+
+
+1. [**Universal Provider**](#universalprovider-with-appkit)
+2. [**Sign Client**](#sign-client-with-appkit)
+3. [**Ethereum Provider**](#ethereum-provider)
 
 ## Installation
 
@@ -32,21 +34,22 @@ The version number may vary. Make sure to check the latest canary version on the
 When you upgrade, please make sure that you remove the `@walletconnect/modal` package from your project. Ensure that this is also removed from your `package.json` file.
 :::
 
-## AppKit Core
+## UniversalProvider with AppKit 
 
-This is the easiest way for developers to go multi-chain. AppKit Core utilizes the `UniversalProvider` underneath and is a ready-to-use solution with hooks and methods.
+Here's how you can configure AppKit with `UniversalProvider`.
 
-<PlatformTabs
-	groupId="wcm"
-	activeOptions={["react", "javascript", "vue"]}
->
-<PlatformTabItem value="react">
 ```javascript
-import { createAppKit } from '@reown/appkit/basic'
-import { mainnet } from '@reown/appkit/networks'
+// Remove the Code in Red
+// Add the Code in Green
 
-const modal = createAppKit({
-  adapters: [], //pass an empty array to only use WalletConnect QR
+import { UniversalProvider } from '@walletconnect/universal-provider'
+import { WalletConnectModal } from '@walletconnect/modal'
+/*highlight-add-start*/
+import { mainnet, solana } from '@reown/appkit/networks'
+/*highlight-add-end*/
+
+
+const provider = await UniversalProvider.init({
   projectId: 'YOUR_PROJECT_ID',
   metadata: {
     name: 'My Website',
@@ -54,61 +57,307 @@ const modal = createAppKit({
     url: 'https://mywebsite.com', // origin must match your domain & subdomain
     icons: ['https://avatars.githubusercontent.com/u/37784886']
   },
-  networks: [mainnet]
+})
+
+/*highlight-delete-start*/
+const modal = new WalletConnectModal({
+  projectId: 'YOUR_PROJECT_ID',
+  chains: ['eip155:1', 'solana:mainnet']
+})
+
+
+// listen to display_uri event and feed modal with uri
+provider.on('display_uri', (uri: string) => {
+  modal.openModal({ uri })
+})
+/*highlight-delete-end*/
+
+/*highlight-add-start*/
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [mainnet, solana]
+})
+
+// A spinner will be showing until it's connected.
+modal.open()
+/*highlight-add-end*/
+
+// Connect provider, this will trigger display_uri event
+await provider.connect({
+  optionalNamespaces: {
+    eip155: {
+      methods: [
+        'eth_sendTransaction',
+        'eth_signTransaction',
+        'eth_sign',
+        'personal_sign',
+        'eth_signTypedData'
+      ],
+      chains: ['eip155:1'],
+      events: ['chainChanged', 'accountsChanged']
+    },
+    solana: {
+      methods: ['solana_signMessage', 'solana_signTransaction'],
+      chains: ['solana:mainnet'],
+      events: ['chainChanged', 'accountsChanged']
+    }
+  }
 })
 ```
-</PlatformTabItem>
 
-<PlatformTabItem value="javascript">
+### how to use a custom network
+
+<details>
+  <summary>Polkadot</summary>
+
 ```javascript
-import { createAppKit } from '@reown/appkit/basic'
-import { mainnet } from '@reown/appkit/networks'
+import { defineChain } from '@reown/appkit/networks'
+
+...
+
+const polkadot = defineChain({
+  id: '91b171bb158e2d3848fa23a9f1c25182',
+  name: 'Polkadot',
+  nativeCurrency: { name: 'Polkadot', symbol: 'DOT', decimals: 10 },
+  rpcUrls: {
+    default: { http: ['https://rpc.polkadot.io'], wss: 'wss://rpc.polkadot.io' }
+  },
+  blockExplorers: { default: { name: 'Polkadot Explorer', url: 'https://polkadot.js.org/apps/' } },
+  chainNamespace: 'polkadot',
+  caipNetworkId: 'polkadot:91b171bb158e2d3848fa23a9f1c25182'
+})
+
+...
 
 const modal = createAppKit({
-  adapters: [], //pass an empty array to only use WalletConnect QR
   projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-  networks: [mainnet]
+  networks: [polkadot]
 })
-```
-</PlatformTabItem>
 
-<PlatformTabItem value="vue">
+await provider.connect({
+  optionalNamespaces: {
+    polkadot: {
+      methods: ['polkadot_signMessage', 'polkadot_signTransaction'],
+      chains: [polkadot.caipNetworkId],
+      events: []
+    }
+  }
+})
+
+```
+</details>
+
+
+<details>
+  <summary>Cosmos</summary>
+
 ```javascript
-import { createAppKit } from '@reown/appkit/basic'
-import { mainnet } from '@reown/appkit/networks'
+import { defineChain } from '@reown/appkit/networks'
+
+...
+
+const cosmos = defineChain({
+  id: 'cosmoshub-3',
+  name: 'Cosmos',
+  nativeCurrency: { name: 'Cosmos', symbol: 'ATOM', decimals: 6 },
+  rpcUrls: {
+    default: { http: ['https://cosmos-rpc.publicnode.com:443'] }
+  },
+  blockExplorers: { default: { name: 'Sui Explorer', url: 'https://suiexplorer.com/' } },
+  testnet: false,
+  chainNamespace: 'cosmos',
+  caipNetworkId: 'cosmos:cosmoshub-4'
+})
+
+...
 
 const modal = createAppKit({
-  adapters: [], //pass an empty array to only use WalletConnect QR
   projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-  networks: [mainnet]
+  networks: [cosmos]
 })
+
+await provider.connect({
+  optionalNamespaces: {
+    cosmos: {
+      methods: ['cosmos_signDirect'],
+      chains: [cosmos.caipNetworkId],
+      events: []
+    }
+  }
+})
+
 ```
-</PlatformTabItem>
+</details>
 
-</PlatformTabs>
-
-You can also refer to the "Multichain" section under AppKit "Core" for installation. [Click here](/appkit/react/core/multichain?platform=basic) to learn more.
 
 ### Examples
 
 Below are the examples for the corresponding library/programming language. 
 
-1. [HTML](https://github.com/reown-com/appkit/tree/main/examples/html-ak-basic)
-2. [React](https://github.com/reown-com/appkit/tree/main/examples/react-ak-basic)
-3. [NextJS](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-app-router)
-4. [Vue](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic)
+1. [**HTML**](https://github.com/reown-com/appkit/tree/main/examples/html-ak-basic-up)
+2. [**React**](https://github.com/reown-com/appkit/tree/main/examples/react-ak-basic-up)
+3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-up-app-router)
+4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-up)
+
+## Sign Client with AppKit
+
+Below is how you can use `SignClient` with AppKit**.
+
+```javascript
+import { SignClient } from '@walletconnect/sign-client'
+import { WalletConnectModal } from '@walletconnect/modal'
+/*highlight-add-start*/
+import { mainnet } from '@reown/appkit/networks'
+/*highlight-add-end*/
+
+const signClient = await SignClient.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+})
+
+/*highlight-delete-start*/
+const modal = new WalletConnectModal({
+  projectId: 'YOUR_PROJECT_ID',
+  chains: ['eip155:1']
+})
+/*highlight-delete-end*/
+
+/*highlight-add-start*/
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [mainnet]
+})
+/*highlight-add-end*/
+
+// connect signClient and feed uri to modal
+const { uri, approval } = await signClient.connect({
+    requiredNamespaces: {
+      eip155: {
+        methods: [
+          'eth_sendTransaction',
+          'eth_signTransaction',
+          'eth_sign',
+          'personal_sign',
+          'eth_signTypedData'
+        ],
+        chains: ['eip155:1'],
+        events: ['chainChanged', 'accountsChanged']
+      }
+    }
+  })
+
+  if (uri) {
+    modal.openModal({ uri })
+    const session = await approval()
+    modal.closeModal()
+  }
+```
+
+
+### how to use a custom network
+
+<details>
+  <summary>Polkadot</summary>
+
+```javascript
+import { defineChain } from '@reown/appkit/networks'
+
+...
+
+const polkadot = defineChain({
+  id: '91b171bb158e2d3848fa23a9f1c25182',
+  name: 'Polkadot',
+  nativeCurrency: { name: 'Polkadot', symbol: 'DOT', decimals: 10 },
+  rpcUrls: {
+    default: { http: ['https://rpc.polkadot.io'], wss: 'wss://rpc.polkadot.io' }
+  },
+  blockExplorers: { default: { name: 'Polkadot Explorer', url: 'https://polkadot.js.org/apps/' } },
+  chainNamespace: 'polkadot',
+  caipNetworkId: 'polkadot:91b171bb158e2d3848fa23a9f1c25182'
+})
+
+...
+
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [polkadot]
+})
+
+// connect signClient and feed uri to modal
+const { uri, approval } = await signClient.connect({
+    requiredNamespaces: {
+      eip155: {
+        methods: ['polkadot_signMessage', 'polkadot_signTransaction'],
+        chains: [polkadot.caipNetworkId],
+        events: []
+      }
+    }
+  })
+
+...
+
+```
+</details>
+
+
+<details>
+  <summary>Cosmos</summary>
+
+```javascript
+import { defineChain } from '@reown/appkit/networks'
+
+...
+
+const cosmos = defineChain({
+  id: 'cosmoshub-3',
+  name: 'Cosmos',
+  nativeCurrency: { name: 'Cosmos', symbol: 'ATOM', decimals: 6 },
+  rpcUrls: {
+    default: { http: ['https://cosmos-rpc.publicnode.com:443'] }
+  },
+  blockExplorers: { default: { name: 'Sui Explorer', url: 'https://suiexplorer.com/' } },
+  testnet: false,
+  chainNamespace: 'cosmos',
+  caipNetworkId: 'cosmos:cosmoshub-4'
+})
+
+...
+
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [cosmos]
+})
+
+// connect signClient and feed uri to modal
+const { uri, approval } = await signClient.connect({
+    requiredNamespaces: {
+      cosmos: {
+        methods: ['cosmos_signDirect'],
+        chains: [cosmos.caipNetworkId],
+        events: []
+      }
+    }
+  })
+
+... 
+```
+</details>
+
+
+### Examples
+
+Below are the examples for the corresponding library/programming language. 
+
+1. [HTML](https://github.com/reown-com/appkit/tree/main/examples/html-ak-basic-sign-client)
+2. [React](https://github.com/reown-com/appkit/tree/main/examples/react-ak-basic-sign-client)
+3. [NextJS](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-sign-client-app-router)
+4. [Vue](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-sign-client)
+
 
 ## Ethereum Provider
 
@@ -142,7 +391,7 @@ await provider.connect()
 
 ### Changes Required
 
-Projects and developers don’t need to change anything in their configuration - upgrading the Ethereum Provider is sufficient. Projects will automatically receive the new QR modal UI.
+Projects and developers don’t need to change anything in their configuration - upgrading the Ethereum Provider to latest version is sufficient. Projects will automatically receive the new QR modal UI.
 
 :::note
 Not all `themeVariables`will be compatible with the new UI, as `AppKit` uses a different design system than `walletConnectModal`
@@ -157,350 +406,3 @@ Below are the examples for the corresponding library/programming language.
 2. [**React**](https://github.com/reown-com/appkit/tree/main/examples/react-ep)
 3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ep-app-router)
 4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ep)
-
-## UniversalProvider with AppKit 
-
-Here's how you can configure AppKit with `UniversalProvider`.
-
-```javascript
-
-// OLD IMPLEMENTATION - Remove the Code Below
-/*highlight-delete-start*/
-import { UniversalProvider } from '@walletconnect/universal-provider'
-import { WalletConnectModal } from '@walletconnect/modal'
-
-
-const provider = await UniversalProvider.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-})
-
-const modal = new WalletConnectModal({
-  projectId: 'YOUR_PROJECT_ID',
-  chains: ['eip155:1', 'solana:mainnet']
-})
-
-
-// listen to display_uri event and feed modal with uri
-provider.on('display_uri', (uri: string) => {
-  modal.openModal({ uri })
-})
-
-// Connect provider, this will trigger display_uri event
-await provider.connect({
-  optionalNamespaces: {
-    eip155: {
-      methods: [
-        'eth_sendTransaction',
-        'eth_signTransaction',
-        'eth_sign',
-        'personal_sign',
-        'eth_signTypedData'
-      ],
-      chains: ['eip155:1'],
-      events: ['chainChanged', 'accountsChanged']
-    },
-    solana: {
-      methods: ['solana_signMessage', 'solana_signTransaction'],
-      chains: ['solana:mainnet'],
-      events: ['chainChanged', 'accountsChanged']
-    }
-  }
-})
-/*highlight-delete-end*/
-
-// NEW IMPLEMENTATION - Add the Code Below
-/*highlight-add-start*/
-import { UniversalProvider } from '@walletconnect/universal-provider'
-import { createAppKit } from '@reown/appkit'
-
-const provider = await UniversalProvider.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-})
-
-const modal = createAppKit({
-  projectId: 'YOUR_PROJECT_ID',
-  networks: [mainnet, solana]
-})
-
-
-// listen to display_uri event and feed modal with uri
-provider.on('display_uri', (uri: string) => {
-  modal.open({ uri })
-})
-
-// Connect provider, this will trigger display_uri event
-await provider.connect({
-  optionalNamespaces: {
-    eip155: {
-      methods: [
-        'eth_sendTransaction',
-        'eth_signTransaction',
-        'eth_sign',
-        'personal_sign',
-        'eth_signTypedData'
-      ],
-      chains: ['eip155:1'],
-      events: ['chainChanged', 'accountsChanged']
-    },
-    solana: {
-      methods: ['solana_signMessage', 'solana_signTransaction'],
-      chains: ['solana:mainnet'],
-      events: ['chainChanged', 'accountsChanged']
-    }
-  }
-})
-/*highlight-add-end*/
-```
-
-### Changes
-
-For projects that are currently using the `UniversalProvider` with `WalletConnectModal` there are two options for you to upgrade. 
-
-#### Option 1
-
-Upgrade to AppKit Core and pass in the `UniversalProvider`. 
-
-```javascript
-const provider = await UniversalProvider.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-})
-
-const modal = createAppKit({
-  projectId: 'YOUR_PROJECT_ID',
-  networks: [mainnet, solana]
-  universalProvider: provider
-})
-```
-
-#### Option 2
-
-Replace `WalletConnectModal` with `AppKit`. 
-
-```javascript
-//Old Code - Remove the Code Below
-/* highlight-delete-start */
-const modal = new WalletConnectModal({
-  projectId: 'YOUR_PROJECT_ID',
-  chains: ['eip155:1', 'solana:mainnet']
-})
-
-provider.on('display_uri', (uri: string) => {
-  modal.openModal({ uri })
-})
-/* highlight-delete-end */
-
-//New Code - Add the Code Below
-/* highlight-add-start */
-const modal = createAppKit({
-  projectId: 'YOUR_PROJECT_ID',
-  networks: [mainnet, solana]
-})
-
-provider.on('display_uri', (uri: string) => {
-  modal.open({ uri })
-})
-/* highlight-add-end */
-```
-
-### Examples
-
-Below are the examples for the corresponding library/programming language. 
-
-1. [**HTML**](https://github.com/reown-com/appkit/tree/main/examples/html-ak-basic-up)
-2. [**React**](https://github.com/reown-com/appkit/tree/main/examples/react-ak-basic-up)
-3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-up-app-router)
-4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-up)
-
-## Sign Client with AppKit
-
-Below is how you can use `SignClient` with AppKit**.
-
-```javascript
-// Old Implementation - Remove the Code Below
-/*highlight-delete-start*/
-import { SignClient } from '@walletconnect/sign-client'
-import { WalletConnectModal } from '@walletconnect/modal'
-
-
-const signClient = await SignClient.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-})
-
-const modal = new WalletConnectModal({
-  projectId: 'YOUR_PROJECT_ID',
-  chains: ['eip155:1']
-})
-
-// connect signClient and feed uri to modal
-const { uri, approval } = await signClient.connect({
-    requiredNamespaces: {
-      eip155: {
-        methods: [
-          'eth_sendTransaction',
-          'eth_signTransaction',
-          'eth_sign',
-          'personal_sign',
-          'eth_signTypedData'
-        ],
-        chains: ['eip155:1'],
-        events: ['chainChanged', 'accountsChanged']
-      }
-    }
-  })
-
-  if (uri) {
-    modal.openModal({ uri })
-    const session = await approval()
-    modal.closeModal()
-  }
-/*highlight-delete-end*/
-
-// New Implementation - Add the Code Below
-/*highlight-add-start*/
-import { SignClient } from '@walletconnect/sign-client'
-import { createAppKit } from '@reown/appkit'
-
-const signClient = await SignClient.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-})
-
-const modal = createAppKit({
-  projectId: 'YOUR_PROJECT_ID',
-  networks: [mainnet]
-})
-
-
-// connect signClient and feed uri to modal
-const { uri, approval } = await signClient.connect({
-    requiredNamespaces: {
-      eip155: {
-        methods: [
-          'eth_sendTransaction',
-          'eth_signTransaction',
-          'eth_sign',
-          'personal_sign',
-          'eth_signTypedData'
-        ],
-        chains: ['eip155:1'],
-        events: ['chainChanged', 'accountsChanged']
-      }
-    }
-  })
-
-  if (uri) {
-    modal.open({ uri })
-    const session = await approval()
-    modal.close()
-  }
-  /*highlight-add-end*/
-```
-
-### Changes
-
-For projects and developers that are currently using the `SignClient` with `WalletConnectModal` there is one option for you to upgrade. 
-
-#### Option 1
-
-Replace `WalletConnectModal` with AppKit. Below is what the implementation would look like. 
-
-```javascript
-// Old Code - Remove the Code Below
-/*highlight-delete-start*/
-const modal = new WalletConnectModal({
-  projectId: 'YOUR_PROJECT_ID',
-  chains: ['eip155:1', 'solana:mainnet']
-})
-
-const { uri, approval } = await signClient.connect({
-    requiredNamespaces: {
-      eip155: {
-        methods: [
-          'eth_sendTransaction',
-          'eth_signTransaction',
-          'eth_sign',
-          'personal_sign',
-          'eth_signTypedData'
-        ],
-        chains: ['eip155:1'],
-        events: ['chainChanged', 'accountsChanged']
-      }
-    }
-  })
-
-  if (uri) {
-    modal.openModal({ uri })
-    const session = await approval()
-    modal.closeModal()
-  }
-/*highlight-delete-end*/
-
-// New Code - Add the Code Below
-/*highlight-add-start*/
-const modal = createAppKit({
-  projectId: 'YOUR_PROJECT_ID',
-  networks: [mainnet]
-})
-
-// connect signClient and feed uri to modal
-const { uri, approval } = await signClient.connect({
-    requiredNamespaces: {
-      eip155: {
-        methods: [
-          'eth_sendTransaction',
-          'eth_signTransaction',
-          'eth_sign',
-          'personal_sign',
-          'eth_signTypedData'
-        ],
-        chains: ['eip155:1'],
-        events: ['chainChanged', 'accountsChanged']
-      }
-    }
-  })
-
-  if (uri) {
-    modal.open({ uri })
-    const session = await approval()
-    modal.close()
-  }
-/*highlight-add-end*/
-```
-
-### Examples
-
-Below are the examples for the corresponding library/programming language. 
-
-1. [HTML](https://github.com/reown-com/appkit/tree/main/examples/html-ak-basic-sign-client)
-2. [React](https://github.com/reown-com/appkit/tree/main/examples/react-ak-basic-sign-client)
-3. [NextJS](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-sign-client-app-router)
-4. [Vue](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-sign-client)
