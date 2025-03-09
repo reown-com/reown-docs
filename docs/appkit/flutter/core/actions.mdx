@@ -37,14 +37,17 @@ _appKitModal.launchBlockExplorer();
 final bytes = utf8.encode(message);
 final encodedMessage = hex.encode(bytes);
 
+final chainId = _appKitModal.selectedChain!.chainId;
+final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
+
 final result = await _appKitModal.request(
   topic: _appKitModal.session!.topic,
-  chainId: _appKitModal.selectedChain!.chainId,
+  chainId: chainId,
   request: SessionRequestParams(
     method: 'personal_sign',
     params: [
       '0x$encodedMessage',
-      _appKitModal.session!.address!,
+      _appKitModal.session!.getAddress(namespace)!;
     ],
   ),
 );
@@ -71,6 +74,10 @@ _appKitModal.getApprovedEvents();
 ```
 
 ### - Interact with Smart Contracts
+
+:::note
+These Smart Contract interaction methods only works for EVM chains but you can always structure your smart contract transaction and call the relevant chain method by using [request()](#--send-an-rpc-request) method.
+:::
 
 ### Read function:
 
@@ -103,10 +110,13 @@ final tetherContract = DeployedContract(
 2. Read from it by calling a read function
 
 ```javascript
+final chainId = _appKitModal.selectedChain!.chainId;
+final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
+
 // Get token decimals
 final decimals = await _appKitModal.requestReadContract(
   topic: _appKitModal.session!.topic,
-  chainId: _appKitModal.selectedChain!.chainId,
+  chainId: chainId,
   deployedContract: tetherContract,
   functionName: 'decimals',
 );
@@ -115,10 +125,10 @@ final decimals = await _appKitModal.requestReadContract(
 final balanceOf = await _appKitModal.requestReadContract(
   deployedContract: tetherContract,
   topic: _appKitModal.session!.topic,
-  chainId: _appKitModal.selectedChain!.chainId,
+  chainId: chainId,
   functionName: 'balanceOf',
   parameters: [
-    EthereumAddress.fromHex(_appKitModal.session!.address!),
+    EthereumAddress.fromHex(_appKitModal.session!.getAddress(namespace)),
   ],
 );
 
@@ -155,14 +165,17 @@ final transferValue = _formatValue(0.23, decimals: decimalUnits); // your format
 
 // Transfer USDT
 Future<void> transferToken() async {
+  final chainId = _appKitModal.selectedChain!.chainId;
+  final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
+
   // Transfer 0.01 amount of Token using Smart Contract's transfer function
   final result = await _appKitModal.requestWriteContract(
     topic: _appKitModal.session!.topic,
-    chainId: _appKitModal.selectedChain!.chainId,
+    chainId: chainId,
     deployedContract: deployedContract,
     functionName: 'transfer',
     transaction: Transaction(
-      from: EthereumAddress.fromHex(_appKitModal.session!.address!), // sender address
+      from: EthereumAddress.fromHex(_appKitModal.session!.getAddress(namespace)), // sender address
     ),
     parameters: [
       EthereumAddress.fromHex('0x59e2f66C0E96803206B6486cDb39029abAE834c0'), // recipient address
@@ -180,13 +193,16 @@ Call a `sayHello` function of a smart contract to write a message.
 ```javascript
 // Write a message data
 Future<void> writeMessage() async {
+  final chainId = _appKitModal.selectedChain!.chainId;
+  final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
+
   final result = await _appKitModal.requestWriteContract(
     topic: _appKitModal.session!.topic,
-    chainId: _appKitModal.selectedChain!.chainId,
+    chainId: chainId,
     deployedContract: deployedContract,
     functionName: 'sayHello',
     transaction: Transaction(
-      from: EthereumAddress.fromHex(_appKitModal.session!.address!), // sender address
+      from: EthereumAddress.fromHex(_appKitModal.session!.getAddress(namespace)), // sender address
     ),
     parameters: ['Hello world!'],
   );
