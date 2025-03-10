@@ -1,0 +1,14 @@
+{
+  "name": "docusaurus-llmstxt-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx": "^3.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
+    "unified": "^11.0.4"
+  }
+}
