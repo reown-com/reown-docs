@@ -235,7 +235,7 @@ module.exports = {
               label: 'Features',
               collapsed: false,
               collapsible: true,
-              link:{
+              link: {
                 type: 'doc',
                 id: 'appkit/features/index'
               },
@@ -250,7 +250,11 @@ module.exports = {
                   label: 'Telegram Mini Apps',
                   id: 'appkit/features/telegram-mini-apps'
                 },
-                { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
+                {
+                  type: 'doc',
+                  label: 'Sponsored Transactions',
+                  id: 'appkit/features/sponsored-transactions'
+                }
               ]
             },
             {
@@ -271,29 +275,69 @@ module.exports = {
               collapsible: true,
               items: [
                 { type: 'doc', label: 'Email & Social Login', id: 'appkit/authentication/socials' },
-                { type: 'doc', label: 'One-Click Auth', id: 'appkit/authentication/one-click-auth' },
+                {
+                  type: 'doc',
+                  label: 'One-Click Auth',
+                  id: 'appkit/authentication/one-click-auth'
+                },
                 {
                   type: 'doc',
                   label: 'Sign in with X (SIWX)',
                   id: 'appkit/features/siwx/default'
-                },
+                }
               ]
             },
             {
               type: 'category',
               label: 'Recipes',
-              collapsed:true,
+              collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'Build a Telegram Mini App', id: 'appkit/recipes/telegram-mini-app' },
-                { type: 'doc', label: 'Configure Virtual TestNets', id: 'appkit/recipes/tenderly-virtual-testnets'},    
-                { type: 'doc', label: 'EVM Transactions using Wagmi', id: 'appkit/recipes/wagmi-send-transaction'},
-                { type: 'doc', label: 'EVM Transactions using Ethers', id: 'appkit/recipes/ethers-send-transaction'},
-                { type: 'doc', label: 'EVM Smart Contract Interaction', id: 'appkit/recipes/EVM-smart-contract-interaction'},
-                { type: 'doc', label: 'Solana Transactions using AppKit', id: 'appkit/recipes/solana-send-transaction'},
-                { type: 'doc', label: 'Bitcoin Transactions using AppKit', id: 'appkit/recipes/bitcoin-send-transaction'},
-                { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' },
-                { type: 'doc', label: 'Sponsoring Transaction with our Paymaster', id: 'appkit/recipes/sponsoring-first-transaction' } 
+                {
+                  type: 'doc',
+                  label: 'Build a Telegram Mini App',
+                  id: 'appkit/recipes/telegram-mini-app'
+                },
+                {
+                  type: 'doc',
+                  label: 'Configure Virtual TestNets',
+                  id: 'appkit/recipes/tenderly-virtual-testnets'
+                },
+                {
+                  type: 'doc',
+                  label: 'EVM Transactions using Wagmi',
+                  id: 'appkit/recipes/wagmi-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'EVM Transactions using Ethers',
+                  id: 'appkit/recipes/ethers-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'EVM Smart Contract Interaction',
+                  id: 'appkit/recipes/EVM-smart-contract-interaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'Solana Transactions using AppKit',
+                  id: 'appkit/recipes/solana-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'Bitcoin Transactions using AppKit',
+                  id: 'appkit/recipes/bitcoin-send-transaction'
+                },
+                {
+                  type: 'doc',
+                  label: 'Support Send Calls',
+                  id: 'appkit/recipes/switching-to-send-calls'
+                },
+                {
+                  type: 'doc',
+                  label: 'Sponsoring Transaction with our Paymaster',
+                  id: 'appkit/recipes/sponsoring-first-transaction'
+                }
               ]
             },
             {
@@ -302,7 +346,11 @@ module.exports = {
               collapsed: true,
               collapsible: true,
               items: [
-                { type: 'doc', label: 'Web3Modal to Reown AppKit', id: 'appkit/upgrade/from-w3m-to-reown' },
+                {
+                  type: 'doc',
+                  label: 'Web3Modal to Reown AppKit',
+                  id: 'appkit/upgrade/from-w3m-to-reown'
+                }
                 //{ type: 'doc', label: 'WalletConnect Modal to AppKit Basic', id: 'appkit/upgrade/wcm' }
               ]
             },
@@ -311,7 +359,7 @@ module.exports = {
               label: 'Migration',
               collapsed: true,
               collapsible: true,
-              link:{
+              link: {
                 type: 'doc',
                 id: 'appkit/migration/index'
               },
@@ -420,7 +468,11 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/react/transactions/onramp', 'appkit/react/transactions/swaps', 'appkit/react/transactions/sponsored-transactions']
+          items: [
+            'appkit/react/transactions/onramp',
+            'appkit/react/transactions/swaps',
+            'appkit/react/transactions/sponsored-transactions'
+          ]
         },
         {
           type: 'category',
@@ -519,7 +571,11 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/next/transactions/onramp', 'appkit/next/transactions/swaps', 'appkit/next/transactions/sponsored-transactions']
+          items: [
+            'appkit/next/transactions/onramp',
+            'appkit/next/transactions/swaps',
+            'appkit/next/transactions/sponsored-transactions'
+          ]
         },
         {
           type: 'category',
@@ -615,7 +671,11 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/vue/transactions/onramp', 'appkit/vue/transactions/swaps', 'appkit/vue/transactions/sponsored-transactions']
+          items: [
+            'appkit/vue/transactions/onramp',
+            'appkit/vue/transactions/swaps',
+            'appkit/vue/transactions/sponsored-transactions'
+          ]
         },
         {
           type: 'category',
@@ -711,7 +771,11 @@ module.exports = {
         {
           type: 'category',
           label: 'Transactions',
-          items: ['appkit/javascript/transactions/onramp', 'appkit/javascript/transactions/swaps', 'appkit/javascript/transactions/sponsored-transactions']
+          items: [
+            'appkit/javascript/transactions/onramp',
+            'appkit/javascript/transactions/swaps',
+            'appkit/javascript/transactions/sponsored-transactions'
+          ]
         },
         {
           type: 'category',
@@ -1184,6 +1248,11 @@ module.exports = {
                 'walletkit/react-native/notifications/notify/spam-protection'
               ]
             },
+            {
+              type: 'category',
+              label: 'Experimental',
+              items: ['walletkit/react-native/experimental/chain-abstraction']
+            },
             'walletkit/react-native/notifications/push'
           ]
         },
@@ -1235,7 +1304,12 @@ module.exports = {
             'walletkit/web/cloud/explorer-submission',
             'walletkit/web/cloud/verify',
             'walletkit/web/cloud/relay',
-            'walletkit/web/cloud/analytics'
+            'walletkit/web/cloud/analytics',
+            {
+              type: 'category',
+              label: 'Experimental',
+              items: ['walletkit/web/experimental/chain-abstraction']
+            }
           ]
         }
       ]
