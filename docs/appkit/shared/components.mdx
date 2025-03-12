@@ -21,12 +21,12 @@ Web components are global html elements that don't require importing.
     {
       variable: { code: 'balance' },
       description: "Show or hide the user's balance.",
-      type: { code: "'show' or 'hide'" }
+      type: { code: "'show' | 'hide'" }
     },
     {
       variable: { code: 'size' },
       description: 'Default size for the button.',
-      type: { code: "'md' or 'sm'" }
+      type: { code: "'md' | 'sm'" }
     },
     {
       variable: { code: 'label' },
@@ -37,6 +37,11 @@ Web components are global html elements that don't require importing.
       variable: { code: 'loadingLabel' },
       description: 'The text shown in the button when the modal is open.',
       type: { code: 'string' }
+    },
+    {
+      variable: { code: 'namespace' },
+      description: 'Option to show specific namespace account info. Note: `eip155` is for EVM and `bip122` is for Bitcoin.',
+      type: { code: "'eip155' | 'solana' | 'bip122'" }
     }
   ]}
 />
@@ -54,7 +59,7 @@ Web components are global html elements that don't require importing.
     {
       variable: { code: 'balance' },
       description: "Show or hide the user's balance.",
-      type: { code: "'show' or 'hide'" }
+      type: { code: "'show' | 'hide'" }
     }
   ]}
 />
@@ -67,7 +72,7 @@ Web components are global html elements that don't require importing.
     {
       variable: { code: 'size' },
       description: 'Default size for the button.',
-      type: { code: "'md' or 'sm'" }
+      type: { code: "'md' | 'sm'" }
     },
     {
       variable: { code: 'label' },
