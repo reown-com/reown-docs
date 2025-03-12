@@ -7,7 +7,8 @@
     "dev": "docusaurus start",
     "spell": "cspell '**/*.md' '**/*.mdx' ",
     "start": " pnpm run spell && docusaurus start",
-    "build": "docusaurus build",
+    "build": "pnpm run build-llmstxt && docusaurus build",
+    "build-llmstxt": "cd scripts && node --experimental-json-modules build-llmstxt.js",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -43,9 +44,15 @@
     "@docusaurus/tsconfig": "^3.4.0",
     "@docusaurus/types": "^3.4.0",
     "cspell": "^8.16.1",
+    "gray-matter": "^4.0.3",
     "prettier": "3.2.2",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx": "^3.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
     "typedoc-plugin-markdown": "3.17.1",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "unified": "^11.0.4"
   },
   "browserslist": {
     "production": [
