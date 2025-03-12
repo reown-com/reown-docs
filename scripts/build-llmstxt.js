@@ -84,6 +84,7 @@ async function processMarkdownFile(filePath) {
       const urlPath = relativePath
         .replace(/\\/g, '/') // Convert Windows path separators
         .replace(/\.(md|mdx)$/, '') // Remove file extension
+        .replace(/\/index$/, '') // Truncate '/index' segments to prevent 404 errors
 
       // Construct URL
       const url = `${SITE_URL}/${urlPath}`
@@ -118,6 +119,7 @@ async function processMarkdownFile(filePath) {
       const urlPath = relativePath
         .replace(/\\/g, '/') // Convert Windows path separators
         .replace(/\.(md|mdx)$/, '') // Remove file extension
+        .replace(/\/index$/, '') // Truncate '/index' segments to prevent 404 errors
 
       // Construct URL
       const url = `${SITE_URL}/${urlPath}`
