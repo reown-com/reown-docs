@@ -116,7 +116,16 @@ const config = {
       appId: 'FNT2FF5Z1N',
       apiKey: '858103ff345e1d20a487ee99ea8fa03a',
       indexName: 'reown',
-      contextualSearch: true
+      contextualSearch: true,
+      attributesToRetrieve: [
+        "hierarchy",
+        "content",
+        "anchor",
+        "url",
+        "framework" // Ensure framework is retrieved
+      ],
+      attributesForFaceting: ["framework"], // Allows filtering by framework
+      attributesToHighlight: ["hierarchy", "content", "framework"], // Highlights framework
     },
     mermaid: {
       theme: {
