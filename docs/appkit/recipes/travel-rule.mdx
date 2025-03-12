@@ -1,0 +1,92 @@
+---
+title: Travel Rule using AppKit
+---
+
+# Travel Rule using AppKit
+
+## Overview
+
+The Travel Rule is a regulatory requirement designed to enhance transparency in financial transactions by mandating the exchange of specific information about both senders and recipients. 
+Initially applied to traditional wire transfers, this rule has been extended to the cryptocurrency sector, especially affecting Virtual Asset Service Providers (VASPs) under guidelines set by the Financial Action Task Force (FATF).
+
+## Traditional Travel Rule
+
+The Travel Rule requires regulated institutions—such as banks and Payment Service Providers (PSPs)—to share essential details of a transaction when a transfer exceeds a specified threshold (approximately 1-3K USD/EUR/GBP). 
+This exchange of information assists law enforcement and regulators in tracing the flow of funds.
+
+### Key Information Exchanged
+- Name
+- Account Number
+- Address (or alternative identifiers, e.g., place and date of birth, client number, or national identity number)
+
+### Rationale
+The main goal of the Travel Rule is to:
+- Improve the traceability of financial transactions.
+- Assist regulatory bodies and law enforcement in tracking funds for compliance and investigative purposes.
+
+## Travel Rule in Cryptocurrency
+
+In 2019, and updated in 2021, the FATF established standards for Virtual Asset Service Providers (VASPs) to follow similar protocols as traditional financial institutions. For crypto transactions, the suggested threshold is approximately EUR 1K.
+
+
+### Application Scenarios
+
+#### VASP-to-VASP Transfers
+What It Means: When cryptocurrency is transferred from one VASP (e.g., a centralized exchange) to another, both parties must exchange the required sender and receiver information.
+
+Example: A user at one centralized exchange sends crypto to a user at another exchange, prompting both VASPs to share identity and account details.
+
+#### Non-Custodial to Non-Custodial Wallet Transfers
+Exemption: Transfers between non-custodial wallets (self-managed wallets) are generally not subject to the Travel Rule since they do not involve regulated VASPs.
+
+#### VASP-to-Non-Custodial Transfers
+Challenge: When a user sends crypto from a VASP to a self-custodial wallet, verifying the identity of the recipient becomes more complex.
+
+General Rule: FATF standards usually exempt these transactions from strict Travel Rule compliance due to verification challenges.
+
+Jurisdictional Variations: Some regions have imposed stricter rules requiring VASPs to collect or verify information from self-custodial wallet owners despite the inherent challenges.
+
+### How AppKit can help
+
+Based on the above, let’s outline some fictional actors within various scenarios and how AppKit can help:
+
+#### Actors
+
+- VASP/CASP #1: A centralized exchange named PortugalEx
+- VASP/CASP #2: A centralized exchange named AustriaEx
+- User #1: A retail trader named John
+- User #2: A retail trader named Jane
+
+#### Scenario #1
+- John wants to transfer from his account on PortugalEx to his own non-custodial wallet:
+- PortugalEx can implement AppKit that within their withdrawal page as a solution to allow the user to connect any self-custodial wallet of their choosing. 
+- Additionally, for a better user experience, AppKit offers a 1-Click Auth solution for John to verify ownership of his self-custodial wallet before PortugalEx allows the transfer.
+
+#### Scenario #2
+
+- John wants to transfer from his account on PortugalEx to his account on AustriaEx
+- PortugalEx and AustriaEx need to exchange information about the sender and receiver. In this case it is only John, but they both must verify this information. 
+- AppKit can broker this secure, encrypted messaging back and forth and provide a standard syntax for the information exchange.
+
+#### Scenario #3
+
+- John wants to transfer from his account on PortugalEx to Jane’s account on AustriaEx
+- PortugalEx and AustriaEx need to exchange information about the sender and receiver. In this case it is two parties and they both must verify this information. 
+- It is effectively the same as scenario #2. AppKit can broker this secure, encrypted messaging back and forth and provide a standard syntax for the information exchange.
+
+#### Scenario #4
+
+- John wants to transfer from PortugalEx to Jane’s non-custodial wallet:
+- AppKit can facilitate developing a KYC-gated Peer-2-Peer payment system.
+- Potential Solutions:
+    - Integrating existing technologies (e.g., visual checks, Satoshi tests, manual signing, Address Ownership Proof Protocol).
+    - Collaborating with existing compliance system providers (e.g., 21Analytics, TRUST).
+
+#### Scenario #5
+
+- John wants to transfer from his non-custodial wallet (let’s say Ledger) to Jane’s non-custodial wallet (let’s say MetaMask).
+- Neither wallet is a regulated VASP, so Travel Rule doesn’t apply.
+
+### Advisory Note
+This documentation is provided for informational purposes only and is intended to facilitate discussions around product opportunities. 
+You should have your own counsel provide guidance on what is relevant for you. These statements are not legal advice and should not be construed as such.
