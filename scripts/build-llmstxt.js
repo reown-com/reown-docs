@@ -205,7 +205,7 @@ function generateLLMSTXTIndex(processedFiles) {
   let llmstxt = `# Reown Documentation\n\n`
 
   // Blockquote with a short summary
-  llmstxt += `> Documentation for the Reown platform, a comprehensive toolkit for Web3 integration.\n\n`
+  llmstxt += `> Documentation for Reown, the onchain UX platform.\n\n`
 
   // Additional information about the project
   llmstxt += `Reown provides tools and SDKs for building Web3 applications and integrating wallets. `
