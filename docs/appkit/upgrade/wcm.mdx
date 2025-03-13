@@ -8,29 +8,88 @@ import TabItem from '@theme/TabItem'
 
 **WalletConnect Modal will soon be deprecated.** Consequently, projects and developers need to upgrade to Reown AppKit Core. The most basic version of Reown AppKit will contain the traditional WalletConnect Modal with a QR code that users can scan and connect their wallets to. 
 
+:::note
+This is a preview version of Reown AppKit Core.
+:::
+
 <img src="/img/appkit-core.gif" />
 
 Please, follow to the different sections depending on which package you were using before:
 
 
-1. [**Universal Provider**](#universalprovider-with-appkit)
-2. [**Sign Client**](#sign-client-with-appkit)
-3. [**Ethereum Provider**](#ethereum-provider)
+1. [**Ethereum Provider**](#ethereum-provider)
+2. [**Universal Provider**](#universal-provider)
+3. [**Sign Client**](#sign-client)
 
 ## Installation
 
 You first need to install the AppKit package in order to get started. You can do this by running the command below.
 
 ```bash npm2yarn
-npm install @reown/appkit@1.7.0
+npm install @reown/appkit
 ```
 :::note
-The version number may vary. Make sure to check the latest canary version on the [npm page](https://www.npmjs.com/package/@reown/appkit?activeTab=versions).
+Make sure to use a version equal or greater than v1.7.0
 :::
 
-## UniversalProvider with AppKit 
 
-Here's how you can configure AppKit with `UniversalProvider`.
+## Ethereum Provider
+
+The Ethereum Provider implementation remains the same as before. Below is an example of how you can configure it:
+
+```javascript
+import { EthereumProvider } from '@walletconnect/ethereum-provider'
+
+const provider = await EthereumProvider.init({
+  projectId: 'YOUR_PROJECT_ID',
+  metadata: {
+    name: 'My Website',
+    description: 'My Website Description',
+    url: 'https://mywebsite.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+  showQrModal: true,
+  optionalChains: [1, 137, 2020],
+
+  /*Optional - Add custom RPCs for each supported chain*/
+  rpcMap: {
+    1: 'mainnet.rpc...',
+    137: 'polygon.rpc...'
+  }
+})
+
+
+// Connect EthereumProvider, this will open modal
+await provider.connect()
+```
+
+### Changes Required
+
+Projects and developers don’t need to change anything in their configuration - upgrading the Ethereum Provider to latest version is sufficient. Projects will automatically receive the new QR modal UI.
+
+:::note
+Not all `themeVariables`will be compatible with the new UI, as `AppKit` uses a different design system than `walletConnectModal`
+:::
+
+### Examples
+
+Below are the examples for the corresponding library/programming language. 
+
+
+1. [**HTML**](https://github.com/reown-com/appkit/tree/main/examples/html-ep)
+2. [**React**](https://github.com/reown-com/appkit/tree/main/examples/react-ep)
+3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ep-app-router)
+4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ep)
+
+## Universal Provider
+
+First, please uninstall the `@walletconnect/modal` package.
+
+```bash npm2yarn
+npm uninstall @walletconnect/modal
+```
+
+then, you can use the following code to configure AppKit with `UniversalProvider`.
 
 ```javascript
 // Remove the Code in Red
@@ -202,9 +261,16 @@ Below are the examples for the corresponding library/programming language.
 3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-up-app-router)
 4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-up)
 
-## Sign Client with AppKit
 
-Below is how you can use `SignClient` with AppKit**.
+## Sign Client
+
+First, please uninstall the `@walletconnect/modal` package.
+
+```bash npm2yarn
+npm uninstall @walletconnect/modal
+```
+
+Then, you can use the following code to configure AppKit with `SignClient`.
 
 ```javascript
 import { SignClient } from '@walletconnect/sign-client'
@@ -367,51 +433,3 @@ Below are the examples for the corresponding library/programming language.
 3. [NextJS](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-sign-client-app-router)
 4. [Vue](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-sign-client)
 
-
-## Ethereum Provider
-
-The Ethereum Provider implementation remains the same as before. Below is an example of how you can configure it:
-
-```javascript
-import { EthereumProvider } from '@walletconnect/ethereum-provider'
-
-const provider = await EthereumProvider.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-  showQrModal: true,
-  optionalChains: [1, 137, 2020],
-
-  /*Optional - Add custom RPCs for each supported chain*/
-  rpcMap: {
-    1: 'mainnet.rpc...',
-    137: 'polygon.rpc...'
-  }
-})
-
-
-// Connect EthereumProvider, this will open modal
-await provider.connect()
-```
-
-### Changes Required
-
-Projects and developers don’t need to change anything in their configuration - upgrading the Ethereum Provider to latest version is sufficient. Projects will automatically receive the new QR modal UI.
-
-:::note
-Not all `themeVariables`will be compatible with the new UI, as `AppKit` uses a different design system than `walletConnectModal`
-:::
-
-### Examples
-
-Below are the examples for the corresponding library/programming language. 
-
-
-1. [**HTML**](https://github.com/reown-com/appkit/tree/main/examples/html-ep)
-2. [**React**](https://github.com/reown-com/appkit/tree/main/examples/react-ep)
-3. [**NextJS**](https://github.com/reown-com/appkit/tree/main/examples/next-ep-app-router)
-4. [**Vue**](https://github.com/reown-com/appkit/tree/main/examples/vue-ep)
