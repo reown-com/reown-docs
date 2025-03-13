@@ -22,7 +22,7 @@ Please, follow to the different sections depending on which package you were usi
 You first need to install the AppKit package in order to get started. You can do this by running the command below.
 
 ```bash npm2yarn
-npm install @reown/appkit@1.7.0-alpha.0
+npm install @reown/appkit@1.7.0
 ```
 :::note
 The version number may vary. Make sure to check the latest canary version on the [npm page](https://www.npmjs.com/package/@reown/appkit?activeTab=versions).
@@ -37,9 +37,12 @@ Here's how you can configure AppKit with `UniversalProvider`.
 // Add the Code in Green
 
 import { UniversalProvider } from '@walletconnect/universal-provider'
+/*highlight-delete-start*/
 import { WalletConnectModal } from '@walletconnect/modal'
+/*highlight-delete-end*/
 /*highlight-add-start*/
 import { mainnet, solana } from '@reown/appkit/networks'
+import { createAppKit } from '@reown/appkit/core'
 /*highlight-add-end*/
 
 
@@ -69,7 +72,9 @@ provider.on('display_uri', (uri: string) => {
 /*highlight-add-start*/
 const modal = createAppKit({
   projectId: 'YOUR_PROJECT_ID',
-  networks: [mainnet, solana]
+  networks: [mainnet, solana],
+  universalProvider: provider,
+  manualWCControl: true
 })
 
 // A spinner will be showing until it's connected.
@@ -125,7 +130,9 @@ const polkadot = defineChain({
 
 const modal = createAppKit({
   projectId: 'YOUR_PROJECT_ID',
-  networks: [polkadot]
+  networks: [polkadot],
+  universalProvider: provider,
+  manualWCControl: true
 })
 
 await provider.connect({
@@ -167,7 +174,9 @@ const cosmos = defineChain({
 
 const modal = createAppKit({
   projectId: 'YOUR_PROJECT_ID',
-  networks: [cosmos]
+  networks: [cosmos],
+  universalProvider: provider,
+  manualWCControl: true
 })
 
 await provider.connect({
@@ -199,9 +208,12 @@ Below is how you can use `SignClient` with AppKit**.
 
 ```javascript
 import { SignClient } from '@walletconnect/sign-client'
+/*highlight-delete-start*/
 import { WalletConnectModal } from '@walletconnect/modal'
+/*highlight-delete-end*/
 /*highlight-add-start*/
 import { mainnet } from '@reown/appkit/networks'
+import { createAppKit } from '@reown/appkit/core'
 /*highlight-add-end*/
 
 const signClient = await SignClient.init({
@@ -224,7 +236,8 @@ const modal = new WalletConnectModal({
 /*highlight-add-start*/
 const modal = createAppKit({
   projectId: 'YOUR_PROJECT_ID',
-  networks: [mainnet]
+  networks: [mainnet],
+  manualWCControl: true
 })
 /*highlight-add-end*/
 
@@ -279,7 +292,8 @@ const polkadot = defineChain({
 
 const modal = createAppKit({
   projectId: 'YOUR_PROJECT_ID',
-  networks: [polkadot]
+  networks: [polkadot],
+  manualWCControl: true
 })
 
 // connect signClient and feed uri to modal
@@ -324,7 +338,8 @@ const cosmos = defineChain({
 
 const modal = createAppKit({
   projectId: 'YOUR_PROJECT_ID',
-  networks: [cosmos]
+  networks: [cosmos],
+  manualWCControl: true
 })
 
 // connect signClient and feed uri to modal
