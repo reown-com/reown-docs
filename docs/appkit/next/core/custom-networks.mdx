@@ -62,6 +62,9 @@ const customNetwork = defineChain({
 // Then pass it to the AppKit
 createAppKit({
     adapters: [...],
-    networks: [customNetwork]
+    networks: [customNetwork],
+    chainImages: { // Customize networks' logos
+      123456789: '/custom-network-logo.png', // <chainId>: 'www.network.com/logo.png'
+    }
 })
 ```

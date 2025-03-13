@@ -40,9 +40,17 @@ Hook for accessing account data and connection status.
 ```ts
 import { useAppKitAccount } from "@reown/appkit/react";
 
-export default Component(){
-  const { address, isConnected, caipAddress, status, embeddedWalletInfo } = useAppKitAccount()
-}
+const { address, isConnected, caipAddress, status, embeddedWalletInfo } = useAppKitAccount()
+```
+
+Hook for accessing account data and connection status for each namespace when working in a multi-chain environment.
+
+```ts
+import { useAppKitAccount } from "@reown/appkit/react";
+
+const eip155Account = useAppKitAccount({ namespace: 'eip155' }) // for EVM chains
+const solanaAccount = useAppKitAccount({ namespace: 'solana' })
+const bip122Account = useAppKitAccount({ namespace: 'bip122' }) // for bitcoin
 ```
 
 ### Returns

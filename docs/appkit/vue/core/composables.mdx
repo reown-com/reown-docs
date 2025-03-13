@@ -40,9 +40,17 @@ Composable function for accessing account data and connection status.
 ```ts
 import { useAppKitAccount } from "@reown/appkit/vue";
 
-export default Component(){
-  const accountData = useAppKitAccount()
-}
+const accountData = useAppKitAccount()
+```
+
+Composable function for accessing account data and connection status for each namespace when working in a multi-chain environment.
+
+```ts
+import { useAppKitAccount } from "@reown/appkit/vue";
+
+const eip155Account = useAppKitAccount({ namespace: 'eip155' }) // for EVM chains
+const solanaAccount = useAppKitAccount({ namespace: 'solana' })
+const bip122Account = useAppKitAccount({ namespace: 'bip122' }) // for bitcoin
 ```
 
 ### Returns

@@ -144,16 +144,6 @@ Create a new project on reown Cloud at https://cloud.reown.com and obtain a new 
 
 ## Trigger the modal
 
-:::warning
-If you are using React v19 and global components. Please add, before the component, the following directive to temporarily suppress TypeScript errors until the upgrade is fully supported:  
-
-```tsx
-{/* @ts-expect-error msg */}
-<appkit-button />
-```
-
-This will prevent TypeScript from reporting errors related to global component types.  
-:::
 
 <PlatformTabs groupId="eth-lib" activeOptions={["wagmi", "ethers5","ethers","solana","bitcoin"]}>
 <PlatformTabItem value="wagmi">

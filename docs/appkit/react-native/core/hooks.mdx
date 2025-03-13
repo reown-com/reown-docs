@@ -64,6 +64,18 @@ You can also select the modal's view when calling the `open` function
 
 ```ts
 open({ view: 'Account' })
+
+// to connect and show multi wallets view
+open({ view: 'Connect'})
+
+// to connect and show only solana wallets
+open({ view: 'Connect', namespace: 'solana' })
+
+// to connect and show only bitcoin wallets
+open({ view: 'Connect', namespace: 'bip122' })
+
+// to connect and show only ethereum wallets
+open({ view: 'Connect', namespace: 'eip155' })
 ```
 
 List of views you can select
@@ -73,7 +85,7 @@ List of views you can select
   data={[
     {
       variable: { code: 'Connect' },
-      description: 'Principal view of the modal - default view when disconnected'
+      description: 'Principal view of the modal - default view when disconnected. A `namespace` can be selected to connect to a specific network (solana, bip122 or eip155)'
     },
     {
       variable: { code: 'Account' },

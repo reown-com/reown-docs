@@ -7,3 +7,13 @@ import Onramp from '../../shared/onramp.mdx'
 # On-Ramp
 
 <Onramp />
+
+## On-Ramp API 
+
+You can programmatically open the On-Ramp modal.
+
+```
+const { open } = useAppKit()
+
+open({ view: 'OnRampProviders' })
+```

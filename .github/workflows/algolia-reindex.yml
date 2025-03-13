@@ -1,0 +1,28 @@
+name: Algolia Docs Reindex
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+  workflow_dispatch:
+
+jobs:
+  algolia_reindex:
+    runs-on: ubuntu-latest
+    name: Algolia Docs Reindex
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Algolia Crawler Reindex
+        uses: algolia/algoliasearch-crawler-github-actions@v1
+        with:
+          crawler-user-id: ${{ secrets.ALGOLIA_CRAWLER_USER_ID }}
+          crawler-api-key: ${{ secrets.ALGOLIA_CRAWLER_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          crawler-name: 'reown'
+          algolia-app-id: 'FNT2FF5Z1N'
+          algolia-api-key: ${{ secrets.ALGOLIA_API_KEY }}
+          site-url: 'https://docs.reown.com/'

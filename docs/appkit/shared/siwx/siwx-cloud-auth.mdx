@@ -1,6 +1,6 @@
 Cloud Auth SIWX is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions.
 
-With Cloud Auth SIWX you will be able to see and control the sessions of your users using the [User Management Dashboard](/cloud/user-management.mdx).
+With Cloud Auth SIWX you will be able to see and control the sessions of your users using the [User Management Dashboard](#user-management).
 
 :::caution
 
@@ -18,12 +18,40 @@ npm install @reown/appkit-siwx
 
 ```ts
 import { createAppKit } from '@reown/appkit'
+/* highlight-add-start */
 import { CloudAuthSIWX } from '@reown/appkit-siwx'
+/* highlight-add-end */
 
 const appkit = createAppKit({
-  // ... your configuration
+  projectId,
+  networks,
+  metadata,
+  /* highlight-add-start */
   siwx: new CloudAuthSIWX()
+  /* highlight-add-end */
 })
 ```
 
 Now you are ready to use the **SIWX** feature in your Dapp.
+
+## User Management
+
+Easily view and manage all authenticated users through AppKit [Cloud Auth SIWX](/appkit/features/siwx/siwx-cloud-auth), a drop-in hosted SIWX server that provides key insights into your user base.
+
+
+### Dashboard
+
+The dashboard provides a list of all accounts (chain + address) connected to your dapp, including the country they connected from, the last connection time, and the authentication method (wallet or social login).
+
+![User Management](/assets/user-management.png)
+
+### Insights
+
+We plan to add more insights over time. Currently, it includes:
+
+- **Connections**: Authenticated users over time  
+- **Geographic Distribution**: User distribution by country  
+- **Wallet Analytics**: Which wallets are most commonly used  
+- **30-Day History**: Historical data for the past 30 days  
+
+![User Management](/assets/insights.png)

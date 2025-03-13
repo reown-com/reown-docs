@@ -78,15 +78,33 @@ importers:
       cspell:
         specifier: ^8.16.1
         version: 8.16.1
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
       prettier:
         specifier: 3.2.2
         version: 3.2.2
+      remark-frontmatter:
+        specifier: ^5.0.0
+        version: 5.0.0
+      remark-mdx:
+        specifier: ^3.0.0
+        version: 3.0.1
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
+      remark-stringify:
+        specifier: ^11.0.0
+        version: 11.0.0
       typedoc-plugin-markdown:
         specifier: 3.17.1
         version: 3.17.1(typedoc@0.25.13(typescript@5.3.3))
       typescript:
         specifier: 5.3.3
         version: 5.3.3
+      unified:
+        specifier: ^11.0.4
+        version: 11.0.4
 
 packages:
 
