@@ -164,11 +164,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={client}>
-        /* highlight-delete-start */ -{' '}
+        /* highlight-delete-start */
         <RainbowKitProvider>
           /* highlight-delete-end */
           <Component {...pageProps} />
-          /* highlight-delete-start */ -{' '}
+          /* highlight-delete-start */
         </RainbowKitProvider>
         /* highlight-delete-end */
       </QueryClientProvider>
