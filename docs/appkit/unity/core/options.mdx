@@ -148,3 +148,38 @@ By requesting fullscreen on the container, the modal will always be rendered on 
 document.querySelector('#canvas-container').requestFullscreen();
 ```
 
+### Redirect from Wallet to App
+
+After a connection or request approval, most wallets attempt to redirect back to the app. 
+To ensure reliability, particularly on iOS, it is recommended to register a custom URL scheme and provide it to AppKit.
+
+- [Register URL Scheme for Android](https://docs.unity3d.com/6000.0/Documentation/Manual/deep-linking-android.html)
+- [Register URL Scheme for iOS](https://docs.unity3d.com/6000.0/Documentation/Manual/deep-linking-ios.html)
+
+```csharp
+// AppKit configuration
+var appKitConfig = new AppKitConfig
+{
+    projectId = "884a........2cc",
+    metadata = new Metadata(
+        "My app",
+        "My app",
+        "https://example.com",
+        "https://..../appkit-icon.png",
+        new RedirectData
+        {
+            // Used by native wallets to redirect back to the app after approving requests
+            Native = "my-url-schema://"
+        }
+    ),
+};
+
+
+await AppKit.InitializeAsync(
+    appKitConfig
+);
+```
+
+
+
+
