@@ -5,7 +5,7 @@ you can start using it to interact with the wallet provider and blockchain.
 
 AppKit comes with the [Nethereum](https://nethereum.com/) and [Wagmi](https://wagmi.sh/) integration out of the box.
 
-To interact with EVM chains use `AppKit.Evm`. Internally, AppKit will use Wagmi on WebGL or Nethereum on other platforms.
+To interact with EVM chains use `AppKit.Evm` (see [Actions](/appkit/unity/core/actions#evm-actions) for more details). Internally, AppKit will use Wagmi on WebGL or Nethereum on other platforms.
 Nethereum is already preconfigured with RPC URL and interceptor that will route the requests between the wallet provider and RPC node.
 
 ## Sending Ether
@@ -86,3 +86,17 @@ var gasAmount = await AppKit.Evm.EstimateGasAsync(contractAddress, abi, "transfe
 // Send transaction
 var result = await AppKit.Evm.WriteContractAsync(contractAddress, abi, "transfer", gasAmount, arguments);
 ```
+## Nethereum Integration
+
+AppKit offers deep integration with [Nethereum](https://nethereum.com/) on native platforms, with limited support on WebGL.
+
+If you need to use Nethereum directly, you can access a preconfigured `Web3` instance from AppKit:
+
+```csharp
+var nethereumService = AppKit.Evm as NethereumEvmService;
+var web3 = nethereumService.Web3;
+```
+
+This `Web3` instance is preconfigured with Reown's Blockchain API for the active chain and includes a request interceptor that routes requests between RPC node and the connected wallet (if needs signing).
+
+Avoid caching this `Web3` instance, as it may be updated when the active chain is switched.
