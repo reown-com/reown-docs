@@ -987,9 +987,11 @@ module.exports = {
             'appkit/unity/core/usage',
             'appkit/unity/core/options',
             'appkit/unity/core/actions',
-            'appkit/unity/core/siwe',
             'appkit/unity/core/events',
-            'appkit/unity/core/customization'
+            'appkit/unity/core/siwe',
+            'appkit/unity/core/customization',
+            'appkit/unity/core/socials',
+            'appkit/unity/core/smart-accounts'
           ]
         },
         {
