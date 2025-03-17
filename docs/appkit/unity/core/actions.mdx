@@ -24,7 +24,9 @@ AppKit.CloseModal();
 ## Chain Actions
 
 ### Set active chain
+
 Note: The chain must be added to the list of [supported chains in the AppKit configuration](https://docs.reown.com/appkit/unity/core/options#supported-chains).
+
 ```csharp
 Chain newChain = ChainConstants.Chains.Ethereum;
 await AppKit.NetworkController.ChangeActiveChainAsync(newChain);
@@ -58,13 +60,17 @@ await AppKit.DisconnectAsync();
 ## EVM Actions
 
 ### Get Balance
+
 Get the native token balance for an address.
+
 ```csharp
 BigInteger balance = await AppKit.EVM.GetBalanceAsync("0x123...");
 ```
 
 ### Sign Message
+
 Sign a message with the active account's private key.
+
 ```csharp
 // Sign a string message
 string signature = await AppKit.EVM.SignMessageAsync("Hello World");
@@ -78,14 +84,18 @@ string signature = await AppKit.EVM.SignMessageAsync("Hello World", "0x123...");
 ```
 
 ### Sign Typed Data
+
 Sign typed data following EIP-712 standard.
+
 ```csharp
 string typedData = "{ /* Your EIP-712 typed data structure */ }";
 string signature = await AppKit.EVM.SignTypedDataAsync(typedData);
 ```
 
 ### Verify Message Signature
+
 Verify if a message was signed by a specific address.
+
 ```csharp
 // Basic verification
 bool isValid = await AppKit.EVM.VerifyMessageSignatureAsync(
@@ -105,7 +115,9 @@ bool isValid = await AppKit.EVM.VerifyMessageSignatureAsync(verifyMessageParams)
 ```
 
 ### Verify Typed Data Signature
+
 Verify if typed data was signed by a specific address.
+
 ```csharp
 // Basic verification
 bool isValid = await AppKit.EVM.VerifyTypedDataSignatureAsync(
@@ -125,6 +137,7 @@ bool isValid = await AppKit.EVM.VerifyTypedDataSignatureAsync(verifyTypedDataPar
 ```
 
 ### Read Contract
+
 Read data from a smart contract (no gas required).
 
 > **Note:** Both JSON and human-readable ABI formats are supported. Human-readable ABI is more concise but JSON ABI may offer better performance.
@@ -167,6 +180,7 @@ string balance = await AppKit.EVM.ReadContractAsync<string>(readContractParams);
 ```
 
 ### Write Contract
+
 Write data to a smart contract (requires gas).
 
 > **Note:** Both JSON and human-readable ABI formats are supported.
@@ -218,7 +232,9 @@ string txHash = await AppKit.EVM.WriteContractAsync(writeContractParams);
 ```
 
 ### Send Transaction
+
 Send a native token transaction.
+
 ```csharp
 // Basic transaction
 string txHash = await AppKit.EVM.SendTransactionAsync(
@@ -238,7 +254,9 @@ string txHash = await AppKit.EVM.SendTransactionAsync(transactionParams);
 ```
 
 ### Send Raw Transaction
+
 Send a pre-signed transaction.
+
 ```csharp
 string txHash = await AppKit.EVM.SendRawTransactionAsync(
     "0x123..." // signed transaction data
@@ -246,7 +264,9 @@ string txHash = await AppKit.EVM.SendRawTransactionAsync(
 ```
 
 ### Estimate Gas
+
 Estimate gas required for a transaction.
+
 ```csharp
 // Estimate for native token transfer
 BigInteger gasLimit = await AppKit.EVM.EstimateGasAsync(
@@ -287,13 +307,17 @@ BigInteger gasLimit = await AppKit.EVM.EstimateGasAsync(contractGasParams);
 ```
 
 ### Get Gas Price
+
 Get the current gas price in wei.
+
 ```csharp
 BigInteger gasPrice = await AppKit.EVM.GetGasPriceAsync();
 ```
 
 ### RPC Request
+
 Make a direct RPC request to the blockchain node.
+
 ```csharp
 // Get the latest block number
 BigInteger blockNumber = await AppKit.EVM.RpcRequestAsync<BigInteger>("eth_blockNumber");

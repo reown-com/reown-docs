@@ -58,8 +58,6 @@ var decimals = await evm.ReadContractAsync<BigInteger>(contractAddress, abi, "de
 var finalBalance = tokenBalance / BigInteger.Pow(10, tokenDecimal);
 ```
 
-###
-
 ### Send ERC20 Token
 
 To send an ERC20 token, you need to know the contract address, ERC20 standard contract ABI, recipient address, and the amount of tokens to send.
