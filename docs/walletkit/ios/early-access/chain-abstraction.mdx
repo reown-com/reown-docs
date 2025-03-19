@@ -7,7 +7,7 @@ For example, when an app requests a 100 USDC payment on Base network but the use
 ## How It Works
 
 :::note
-Apps need to pass `gas` as null, while sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../../appkit/next/experimental/chain-abstraction.mdx) for more details.
+Apps need to pass `gas` as null, while sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../../appkit/next/early-access/chain-abstraction.mdx) for more details.
 :::
 
 When sending a transaction, you need to:
@@ -25,7 +25,7 @@ The following sequence diagram illustrates the complete flow of a chain abstract
 Following are the methods from WalletKit that you will use in implementing chain abstraction.
 
 :::note
-💡 Chain abstraction is currently in the experimental phase
+💡 Chain abstraction is currently in the early access phase
 :::
 
 ### Prepare 
@@ -96,7 +96,7 @@ For example, check out implementation of chain abstraction in [sample wallet](ht
 ## Testing 
 
 Best way to test Chain Abstraction is to use [sample wallet](https://testflight.apple.com/join/09bTAryp).
-You can also use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/experimental/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction-supported wallet. 
+You can also use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction-supported wallet. 
 
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
   <source src="/assets/chain-abstraction-demo.mp4" type="video/mp4" />
