@@ -66,7 +66,7 @@ The chosen elliptic curve was Curve25519 offering 128 bits of security (256 bits
 
 ## Authenticated Encryption
 
-Authentication Encryption refers to a form of encryption which simultaneously assures the confidentiality and authenticity of data.
+Authenticated Encryption refers to a form of encryption which simultaneously assures the confidentiality and authenticity of data.
 
 The chosen approach was to encrypt-then-mac which produces a MAC based on the resulting ciphertext. The encryption uses AES-256-CBC with a random Initialization Vector (IV) and authentication uses HMAC-SHA256. The encrypted payloads are serialized in the following order: iv, publicKey, mac and cipherText.
 
