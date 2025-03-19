@@ -354,8 +354,8 @@ module.exports = {
                 { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' },
                 {
                   type: 'category',
-                  label: 'Experimental',
-                  items: ['walletkit/features/experimental/chain-abstraction']
+                  label: 'Early Access',
+                  items: ['walletkit/features/early-access/chain-abstraction']
                 }
               ]
             },
@@ -411,10 +411,10 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'Experimental',
+          label: 'Early Access',
           items: [
-            'appkit/react/experimental/smart-session',
-            'appkit/react/experimental/chain-abstraction'
+            'appkit/react/early-access/smart-session',
+            'appkit/react/early-access/chain-abstraction'
           ]
         },
         {
@@ -510,10 +510,10 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'Experimental',
+          label: 'Early Access',
           items: [
-            'appkit/next/experimental/smart-session',
-            'appkit/next/experimental/chain-abstraction'
+            'appkit/next/early-access/smart-session',
+            'appkit/next/early-access/chain-abstraction'
           ]
         },
         {
@@ -609,8 +609,8 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'Experimental',
-          items: ['appkit/vue/experimental/smart-session']
+          label: 'Early Access',
+          items: ['appkit/vue/early-access/smart-session']
         },
         {
           type: 'category',
@@ -705,8 +705,8 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'Experimental',
-          items: ['appkit/javascript/experimental/smart-session']
+          label: 'Early Access',
+          items: ['appkit/javascript/early-access/smart-session']
         },
         {
           type: 'category',
@@ -987,9 +987,11 @@ module.exports = {
             'appkit/unity/core/usage',
             'appkit/unity/core/options',
             'appkit/unity/core/actions',
-            'appkit/unity/core/siwe',
             'appkit/unity/core/events',
-            'appkit/unity/core/customization'
+            'appkit/unity/core/siwe',
+            'appkit/unity/core/customization',
+            'appkit/unity/core/socials',
+            'appkit/unity/core/smart-accounts'
           ]
         },
         {
@@ -1044,8 +1046,8 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'Experimental',
-          items: ['walletkit/android/experimental/chain-abstraction']
+          label: 'Early Access',
+          items: ['walletkit/android/early-access/chain-abstraction']
         },
         'walletkit/android/best-practices',
         'walletkit/android/resources',
@@ -1101,8 +1103,8 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'Experimental',
-          items: ['walletkit/ios/experimental/chain-abstraction']
+          label: 'Early Access',
+          items: ['walletkit/ios/early-access/chain-abstraction']
         },
         'walletkit/ios/best-practices',
         'walletkit/ios/resources',
@@ -1203,8 +1205,8 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'Experimental',
-          items: ['walletkit/react-native/experimental/chain-abstraction']
+          label: 'Early Access',
+          items: ['walletkit/react-native/early-access/chain-abstraction']
         }
       ]
     },

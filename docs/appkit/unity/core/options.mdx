@@ -51,15 +51,11 @@ await AppKit.InitializeAsync(new AppKitConfig
             blockExplorer: new BlockExplorer("Seitrace", "https://seitrace.com"),
             rpcUrl: "https://evm-rpc-arctic-1.sei-apis.com",
             isTestnet: true,
-            imageUrl: $"https://api.web3modal.com/public/getAssetImage/692ed6ba-e569-459a-556a-776476829e00",
-            viemName: "seiDevnet" // required only on WebGL
+            imageUrl: $"https://imagedelivery.net/_aTEfDRm7z3tKgu9JhfeKA/692ed6ba-e569-459a-556a-776476829e00/md"
         )
     }
 });
 ```
-The `viemName` argument of the `Chain` constructor is required only when targeting WebGL.
-The full list of chain names can be found in [the Viem source code](https://github.com/wevm/viem/blob/main/src/chains/index.ts).
-
 
 ### Enable Installed Wallet Detection
 
@@ -151,4 +147,39 @@ By requesting fullscreen on the container, the modal will always be rendered on 
 // Use this instead of unityInstance.SetFullscreen(1) to enable full screen
 document.querySelector('#canvas-container').requestFullscreen();
 ```
+
+### Redirect from Wallet to App
+
+After a connection or request approval, most wallets attempt to redirect back to the app. 
+To ensure reliability, particularly on iOS, it is recommended to register a custom URL scheme and provide it to AppKit.
+
+- [Register URL Scheme for Android](https://docs.unity3d.com/6000.0/Documentation/Manual/deep-linking-android.html)
+- [Register URL Scheme for iOS](https://docs.unity3d.com/6000.0/Documentation/Manual/deep-linking-ios.html)
+
+```csharp
+// AppKit configuration
+var appKitConfig = new AppKitConfig
+{
+    projectId = "884a........2cc",
+    metadata = new Metadata(
+        "My app",
+        "My app",
+        "https://example.com",
+        "https://..../appkit-icon.png",
+        new RedirectData
+        {
+            // Used by native wallets to redirect back to the app after approving requests
+            Native = "my-url-schema://"
+        }
+    ),
+};
+
+
+await AppKit.InitializeAsync(
+    appKitConfig
+);
+```
+
+
+
 
