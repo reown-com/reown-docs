@@ -10,8 +10,9 @@ const dropdown_placeholder = {
 const cloud = {
   type: 'category',
   label: 'Cloud',
-  collapsible: false,
-  className: 'menu_outer_list',
+  collapsed: true,
+  collapsible: true,
+  className: 'sidebar__logo',
   items: [
     'cloud/explorer',
     'cloud/explorer-submission',
@@ -37,8 +38,9 @@ const cloud = {
 const advanced = {
   type: 'category',
   label: 'Advanced',
-  collapsible: false,
-  className: 'menu_outer_list',
+  collapsed: true,
+  collapsible: true,
+  className: 'sidebar__logo ',
   items: [
     {
       type: 'category',
@@ -141,7 +143,7 @@ const specs = {
   items: [
     {
       type: 'link',
-      label: 'Specs',
+      label: 'WC Specs',
       href: 'https://specs.walletconnect.com/'
     },
     'advanced/faq'
@@ -374,11 +376,12 @@ module.exports = {
               ]
             }
           ]
-        }
+        },
+        cloud,
+        advanced
       ]
     },
-    cloud,
-    advanced,
+    ,
     specs,
     dropdown_placeholder
   ],
