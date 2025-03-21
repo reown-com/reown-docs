@@ -30,7 +30,7 @@ npm uninstall @web3modal/solana
 
 Next, install the Reown AppKit and Solana wallet adapter packages.
 ```bash npm2yarn
-npm install @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-solana
 ```
 
 ### Implementation
@@ -51,7 +51,6 @@ Make sure you update the imports in your codebase to reflect the new package nam
 + import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 + import { createAppKit } from '@reown/appkit/react'
 + import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
-+ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 /* highlight-add-end */
 ```
 Now, set up the Solana Adapter and the modal. 
@@ -67,9 +66,7 @@ The `metadata` and the `projectId` are the same as before.
 /* highlight-delete-end */
  
 /* highlight-add-start */
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
++ const solanaAdapter = new SolanaAdapter()
 
 + const modal = createAppKit({
 +   projectId,
@@ -92,7 +89,6 @@ Make sure you update the imports in your codebase to reflect the new package nam
 + import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 + import { createAppKit } from '@reown/appkit/vue'
 + import { SolanaAdapter } from '@reown/appkit-adapter-solana/vue'
-+ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 /* highlight-add-end */
 ```
 
@@ -109,9 +105,7 @@ The `metadata` and the `projectId` are the same as before.
 /* highlight-delete-end */
  
 /* highlight-add-start */
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
++ const solanaAdapter = new SolanaAdapter()
 
 + const modal = createAppKit({
 +   projectId,
@@ -134,7 +128,6 @@ Make sure you update the imports in your codebase to reflect the new package nam
 + import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 + import { createAppKit } from '@reown/appkit'
 + import { SolanaAdapter } from '@reown/appkit-adapter-solana'
-+ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 /* highlight-add-end */
 ```
 Now, set up the Solana Adapter and the modal. 
@@ -150,9 +143,7 @@ The `metadata` and the `projectId` are the same as before.
 /* highlight-delete-end */
  
 /* highlight-add-start */
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
++ const solanaAdapter = new SolanaAdapter()
 
 + const modal = createAppKit({
 +   projectId,
