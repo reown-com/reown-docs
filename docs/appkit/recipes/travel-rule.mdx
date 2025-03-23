@@ -1,6 +1,7 @@
 ---
 title: Travel Rule using AppKit
 ---
+import GithubBox from '../../components/GithubBox'
 
 # Travel Rule using AppKit
 
@@ -9,83 +10,78 @@ title: Travel Rule using AppKit
 The Travel Rule is a regulatory requirement designed to enhance transparency in financial transactions by mandating the exchange of specific information about both senders and recipients. 
 Initially applied to traditional wire transfers, this rule has been extended to the cryptocurrency sector, especially affecting Virtual Asset Service Providers (VASPs) under guidelines set by the Financial Action Task Force (FATF).
 
-## Traditional Travel Rule
-
-The Travel Rule requires regulated institutions—such as banks and Payment Service Providers (PSPs)—to share essential details of a transaction when a transfer exceeds a specified threshold (approximately 1-3K USD/EUR/GBP). 
-This exchange of information assists law enforcement and regulators in tracing the flow of funds.
-
-### Key Information Exchanged
-- Name
-- Account Number
-- Address (or alternative identifiers, e.g., place and date of birth, client number, or national identity number)
-
-### Rationale
-The main goal of the Travel Rule is to:
-- Improve the traceability of financial transactions.
-- Assist regulatory bodies and law enforcement in tracking funds for compliance and investigative purposes.
 
 ## Travel Rule in Cryptocurrency
 
 In 2019, and updated in 2021, the FATF established standards for Virtual Asset Service Providers (VASPs) to follow similar protocols as traditional financial institutions. For crypto transactions, the suggested threshold is approximately EUR 1K.
 
+### Authentication Scenario
 
-### Application Scenarios
+SIWX (Sign In With Solana, EVM or Bitcoin) is a two-step authentication process:
 
-#### VASP-to-VASP Transfers
-What It Means: When cryptocurrency is transferred from one VASP (e.g., a centralized exchange) to another, both parties must exchange the required sender and receiver information.
+1. **Connect Wallet**: First, the user connects their self-custodial wallet.
 
-Example: A user at one centralized exchange sends crypto to a user at another exchange, prompting both VASPs to share identity and account details.
+2. **Sign Message**: After connecting, the user signs a message with their wallet to prove ownership of the account. This signature cryptographically proves that they control the private keys.
 
-#### Non-Custodial to Non-Custodial Wallet Transfers
-Exemption: Transfers between non-custodial wallets (self-managed wallets) are generally not subject to the Travel Rule since they do not involve regulated VASPs.
+Here's a practical example:
 
-#### VASP-to-Non-Custodial Transfers
-Challenge: When a user sends crypto from a VASP to a self-custodial wallet, verifying the identity of the recipient becomes more complex.
+- John wants to transfer funds from his PortugalEx account to his non-custodial wallet
+- PortugalEx implements AppKit in their withdrawal page to enable wallet connections
+- When John initiates the withdrawal:
+  1. He connects his self-custodial wallet through AppKit's interface
+  2. AppKit prompts him to sign a message with the connected wallet
+  3. Only after successful signature verification does PortugalEx allow the transfer
+- This SIWX flow ensures John truly owns and controls the destination wallet before permitting withdrawals
 
-General Rule: FATF standards usually exempt these transactions from strict Travel Rule compliance due to verification challenges.
+## Installing and Implementing SIWX
+## Prerequisites
 
-Jurisdictional Variations: Some regions have imposed stricter rules requiring VASPs to collect or verify information from self-custodial wallet owners despite the inherent challenges.
+Before implementing SIWX for Travel Rule compliance, ensure you have:
 
-### How AppKit can help
+- AppKit installed and configured in your project following the [AppKit Next installation guide](https://docs.reown.com/appkit/next/core/installation)
+- A project ID from [Reown Cloud](https://cloud.reown.com)
 
-Based on the above, let’s outline some fictional actors within various scenarios and how AppKit can help:
+## Example Implementation
+<GithubBox name="Travel Rule SIWX Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-siwx-multichain" description="Check out this example implementation of Travel Rule compliance using SIWX with multichain"></GithubBox>
 
-#### Actors
+### Installation
 
-- VASP/CASP #1: A centralized exchange named PortugalEx
-- VASP/CASP #2: A centralized exchange named AustriaEx
-- User #1: A retail trader named John
-- User #2: A retail trader named Jane
+Install the AppKit SIWX package:
 
-#### Scenario #1
-- John wants to transfer from his account on PortugalEx to his own non-custodial wallet:
-- PortugalEx can implement AppKit that within their withdrawal page as a solution to allow the user to connect any self-custodial wallet of their choosing. 
-- To enhance user experience, AppKit provides a SIWX solution for John to verify ownership of his self-custodial wallet before PortugalEx permits the transfer, by signing a message with the wallet immediately after connecting it.
-#### Scenario #2
+```bash npm2yarn
+npm install @reown/appkit-siwx
+```
 
-- John wants to transfer from his account on PortugalEx to his account on AustriaEx
-- PortugalEx and AustriaEx need to exchange information about the sender and receiver. In this case it is only John, but they both must verify this information. 
-- AppKit can facilitate secure, encrypted messaging and provide a standard syntax for information exchange.
+### Usage
 
-#### Scenario #3
+Once you have AppKit set up in your dApp, you can easily enable SIWX by adding the default implementation with the following configuration:
 
-- John wants to transfer from his account on PortugalEx to Jane’s account on AustriaEx
-- PortugalEx and AustriaEx need to exchange information about the sender and receiver. In this case it is two parties and they both must verify this information. 
-- It is effectively the same as scenario #2. AppKit can facilitate secure, encrypted messaging and provide a standardized syntax for information exchange.
+```ts
+import { createAppKit } from '@reown/appkit'
+/* highlight-add-start */
+import { DefaultSIWX } from '@reown/appkit-siwx'
+/* highlight-add-end */
 
-#### Scenario #4
+const appkit = createAppKit({
+  projectId,
+  networks,
+  metadata,
+  /* highlight-add-start */
+  siwx: new DefaultSIWX() // add this line to enable SIWX
+  /* highlight-add-end */
+})
+```
 
-- John wants to transfer from PortugalEx to Jane’s non-custodial wallet:
-- AppKit can facilitate developing a KYC-gated Peer-2-Peer payment system.
-- Potential Solutions:
-    - Integrating existing technologies (e.g., visual checks, Satoshi tests, manual signing, Address Ownership Proof Protocol).
-    - Collaborating with existing compliance system providers (e.g., 21Analytics, TRUST).
 
-#### Scenario #5
+## Conclusion
 
-- John wants to transfer from his non-custodial wallet (let’s say Ledger) to Jane’s non-custodial wallet (let’s say MetaMask).
-- Neither wallet is a regulated VASP, so Travel Rule doesn’t apply.
+By implementing SIWX for Travel Rule compliance, you have:
 
-### Advisory Note
-This documentation is provided for informational purposes only and is intended to facilitate discussions around product opportunities. 
-You should have your own counsel provide guidance on what is relevant for you. These statements are not legal advice and should not be construed as such.
+- Enhanced your platform's security by verifying wallet ownership before transfers
+- Simplified the user experience while maintaining regulatory compliance 
+- Implemented a robust solution that works across multiple blockchain networks
+
+This implementation helps meet Travel Rule requirements while providing a seamless experience for your users. The SIWX verification acts as a critical safeguard, ensuring that only verified wallet owners can send funds.
+
+For more advanced customization options, refer to our [SIWX documentation](/appkit/features/siwx/default)
+
