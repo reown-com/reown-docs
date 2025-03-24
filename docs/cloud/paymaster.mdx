@@ -63,8 +63,8 @@ All supported chains are enabled by default, but you can deselect any chain to s
 ### 4. Add Policy Logic
 
 Policy logic can be updated in one of two ways:
-1. JSON editor
-2. No-code builder (In development, coming soon)
+1. No-code policy builder 
+2. JSON editor
 
 There are distinct advantages to this:
 1. You can maintain an auditable history of your policies by storing the JSON files for each policy.
@@ -72,6 +72,17 @@ There are distinct advantages to this:
 3. Policies are highly flexible, allowing you to chain conditional checks to target specific smart contracts, particular methods within a contract, expected gas limits, and more.
 
 Once created, the policy will become active immediately if the start date has already passed, making it ready for use.
+
+#### Using the no code builder
+<img src="/img/paymasters/no-code-builder.png" />
+
+All that is required is to
+1. Input the contract address
+2. Paste the ABI
+3. Select the methods you wish to sponsor via the drop down
+4. *IMPORTANT*: If you would like to sponsor the deployement of smart accounts
+on your app, tick the `Sponsor Smart Account Deployment` checkbox.
+
 
 ## Sponsoring transactions
 
