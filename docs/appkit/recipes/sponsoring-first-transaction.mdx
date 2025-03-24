@@ -82,15 +82,46 @@ You can verify it worked in multiple ways:
   Status" and then take the transaction receipt and paste it into
   https://sepolia.etherscan.io/. It will show the paymaster covering the gas.
 
----
+## Trouble Shooting
+
+The most common errors encountered with integrating Paymasters typically come in 
+the form of simulation errors. 
+
+Thankfully, the paymaster provides a full report of user ops that run into
+errors. For example:
+
+```json
+{
+  "error": {
+    "message": "The UserOp does not satisfy requirements of policy",
+    "details": {
+      "message": "Could not successfully simulate call.",
+      "cause": "Filtered simulation calls do not include a call to a smart contract.",
+      "debugInfo": {
+        "simulatedTransaction": { /* full simulation information */ },
+        "errors": [
+          {
+            "error": "executionreverted"
+          },
+          {
+            "error": "out of gas"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+Here the simulation was intentionally broken by providing faulty gas estimation,
+but all other simulation errors would be reported this way. Utilizing this can
+help debug where sponsorship is going wrong.
 
 ## Part 2: Integrating it with your Dapp
 
 To add this functionality to your dapp, you can integrate sendCalls
 functionality using Wagmi's `useSendCalls`. For example, adding this
 functionality to a React Component
-
-
 
 ### Define the ABI 
 ```ts
