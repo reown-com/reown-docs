@@ -38,9 +38,10 @@ To mitigate this account spoofing risk, the standard practice is to require the 
 the provided address and then verify the signature.
 
 The Sign-In With Ethereum (SIWE) feature in AppKit can facilitate this verification process,
-enabling the application to confirm the user's Ethereum address even the app doesn’t have a backend.
+enabling the application to confirm the user's Ethereum address even the app doesn't have a backend.
 
 ### 0. Create basic SIWE configuration
+
 ```csharp
 // Create SIWE configuration
 var siweConfig = new SiweConfig
@@ -65,6 +66,7 @@ siweConfig.SignOutSuccess += () => Debug.Log("Address verification canceled or w
 
 
 ### 1. Initialize AppKit with your `SiweConfig`
+
 Add the SIWE configuration to `AppKitConfig`
 
 ```csharp
@@ -94,6 +96,7 @@ With this configuration, AppKit will enforce address verification and invoke the
 user successfully verifies the address.
 
 ## Sign-In With Ethereum with Backend
+
 To use 1-CA + SIWE at full extend, a backend for communication is required. This backend will be used to generate a nonce,
 verify messages and handle sessions. You can read more about SIWE backend implementation at [here](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/implement-the-backend).
 
@@ -174,6 +177,7 @@ siweConfig.SignOutSuccess += () => Debug.Log("[Dapp] SIWE Sign Out Success!");
 ```
 
 ### 1. Initialize AppKit with your `SiweConfig`
+
 Add the SIWE configuration to `AppKitConfig`
 
 ```csharp

@@ -102,15 +102,27 @@ public async void Start()
 }
 ```
 
-3. Open the modal
+3. Connect account
 
 ```csharp
-public void OpenAppKitModal()
+public async Task ResumeSession()
 {
-    AppKit.OpenModal();
+    // Try to resume account connection from the last session
+    var resumed = await AppKit.ConnectorController.TryResumeSessionAsync();
+
+    if (resumed)
+    {
+        // Continue to the game
+        MyAccountConnectedHandler();
+    }
+    else
+    {
+        // Connect account
+        AppKit.AccountConnected += (_, e) => MyAccountConnectedHandler();
+        AppKit.OpenModal();
+    }
 }
 ```
-
 
 ## Examples and Test dApps
 

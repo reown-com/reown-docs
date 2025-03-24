@@ -24,7 +24,9 @@ AppKit.CloseModal();
 ## Chain Actions
 
 ### Set active chain
+
 Note: The chain must be added to the list of [supported chains in the AppKit configuration](https://docs.reown.com/appkit/unity/core/options#supported-chains).
+
 ```csharp
 Chain newChain = ChainConstants.Chains.Ethereum;
 await AppKit.NetworkController.ChangeActiveChainAsync(newChain);
@@ -58,13 +60,17 @@ await AppKit.DisconnectAsync();
 ## EVM Actions
 
 ### Get Balance
+
 Get the native token balance for an address.
+
 ```csharp
 BigInteger balance = await AppKit.EVM.GetBalanceAsync("0x123...");
 ```
 
 ### Sign Message
+
 Sign a message with the active account's private key.
+
 ```csharp
 // Sign a string message
 string signature = await AppKit.EVM.SignMessageAsync("Hello World");
@@ -72,50 +78,116 @@ string signature = await AppKit.EVM.SignMessageAsync("Hello World");
 // Sign raw bytes
 byte[] rawMessage = System.Text.Encoding.UTF8.GetBytes("Hello World");
 string signature = await AppKit.EVM.SignMessageAsync(rawMessage);
+
+// Sign with specific address (optional)
+string signature = await AppKit.EVM.SignMessageAsync("Hello World", "0x123...");
 ```
 
 ### Sign Typed Data
+
 Sign typed data following EIP-712 standard.
+
 ```csharp
 string typedData = "{ /* Your EIP-712 typed data structure */ }";
 string signature = await AppKit.EVM.SignTypedDataAsync(typedData);
 ```
 
 ### Verify Message Signature
+
 Verify if a message was signed by a specific address.
+
 ```csharp
+// Basic verification
 bool isValid = await AppKit.EVM.VerifyMessageSignatureAsync(
     "0x123...", // address
     "Hello World", // original message
     "0xabc..." // signature
 );
+
+// Using parameters object
+var verifyMessageParams = new VerifyMessageSignatureParams
+{
+    Address = "0x123...",
+    Message = "Hello World",
+    Signature = "0xabc..."
+};
+bool isValid = await AppKit.EVM.VerifyMessageSignatureAsync(verifyMessageParams);
 ```
 
 ### Verify Typed Data Signature
+
 Verify if typed data was signed by a specific address.
+
 ```csharp
+// Basic verification
 bool isValid = await AppKit.EVM.VerifyTypedDataSignatureAsync(
     "0x123...", // address
     "{ /* Your typed data */ }", // original typed data
     "0xabc..." // signature
 );
+
+// Using parameters object
+var verifyTypedDataParams = new VerifyTypedDataSignatureParams
+{
+    Address = "0x123...",
+    Data = "{ /* Your typed data */ }",
+    Signature = "0xabc..."
+};
+bool isValid = await AppKit.EVM.VerifyTypedDataSignatureAsync(verifyTypedDataParams);
 ```
 
 ### Read Contract
+
 Read data from a smart contract (no gas required).
+
+> **Note:** Both JSON and human-readable ABI formats are supported. Human-readable ABI is more concise but JSON ABI may offer better performance.
+
 ```csharp
-string contractAbi = "[ /* Your contract ABI */ ]";
+// Using JSON ABI
+string jsonAbi = "[ /* Your contract ABI */ ]";
 string tokenSymbol = await AppKit.EVM.ReadContractAsync<string>(
     "0x123...", // contract address
-    contractAbi,
+    jsonAbi,
     "symbol" // method name
 );
+
+// Using human-readable ABI
+string humanReadableAbi = "function symbol() view returns (string)";
+string tokenSymbol = await AppKit.EVM.ReadContractAsync<string>(
+    "0x123...", // contract address
+    humanReadableAbi,
+    "symbol" // method name
+);
+
+// With arguments
+string balance = await AppKit.EVM.ReadContractAsync<string>(
+    "0x123...", // contract address
+    jsonAbi,
+    "balanceOf", // method name
+    new object[] { "0x456..." } // arguments
+);
+
+// Using parameters object
+var readContractParams = new ReadContractParams
+{
+    ContractAddress = "0x123...",
+    ContractAbi = jsonAbi,
+    MethodName = "balanceOf",
+    Arguments = new object[] { "0x456..." }
+};
+string balance = await AppKit.EVM.ReadContractAsync<string>(readContractParams);
+
 ```
 
 ### Write Contract
+
 Write data to a smart contract (requires gas).
+
+> **Note:** Both JSON and human-readable ABI formats are supported.
+
 ```csharp
 string contractAbi = "[ /* Your contract ABI */ ]";
+// Or use human-readable ABI: "function transfer(address to, uint256 amount) returns (bool)"
 
 // Basic write
 string txHash = await AppKit.EVM.WriteContractAsync(
@@ -145,20 +217,46 @@ string txHash = await AppKit.EVM.WriteContractAsync(
     gas: 100000,
     true // other arguments
 );
+
+// Using parameters object
+var writeContractParams = new WriteContractParams
+{
+    ContractAddress = "0x123...",
+    ContractAbi = contractAbi,
+    MethodName = "transfer",
+    Value = 0, // optional value in wei
+    Gas = 100000, // optional gas limit
+    Arguments = new object[] { "0x456...", 1000 }
+};
+string txHash = await AppKit.EVM.WriteContractAsync(writeContractParams);
 ```
 
 ### Send Transaction
+
 Send a native token transaction.
+
 ```csharp
+// Basic transaction
 string txHash = await AppKit.EVM.SendTransactionAsync(
     "0x123...", // recipient address
     1000000000000000000, // 1 ETH in wei
     "0x" // optional data
 );
+
+// Using parameters object
+var transactionParams = new SendTransactionParams
+{
+    AddressTo = "0x123...",
+    Value = 1000000000000000000, // 1 ETH in wei
+    Data = "0x" // optional data
+};
+string txHash = await AppKit.EVM.SendTransactionAsync(transactionParams);
 ```
 
 ### Send Raw Transaction
+
 Send a pre-signed transaction.
+
 ```csharp
 string txHash = await AppKit.EVM.SendRawTransactionAsync(
     "0x123..." // signed transaction data
@@ -166,13 +264,24 @@ string txHash = await AppKit.EVM.SendRawTransactionAsync(
 ```
 
 ### Estimate Gas
+
 Estimate gas required for a transaction.
+
 ```csharp
 // Estimate for native token transfer
 BigInteger gasLimit = await AppKit.EVM.EstimateGasAsync(
     "0x123...", // recipient address
     1000000000000000000 // 1 ETH in wei
 );
+
+// Using parameters object for native transfer
+var transferParams = new SendTransactionParams
+{
+    AddressTo = "0x123...",
+    Value = 1000000000000000000, // 1 ETH in wei
+    Data = "0x" // optional data
+};
+BigInteger gasLimit = await AppKit.EVM.EstimateGasAsync(transferParams);
 
 // Estimate for contract interaction
 string contractAbi = "[ /* Your contract ABI */ ]";
@@ -184,11 +293,39 @@ BigInteger gasLimit = await AppKit.EVM.EstimateGasAsync(
     "0x456...", // method arguments
     1000
 );
+
+// Using parameters object for contract interaction
+var contractGasParams = new WriteContractParams
+{
+    ContractAddress = "0x123...",
+    ContractAbi = contractAbi,
+    MethodName = "transfer",
+    Value = 0, // optional value in wei
+    Arguments = new object[] { "0x456...", 1000 }
+};
+BigInteger gasLimit = await AppKit.EVM.EstimateGasAsync(contractGasParams);
 ```
 
 ### Get Gas Price
+
 Get the current gas price in wei.
+
 ```csharp
 BigInteger gasPrice = await AppKit.EVM.GetGasPriceAsync();
+```
+
+### RPC Request
+
+Make a direct RPC request to the blockchain node.
+
+```csharp
+// Get the latest block number
+BigInteger blockNumber = await AppKit.EVM.RpcRequestAsync<BigInteger>("eth_blockNumber");
+
+// Get transaction by hash
+var transaction = await AppKit.EVM.RpcRequestAsync<object>("eth_getTransactionByHash", "0x123...");
+
+// Call a custom method with multiple parameters
+var result = await AppKit.EVM.RpcRequestAsync<object>("custom_method", param1, param2);
 ```
 
