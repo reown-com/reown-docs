@@ -82,35 +82,6 @@ You can verify it worked in multiple ways:
   Status" and then take the transaction receipt and paste it into
   https://sepolia.etherscan.io/. It will show the paymaster covering the gas.
 
-## Trouble Shooting
-
-The most common errors encountered with integrating Paymasters typically come in 
-the form of simulation errors. 
-
-Thankfully, the paymaster provides a full report of user ops that run into
-errors. For example:
-
-```json
-{
-  "error": {
-    "message": "The UserOp does not satisfy requirements of policy",
-    "details": {
-      "message": "Could not successfully simulate call.",
-      "cause": "Filtered simulation calls do not include a call to a smart contract.",
-      "debugInfo": {
-        "simulatedTransaction": { /* full simulation information */ },
-        "errors": [
-          {
-            "error": "executionreverted"
-          },
-          {
-            "error": "out of gas"
-          }
-        ]
-      }
-    }
-  }
-}
 ```
 
 Here the simulation was intentionally broken by providing faulty gas estimation,
@@ -256,6 +227,37 @@ paymasterService: {
 ```
 
 ### Paymaster was called but returned an error
+
+#### Simulation Errors
+
+The most common errors encountered with integrating Paymasters typically come in 
+the form of simulation errors. 
+
+Thankfully, the paymaster provides a full report of user ops that run into
+errors. For example:
+
+```json
+{
+  "error": {
+    "message": "The UserOp does not satisfy requirements of policy",
+    "details": {
+      "message": "Could not successfully simulate call.",
+      "cause": "Filtered simulation calls do not include a call to a smart contract.",
+      "debugInfo": {
+        "simulatedTransaction": { /* full simulation information */ },
+        "errors": [
+          {
+            "error": "executionreverted"
+          },
+          {
+            "error": "out of gas"
+          }
+        ]
+      }
+    }
+  }
+}
+
 
 #### No calls were made to the specified contract.
 
