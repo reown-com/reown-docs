@@ -1,0 +1,87 @@
+---
+title: Travel Rule using AppKit
+---
+import GithubBox from '../../components/GithubBox'
+
+# Travel Rule using AppKit
+
+## Overview
+
+The Travel Rule is a regulatory requirement designed to enhance transparency in financial transactions by mandating the exchange of specific information about both senders and recipients. 
+Initially applied to traditional wire transfers, this rule has been extended to the cryptocurrency sector, especially affecting Virtual Asset Service Providers (VASPs) under guidelines set by the Financial Action Task Force (FATF).
+
+
+## Travel Rule in Cryptocurrency
+
+In 2019, and updated in 2021, the FATF established standards for Virtual Asset Service Providers (VASPs) to follow similar protocols as traditional financial institutions. For crypto transactions, the suggested threshold is approximately EUR 1K.
+
+### Authentication Scenario
+
+SIWX (Sign In With Solana, EVM or Bitcoin) is a two-step authentication process:
+
+1. **Connect Wallet**: First, the user connects their self-custodial wallet.
+
+2. **Sign Message**: After connecting, the user signs a message with their wallet to prove ownership of the account. This signature cryptographically proves that they control the private keys.
+
+Here's a practical example:
+
+- John wants to transfer funds from his PortugalEx account to his non-custodial wallet
+- PortugalEx implements AppKit in their withdrawal page to enable wallet connections
+- When John initiates the withdrawal:
+  1. He connects his self-custodial wallet through AppKit's interface
+  2. AppKit prompts him to sign a message with the connected wallet
+  3. Only after successful signature verification does PortugalEx allow the transfer
+- This SIWX flow ensures John truly owns and controls the destination wallet before permitting withdrawals
+
+## Installing and Implementing SIWX
+## Prerequisites
+
+Before implementing SIWX for Travel Rule compliance, ensure you have:
+
+- AppKit installed and configured in your project following the [AppKit Next installation guide](https://docs.reown.com/appkit/next/core/installation)
+- A project ID from [Reown Cloud](https://cloud.reown.com)
+
+## Example Implementation
+<GithubBox name="Travel Rule SIWX Example" url="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-siwx-multichain" description="Check out this example implementation of Travel Rule compliance using SIWX with multichain"></GithubBox>
+
+### Installation
+
+Install the AppKit SIWX package:
+
+```bash npm2yarn
+npm install @reown/appkit-siwx
+```
+
+### Usage
+
+Once you have AppKit set up in your dApp, you can easily enable SIWX by adding the default implementation with the following configuration:
+
+```ts
+import { createAppKit } from '@reown/appkit'
+/* highlight-add-start */
+import { DefaultSIWX } from '@reown/appkit-siwx'
+/* highlight-add-end */
+
+const appkit = createAppKit({
+  projectId,
+  networks,
+  metadata,
+  /* highlight-add-start */
+  siwx: new DefaultSIWX() // add this line to enable SIWX
+  /* highlight-add-end */
+})
+```
+
+
+## Conclusion
+
+By implementing SIWX for Travel Rule compliance, you have:
+
+- Enhanced your platform's security by verifying wallet ownership before transfers
+- Simplified the user experience while maintaining regulatory compliance 
+- Implemented a robust solution that works across multiple blockchain networks
+
+This implementation helps meet Travel Rule requirements while providing a seamless experience for your users. The SIWX verification acts as a critical safeguard, ensuring that only verified wallet owners can send funds.
+
+For more advanced customization options, refer to our [SIWX documentation](/appkit/features/siwx/default)
+

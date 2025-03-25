@@ -293,7 +293,8 @@ module.exports = {
                 { type: 'doc', label: 'Solana Transactions using AppKit', id: 'appkit/recipes/solana-send-transaction'},
                 { type: 'doc', label: 'Bitcoin Transactions using AppKit', id: 'appkit/recipes/bitcoin-send-transaction'},
                 { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' },
-                { type: 'doc', label: 'Sponsoring Transaction with our Paymaster', id: 'appkit/recipes/sponsoring-first-transaction' } 
+                { type: 'doc', label: 'Sponsoring Transaction with our Paymaster', id: 'appkit/recipes/sponsoring-first-transaction' },
+                { type: 'doc', label: 'Travel Rule using AppKit', id: 'appkit/recipes/travel-rule'}
               ]
             },
             {
