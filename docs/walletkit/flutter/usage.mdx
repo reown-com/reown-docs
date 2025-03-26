@@ -191,7 +191,8 @@ for (var chainId in supportedChains) {
 }
 
 Future<void> _personalSignHandler(String topic, dynamic params) async {
-  final id = _walletKit.pendingRequests.getAll().first;
+  final SessionRequest pendingRequest = _walletKit.pendingRequests.getAll().last;
+  final int requestId = pendingRequest.id;
 
   // message should arrive encoded
   final decoded = hex.decode(params.first.substring(2));
@@ -201,17 +202,18 @@ Future<void> _personalSignHandler(String topic, dynamic params) async {
   // if approved
   if (approved) {
     // Your code to sign the message here
-    final signature = ...
+    final signature = await signMessage(message);
 
     return _walletKit.respondSessionRequest(
       topic: topic,
       response: JsonRpcResponse(
-        id: id,
+        id: requestId,
         jsonrpc: '2.0',
         result: signature,
       ),
     );
   }
+
   // if rejected
   return _walletKit.respondSessionRequest(
     topic: topic,
@@ -224,7 +226,36 @@ Future<void> _personalSignHandler(String topic, dynamic params) async {
 }
 
 Future<void> _ethSendTransactionHandler(String topic, dynamic params) async {
-  // ...
+  final SessionRequest pendingRequest = _walletKit.pendingRequests.getAll().last;
+  final int requestId = pendingRequest.id;
+  final String chainId = pendingRequest.chainId;
+
+  final transaction = (params as List<dynamic>).first as Map<String, dynamic>;
+
+  // display a prompt for the user to approve or reject the request
+  // if approved
+  if (approved) {
+    final signedTx = await sendTransaction(transaction, int.parse(chainId));
+    // respond to requester
+    await _walletKit.respondSessionRequest(
+      topic: topic,
+      response: JsonRpcResponse(
+        id: requestId, 
+        jsonrpc: '2.0', 
+        result: signedTx,
+      ),
+    );
+  }
+
+  // if rejected
+  return _walletKit.respondSessionRequest(
+    topic: topic,
+    response: JsonRpcResponse(
+      id: id,
+      jsonrpc: '2.0',
+      error: const JsonRpcError(code: 5001, message: 'User rejected method'),
+    ),
+  );
 }
 ```
 

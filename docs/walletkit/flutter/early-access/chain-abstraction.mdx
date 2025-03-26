@@ -9,7 +9,7 @@ import ChainAbstractionIntro from '../../shared/chain-abstraction-intro.mdx'
 The following methods from WalletKit are used in implementing chain abstraction.
 
 :::note
-💡 Chain abstraction is currently in the early access phase
+💡 Chain abstraction is currently in the early access phase, use it carefully
 :::
 
 ### Prepare 
@@ -17,7 +17,7 @@ The following methods from WalletKit are used in implementing chain abstraction.
 This method is used to check if chain abstraction is needed. If it is, it will return a response with the necessary transactions. 
 If it is not, it will return a response with the original transaction. 
 
-```dart
+```swift
 Future<PrepareDetailedResponseCompat> prepare({
   required String chainId,
   required String from,
@@ -30,7 +30,7 @@ Future<PrepareDetailedResponseCompat> prepare({
 
 This method is used to execute the chain abstraction operation. The method will handle broadcasting all transactions in the correct order and monitor the cross-chain transfer process. It returns an `ExecuteDetails` object with the transaction status and results.
 
-```dart
+```swift
 Future<ExecuteDetailsCompat> execute({
   required UiFieldsCompat uiFields,
   required List<String> routeTxnSigs,
@@ -68,7 +68,7 @@ response.when(
           return rSignature;
         }).toList();
 
-        return await _walletKit.execute(
+        await _walletKit.execute(
           uiFields: uiFields,
           initialTxnSig: initialSignature,
           routeTxnSigs: routeSignatures,
@@ -88,7 +88,108 @@ response.when(
 );
 ```
 
+If you are looking to trigger Chain Abstraction during a eth_sendTransaction Session Request you should do it inside the session request handler as explained in [Responding to Session requests](../usage.mdx#responding-to-session-requests) section.
+
+```swift
+Future<void> _ethSendTransactionHandler(String topic, dynamic params) async {
+  final SessionRequest pendingRequest = _walletKit.pendingRequests.getAll().last;
+  final int requestId = pendingRequest.id;
+  final String chainId = pendingRequest.chainId;
+
+  final transaction = (params as List<dynamic>).first as Map<String, dynamic>;
+
+  // Intercept to check if Chain Abstraction is required
+  if (transaction.containsKey('input') || transaction.containsKey('data')) {
+    final inputData = transaction.containsKey('input') ?? transaction.containsKey('data');
+    final response = await _walletKit.prepare(
+      chainId: chainId,
+      from: transaction['from'],
+      call: CallCompat(
+        to: transaction['to'],
+        input: inputData,
+      ),
+    );
+    response.when(
+      success: (PrepareDetailedResponseSuccessCompat deatailResponse) {
+        deatailResponse.when(
+          available: (UiFieldsCompat uiFieldsCompat) {
+            // Only if the route is available, present a Chain Abstraction approval modal 
+            // and proceed with execute() method
+            if (approved) {
+              final TxnDetailsCompat initial = uiFieldsCompat.initial;
+              final List<TxnDetailsCompat> route = uiFieldsCompat.route;
+              
+              final String initialSignature = signHashMethod(initial.transactionHashToSign);
+              final List<String> routeSignatures = route.map((route) {
+                final String rSignature = signHashMethod(route.transactionHashToSign);
+                return rSignature;
+              }).toList();
+
+              final executeResponse = await _walletKit.execute(
+                uiFields: uiFields,
+                initialTxnSig: initialSignature,
+                routeTxnSigs: routeSignatures,
+              );
+
+              // Respond to the session request. Flow shouldn't end here as the transaction was processed
+              return await _walletKit.respondSessionRequest(
+                topic: topic,
+                response: JsonRpcResponse(
+                  id: requestId, 
+                  jsonrpc: '2.0', 
+                  result: executeResponse.initialTxnReceipt,
+                ),
+              );
+            }
+          },
+          // If deatailResponse is not `available` type
+          // then let the flow to continue to regular send transacrion
+        );
+      },
+    );
+  }
+
+  // display a prompt for the user to approve or reject the request
+  // if approved
+  if (approved) {
+    final signedTx = await sendTransaction(transaction, int.parse(chainId));
+    // respond to requester
+    await _walletKit.respondSessionRequest(
+      topic: topic,
+      response: JsonRpcResponse(
+        id: requestId, 
+        jsonrpc: '2.0', 
+        result: signedTx,
+      ),
+    );
+  }
+
+  // if rejected
+  return _walletKit.respondSessionRequest(
+    topic: topic,
+    response: JsonRpcResponse(
+      id: id,
+      jsonrpc: '2.0',
+      error: const JsonRpcError(code: 5001, message: 'User rejected method'),
+    ),
+  );
+}
+
+```
+
 For example, check out implementation of chain abstraction in [sample wallet](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_walletkit/example/lib/dependencies/chain_services/evm_service.dart) with Flutter.
+
+### Token Balance
+
+You can use this method to query the token balance of the given address
+
+```swift
+Future<String> erc20TokenBalance({
+  required String chainId, // chain id
+  required String token, // token address
+  required String owner, // user address
+})
+```
 
 ## Testing 
 
