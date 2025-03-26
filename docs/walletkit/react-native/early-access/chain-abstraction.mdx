@@ -1,29 +1,8 @@
+import ChainAbstractionIntro from '../../shared/chain-abstraction-intro.mdx'
+
 # Chain Abstraction
 
-:::note
-💡 Chain Abstraction is currently in early access phase. 
-:::
-
-Chain Abstraction in WalletKit enables users with stablecoins on any network to spend them on-the-fly on a different network. Our Chain Abstraction solution provides a toolkit for wallet developers to integrate this complex functionality using WalletKit.
-
-For example, when an app requests a 100 USDC payment on Base network but the user only has USDC on Arbitrum, WalletKit offers methods to detect this mismatch, generate necessary transactions, track the cross-chain transfer, and complete the original transaction after bridging finishes.
-
-
-## How It Works
-
-:::note
-Apps need to pass `gas` as null when sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../../appkit/next/early-access/chain-abstraction.mdx) for more details.
-:::
-
-When sending a transaction, you need to:
-1. Check if the required chain has enough funds to complete the transaction
-2. If not, use the `prepare` method to generate necessary bridging transactions
-3. Check the status of the bridging transactions and wait for them to complete
-4. Once the bridging transactions are completed, execute the initial transaction
-
-The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
-
-![Chain Abstraction Flow](/assets/chain-abstraction-flow.png)
+<ChainAbstractionIntro />
 
 ## Methods
 
