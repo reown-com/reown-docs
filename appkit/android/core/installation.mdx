@@ -1,0 +1,50 @@
+---
+title: Kotlin
+---
+
+Kotlin implementation of AppKit for Android applications.
+
+Android Core <img src="/images/v.svg" class="inline" />\
+Appkit <img src="/images/v.svg" class="inline" />
+
+### Requirements
+
+- Android min SDK 23
+- Java 11
+
+## Installation
+
+root/build.gradle.kts:
+
+```gradle
+allprojects {
+   repositories {
+      mavenCentral()
+      maven { url "https://jitpack.io" }
+   }
+}
+```
+
+app/build.gradle.kts
+
+```gradle
+implementation(platform("com.reown:android-bom:$BOM_VERSION"))
+implementation("com.reown:android-core")
+implementation("com.reown:appkit")
+```
+
+## Example
+
+<Card
+  title="AppKit with Kotlin example"
+  icon="github"
+  href="https://github.com/reown-com/reown-kotlin/tree/develop/sample/dapp"
+>
+  Check the Kotlin example
+</Card>
+
+## Test Apps
+
+Want to see AppKit in action? Download our sample AppKit apps below and explore what it can do. Enjoy! 😊
+
+- [Android Build (Firebase)](https://appdistribution.firebase.google.com/pub/i/4cf60e7b49f9265e)

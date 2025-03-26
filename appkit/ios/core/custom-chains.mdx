@@ -1,0 +1,15 @@
+---
+title: Custom Chains
+---
+
+## Custom Chain Selection
+
+You can add your own chain to extend default set of chain presets by calling the `addChainPreset(_ chain: Chain)` static method on the `AppKit` object.
+
+<Note>
+If you modify the presets, it will be reflected in the `AppKitNetworkButton` button and Network selection screens.
+</Note>
+
+<Info>
+The chain must be EVM compatible
+</Info>
