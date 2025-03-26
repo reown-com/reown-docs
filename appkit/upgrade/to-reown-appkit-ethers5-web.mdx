@@ -1,0 +1,428 @@
+---
+pagination_next: appkit/react/core/installation
+title: Migrate from Web3Modal v5 to Reown AppKit Solana
+displayed_sidebar: mainSidebar
+---
+
+# Upgrade Guide
+
+## Web3Modal v5 to Reown Web AppKit | Ethers v5
+
+This guide will help you migrate from Web3Modal v5 using Ethers v5 to the latest Reown AppKit.
+
+**Find here all the upgrades guides:**
+
+- [To Reown Web AppKit using Wagmi](/appkit/upgrade/to-reown-appkit-web).
+- [To Reown Web AppKit using Solana](/appkit/upgrade/to-reown-appkit-solana-web).
+- [To Reown Web AppKit using Ethers](/appkit/upgrade/to-reown-appkit-ethers-web).
+
+### Installation
+
+To upgrade from Web3Modal v5 to Reown AppKit, start by removing the Web3Modal v5 dependency `@web3modal/ethers5`.
+
+<CodeGroup>
+
+```bash npm
+npm uninstall @web3modal/ethers5
+```
+
+```bash Yarn
+yarn remove @web3modal/ethers5
+```
+
+```bash Bun
+bun remove @web3modal/ethers5
+```
+
+```bash pnpm
+pnpm remove @web3modal/ethers5
+```
+</CodeGroup>
+
+Next, install the Reown AppKit packages.
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ethers5
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ethers5
+```
+
+```bash Bun
+bun a @reown/appkit @reown/appkit-adapter-ethers5
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ethers5
+```
+</CodeGroup>
+
+### Implementation
+
+<Tabs
+	
+	
+>
+<Tab title="react">
+
+You can start the AppKit configuration by using either the **default** or **advanced** mode.
+
+Default mode will implement WalletConnect, Browser Wallets (injected) and Coinbase options in addition to [WalletConnect's provider](../../cloud/blockchain-api).
+<Info>
+Make sure to set your configuration outside React components to avoid unwanted rerenders.
+</Info>
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
+
+```tsx
+/* highlight-delete-start */
+- import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5/react'
+- import { arbitrum, mainnet } from 'viem/chains'
+/* highlight-delete-end */
+
+/* highlight-add-start */
++ import { createAppKit } from '@reown/appkit/react'
++ import { arbitrum, mainnet } from '@reown/appkit/networks'
++ import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5'
+/* highlight-add-end */
+```
+
+Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
+
+```tsx
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
+
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://example.com',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+/* highlight-delete-start */
++ const ethersConfig = defaultConfig({ ... })
+/* highlight-delete-end */
+```
+
+Finally, set up the `Ethers5Adapter` and pass the other parameters to `createAppKit` function.
+
+```tsx
+/* highlight-delete-start */
+- createWeb3Modal({ ... })
+/* highlight-delete-end */
+
+/* highlight-add-start */
+// import { createAppKit } from '@reown/appkit/react'
++ createAppKit({
+ adapters: [new Ethers5Adapter()],
+ networks: [mainnet, arbitrum],
+ metadata,
+ projectId,
+ features: {
+   analytics: true,
+ }
+})
+/* highlight-add-end */
+```
+
+</Tab>
+<Tab title="vue">
+
+You can start the AppKit configuration by using either the **default** or **advanced** mode.
+
+Default mode will implement WalletConnect, Browser Wallets (injected) and Coinbase options in addition to [WalletConnect's provider](../../cloud/blockchain-api).
+<Info>
+Make sure to set your configuration outside React components to avoid unwanted rerenders.
+</Info>
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
+
+```tsx
+/* highlight-delete-start */
+import { createWeb3Modal, defaultConfig } from "@web3modal/ethers5/vue";
+/* highlight-delete-end */
+
+/* highlight-add-start */
+import { createAppKit } from "@reown/appkit/vue";
+import { arbitrum, mainnet } from "@reown/appkit/networks";
+import { Ethers5Adapter } from "@reown/appkit-adapter-ethers5";
+/* highlight-add-end */
+```
+
+Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
+
+```tsx
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
+
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://example.com',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+/* highlight-delete-start */
+- const ethersConfig = defaultConfig({ ... })
+/* highlight-delete-end */
+```
+
+Finally, set up the `Ethers5Adapter` and pass the other parameters to `createAppKit` function.
+
+```tsx
+/* highlight-delete-start */
+- createWeb3Modal({ ethersConfig, projectId, chains })
+/* highlight-delete-end */
+
+/* highlight-add-start */
+// import { createAppKit } from '@reown/appkit/vue'
+// import { EthersAdapter } from '@reown/appkit-adapter-ethers5'
++ const modal = createAppKit({
+ adapters: [new Ethers5Adapter()],
+ networks: [mainnet, arbitrum],
+ metadata,
+ projectId,
+ features: {
+   analytics: true,
+ }
+})
+/* highlight-add-end */
+```
+
+</Tab>
+<Tab title="javascript">
+
+Start by importing AppKit packages, then create Ethers5Adapter using your own settings or the default presets as shown below.
+
+Import `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
+
+```ts
+/* highlight-delete-start */
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5'
+/* highlight-delete-end */
+
+/* highlight-add-start */
++ import { createAppKit } from '@reown/appkit'
++ import { arbitrum, mainnet } from '@reown/appkit/networks'
++ import { EthersAdapter } from '@reown/appkit-adapter-ethers5'
+/* highlight-add-end */
+```
+
+Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
+
+```tsx
+const projectId = 'YOUR_PROJECT_ID'
+const queryClient = new QueryClient()
+
+const metadata = { //optional
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://example.com',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+/* Remove the existing Ethers Config */
+/* highlight-delete-start */
+- const ethersConfig = defaultConfig({ ... })
+/* highlight-delete-end */
+```
+
+Finally, set up the `Ethers5Adapter` and pass the other parameters to `createAppKit` function.
+
+```ts
+/* highlight-delete-start */
+- const modal = createWeb3Modal({
+  ethersConfig,
+  projectId,
+  enableAnalytics: true
+})
+/* highlight-delete-end */
+
+/* highlight-add-start */
+// import { createAppKit } from '@reown/appkit'
++ const modal = createAppKit({
+  adapters: [new Ethers5Adapter()],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: true
+  }
+})
+/* highlight-add-end */
+```
+
+</Tab>
+</Tabs>
+
+### Trigger the modal
+
+<Tabs
+	
+	
+>
+<Tab title="react">
+
+```tsx
+/* highlight-delete-start */
+- import { useWeb3Modal } from '@web3modal/ethers5/react'
+/* highlight-delete-end */
+/* highlight-add-start */
++ import { useAppKit } from '@reown/appkit/react'
+/* highlight-add-end */
+
+function HomePage() {
+  const { open } = useAppKit()
+
+  return <button onClick={open}>Connect</button>
+}
+```
+
+Learn more about Reown AppKit [here](../react/core/installation)
+
+</Tab>
+<Tab title="vue">
+
+Use your own button to open the modal.
+
+```js
+document.getElementById('my-button').addEventListener('click', () => {
+    modal.open()
+})
+
+<button id="my-button">Connect Wallet</button>
+```
+
+Learn more about Reown AppKit JavaScript [here](../javascript/core/installation)
+
+</Tab>
+<Tab title="javascript">
+
+Use your own button to open the modal.
+
+```js
+document.getElementById('my-button').addEventListener('click', () => {
+    modal.open()
+})
+
+<button id="my-button">Connect Wallet</button>
+```
+
+Learn more about Reown AppKit JavaScript [here](../javascript/core/installation)
+
+</Tab>
+</Tabs>
+
+### Properties
+
+As you may have noticed, some of the properties of Web3Modal have changed as a consequence of the migration to Reown AppKit.
+
+#### adapters
+
+The `adapters` property is a new property that is an array of adapters that can be initialized.
+
+#### networks
+
+The `chains` property is now `networks` in Reown AppKit. You should import them from `@reown/appkit/networks` package instead of importing these networks from `viem` or other packages.
+
+#### defaultNetwork
+
+The `defaultChain` property is now `defaultNetwork` in Reown AppKit. This is a network object that specifies the default network for your Web3 app.
+
+### Utility Functions
+
+The following methods are still available with the same nomenclature as before:
+
+#### modal.getAddress()
+
+This returns the connected address.
+
+<Info>
+It returns the active namespace's address.
+
+**Example**: You’ve initialized both the Wagmi and Solana adapters and connected to a dApp with an EVM-only wallet (e.g., Rainbow). In this case, the Solana adapter is still not connected. When your active network is one of the EVM chains, the address will return your wallet address. However, if you manually switch to the Solana network, the address will return `undefined` (unless you connect to a Solana wallet).
+</Info>
+
+#### modal.getError()
+
+This returns the error values.
+
+#### modal.getChainId()
+
+Returns the active network's `chainId`
+
+<Info>
+In versions prior to v5, which were single-chain, `getChainId()` returned a single type rather than multiple types:
+
+- `@web3modal/wagmi` (along with ethers and ethers5) returned `number | undefined`.
+- `@web3modal/solana` returned `string | undefined`.
+
+Now, in Reown AppKit, since both chains can be connected simultaneously, the type definition is `number | string | undefined`.
+</Info>
+
+#### modal.switchNetwork(network)
+
+This switches the active network to the different network being passed.
+
+<Info>
+Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather than the chain id.
+
+- (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
+- (Reown AppKit v1) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
+
+```tsx
+/* highlight-delete-start */
+modal.switchNetwork(137);
+/* highlight-delete-end */
+/* highlight-add-start */
+import { polygon } from "@reown/appkit/networks";
+modal.switchNetwork(polygon);
+/* highlight-add-end */
+```
+
+</Info>
+
+#### modal.getIsConnected()
+
+This returns if the selected network adapter is connected or not.
+<Info>
+It returns the active namespace's connection status as a boolean.
+
+Example: You've initialized both the Wagmi and Solana adapters and connected to the dApp with an EVM-only wallet (e.g., Rainbow). In this case, the Solana adapter is still not connected. When you manually switch to the Solana network from the network selection list, you will see a disconnected state because the Solana adapter cannot use Rainbow's connection. As a result, it will prompt you to connect with a Solana wallet.
+</Info>
+
+#### modal.getWalletProvider()
+
+This returns the active connection provider.
+
+#### modal.getWalletProviderType()
+
+This returns the active connection provider type.
+
+#### modal.subscribeProvider(callback)
+
+This is a listener that detects changes to the AppKit state, such as `address`, `chainId`, `isConnected`, `provider`, and `providerType`.
+
+- `address` - It returns the connected wallet address. The value returned is the same as `modal.getAddress()`
+- `chainId` - It returns the active network’s `chainId` . The value returned is the same as `modal.getChainId()`
+- `isConnected` - It returns if the selected network adapter is connected. The value returned is the same as `modal.getIsConnected()`
+- `provider` - It returns the active connection provider. The value returned is the same as `modal.getWalletProvider()`
+- `providerType` - It returns the active connection provider type. The value returned is the same as `modal.getWalletProviderType()`
+
+The following methods and listeners are exactly the same and do not have any specific details related to the multiple chains feature.
+
+- `modal.getState` - it returns the modal state
+  - `open` - it returns boolean that indicates if the modal is open or not
+  - `selectedNetworkId` - it returns active network’s id
+- `modal.subscribeState`
+- `modal.setThemeMode`
+- `modal.getThemeMode`
+- `modal.setThemeVariables`
+- `modal.getThemeVariables`
+- `modal.subscribeTheme`
+- `modal.getEvent`
+- `modal.subscribeEvents`

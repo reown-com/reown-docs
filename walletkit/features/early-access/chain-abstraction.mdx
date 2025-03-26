@@ -1,0 +1,77 @@
+---
+title: Chain Abstraction
+---
+Chain Abstraction allows users to spend stablecoins across different networks seamlessly. 
+This solution provides wallet developers with a toolkit to integrate cross-chain functionality using WalletKit.
+
+<Note>
+💡 Support for Chain Abstraction is currently in early access phase.
+</Note>
+
+<video
+  controls
+  className="w-full aspect-video"
+  src="/images/assets/chain-abstraction-demo.mp4"
+></video>
+
+## How it works
+
+When an application sends a `wallet_sendTransaction` request for an ERC-20 transfer (such as USDC), 
+the wallet checks for available tokens across all supported networks. If the user has sufficient funds on any supported network,
+they can complete the transaction instantly, regardless of which network holds their tokens.
+
+For example, consider a scenario where an app requests a transfer of 225 USDC on the Base Network. 
+Even if the user doesn't have USDC on Base, their wallet can automatically source the funds from other networks,
+making the experience seamless for both the user and the application.
+
+<Note>
+💡 Make sure you have enough gas fees in other networks from which bridging will happen. 
+For example, in given scenario, you need to have enough gas fees on OP Mainnet and Arbitrum. 
+</Note>
+
+The diagram below shows an example scenario where a user is interacting with an app and is asked to transfer 225 USDC to the app on Base Network. 
+The user does not have any USDC on Base, but their wallet seamlessly allows them to source the funds from other networks. 
+<Frame>   
+![Chain Abstraction Example](/images/assets/chain_abstraction_demo.png)
+</Frame>  
+## Get Started
+
+<CardGroup cols={2}>
+  <Card title="Android" icon="android" href="/walletkit/android/early-access/chain-abstraction">
+    Get started with WalletKit in Android.
+  </Card>
+
+  <Card title="iOS" icon="apple" href="/walletkit/ios/early-access/chain-abstraction">
+    Get started with WalletKit in iOS.
+  </Card>
+
+  <Card title="React Native" icon="react" href="/walletkit/react-native/early-access/chain-abstraction">
+    Get started with WalletKit in React Native.
+  </Card>
+</CardGroup>
+
+
+## FAQ
+
+### What are the available networks for Chain Abstraction?
+
+Chain Abstraction is available on the following networks:
+
+- Base 
+- Arbitrum
+- OP Mainnet 
+
+### What are the supported tokens and networks?
+
+Chain Abstraction supports the following stablecoins across different networks:
+
+| Network   | Supported tokens |
+|-----------|-----------------|
+| OP Mainnet | USDC, USDT      |
+| Base      | USDC            |
+| Arbitrum  | USDC            |
+
+
+### What are the limitations?
+
+We currently support 1:1 transfers i.e. sourcing funds from one address to another. Make sure that you're transferring minimum 0.6 [USDC/USDT](/walletkit/../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) and have enough gas to pay bridging fees. 

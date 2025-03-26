@@ -1,0 +1,82 @@
+---
+title: Swift
+---
+
+<Tabs>
+<Tab title="SPM">
+
+### SwiftPackageManager
+
+You can add AppKit to your project with Swift Package Manager. In order to do that:
+
+1. Open Xcode
+2. Go to File -> Add Packages
+3. Paste the repo GitHub url: https://github.com/reown-com/reown-swift
+4. Tap Add Package
+5. Choose the AppKit products that you want installed in your app.
+
+### Alternatively, add AppKit to a `Package.swift` manifest
+
+To integrate via a `Package.swift` manifest instead of Xcode, you can add
+AppKit to the dependencies array of your package:
+
+```swift
+dependencies: [
+  .package(
+    name: "AppKit",
+    url: "https://github.com/reown-com/reown-swift",
+    .upToNextMajor(from: "1.0.0")
+  ),
+
+  // Any other dependencies you have...
+],
+```
+
+Then, in any target that depends on a AppKit product, add it to the `dependencies`
+array of that target:
+
+```swift
+.target(
+  name: "MyTargetName",
+  dependencies: [
+    // The product(s) you want (most likely AppKit).
+    .product(name: "AppKit", package: "AppKit"),
+  ]
+),
+```
+
+</Tab>
+<Tab title="Cocoapods">
+
+<Warning>
+Cocoapods support may be deprecated soon, use SPM instead.
+</Warning>
+
+1. Update Cocoapods spec repos. Type in terminal `pod repo update`
+2. Initialize Podfile if needed with `pod init`
+3. Add pod to your Podfile like this:
+
+```ruby
+pod 'reown-swift/ReownAppKit', :git => 'https://github.com/reown-com/reown-swift.git', :tag => '1.0.4'
+```
+
+4. Install pods with `pod install`
+
+</Tab>
+</Tabs>
+
+## Example
+
+<Card
+  title="AppKit with Swift example"
+  icon="github"
+  href="https://github.com/reown-com/reown-swift/tree/develop/Example/ExampleApp.xcodeproj"
+>
+  Check the Swift example
+</Card>
+
+## Test Apps
+
+Want to see AppKit in action? Download our sample AppKit apps below and explore what it can do. Enjoy! 😊
+
+- [iOS Build (Testflight)](https://testflight.apple.com/join/7S1GYcjC)

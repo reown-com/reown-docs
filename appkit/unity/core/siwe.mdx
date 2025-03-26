@@ -1,0 +1,196 @@
+---
+title: Sign-In With Ethereum
+sidebarTitle: One-Click Auth / SIWE
+---
+
+AppKit provides a simple solution for integrating with "Sign-In With Ethereum" (SIWE), a new form of authentication that
+enables users to control their digital identity with their Ethereum account.
+SIWE is a standard also known as [EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361).
+
+<Frame>
+![unity-appkit-siwe](/images/assets/unity-appkit-siwe.webp)
+</Frame>
+
+## One-Click Auth
+
+_One-Click Auth_ represents a key advancement within WalletConnect v2, streamlining the user authentication process in
+AppKit by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
+
+Connecting a wallet, proving control of an address with an off-chain signature, authorizing specific actions.
+These are the kinds of authorizations that can be encoded as ["ReCaps"](https://eips.ethereum.org/EIPS/eip-5573). ReCaps are permissions for a specific website
+or dapp that can be compactly encoded as a long string in the message you sign and translated by any wallet into a
+straight-forward one-sentence summary.
+WalletConnect uses permissions expressed as ReCaps to enable a One-Click Authentication.
+
+<Note>
+One-Click Auth and Sign-In With Ethereum are currently not supported on WebGL.
+</Note>
+
+## Local Address Verification
+
+When connecting wallets to applications using the WalletConnect protocol, the wallet supplies a list of accounts.
+However, there is a potential risk that the wallet could provide an address the user does not control.
+To mitigate this account spoofing risk, the standard practice is to require the user to sign a message with
+the provided address and then verify the signature.
+
+The Sign-In With Ethereum (SIWE) feature in AppKit can facilitate this verification process,
+enabling the application to confirm the user's Ethereum address even the app doesn't have a backend.
+
+### 0. Create basic SIWE configuration
+
+```csharp
+// Create SIWE configuration
+var siweConfig = new SiweConfig
+{
+    // The properties from `SiweMessageParams` be used to generate SIWE message.
+    // There're no strict rules on what Domain and Uri parameters have to be on native platforms.
+    // In this example we use website domain and app URL scheme.
+    GetMessageParams = () => new SiweMessageParams
+    {
+        Domain = "mywebsite.com",
+        Uri = "my-app://"
+    },
+    // By setting this to false, we disable a requirement to sign a new SIWE message
+    // every time the active chain changes in AppKit or wallet.
+    SignOutOnChainChange = false
+};
+
+// Subscribe to SIWE events
+siweConfig.SignInSuccess += _ => Debug.Log("Address verified successfully!");
+siweConfig.SignOutSuccess += () => Debug.Log("Address verification canceled or wallet disconnected.");
+```
+
+### 1. Initialize AppKit with your `SiweConfig`
+
+Add the SIWE configuration to `AppKitConfig`
+
+```csharp {17}
+var appKitConfig = new AppKitConfig
+{
+    // Project ID from https://cloud.reown.com/
+    projectId = "MY_PROJECT_ID",
+    metadata = new Metadata(
+        "App Name",
+        "App Description",
+        "https://reown.com",
+        "https://raw.githubusercontent.com/reown-com/reown-dotnet/main/media/appkit-icon.png",
+        new RedirectData
+        {
+            // Used by native wallets to redirect back to the app after approving requests
+            Native = "my-app://"
+        }
+    ),
+    // Assign the SIWE configuration created above. Can be null if SIWE is not used.
+    siweConfig = siweConfig
+};
+```
+
+With this configuration, AppKit will enforce address verification and invoke the `SignInSuccess` delegate when the
+user successfully verifies the address.
+
+## Sign-In With Ethereum with Backend
+
+To use 1-CA + SIWE at full extend, a backend for communication is required. This backend will be used to generate a nonce,
+verify messages and handle sessions. You can read more about SIWE backend implementation at [here](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/implement-the-backend).
+
+### 0. Create SIWE configuration
+
+```csharp
+var siweConfig = new SiweConfig
+{
+    GetNonce = async () =>
+    {
+        // The getNonce method functions as a safeguard against spoofing,
+        // akin to a CSRF token.
+        return await yourApi.getNonce();
+    },
+    // The properties from `SiweMessageParams` be used to generate SIWE message.
+    // There's no strict rules on what Domain and Uri parameters have to be
+    // on native platforms.
+    // In this example we use website domain and app URL scheme.
+    GetMessageParams = () =>
+    {
+        // Returns parameters that are used to create the SIWE message internally.
+        return new SiweMessageParams
+        {
+            Domain = "mywebsite.com",
+            Uri = "my-app://",
+            // The custom statement that will be prepended to the SIWE message.
+            // Optional.
+            Statement = "My custom statement."
+        };
+    },
+    CreateMessage = (createMessageArgs) =>
+    {
+        // Generates an EIP-4361-compatible message.
+        // You can use our provided SiweUtils.FormatMessage
+        // method (default behaviour if delegate is null) or implement your own.
+        return SiweUtils.FormatMessage(createMessageArgs);
+    },
+    VerifyMessage = async (verifyMessageArgs) =>
+    {
+        // Ensures the message is valid, has not been tampered with,
+        // and has been appropriately signed by the wallet address.
+        try {
+            var json = JsonConvert.SerializeObject(verifyMessageArgs);
+            var isValidMessage = await yourApi.verifyMessage(json);
+            return isValidMessage;
+        } catch (Exception) {
+            return false;
+        }
+    },
+    GetSession = async (getSessionArgs) =>
+    {
+        // Called after VerifyMessage() succeeds
+        // The backend session should store the associated address and chainId
+        // and return it via the `getSession` method.
+        var session = await yourApi.getSession();
+        return new SiweSession
+        {
+            EthAddress = session.address,
+            EthChainIds = session.ChainIdArray,
+        };
+    },
+    SignOut = async () =>
+    {
+        // Called when the wallet disconnects if SignOutOnWalletDisconnect is true,
+        // and/or when the account changes if SignOutOnAccountChange is true,
+        // and/or when the network changes if SignOutOnChainChange is true.
+        await yourApi.signOut();
+    },
+    SignOutOnAccountChange = true,
+    SignOutOnChainChange = true,
+    SignOutOnWalletDisconnect = true,
+};
+
+// Called after SiweConfig.GetSession() succeeds
+siweConfig.SignInSuccess += _ => Debug.Log("[Dapp] SIWE Sign In Success!");
+
+// Called after SiweConfig.SignOut() succeeds
+siweConfig.SignOutSuccess += () => Debug.Log("[Dapp] SIWE Sign Out Success!");
+```
+
+### 1. Initialize AppKit with your `SiweConfig`
+
+Add the SIWE configuration to `AppKitConfig`
+
+```csharp {17}
+var appKitConfig = new AppKitConfig
+{
+    // Project ID from https://cloud.reown.com/
+    projectId = "MY_PROJECT_ID",
+    metadata = new Metadata(
+        "App Name",
+        "App Description",
+        "https://reown.com",
+        "https://raw.githubusercontent.com/reown-com/reown-dotnet/main/media/appkit-icon.png",
+        new RedirectData
+        {
+            // Used by native wallets to redirect back to the app after approving requests
+            Native = "my-app://"
+        }
+    ),
+    // Assign the SIWE configuration created above. Can be null if SIWE is not used.
+    siweConfig = siweConfig
+};
+```

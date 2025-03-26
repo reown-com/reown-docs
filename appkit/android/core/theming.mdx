@@ -1,0 +1,140 @@
+---
+title: Theming
+---
+
+## Usage
+
+<Tabs>
+<Tab title="Compose">
+Wrap your composable component with `AppKitTheme`
+
+```kotlin
+import com.reown.appkit.ui.AppKitTheme
+
+AppKitTheme(
+    mode = AppKitTheme.Mode.AUTO || AppKitTheme.Mode.LIGHT || AppKitTheme.Mode.DARK,
+    lightColors = AppKitTheme.provideLightAppKitColors(
+        // Override colors
+    ),
+    darkColors = AppKitTheme.provideDarkAppKitColors(
+        // Override colors
+    )
+)    {
+    /* any AppKit component or graph */
+}
+
+```
+</Tab>
+<Tab title="View">
+You can define AppKitTheme in yours `style.xml` files
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppKitTheme">
+        <item name="modalMode">AUTO || LIGHT || DARK</item>
+        /* Override colors */
+    </style>
+</resources>
+```
+</Tab>
+</Tabs>
+
+## Mode
+
+<Tabs>
+<Tab title="Compose">
+```kotlin
+    enum class Mode {
+        LIGHT, DARK, AUTO
+    }
+```
+</Tab>
+<Tab title="View">
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="modalMode" format="enum">
+        <enum name="AUTO" value="0"/>
+        <enum name="DARK" value="1"/>
+        <enum name="LIGHT" value="2"/>
+    </attr>
+</resources>
+```
+</Tab>
+</Tabs>
+
+## Colors
+
+<Tabs>
+<Tab title="Compose">
+Customizable colors in AppKitTheme.
+To override colors you need to use methods `AppKitTheme.provideLightAppKitColors` or AppKitTheme.provideDarkAppKitColors
+To override foreground or background `ColorPalette` you can define new palette or use one of the AppKitTheme methods to provide Palette and override selected colors
+
+```kotlin
+    interface Colors {
+        val accent100: Color
+        val accent90: Color
+        val accent80: Color
+        val foreground: ColorPalette
+        val background: ColorPalette
+        val grayGlass: Color
+        val success: Color
+        val error: Color
+    }
+```
+
+ColorPalette
+
+```kotlin
+    data class ColorPalette(
+        val color100: Color,
+        val color125: Color,
+        val color150: Color,
+        val color175: Color,
+        val color200: Color,
+        val color225: Color,
+        val color250: Color,
+        val color275: Color,
+        val color300: Color,
+    )
+```
+
+</Tab>
+<Tab title="View">
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+
+You can override those values in AppKitTheme in your style.xml file
+
+<resources>
+    <attr name="modalAccent100" format="color"/>
+    <attr name="modalAccent90" format="color"/>
+    <attr name="modalAccent80" format="color"/>
+    <attr name="modalForeground100" format="color"/>
+    <attr name="modalForeground125" format="color"/>
+    <attr name="modalForeground150" format="color"/>
+    <attr name="modalForeground175" format="color"/>
+    <attr name="modalForeground200" format="color"/>
+    <attr name="modalForeground225" format="color"/>
+    <attr name="modalForeground250" format="color"/>
+    <attr name="modalForeground275" format="color"/>
+    <attr name="modalForeground300" format="color"/>
+    <attr name="modalBackground100" format="color"/>
+    <attr name="modalBackground125" format="color"/>
+    <attr name="modalBackground150" format="color"/>
+    <attr name="modalBackground175" format="color"/>
+    <attr name="modalBackground200" format="color"/>
+    <attr name="modalBackground225" format="color"/>
+    <attr name="modalBackground250" format="color"/>
+    <attr name="modalBackground275" format="color"/>
+    <attr name="modalBackground300" format="color"/>
+    <attr name="modalGrayGlass" format="color"/>
+    <attr name="modalSuccess" format="color"/>
+    <attr name="modalError" format="color"/>
+
+</resources>
+```
+</Tab>
+</Tabs>

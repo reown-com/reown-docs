@@ -1,0 +1,45 @@
+---
+title: Events
+---
+
+### List of events you can subscribe to in order to get connection updates
+
+#### Modal specific events
+
+```javascript
+_appKitModal.onModalConnect.subscribe((ModalConnect? event) {});
+
+_appKitModal.onModalUpdate.subscribe((ModalConnect? event) {});
+
+_appKitModal.onModalNetworkChange.subscribe((ModalNetworkChange? event) {});
+
+_appKitModal.onModalDisconnect.subscribe((ModalDisconnect? event) {});
+
+_appKitModal.onModalError.subscribe((ModalError? event) {});
+```
+
+<hr />
+
+<Note>
+The following events are available only through WalletConnect protocol, meaning that they won't be throwing events when connected to Coinbase Wallet nor Email or Social Login.
+</Note>
+
+#### Session specific events
+
+```javascript
+_appKitModal.onSessionExpireEvent.subscribe((SessionExpire? event) {});
+
+_appKitModal.onSessionUpdateEvent.subscribe((SessionUpdate? event) {});
+
+_appKitModal.onSessionEventEvent.subscribe((SessionEvent? event) {});
+```
+
+#### Relay specific events
+
+```javascript
+_appKitModal.appKit!.core.relayClient.onRelayClientConnect.subscribe((EventArgs? event) {});
+
+_appKitModal.appKit!.core.relayClient.onRelayClientError.subscribe((EventArgs? event) {});
+
+_appKitModal.appKit!.core.relayClient.onRelayClientDisconnect.subscribe((EventArgs? event) {});
+```

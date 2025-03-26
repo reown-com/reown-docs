@@ -1,0 +1,65 @@
+For a quick integration, you can use the `createAppKit` function with a unified configuration. This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana, so you no longer need to manually configure each one individually. Simply pass the common parameters such as `projectId`, `chains`, `metadata`, etc., and the function will handle the adapter-specific configurations under the hood.
+
+This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
+
+<Note>
+If you're using Nuxt, you can set wagmi's `ssr` option to true and call the `reconnect` function after your application mounts.
+</Note>
+
+In your `App.vue` file set up the following configuration
+
+```html
+<script lang="ts" setup>
+  import { createAppKit } from '@reown/appkit/vue'
+  import { arbitrum, mainnet, type AppKitNetwork } from '@reown/appkit/networks'
+  import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+  // 1. Get projectId from https://cloud.reown.com
+  const projectId = 'YOUR_PROJECT_ID'
+
+  // 2. Create a metadata object
+  const metadata = {
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://example.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+  }
+
+  // 3. Set the networks
+  const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, polygon, base]
+
+  // 4. Create Wagmi Adapter
+  const wagmiAdapter = new WagmiAdapter({
+    networks,
+    projectId
+  })
+
+  // 5. Create the modal
+  const modal = createAppKit({
+    adapters: [wagmiAdapter],
+    networks,
+    projectId,
+    metadata,
+    features: {
+      analytics: true // Optional - defaults to your Cloud configuration
+    }
+  })
+</script>
+
+<template> // Rest of your app ... </template>
+```
+
+## Importing networks
+
+Reown AppKit use [Viem](https://viem.sh/) networks under the hood, which provide a wide variety of networks for EVM chains. You can find all the networks supported by Viem within the `@reown/appkit/networks` path.
+
+```js
+import { createAppKit } from '@reown/appkit/vue'
+/* highlight-add-start */
+import { mainnet, arbitrum, base, scroll, polygon } from '@reown/appkit/networks'
+/* highlight-add-end */
+```
+
+<Note>
+Looking to add a custom network? Check out the [custom networks](../../core/custom-networks) section.
+</Note>

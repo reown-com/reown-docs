@@ -1,0 +1,49 @@
+---
+title: User Management
+---
+
+Easily view and manage all authenticated users through AppKit [Cloud Auth SIWX](/appkit/features/siwx/siwx-cloud-auth), a drop-in hosted SIWX server that provides key insights into your user base.
+
+## Usage
+
+Refer to [Cloud Auth SIWX](/appkit/features/siwx/siwx-cloud-auth) for instructions on enabling this feature with AppKit.
+
+## Dashboard
+
+The dashboard provides a list of all accounts (chain + address) connected to your dapp, including the country they connected from, the last connection time, and the authentication method (wallet or social login).
+<Frame>
+![User Management](/images/assets/user-management.png)
+</Frame>
+## Insights
+
+We plan to add more insights over time. Currently, it includes:
+
+- **Connections**: Authenticated users over time  
+- **Geographic Distribution**: User distribution by country  
+- **Wallet Analytics**: Which wallets are most commonly used  
+- **30-Day History**: Historical data for the past 30 days  
+
+<Frame>
+![User Management](/images/assets/insights.png)
+</Frame>
+# SIWX API
+
+The Cloud Auth SIWX API is a hosted server implementing [Sign In With X/Anything (SIWX)](https://chainagnostic.org/CAIPs/caip-122). SIWX is a chain-agnostic variant of [Sign In With Ethereum (SIWE)](https://eips.ethereum.org/EIPS/eip-4361). To connect to your dapp, users must sign a message. The message signature is forwarded to our server, which verifies it and issues a JWT upon successful authentication.
+
+## Why Use Our API Instead of Building Your Own?
+
+Our solution abstracts the complexity and maintenance costs of running a SIWX server. Another benefit is immediate access to key user insights in your dashboard, as shown above. The API leverages Cloudflare Workers for global distribution and has built-in rate limiting.
+
+## Limitations
+
+<Warning>
+The feature is currently in beta.
+</Warning>
+
+Currently, this feature and its API are only available for AppKit projects and only supports EVM networks. We plan to make it available for all Reown projects and will add more networks in upcoming versions. Get in touch via Discord if you are interested.
+
+# Programmatic Access & Webhooks
+
+We are planning on enabling your backend to interact with our hosted backend via [OIDC](https://openid.net/developers/how-connect-works/). This allows you to confirm whether a user is logged in and qualify their scopes.
+
+We are also planning on exposing the list of users programmatically and webhooks such that you can subscribe to signup, login, and other events.

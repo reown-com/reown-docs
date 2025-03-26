@@ -1,0 +1,89 @@
+export const WalletList = () => {
+  let wallets = [];
+  let originalWalletsArray = [];
+
+  if (typeof document !== "undefined") {
+    fetch(
+      "https://explorer-api.walletconnect.com/v3/wallets?projectId=8e998cd112127e42dce5e2bf74122539"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        wallets = data.listings;
+        originalWalletsArray = Object.keys(data.listings).map((key) => ({
+          ...data.listings[key],
+          namespace: key,
+        }));
+        renderWallets(wallets);
+
+        const searchInput = document.querySelector(".search-bar");
+        if (searchInput) {
+          searchInput.addEventListener("input", (event) => {
+            const query = event.target.value.toLowerCase();
+            const filteredwallets = Object.fromEntries(
+              Object.entries(wallets).filter(([_, wallet]) =>
+                wallet.name.toLowerCase().includes(query)
+              )
+            );
+            renderWallets(filteredwallets);
+          });
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
+  const renderWallets = (wallets) => {
+    const container = document.querySelector(".wallet-card-container");
+    if (container) {
+      container.innerHTML = "";
+      Object.keys(wallets).forEach((key) => {
+        const wallet = wallets[key];
+        const card = document.createElement("button");
+        card.className = `
+          flex flex-col items-center justify-center 
+          border border-gray-500 p-2 text-center 
+          w-full dark:bg-gray-600 dark:text-white h-20
+        `;
+        card.innerHTML = `
+          <img src="${wallet.image_url.sm}" width="40" height="40" class="p-0 m-0" alt="${wallet.name}" />
+          <span>${wallet.name}</span>
+        `;
+        card.onclick = () => {
+          navigator.clipboard.writeText(wallet.id);
+          card.innerHTML = "Wallet ID copied!";
+          setTimeout(() => {
+            card.innerHTML = `
+              <img src="${wallet.image_url.sm}" width="40" height="40" class="p-0 m-0" alt="${wallet.name}" />
+              <span>${wallet.name}</span>
+            `;
+          }, 3000);
+        };
+        container.appendChild(card);
+      });
+    }
+  };
+
+  return (
+    <div className="wallet-list">
+      <input
+        type="text"
+        className="search-bar"
+        placeholder="Search for a wallet..."
+        style={{
+          width: "100%",
+          padding: "8px",
+          marginBottom: "20px",
+          marginTop: "20px",
+          boxSizing: "border-box",
+        }}
+      />
+      <div
+        className="wallet-card-container"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+          gap: "8px",
+        }}
+      ></div>
+    </div>
+  );
+};

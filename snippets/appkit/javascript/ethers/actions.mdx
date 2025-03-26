@@ -1,0 +1,80 @@
+You can use the following methods to get data and subscribe to changes:
+
+### getAddress
+
+```ts
+const address = modal.getAddress();
+```
+
+### getError
+
+```ts
+const error = modal.getError();
+```
+
+### getChainId
+
+```ts
+const chainId = modal.getChainId();
+```
+
+### switchNetwork
+
+```ts
+import { createAppKit } from "@reown/appkit";
+import { mainnet, arbitrum, polygon } from "@reown/appkit/networks";
+
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  projectId,
+  networks: [mainnet, arbitrum],
+  metadata: metadata,
+  features: {
+    analytics: true,
+  },
+});
+
+modal.switchNetwork(polygon);
+```
+
+### getIsConnected
+
+```ts
+const isConnected = modal.getIsConnected();
+```
+
+### getWalletProvider
+
+The wallet provider.
+
+```ts
+const walletProvider = modal.getWalletProvider();
+```
+
+### getWalletProviderType
+
+```ts
+const walletProviderType = modal.getWalletProviderType();
+```
+
+### subscribeProvider
+
+```ts
+function handleChange({
+  provider,
+  providerType,
+  address,
+  error,
+  chainId,
+  isConnected,
+}) {
+  //...
+}
+
+modal.subscribeProvider(handleChange);
+```
+
+<Card
+  title="Learn More"
+  href="https://docs.ethers.org/v6/getting-started/#starting-blockchain"
+/>

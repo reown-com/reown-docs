@@ -1,0 +1,174 @@
+---
+title: Migration from RainbowKit to AppKit
+sidebarTitle: "From RainbowKit"
+---
+
+
+Follow the steps below to migrate from the default RainbowKit project using Next.js Pages to an AppKit project using wagmi.
+
+### Step 1. Create a project in Reown Cloud
+
+- Create a new project on [Reown Cloud](https://cloud.reown.com) and obtain a new project ID.
+
+### Step 2. Install & uninstall libraries
+
+- Run this command to install AppKit and uninstall RainbowKit.
+<CodeGroup>
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi && npm uninstall @rainbow-me/rainbowkit
+```
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi&& yarn remove @rainbow-me/rainbowkit
+```
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-wagmi && npm uninstall @rainbow-me/rainbowkit
+```
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi&& pnpm remove @rainbow-me/rainbowkit
+```
+</CodeGroup>
+
+### Step 3. Change the index.tsx
+
+Use the AppKit Button. It can be configure following these [guidelines](https://docs.walletconnect.com/appkit/react-native/core/components#w3mbutton-).
+
+```tsx {3}
+- import { ConnectButton } from '@rainbow-me/rainbowkit';
+- <ConnectButton />
++ <appkit-button />
+```
+
+<Info>
+AppKit's web components are global HTML elements that don't require importing.
+</Info>
+
+### Step 4. Changes in your config file
+
+- Replace the following import statements:
+
+```tsx {2}
+- import { getDefaultConfig } from '@rainbow-me/rainbowkit';
++ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+```
+
+- If you have something similar to this
+
+```tsx
+
+- export const config = getDefaultConfig({
+-  appName: 'RainbowKit App',
+-  projectId: 'YOUR_PROJECT_ID',
+-  chains: [
+-    mainnet,
+-    polygon,
+-    optimism,
+-    arbitrum,
+-    base,
+-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+-  ],
+-  ssr: true,
+- });
+
+```
+
+- Replace the wagmi config for this example. Also you can customize email and social logins following this [guidelines](https://docs.walletconnect.com/appkit/react/onboarding/socials).
+
+```tsx {1-15}
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { arbitrum, mainnet } from '@reown/appkit/networks'
+export const projectId = 'YOUR_PROJECT_ID'
+
+export const networks = [mainnet, arbitrum]
+
+//Set up the Wagmi Adapter (Config)
+export const wagmiAdapter = new WagmiAdapter({
+  storage: createStorage({
+    storage: cookieStorage
+  }),
+  ssr: true,
+  networks,
+  projectId
+})
+```
+
+### Step 5. Update app.tsx
+
+In this step, we'll update the import statements and remove the RainbowKitProvider from the component tree.
+
+- Replace the following import statements:
+
+```tsx {10,14}
+import '../styles/globals.css';
+- import '@rainbow-me/rainbowkit/styles.css';
+
+import type { AppProps } from 'next/app';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+- import { WagmiProvider } from 'wagmi';
+- import { config } from '../wagmi';
+
++ import { wagmiAdapter, projectId } from '@/config'
+
+- import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+
++ import { createAppKit } from "@reown/appkit/react"
+
+
+```
+
+- Now, Initialize AppKit:
+
+```tsx {3-10, 12-21}
+const client = new QueryClient()
+
+// Set up metadata
+const metadata = {
+  //this is optional
+  name: 'appkit-example',
+  description: 'AppKit Example',
+  url: 'https://exampleapp.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+// Create modal
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  projectId,
+  networks: [mainnet, arbitrum],
+  metadata: metadata,
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
+})
+
+```
+
+- Update the component:
+
+```tsx
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={client}>
+        
+        <RainbowKitProvider>
+          
+          <Component {...pageProps} />
+          
+        </RainbowKitProvider>
+        
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
+}
+
+export default MyApp
+```
+
+### Final notes
+
+- Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from RainbowKit to AppKit.
+- Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
+- Check our [AppKit web examples](https://github.com/reown-com/appkit/tree/main/examples) to compare with your implementation in case you are having issues
+- If you want to start from scratch, please refer to the Installation docs [here](/appkit/overview)

@@ -1,0 +1,31 @@
+# Theming
+
+## ThemeMode
+
+By default `themeMode` option will be set to user system settings 'light' or 'dark'. But you can override it like this:
+
+```ts
+createAppKit({
+  //...
+  themeMode: "light",
+});
+```
+
+## themeVariables
+
+By default `themeVariables` are undefined. You can set them like this:
+
+```ts
+createAppKit({
+  //...
+  themeVariables: {
+    accent: "#00BB7F",
+  },
+});
+```
+
+The following list shows the theme variables you can override:
+
+| Variable | Description                                 | Type     |
+| -------- | ------------------------------------------- | -------- |
+| `accent` | Color used for buttons, icons, labels, etc. | `string` |

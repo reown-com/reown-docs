@@ -1,0 +1,199 @@
+---
+title: How to Sign Messages, Send Transactions, and Get Balance on Solana using AppKit
+sidebarTitle: "Solana Transactions using AppKit"
+---
+
+Learn how to use Reown AppKit for essential wallet functionalities such as signing messages, sending transactions, and retrieving wallet balances.
+
+---
+
+In this recipe, you will learn how to:
+
+- Retrieve the balance of the connected wallet.
+- Sign a message using a connected wallet.
+- Send a transaction to the Solana blockchain.
+
+This guide takes approximately 20 minutes to complete.
+
+Let’s dive in!
+<Frame>
+![](/images/assets/solanaGuide.gif)
+</Frame>
+## Prerequisites
+
+- A fundamental understanding of JavaScript and React.
+- A minimal installation of AppKit in React.
+- Obtain a new project Id on Reown Cloud at https://cloud.reown.com
+
+## Final project
+<Card title="Appkit Example for Interacting with the Solana Blockchain" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-solana">
+Clone this Github repo to try it out locally.
+</Card>
+
+
+## AppKit Minimal Installation
+
+You can start a small project following the guidelines from our [installation React docs using Solana](https://docs.reown.com/appkit/react/core/installation?platform=solana)
+
+## Start building
+
+In this guide, we are going to use the library [@solana/web3.js](https://solana.com/docs/clients/javascript-reference) to make the calls to the Solana blockchain and to interact with the wallet.
+
+### Get Balance
+
+Fetching a user's balance is straightforward using the Connection object from Solana.
+
+1. Start by importing the `useAppKitConnection` hook from the solana Adapter, the `useAppKitAccount` AppKit hook to get the account information and `PublicKey` from the solana/web3 library.
+
+```js
+import { useAppKitConnection } from "@reown/appkit-adapter-solana/react";
+import { useAppKitAccount } from "@reown/appkit/react";
+import { PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
+```
+
+2. Use the hooks to retrieve the connection Solana object, the user's address and check if they are connected.
+
+```js
+const { connection } = useAppKitConnection();
+const { isConnected, address } = useAppKitAccount();
+```
+
+3. Create a function to fetch and display (in console) the balance when triggered
+
+```js
+// function to get the balance
+const handleGetBalance = async () => {
+  const wallet = new PublicKey(address);
+  const balance = await connection?.getBalance(wallet); // get the amount in LAMPORTS
+
+  console.log(`${balance / LAMPORTS_PER_SOL} SOL`);
+};
+```
+
+4. Finally, in order to call the function you can show the button in a component when `isConnected` is `true`
+
+```jsx
+return (
+  isConnected && (
+    <div>
+      <button onClick={getBalance}>Get Balance</button>
+    </div>
+  )
+);
+```
+
+### Sign a message
+
+In order to raise the modal to sign a message with your wallet. You can follow these steps:
+
+1. Start by importing the `useAppKitProvider` hook.
+
+```js
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
+```
+
+2. Extract the `walletProvider` function from the `useAppKitProvider` hook. This function allows you to prompt the connected wallet to sign a specific message. Also the `useAppKitAccount` AppKit hook to get the address and isConnected as explain before.
+
+```js
+// Get the wallet provider with the AppKit hook
+const { walletProvider } = useAppKitProvider < Provider > "solana";
+
+// AppKit hook to get the address and check if the user is connected
+const { address, isConnected } = useAppKitAccount();
+```
+
+3. Create a function to prompt the modal for signing the message.
+
+```js
+// function to sing a msg
+const handleSignMsg = async () => {
+  // message to sign
+  const encodedMessage = new TextEncoder().encode("Hello Reown AppKit!");
+
+  // Raise the modal
+  const sig = await walletProvider.signMessage(encodedMessage);
+
+  // Print the signed message in hexadecimal format
+  console.log(Buffer.from(sig).toString("hex"));
+};
+```
+
+4. Finally, in order to call the function:
+
+```jsx
+return (
+  isConnected && (
+    <div>
+      <button onClick={handleSignMsg}>Sign Message</button>
+    </div>
+  )
+);
+```
+
+### Send a transaction in Solana
+
+In order to raise the modal to sign and send a transaction with your wallet. It's a bit more complex, but you can follow these steps:
+
+1. Start by importing very similar packages from the previous examples and also the Transaction and SystemProgram object from solana/web3.js library.
+
+```js
+import { useAppKitConnection } from "@reown/appkit-adapter-solana/react";
+import { PublicKey, Transaction, SystemProgram } from "@solana/web3.js";
+import { useAppKitAccount, useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
+```
+
+2. Use the `useAppKitAccount`, useAppKitConnection and useAppKitProvider AppKit hooks to get the connection object, the walletProvider and the address from the user.
+
+```js
+const { isConnected, address } = useAppKitAccount();
+const { connection } = useAppKitConnection();
+const { walletProvider } = useAppKitProvider < Provider > "solana";
+```
+
+3. Create the function to raise the modal to send the transaction
+
+```js
+// function to send a TX
+const handleSendTx = () => {
+    const latestBlockhash = await connection.getLatestBlockhash();
+
+    // create the transaction
+    const transaction= new Transaction({
+        feePayer: wallet,
+        recentBlockhash: latestBlockhash?.blockhash,
+      }).add(
+        SystemProgram.transfer({
+          fromPubkey: wallet,
+          toPubkey: new PublicKey(address), // destination address
+          lamports: 1000,
+        })
+      );
+
+    // raise the modal
+    const signature = await walletProvider.sendTransaction(transaction, connection)
+
+    // print the Transaction Signature
+    console.log(signature);
+}
+```
+
+4. Finally, in order to call the function:
+
+```jsx
+return (
+  isConnected && (
+    <div>
+      <button onClick={handleSendTx}>Send Transaction</button>
+    </div>
+  )
+);
+```
+
+## Conclusion
+
+By following this guide, you’ve learned how to integrate Reown AppKit and Solana into your React application to perform essential wallet operations.
+You can now fetch wallet balances, sign messages, and send transactions in the Solana blockchain.
+
+Keep exploring AppKit to enhance your dApp’s functionality and user experience!

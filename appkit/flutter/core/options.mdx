@@ -1,0 +1,98 @@
+---
+title: Options
+---
+
+```javascript
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect( // OPTIONAL
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+      linkMode: false,
+    ),
+  ),
+  // disconnectOnDispose: false,
+  // enableAnalytics: true, // OPTIONAL - null by default
+  // siweConfig: SIWEConfig(...), // OPTIONAL - null by default
+  // featuresConfig: FeaturesConfig(
+  //   email: true, // OPTIONAL - false by default
+  //   socials: [...], // OPTIONAL - empty by default
+  //   showMainWallets: true, // OPTIONAL - true by default
+  // ),
+  // getBalanceFallback: () async { }, OPTIONAL - null by default
+  // requiredNamespaces: {}, OPTIONAL - null by default
+  // optionalNamespaces: {}, OPTIONAL - null by default
+  // featuredWalletIds: {}, OPTIONAL - null by default
+  // includedWalletIds: {}, OPTIONAL - null by default
+  // excludedWalletIds: {}, OPTIONAL - null by default
+);
+```
+
+### enableAnalytics:
+
+Enable analytics to get more insights on your users activity within your [Reown Cloud's dashboard](https://cloud.reown.com)
+
+### siweConfig:
+
+Used to configure [One-Click Auth + Sign In With Ethereum](./siwe) feature. 
+
+Will be disabled automatically if you decide to support/include non-EVM blockchains.
+
+### featuresConfig:
+
+Used to configure extra features such [Email and Social Login](../core/email).
+
+### getBalanceFallback:
+
+This callback method will be triggered if getting the balance from our blockchain API fails due to unsupported network. You may replace this with your own `getBalance()` method if desired.
+
+### requiredNamespaces: and optionalNamespaces:
+
+These are the set of namespaces that will be requested to the wallet you are connecting to.
+
+These values are optionals and, in most cases, not required since AppKit already defines every required and optional namespace internally based on configured networks.
+
+However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) these are the object you should modify. See [Custom Networks](../core/custom-chains). section.
+
+### featuredWalletIds:
+
+Allows to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). 
+You can find the wallets IDs in our [Wallets List](/cloud/wallets/wallet-list).
+
+```javascript
+final Set<String> featuredWalletIds = {
+  'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
+  '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust
+  'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa', // Coinbase Wallet
+}
+```
+
+### includedWalletIds:
+
+Similar to `featuredWalletIds` this option allows you to determine exactly which wallets do you want to show. If `includedWalletIds` is set then only the wallets listed in this object are going to be displayed in the modal.
+
+```javascript
+final Set<String> includedWalletIds = {
+  'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
+  '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust
+  'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa', // Coinbase Wallet
+}
+```
+
+### excludedWalletIds:
+
+Similar to `includedWalletIds` this option allows you to exclude a list of wallets from the API response.
+
+```javascript
+final Set<String> excludedWalletIds = {
+  'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
+  '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust
+  'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa', // Coinbase Wallet
+}
+```

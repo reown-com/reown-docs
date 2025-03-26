@@ -1,0 +1,61 @@
+---
+title: Web Components
+sidebarTitle: Components
+---
+
+import Components from "/snippets/appkit/shared/components.mdx";
+
+<Components />
+
+### `<appkit-wallet-button  />`
+
+<Frame>
+  <img src="/images/assets/walletButtons.jpg" />
+</Frame>
+
+Using the wallet button components ([Demo in our Lab](https://appkit-lab.reown.com/library/wagmi-wallet-button/)), you can directly connect to the top 20 wallets, WalletConnect QR and also all the social logins.
+This component allows to customize dApps, enabling users to connect their wallets effortlessly, all without the need for the traditional modal.
+
+Follow these steps to use the component:
+
+1. Install the package:
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-wallet-button
+```
+
+```bash Yarn
+yarn add @reown/appkit-wallet-button
+```
+
+```bash Bun
+bun a @reown/appkit-wallet-button
+```
+
+```bash pnpm
+pnpm add @reown/appkit-wallet-button
+```
+
+</CodeGroup>
+
+2. Import the library in your project:
+
+```tsx
+import "@reown/appkit-wallet-button/react";
+```
+
+3. use the component in your project:
+
+```tsx
+<appkit-wallet-button wallet="metamask" />
+```
+
+#### Options for wallet property
+
+| Type          | Options                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                               |
+| Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `coinbase`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, and `tokenpocket` |
+| Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                                      |

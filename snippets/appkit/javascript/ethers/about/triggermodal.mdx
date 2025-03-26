@@ -1,0 +1,68 @@
+To open AppKit you can use our [**web component**](../../core/components) or build your own button with AppKit [**actions**](../../core/actions.mdx#open-and-close-the-modal).
+
+<Tabs>
+<Tab title="Web Component">
+
+```html
+  <body>
+    <div id="app">
+      /* highlight-add-start */
+      <appkit-button></appkit-button>
+      <appkit-network-button></appkit-network-button>
+      /* highlight-add-end */
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+```
+
+Learn more about the AppKit web components [here](../../core/components)
+
+<Info>
+Web components are global html elements that don't require importing.
+</Info>
+
+</Tab>
+<Tab title="actions">
+
+You can trigger the modal by calling the `open` function from a modal instance returned by `createAppKit`.
+
+Let's first add two html button elements into our `index.html` file:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML Example</title>
+  </head>
+  <body>
+    <div id="app">
+      /* highlight-add-start */
+      <button id="open-connect-modal">Open Modal</button>
+      <button id="open-network-modal">Open Networks</button>
+      /* highlight-add-end */
+    </div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
+```
+
+Following with our `main.js` file, we can now add the needed logic to open the modal:
+
+```ts
+// Trigger modal programaticaly
+// Add this code inside `main.js` file at the end of the code file
+const openConnectModalBtn = document.getElementById("open-connect-modal");
+const openNetworkModalBtn = document.getElementById("open-network-modal");
+
+openConnectModalBtn.addEventListener("click", () => modal.open());
+openNetworkModalBtn.addEventListener("click", () =>
+  modal.open({ view: "Networks" })
+);
+```
+
+Learn more about the AppKit actions [here](../../core/actions)
+
+</Tab>
+</Tabs>

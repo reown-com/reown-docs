@@ -1,0 +1,44 @@
+To open AppKit you can use our [**web component**](../core/components) or build your own button with AppKit [**hooks**](../core/hooks.mdx#useAppKit).
+
+<Tabs>
+<Tab title="Web Component">
+
+```tsx
+export default function ConnectButton() {
+  return <appkit-button />;
+}
+```
+
+Learn more about the AppKit web components [here](../core/components)
+
+<Info>
+  Web components are global html elements that don't require importing.
+</Info>
+
+</Tab>
+<Tab title="Hooks">
+
+You can trigger the modal by calling the `open` function from `useAppKit` hook.
+
+```tsx
+import { useAppKit } from "@reown/appkit/react";
+
+export default function ConnectButton() {
+  // 4. Use modal hook
+  const { open } = useAppKit();
+
+  return (
+    <>
+      <button onClick={() => open()}>Open Connect Modal</button>
+      <button onClick={() => open({ view: "Networks" })}>
+        Open Network Modal
+      </button>
+    </>
+  );
+}
+```
+
+Learn more about the AppKit hooks [here](../core/hooks)
+
+</Tab>
+</Tabs>

@@ -1,0 +1,132 @@
+---
+title: Unity
+sidebarTitle: Installation
+---
+
+import CloudBanner from "/snippets/cloud-banner.mdx";
+
+With AppKit, you can easily let people interact with multiple EVM compatible wallets and blockchains.
+
+## Install
+
+Let's get started by installing the package!
+
+### Prerequisites
+
+- Unity 2022.3 or above
+- IL2CPP code stripping level: Minimal (or lower)
+- Target platform: Android, iOS, Windows, macOS, WebGL
+- Gamma color space
+  - If you need Linear color space, please [open a GitHub issue](https://github.com/reown-com/reown-dotnet/issues)
+
+### Package
+
+<Tabs>
+<Tab title="OpenUPM CLI">
+
+To install packages via OpenUPM, you need to have [Node.js](https://nodejs.org/en/) and [openupm-cli](https://openupm.com/docs/getting-started.html#installing-openupm-cli) installed. Once you have them installed, you can run the following commands:
+
+```bash
+openupm add com.reown.appkit.unity
+```
+</Tab>
+<Tab title="Package Manager with OpenUPM">
+
+1. Open `Advanced Project Settings` from the gear ⚙ menu located at the top right of the Package Manager’s toolbar
+2. Add a new scoped registry with the following details:
+   - Name: `OpenUPM`
+   - URL: `https://package.openupm.com`
+   - Scope(s): `com.reown` and `com.nethereum`
+3. Press plus ➕ and then `Save` buttons
+4. In the Package Manager windows open the add ➕ menu from the toolbar
+5. Select `Add package by name...`
+6. Enter the names of the following packages one by one:
+   - `com.nethereum.unity
+   - `com.reown.core`
+   - `com.reown.core.crypto`
+   - `com.reown.core.common`
+   - `com.reown.core.network`
+   - `com.reown.core.storage`
+   - `com.reown.sign`
+   - `com.reown.sign.unity`
+   - `com.reown.sign.nethereum`
+   - `com.reown.sign.nethereum.unity`
+   - `com.reown.appkit.unity`
+7. Press `Add` button
+</Tab>
+</Tabs>
+
+## Configure
+
+The minimum configuration required is filling in a `Project ID` and `Metadata` fields inside of `AppKitConfig`.
+
+<CloudBanner />
+
+```csharp
+await AppKit.InitializeAsync(
+    new AppKitConfig(
+        projectId: "YOUR PROJECT ID",
+        new Metadata(
+            name: "My Game",
+            description: "Short description
+            url: "https://example.com",
+            iconUrl: "https://example.com/logo.png"
+        )
+    )
+);
+```
+
+- **projectId**: The project ID is a unique identifier for your project.
+  - If you don’t have a Project ID, you can create one at [Reown Cloud](https://cloud.reown.com).
+- **name**: The project name is a human-readable name for your project.
+- **description**: The project description is a human-readable description for your project.
+- **url**: The project URL
+- **iconUrl**: Icon of the project.
+
+## Implement
+
+1. Add `Reown AppKit` prefab from `Packages/AppKit/Prefabs` to your scene.
+2. Initialize AppKit from your script
+
+```csharp
+public async void Start()
+{
+    var config = new AppKitConfig(...);
+    await AppKit.InitializeAsync(config);
+}
+```
+
+3. Connect account
+
+```csharp
+public async Task ResumeSession()
+{
+    // Try to resume account connection from the last session
+    var resumed = await AppKit.ConnectorController.TryResumeSessionAsync();
+
+    if (resumed)
+    {
+        // Continue to the game
+        MyAccountConnectedHandler();
+    }
+    else
+    {
+        // Connect account
+        AppKit.AccountConnected += (_, e) => MyAccountConnectedHandler();
+        AppKit.OpenModal();
+    }
+}
+```
+
+## Examples and Test dApps
+
+- [Unity AppKit Example in Github](https://github.com/reown-com/reown-dotnet/tree/main/sample/)
+- [A WebGL sample](https://unity-appkit.vercel.app/)
+- [Android Build (Firebase)](https://appdistribution.firebase.dev/i/093025eda71719e2)
+- [iOS Build (Testflight)](https://testflight.apple.com/join/MPkPYk43)
+
+## Getting Support 🙋
+
+Reown is committed to delivering the best developer experience.
+
+If you have any questions, feature requests, or bug reports, feel free to open an issue on [GitHub](https://github.com/reown-com/reown-dotnet/issues)!
