@@ -1,121 +1,86 @@
 import rpcUrls from '../../../static/assets/paymaster-rpc-urls.png'
 
-# Sponsoring First Transaction with Reown Verifying Paymaster
+# Gas Sponsorship with Reown
 
 :::warning
-  Paymaster feature is currently in a limited access phase and only
+  Gas Sponsorship is currently an early access feature. 
   available by invite. If you're interested in access, please [contact us](https://reown.com/contact).
 :::
 
 In this recipe, you will learn how to:
 
 - Create a Paymaster Policy on Cloud
-- Use the policy in your dapp to sponsor transactions
+- Use the policy in your dApp to sponsor transactions
 - Sponsor using Appkit's embedded account
 
-This guide takes approximately 20 minutes to complete and is split in 2 parts.
+This guide takes approximately 20 minutes to complete and is split into 2 parts.
 First, we will be using pre-made policies that interact with smart accounts
 deployed in service of [Appkit lab](https://appkit-lab.reown.com/library/wagmi/) and validated
-there. The second half is integrating that in your own Dapp.
+there. The second half involves integrating it into your own dApp.
 
 Let’s dive in!
 
 ## Prerequisites
 - A fundamental understanding of JavaScript and React.
 - Obtain a new project Id on Reown Cloud at https://cloud.reown.com
-- As Paymaster is currently in limited access, you have to be granted access. Please [contact us](https://reown.com/contact).
+- Since Gas Sponsorship is an early access feature, your projectId needs to be access listed. Please [contact us](https://reown.com/contact).
 
-## Part 1: Set up a policy
+## Part 1: Steps to Set up a policy
 
-First, head to the Cloud dashboard and select "Paymaster" from the sidebar.
-Then, hit "Add Policy". Since we are just testing, we can stick with "Testnet"
-chains when greeted with the option of choosing between "Testnet" and
-"Pay as you go".
+1. Open the Cloud dashboard and click on "Paymaster" in the sidebar.
+2. Click "Add Policy". When prompted, choose "Testnet" chains for testing.
+3. Enter your Policy name and click next.
+4. On the chain selection screen, simply click next since all testnet chains are enabled.
+5. You’ll then see the Control Sponsorships screen.
+6. For most cases, the no-code builder works well, though there is a [detailed guide for custom policies](../../cloud/paymaster.mdx) if needed.
 
-After filling in the Policy name and hitting next, a chain selection screen
-follows next. As all testnet chains are enabled when testing, we can go ahead
-and click next. This will then show the JSON policy editor. A [detailed
-guide on custom crafting your policy](../../cloud/paymaster.mdx). However, for
-the purposes of this quick guide, we will use a pre-made policy.
 
-```json
-{
-  "policyType": "useroperation_payload_control",
-  "policyStaticProps": {
-    "contract1": {
-      "abi": [{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"purchase","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"donutBalances","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"check","type":"address"}],"name":"getBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
-    }
-  },
-  "policyLogics": {
-    "params": {
-      "key": "callData",
-      "op": "callDataToEquals",
-      "value": "0x2E65BAfA07238666c3b239E94F32DaD3cDD6498D"
-    },
-    "ands": [
-      {
-        "params": {
-          "key": "callData",
-          "op": "callDataMethodEquals",
-          "value": "purchase"
-        },
-        "metadata": {
-          "contractAbi": "<contract1.abi>"
-        }
-      }
-    ]
-  },
-  "metadata": {
-    "chainIds": [
-      11155111
-    ],
-    "sponsorSADeployements": true,
-    "startTime": "2024-11-14T11:12:00.000Z"
-  }
-}
-```
+<img src="/img/paymasters/no-code-builder.png" />
 
-The metadata will auto adjust based on the chains and start/end times
-configured. 
+**Required Items:**
+1. Input the contract address
+2. The ABI of the contract
+3. Select the method you've chosen to sponsor
+4. *IMPORTANT*: If you would like to sponsor the deployment of smart accounts
+on your app, tick the `Sponsor Smart Account Deployment` checkbox.
+5. Click "Create".
 
-Click "Create" and you now have a functional policy!
+You now have a functional policy!
 
 ## Retrieving the Paymaster URL 
-Since all Paymasters are specific to a chain, there is an "RPC URLs" button that provides all the supported chain-specific URLs.
+Each Paymaster is linked to a specific chain. Click the "RPC URLs" button to view all supported chain URLs.
 
 ![](/assets/paymaster-rpc-urls.png)
 
-Select `Sepolia` and copy the URL provided to get your first paymaster URL.
+Select `Sepolia` and copy the URL provided to get your paymaster URL.
 
 ## Testing the Paymaster Out
 
-To validate that the paymaster is operating as expected, you can test it in
-[Appkit lab](https://appkit-lab.reown.com/library/wagmi/).
+Before integrating this functionality into your dApp, you can test that you set
+up the policy by visiting [Appkit
+Lab](https://appkit-lab.reown.com/library/wagmi/) .
 
-If you do not have an Appkit Smart Account, login with email or socials. 
+Login with Appkit Email or Social Login (Google, Apple, etc)
 
-Scroll down to "Send Calls (Paymaster Service)" and paste your Paymaster URL and
-hit send calls. 
+Scroll down to "Send Calls with custom abi (Paymaster Service)" and 
+1. Input your smart contract address
+2. Paste the ABI of the contract
+3. Select the method you've chosen to sponsor
+4. Add any method arguments in the format of an array
+5. Add any value if necessary
+6. Paste your Paymaster URL 
+7. Hit send calls. 
 
-You can verify it worked in multiple ways:
-- In the network tab in your browser, you can filter by `sendUserOperation`. If
-  the request payload has a filled in `paymasterAndData`, then everything is
-  setup!
-- Another way is to copy the send calls result and paste it into "Get Call
-  Status" and then take the transaction receipt and paste it into
-  https://sepolia.etherscan.io/. It will show the paymaster covering the gas.
+You can check it in two simple ways:
 
-You can read more about it
-
----
-
-## Part 2: Integrating it with your Dapp
-
-To add this functionality to your dapp, you can integrate sendCalls
-functionality using Wagmi's `useSendCalls`. For example, adding this
-functionality to a React Component
+- In your browser's network tab, filter for sendUserOperation. If the payload includes paymasterAndData, it's working.
+- Alternatively, copy the send call result, paste it into "Get Call Status", then use the transaction receipt on Sepolia Etherscan. It will show the paymaster covering the gas.
 
 
+## Part 2: Integrating with your dApp
+
+After setting up your policy, you can seamlessly add blockchain call functionality to your dApp using Wagmi's `useSendCalls` hook. 
+This hook simplifies interacting with the blockchain, allowing you to trigger transactions directly from your React component.
 
 ### Define the ABI 
 ```ts
@@ -138,7 +103,7 @@ const donutContractAbi = [
 const donutContactAddress = '0x2E65BAfA07238666c3b239E94F32DaD3cDD6498D' as const
 ```
 
-### Calculate CallData and Prep transaction
+### Calculate CallData and Prepare the transaction
 ```
 const purchaseDonutCallData = encodeFunctionData({
   abi: donutContractAbi,
@@ -160,7 +125,8 @@ import { useSendCalls } from 'wagmi/experimental'
 ```
 
 ```
-// in component...
+// Inside the Component
+
 const { sendCalls } = useSendCalls({
   mutation: {
     onSuccess: hash => {
@@ -198,7 +164,7 @@ const onSendCalls = useCallback(() => {
         url: paymasterServiceUrl,
         context
       }
-    }
+    } 
   })
 }, [sendCalls, paymasterServiceUrl])
 ```
@@ -237,8 +203,8 @@ the `capabilities` object and remove any extra conditional logic.
 Since the embedded wallet lives on your browser, you can observe the network
 calls it makes.
 
-If after performing the `sendCalls` and approving it in the AppKit Embedded
-Wallet, there is no call to the paymaster URL provided. It likely means
+If, after performing the `sendCalls` and approving it in the AppKit Embedded
+Wallet, there is no call to the paymaster URL provided, it likely means
 that the `capabilities` were not filled in properly.
 
 Ensure the capabilities object you're sending looks like this:
@@ -250,6 +216,37 @@ paymasterService: {
 ```
 
 ### Paymaster was called but returned an error
+
+#### Simulation Errors
+
+The most common errors encountered with integrating Paymasters typically come in 
+the form of simulation errors. 
+
+Thankfully, the paymaster provides a full report of user ops that run into
+errors. For example:
+
+```json
+{
+  "error": {
+    "message": "The UserOp does not satisfy requirements of policy",
+    "details": {
+      "message": "Could not successfully simulate call.",
+      "cause": "Filtered simulation calls do not include a call to a smart contract.",
+      "debugInfo": {
+        "simulatedTransaction": { /* full simulation information */ },
+        "errors": [
+          {
+            "error": "executionreverted"
+          },
+          {
+            "error": "out of gas"
+          }
+        ]
+      }
+    }
+  }
+}
+```
 
 #### No calls were made to the specified contract.
 
@@ -268,7 +265,6 @@ performing `sendUserOperation` has filled the `paymasterData` field
 block explorer that supports searching by User Op Hashes like BlockScout 
 5. Ensure the paymaster sponsor field is filled
 
----
 
 ## Links
 - [Reown Cloud](https://cloud.reown.com)

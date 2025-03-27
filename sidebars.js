@@ -250,7 +250,7 @@ module.exports = {
                   label: 'Telegram Mini Apps',
                   id: 'appkit/features/telegram-mini-apps'
                 },
-                { type: 'doc', label: 'Sponsored Transactions', id:'appkit/features/sponsored-transactions'}
+                { type: 'doc', label: 'Gas Sponsorship', id:'appkit/features/sponsored-transactions'}
               ]
             },
             {
@@ -293,7 +293,8 @@ module.exports = {
                 { type: 'doc', label: 'Solana Transactions using AppKit', id: 'appkit/recipes/solana-send-transaction'},
                 { type: 'doc', label: 'Bitcoin Transactions using AppKit', id: 'appkit/recipes/bitcoin-send-transaction'},
                 { type: 'doc', label: 'Support Send Calls', id: 'appkit/recipes/switching-to-send-calls' },
-                { type: 'doc', label: 'Sponsoring Transaction with our Paymaster', id: 'appkit/recipes/sponsoring-first-transaction' } 
+                { type: 'doc', label: 'Gas Sponsorship using AppKit', id: 'appkit/recipes/sponsoring-first-transaction' },
+                { type: 'doc', label: 'Travel Rule using AppKit', id: 'appkit/recipes/travel-rule'}
               ]
             },
             {
@@ -351,12 +352,7 @@ module.exports = {
               items: [
                 { type: 'doc', label: 'One-Click Auth', id: 'walletkit/features/one-click-auth' },
                 { type: 'doc', label: 'Notifications', id: 'walletkit/features/notifications' },
-                { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' },
-                {
-                  type: 'category',
-                  label: 'Early Access',
-                  items: ['walletkit/features/early-access/chain-abstraction']
-                }
+                { type: 'doc', label: 'Verify', id: 'walletkit/features/verify' }
               ]
             },
             'walletkit/best-practices',
