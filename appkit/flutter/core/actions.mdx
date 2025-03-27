@@ -1,0 +1,214 @@
+---
+title: Actions
+---
+
+### - Listen to balance change
+
+You can subscribe to `_appKitModal.balanceNotifier` to be up to date with balance.
+
+```javascript
+// Example usage:
+ValueListenableBuilder<String>(
+  valueListenable: _appKitModal.balanceNotifier,
+  builder: (_, balance, __) {
+    return Text(balance);
+  },
+),
+
+```
+
+### - Launch the current wallet
+
+If you connected your dApp through deep linking to a Wallet app you can launch that wallet app with the following:
+
+```javascript
+_appKitModal.launchConnectedWallet();
+```
+
+### - Launch block explorer
+
+You can open the selected chain's block explorer easily:
+
+```javascript
+_appKitModal.launchBlockExplorer();
+```
+
+### - Send an RPC request
+
+```javascript
+final bytes = utf8.encode(message);
+final encodedMessage = hex.encode(bytes);
+
+final chainId = _appKitModal.selectedChain!.chainId;
+final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
+
+final result = await _appKitModal.request(
+  topic: _appKitModal.session!.topic,
+  chainId: chainId,
+  request: SessionRequestParams(
+    method: 'personal_sign',
+    params: [
+      '0x$encodedMessage',
+      _appKitModal.session!.getAddress(namespace)!;
+    ],
+  ),
+);
+```
+
+A list of all available methods can be found in [constants.dart](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_core/lib/utils/constants.dart#L70) file, which is already exported for you to use directly from AppKit package.
+
+### - List of approved chains by the connected wallet
+
+```javascript
+_appKitModal.getApprovedChains();
+```
+
+### - List of approved methods by connected wallet
+
+```javascript
+_appKitModal.getApprovedMethods();
+```
+
+### - List of approved events by the connected wallet
+
+```javascript
+_appKitModal.getApprovedEvents();
+```
+
+### - Interact with Smart Contracts
+
+<Info>
+These Smart Contract interaction methods only works for EVM chains but you can always structure your smart contract transaction and call the relevant chain method by using [request()](#--send-an-rpc-request) method.
+</Info>
+
+### - Read function:
+
+```javascript
+Future<List<dynamic>> requestReadContract({
+  required String? topic,
+  required String chainId,
+  required DeployedContract deployedContract,
+  required String functionName,
+  EthereumAddress? sender,
+  List parameters = const [],
+});
+```
+
+#### Usage:
+
+1. Create a `DeployedContract` object
+
+```javascript
+// Create DeployedContract object using contract's ABI and address
+final tetherContract = DeployedContract(
+  ContractAbi.fromJson(
+    jsonEncode([{.....}]), // ABI object
+    'Tether USD',
+  ),
+  EthereumAddress.fromHex('0xdAC17F958D2ee523a2206206994597C13D831ec7'), // https://etherscan.io/token/0xdAC17F958D2ee523a2206206994597C13D831ec7
+);
+```
+
+2. Read from it by calling a read function
+
+```javascript
+final chainId = _appKitModal.selectedChain!.chainId;
+final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
+
+// Get token decimals
+final decimals = await _appKitModal.requestReadContract(
+  topic: _appKitModal.session!.topic,
+  chainId: chainId,
+  deployedContract: tetherContract,
+  functionName: 'decimals',
+);
+
+// Get balance of wallet
+final balanceOf = await _appKitModal.requestReadContract(
+  deployedContract: tetherContract,
+  topic: _appKitModal.session!.topic,
+  chainId: chainId,
+  functionName: 'balanceOf',
+  parameters: [
+    EthereumAddress.fromHex(_appKitModal.session!.getAddress(namespace)),
+  ],
+);
+
+// Get token total supply
+final totalSupply = await _appKitModal.requestReadContract(
+  deployedContract: tetherContract,
+  topic: _appKitModal.session!.topic,
+  chainId: _appKitModal.selectedChain!.chainId,
+  functionName: 'totalSupply',
+);
+```
+
+### - Write function:
+
+```javascript
+Future<dynamic> requestWriteContract({
+  required String? topic,
+  required String chainId,
+  required DeployedContract deployedContract,
+  required String functionName,
+  required Transaction transaction,
+  List<dynamic> parameters = const [],
+  String? method,
+});
+```
+
+#### Usage:
+
+Write to it by calling a write function, for example, `transfer` function from USDC token contract:
+
+```javascript
+final decimalUnits = (decimals.first as BigInt); // decimals value from `decimals` contract function
+final transferValue = _formatValue(0.23, decimals: decimalUnits); // your format value function
+
+// Transfer USDT
+Future<void> transferToken() async {
+  final chainId = _appKitModal.selectedChain!.chainId;
+  final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
+
+  // Transfer 0.01 amount of Token using Smart Contract's transfer function
+  final result = await _appKitModal.requestWriteContract(
+    topic: _appKitModal.session!.topic,
+    chainId: chainId,
+    deployedContract: deployedContract,
+    functionName: 'transfer',
+    transaction: Transaction(
+      from: EthereumAddress.fromHex(_appKitModal.session!.getAddress(namespace)), // sender address
+    ),
+    parameters: [
+      EthereumAddress.fromHex('0x59e2f66C0E96803206B6486cDb39029abAE834c0'), // recipient address
+      transferValue, // == 0.23 USDT
+    ],
+  );
+}
+
+```
+
+#### Additional example:
+
+Call a `sayHello` function of a smart contract to write a message.
+
+```javascript
+// Write a message data
+Future<void> writeMessage() async {
+  final chainId = _appKitModal.selectedChain!.chainId;
+  final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
+
+  final result = await _appKitModal.requestWriteContract(
+    topic: _appKitModal.session!.topic,
+    chainId: chainId,
+    deployedContract: deployedContract,
+    functionName: 'sayHello',
+    transaction: Transaction(
+      from: EthereumAddress.fromHex(_appKitModal.session!.getAddress(namespace)), // sender address
+    ),
+    parameters: ['Hello world!'],
+  );
+}
+```
+
+For a complete example app check out the [example app](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/modal/lib/services/eip155_service.dart) for AppKit

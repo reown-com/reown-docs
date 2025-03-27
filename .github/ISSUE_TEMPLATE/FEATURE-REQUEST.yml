@@ -1,0 +1,17 @@
+name: 💡 Feature Request
+description: Suggest an idea to make this documentation better.
+labels: ['feature', 'triage']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature request!
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Add any other context or screenshots about the feature request here.
+      placeholder: Share the context
+    validations:
+      required: false

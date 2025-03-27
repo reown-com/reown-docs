@@ -1,0 +1,17 @@
+8. Initialize `CoinbaseProvider` and add it in the default config
+
+```tsx
+import { CoinbaseProvider } from '@reown/appkit-coinbase-ethers-react-native'
+
+const coinbaseProvider = new CoinbaseProvider({
+  redirect: 'https://your-app-universal-link.com' || 'YOUR_APP_SCHEME://'
+  rpcUrl: mainnet.rpcUrl
+})
+
+const config = defaultConfig({
+  metadata,
+  coinbase: coinbaseProvider
+})
+```
+
+* Prefer universal links over custom schemes to avoid an app verification warning on Coinbase Wallet

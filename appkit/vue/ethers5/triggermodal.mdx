@@ -1,0 +1,40 @@
+To open AppKit you can use our [**web component**](../core/components) or build your own button with the AppKit [**composables**](../core/composables.mdx#useAppKit).
+
+<Tabs>
+<Tab title="Web Components">
+
+```html
+<template>
+  <appkit-button />
+</template>
+```
+
+Learn more about the AppKit web components [here](../core/components)
+
+<Info>
+  Web components are global html elements that don't require importing.
+</Info>
+
+</Tab>
+<Tab title="Composables">
+
+You can trigger the modal by calling the `open` method from `useAppKit` composable.
+
+```html
+<script setup lang="ts">
+  import { useAppKit } from "@reown/appkit/vue";
+
+  // Use modal composable
+  const modal = useAppKit();
+</script>
+
+<template>
+  <button @click="modal.open()">Open Connect Modal</button>
+  <button @click="modal.open({ view: 'Networks' })">Open Network Modal</button>
+</template>
+```
+
+Learn more about the Appkit composables [here](../core/composables)
+
+</Tab>
+</Tabs>

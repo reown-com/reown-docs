@@ -1,0 +1,313 @@
+---
+title: Installation
+---
+
+import CloudBanner from "/snippets/cloud-banner.mdx";
+
+import WagmiImplementation from "/snippets/appkit/javascript/wagmi/about/implementation.mdx";
+import WagmiModal from "/snippets/appkit/javascript/wagmi/about/triggermodal.mdx";
+
+import Ethers5Implementation from "/snippets/appkit/javascript/ethers5/implementation.mdx";
+
+import EthersImplementation from "/snippets/appkit/javascript/ethers/about/implementation.mdx";
+import EthersModal from "/snippets/appkit/javascript/ethers/about/triggermodal.mdx";
+
+import SolanaImplementation from "/snippets/appkit/javascript/solana/about/implementation.mdx";
+import SolanaModal from "/snippets/appkit/javascript/solana/about/triggermodal.mdx";
+import SolanaPrograms from "/snippets/appkit/javascript/solana/about/programs.mdx";
+
+import BitcoinImplementation from "/snippets/appkit/javascript/bitcoin/about/implementation.mdx";
+import BitcoinModal from "/snippets/appkit/javascript/bitcoin/about/triggermodal.mdx";
+
+# JavaScript
+
+AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
+Choose one of these to get started.
+
+<Note>
+  We recommend using
+  [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to get
+  started with AppKit JavaScript.
+</Note>
+
+## Installation
+
+<Tabs>
+<Tab title="Wagmi">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Ethers v5">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ethers5 ethers@5.7.2
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ethers5 ethers@5.7.2
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-ethers5 ethers@5.7.2
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ethers5 ethers@5.7.2
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Ethers">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ethers ethers
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ethers ethers
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-ethers ethers
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ethers ethers
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Solana">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-solana
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-solana
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-solana
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-solana
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Bitcoin">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+</CodeGroup>
+
+</Tab>
+</Tabs>
+
+## Cloud Configuration
+
+Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new project ID.
+
+<CloudBanner />
+
+## Implementation
+
+<Tabs>
+<Tab title="Wagmi">
+<Card title="wagmi Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-wagmi">
+Check the Javascript wagmi example
+</Card>
+
+<WagmiImplementation />
+
+</Tab>
+<Tab title="Ethers v5">
+
+<Ethers5Implementation />
+
+</Tab>
+<Tab title="Ethers">
+<Card title="ethers Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-ethers">
+Check the Javascript ethers example
+</Card>
+
+<EthersImplementation />
+
+</Tab>
+<Tab title="Solana">
+<Card title="Solana Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-solana">
+Check the Javascript Solana example
+</Card>
+
+<SolanaImplementation />
+
+</Tab>
+<Tab title="Bitcoin">
+<Card title="Bitcoin Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-bitcoin">
+Check the Javascript Bitcoin example
+</Card>
+
+<BitcoinImplementation />
+
+</Tab>
+</Tabs>
+
+## Trigger the modal
+
+<Tabs>
+<Tab title="Wagmi">
+
+<WagmiModal />
+
+</Tab>
+<Tab title="Ethers v5">
+
+<EthersModal />
+
+</Tab>
+<Tab title="Ethers">
+
+<EthersModal />
+
+</Tab>
+<Tab title="Solana">
+
+<SolanaModal />
+
+</Tab>
+<Tab title="Bitcoin">
+
+<BitcoinModal />
+
+</Tab>
+</Tabs>
+
+## Blockchain Interaction
+
+<Tabs>
+
+<Tab title="Wagmi">
+You need to install @wagmi/core to interact with smart contracts:
+
+<CodeGroup>
+
+```bash npm
+npm install @wagmi/core
+```
+
+```bash Yarn
+yarn add @wagmi/core
+```
+
+```bash Bun
+bun a @wagmi/core
+```
+
+```bash pnpm
+pnpm add @wagmi/core
+```
+</CodeGroup>
+
+[Wagmi actions](https://wagmi.sh/core/api/actions/readContract) can help us interact with wallets and smart contracts:
+
+For this use case, we need to import the `wagmiConfig`from our AppKit WagmiAdapter configuration.
+
+```tsx
+import { readContract } from "@wagmi/core";
+import { USDTAbi } from "../abi/USDTAbi";
+
+const USDTAddress = "0x...";
+
+const data = readContract(wagmiConfig, {
+  address: USDTAddress,
+  abi: USDTAbi,
+  functionName: "totalSupply",
+  args: [],
+});
+```
+
+Read more about Wagmi actions for smart contract interaction [here](https://wagmi.sh/core/actions/readContract).
+
+</Tab>
+<Tab title="Ethers">
+
+[Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
+
+```tsx
+import { BrowserProvider, Contract, parseEther } from "ethers";
+
+const provider = await modal.subscribeProviders((state) => {
+  return state["eip155"];
+});
+
+const addressFrom = await modal.subscribeAccount((state) => {
+  return state;
+});
+
+if (!provider) throw Error("No provider found");
+if (!addressFrom) throw Error("No address found");
+
+function sendTransaction() {
+  const tx = {
+    from: addressFrom,
+    to: "0x...", // any address
+    value: parseEther("0.0001"),
+  };
+  const ethersProvider = new BrowserProvider(provider);
+  const signer = await ethersProvider.getSigner();
+  const tx = await signer.sendTransaction(tx);
+  console.log("transaction:", tx);
+}
+```
+
+</Tab>
+<Tab title="Solana">
+  <SolanaPrograms />
+</Tab>
+</Tabs>

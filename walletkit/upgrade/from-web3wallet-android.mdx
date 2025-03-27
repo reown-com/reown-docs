@@ -1,0 +1,108 @@
+---
+title: Upgrade from Web3Wallet to WalletKit for Android
+pagination_next: 
+displayed_sidebar: mainSidebar
+---
+
+## Upgrade to Reown WalletKit
+
+This upgrade guide helps developers transition from using the Web3Wallet library to the WalletKit within reown-kotlin. The guide involves updating imports, modifying class references and updating artefacts dependencies. Follow these steps to ensure a smooth migration.
+
+### Step 1. Update the Repository Dependencies
+
+The Web3Wallet library has been deprecated and moved to a new repository under the reown-com organization. Update your dependencies to use WalletKit:
+
+```swift
+/* highlight-delete-start */
+- dependencies {
+-     implementation(platform("com.walletconnect:android-bom:{BOM version}"))
+-     implementation("com.walletconnect:android-core")
+-     implementation("com.walletconnect:web3wallet")
+- }
+/* highlight-delete-end */
+/* highlight-add-start */
++ dependencies {
++     implementation(platform("com.reown:android-bom:{BOM version}"))
++     implementation("com.reown:android-core")
++     implementation("com.reown:walletkit")
++ }
+/* highlight-add-end */
+```
+
+### Step 2.  Update Imports in Your Code
+
+All references to Web3Wallet in your import statements should be updated to use WalletKit.
+
+```swift
+/* highlight-delete-start */
+- import com.walletconnect.android.*
+- import com.walletconnect.web3.wallet.*
+/* highlight-delete-end */
+/* highlight-add-start */
++ import com.reown.android.*
++ import com.reown.walletkit.*
+/* highlight-add-end */
+```
+
+
+### Step 3. Update Class Name
+
+The singleton instance for Web3Wallet has been replaced with WalletKit. Update all instances where Web3Wallet is used with WalletKit.
+
+```swift
+/* highlight-delete-start */
+- Web3Wallet.initialize(Wallet.Params.Init(core = CoreClient), onSuccess, onError)
+- Web3Wallet.approveSession(approveProposal, onSuccess, onError)
+/* highlight-delete-end */
+/* highlight-add-start */
++ WalletKit.initialize(Wallet.Params.Init(core = CoreClient), onSuccess, onError)
++ WalletKit.approveSession(approveProposal, onSuccess, onError)
+/* highlight-add-end */
+```
+
+### Step 4. Update ProGuard file rules
+
+If you have ProGuard rules defined remember to update 
+
+```swift
+/* highlight-delete-start */
+- -keep class com.walletconnect.web3.wallet.client.Wallet$Model { *; }
+- -keep class com.walletconnect.web3.wallet.client.Wallet { *; }
+/* highlight-delete-end */
+/* highlight-add-start */
++ -keep class com.reown.walletkit.client.Wallet$Model { *; }
++ -keep class com.reown.walletkit.client.Wallet { *; }
+/* highlight-add-end */
+```
+
+### Step 5. Test Your Changes
+
+After updating all references to Web3Wallet to use WalletKit, thoroughly test your application to ensure that all functionalities work as expected.
+
+## Pairing Expiry
+
+Currently, Dapps create a new pairing whenever the user selects the **"Connect Wallet"** button, instead of reusing existing pairings. Although pairings were not intended to be reused, they were being persisted for 30 days, causing unnecessary resource usage for both Dapps and wallet clients, including redundant socket connections. 
+
+This led to an accumulation of stale pairings in wallets, resulting in degraded efficiency and increased resource consumption. To address this issue, we have introduced changes to how pairings are managed to ensure more efficient connection handling.
+
+Pairings were never intended to be listed in the wallet, and wallets should only display active sessions to users.
+
+## WebSocket Connection Handling
+
+We've optimized the WebSocket connection management to improve performance and resource utilization. The SDK will now establish a WebSocket connection only when there's an explicit intention to send a request or subscribe to a topic. If none of these conditions are met, the WebSocket connection will remain closed by default.
+
+### What's Changed?
+Previous Behavior: The SDK automatically initiated a WebSocket connection upon startup, regardless of active sessions or pending actions.
+
+New Behavior: The SDK delays establishing a WebSocket connection until it's necessary based on the app's activities.
+
+### Why This Change?
+This adjustment reduces unnecessary network traffic and conserves device resources, leading to better performance and battery life, especially important for mobile applications.
+
+### Impact on Your Application
+Disconnected State on Launch: Apps without active sessions at launch will start with the WebSocket in a disconnected state.
+UI Elements Depending on WebSocket: Buttons or features that rely on an active WebSocket connection may not function until the connection is established.
+
+### Steps for Migration
+
+Wallets are no longer expected to handle pairing-related methods. If your wallet has been listing pairings, please replace this with listing active sessions instead.

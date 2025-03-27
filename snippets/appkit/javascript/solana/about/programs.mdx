@@ -1,0 +1,55 @@
+[@Solana/web3.js](https://solana.com/docs/clients/javascript) library allows for seamless interaction with wallets and smart contracts on the Solana blockchain.
+
+For a practical example of how it works, you can refer to our [lab dApp](https://appkit-lab.reown.com/library/solana/).
+
+```js
+import { PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from "@solana/web3.js";
+
+import type { Provider } from '@reown/appkit-adapter-solana'
+
+const solanaProvider = {};
+const solanaConnection = {};
+modal.subscribeProviders(state => {
+    solanaProvider = state['solana'];
+    const url = solanaProvider.getActiveChain().rpcUrls.default.http[0];
+    const solanaConnection = new Connection(url);
+})
+
+const addressFrom = await modal.subscribeAccount(state => {
+  return state;
+})
+
+const sendTransaction = async () => {
+  if (!addressFrom || !solanaConnection) throw Error('user is disconnected');
+
+  const wallet = new PublicKey(addressFrom);
+  if (!wallet) throw Error('wallet provider is not available');
+
+  const latestBlockhash = await solanaConnection.getLatestBlockhash();
+
+  const transaction = new Transaction({
+    feePayer: wallet,
+    recentBlockhash: latestBlockhash?.blockhash,
+  }).add(
+    SystemProgram.transfer({
+      fromPubkey: wallet,
+      toPubkey: new PublicKey(address), // destination address
+      lamports: 1000,
+    })
+  );
+
+  return await provider.sendTransaction(transaction, solanaConnection);
+}
+
+const getBalance = async () => {
+  if (!addressFrom || !solanaConnection) throw Error('user is disconnected');
+
+  const wallet = new PublicKey(addressFrom);
+  const balance = await solanaConnection?.getBalance(wallet);
+  if (balance !== undefined) {
+    return `${balance / LAMPORTS_PER_SOL}`;
+  } else {
+    return '-';
+  }
+}
+```
