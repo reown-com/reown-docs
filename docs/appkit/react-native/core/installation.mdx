@@ -294,8 +294,9 @@ module.exports = createRunOncePlugin(
 
 ## Enable Coinbase Wallet
 
-<Tabs groupId="platform">
-<TabItem value="rn-cli" label="React Native CLI">
+:::info Note
+Coinbase SDK uses `react-native-mmkv@2.x.x` internally, which makes the SDK not compatible with React Native's new architecture.
+:::
 
 Follow these steps to install Coinbase SDK in your project along with our Coinbase package. Check <a href="https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install">here</a> for more detailed information.
 
@@ -310,7 +311,7 @@ npx install-expo-modules@latest
 2. Install Coinbase SDK
 
 ```
-yarn add @coinbase/wallet-mobile-sdk react-native-mmkv
+yarn add @coinbase/wallet-mobile-sdk react-native-mmkv@^2.0.0
 ```
 
 3. Install our custom connector
@@ -401,14 +402,6 @@ useEffect(() => {
 </PlatformTabs>
 
 Check <a href="https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install">Coinbase docs</a> for more detailed information.
-
-</TabItem>
-
-<TabItem value="expo" label="Expo">
-  Coinbase SDK doesn't support Expo Projects. More info <a href="https://github.com/MobileWalletProtocol/wallet-mobile-sdk/issues/206#issuecomment-1468836345">here</a>
-</TabItem>
-
-</Tabs>
 
 ## Examples
 
