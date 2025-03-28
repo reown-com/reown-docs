@@ -35,7 +35,7 @@ If it is not, it will return a response with the original transaction.
 
 ```swift
 @available(*, message: "This method is experimental. Use with caution.")
-public func prepare(transaction: InitialTransaction) async throws -> PrepareResponse {
+public func prepare(chainId: String, from: FfiAddress, call: Call, accounts: [String], localCurrency: Currency) async throws -> PrepareDetailedResponse 
 }
 ```
 
@@ -61,6 +61,7 @@ let routeResponseSuccess = try await WalletKit.instance.ChainAbstraction.prepare
     chainId: selectedNetwork.chainId.absoluteString,
     from: myAccount.address,
     call: call,
+    accounts: caip10Accounts,
     localCurrency: .usd
 )
 
