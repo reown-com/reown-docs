@@ -14,6 +14,36 @@
       "dark": "#202020"
     }
   },
+  "redirects": [
+    {
+      "source": "/2.0/:path*",
+      "destination": "/:path*"
+    },
+    {
+      "source": "/appkit/features/email",
+      "destination": "/appkit/features/socials"
+    },
+    {
+      "source": "/web3modal/:path*",
+      "destination": "/appkit/overview"
+    },
+    {
+      "source": "/web3inbox/:path*",
+      "destination": "/appkit/overview"
+    },
+    {
+      "source": "/web3wallet/:path*",
+      "destination": "/walletkit/overview"
+    },
+    {
+      "source": "/advanced/multichain/chain-list",
+      "destination": "cloud/chains/chain-list"
+    },
+    {
+      "source": "/advanced/rpc-reference/:path*",
+      "destination": "/advanced/multichain/rpc-reference/:path*"
+    }
+  ],
   "navigation": {
     "dropdowns": [
       {
