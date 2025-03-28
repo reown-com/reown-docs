@@ -7,7 +7,7 @@
     "light": "#008847",
     "dark": "#008847"
   },
-  
+
   "favicon": "/images/favicon.ico",
   "background": {
     "color": {
@@ -24,10 +24,7 @@
           {
             "group": "Introduction",
             "icon": "bolt",
-            "pages": [
-              "overview",
-              "external-link-01"
-            ]
+            "pages": ["overview", "external-link-01"]
           },
           {
             "group": "SDKs",
@@ -82,9 +79,7 @@
                   },
                   {
                     "group": "Upgrade",
-                    "pages": [
-                      "appkit/upgrade/from-w3m-to-reown"
-                    ]
+                    "pages": ["appkit/upgrade/from-w3m-to-reown"]
                   },
                   {
                     "group": "Migration",
@@ -110,18 +105,14 @@
                       "walletkit/features/verify",
                       {
                         "group": "Early Access",
-                        "pages": [
-                          "walletkit/features/early-access/chain-abstraction"
-                        ]
+                        "pages": ["walletkit/features/early-access/chain-abstraction"]
                       }
                     ]
                   },
                   "walletkit/best-practices",
                   {
                     "group": "Upgrade",
-                    "pages": [
-                      "walletkit/upgrade/from-web3wallet-to-reown"
-                    ]
+                    "pages": ["walletkit/upgrade/from-web3wallet-to-reown"]
                   }
                 ]
               }
@@ -134,16 +125,11 @@
               "cloud/explorer-submission",
               {
                 "group": "Explorer Chains",
-                "pages": [
-                  "cloud/chains/overview",
-                  "cloud/chains/chain-list"
-                ]
+                "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
               },
               {
                 "group": "Explorer Wallets",
-                "pages": [
-                  "cloud/wallets/wallet-list"
-                ]
+                "pages": ["cloud/wallets/wallet-list"]
               },
               "cloud/user-management",
               "cloud/verify",
@@ -206,17 +192,11 @@
                 "pages": [
                   {
                     "group": "Core",
-                    "pages": [
-                      "api/core/pairing",
-                      "api/core/relay",
-                      "api/core/shared-core"
-                    ]
+                    "pages": ["api/core/pairing", "api/core/relay", "api/core/shared-core"]
                   },
                   {
                     "group": "Notify",
-                    "pages": [
-                      "api/notify/about"
-                    ]
+                    "pages": ["api/notify/about"]
                   },
                   {
                     "group": "Sign",
@@ -231,9 +211,7 @@
               },
               {
                 "group": "Security",
-                "pages": [
-                  "advanced/security/content-security-policy"
-                ]
+                "pages": ["advanced/security/content-security-policy"]
               },
               "advanced/push-server",
               "advanced/walletconnect-deprecations"
@@ -241,10 +219,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -330,10 +305,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -419,10 +391,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -455,9 +424,7 @@
               },
               {
                 "group": "Early Access",
-                "pages": [
-                  "appkit/vue/early-access/smart-session"
-                ]
+                "pages": ["appkit/vue/early-access/smart-session"]
               },
               {
                 "group": "Transactions",
@@ -507,10 +474,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -543,9 +507,7 @@
               },
               {
                 "group": "Early Access",
-                "pages": [
-                  "appkit/javascript/early-access/smart-session"
-                ]
+                "pages": ["appkit/javascript/early-access/smart-session"]
               },
               {
                 "group": "Transactions",
@@ -595,10 +557,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -666,10 +625,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -710,10 +666,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -751,10 +704,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -791,10 +741,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -834,10 +781,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -870,10 +814,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -911,9 +852,7 @@
               },
               {
                 "group": "Early Access",
-                "pages": [
-                  "walletkit/ios/early-access/chain-abstraction"
-                ]
+                "pages": ["walletkit/ios/early-access/chain-abstraction"]
               },
               "walletkit/ios/best-practices",
               "walletkit/ios/resources"
@@ -930,10 +869,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -971,9 +907,7 @@
               },
               {
                 "group": "Early Access",
-                "pages": [
-                  "walletkit/android/early-access/chain-abstraction"
-                ]
+                "pages": ["walletkit/android/early-access/chain-abstraction"]
               },
               "walletkit/android/best-practices",
               "walletkit/android/resources"
@@ -990,10 +924,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -1026,10 +957,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -1077,18 +1005,13 @@
               "walletkit/react-native/cloud/analytics",
               {
                 "group": "Early Access",
-                "pages": [
-                  "walletkit/react-native/early-access/chain-abstraction"
-                ]
+                "pages": ["walletkit/react-native/early-access/chain-abstraction"]
               }
             ]
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
@@ -1117,10 +1040,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": [
-              "link-spec",
-              "advanced/faq"
-            ]
+            "pages": ["link-spec", "advanced/faq"]
           }
         ]
       },
