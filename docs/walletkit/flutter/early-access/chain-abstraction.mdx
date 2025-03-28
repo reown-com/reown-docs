@@ -193,6 +193,43 @@ Future<String> erc20TokenBalance({
 })
 ```
 
+## Android
+
+In your android (project's) build.gradle file add support for Jitpack:
+
+```
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' } // <- add jipack url
+    }
+}
+```
+
+It shouldn't happen but if you encounter issues with minification, add the below rules to your application:
+
+```
+-keepattributes *Annotation*
+
+-keep class com.sun.jna.** { *; }
+-keepclassmembers class com.sun.jna.** {
+    native <methods>;
+    *;
+}
+
+-keep class uniffi.** { *; }
+
+# Preserve all public and protected fields and methods
+-keepclassmembers class ** {
+    public *;
+    protected *;
+}
+
+-dontwarn uniffi.**
+-dontwarn com.sun.jna.**
+```
+
 ## Testing 
 
 Best way to test Chain Abstraction is to use our Sample wallet.
