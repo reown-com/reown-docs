@@ -1136,6 +1136,14 @@ module.exports = {
         'walletkit/flutter/link-mode',
         'walletkit/flutter/verify',
         'walletkit/flutter/eip5792',
+        // Notifications
+        {
+          type: 'category',
+          label: 'Early Access',
+          items: ['walletkit/flutter/early-access/chain-abstraction']
+        },
+        // Best practices
+        // Recourses
         {
           type: 'category',
           label: 'Cloud',
@@ -1185,6 +1193,11 @@ module.exports = {
             'walletkit/react-native/notifications/push'
           ]
         },
+        {
+          type: 'category',
+          label: 'Early Access',
+          items: ['walletkit/react-native/early-access/chain-abstraction']
+        },
         'walletkit/react-native/best-practices',
         'walletkit/react-native/resources',
         {
@@ -1198,11 +1211,6 @@ module.exports = {
             'walletkit/react-native/cloud/relay',
             'walletkit/react-native/cloud/analytics'
           ]
-        },
-        {
-          type: 'category',
-          label: 'Early Access',
-          items: ['walletkit/react-native/early-access/chain-abstraction']
         }
       ]
     },
