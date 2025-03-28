@@ -54,7 +54,7 @@
           {
             "group": "Introduction",
             "icon": "bolt",
-            "pages": ["overview", "external-link-01"]
+            "pages": ["index", "external-link-01"]
           },
           {
             "group": "SDKs",
