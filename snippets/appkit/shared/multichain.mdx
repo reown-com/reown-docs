@@ -14,19 +14,19 @@ Currently, AppKit supports two non-EVM networks, they are, **Solana** and **Bitc
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+yarn add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana
 ```
 
 ```bash Bun
-bun a @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+bun a @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana
 ```
 
 </CodeGroup>
@@ -60,19 +60,19 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-bitcoin
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+yarn add @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana
 ```
 
 ```bash Bun
-bun a @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+bun a @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+pnpm add @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana
 ```
 
 </CodeGroup>
@@ -83,19 +83,19 @@ pnpm add @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solan
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+yarn add @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana
 ```
 
 ```bash Bun
-bun a @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+bun a @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+pnpm add @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana
 ```
 
 </CodeGroup>
@@ -150,11 +150,6 @@ import {
 } from "@reown/appkit/networks";
 import type { AppKitNetwork } from "@reown/appkit/types";
 
-import {
-  SolflareWalletAdapter,
-  PhantomWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
-
 const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet]
 
 // 0. Get projectId from https://cloud.reown.com
@@ -162,36 +157,33 @@ const projectId = 'YOUR_PROJECT_ID'
 
 // 1. Create the Wagmi adapter
 export const wagmiAdapter = new WagmiAdapter({
-ssr: true,
-projectId,
-networks
+  ssr: true,
+  projectId,
+  networks
 })
 
 // 2. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-})
+const solanaWeb3JsAdapter = new SolanaAdapter()
 
 // 3. Set up the metadata - Optional
 const metadata = {
-name: 'AppKit',
-description: 'AppKit Example',
-url: 'https://example.com', // origin must match your domain & subdomain
-icons: ['https://avatars.githubusercontent.com/u/179229932']
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
 // 4. Create the AppKit instance
 const modal = createAppKit({
-adapters: [wagmiAdapter, solanaWeb3JsAdapter],
-networks,
-metadata,
-projectId,
-features: {
-analytics: true,
-}
+  adapters: [wagmiAdapter, solanaWeb3JsAdapter],
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
 })
-
-````
+```
 </Tab>
 
 <Tab title="Wagmi + Bitcoin">
@@ -237,7 +229,7 @@ const modal = createAppKit({
     analytics: true,
   }
 })
-````
+```
 
 </Tab>
 
@@ -247,7 +239,7 @@ import { createAppKit } from '@reown/appkit'
 import { SolanaAdapter } from '@reown/appkit-adapter-solana'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 
-import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks';
 import { mainnet, arbitrum, sepolia } from "@reown/appkit/networks";
 
 import {
@@ -287,8 +279,7 @@ analytics: true,
 }
 })
 
-````
-
+```
 </Tab>
 
 <Tab title="Ethers5 + Solana">
@@ -331,7 +322,7 @@ const modal = createAppKit({
     analytics: true,
   }
 })
-````
+```
 
 </Tab>
 

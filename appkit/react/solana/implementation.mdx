@@ -4,10 +4,6 @@ On top of your app set up the following configuration, making sure that all func
 import { createAppKit } from "@reown/appkit/react";
 import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
 import { SolanaAdapter } from "@reown/appkit-adapter-solana/react";
-import {
-  PhantomWalletAdapter,
-  SolflareWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
 
 // 1. Get projectId
 const projectId = "YOUR_PROJECT_ID";
@@ -30,9 +26,7 @@ const metadata = {
 };
 
 // 4. Create Wagmi Adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
-});
+const solanaWeb3JsAdapter = new SolanaAdapter();
 
 // 5. Create a AppKit instance
 const modal = createAppKit({

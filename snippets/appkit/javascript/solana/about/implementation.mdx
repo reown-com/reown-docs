@@ -6,15 +6,9 @@ On top of your app set up the following configuration.
 import { createAppKit } from "@reown/appkit";
 import { SolanaAdapter } from "@reown/appkit-adapter-solana";
 import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
-import {
-  PhantomWalletAdapter,
-  SolflareWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
 
 // 0. Set up Solana Adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
-});
+const solanaWeb3JsAdapter = new SolanaAdapter();
 
 // 1. Get projectId from https://cloud.reown.com
 const projectId = "YOUR_PROJECT_ID";
