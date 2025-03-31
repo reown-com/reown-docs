@@ -14,7 +14,7 @@
     }
   },
 
-  "favicon": "images/favicon.ico",
+  "favicon": "/images/favicon.ico",
   "background": {
     "color": {
       "dark": "#202020"
