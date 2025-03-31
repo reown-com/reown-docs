@@ -7,8 +7,14 @@
     "light": "#008847",
     "dark": "#008847"
   },
+  
+  "integrations": {
+    "gtm": {
+      "tagId": "GTM-56G35T8X"
+    }
+  },
 
-  "favicon": "/images/favicon.ico",
+  "favicon": "images/favicon.ico",
   "background": {
     "color": {
       "dark": "#202020"
