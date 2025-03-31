@@ -1,0 +1,80 @@
+export const ChainList = () => {
+  let chains = [];
+  let filteredChains = [];
+
+  if (typeof document !== "undefined") {
+    fetch(
+      "https://explorer-api.walletconnect.com/v3/chains?projectId=8e998cd112127e42dce5e2bf74122539"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        chains = Object.keys(data.chains).map((key) => ({
+          name: data.chains[key].name, 
+          namespace: key, 
+        }));
+        filteredChains = [...chains];
+        renderChains(filteredChains);
+
+        const searchInput = document.querySelector(".search-bar");
+        if (searchInput) {
+          searchInput.addEventListener("input", (event) => {
+            const query = event.target.value.toLowerCase();
+            filteredChains = chains.filter((chain) =>
+              chain.name.toLowerCase().includes(query)
+            );
+            renderChains(filteredChains);
+          });
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
+  const renderChains = (chains) => {
+    const container = document.querySelector(".chain-card-container");
+    if (container) {
+      container.innerHTML = "";
+      chains.forEach((chain) => {
+        const card = document.createElement("button");
+        card.className = `
+          flex items-center justify-center 
+          border border-gray-500 p-2 text-center 
+          w-full dark:bg-gray-600 dark:text-white h-20
+        `;
+        card.innerText = chain.name;
+        card.onclick = () => {
+          navigator.clipboard.writeText(chain.namespace);
+          card.innerText = "Chain ID copied!";
+          setTimeout(() => {
+            card.innerText = chain.name;
+          }, 3000);
+        };
+        container.appendChild(card);
+      });
+    }
+  };
+
+  return (
+    <div className="chain-list">
+      <input
+        type="text"
+        className="search-bar"
+        placeholder="Search for a chain..."
+        style={{
+          width: "100%",
+          padding: "8px",
+          marginBottom: "20px",
+          marginTop: "20px",
+          boxSizing: "border-box",
+        }}
+      />
+      <div
+        className="chain-card-container"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+          gap: "8px",
+        }}
+      ></div>
+    </div>
+  );
+};
