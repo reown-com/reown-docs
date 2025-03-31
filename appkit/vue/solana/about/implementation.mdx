@@ -1,0 +1,43 @@
+
+
+In your `App.vue` file set up the following configuration
+
+```html
+<script setup>
+  
+  import { createAppKit } from '@reown/appkit/vue'
+  import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
+  import { reconnect } from '@wagmi/core'
+
+  // 1. Define constants
+  const projectId = process.env.VUE_APP_PROJECT_ID // get it from cloud.reown.com
+
+  // 2. Create wagmiConfig
+  const metadata = {
+    name: 'Appkit Solana',
+    description: 'Appkit Solana Example',
+    url: 'https://example.com', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+  }
+
+  // 3. Create Wagmi Adapter
+  const solanaWeb3JsAdapter = new SolanaAdapter({
+    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+  })
+
+  reconnect(solanaConfig)
+
+  // 3. Create modal
+  createAppKit({
+    projectId,
+    metadata,
+    networks: [solana, solanaTestnet, solanaDevnet],
+    adapters: [solanaWeb3JsAdapter],
+  })
+</script>
+
+<template>
+  // Rest of your app ...
+</template>
+
+```

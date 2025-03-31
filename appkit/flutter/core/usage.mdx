@@ -1,0 +1,239 @@
+---
+title: Usage
+---
+
+import CloudBanner from "/snippets/cloud-banner.mdx";
+
+## Import the package:
+
+```javascript
+import "package:reown_appkit/reown_appkit.dart";
+```
+
+Create your `ReownAppKitModal()` instance, which is your primary class for opening, closing, disconnecting, etc.
+
+Be sure to update the _project ID_ and _metadata_ with your own.
+
+<CloudBanner />
+
+## Initialization
+
+In order to initialize `ReownAppKitModal()` instance you must provide a _projectId_ and a _metadata_.
+
+```javascript
+// AppKit Modal instance
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect(  // OPTIONAL
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+      linkMode: true|false,
+    ),
+  ),
+);
+
+// Register here the event callbacks on the service you'd like to use. See `Events` section.
+
+await _appKitModal.init();
+```
+
+Alternatively, `ReownAppKitModal()` allows you to create an instance by passing a `ReownAppKit()` object as follows:
+
+```javascript
+// AppKit instance
+final appKit = ReownAppKit.createInstance(
+  projectId: '{YOUR_PROJECT_ID}',
+  metadata: const PairingMetadata(
+    name: 'Example App',
+    description: 'Example app description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect(
+      native: 'exampleapp://',
+      universal: 'https://reown.com/exampleapp',
+      linkMode: true|false,
+    ),
+  ),
+);
+
+// AppKit Modal instance
+final _appKitModal = ReownAppKitModal(
+  context: context,
+  appKit: appKit,
+);
+
+// Register here the event callbacks on the service you'd like to use. See `Events` section.
+
+await _appKitModal.init();
+```
+
+The `metadata` object should contain your dApp's name, description, url and icon. Redirect object is optional but _highly recommended_. See next session why.
+
+## Redirect to your dApp
+
+AppKit's metadata object contains a `redirect` option that should be used by the wallet to redirected back to your dapp after connection.
+
+```javascript
+redirect: Redirect(
+  // your own custom scheme for deep linking
+  native: 'exampleapp://',
+  // your own universal link for deep linking, required if you are going to use Link Mode
+  universal: 'https://reown.com/exampleapp',
+  // enable or disable relay-less communication, see `Link Mode` section
+  // won't be used if you decide to support/include non-EVM blockchains
+  linkMode: true|false,
+),
+```
+
+But in order for the redirect mechanism to work you would also need to add the following in the iOS and Android native sides:
+
+<Tabs>
+<Tab title="iOS">
+
+1. Locate your `Info.plist` file under `your_project/ios/Runner/` folder.
+2. Locate the `<key>CFBundleURLTypes</key>` section.
+3. Add your schema as `<dict>` entry within the `<array>` object as follows.
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleTypeRole</key>
+    <string>Editor</string>
+    <key>CFBundleURLName</key>
+    <string>com.example.yourBundleId</string> <!-- Bundle ID of your app -->
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <!-- your own custom scheme -->
+      <!-- Should be the same you set on Redirect.native on Flutter side -->
+      <!-- Be mind of removing :// for this step -->
+      <string>exampleapp</string>
+    </array>
+  </dict>
+</array>
+```
+
+</Tab>
+<Tab title="Android">
+
+1. Locate your `AndroidManifest.xml` file under `your_project/android/app/src/main/` folder.
+2. Locate the `<Activity .MainActivity` inside `<application />` scope.
+3. Add the following intent
+
+```xml
+<intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <!-- your own custom scheme -->
+    <!-- Should be the same you set on Redirect.native on Flutter side -->
+    <!-- Be mind of removing :// for this step -->
+    <data android:scheme="exampleapp" />
+</intent-filter>
+```
+
+</Tab>
+</Tabs>
+
+## Available Buttons
+
+`AppKitModalConnectButton` to open modal and connect to a wallet or through social options
+
+```javascript
+AppKitModalConnectButton(appKit: _appKitModal)
+```
+
+`AppKitModalNetworkSelectButton` to select an available network
+
+```javascript
+AppKitModalNetworkSelectButton(appKit: _appKitModal)
+```
+
+`AppKitModalAccountButton` to open account screen once connected
+
+```javascript
+AppKitModalAccountButton(appKitModal: _appKitModal)
+```
+
+`AppKitModalAddressButton` shows the address on the current selected network
+
+```javascript
+AppKitModalAddressButton(appKitModal: _appKitModal)
+```
+
+`AppKitModalBalanceButton` shows wallet balance on the current selected network
+
+```javascript
+AppKitModalBalanceButton(appKitModal: _appKitModal)
+```
+
+To connect to a wallet you can either use `AppKitModalConnectButton` or `AppKitModalNetworkSelectButton`.
+
+`AppKitModalNetworkSelectButton` will allow the user to pre-select a Network before connecting while `AppKitModalConnectButton` will directly show available wallets and social options.
+
+Once connected, `AppKitModalConnectButton` will serve as Disconnect button while `AppKitModalAccountButton` will show basic account data such as balance and address and will be used to open Account screen.
+
+Quick example:
+
+```javascript
+Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    AppKitModalNetworkSelectButton(appKit: _appKitModal),
+    AppKitModalConnectButton(appKit: _appKitModal),
+    Visibility(
+      visible: _appKitModal.isConnected,
+      child: AppKitModalAccountButton(appKit: _appKitModal),
+    )
+  ],
+),
+```
+
+`AppKitModalAccountButton` is composed by `AppKitModalBalanceButton` and `AppKitModalAddressButton` and you can use these separately from `AppKitModalAccountButton`
+
+```javascript
+AppKitModalBalanceButton(appKitModal: _appKitModal, onTap: _appKitModal.openModalView);
+
+AppKitModalAddressButton(appKitModal: _appKitModal, onTap: _appKitModal.openModalView);
+```
+
+## Custom Buttons
+
+If you like you can also override AppKit's buttons by using the `custom:` property as follows
+
+```javascript {3-8}
+AppKitModalConnectButton(
+  appKit: _appKitModal,
+  custom: MyCustomButton(
+    onPressed: () {
+      _appKitModal.openModalView();
+    },
+    child: const Text('CONNECT WALLET'),
+  ),
+),
+```
+
+`openModalView()` method can accept a "startWidget" argument that you can leverage to open specifics screens of the modal:
+
+```javascript
+// With no options will open default screen depending on the connection status
+_appKitModal.openModalView();
+
+// Will open Network Selection screen independently of the connection status
+// This option is not needed if you use AppKitModalNetworkSelectButton()
+_appKitModal.openModalView(ReownAppKitModalSelectNetworkPage());
+
+// Will open QR Code screen for connection.
+// Will work only if not yet connected.
+_appKitModal.openModalView(ReownAppKitModalQRCodePage());
+
+// Will open All Wallets screen for connection
+// Will work only if not yet connected.
+_appKitModal.openModalView(ReownAppKitModalAllWalletsPage());
+```

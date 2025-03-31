@@ -1,0 +1,360 @@
+---
+title: Multichain
+---
+
+AppKit is now multichain. The architecture is designed to support both EVM and non-EVM blockchains. This will allow developers and projects to choose and configure multiple blockchain networks within their instance of AppKit, extending beyond just Ethereum-based (EVM) networks.
+
+Currently, AppKit supports two non-EVM networks, they are, **Solana** and **Bitcoin**. Soon, AppKit will support Polkadot and Cosmos, allowing projects to tap into users from these different blockchain ecosystems. This will enable developers and projects to reach a broader audience and interact with multiple blockchain networks, all through a single wallet provider.
+
+## Installation
+
+<Tabs>
+<Tab title="Wagmi + Solana">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana
+```
+
+```bash Bun
+bun a @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-solana
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Wagmi + Bitcoin">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-bitcoin
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-bitcoin
+```
+
+```bash Bun
+bun a @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-bitcoin
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi @reown/appkit-adapter-bitcoin
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Ethers5 + Solana">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana
+```
+
+```bash Bun
+bun a @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ethers5 @reown/appkit-adapter-solana
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Ethers + Solana">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana
+```
+
+```bash Bun
+bun a @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ethers @reown/appkit-adapter-solana
+```
+
+</CodeGroup>
+
+</Tab>
+
+<Tab title="Basic">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit
+```
+
+```bash Yarn
+yarn add @reown/appkit
+```
+
+```bash Bun
+bun a @reown/appkit
+```
+
+```bash pnpm
+pnpm add @reown/appkit
+```
+
+</CodeGroup>
+
+</Tab>
+</Tabs>
+
+## Integration
+
+The AppKit instance allows you to support multiple chains by importing the respective chains, creating the respective network adapters and passing these within the `createAppKit()` function.
+
+Depending on the network adapter of your preference (`Wagmi`, `Ethers`, `Ethers5`), the integration may vary. Let's look at what the integration will look like.
+
+<Tabs>
+<Tab title="Wagmi + Solana">
+```ts
+import { createAppKit } from '@reown/appkit'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+import {
+  mainnet,
+  arbitrum,
+  sepolia,
+  solana,
+  solanaTestnet,
+  solanaDevnet,
+} from "@reown/appkit/networks";
+import type { AppKitNetwork } from "@reown/appkit/types";
+
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet]
+
+// 0. Get projectId from https://cloud.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 1. Create the Wagmi adapter
+export const wagmiAdapter = new WagmiAdapter({
+  ssr: true,
+  projectId,
+  networks
+})
+
+// 2. Create Solana adapter
+const solanaWeb3JsAdapter = new SolanaAdapter()
+
+// 3. Set up the metadata - Optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+// 4. Create the AppKit instance
+const modal = createAppKit({
+  adapters: [wagmiAdapter, solanaWeb3JsAdapter],
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
+})
+```
+</Tab>
+
+<Tab title="Wagmi + Bitcoin">
+```ts
+import { createAppKit } from '@reown/appkit'
+import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+import { mainnet, arbitrum, sepolia, bitcoin } from '@reown/appkit/networks'
+
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, bitcoin]
+
+// 0. Get projectId from https://cloud.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 1. Create the Wagmi adapter
+export const wagmiAdapter = new WagmiAdapter({
+  ssr: true,
+  projectId,
+  networks
+})
+
+// 2. Set up Bitcoin Adapter
+const bitcoinAdapter = new BitcoinAdapter({
+  projectId
+})
+
+// 3. Set up the metadata - Optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+// 4. Create the AppKit instance
+const modal = createAppKit({
+  adapters: [wagmiAdapter, bitcoinAdapter],
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
+})
+```
+
+</Tab>
+
+<Tab title="Ethers + Solana">
+```ts
+import { createAppKit } from '@reown/appkit'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
+import { EthersAdapter } from '@reown/appkit-adapter-ethers'
+
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks';
+import { mainnet, arbitrum, sepolia } from "@reown/appkit/networks";
+
+import {
+  SolflareWalletAdapter,
+  PhantomWalletAdapter,
+} from "@solana/wallet-adapter-wallets";
+
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet]
+
+// 0. Create the Ethers adapter
+export const ethersAdapter = new EthersAdapter()
+
+// 1. Create Solana adapter
+const solanaWeb3JsAdapter = new SolanaAdapter({
+wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
+
+// 2. Get projectId from https://cloud.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 3. Set up the metadata - Optional
+const metadata = {
+name: 'AppKit',
+description: 'AppKit Example',
+url: 'https://example.com', // origin must match your domain & subdomain
+icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+// 4. Create the AppKit instance
+const modal = createAppKit({
+adapters: [ethersAdapter, solanaWeb3JsAdapter],
+networks,
+metadata,
+projectId,
+features: {
+analytics: true,
+}
+})
+
+```
+</Tab>
+
+<Tab title="Ethers5 + Solana">
+```ts
+import { createAppKit } from '@reown/appkit'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
+import { EthersAdapter } from '@reown/appkit-adapter-ethers'
+
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
+import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
+
+import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+// 0. Create the Ethers adapter
+export const ethersAdapter = new EthersAdapter()
+
+// 1. Create Solana adapter
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
+})
+
+// 2. Get projectId from https://cloud.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 3. Set up the metadata - Optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+// 4. Create the AppKit instance
+const modal = createAppKit({
+  adapters: [ethersAdapter, solanaWeb3JsAdapter],
+  networks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+  }
+})
+```
+
+</Tab>
+
+<Tab title="Basic">
+
+```ts
+import { createAppKit } from "@reown/appkit";
+import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
+import { mainnet, arbitrum, sepolia } from "@reown/appkit/networks";
+
+// 1. Get projectId from https://cloud.reown.com
+const projectId = "YOUR_PROJECT_ID";
+
+// 2. Set up the metadata - Optional
+const metadata = {
+  name: "AppKit",
+  description: "AppKit Example",
+  url: "https://example.com", // origin must match your domain & subdomain
+  icons: ["https://avatars.githubusercontent.com/u/179229932"],
+};
+
+// 3. Create the AppKit instance
+const modal = createAppKit({
+  networks: [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet],
+  metadata: metadata,
+  projectId,
+  features: {
+    analytics: true,
+  },
+});
+```
+
+</Tab>
+
+</Tabs>

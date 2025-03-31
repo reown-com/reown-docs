@@ -1,0 +1,177 @@
+---
+title: "How to Interact with EVM Smart Contracts using AppKit and React"
+sidebarTitle: "EVM Smart Contract Interaction"
+---
+
+In this recipe, you will learn how to:
+
+- Read data from a smart contract
+- Write data to a smart contract
+
+This guide takes approximately 20 minutes to complete.
+
+Let’s dive in!
+
+## Prerequisites
+
+- A fundamental understanding of JavaScript and React.
+- A minimal installation of AppKit in React.
+- Obtain a new project Id on Reown Cloud at https://cloud.reown.com
+
+## Final project
+<Card title="Appkit Wagmi Example with smart contract interactions" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi">
+Download the full project to try it directly on your computer.
+</Card>
+
+<Card title="Appkit Ethers Example with smart contract interactions" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-ethers">
+Download the full project to try it directly on your computer.
+</Card>
+
+## Try the demo in Sepolia Testnet
+
+- [Ethers Example](https://appkit-web-examples-react-ethers.reown.com/)
+- [Wagmi Example](https://appkit-web-examples-react-wagmi.reown.com/)
+
+## Requirements
+
+In order to interact with a smart contract you will need to have one deployed in a EVM-compatible blockchain. There are several tools to help you deploy a smart contract:
+
+- [Remix IDE](https://remix.ethereum.org/)
+- [Foundry](https://getfoundry.sh/)
+- [Truffle](https://www.trufflesuite.com/)
+- [Hardhat](https://hardhat.org/)
+
+We have already deployed a simple smart contract (0xEe6D291CC60d7CeD6627fA4cd8506912245c8cA4) in Sepolia Testnet for you to use. Once you compile the smart contract, you get the ABI.
+The ABI is a set of rules that define how the contract's functions can be called and how data is sent and received.
+
+To interact with the smart contract, you need to have some tokens to pay for gas fees when writing to the contract. You can get them from this [faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia), but you can also look for other options on the web.
+It's also good to know that reading from a smart contract is free.
+
+For both SDKs, you need to declare the contract address and ABI.
+
+```jsx
+const storageSC = "0xEe6D291CC60d7CeD6627fA4cd8506912245c8cA4";
+
+const storageABI = [
+  {
+    inputs: [],
+    name: "retrieve",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "num",
+        type: "uint256",
+      },
+    ],
+    name: "store",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+```
+
+### Start building with Wagmi
+
+1. Start by importing the hooks to read and write.
+
+```jsx
+import { useReadContract, useWriteContract } from "wagmi";
+```
+
+2. Call the hooks.
+
+```jsx
+const { writeContract, isSuccess } = useWriteContract();
+const readContract = useReadContract({
+  address: storageSC,
+  abi: storageABI,
+  functionName: "retrieve",
+  query: {
+    enabled: false, // disable the query in onload
+  },
+});
+```
+
+3. Generate the actions:
+
+```jsx
+// Call the function to read the smart contract and print on console
+const handleReadSmartContract = async () => {
+  const { data } = await readContract.refetch();
+  console.log("data: ", data);
+};
+
+// Write to the smart contract and check if the transaction is successful with useEffect
+const handleWriteSmartContract = () => {
+  writeContract({
+    address: storageSC,
+    abi: storageABI,
+    functionName: "store",
+    args: [123n],
+  });
+};
+
+// useEffect to print the success message when the contract is written
+useEffect(() => {
+  if (isSuccess) {
+    console.log("contract write success");
+  }
+}, [isSuccess]);
+```
+
+### Start building with Ethers
+
+1. Start by importing the libraries needed to interact:
+
+```jsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import { Contract, BrowserProvider } from "ethers";
+import type { Provider } from "@reown/appkit/react";
+```
+
+2. Call the AppKit Provider hook:
+
+```jsx
+const { walletProvider } = useAppKitProvider < Provider > "eip155";
+```
+
+3. Generate the actions calling the functions:
+
+```jsx
+// get the data from the smart contract and print on console
+const handleReadSmartContract = async () => {
+  const ethersProvider = new BrowserProvider(walletProvider);
+  const signer = await ethersProvider.getSigner();
+  const contract = new Contract(storageSC, storageABI, signer);
+  const data = await contract.retrieve();
+  console.log("data: ", data);
+};
+
+// write to the smart contract and print on console
+const handleWriteSmartContract = async () => {
+  const ethersProvider = new BrowserProvider(walletProvider);
+  const signer = await ethersProvider.getSigner();
+  const contract = new Contract(storageSC, storageABI, signer);
+  const data = await contract.store(1n);
+  console.log("data: ", data);
+};
+```
+
+## Conclusion
+
+By following this guide, you've learned how to integrate Reown AppKit with Wagmi or Ethers to interact with a smart contract.
+With very few lines of code you can read and write to a smart contract.
+
+Keep exploring AppKit to enhance your dApp's functionality and user experience!

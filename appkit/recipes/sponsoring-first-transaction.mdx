@@ -1,0 +1,277 @@
+---
+title: Gas Sponsorship with Reown
+sidebarTitle: "Gas Sponsorship using AppKit"
+---
+
+<Warning>
+  Gas Sponsorship is currently an early access feature. 
+  available by invite. If you're interested in access, please [contact us](https://reown.com/contact).
+</Warning>
+
+In this recipe, you will learn how to:
+
+- Create a Paymaster Policy on Cloud
+- Use the policy in your dApp to sponsor transactions
+- Sponsor using Appkit's embedded account
+
+This guide takes approximately 20 minutes to complete and is split into 2 parts.
+First, we will be using pre-made policies that interact with smart accounts
+deployed in service of [Appkit lab](https://appkit-lab.reown.com/library/wagmi/) and validated
+there. The second half involves integrating it into your own dApp.
+
+Let's dive in!
+
+## Prerequisites
+- A fundamental understanding of JavaScript and React.
+- Obtain a new project Id on Reown Cloud at https://cloud.reown.com
+- Since Gas Sponsorship is an early access feature, your projectId needs to be access listed. Please [contact us](https://reown.com/contact).
+                            
+## Part 1: Steps to Set up a policy
+
+1. Open the Cloud dashboard and click on "Paymaster" in the sidebar.
+2. Click "Add Policy". When prompted, choose "Testnet" chains for testing.
+3. Enter your Policy name and click next.
+4. On the chain selection screen, simply click next since all testnet chains are enabled.
+5. You'll then see the Control Sponsorships screen.
+6. For most cases, the no-code builder works well, though there is a [detailed guide for custom policies](../../cloud/paymaster) if needed.
+
+<Frame>
+![](/images/paymasters/no-code-builder.png)
+</Frame>
+
+**Required Items:**
+1. Input the contract address
+2. The ABI of the contract
+3. Select the method you've chosen to sponsor
+4. *IMPORTANT*: If you would like to sponsor the deployment of smart accounts
+on your app, tick the `Sponsor Smart Account Deployment` checkbox.
+5. Click "Create".
+
+You now have a functional policy!
+
+## Retrieving the Paymaster URL 
+Each Paymaster is linked to a specific chain. Click the "RPC URLs" button to view all supported chain URLs.
+
+<Frame>
+![](/images/paymasters/rpc-selector.png)
+</Frame>
+
+Select `Sepolia` and copy the URL provided to get your paymaster URL.
+
+## Testing the Paymaster Out
+
+Before integrating this functionality into your dApp, you can test that you set
+up the policy by visiting [Appkit Lab](https://appkit-lab.reown.com/library/wagmi/).
+
+Login with Appkit Email or Social Login (Google, Apple, etc)
+
+Scroll down to "Send Calls with custom abi (Paymaster Service)" and 
+1. Input your smart contract address
+2. Paste the ABI of the contract
+3. Select the method you've chosen to sponsor
+4. Add any method arguments in the format of an array
+5. Add any value if necessary
+6. Paste your Paymaster URL 
+7. Hit send calls. 
+
+You can check it in two simple ways:
+
+- In your browser's network tab, filter for sendUserOperation. If the payload includes paymasterAndData, it's working.
+- Alternatively, copy the send call result, paste it into "Get Call Status", then use the transaction receipt on Sepolia Etherscan. It will show the paymaster covering the gas.
+
+## Part 2: Integrating with your dApp
+
+After setting up your policy, you can seamlessly add blockchain call functionality to your dApp using Wagmi's `useSendCalls` hook.
+This hook simplifies interacting with the blockchain, allowing you to trigger transactions directly from your React component.
+                            
+### Define the ABI 
+```ts
+const donutContractAbi = [
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256'
+      }
+    ],
+    name: 'purchase',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function'
+  },
+]
+
+const donutContactAddress = '0x2E65BAfA07238666c3b239E94F32DaD3cDD6498D' as const
+```
+
+### Calculate CallData and Prepare the transaction
+```ts
+const purchaseDonutCallData = encodeFunctionData({
+  abi: donutContractAbi,
+  functionName: 'purchase',
+  args: [1]
+})
+
+const TEST_TX = {
+  to: donutContractaddress,
+  value: parseEther('0.0001'),
+  data: purchaseDonutCallData
+}
+```
+
+
+### Import `sendCalls` from Wagmi
+```ts
+import { useSendCalls } from 'wagmi/experimental'
+```
+
+```ts
+// Inside the Component
+
+const { sendCalls } = useSendCalls({
+  mutation: {
+    onSuccess: hash => {
+      setLoading(false)
+      toast({
+        title: 'SendCalls Success',
+        description: hash,
+        type: 'success'
+      })
+    },
+    onError: () => {
+      setLoading(false)
+      toast({
+        title: 'SendCalls Error',
+        description: 'Failed to send calls',
+        type: 'error'
+      })
+    }
+  }
+})
+```
+
+
+### Add Event Handler to a button
+```ts
+const onSendCalls = useCallback(() => {
+  setLoading(true)
+  if (!paymasterServiceUrl) {
+    throw Error('paymasterServiceUrl not set')
+  }
+  sendCalls({
+    calls: [TEST_TX],
+    capabilities: {
+      paymasterService: {
+        url: paymasterServiceUrl,
+        context
+      }
+    } 
+  })
+}, [sendCalls, paymasterServiceUrl])
+```
+
+```ts 
+return (
+  <Button
+    onClick={onSendCalls}
+    disabled={!sendCalls}
+  >
+    SendCalls w/ Paymaster Service
+  </Button>
+)
+```
+
+For more information on sponsoring calls, read more in [our docs](../features/sponsored-transactions).
+
+
+## Troubleshooting
+
+If you're running into issues getting a transaction to be successfully
+sponsored, it's best to isolate issues. So to get started, first: 
+
+### Setup Environment
+
+1. Use AppKit's Embedded Smart Wallet: Login using social login (Ex. Gmail) or
+your email
+
+2. Ensure the code performs send calls as simply as possible., eg: hardcode
+the `capabilities` object and remove any extra conditional logic.
+
+3. Keep the network tab on your browser console open
+
+### Ensure a call to the paymaster is being made
+
+Since the embedded wallet lives on your browser, you can observe the network
+calls it makes.
+
+If, after performing the `sendCalls` and approving it in the AppKit Embedded
+Wallet, there is no call to the paymaster URL provided, it likely means
+that the `capabilities` were not filled in properly.
+
+Ensure the capabilities object you're sending looks like this:
+
+```ts
+paymasterService: {
+  url: 'https://paymaster-api.reown.com/<CHAIN_ID>/rpc?projectId=<YOUR_PROJECT_ID>',
+}
+```
+
+### Paymaster was called but returned an error
+
+#### Simulation Errors
+
+The most common errors encountered with integrating Paymasters typically come in 
+the form of simulation errors. 
+
+Thankfully, the paymaster provides a full report of user ops that run into
+errors. For example:
+
+```json
+{
+  "error": {
+    "message": "The UserOp does not satisfy requirements of policy",
+    "details": {
+      "message": "Could not successfully simulate call.",
+      "cause": "Filtered simulation calls do not include a call to a smart contract.",
+      "debugInfo": {
+        "simulatedTransaction": { /* full simulation information */ },
+        "errors": [
+          {
+            "error": "executionreverted"
+          },
+          {
+            "error": "out of gas"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+#### No calls were made to the specified contract.
+
+1. Ensure that the chain ID provided in the paymaster URL matches the network
+you are on
+
+2. Ensure you are targeting the contract and method specified in your policy
+
+### Not sure if everything's set up correctly?
+
+1. Confirm a call to the Paymaster is being made via the network tab
+2. Ensure the response from the call is not `0x` or an `error`. 
+3. Verify the call to the `bundler` (also viewed in the network tab) that is
+performing `sendUserOperation` has filled the `paymasterData` field
+4. Grab the user op hash (result from `sendUserOperation`) and paste it into a
+block explorer that supports searching by User Op Hashes like BlockScout 
+5. Ensure the paymaster sponsor field is filled
+
+
+## Links
+- [Reown Cloud](https://cloud.reown.com)
+- [Appkit lab](https://appkit-lab.reown.com/library/wagmi/)
+
+
+
+

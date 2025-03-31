@@ -1,0 +1,217 @@
+---
+title: Migration from Solana Anza Adapter to AppKit
+sidebarTitle: "From Anza Adapter"
+---
+
+
+Follow the steps below to migrate from the Starter Pack of Anza Adapter to AppKit. Based on the default implementation. Our starting point is the [Anza Adapter Starter Pack](https://github.com/anza-xyz/wallet-adapter/blob/master/packages/starter/react-ui-starter/) in Github.
+
+## Step 1. Integrate Solana Appkit
+
+### a. Create a project in Reown Cloud
+
+- Create a new project on [Reown Cloud](https://cloud.reown.com) and obtain a new project ID.
+
+### b. Uninstall old packages and install the AppKit packages:
+
+<CodeGroup>
+```bash npm
+npm uninstall @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wallet-adapter-react-ui
+```
+```bash Yarn
+yarn remove @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wallet-adapter-react-ui
+```
+```bash Bun
+npm uninstall @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wallet-adapter-react-ui
+```
+```bash pnpm
+pnpm remove @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wallet-adapter-react-ui
+```
+</CodeGroup>
+<CodeGroup>
+```bash npm
+npm install @web3modal/solana
+```
+```bash Yarn
+yarn add @web3modal/solana
+```
+```bash Bun
+bun add @web3modal/solana
+```
+```bash pnpm
+pnpm add @web3modal/solana
+```
+</CodeGroup>
+### c. Add imports to the top of the `App.tsx`
+
+Remove old imports:
+
+```tsx
+- import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+- import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+- import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+```
+
+Add the new imports:
+
+```tsx {1-2}
++ import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
++ import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+```
+
+Update the code:
+
+```tsx
+// 0. Setup chains
+const chains = [solana, solanaTestnet, solanaDevnet]
+
+//  Get projectId at https://cloud.reown.com
+const projectId = import.meta.env.VITE_PROJECT_ID
+if (!projectId) throw new Error('Project ID is undefined')
+
+// 2. Create solanaConfig
+const metadata = {
+  name: 'Appkit Solana Example',
+  description: 'Appkit Solana Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+const solanaConfig = defaultSolanaConfig({
+  metadata,
+  chains,
+  projectId,
+  auth: {
+    email: true,
+    socials: ['google', 'x', 'farcaster', 'github']
+  }
+})
+
+//  Create modal
+createWeb3Modal({
+  metadata,
+  solanaConfig,
+  chains,
+  projectId
+})
+```
+
+<Note>
+Email an social logins are enabled by default.
+</Note>
+
+### d. Update the `App.tsx` component
+
+Use the AppKit Button. It can be configure following these [guidelines](https://docs.walletconnect.com/appkit/react-native/core/components#w3mbutton-).
+
+<Note>
+AppKit's web components are global HTML elements that don't require importing.
+</Note>
+
+```tsx {5}
+const Content: FC = () => {
+
+-   return <WalletMultiButton />;
+
++   return <appkit-button />
+
+};
+
+```
+
+### e. Create the `.env` file with the projectId
+
+```
+VITE_PROJECT_ID=<Add_your_project_id>
+```
+
+## Step 2. Interact with the Solana network
+
+After integrating AppKit, you can interact with the Solana network using the `@solana/web3.js` library.
+You can check our [example](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal/react-solana) on how to fully interact or read our [documentation](https://docs.walletconnect.com/appkit/react/core/installation#smart-contract-interaction) for more information.
+
+### a. Add all the imports you need to interact with the Solana network:
+
+```tsx
+import { useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
+import { PublicKey, Transaction, SystemProgram, Connection } from '@solana/web3.js'
+```
+
+### b. call the hooks `useWeb3ModalAccount` and `useWeb3ModalProvider`:
+
+```tsx
+const { address } = useWeb3ModalAccount()
+const { walletProvider, connection } = useWeb3ModalProvider()
+```
+
+### c. Create a function to generate a transaction:
+
+```tsx
+const handleSendTransaction = async () => {
+  if (!walletProvider || !address || !connection) {
+    // walletProvider, connection or address are undefined
+    return
+  }
+
+  // Recipient address
+  const recipientAddress = new PublicKey('DG1Bq6muEMqaW6MHzWZFfQ8MmHiwvEuQcjVefVmPoV3j')
+
+  // Create a new transaction
+  const transaction = new Transaction().add(
+    SystemProgram.transfer({
+      fromPubkey: walletProvider.publicKey,
+      toPubkey: recipientAddress,
+      lamports: 10000000 //0.01 SOL
+    })
+  )
+  transaction.feePayer = walletProvider.publicKey
+
+  const { blockhash } = await connection.getLatestBlockhash()
+  transaction.recentBlockhash = blockhash
+  const tx = await walletProvider.sendTransaction(transaction, connection as Connection)
+}
+```
+
+### d. Call the function:
+
+```tsx
+<button onClick={handleSendTransaction}>Send Transaction</button>
+```
+
+### e. Install and Run the Solana AppKit Project.
+
+Install dependencies:
+<CodeGroup>
+```bash npm
+npm install
+```
+```bash Yarn
+yarn install
+```
+```bash Bun
+npm install
+```
+```bash pnpm
+pnpm install
+```
+</CodeGroup>
+
+Start the project:
+<CodeGroup>
+```bash npm
+npm run dev
+```
+```bash Yarn
+yarn dev
+```
+```bash Bun
+npm run dev
+```
+```bash pnpm
+pnpm run dev
+```
+</CodeGroup>
+# Final notes
+
+- Check our [Solana AppKit React Docs](/appkit/react/core/installation?platform=solana) for more information on how to customize your project.
+- Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.

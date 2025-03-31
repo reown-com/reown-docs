@@ -1,0 +1,40 @@
+The theme for the AppKit integration in your dApp can be fully customized. Below are some examples:
+
+- [**Wormfare**](https://dashboard.wormfare.com/purchase)
+
+## ThemeMode
+
+By default `themeMode` option will be set to user system settings 'light' or 'dark'. But you can override it like this:
+
+```ts
+createAppKit({
+  //...
+  themeMode: "light",
+});
+```
+
+## themeVariables
+
+By default `themeVariables` are undefined. You can set them like this:
+
+```ts
+createAppKit({
+  //...
+  themeVariables: {
+    "--w3m-color-mix": "#00BB7F",
+    "--w3m-color-mix-strength": 40,
+  },
+});
+```
+
+The following list shows the theme variables you can override:
+
+| Variable                     | Description                                                  | Type     |
+| ---------------------------- | ------------------------------------------------------------ | -------- |
+| `--w3m-font-family`          | Base font family                                             | `string` |
+| `--w3m-accent`               | Color used for buttons, icons, labels, etc.                  | `string` |
+| `--w3m-color-mix`            | The color that blends in with the default colors             | `string` |
+| `--w3m-color-mix-strength`   | The percentage on how much "--w3m-color-mix" should blend in | `number` |
+| `--w3m-font-size-master`     | The base pixel size for fonts.                               | `string` |
+| `--w3m-border-radius-master` | The base border radius in pixels.                            | `string` |
+| `--w3m-z-index`              | The z-index of the modal.                                    | `number` |
