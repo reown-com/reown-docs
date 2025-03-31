@@ -1,0 +1,66 @@
+---
+title: Swaps
+---
+
+Enable users to easily switch between crypto assets without leaving your React Native app. With Swaps, users can easily and securely swap tokens right within your app via AppKit. Set up in minutes with just one line of code.
+
+## Configuration
+
+The Swaps feature is enabled by default in AppKit. Here's how to configure it in your app:
+
+```typescript
+import { createAppKit } from '@reown/appkit...';
+
+createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  // ... other config options
+  features: {
+    swaps: true, // Optional - true by default
+  }
+});
+```
+
+If you want to disable the Swaps feature, you can set `swaps: false` in the features configuration.
+
+## Usage
+
+### Opening the Swaps View
+
+You can programmatically open the Swaps view using the `useAppKit` hook:
+
+```typescript
+import { useAppKit } from '@reown/appkit-...';
+
+function SwapButton() {
+  const { open } = useAppKit();
+
+  const handleSwapPress = () => {
+    open({ view: 'Swap' });
+  };
+
+  return (
+    <Button 
+      title="Swap Tokens" 
+      onPress={handleSwapPress} 
+    />
+  );
+}
+```
+
+### User Flow
+
+1. When users tap the "Swap Tokens" button or select it from the account view, they'll be presented with the Swaps interface.
+
+2. In the Swaps interface, users can:
+   - Select the token they want to swap from
+   - Select the token they want to swap to
+   - Enter the amount they want to swap
+   - Review the transaction details including:
+     - Price impact
+     - Network cost
+     - Slippage tolerance
+     - Provider fee
+
+3. After reviewing the transaction details, users can confirm the swap.
+
+4. Once confirmed, the transaction will be processed and the tokens will be swapped in their wallet.
