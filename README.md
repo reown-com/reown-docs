@@ -42,17 +42,12 @@ To run the documentation locally, you'll need to have Node.js installed on your 
    cd reown-docs
    ```
 
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-4. Start the development server:
+3. Start the development server:
    ```bash
    mintlify dev
    ```
 
-5. Open your browser and navigate to `http://localhost:3000` to view the documentation
+4. Open your browser and navigate to `http://localhost:3000` to view the documentation
 
 The development server will automatically reload when you make changes to the documentation files.
 
