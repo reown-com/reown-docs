@@ -1,0 +1,240 @@
+---
+title: Chain Abstraction
+---
+
+Chain Abstraction in WalletKit enables users with stablecoins on any network to spend them on-the-fly on a different network. Our Chain Abstraction solution provides a toolkit for wallet developers to integrate this complex functionality using WalletKit.
+
+For example, when an app requests a 100 USDC payment on Base network but the user only has USDC on Arbitrum, WalletKit offers methods to detect this mismatch, generate necessary transactions, track the cross-chain transfer, and complete the original transaction after bridging finishes.
+
+## How It Works
+
+<Info>
+Apps need to pass `gas` as null, while sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../../appkit/next/early-access/chain-abstraction) for more details.
+</Info>
+
+When sending a transaction, you need to:
+1. Check if the required chain has enough funds to complete the transaction
+2. If not, use the `prepare` method to generate necessary bridging transactions
+3. Sign routing and initial transaction hashes, prepared by the prepare method
+4. Use `execute` method to broadcast routing and initial transactions and wait for it to be completed
+
+The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
+
+<Frame caption="Chain Abstraction Flow">
+    <img src="/images/assets/chain-abstraction-sequence.png" />
+</Frame>
+
+## Methods
+
+The following methods from WalletKit are used in implementing chain abstraction.
+
+<Info>
+Chain abstraction is currently in an early access phase and requires the `@ChainAbstractionExperimentalApi` annotation.
+</Info>
+
+### Prepare 
+
+This method is used to check if chain abstraction is needed. If it is, it will return a `PrepareSuccess.Available` object with the necessary transactions and funding information. 
+If it is not, it will return a `PrepareSuccess.NotRequired` object with the original transaction. 
+
+```kotlin 
+@ChainAbstractionExperimentalApi
+fun prepare(
+  initialTransaction: Wallet.Model.InitialTransaction,
+  onSuccess: (Wallet.Model.PrepareSuccess) -> Unit,
+  onError: (Wallet.Model.PrepareError) -> Unit
+)
+```
+
+### Execute
+
+This method is used to execute the chain abstraction operation. It broadcasts the bridging and initial transactions and waits for them to be completed.
+The method returns a `ExecuteSuccess` object with the transaction hash and receipt.
+
+```kotlin
+@ChainAbstractionExperimentalApi
+fun execute(
+  prepareAvailable: Wallet.Model.PrepareSuccess.Available,
+  prepareSignedTxs: List<String>,
+  initSignedTx: String,
+  onSuccess: (Wallet.Model.ExecuteSuccess) -> Unit,
+  onError: (Wallet.Model.Error) -> Unit
+)
+``` 
+
+## Usage
+
+When sending a transaction, first check if chain abstraction is needed using the `prepare` method. If it is needed, you must sign all the fulfillment transactions and use the `execute` method. 
+
+If the operation is successful, use `execute` method and await the transaction hash and receipt. 
+If the operation is unsuccessful, send the JsonRpcError to the dapp and display the error to the user. 
+
+```kotlin
+    val initialTransaction = Wallet.Model.Transaction(...)
+    WalletKit.ChainAbstraction.prepare(
+      initialTransaction,
+      onSuccess = { prepareSuccess ->
+        when (prepareSuccess) {
+          is Wallet.Model.PrepareSuccess.Available -> {
+            //Sign all the fulfilment transactions and init transaction
+            //Use execute method
+            
+            //Call the execute
+            WalletKit.ChainAbstraction.execute(prepareSuccess, prepareSignedTxs, initSignedTx
+                onSuccess = {
+                    //The execution of the Chain Abstraction is successfull
+                    //Send the response to the Dapp
+                },
+                onError = {
+                    //Execute error - wallet should send the JsonRpcError to a dapp for given request and display error to the user
+                }
+            )
+          }
+
+          is Wallet.Model.PrepareSuccess.NotRequired -> {
+              //Chain abstraction is not required, handle transaction as usual
+          }
+        }
+      },
+      onError = { prepareError ->
+            // One of the possible errors: NoRoutesAvailable, InsufficientFunds, InsufficientGasFunds - wallet should send the JsonRpcError to a dapp for given request and display error to the user
+      }
+   )
+```
+
+For example, check out implementation of chain abstraction in [sample wallet](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/master/sample/wallet) with Kotlin. 
+
+## Testing 
+
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
+You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076a3bc9669d3bee) for testing. 
+
+<video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
+  <source src="/assets/chain-abstraction-demo.mp4" type="video/mp4" />
+</video>
+
+## Types
+
+Following are the types that are used in the chain abstraction methods.
+
+```kotlin
+ data class Transaction(
+    var from: String,
+    var to: String,
+    var value: String,
+    var gasLimit: String,
+    var input: String,
+    var nonce: String,
+    var chainId: String
+)
+
+data class InitialTransaction(
+    var from: String,
+    var to: String,
+    var value: String,
+    var input: String,
+    var chainId: String
+)
+
+data class FeeEstimatedTransaction(
+    var from: String,
+    var to: String,
+    var value: String,
+    var gasLimit: String,
+    var input: String,
+    var nonce: String,
+    var maxFeePerGas: String,
+    var maxPriorityFeePerGas: String,
+    var chainId: String
+)
+
+sealed class PrepareSuccess {
+  data class Available(
+    val orchestratorId: String,
+    val checkIn: Long,
+    val transactions: List<Transaction>,
+    val initialTransaction: Transaction,
+    val initialTransactionMetadata: InitialTransactionMetadata,
+    val funding: List<FundingMetadata>,
+    val transactionsDetails: TransactionsDetails
+  ) : PrepareSuccess()
+
+  data class NotRequired(val initialTransaction: Transaction) : PrepareSuccess()
+}
+
+data class InitialTransactionMetadata(
+  var symbol: String,
+  var amount: String,
+  var decimals: Int,
+  var tokenContract: String,
+  var transferTo: String
+)
+
+data class FundingMetadata(
+  var chainId: String,
+  var tokenContract: String,
+  var symbol: String,
+  var amount: String,
+  var bridgingFee: String,
+  var decimals: Int
+)
+
+sealed class PrepareError : Model() {
+  data object NoRoutesAvailable : PrepareError()
+  data object InsufficientFunds : PrepareError()
+  data object InsufficientGasFunds : PrepareError()
+  data class Unknown(val message: String) : PrepareError()
+}
+
+data class TransactionsDetails(
+  var details: List<TransactionDetails>,
+  var initialDetails: TransactionDetails,
+  var bridgeFees: List<TransactionFee>,
+  var localBridgeTotal: Amount,
+  var localFulfilmentTotal: Amount,
+  var localTotal: Amount
+)
+
+data class TransactionDetails(
+  var transaction: FeeEstimatedTransaction,
+  var transactionFee: TransactionFee
+)
+
+data class TransactionFee(
+  var fee: Amount,
+  var localFee: Amount
+)
+
+data class Amount(
+  var symbol: String,
+  var amount: String,
+  var unit: String,
+  var formatted: String,
+  var formattedAlt: String
+)
+```
+
+## ProGuard rules
+
+If you encounter issues with minification, add the below rules to your application:
+
+```
+-keepattributes *Annotation*
+
+-keep class com.sun.jna.** { *; }
+-keepclassmembers class com.sun.jna.** {
+    native <methods>;
+    *;
+}
+
+-keep class uniffi.** { *; }
+
+# Preserve all public and protected fields and methods
+-keepclassmembers class ** {
+    public *;
+    protected *;
+}
+
+-dontwarn uniffi.**
+-dontwarn com.sun.jna.**
+```

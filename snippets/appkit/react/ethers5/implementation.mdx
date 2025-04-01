@@ -1,0 +1,37 @@
+On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
+
+```tsx
+import { createAppKit } from "@reown/appkit/react";
+import { Ethers5Adapter } from "@reown/appkit-adapter-ethers5";
+import { mainnet, arbitrum } from "@reown/appkit/networks";
+
+// 1. Get projectId
+const projectId = "YOUR_PROJECT_ID";
+
+// 2. Create a metadata object - optional
+const metadata = {
+  name: "My Website",
+  description: "My Website description",
+  url: "https://mywebsite.com", // origin must match your domain & subdomain
+  icons: ["https://avatars.mywebsite.com/"],
+};
+
+// 3. Create the AppKit instance
+createAppKit({
+  adapters: [new Ethers5Adapter()],
+  metadata: metadata,
+  networks: [mainnet, arbitrum],
+  projectId,
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  },
+});
+
+export default function App() {
+  return <YourApp />; //make sure you have configured the <appkit-button> inside
+}
+```
+
+<Warning>
+Make sure that the `url` from the `metadata` matches your domain and subdomain. This will later be used by the [Verify API](../../../cloud/verify) to tell wallets if your application has been verified or not.
+</Warning>

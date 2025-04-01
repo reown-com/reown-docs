@@ -11,4 +11,4 @@ Enter the description of this PR and add any important context/info.
 
 Insert the Vercel preview URL for all the doc pages that you have made changes to.
 
-<PREVIEW_URL_1>
+PREVIEW_URL_1

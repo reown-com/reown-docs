@@ -1,0 +1,260 @@
+# Options
+
+The following options can be passed to the `createAppKit` function:
+
+```ts
+createAppKit({ projectId, chains, ...options });
+```
+
+## defaultChain
+
+You can set a desired chain for the initial connection:
+
+<Tabs>
+
+<Tab title="Wagmi">
+```ts
+import { mainnet } from '@wagmi/core/chains'
+
+createAppKit({
+//...
+defaultChain: mainnet
+})
+
+````
+</Tab>
+
+<Tab title="Ethers">
+```ts
+const mainnet = {
+  chainId: 1,
+  name: 'Ethereum',
+  currency: 'ETH',
+  explorerUrl: 'https://etherscan.io',
+  rpcUrl: 'https://cloudflare-eth.com',
+};
+
+createAppKit({
+  //...
+  defaultChain: mainnet
+})
+````
+
+</Tab>
+
+<Tab title="Ethers v5">
+```ts
+const mainnet = {
+  chainId: 1,
+  name: 'Ethereum',
+  currency: 'ETH',
+  explorerUrl: 'https://etherscan.io',
+  rpcUrl: 'https://cloudflare-eth.com',
+};
+
+createAppKit({
+//...
+defaultChain: mainnet
+})
+
+````
+</Tab>
+
+</Tabs>
+
+## clipboardClient
+
+Use your preferred clipboard library to allow AppKit use the clipboard to copy addresses & URIs
+
+```ts
+import * as Clipboard from 'expo-clipboard' // or `@react-native-clipboard/clipboard`
+
+createAppKit({
+  //...
+  clipboardClient: {
+    setString: async (value: string) => {
+      await Clipboard.setStringAsync(value)
+    }
+  }
+})
+````
+
+## customWallets
+
+Add custom wallets to the modal's main view. `customWallets` is an array of objects, where each object contains specific information of a custom wallet.
+
+```ts
+createAppKit({
+  //...
+  customWallets: [
+    {
+      id: "myCustomWallet",
+      name: "My Custom Wallet",
+      homepage: "www.mycustomwallet.com", // Optional
+      mobile_link: "mobile_link", // Optional - Deeplink or universal
+      link_mode: "universal_link", // Optional - Universal link if the wallet supports link-mode
+      desktop_link: "desktop_link", // Optional - Deeplink
+      webapp_link: "webapp_link", // Optional
+      app_store: "app_store", // Optional
+      play_store: "play_store", // Optional
+    },
+  ],
+});
+```
+
+## featuredWalletIds
+
+Select wallets that are going to be shown on the modal's main view. Array of wallet IDs defined will be prioritized (order is respected).
+These wallets will also show up first in `All Wallets` view.
+You can find the wallets ids in [WalletGuide](https://walletguide.walletconnect.network/)
+
+```ts
+createAppKit({
+  //...
+  featuredWalletIds: [
+    "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369", // Rainbow
+    "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
+  ],
+});
+```
+
+## includeWalletIds
+
+Override default recommended wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/).
+Array of wallet ids defined will be shown (order is respected).
+Unlike `featuredWalletIds`, these wallets will be the **only** ones shown in `All Wallets` view and as recommended wallets.
+You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
+
+```ts
+createAppKit({
+  //...
+  includeWalletIds: [
+    "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369", // Rainbow
+    "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
+  ],
+});
+```
+
+## excludeWalletIds
+
+Exclude wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/).
+Array of wallet ids defined will be excluded.
+All other wallets will be shown in respective places.
+You can find the wallets IDs in our [Wallets List](/cloud/wallets/wallet-list).
+
+```ts
+createAppKit({
+  //...
+  excludeWalletIds: [
+    "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
+    "fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa", // Coinbase
+  ],
+});
+```
+
+## debug
+
+Enable or disable debug mode in your AppKit. This is useful if you want to see UI alerts when debugging. Default is `false`.
+
+```ts
+createAppKit({
+  //...
+  debug: true,
+});
+```
+
+## features
+
+Allows you to toggle (enable or disable) additional features provided by AppKit. Features such as email and social logins, swaps, etc., can be enabled using this parameter.
+
+### swaps
+
+Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transactions/swaps) feature is enabled by default.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    swaps: true,
+  },
+});
+```
+
+### email
+
+This boolean defines whether you want to enable email login. This feature is enabled by default.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    email: true,
+  },
+});
+```
+
+### socials
+
+This array contains the list of social platforms that you want to enable for user authentication. The platforms supported are X, Discord and Apple. The default value of undefined displays everything. Set it to false to disable this feature. You can also pass an empty array to disable it.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    socials: ["x", "discord", "apple"],
+  },
+});
+```
+
+### emailShowWallets
+
+This boolean defines whether you want to show the wallet options on the first connect screen. If this is false and socials are enabled, it will show a button that directs you to a new screen displaying the wallet options. This feature is enabled by default.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    emailShowWallets: false,
+  },
+});
+```
+
+## enableAnalytics
+
+Enable analytics to get more insights on your users activity within your [Reown Cloud's dashboard](https://cloud.reown.com)
+
+```ts
+createAppKit({
+  //...
+  enableAnalytics: true,
+});
+```
+
+<Card title="Learn More" href="/cloud/analytics" />
+
+## chainImages
+
+Add or override the modal's network images.
+
+```ts
+createAppKit({
+  // ...
+  chainImages: {
+    1: "https://my.images.com/eth.png",
+  },
+});
+```
+
+## connectorImages
+
+Set or override the images of any connector.
+
+```ts
+createAppKit({
+  connectorImages: {
+    coinbaseWallet: "https://images.mydapp.com/coinbase.png",
+    walletConnect: "https://images.mydapp.com/walletconnect.png",
+    appKitAuth: "https://images.mydapp.com/auth.png",
+  },
+});
+```

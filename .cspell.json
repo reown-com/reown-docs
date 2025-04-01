@@ -13,16 +13,16 @@
         "filename": "**/*.md",
         "languageId": "markdown",
         "ignoreRegExpList": [
-            "/`[^`]*`/",  // Ignore inline code,
-          "/```[\\s\\S]*?```/"  // Ignore everything between triple backticks
+            "/`[^`]*`/",
+          "/```[\\s\\S]*?```/"
         ]
       },
       {
         "filename": "**/*.mdx",
         "languageId": "markdown",
         "ignoreRegExpList": [
-          "/`[^`]*`/",  // Ignore inline code
-          "/```[\\s\\S]*?```/"  // Ignore everything between triple backticks
+          "/`[^`]*`/",
+          "/```[\\s\\S]*?```/"
         ]
       }
     ],
@@ -67,7 +67,8 @@
       "Rebalancing", "hackathons", "eviluniswap", "permissioned", "Diffie", "prioritise", "synchronise", "scriptable", "dedup", "Zora", "Fraximal", "Podspec", "Wormfare",
       "johnsmith", "secp", "reimagined", "tgvideo", "solflare", "WBIPs", "xverse", "mycustomwallet", "seedphrases", "Pimlico", "signup", "onramps", "rainbowkit", "connectkit", "stablecoins", "fulfilment",
       "tictactoe", "dollar", "supabase", "Frontmatter", "LLMSTXT", "tokenpocket", "imtoken", "kraken", "ronin", "exodus", "argent", "zerion", "oneinch", "crypto-com", "imtoken", "kraken", "ronin", "robinhood", "exodus", "argent", "tokenpocket",
-      "nosocial", "bitget", "leather", "binance", "uniswap", "safepal", "bybit", "phantom", "ledger", "timeless-x", "safe", "zerion", "oneinch", "crypto-com", "imtoken", "kraken", "ronin", "robinhood", "exodus", "argent", "tokenpocket", "FATF", "VASP", "LLMSTXT", "Frontmatter", "CASP"
+      "nosocial", "bitget", "leather", "binance", "uniswap", "safepal", "bybit", "phantom", "ledger", "timeless-x", "safe", "zerion", "oneinch", "crypto-com", "imtoken", "kraken", "ronin", "robinhood", "exodus", "argent", "tokenpocket", "Contractaddress", 
+      "executionreverted", "FATF", "VASP", "LLMSTXT", "Frontmatter", "CASP", "DKMS"
     ]
   }
   
