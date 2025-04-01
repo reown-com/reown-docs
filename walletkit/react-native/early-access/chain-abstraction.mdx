@@ -2,36 +2,17 @@
 title: Chain Abstraction
 ---
 
-<Info>
-💡 Chain Abstraction is currently in early access phase. 
-</Info>
+import HowItWorks from "/snippets/walletkit/shared/chain-abstraction-intro.mdx";
 
-Chain Abstraction in WalletKit enables users with stablecoins on any network to spend them on-the-fly on a different network. Our Chain Abstraction solution provides a toolkit for wallet developers to integrate this complex functionality using WalletKit.
-
-For example, when an app requests a 100 USDC payment on Base network but the user only has USDC on Arbitrum, WalletKit offers methods to detect this mismatch, generate necessary transactions, track the cross-chain transfer, and complete the original transaction after bridging finishes.
-
-
-## How It Works
-
-<Info>
-Apps need to pass `gas` as null when sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../../appkit/next/early-access/chain-abstraction) for more details.
-</Info>
-
-When sending a transaction, you need to:
-1. Check if the required chain has enough funds to complete the transaction
-2. If not, use the `prepare` method to generate necessary bridging transactions
-3. Check the status of the bridging transactions and wait for them to complete
-4. Once the bridging transactions are completed, execute the initial transaction
-
-The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
-
-<Frame caption="Chain Abstraction Flow">
-    <img src="/images/assets/chain-abstraction-flow.png" />
-</Frame>
+<HowItWorks />
 
 ## Methods
 
+The following methods from WalletKit are used in implementing chain abstraction.
+
 <Info>
+💡 Chain abstraction is currently in the early access phase.
+
 Make sure you are using canary version of `@reown/walletkit` and `@walletconnect/react-native-compat`
 </Info>
 
@@ -192,5 +173,5 @@ To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-la
 You can also use this [sample wallet](https://appdistribution.firebase.google.com/testerapps/1:222905275039:android:799d1c9291d92ebe8c88aa/releases/7tkfoelis7n08) for testing. 
 
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
-  <source src="/assets/chain-abstraction-demo.mp4" type="video/mp4" />
+  <source src="/images/assets/chain-abstraction-demo.mp4" type="video/mp4" />
 </video>
