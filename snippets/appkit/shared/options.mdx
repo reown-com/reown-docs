@@ -197,30 +197,6 @@ Enable or disable WalletConnect QR feature. Default is `true`.
 enableWalletConnect: false;
 ```
 
-## universalProviderConfigOverride
-
-Custom Universal Provider configuration to override the default one. This allows you to customize specific aspects of the provider's behavior.
-
-```ts
-createAppKit({
-  //...
-  universalProviderConfigOverride: {
-    methods: { eip155: ['eth_sendTransaction', 'personal_sign'] },
-    chains: { eip155: ['1', '137'] },
-    events: { eip155: ['chainChanged', 'accountsChanged'] },
-    rpcMap: { eip155:1: 'https://ethereum.publicnode.com' },
-    defaultChain: 'eip155:1'
-  },
-});
-```
-
-You can override any of the following properties:
-- `methods`: Custom RPC methods for each namespace
-- `chains`: Supported chains for each namespace
-- `events`: Events to subscribe to for each namespace
-- `rpcMap`: Custom RPC URLs for specific chains
-- `defaultChain`: The default chain to connect to
-
 ## debug
 
 Enable or disable debug mode in your AppKit. This is useful if you want to see UI alerts when debugging. Default is `false`.
@@ -571,3 +547,27 @@ const wagmiAdapter = new WagmiAdapter({
 ```
 
 </Note>
+
+## universalProviderConfigOverride
+
+Allows you to customize specific aspects of the provider's behavior.
+
+```ts
+createAppKit({
+  //...
+  universalProviderConfigOverride: {
+    methods: { eip155: ['eth_sendTransaction', 'personal_sign'] },
+    chains: { eip155: ['1', '137'] },
+    events: { eip155: ['chainChanged', 'accountsChanged'] },
+    rpcMap: { eip155:1: 'https://ethereum.publicnode.com' },
+    defaultChain: 'eip155:1'
+  },
+});
+```
+
+You can override any of the following properties:
+- `methods`: Custom RPC methods for each namespace
+- `chains`: Supported chains for each namespace
+- `events`: Events to subscribe to for each namespace
+- `rpcMap`: Custom RPC URLs for specific chains
+- `defaultChain`: The default chain to connect to
