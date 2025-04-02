@@ -189,12 +189,24 @@ createAppKit({
 
 </Tab>
 </Tabs>
+
 ## enableWalletConnect
 
 Enable or disable WalletConnect QR feature. Default is `true`.
 
 ```ts
 enableWalletConnect: false;
+```
+
+## enableNetworkSwitch
+
+Enables or disables the network switching functionality in the modal. The default is `true`.
+
+```ts
+createAppKit({
+  //...
+  enableNetworkSwitch: false,
+});
 ```
 
 ## debug
