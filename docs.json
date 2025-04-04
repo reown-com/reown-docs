@@ -7,7 +7,7 @@
     "light": "#008847",
     "dark": "#008847"
   },
-  
+
   "integrations": {
     "gtm": {
       "tagId": "GTM-56G35T8X"
@@ -835,6 +835,10 @@
               "walletkit/web/one-click-auth",
               "walletkit/web/verify",
               "walletkit/web/eip5792",
+              {
+                "group": "Early Access",
+                "pages": ["walletkit/web/early-access/chain-abstraction"]
+              },
               "walletkit/web/best-practices",
               "walletkit/web/resources"
             ]
@@ -1014,6 +1018,10 @@
               "walletkit/react-native/verify",
               "walletkit/react-native/eip5792",
               {
+                "group": "Early Access",
+                "pages": ["walletkit/react-native/early-access/chain-abstraction"]
+              },
+              {
                 "group": "Notifications",
                 "pages": [
                   {
@@ -1038,11 +1046,7 @@
               "walletkit/react-native/cloud/explorer-submission",
               "walletkit/react-native/cloud/verify",
               "walletkit/react-native/cloud/relay",
-              "walletkit/react-native/cloud/analytics",
-              {
-                "group": "Early Access",
-                "pages": ["walletkit/react-native/early-access/chain-abstraction"]
-              }
+              "walletkit/react-native/cloud/analytics"
             ]
           },
           {

@@ -1,20 +1,20 @@
 ---
 title: Chain Abstraction
+sidebar_position: 1
 ---
 
 <Info>
-💡 Chain Abstraction is currently in early access phase. 
+💡 Chain Abstraction is currently in experimental phase. 
 </Info>
 
 Chain Abstraction in WalletKit enables users with stablecoins on any network to spend them on-the-fly on a different network. Our Chain Abstraction solution provides a toolkit for wallet developers to integrate this complex functionality using WalletKit.
 
 For example, when an app requests a 100 USDC payment on Base network but the user only has USDC on Arbitrum, WalletKit offers methods to detect this mismatch, generate necessary transactions, track the cross-chain transfer, and complete the original transaction after bridging finishes.
 
-
 ## How It Works
 
 <Info>
-Apps need to pass `gas` as null when sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../../appkit/next/early-access/chain-abstraction) for more details.
+Apps need to pass `gas` as null when sending a transaction to allow proper gas estimation by the wallet. Refer to this [guide](../../../appkit/next/experimental/chain-abstraction.mdx) for more details.
 </Info>
 
 When sending a transaction, you need to:
@@ -25,14 +25,12 @@ When sending a transaction, you need to:
 
 The following sequence diagram illustrates the complete flow of a chain abstraction operation, from the initial dapp request to the final transaction confirmation
 
-<Frame caption="Chain Abstraction Flow">
-    <img src="/images/assets/chain-abstraction-flow.png" />
-</Frame>
+![Chain Abstraction Flow](/assets/chain-abstraction-sequence.png)
 
 ## Methods
 
 <Info>
-Make sure you are using canary version of `@reown/walletkit` and `@walletconnect/react-native-compat`
+Make sure you are using canary version of `@reown/walletkit`.
 </Info>
 
 Following are the methods from WalletKit that you will use in implementing chain abstraction.
@@ -100,7 +98,7 @@ if ('success' in result) {
 }
 ```
 
-For example, check out implementation of chain abstraction in [sample wallet](https://github.com/reown-com/react-native-examples/tree/main/wallets/rn_cli_wallet) with React Native CLI. 
+For example, check out implementation of chain abstraction in [sample wallet](https://github.com/reown-com/web-examples/tree/main/advanced/wallets/react-wallet-v2) built with React. 
 
 ## Error Handling
 
@@ -145,8 +143,8 @@ From the user's perspective, treat these as retryable errors, but ensure you log
 
 ## Testing 
 
-To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending any supported [tokens](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
-You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076a3bc9669d3bee) for testing. 
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/experimental/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
+You can also use this [sample wallet](https://react-wallet.walletconnect.com) for testing. 
 
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
   <source src="/images/assets/chain-abstraction-demo.mp4" type="video/mp4" />
