@@ -57,77 +57,95 @@ public abstract status(params: {
 }): Promise<ChainAbstractionTypes.FulfilmentStatusResponse>;
 ```
 
-### Usage
+## Usage
 
-When sending a transaction, first check if chain abstraction is needed using the `prepare` method. If it is needed, you need to sign all the fulfillment transactions and broadcast them in parallel. 
-After that, you need to call the `status` method to check the status of the fulfillment operation. 
+When sending a transaction, first check if chain abstraction is needed using the `prepare` method. If it is needed, you must sign all the fulfillment transactions and use the `execute` method. 
 
-If the operation is successful, you need to broadcast the initial transaction and await the transaction hash and receipt. 
-If the operation is not successful, you need to send the JsonRpcError to the dapp and display the error to the user. 
+If the operation is successful, use `execute` method and await the transaction hash and receipt. 
+If the operation is unsuccessful, send the JsonRpcError to the dapp and display the error to the user. 
 
 ```typescript
-walletkit.on("session_request", async (event) => {
-  const {
-    id,
-    topic,
-    params: { request, chainId },
-  } = event;
+const initialTransaction = {
+  // ... transaction details
+};
 
-  if (request.method === "eth_sendTransaction") {
-    const originalTransaction = request.params[0];
+const prepareResponse = await WalletKit.ChainAbstraction.prepare(initialTransaction);
+
+if (prepareResponse.type === 'Available') {
+  // Sign all the fulfilment transactions and init transaction
+  // Use execute method
+  
+  try {
+    const executeResponse = await WalletKit.ChainAbstraction.execute(
+      prepareResponse,
+      prepareSignedTxs,
+      initSignedTx
+    );
     
-    // Check if bridging transactions are required
-    const prepareResponse = await wallet.prepare({
-      transaction: {
-        ...originalTransaction,
-        chainId,
-      },
-    });
-
-    if (prepareResponse.status === "error") {
-      // Display error to user and respond to dapp
-      await wallet.respondSessionRequest({
-        topic,
-        response: formatJsonRpcResult(id, prepareResponse.reason),
-      });
-      return;
-    }
-
-    if (prepareResponse.status === "available") {
-      const { transactions, funding, fulfilmentId, checkIn } = prepareResponse.data;
-
-      // Display bridging information to user
-      // Once approved, execute bridging transactions
-      for (const transaction of transactions) {
-        const signedTransaction = await wallet.signTransaction(transaction);
-        await wallet.sendTransaction(signedTransaction);
-      }
-      // await for the completed fulfilment status 
-      await statusResult = await wallet.status({
-        fulfilmentId
-      });
-
-      // Proceed with original transaction
-      const signedTransaction = await wallet.signTransaction(originalTransaction);
-      const result = await wallet.sendTransaction(signedTransaction);
-      
-      await wallet.respondSessionRequest({
-        topic,
-        response: formatJsonRpcResult(id, result)
-      });
-    } else {
-      // No bridging required, process transaction normally
-      const signedTransaction = await wallet.signTransaction(originalTransaction);
-      const result = await wallet.sendTransaction(signedTransaction);
-      
-      await wallet.respondSessionRequest({
-        topic,
-        response: formatJsonRpcResult(id, result)
-      });
-    }
+    // The execution of the Chain Abstraction is successful
+    // Send the response to the Dapp
+  } catch (error) {
+    // Execute error - wallet should send the JsonRpcError to a dapp for given request and display error to the user
   }
-});
+} else if (prepareResponse.type === 'NotRequired') {
+  // Chain abstraction is not required, handle transaction as usual
+} else {
+  // One of the possible errors: NoRoutesAvailable, InsufficientFunds, InsufficientGasFunds
+  // Wallet should send the JsonRpcError to a dapp for given request and display error to the user
+}
 ```
+
+For example, check out implementation of chain abstraction in [sample wallet](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/master/sample/wallet) with Kotlin. 
+
+## Error Handling
+
+When implementing Chain Abstraction, you may encounter different types of errors. Here's how to handle them effectively:
+
+### Application-Level Errors
+
+These errors (`PrepareDetailedResponse::Err`) indicate specific issues that need to be addressed and typically require user action:
+
+- **Insufficient Gas Fees**: User needs to add more gas tokens to their wallet
+- **Malformed Transaction Requests**: Transaction parameters are invalid or incomplete
+- **Minimum Bridging Amount Not Met**: Currently set at $0.60
+- **Invalid Token or Network Selection**: Selected token or network is not supported
+
+When handling these errors, you should display clear, user-friendly error messages that provide specific guidance on how to resolve the issue. Allow users to modify their transaction parameters and consider implementing validation checks before initiating transactions.
+
+### Retryable Errors
+
+These errors (`Result::Err`) indicate temporary issues that may be resolved by retrying the operation:
+
+- **Local Network Issues**: DNS blocks, TLS inspection, TCP timeouts
+- **Server Issues**: 5xx errors, service outages
+- **Race Conditions**: Concurrent transaction conflicts
+- **Temporary RPC Errors**: Network connectivity issues
+
+For retryable errors, show a generic "oops" message to users and provide a retry button. Log detailed error information to your error tracking service, but avoid displaying technical details to end users.
+
+<Note>
+For errors in the `execute()` method, a retry may not resolve the issue. In such cases, allow users to cancel the transaction, return them to the application, and let the application initiate a new transaction.
+</Note>
+
+### Critical Errors
+
+Critical errors indicate bugs or implementation issues that should be treated as high-priority incidents:
+
+- **Unexpected State Transitions**: Invalid state changes in the transaction flow
+- **Contract Interaction Failures**: Issues with smart contract interactions
+- **Bridge Protocol Errors**: Problems with the bridging protocol implementation
+- **Security Violations**: Potential security-related issues
+
+From the user's perspective, treat these as retryable errors, but ensure you log the incident immediately for investigation and implement appropriate error tracking and monitoring.
+
+## Testing 
+
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending any supported [tokens](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
+You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076a3bc9669d3bee) for testing. 
+
+<video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
+  <source src="/assets/chain-abstraction-demo.mp4" type="video/mp4" />
+</video>
 
 ## Types
 
@@ -185,12 +203,3 @@ namespace ChainAbstractionTypes {
 ```
 
 For example, check out implementation of chain abstraction in [sample wallet](https://github.com/reown-com/react-native-examples/pull/185) with React Native CLI. 
-
-## Testing 
-
-To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
-You can also use this [sample wallet](https://appdistribution.firebase.google.com/testerapps/1:222905275039:android:799d1c9291d92ebe8c88aa/releases/7tkfoelis7n08) for testing. 
-
-<video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
-  <source src="/assets/chain-abstraction-demo.mp4" type="video/mp4" />
-</video>
