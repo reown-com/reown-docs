@@ -64,6 +64,15 @@ AppKit.instance.authResponsePublisher.sink { (id, result) in
 
 The latest release of AppKit supports link mode, a low latency mechanism for transporting 1-click auth requests and session requests over universal links, eliminating the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with networking connections, especially when the user has an unstable internet connection.
 
+<Frame>
+<video
+  controls
+  autoPlay
+  src="/images/link-mode.mp4"
+  height="400" width="300"
+></video>
+</Frame>
+
 To support link mode, configure your AppMetadata.Redirect with a valid universal link and set the linkMode property to true:
 
 ```swift
