@@ -9,3 +9,18 @@ Applications can specify that these onchain calls be executed taking advantage o
 - `wallet_getCallsStatus`: Returns the status of a call batch that was sent via wallet_sendCalls.
 - `wallet_showCallsStatus`: Requests that a wallet shows information about a given call bundle that was sent with wallet_sendCalls.
 - `wallet_getCapabilities`: This RPC allows an application to request capabilities from a wallet (e.g. batch transactions, paymaster communication).
+
+## Usage
+
+To use your own wallet service for EIP-5792, you need to specify the `scopedProperties` when approving a session.
+
+```json
+"scopedProperties": {
+    "eip155": {
+        "walletService": [{
+            "url": "<wallet service URL>",
+            "methods": ["wallet_getCallsStatus"]
+        }]
+    }
+}
+```
