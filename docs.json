@@ -96,7 +96,7 @@
                     "pages": [
                       "appkit/authentication/socials",
                       "appkit/authentication/one-click-auth",
-                      "appkit/features/siwx/default"
+                      "appkit/authentication/siwx/default"
                     ]
                   },
                   {
