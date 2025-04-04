@@ -31,6 +31,17 @@ We welcome contributions to improve our documentation! Here's how you can help:
 
 To run the documentation locally, you'll need to have Node.js installed on your machine. Then follow these steps:
 
+1. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+2. Run the development server:
+   ```bash
+   pnpm run dev
+   ```
+
+or 
+
 1. Install the Mintlify CLI globally:
    ```bash
    npm install -g mintlify
