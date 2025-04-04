@@ -1,0 +1,14 @@
+{
+  "name": "mintlify-docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm run spell && mintlify dev",
+    "start": "pnpm run spell && mintlify dev",
+    "spell": "cspell '**/*.md' '**/*.mdx' "
+  },
+  "devDependencies": {
+    "mintlify": "latest",
+    "cspell": "^8.16.1"
+  }
+} 
