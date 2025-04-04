@@ -228,19 +228,19 @@
                 "pages": [
                   {
                     "group": "Core",
-                    "pages": ["api/core/pairing", "api/core/relay", "api/core/shared-core"]
+                    "pages": ["advanced/api/core/pairing", "advanced/api/core/relay", "advanced/api/core/shared-core"]
                   },
                   {
                     "group": "Notify",
-                    "pages": ["api/notify/about"]
+                    "pages": ["advanced/api/notify/about"]
                   },
                   {
                     "group": "Sign",
                     "pages": [
-                      "api/sign/overview",
-                      "api/sign/dapp-usage",
-                      "api/sign/wallet-usage",
-                      "api/sign/smart-contract-wallet-usage"
+                      "advanced/api/sign/overview",
+                      "advanced/api/sign/dapp-usage",
+                      "advanced/api/sign/wallet-usage",
+                      "advanced/api/sign/smart-contract-wallet-usage"
                     ]
                   }
                 ]
