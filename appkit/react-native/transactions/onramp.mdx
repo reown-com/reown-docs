@@ -1,0 +1,60 @@
+---
+title: On-Ramp
+---
+
+Enable users to purchase crypto with fiat directly within your React Native app using AppKit's On-Ramp feature. This integration allows users to securely access over 100 cryptocurrencies and purchase tokens to support in-app activity and transactions across multiple chains.
+
+## Configuration
+
+The On-Ramp feature is enabled by default in AppKit. Here's how to configure it in your app:
+
+```typescript
+import { createAppKit } from '@reown/appkit...';
+
+createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  // ... other config options
+  features: {
+    onramp: true, // Optional - true by default
+  }
+});
+```
+
+If you want to disable the On-Ramp feature, you can set `onramp: false` in the features configuration.
+
+## Usage
+
+### Opening the On-Ramp View
+
+You can programmatically open the On-Ramp view using the `useAppKit` hook:
+
+```typescript
+import { useAppKit } from '@reown/appkit...';
+
+function BuyButton() {
+  const { open } = useAppKit();
+
+  const handleBuyPress = () => {
+    open({ view: 'OnRamp' });
+  };
+
+  return (
+    <Button 
+      title="Buy Crypto" 
+      onPress={handleBuyPress} 
+    />
+  );
+}
+```
+
+### User Flow
+
+1. When users tap the "Buy Crypto" button or select it from the account view, they'll be presented with available On-Ramp interface where they can:
+   - Select the cryptocurrency they want to purchase
+   - Select the country and fiat currency
+   - Choose the amount
+   - Select their preferred payment method
+
+2. After reviewing the purchase details, the user will be redirected to the browser to finish the transaction.
+
+3. Once the purchase is complete, the crypto will be sent directly to their connected wallet address.
