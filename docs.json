@@ -979,7 +979,11 @@
               "walletkit/flutter/mobile-linking",
               "walletkit/flutter/link-mode",
               "walletkit/flutter/verify",
-              "walletkit/flutter/eip5792"
+              "walletkit/flutter/eip5792",
+              {
+                "group": "Early Access",
+                "pages": ["walletkit/flutter/early-access/chain-abstraction"]
+              }
             ]
           },
           {
@@ -1028,6 +1032,10 @@
                   "walletkit/react-native/notifications/push"
                 ]
               },
+              {
+                "group": "Early Access",
+                "pages": ["walletkit/react-native/early-access/chain-abstraction"]
+              },
               "walletkit/react-native/best-practices",
               "walletkit/react-native/resources"
             ]
@@ -1038,11 +1046,7 @@
               "walletkit/react-native/cloud/explorer-submission",
               "walletkit/react-native/cloud/verify",
               "walletkit/react-native/cloud/relay",
-              "walletkit/react-native/cloud/analytics",
-              {
-                "group": "Early Access",
-                "pages": ["walletkit/react-native/early-access/chain-abstraction"]
-              }
+              "walletkit/react-native/cloud/analytics"
             ]
           },
           {
