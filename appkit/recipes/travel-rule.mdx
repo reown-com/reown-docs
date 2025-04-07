@@ -2,8 +2,6 @@
 title: Travel Rule using AppKit
 ---
 
-# Travel Rule using AppKit
-
 ## What is the Travel Rule?
 
 The Travel Rule is a regulatory requirement designed to enhance transparency in financial transactions by mandating the exchange of specific information about both senders and recipients.
@@ -76,19 +74,15 @@ bun add @reown/appkit-siwx
 
 Once you have AppKit set up in your dApp, you can easily enable SIWX by adding the default implementation with the following configuration:
 
-```ts
+```ts {2, 8}
 import { createAppKit } from '@reown/appkit'
-/* highlight-add-start */
 import { DefaultSIWX } from '@reown/appkit-siwx'
-/* highlight-add-end */
 
 const appkit = createAppKit({
   projectId,
   networks,
   metadata,
-  /* highlight-add-start */
   siwx: new DefaultSIWX() // add this line to enable SIWX
-  /* highlight-add-end */
 })
 ```
 

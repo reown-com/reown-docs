@@ -14,7 +14,7 @@ By enabling it, the wallet and dapp will communicate through declared Universal 
 
 3. Set the `linkMode` property to `true`:
 
-```javascript
+```javascript {12,13}
 final _walletKit = ReownWalletKit(
   core: ReownCore(
     projectId: '{YOUR_PROJECT_ID}',
@@ -26,10 +26,8 @@ final _walletKit = ReownWalletKit(
     icons: ['https://example.com/logo.png'],
     redirect: Redirect(
       native: 'examplewallet://',
-      /* highlight-add-start */
       universal: 'https://example.com/wallet',
       linkMode: true,
-      /* highlight-add-end */
     ),
   ),
 );

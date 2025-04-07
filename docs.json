@@ -110,7 +110,8 @@
                       "appkit/recipes/solana-send-transaction",
                       "appkit/recipes/bitcoin-send-transaction",
                       "appkit/recipes/switching-to-send-calls",
-                      "appkit/recipes/sponsoring-first-transaction"
+                      "appkit/recipes/sponsoring-first-transaction",
+                      "appkit/recipes/travel-rule"
                     ]
                   },
                   {

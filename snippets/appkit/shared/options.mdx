@@ -474,13 +474,11 @@ export const config = wagmiAdapter.wagmiConfig;
 </Tab>
 <Tab title="Ethers">
 
-```ts
+```ts {4}
 createAppKit({
   //...
   enableCoinbase: true, // true by default
-  /* highlight-add-start */
   coinbasePreference: "smartWalletOnly",
-  /* highlight-add-end */
 });
 ```
 </Tab>

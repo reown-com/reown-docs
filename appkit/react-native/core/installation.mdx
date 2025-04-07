@@ -193,11 +193,10 @@ To enable AppKit to detect wallets installed on the device in your Expo project 
 
 Your configuration should look like this:
 
-```js
+```js {4-13}
 {
   "expo": {
     "ios": {
-      /* highlight-add-start */
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "metamask",
@@ -208,7 +207,6 @@ Your configuration should look like this:
           // Add other wallet schemes names here
         ]
       }
-    /* highlight-add-end */
     }
   }
 }
@@ -222,13 +220,11 @@ To enable AppKit to detect wallets installed on the device in your Expo project 
 2. Locate the plugins section within the configuration.
 3. Add `queries.js` in the plugins array:
 
-```js
+```js {4}
 {
   "plugins": [
     // other plugins,
-    /* highlight-add-start */
     "./queries.js"
-    /* highlight-add-end */
   ],
 }
 ```

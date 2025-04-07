@@ -3,13 +3,12 @@ To allow users to authenticate using their email or social accounts, you need to
 <Tabs>
 <Tab title="Wagmi">
 
-```ts
+```ts {6-20}
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   networks: [mainnet, arbitrum],
   metadata,
-  /* highlight-add-start */
   features: {
     email: true, // default to true
     socials: [
@@ -24,20 +23,18 @@ const modal = createAppKit({
     emailShowWallets: true, // default to true
   },
   allWallets: "SHOW", // default to SHOW
-  /* highlight-add-end */
 });
 ```
 
 </Tab>
 <Tab title="Ethers">
 
-```ts
+```ts {6-20}
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   networks: [mainnet, arbitrum],
   metadata,
-  /* highlight-add-start */
   features: {
     email: true, // default to true
     socials: [
@@ -52,7 +49,6 @@ const modal = createAppKit({
     emailShowWallets: true, // default to true
   },
   allWallets: "SHOW", // default to SHOW
-  /* highlight-add-end */
 });
 ```
 
@@ -65,13 +61,12 @@ AppKit with ethers v5 does not support the `auth` parameter and social logins. I
 
 <Tab title="Solana">
 
-```ts
+```ts {6-20}
 const modal = createAppKit({
   adapters: [solanaWeb3JsAdapter],
   projectId,
   networks: [solana, solanaTestnet, solanaDevnet],
   metadata,
-  /*highlight-add-start*/
   features: {
     email: true, // default to true
     socials: [
@@ -86,7 +81,6 @@ const modal = createAppKit({
     emailShowWallets: true, // default to true
   },
   allWallets: "SHOW", // default to SHOW
-  /*highlight-add-end*/
 });
 ```
 
