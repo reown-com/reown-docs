@@ -12,66 +12,59 @@ This upgrade guide helps developers transition from using the Web3Modal library 
 
 The Web3Modal library has been deprecated and moved to a new repository under the reown-com organization. Update your dependencies to use AppKit:
 
-```swift
-/* highlight-delete-start */
+```swift {8-12}
+// Remove the following code lines
 - dependencies {
 -    implementation(platform("com.walletconnect:android-bom:{BOM version}"))
 -    implementation("com.walletconnect:android-core")
 -    implementation("com.walletconnect:web3modal")
 - }
-/* highlight-delete-end */
-/* highlight-add-start */
+
 + dependencies {
 +    implementation(platform("com.reown:android-bom:{BOM version}"))
 +    implementation("com.reown:android-core")
 +    implementation("com.reown:appkit")
 + }
-/* highlight-add-end */
+
 ```
 
 ### Step 2. Update Imports in Your Code
 
 All references to Web3Modal in your import statements should be updated to use AppKit.
 
-```swift
-/* highlight-delete-start */
+```swift {5,6}
+// Remove the following code lines
 - import com.walletconnect.android.*
 - import com.walletconnect.web3.modal.*
-/* highlight-delete-end */
-/* highlight-add-start */
+
 + import com.reown.android.*
 + import com.reown.appkit.*
-/* highlight-add-end */
 ```
 
 ### Step 3. Update Class Name
 
 The singleton instance for Web3Modal has been replaced with AppKit. Update all instances where Web3Modal is used with AppKit.
 
-```swift
-/* highlight-delete-start */
+```swift {5,6}
+// Remove the following code lines
 - Web3Modal.initialize(Wallet.Params.Init(core = CoreClient), onSuccess, onError)
 - Web3Modal.request(request, onSuccess, onError)
-/* highlight-delete-end */
-/* highlight-add-start */
+
 + AppKit.initialize(Wallet.Params.Init(core = CoreClient), onSuccess, onError)
 + AppKit.request(request, onSuccess, onError)
-/* highlight-add-end */
 ```
 
 ### Step 4. Update ProGuard file rules
 
 If you have ProGuard rules defined remember to update them
 
-```swift
-/* highlight-delete-start */
+```swift {5,6}
+// Remove the following code lines
 - -keep class com.walletconnect.web3.modal.client.Wallet$Model { *; }
 - -keep class com.walletconnect.web3.modal.client.Wallet { *; }
-/* highlight-delete-end */
-/* highlight-add-start */
+
 + -keep class com.reown.appkit.client.Wallet$Model { *; }
 + -keep class com.reown.appkit.client.Wallet { *; }
-/* highlight-add-end */
 ```
 
 ### Step 5. Test Your Changes
