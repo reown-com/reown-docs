@@ -15,7 +15,7 @@ AppKit Link Mode is a low latency mechanism for transporting One-Click Auth requ
 
 To support link mode add a universal link for your dapp in Cloud project configuration [dashboard](https://cloud.reown.com/sign-in), configure your Metadata with a valid universal link and set the `linkMode` property to `true`:
 
-```ts
+```ts {8,9}
 const metadata = {
   name: "AppKit RN",
   description: "AppKit RN Example",
@@ -23,10 +23,8 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/179229932"],
   redirect: {
     native: "YOUR_APP_SCHEME://",
-    /* highlight-add-start */
     universal: "https://example.com/example_dapp",
     linkMode: true,
-    /* highlight-add-end */
   },
 };
 

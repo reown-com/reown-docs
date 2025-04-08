@@ -3,7 +3,7 @@ In this example we are going to use the `<appkit-button>` component.
 
 Web components are global html elements that don't require importing.
 
-```html
+```html {11,12}
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,10 +14,8 @@ Web components are global html elements that don't require importing.
     <div id="app">
       <button id="open-connect-modal">Open Modal</button>
       <button id="open-network-modal">Open Networks</button>
-      /* highlight-add-start */
-      <appkit-button></appkit-button>
-      <appkit-network-button></appkit-network-button>
-      /* highlight-add-end */
+      <appkit-button />
+      <appkit-network-button />
     </div>
     <script type="module" src="main.js"></script>
   </body>

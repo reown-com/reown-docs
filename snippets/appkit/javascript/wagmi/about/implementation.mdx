@@ -53,11 +53,9 @@ openNetworkModalBtn.addEventListener('click', () => modal.open({ view: 'Networks
 
 Reown AppKit use [Viem](https://viem.sh/) networks under the hood, which provide a wide variety of networks for EVM chains. You can find all the networks supported by Viem within the `@reown/appkit/networks` path.
 
-```js
+```js {2}
 import { createAppKit } from '@reown/appkit'
-/* highlight-add-start */
 import { mainnet, arbitrum, base, scroll, polygon } from '@reown/appkit/networks'
-/* highlight-add-end */
 ```
 
 <Note>

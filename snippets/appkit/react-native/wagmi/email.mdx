@@ -12,35 +12,32 @@ npx pod-install
 
 ### Add the auth connector in `defaultWagmiConfig`
 
-```ts
-/* highlight-add-start */
+```ts {1-4, 10-11}
+// Add the following code lines
 import { authConnector } from "@reown/appkit-auth-wagmi-react-native";
 
 const auth = authConnector({ projectId, metadata });
-/* highlight-add-end */
 
 const wagmiConfig = defaultWagmiConfig({
   chains,
   projectId,
   metadata,
-  /* highlight-add-start */
+  // Add the following code line
   extraConnectors: [auth],
-  /* highlight-add-end */
 });
 ```
 
 ### Enable features in `createAppKit`
 
-```ts
+```ts {4-9}
 createAppKit({
   projectId,
   wagmiConfig,
-  /* highlight-add-start */
+  // Add the following code line
   features: {
     email: true, // default to true
     socials: ["x", "discord", "apple"], // default value
     emailShowWallets: true, // default to true
   },
-  /* highlight-add-end */
 });
 ```

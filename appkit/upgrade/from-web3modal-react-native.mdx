@@ -1,10 +1,8 @@
 ---
-title: Migration from Web3Modal to AppKit for React Native
+title: Upgrade from Web3Modal to Reown AppKit for React Native
 pagination_next:
 displayed_sidebar: mainSidebar
 ---
-
-# Upgrade from Web3Modal to Reown AppKit for React Native
 
 This document outlines the steps to migrate from the old `@web3modal` packages to the new `@reown/appkit` packages in your React Native project.
 
@@ -13,21 +11,20 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
   <Tab title="Wagmi">
   **Step 1. Replace the dependencies in your code and `package.json`**
 
-```json
+```json {9-13}
 {
   "dependencies": {
-    /* highlight-delete-start */
+    // Remove the following code lines
     "@web3modal/wagmi-react-native": "2.0.4",
     "@web3modal/email-wagmi-react-native": "2.0.4",
     "@web3modal/coinbase-wagmi-react-native": "2.0.4",
     "@web3modal/siwe-react-native": "2.0.4",
-    /* highlight-delete-end */
-    /* highlight-add-start */
+
+    // Add the following code lines
     "@reown/appkit-wagmi-react-native": "1.0.0",
     "@reown/appkit-auth-wagmi-react-native": "1.0.0",
     "@reown/appkit-coinbase-wagmi-react-native": "1.0.0",
     "@reown/appkit-siwe-react-native": "1.0.0"
-    /* highlight-add-end */
   }
 }
 ```
@@ -36,43 +33,40 @@ This document outlines the steps to migrate from the old `@web3modal` packages t
 
 **Step 2. Update your AppKit config**
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following code lines
 import { createWeb3Modal } from "@web3modal/wagmi-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import { createAppKit } from "@reown/appkit-wagmi-react-native";
-/* highlight-add-end */
 ```
 
 **Step 3. Update your Hooks usage**
 Update your hook imports as follows:
 
-```tsx
-/* highlight-delete-start */
+```tsx {9-15}
+// Remove the following code lines
 import {
   useWeb3Modal,
   useWeb3ModalState,
   useWeb3ModalEvents,
   useWalletInfo,
 } from "@web3modal/wagmi-react-native";
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following code lines
 import {
   useAppKit,
   useAppKitState,
   useAppKitEvents,
   useWalletInfo,
 } from "@reown/appkit-wagmi-react-native";
-/* highlight-add-end */
 ```
 
 **Step 4. Update your Components usage**
 Update your component imports as follows:
 
-```tsx
-/* highlight-delete-start */
+```tsx {10-17}
+// Remove the following code lines
 import {
   W3mAccountButton,
   W3mButton,
@@ -80,8 +74,8 @@ import {
   W3mNetworkButton,
   Web3Modal,
 } from "@web3modal/wagmi-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import {
   AccountButton,
   AppKitButton,
@@ -89,31 +83,28 @@ import {
   NetworkButton,
   AppKit,
 } from "@reown/appkit-wagmi-react-native";
-/* highlight-add-end */
 ```
 
 **Step 5. Update your config for Universal Wallets**
 Update email wallet specific imports as follows:
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following code lines
 import { emailConnector } from "@web3modal/email-wagmi-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import { authConnector } from "@reown/appkit-auth-wagmi-react-native";
-/* highlight-add-end */
 ```
 
 **Step 6. Update your import to support Coinbase Wallet**
 Update coinbase connector import as follows:
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following code lines
 import { coinbaseConnector } from "@web3modal/coinbase-wagmi-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import { coinbaseConnector } from "@reown/appkit-coinbase-wagmi-react-native";
-/* highlight-add-end */
 ```
 
   </Tab>
@@ -122,22 +113,21 @@ import { coinbaseConnector } from "@reown/appkit-coinbase-wagmi-react-native";
 
 **Step 1. Replace the dependencies in your code and `package.json`**
 
-```json
+```json {9-14}
 {
   "dependencies": {
-    /* highlight-delete-start */
+    // Remove the following code lines
     "@web3modal/ethers-react-native": "2.0.4",
     "@web3modal/ethers5-react-native": "2.0.4",
     "@web3modal/email-ethers-react-native": "2.0.4",
     "@web3modal/coinbase-ethers-react-native": "2.0.4",
     "@web3modal/siwe-react-native": "2.0.4",
-    /* highlight-delete-end */
-    /* highlight-add-start */
+
+    // Add the following code lines
     "@reown/appkit-ethers-react-native": "1.0.0",
     "@reown/appkit-auth-ethers-react-native": "1.0.0",
     "@reown/appkit-coinbase-ethers-react-native": "1.0.0",
     "@reown/appkit-siwe-react-native": "1.0.0"
-    /* highlight-add-end */
   }
 }
 ```
@@ -146,20 +136,19 @@ import { coinbaseConnector } from "@reown/appkit-coinbase-wagmi-react-native";
 
 **Step 2. Update your AppKit config**
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following code lines
 import { createWeb3Modal } from "@web3modal/ethers-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import { createAppKit } from "@reown/appkit-ethers-react-native";
-/* highlight-add-end */
 ```
 
 **Step 3. Update your Hooks usage**
 Update your hook imports as follows:
 
-```tsx
-/* highlight-delete-start */
+```tsx {12-21}
+// Remove the following code lines
 import {
   useWeb3Modal,
   useWeb3ModalState,
@@ -169,8 +158,8 @@ import {
   useWeb3ModalError,
   useWalletInfo,
 } from "@web3modal/ethers-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import {
   useAppKit,
   useAppKitState,
@@ -180,14 +169,13 @@ import {
   useAppKitError,
   useWalletInfo,
 } from "@reown/appkit-ethers-react-native";
-/* highlight-add-end */
 ```
 
 **Step 4. Update your Components usage**
 Update your component imports as follows:
 
-```tsx
-/* highlight-delete-start */
+```tsx {11-17}
+// Remove the following code lines
 import {
   W3mAccountButton,
   W3mButton,
@@ -195,8 +183,8 @@ import {
   W3mNetworkButton,
   Web3Modal,
 } from "@web3modal/ethers-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import {
   AccountButton,
   AppKitButton,
@@ -204,30 +192,27 @@ import {
   NetworkButton,
   AppKit,
 } from "@reown/appkit-ethers-react-native";
-/* highlight-add-end */
 ```
 
 **Step 5. Update email wallet specific imports as follows:**
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following code lines
 import { EmailProvider } from "@web3modal/email-ethers-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import { AuthProvider } from "@reown/appkit-auth-ethers-react-native";
-/* highlight-add-end */
 ```
 
 **Step 6. Update your import to support Coinbase Wallet**
 Update coinbase connector import as follows:
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following code lines
 import { CoinbaseProvider } from "@web3modal/coinbase-ethers-react-native";
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import { CoinbaseProvider } from "@reown/appkit-coinbase-ethers-react-native";
-/* highlight-add-end */
 ```
 
   </Tab>

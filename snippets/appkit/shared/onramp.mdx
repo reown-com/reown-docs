@@ -18,16 +18,14 @@ If you prefer to disable it, set the `onramp` flag to `false` in the configurati
 On-Ramp is now available on **Solana**. The configuration for On-Ramp on both EVM and Solana is the same. Please refer to the code snippet below.
 </Note>
 
-```ts
+```ts {7}
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   networks: [mainnet, arbitrum],
   metadata: metadata,
   features: {
-    /* highlight-add-start */
     onramp: false // Optional - true by default
-    /* highlight-add-end */
   }
 })
 ```

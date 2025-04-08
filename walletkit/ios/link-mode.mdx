@@ -6,15 +6,13 @@ WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth r
 
 To support Link Mode add a universal link for your wallet in Cloud project configuration dashboard, configure your `AppMetadata.Redirect` with a valid universal link and set the `linkMode` property to `true`:
 
-```swift
+```swift {5,6}
 let metadata = AppMetadata(
     ...
     redirect: try! AppMetadata.Redirect(
         native: "exampleApp://",
-        /* highlight-add-start */
         universal: "https://example.com/example_wallet",
         linkMode: true
-        /* highlight-add-end */
     )
 )
 

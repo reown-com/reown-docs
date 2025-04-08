@@ -89,16 +89,14 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createWeb3Modal`, `defaultWagmiConfig` and wagmi packages
 
-```tsx
-/* highlight-delete-start */
+```tsx {5-7}
+// Remove the following code lines
 - import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 - import { Web3Modal } from '@web3modal/react'
-/* highlight-delete-end */
-/* highlight-add-start */
+
 + import { createWeb3Modal } from '@web3modal/wagmi/react'
 + import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 + import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-/* highlight-add-end */
 
 import { WagmiConfig } from 'wagmi'
 import { arbitrum, mainnet } from 'viem/chains'
@@ -106,20 +104,19 @@ import { arbitrum, mainnet } from 'viem/chains'
 
 Then create `wagmiConfig` using `defaultWagmiConfig` function as shown below
 
-```tsx
+```tsx {13-22}
 const chains = [arbitrum, mainnet]
 const projectId = 'YOUR_PROJECT_ID'
 
 /* Create Wagmi Config */
-/* highlight-delete-start */
+// Remove the following code lines
 - const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
 - const wagmiConfig = createConfig({
 -   autoConnect: true,
 -   connectors: w3mConnectors({ projectId, chains }),
 -   publicClient
 - })
-/* highlight-delete-end */
-/* highlight-add-start */
+
 + const queryClient = new QueryClient()
 
 + const metadata = {
@@ -130,7 +127,6 @@ const projectId = 'YOUR_PROJECT_ID'
 + }
 
 + const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-add-end */
 
 ```
 

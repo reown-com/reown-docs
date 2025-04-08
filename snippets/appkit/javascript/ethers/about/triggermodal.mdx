@@ -3,13 +3,11 @@ To open AppKit you can use our [**web component**](../../core/components) or bui
 <Tabs>
 <Tab title="Web Component">
 
-```html
+```html {3,4}
   <body>
     <div id="app">
-      /* highlight-add-start */
-      <appkit-button></appkit-button>
-      <appkit-network-button></appkit-network-button>
-      /* highlight-add-end */
+      <appkit-button />
+      <appkit-network-button />
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
@@ -29,7 +27,7 @@ You can trigger the modal by calling the `open` function from a modal instance r
 
 Let's first add two html button elements into our `index.html` file:
 
-```html
+```html {9,10}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,10 +36,8 @@ Let's first add two html button elements into our `index.html` file:
   </head>
   <body>
     <div id="app">
-      /* highlight-add-start */
       <button id="open-connect-modal">Open Modal</button>
       <button id="open-network-modal">Open Networks</button>
-      /* highlight-add-end */
     </div>
     <script type="module" src="main.js"></script>
   </body>
