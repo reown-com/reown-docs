@@ -171,7 +171,7 @@ walletKit.on("session_request", async (requestEvent) => {
 
 # Sessions Persistence/Management
 
-- sessions can be saved/stored so users dont have to pair repeatedly
+- sessions can be saved/stored so users don't have to pair repeatedly
 - sessions can be disconnected from using `await walletKit.disconnectSession({ topic: topic });` passing the session topic.
 - sessions can be extended using `await walletKit.extendSession({ topic: topic });` passing the session topic.
 - Default session lifetime is 7 days for WalletConnect v2.0.
