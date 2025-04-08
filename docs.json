@@ -53,7 +53,7 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Introduction",
+        "tab": "Docs",
         "pages": [
           {
             "group": "Introduction",
@@ -191,6 +191,7 @@
       },
       {
         "tab": "AppKit",
+        "icon": "layer-group",
         "dropdowns": [  
           {
             "dropdown": "AppKit - Overview",
