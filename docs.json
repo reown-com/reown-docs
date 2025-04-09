@@ -345,6 +345,15 @@
                     ]
                   }
                 ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/react/cloud/relay",
+                  "appkit/react/cloud/verify",
+                  "appkit/react/cloud/blockchain-api",
+                  "appkit/react/cloud/analytics"
+                ]
               }
             ]
           },
@@ -412,6 +421,15 @@
                     ]
                   }
                 ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/next/cloud/relay",
+                  "appkit/next/cloud/verify",
+                  "appkit/next/cloud/blockchain-api",
+                  "appkit/next/cloud/analytics"
+                ]
               }
             ]
           },
@@ -477,6 +495,15 @@
                       "appkit/vue/notifications/authorization-signatures/all-apps"
                     ]
                   }
+                ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/vue/cloud/relay",
+                  "appkit/vue/cloud/verify",
+                  "appkit/vue/cloud/blockchain-api",
+                  "appkit/vue/cloud/analytics"
                 ]
               }
             ]
@@ -544,6 +571,15 @@
                     ]
                   }
                 ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/javascript/cloud/relay",
+                  "appkit/javascript/cloud/verify",
+                  "appkit/javascript/cloud/blockchain-api",
+                  "appkit/javascript/cloud/analytics"
+                ]
               }
             ]
           },
@@ -593,6 +629,15 @@
                     ]
                   }
                 ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/react-native/cloud/relay",
+                  "appkit/react-native/cloud/verify",
+                  "appkit/react-native/cloud/blockchain-api",
+                  "appkit/react-native/cloud/analytics"
+                ]
               }
             ]
           },
@@ -615,6 +660,15 @@
                   "appkit/flutter/core/theming",
                   "appkit/flutter/core/custom-chains"
                 ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/flutter/cloud/relay",
+                  "appkit/flutter/cloud/verify",
+                  "appkit/flutter/cloud/blockchain-api",
+                  "appkit/flutter/cloud/analytics"
+                ]
               }
             ]
           },
@@ -634,6 +688,15 @@
                   "appkit/android/core/components",
                   "appkit/android/core/theming"
                 ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/android/cloud/relay",
+                  "appkit/android/cloud/verify",
+                  "appkit/android/cloud/blockchain-api",
+                  "appkit/android/cloud/analytics"
+                ]
               }
             ]
           },
@@ -651,6 +714,15 @@
                   "appkit/ios/core/actions",
                   "appkit/ios/core/one-click-auth",
                   "appkit/ios/core/custom-chains"
+                ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/ios/cloud/relay",
+                  "appkit/ios/cloud/verify",
+                  "appkit/ios/cloud/blockchain-api",
+                  "appkit/ios/cloud/analytics"
                 ]
               }
             ]
@@ -672,6 +744,15 @@
                   "appkit/unity/core/customization",
                   "appkit/unity/core/socials",
                   "appkit/unity/core/smart-accounts"
+                ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/unity/cloud/relay",
+                  "appkit/unity/cloud/verify",
+                  "appkit/unity/cloud/blockchain-api",
+                  "appkit/unity/cloud/analytics"
                 ]
               }
             ]
