@@ -817,7 +817,16 @@
               "walletkit/web/verify",
               "walletkit/web/eip5792",
               "walletkit/web/best-practices",
-              "walletkit/web/resources"
+              "walletkit/web/resources",
+              {
+                "group": "Cloud",
+                "pages": [
+                  "walletkit/web/cloud/explorer-submission",
+                  "walletkit/web/cloud/verify",
+                  "walletkit/web/cloud/relay",
+                  "walletkit/web/cloud/analytics"
+                ]
+              }
             ]
           },
           {
@@ -859,6 +868,15 @@
                 "group": "Early Access",
                 "pages": [
                   "walletkit/ios/early-access/chain-abstraction"
+                ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "walletkit/ios/cloud/explorer-submission",
+                  "walletkit/ios/cloud/verify",
+                  "walletkit/ios/cloud/relay",
+                  "walletkit/ios/cloud/analytics"
                 ]
               }
             ]
@@ -903,6 +921,15 @@
                 "pages": [
                   "walletkit/android/early-access/chain-abstraction"
                 ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "walletkit/android/cloud/explorer-submission",
+                  "walletkit/android/cloud/verify",
+                  "walletkit/android/cloud/relay",
+                  "walletkit/android/cloud/analytics"
+                ]
               }
             ]
           },
@@ -917,7 +944,16 @@
               "walletkit/flutter/mobile-linking",
               "walletkit/flutter/link-mode",
               "walletkit/flutter/verify",
-              "walletkit/flutter/eip5792"
+              "walletkit/flutter/eip5792",
+              {
+                "group": "Cloud",
+                "pages": [
+                  "walletkit/flutter/cloud/explorer-submission",
+                  "walletkit/flutter/cloud/verify",
+                  "walletkit/flutter/cloud/relay",
+                  "walletkit/flutter/cloud/analytics"
+                ]
+              }
             ]
           },
           {
@@ -953,6 +989,15 @@
                   },
                   "walletkit/react-native/notifications/push"
                 ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "walletkit/react-native/cloud/explorer-submission",
+                  "walletkit/react-native/cloud/verify",
+                  "walletkit/react-native/cloud/relay",
+                  "walletkit/react-native/cloud/analytics"
+                ]
               }
             ]
           },
@@ -963,7 +1008,16 @@
             "pages": [
               "walletkit/c-sharp/installation",
               "walletkit/c-sharp/usage",
-              "walletkit/c-sharp/verify"
+              "walletkit/c-sharp/verify",
+              {
+                "group": "Cloud",
+                "pages": [
+                  "walletkit/c-sharp/cloud/explorer-submission",
+                  "walletkit/c-sharp/cloud/verify",
+                  "walletkit/c-sharp/cloud/relay",
+                  "walletkit/c-sharp/cloud/analytics"
+                ]
+              }
             ]
           }
         ]
