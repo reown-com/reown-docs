@@ -57,7 +57,7 @@
         "pages": [
           {
             "group": "Introduction",
-            "pages": ["overview", "external-link-01"]
+            "pages": ["overview"]
           },
           {
             "group": "Guides",
@@ -185,7 +185,7 @@
           },
           {
             "group": "Technical Reference",
-            "pages": ["link-spec", "advanced/faq"]
+            "pages": ["link-spec", "external-link-01", "advanced/faq"]
           }
         ]
       },
