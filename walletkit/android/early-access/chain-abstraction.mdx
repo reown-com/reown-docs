@@ -110,7 +110,7 @@ When implementing Chain Abstraction, you may encounter different types of errors
 
 ### Application-Level Errors
 
-These errors (`PrepareDetailedResponse::Err`) indicate specific issues that need to be addressed and typically require user action:
+These errors (`PrepareError`) indicate specific issues that need to be addressed and typically require user action:
 
 - **Insufficient Gas Fees**: User needs to add more gas tokens to their wallet
 - **Malformed Transaction Requests**: Transaction parameters are invalid or incomplete
@@ -121,12 +121,8 @@ When handling these errors, you should display clear, user-friendly error messag
 
 ### Retryable Errors
 
-These errors (`Result::Err`) indicate temporary issues that may be resolved by retrying the operation:
-
-- **Local Network Issues**: DNS blocks, TLS inspection, TCP timeouts
-- **Server Issues**: 5xx errors, service outages
-- **Race Conditions**: Concurrent transaction conflicts
-- **Temporary RPC Errors**: Network connectivity issues
+These errors (`Result::Err`) indicate temporary issues that may be resolved by retrying the operation. 
+Examples of these types of issues include network connection timeouts, TLS negotiation issues, service outages, or other transient errors.
 
 For retryable errors, show a generic "oops" message to users and provide a retry button. Log detailed error information to your error tracking service, but avoid displaying technical details to end users.
 
@@ -136,14 +132,7 @@ For errors in the `execute()` method, a retry may not resolve the issue. In such
 
 ### Critical Errors
 
-Critical errors indicate bugs or implementation issues that should be treated as high-priority incidents:
-
-- **Unexpected State Transitions**: Invalid state changes in the transaction flow
-- **Contract Interaction Failures**: Issues with smart contract interactions
-- **Bridge Protocol Errors**: Problems with the bridging protocol implementation
-- **Security Violations**: Potential security-related issues
-
-From the user's perspective, treat these as retryable errors, but ensure you log the incident immediately for investigation and implement appropriate error tracking and monitoring.
+Critical errors indicate bugs or implementation issues that should be treated as high-priority incidents: incorrect usage of WalletKit API, wrong data encoding or wrong fields passed to WalletKit, or WalletKit internal bugs.
 
 ## Testing 
 

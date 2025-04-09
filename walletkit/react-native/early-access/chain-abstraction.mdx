@@ -19,7 +19,7 @@ Apps need to pass `gas` as null when sending a transaction to allow proper gas e
 
 When sending a transaction, you need to:
 1. Check if the required chain has enough funds to complete the transaction
-2. If not, use the `prepareDetailed` method to generate necessary bridging transactions
+2. If not, use the `prepare` method to generate necessary bridging transactions
 3. Sign routing and initial transaction hashes, prepared by the prepare method
 4. Use `execute` method to broadcast routing and initial transactions and wait for it to be completed
 
@@ -42,9 +42,9 @@ Following are the methods from WalletKit that you will use in implementing chain
 This method checks if a transaction requires additional bridging transactions beforehand.
 
 ```typescript
-public abstract prepareDetailed(params: {
+public abstract prepare(params: {
   transaction: ChainAbstractionTypes.PartialTransaction;
-}): ChainAbstractionTypes.PrepareDetailedResponse;
+}): ChainAbstractionTypes.PrepareResponse;
 ```
 
 ### Execute 
@@ -61,13 +61,13 @@ public abstract execute(params: {
 
 ## Usage
 
-When sending a transaction, first check if chain abstraction is needed using the `prepareDetailed` method. 
+When sending a transaction, first check if chain abstraction is needed using the `prepare` method. 
 If it is needed, you must sign all the fulfillment transactions and use the `execute` method. 
 Here's a complete example:
 
 ```typescript
 // Check if chain abstraction is needed
-const result = await walletKit.chainAbstraction.prepareDetailed({
+const result = await walletKit.chainAbstraction.prepare({
   transaction: {
     from: transaction.from as `0x${string}`,
     to: transaction.to as `0x${string}`,
@@ -108,7 +108,7 @@ When implementing Chain Abstraction, you may encounter different types of errors
 
 ### Application-Level Errors
 
-These errors (`PrepareDetailedResponse::Err`) indicate specific issues that need to be addressed and typically require user action:
+These errors (`PrepareError`) indicate specific issues that need to be addressed and typically require user action:
 
 - **Insufficient Gas Fees**: User needs to add more gas tokens to their wallet
 - **Malformed Transaction Requests**: Transaction parameters are invalid or incomplete
@@ -119,12 +119,8 @@ When handling these errors, you should display clear, user-friendly error messag
 
 ### Retryable Errors
 
-These errors (`Result::Err`) indicate temporary issues that may be resolved by retrying the operation:
-
-- **Local Network Issues**: DNS blocks, TLS inspection, TCP timeouts
-- **Server Issues**: 5xx errors, service outages
-- **Race Conditions**: Concurrent transaction conflicts
-- **Temporary RPC Errors**: Network connectivity issues
+These errors (`Result::Err`) indicate temporary issues that may be resolved by retrying the operation. 
+Examples of these types of issues include network connection timeouts, TLS negotiation issues, service outages, or other transient errors.
 
 For retryable errors, show a generic "oops" message to users and provide a retry button. Log detailed error information to your error tracking service, but avoid displaying technical details to end users.
 
@@ -134,14 +130,7 @@ For errors in the `execute()` method, a retry may not resolve the issue. In such
 
 ### Critical Errors
 
-Critical errors indicate bugs or implementation issues that should be treated as high-priority incidents:
-
-- **Unexpected State Transitions**: Invalid state changes in the transaction flow
-- **Contract Interaction Failures**: Issues with smart contract interactions
-- **Bridge Protocol Errors**: Problems with the bridging protocol implementation
-- **Security Violations**: Potential security-related issues
-
-From the user's perspective, treat these as retryable errors, but ensure you log the incident immediately for investigation and implement appropriate error tracking and monitoring.
+Critical errors indicate bugs or implementation issues that should be treated as high-priority incidents: incorrect usage of WalletKit API, wrong data encoding or wrong fields passed to WalletKit, or WalletKit internal bugs.
 
 ## Testing 
 
