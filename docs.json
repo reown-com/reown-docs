@@ -127,7 +127,8 @@
                       "advanced/multichain/rpc-reference/everscale-rpc",
                       "advanced/multichain/rpc-reference/bitcoin-rpc",
                       "advanced/multichain/rpc-reference/litecoin-rpc",
-                      "advanced/multichain/rpc-reference/dogecoin-rpc"
+                      "advanced/multichain/rpc-reference/dogecoin-rpc",
+                      "advanced/multichain/rpc-reference/multiversx-rpc"
                     ]
                   },
                   {
