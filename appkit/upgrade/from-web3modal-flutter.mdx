@@ -1,7 +1,6 @@
 ---
 title: Migration from Web3Modal to AppKit for Flutter
-pagination_next:
-displayed_sidebar: mainSidebar
+sidebarTitle: Reown AppKit - Flutter
 ---
 
 # Upgrade from Web3Modal to Reown AppKit for Flutter
@@ -12,26 +11,22 @@ This document outlines the steps to migrate from the old `web3modal_flutter` pac
 
 Remove `web3modal_flutter` dependency from pubspec.yaml and add `reown_appkit`:
 
-```dart
-/* highlight-delete-start */
+```dart {4}
+// Remove the code line below
 web3modal_flutter: ^X.Y.Z
-/* highlight-delete-end */
-/* highlight-add-start */
+
 reown_appkit: ^1.0.0
-/* highlight-add-end */
 ```
 
 Run `flutter clean && flutter pub get` after replacing the packages
 
 Then replace the imports...
 
-```dart
-/* highlight-delete-start */
+```dart {4}
+// Remove the code line below
 import 'package:web3modal_flutter/web3modal_flutter.dart';
-/* highlight-delete-end */
-/* highlight-add-start */
+
 import 'package:reown_appkit/reown_appkit.dart';
-/* highlight-add-end */
 ```
 
 ### Step 2. Update your AppKit's theme related classes
@@ -120,17 +115,15 @@ The way we used to manipulate the network presets has changed
   ]}
 />
 
-```tsx
-/* highlight-delete-start */
+```tsx {5-8}
+// Remove the code lines below
 W3MChainPresets.chains.addAll(W3MChainPresets.extraChains);
 W3MChainPresets.chains.addAll(W3MChainPresets.testChains);
-/* highlight-delete-end */
-/* highlight-add-start */
+
 final testNetworks = ReownAppKitModalNetworks.test['eip155'] ?? [];
 final extraNetworks = ReownAppKitModalNetworks.extra['eip155'] ?? [];
 ReownAppKitModalNetworks.addNetworks('eip155', testNetworks);
 ReownAppKitModalNetworks.addNetworks('eip155', extraNetworks);
-/* highlight-add-end */
 ```
 
 See more on [Custom networks section](../flutter/core/custom-chains)
@@ -141,13 +134,11 @@ Update your web3app instance within the service:
 
 If you use to subscribe to `web3App` events you should now change it to `appKit`. Example:
 
-```tsx
-/* highlight-delete-start */
+```tsx {4}
+// Remove the code line below
 _w3mService.web3App!.getActiveSessions();
-/* highlight-delete-end */
-/* highlight-add-start */
+
 _appKitModal.appKit!.getActiveSessions();
-/* highlight-add-end */
 ```
 
 Same for anything related to `_w3mService.web3App!...`

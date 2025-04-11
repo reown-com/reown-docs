@@ -2,9 +2,13 @@
 title: Link Mode
 ---
 
-WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth requests and session requests over Universal Links, reducing the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with network connections, especially when the user has an unstable internet connection.
+WalletKit Link Mode is a low latency mechanism for transporting [One-Click Auth](/walletkit/flutter/one-click-auth) requests and session requests over Universal Links, reducing the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with network connections, especially when the user has an unstable internet connection.
 
 By enabling it, the wallet and dapp will communicate through declared Universal Links on iOS and/or App Links on Android **even without an internet connection.**
+
+<Note>
+Make sure that [One-Click Auth](/walletkit/flutter/one-click-auth) is implemented before enabling Link Mode. 
+</Note>
 
 ### How to enable it:
 
@@ -14,7 +18,7 @@ By enabling it, the wallet and dapp will communicate through declared Universal 
 
 3. Set the `linkMode` property to `true`:
 
-```javascript
+```javascript {12,13}
 final _walletKit = ReownWalletKit(
   core: ReownCore(
     projectId: '{YOUR_PROJECT_ID}',
@@ -26,10 +30,8 @@ final _walletKit = ReownWalletKit(
     icons: ['https://example.com/logo.png'],
     redirect: Redirect(
       native: 'examplewallet://',
-      /* highlight-add-start */
       universal: 'https://example.com/wallet',
       linkMode: true,
-      /* highlight-add-end */
     ),
   ),
 );

@@ -1,36 +1,31 @@
 ---
-title: Migration from Web3Modal to AppKit
-pagination_next:
-displayed_sidebar: mainSidebar
+title:  Upgrade from Web3Modal to Reown AppKit on Unity
+sidebarTitle: Reown AppKit - Unity
 ---
-
-# Upgrade from Web3Modal to AppKit for Unity
 
 This document outlines the steps to migrate from the old `com.walletconnect` packages to the new `com.reown` package in your Unity project.
 
 ### Step 1. Replace the corresponding dependency in your manifest.json
 
-```json
+```json {6-7, 17-18}
 {
   "dependencies": {
-    /* highlight-delete-start */
+    // Remove the following code lines
     "com.walletconnect.web3modal": "1.0.0",
-    /* highlight-delete-end */
-    /* highlight-add-start */
+
+    // Add the following code lines
     "com.reown.appkit": "0.4.2"
-    /* highlight-add-end */
   },
   "scopedRegistries": [
     {
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
-        /* highlight-delete-start */
+        // Remove the following code lines
         "com.walletconnect",
-        /* highlight-delete-end */
-        /* highlight-add-start */
+
+        // Add the following code lines
         "com.reown"
-        /* highlight-add-end */
       ]
     }
   ]
@@ -39,7 +34,7 @@ This document outlines the steps to migrate from the old `com.walletconnect` pac
 
 Alternatively, you can use the OpenUPM CLI:
 
-```bash
+```bash {4-5}
 # Remove the old package
 openupm remove com.walletconnect.web3modal
 
@@ -112,33 +107,30 @@ recommend to rely on the IDE to automatically update the namespaces.
 
 Change `Web3Modal` to `AppKit` in your codebase. For example:
 
-```csharp
-/* highlight-delete-start */
+```csharp {4-5, 10-11}
+// Remove the following code line
 Web3Modal.Open();
-/* highlight-delete-end */
-/* highlight-add-start */
-AppKit.Open();
-/* highlight-add-end */
 
-/* highlight-delete-start */
+// Add the following code line
+AppKit.Open();
+
+// Remove the following code line
 await Web3Modal.Evm.SendTransactionAsync(address, value);
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code line
 await AppKit.Evm.SendTransactionAsync(address, value);
-/* highlight-add-end */
 ```
 
 ### Step 5. Rename USS variables
 
 If you customized any AppKit USS variables, simply change `--wui` part of the variable name to `--ro`. For example:
 
-```css
-/* highlight-delete-start */
+```css {4-5}
+// Remove the following code line
 --wui-color-accent-100: rgb(156, 81, 65);
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code line
 --ro-color-accent-100: rgb(156, 81, 65);
-/* highlight-add-end */
 ```
 
 ### Final notes

@@ -1,7 +1,6 @@
 ---
-pagination_next: appkit/react/core/installation
 title: Migrate from Web3Modal v5 to Reown AppKit Solana
-displayed_sidebar: mainSidebar
+sidebarTitle: AppKit Ethers
 ---
 
 # Upgrade Guide
@@ -66,7 +65,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-ethers
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
 You can start the AppKit configuration by using either the **default** or **advanced** mode.
 
@@ -77,17 +76,15 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```tsx
-/* highlight-delete-start */
+```tsx {5-8}
+// Remove the following imports
 - import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
 - import { arbitrum, mainnet } from 'viem/chains'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit/react'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { EthersAdapter } from '@reown/appkit-adapter-ethers'
-/* highlight-add-end */
 ```
 
 Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
@@ -103,20 +100,17 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* highlight-delete-start */
-+ const ethersConfig = defaultConfig({ ... })
-/* highlight-delete-end */
+// Remove the following code line
+- const ethersConfig = defaultConfig({ ... })
 ```
 
 Finally, set up the `EthersAdapter` and pass the other parameters to `createAppKit` function.
 
-```tsx
-/* highlight-delete-start */
--createWeb3Modal({ ethersConfig, projectId, chains }) +
-  /* highlight-delete-end */
+```tsx {4-13}
+// Remove the following code line
+-createWeb3Modal({ ethersConfig, projectId, chains })
 
-  /* highlight-add-start */
-  // import { createAppKit } from '@reown/appkit/react'
+// Add the following code lines
   createAppKit({
     adapters: [new EthersAdapter()],
     networks: [mainnet, arbitrum],
@@ -126,11 +120,10 @@ Finally, set up the `EthersAdapter` and pass the other parameters to `createAppK
       analytics: true,
     },
   });
-/* highlight-add-end */
 ```
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 You can start the AppKit configuration by using either the **default** or **advanced** mode.
 
@@ -141,16 +134,14 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```tsx
-/* highlight-delete-start */
-import { createWeb3Modal, defaultConfig } from "@web3modal/ethers/vue";
-/* highlight-delete-end */
+```tsx {4-8}
+// Remove the following imports
+- import { createWeb3Modal, defaultConfig } from "@web3modal/ethers/vue";
 
-/* highlight-add-start */
-import { createAppKit } from "@reown/appkit/vue";
-import { arbitrum, mainnet } from "@reown/appkit/networks";
-import { EthersAdapter } from "@reown/appkit-adapter-ethers";
-/* highlight-add-end */
+// Add the following imports
++ import { createAppKit } from "@reown/appkit/vue";
++ import { arbitrum, mainnet } from "@reown/appkit/networks";
++ import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 ```
 
 Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
@@ -166,22 +157,18 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* highlight-delete-start */
+// Remove the following code line
 - const ethersConfig = defaultConfig({ ... })
-/* highlight-delete-end */
 ```
 
 Finally, set up the `EthersAdapter` and pass the other parameters to `createAppKit` function.
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-13}
+// Remove the following code line
 - createWeb3Modal({ ethersConfig, projectId, chains })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit/vue'
-// import { EthersAdapter } from '@reown/appkit-adapter-ethers'
-+ const modal = createAppKit({
+// Add the following code lines
+ const modal = createAppKit({
  adapters: [new EthersAdapter()],
  networks: [mainnet, arbitrum],
  metadata,
@@ -190,26 +177,23 @@ Finally, set up the `EthersAdapter` and pass the other parameters to `createAppK
    analytics: true,
  }
 })
-/* highlight-add-end */
 ```
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Start by importing AppKit packages, then create EthersAdapter using your own settings or the default presets as shown below.
 
 Import `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```ts
-/* highlight-delete-start */
-import { createWeb3Modal, defaultConfig } from '@web3modal/ethers'
-/* highlight-delete-end */
+```ts {4-7}
+// Remove the following imports
+- import { createWeb3Modal, defaultConfig } from '@web3modal/ethers'
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { EthersAdapter } from '@reown/appkit-adapter-ethers'
-/* highlight-add-end */
 ```
 
 Then, remove the `defaultConfig` function that is being imported from the Ethers package in your code.
@@ -225,25 +209,21 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Ethers Config */
-/* highlight-delete-start */
+// Remove the existing Ethers Config as shown below
 - const ethersConfig = defaultConfig({ ... })
-/* highlight-delete-end */
 ```
 
 Finally, set up the `EthersAdapter` and pass the other parameters to `createAppKit` function.
 
-```ts
-/* highlight-delete-start */
+```ts {8-17}
+// Remove the following code line
 - const modal = createWeb3Modal({
   ethersConfig,
   projectId,
   enableAnalytics: true
 })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit'
+// Add the following code lines
 + const modal = createAppKit({
   adapters: [new EthersAdapter()],
   networks: [mainnet, arbitrum],
@@ -253,7 +233,6 @@ Finally, set up the `EthersAdapter` and pass the other parameters to `createAppK
     analytics: true
   }
 })
-/* highlight-add-end */
 ```
 
 </Tab>
@@ -265,19 +244,16 @@ Finally, set up the `EthersAdapter` and pass the other parameters to `createAppK
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-9}
+// Remove the following import
 - import { useWeb3Modal } from '@web3modal/ethers/react'
-/* highlight-delete-end */
-/* highlight-add-start */
-+ import { useAppKit } from '@reown/appkit/react'
-/* highlight-add-end */
 
+// Add the following import
++ import { useAppKit } from '@reown/appkit/react'
 function HomePage() {
   const { open } = useAppKit()
-
   return <button onClick={open}>Connect</button>
 }
 ```
@@ -285,7 +261,7 @@ function HomePage() {
 Learn more about Reown AppKit [here](../react/core/installation)
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 Use your own button to open the modal
 
@@ -300,7 +276,7 @@ document.getElementById('my-button').addEventListener('click', () => {
 Learn more about Reown AppKit JavaScript [here](../javascript/core/installation)
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Use your own button to open the modal
 
@@ -374,14 +350,13 @@ Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather t
 - (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
 - (Reown AppKit v1) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-6}
+// Remove the following code line
 modal.switchNetwork(137);
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import { polygon } from "@reown/appkit/networks";
 modal.switchNetwork(polygon);
-/* highlight-add-end */
 ```
 
 </Info>

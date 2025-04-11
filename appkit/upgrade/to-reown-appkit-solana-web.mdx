@@ -1,7 +1,6 @@
 ---
-pagination_next: appkit/react/core/installation
 title: Migrate from Web3Modal v5 to Reown AppKit Solana
-displayed_sidebar: mainSidebar
+sidebarTitle: AppKit Solana
 ---
 
 # Upgrade Guide
@@ -66,47 +65,32 @@ pnpm add @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-walle
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 Make sure you update the imports in your codebase to reflect the new package names.
-```tsx
-/* highlight-delete-start */
+
+```tsx {4-9}
+// Remove the following imports
 - import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
 - import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
-/* highlight-delete-end */
 
-/_ highlight-add-start _/
+// Add the following imports
++ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
++ import { createAppKit } from '@reown/appkit/react'
++ import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
+```
 
-- import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks
-
-  '
-
-- import { createAppKit } from '@reown/appkit/react
-
-  '
-
-- import { SolanaAdapter } from '@reown/appkit-adapter-solana/react
-
-  '
-
-- import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
-/* highlight-add-end *
-
-  /
-
-````
 Now, set up the Solana Adapter and the modal.
 
 The `chains` property is now `networks` in Reown AppKit. You should import them from `@reown/appkit/networks` package instead of importing these networks other packages.
 
 The `metadata` and the `projectId` are the same as before.
 
-```tsx
-/* highlight-delete-start */
+```tsx {5-15}
+// Remove the following code lines
 - const solanaConfig = defaultSolanaConfig({ ... });
 - createWeb3Modal( ... });
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following code lines
 + const solanaAdapter = new SolanaAdapter({
 +   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 + })
@@ -117,38 +101,21 @@ The `metadata` and the `projectId` are the same as before.
 +   networks: [solana, solanaTestnet, solanaDevnet],
 +   adapters: [solanaAdapter],
 + })
-/* highlight-add-end */
-````
+```
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 Make sure you update the imports in your codebase to reflect the new package names.
-```tsx
-/* highlight-delete-start */
+```tsx {4-13}
+// Remove the following imports
 - import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/vue'
 - import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
-/* highlight-delete-end */
 
-/_ highlight-add-start _/
-
-- import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks
-
-  '
-
-- import { createAppKit } from '@reown/appkit/vue
-
-  '
-
-- import { SolanaAdapter } from '@reown/appkit-adapter-solana/vue
-
-  '
-
-- import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
-/* highlight-add-end *
-
-  /
-
-````
+// Add the following imports
++ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
++ import { createAppKit } from '@reown/appkit/vue'
++ import { SolanaAdapter } from '@reown/appkit-adapter-solana/vue'
+```
 
 Now, set up the Solana Adapter and the modal.
 
@@ -156,13 +123,12 @@ The `chains` property is now `networks` in Reown AppKit. You should import them 
 
 The `metadata` and the `projectId` are the same as before.
 
-```tsx
-/* highlight-delete-start */
+```tsx {5-15}
+// Remove the following code lines
 - const solanaConfig = defaultSolanaConfig({ ... });
 - createWeb3Modal( ... });
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following code lines
 + const solanaAdapter = new SolanaAdapter({
 +   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 + })
@@ -173,51 +139,35 @@ The `metadata` and the `projectId` are the same as before.
 +   networks: [solana, solanaTestnet, solanaDevnet],
 +   adapters: [solanaAdapter],
 + })
-/* highlight-add-end */
-````
+```
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 Make sure you update the imports in your codebase to reflect the new package names.
-```tsx
-/* highlight-delete-start */
+
+```tsx {5-8}
+// Remove the following imports
 - import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
 - import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
-/* highlight-delete-end */
 
-/_ highlight-add-start _/
+// Add the following imports
++ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
++ import { createAppKit } from '@reown/appkit'
++ import { SolanaAdapter } from '@reown/appkit-adapter-solana'
+```
 
-- import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks
-
-  '
-
-- import { createAppKit } from '@reown/appkit
-
-  '
-
-- import { SolanaAdapter } from '@reown/appkit-adapter-solana
-
-  '
-
-- import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
-/* highlight-add-end *
-
-  /
-
-````
 Now, set up the Solana Adapter and the modal.
 
 The `chains` property is now `networks` in Reown AppKit. You should import them from `@reown/appkit/networks` package instead of importing these networks other packages.
 
 The `metadata` and the `projectId` are the same as before.
 
-```tsx
-/* highlight-delete-start */
+```tsx {5-15}
+// Remove the following code lines
 - const solanaConfig = defaultSolanaConfig({ ... });
 - createWeb3Modal( ... });
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following code lines
 + const solanaAdapter = new SolanaAdapter({
 +   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
 + })
@@ -228,8 +178,7 @@ The `metadata` and the `projectId` are the same as before.
 +   networks: [solana, solanaTestnet, solanaDevnet],
 +   adapters: [solanaAdapter],
 + })
-/* highlight-add-end */
-````
+```
 
 </Tab>
 
@@ -241,19 +190,16 @@ The `metadata` and the `projectId` are the same as before.
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-10}
+// Remove the following code line
 - import { useWeb3Modal } from '@web3modal/wagmi/react'
-/* highlight-delete-end */
-/* highlight-add-start */
-+ import { useAppKit } from '@reown/appkit/react'
-/* highlight-add-end */
 
+// Add the following code lines
++ import { useAppKit } from '@reown/appkit/react'
 function HomePage() {
   const { open } = useAppKit()
-
   return <button onClick={open}>Connect</button>
 }
 ```
@@ -261,7 +207,7 @@ function HomePage() {
 Learn more about Reown AppKit [here](../react/core/installation)
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 Use your own button with to open the modal
 
@@ -276,7 +222,7 @@ document.getElementById('my-button').addEventListener('click', () => {
 Learn more about Reown AppKit JavaScript [here](../javascript/core/installation)
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Use your own button with to open the modal
 
@@ -350,14 +296,13 @@ Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather t
 - (v5) - switchNetwork(103) -> switches the chain to Solana Devnet as we are passing Solana Devnet's chain id.
 - (Reown AppKit v1) - switchNetwork(solanaDevnet) -> `solanaDevnet` is imported from `@reown/appkit/networks`.
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-7}
+// Remove the following code line
 modal.switchNetwork(103);
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following code lines
 import { solanaDevnet } from "@reown/appkit/networks";
 modal.switchNetwork(solanaDevnet);
-/* highlight-add-end */
 ```
 
 </Info>

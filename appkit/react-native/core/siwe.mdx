@@ -100,14 +100,12 @@ export const siweConfig = createSIWEConfig({
 
 Add the siwe configuration in `createAppKit` initialization
 
-```ts
+```ts {5}
 import { siweConfig } from "./siweConfig.ts";
 
 createAppKit({
   //..
-  /* highlight-add-start */
   siweConfig,
-  /* highlight-add-end */
 });
 ```
 

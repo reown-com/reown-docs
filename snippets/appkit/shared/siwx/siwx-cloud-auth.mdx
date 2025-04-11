@@ -31,19 +31,17 @@ pnpm add @reown/appkit-siwx
 
 ### Usage
 
-```ts
+```ts {2-3, 9-10}
 import { createAppKit } from '@reown/appkit'
-/* highlight-add-start */
+// Add the following code line
 import { CloudAuthSIWX } from '@reown/appkit-siwx'
-/* highlight-add-end */
 
 const appkit = createAppKit({
   projectId,
   networks,
   metadata,
-  /* highlight-add-start */
+  // Add the following code line
   siwx: new CloudAuthSIWX()
-  /* highlight-add-end */
 })
 ```
 
@@ -51,7 +49,7 @@ Now you are ready to use the **SIWX** feature in your Dapp.
 
 ## User Management
 
-Easily view and manage all authenticated users through AppKit [Cloud Auth SIWX](/appkit/features/siwx/siwx-cloud-auth), a drop-in hosted SIWX server that provides key insights into your user base.
+Easily view and manage all authenticated users through AppKit [Cloud Auth SIWX](/appkit/authentication/siwx/siwx-cloud-auth), a drop-in hosted SIWX server that provides key insights into your user base.
 
 
 ### Dashboard

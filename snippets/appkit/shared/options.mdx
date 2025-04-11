@@ -189,12 +189,24 @@ createAppKit({
 
 </Tab>
 </Tabs>
+
 ## enableWalletConnect
 
 Enable or disable WalletConnect QR feature. Default is `true`.
 
 ```ts
 enableWalletConnect: false;
+```
+
+## enableNetworkSwitch
+
+Enables or disables the network switching functionality in the modal. The default is `true`.
+
+```ts
+createAppKit({
+  //...
+  enableNetworkSwitch: false,
+});
 ```
 
 ## debug
@@ -462,13 +474,11 @@ export const config = wagmiAdapter.wagmiConfig;
 </Tab>
 <Tab title="Ethers">
 
-```ts
+```ts {4}
 createAppKit({
   //...
   enableCoinbase: true, // true by default
-  /* highlight-add-start */
   coinbasePreference: "smartWalletOnly",
-  /* highlight-add-end */
 });
 ```
 </Tab>
@@ -547,3 +557,27 @@ const wagmiAdapter = new WagmiAdapter({
 ```
 
 </Note>
+
+## universalProviderConfigOverride
+
+Lets you customize specific aspects of the provider's behavior.
+
+```ts
+createAppKit({
+  //...
+  universalProviderConfigOverride: {
+    methods: { eip155: ['eth_sendTransaction', 'personal_sign'] },
+    chains: { eip155: ['1', '137'] },
+    events: { eip155: ['chainChanged', 'accountsChanged'] },
+    rpcMap: { eip155:1: 'https://ethereum.publicnode.com' },
+    defaultChain: 'eip155:1'
+  },
+});
+```
+
+You can override any of the following properties:
+- `methods`: Custom RPC methods for each namespace
+- `chains`: Supported chains for each namespace
+- `events`: Events to subscribe to for each namespace
+- `rpcMap`: Custom RPC URLs for specific chains
+- `defaultChain`: The default chain to connect to

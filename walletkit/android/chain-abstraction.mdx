@@ -20,10 +20,15 @@ The following methods from WalletKit are used in implementing chain abstraction.
 This method is used to check if chain abstraction is needed. If it is, it will return a `PrepareSuccess.Available` object with the necessary transactions and funding information. 
 If it is not, it will return a `PrepareSuccess.NotRequired` object with the original transaction. 
 
+<Note>
+Accounts field is a list of CAIP-20 accounts you are sourcing from e.g. Solana account
+</Note>
+
 ```kotlin 
 @ChainAbstractionExperimentalApi
 fun prepare(
   initialTransaction: Wallet.Model.InitialTransaction,
+  accounts: List<String>,
   onSuccess: (Wallet.Model.PrepareSuccess) -> Unit,
   onError: (Wallet.Model.PrepareError) -> Unit
 )
@@ -38,7 +43,7 @@ The method returns a `ExecuteSuccess` object with the transaction hash and recei
 @ChainAbstractionExperimentalApi
 fun execute(
   prepareAvailable: Wallet.Model.PrepareSuccess.Available,
-  prepareSignedTxs: List<String>,
+  prepareSignedTxs: List<Wallet.Model.RouteSig>,
   initSignedTx: String,
   onSuccess: (Wallet.Model.ExecuteSuccess) -> Unit,
   onError: (Wallet.Model.Error) -> Unit
@@ -56,17 +61,29 @@ If the operation is unsuccessful, send the JsonRpcError to the dapp and display 
     val initialTransaction = Wallet.Model.Transaction(...)
     WalletKit.ChainAbstraction.prepare(
       initialTransaction,
+      caip10Accounts,
       onSuccess = { prepareSuccess ->
         when (prepareSuccess) {
           is Wallet.Model.PrepareSuccess.Available -> {
-            //Sign all the fulfilment transactions and init transaction
-            //Use execute method
+            // If the route is available, present a CA transaction flow
+
+            //sign route transactions
+            transactionsDetails?.route?.forEach { route ->
+              route.transactionDetails.forEach { transactionDetails ->
+                val signedTransaction = Signer.signHash(transactionDetails.transactionHashToSign, EthAccountDelegate.privateKey)
+                eip155Signatures.add(signedTransaction)
+              }
+            }
+          }
+
+          //sign initial transaction
+          val signedInitialTx = Signer.signHash(transactionsDetails?.initialDetails.transactionHashToSign, EthAccountDelegate.privateKey)
             
             //Call the execute
-            WalletKit.ChainAbstraction.execute(prepareSuccess, prepareSignedTxs, initSignedTx
+            WalletKit.ChainAbstraction.execute(prepareSuccess, eip155Signatures, signedInitialTx
                 onSuccess = {
                     //The execution of the Chain Abstraction is successfull
-                    //Send the response to the Dapp
+                    //Send the response to the Dapp or show to the user
                 },
                 onError = {
                     //Execute error - wallet should send the JsonRpcError to a dapp for given request and display error to the user
@@ -75,7 +92,7 @@ If the operation is unsuccessful, send the JsonRpcError to the dapp and display 
           }
 
           is Wallet.Model.PrepareSuccess.NotRequired -> {
-              //Chain abstraction is not required, handle transaction as usual
+                  // user does not need to move funds from other chains, sign and broadcast original transaction
           }
         }
       },
@@ -97,107 +114,6 @@ You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
   <source src="/images/assets/chain-abstraction-demo.mp4" type="video/mp4" />
 </video>
-
-## Types
-
-Following are the types that are used in the chain abstraction methods.
-
-```kotlin
- data class Transaction(
-    var from: String,
-    var to: String,
-    var value: String,
-    var gasLimit: String,
-    var input: String,
-    var nonce: String,
-    var chainId: String
-)
-
-data class InitialTransaction(
-    var from: String,
-    var to: String,
-    var value: String,
-    var input: String,
-    var chainId: String
-)
-
-data class FeeEstimatedTransaction(
-    var from: String,
-    var to: String,
-    var value: String,
-    var gasLimit: String,
-    var input: String,
-    var nonce: String,
-    var maxFeePerGas: String,
-    var maxPriorityFeePerGas: String,
-    var chainId: String
-)
-
-sealed class PrepareSuccess {
-  data class Available(
-    val orchestratorId: String,
-    val checkIn: Long,
-    val transactions: List<Transaction>,
-    val initialTransaction: Transaction,
-    val initialTransactionMetadata: InitialTransactionMetadata,
-    val funding: List<FundingMetadata>,
-    val transactionsDetails: TransactionsDetails
-  ) : PrepareSuccess()
-
-  data class NotRequired(val initialTransaction: Transaction) : PrepareSuccess()
-}
-
-data class InitialTransactionMetadata(
-  var symbol: String,
-  var amount: String,
-  var decimals: Int,
-  var tokenContract: String,
-  var transferTo: String
-)
-
-data class FundingMetadata(
-  var chainId: String,
-  var tokenContract: String,
-  var symbol: String,
-  var amount: String,
-  var bridgingFee: String,
-  var decimals: Int
-)
-
-sealed class PrepareError : Model() {
-  data object NoRoutesAvailable : PrepareError()
-  data object InsufficientFunds : PrepareError()
-  data object InsufficientGasFunds : PrepareError()
-  data class Unknown(val message: String) : PrepareError()
-}
-
-data class TransactionsDetails(
-  var details: List<TransactionDetails>,
-  var initialDetails: TransactionDetails,
-  var bridgeFees: List<TransactionFee>,
-  var localBridgeTotal: Amount,
-  var localFulfilmentTotal: Amount,
-  var localTotal: Amount
-)
-
-data class TransactionDetails(
-  var transaction: FeeEstimatedTransaction,
-  var transactionFee: TransactionFee
-)
-
-data class TransactionFee(
-  var fee: Amount,
-  var localFee: Amount
-)
-
-data class Amount(
-  var symbol: String,
-  var amount: String,
-  var unit: String,
-  var formatted: String,
-  var formattedAlt: String
-)
-```
 
 ## ProGuard rules
 

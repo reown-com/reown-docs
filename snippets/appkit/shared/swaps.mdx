@@ -23,16 +23,14 @@ The Swaps feature is enabled by default, so no additional configuration is requi
 
 If you prefer to disable it, set the `swaps` flag to `false` in the configuration of the `createAppKit` function.
 
-```ts
+```ts {7}
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   networks: [mainnet, arbitrum],
   metadata: metadata,
   features: {
-    /* highlight-add-start */
     swaps: false // Optional - true by default
-    /* highlight-add-end */
   }
 })
 ```

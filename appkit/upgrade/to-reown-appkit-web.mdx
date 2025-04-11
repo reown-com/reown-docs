@@ -1,7 +1,6 @@
 ---
-pagination_next: appkit/react/core/installation
 title: Migrate from Web3Modal v5 to Reown AppKit
-displayed_sidebar: mainSidebar
+sidebarTitle: AppKit Wagmi
 ---
 
 # Upgrade Guide
@@ -28,7 +27,7 @@ This guide will help you upgrade from Web3Modal v5 using Wagmi to the latest Reo
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
 To upgrade from Web3Modal v5 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `Wagmi` and `Viem`.
 
@@ -52,7 +51,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
 </CodeGroup>
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 To upgrade from Web3Modal v5 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `@wagmi/core` and `Viem`.
 
@@ -76,7 +75,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi
 </CodeGroup>
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 To upgrade from Web3Modal v5 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum`, `Wagmi` and `@web3modal/vue`. Now you can install AppKit library and update `Viem`.
 
@@ -108,7 +107,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vu
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
 You can start the AppKit configuration by using either the **default** or **advanced** mode.
 
@@ -119,25 +118,23 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```tsx
-/* highlight-delete-start */
+```tsx {6-9}
+// Remove the following imports
 - import { createWeb3Modal } from '@web3modal/wagmi/react'
 - import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 - import { arbitrum, mainnet } from 'viem/chains'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit/react'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-/* highlight-add-end */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {13-18}
 const projectId = 'YOUR_PROJECT_ID'
 const queryClient = new QueryClient()
 
@@ -148,29 +145,23 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
+// Remove the existing Wagmi Config
 + const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 ```
 
 Finally, pass `wagmiAdapter` and other parameters to `createAppKit`
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-13, 21-22}
+// Remove the following line
 - createWeb3Modal({ wagmiConfig, projectId, chains })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit/react'
+// Add the following line
 + createAppKit({
  adapters: [wagmiAdapter],
  networks: [mainnet, arbitrum],
@@ -180,29 +171,26 @@ Finally, pass `wagmiAdapter` and other parameters to `createAppKit`
    analytics: true,
  }
 })
-/* highlight-add-end */
 
 export default function App() {
   return (
     <>
-/* highlight-delete-start */
--      <WagmiProvider config={wagmiConfig}>
-/* highlight-delete-end */
-/* highlight-add-start */
-+      <WagmiProvider config={wagmiAdapter.wagmiConfig}>
-/* highlight-add-end */
+    // Remove the following line
+-   <WagmiProvider config={wagmiConfig}>
 
+    // Add the following line
++   <WagmiProvider config={wagmiAdapter.wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-          <HomePage />
-       </QueryClientProvider>
-      </WagmiProvider>
+        <HomePage />
+      </QueryClientProvider>
+    </WagmiProvider>
     </>
   )
 }
 ```
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 You can start the AppKit configuration by using either the **default** or **advanced** mode.
 
@@ -213,24 +201,22 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```tsx
-/* highlight-delete-start */
-import { createWeb3Modal } from "@web3modal/wagmi/vue";
-import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
-import { WagmiConfig } from "wagmi";
-import { arbitrum, mainnet } from "viem/chains";
-/* highlight-delete-end */
+```tsx {7-10}
+// Remove the following imports
+- import { createWeb3Modal } from "@web3modal/wagmi/vue";
+- import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
+- import { WagmiConfig } from "wagmi";
+- import { arbitrum, mainnet } from "viem/chains";
 
-/* highlight-add-start */
-import { createAppKit } from "@reown/appkit/vue";
-import { arbitrum, mainnet } from "@reown/appkit/networks";
-import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-/* highlight-add-end */
+// Add the following imports
++ import { createAppKit } from "@reown/appkit/vue";
++ import { arbitrum, mainnet } from "@reown/appkit/networks";
++ import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {12-17}
 const projectId = 'YOUR_PROJECT_ID'
 
 const metadata = { //optional
@@ -240,29 +226,23 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
+// Remove the existing Wagmi Config
 - const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 ```
 
 Pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-13}
+// Remove the following code line
 - createWeb3Modal({ wagmiConfig, projectId, chains })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit/vue'
+// Add the following code lines
 + const modal = createAppKit({
  adapters: [wagmiAdapter],
  networks: [mainnet, arbitrum],
@@ -272,53 +252,53 @@ Pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
    analytics: true,
  }
 })
-/* highlight-add-end */
 ```
 
 Finally, you need to initialized Vue Query in the `main.ts`
 
-```tsx
-import { createApp } from "vue";
-/* highlight-add-start */
-import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query";
-/* highlight-add-end */
-import App from "./App.vue";
+```tsx {8-9, 12-13, 16-17}
+// Remove the following code lines
+- import { createWeb3Modal } from "@web3modal/wagmi/vue";
+- import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
+- import { WagmiConfig } from "wagmi";
+- import { arbitrum, mainnet } from "viem/chains";
 
-/* highlight-add-start */
+import { createApp } from "vue";
+// Add the following import
+import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query";
+
+import App from "./App.vue";
+// Add the following code line
 const queryClient = new QueryClient();
-/* highlight-add-end */
 
 createApp(App)
-  /* highlight-add-start */
+  // Add the following code line
   .use(VueQueryPlugin, { queryClient })
-  /* highlight-add-end */
   .mount("#app");
 ```
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Start by importing AppKit packages, then create wagmiAdapter using your own settings or the default presets as shown below. Finally, pass wagmiAdapter to AppKit as one of the adapters.
 
 Import `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```ts
-/* highlight-delete-start */
+```ts {6-9}
+// Remove the following imports
 - import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 - import { createConfig } from '@wagmi/core'
 - import { arbitrum, mainnet } from 'viem/chains'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-/* highlight-add-end */
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {14-19}
 const projectId = 'YOUR_PROJECT_ID'
 const queryClient = new QueryClient()
 
@@ -329,33 +309,27 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
+// Remove the existing Wagmi Config
 - const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 ```
 
 Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 
-```ts
-/* highlight-delete-start */
+```ts {8-17}
+// Remove the following code lines
 - const modal = createWeb3Modal({
   wagmiConfig,
   projectId,
   enableAnalytics: true
 })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit'
+// Add the following code lines
 + const modal = createAppKit({
   adapters: [wagmiAdapter],
   networks: [mainnet, arbitrum],
@@ -365,7 +339,6 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
     analytics: true
   }
 })
-/* highlight-add-end */
 ```
 
 </Tab>
@@ -377,15 +350,14 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following import
 - import { useWeb3Modal } from '@web3modal/wagmi/react'
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following import
 + import { useAppKit } from '@reown/appkit/react'
-/* highlight-add-end */
 
 function HomePage() {
   const { open } = useAppKit()
@@ -399,7 +371,7 @@ function HomePage() {
 Learn more about Reown AppKit [here](../react/core/installation).
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 Use your own button with to open the modal.
 
@@ -433,7 +405,7 @@ Use your own button with to open the modal.
 Learn more about integrating Reown AppKit with Vue [here](../vue/core/installation).
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Use your own button with to open the modal.
 
@@ -509,14 +481,13 @@ Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather t
 - (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
 - (Reown AppKit v1) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
 
-```tsx
-/* highlight-delete-start */
-modal.switchNetwork(137);
-/* highlight-delete-end */
-/* highlight-add-start */
-import { polygon } from "@reown/appkit/networks";
-modal.switchNetwork(polygon);
-/* highlight-add-end */
+```tsx {4-6}
+// Remove the following code line
+- modal.switchNetwork(137);
+
+// Add the following code lines
++ import { polygon } from "@reown/appkit/networks";
++ modal.switchNetwork(polygon);
 ```
 
 </Info>
@@ -570,7 +541,7 @@ The following methods and listeners are exactly the same and do not have any spe
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
 To upgrade from Web3Modal v4 to Reown AppKit start by removing Web3Modal v4 dependencies `@web3modal/wagmi`. Now you can install AppKit library and update `Wagmi` `@tanstack/react-query` and `Viem`.
 
@@ -594,7 +565,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi
 </CodeGroup>
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 To upgrade from Web3Modal v4 to Reown AppKit start by removing Web3Modal v4 dependencies `@web3modal/wagmi`. Now you can install AppKit library and update `@wagmi/core`, `@wagmi/connectors` and `Viem`.
 
@@ -618,7 +589,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi
 </CodeGroup>
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 To upgrade from Web3Modal v4 to Reown AppKit start by removing Web3Modal v4 dependencies `@web3modal/ethereum` and `@web3modal/vue`. Now you can install AppKit library and update `Wagmi` and `Viem`.
 
@@ -650,7 +621,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vu
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
 You can start the AppKit configuration by using either the **default** or **advanced** mode.
 
@@ -661,26 +632,24 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```tsx
-/* highlight-delete-start */
+```tsx {5-10}
+// Remove the following imports
 - import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 - import { WagmiConfig } from 'wagmi'
 - import { arbitrum, mainnet } from 'wagmi/chains'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit/react'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 + import { WagmiProvider } from 'wagmi'
-/* highlight-add-end */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {14-18}
 const projectId = 'YOUR_PROJECT_ID'
 const queryClient = new QueryClient()
 
@@ -691,29 +660,23 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
-+ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
+// Remove the existing Wagmi Config
+- const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 ```
 
 Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-13, 21-22, 29-30}
+// Remove the following code line
 - createWeb3Modal({ wagmiConfig, projectId, chains })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit/react'
+// Add the following code lines
 + createAppKit({
  adapters: [wagmiAdapter],
  networks: [mainnet, arbitrum],
@@ -723,34 +686,30 @@ Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
    analytics: true,
  }
 })
-/* highlight-add-end */
 
 export default function App() {
   return (
     <>
-/* highlight-delete-start */
--      <WagmiConfig config={wagmiConfig}>
-/* highlight-delete-end */
-/* highlight-add-start */
-+      <WagmiProvider config={wagmiAdapter.wagmiConfig}>
-/* highlight-add-end */
+    // Remove the following code line
+-   <WagmiConfig config={wagmiConfig}>
 
-      <QueryClientProvider client={queryClient}>
-          <HomePage />
-       </QueryClientProvider>
-/* highlight-delete-start */
--      <WagmiConfig />
-/* highlight-delete-end */
-/* highlight-add-start */
-+      </WagmiProvider>
-/* highlight-add-end */
+    // Add the following code line
++   <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+    <QueryClientProvider client={queryClient}>
+      <HomePage />
+    </QueryClientProvider>
+    // Remove the following code line
+-   <WagmiConfig />
+
+    // Add the following code line
++   </WagmiProvider>
     </>
   )
 }
 ```
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 You can start the AppKit configuration by using either the **default** or **advanced** mode.
 
@@ -761,24 +720,22 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```tsx
-/* highlight-delete-start */
+```tsx {5-10}
+// Remove the following imports
 - import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/vue'
 - import { WagmiConfig } from 'wagmi'
 - import { arbitrum, mainnet } from 'wagmi/chains'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit/vue'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 + import { WagmiPlugin } from '@wagmi/vue';
-/* highlight-add-end */
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {12-17}
 const projectId = 'YOUR_PROJECT_ID'
 
 const metadata = { //optional
@@ -788,29 +745,23 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
+// Remove the existing Wagmi Config
 - const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 ```
 
 Pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-13, 18-19, 21-22}
+// Remove the following code line
 - createWeb3Modal({ wagmiConfig, projectId, chains })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit/vue'
+// Add the following code lines
 + const modal = createAppKit({
  adapters: [wagmiAdapter],
  networks: [mainnet, arbitrum],
@@ -820,18 +771,15 @@ Pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
    analytics: true,
  }
 })
-/* highlight-add-end */
 
 export default function App() {
   return (
     <>
-/* highlight-add-start */
-+      <WagmiPlugin config="{{ wagmiAdapter.wagmiConfig }}">
-/* highlight-add-end */
-            <HomePage />
-/* highlight-add-start */
-      </WagmiPlugin>
-/* highlight-add-end */
+    // Add the following code line
++   <WagmiPlugin config="{{ wagmiAdapter.wagmiConfig }}">
+      <HomePage />
+    // Add the following code line
++   </WagmiPlugin>
     </>
   )
 }
@@ -839,48 +787,45 @@ export default function App() {
 
 Finally, you need to initialized Vue Query in the `main.ts`
 
-```tsx
+```tsx {4-6, 8-9, 12-13}
+// Remove the following import
 import { createApp } from "vue";
-/* highlight-add-start */
-import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query";
-/* highlight-add-end */
-import App from "./App.vue";
 
-/* highlight-add-start */
-const queryClient = new QueryClient();
-/* highlight-add-end */
+// Add the following imports
++ import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query";
++ import App from "./App.vue";
+
+// Add the following code line
++ const queryClient = new QueryClient();
 
 createApp(App)
-  /* highlight-add-start */
+  // Add the following code line
   .use(VueQueryPlugin, { queryClient })
-  /* highlight-add-end */
   .mount("#app");
 ```
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Start by importing AppKit packages, then create wagmiAdapter using your own settings or the default presets as shown below. Finally, pass wagmiAdapter to AppKit as one of the adapters.
 
 Import `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```ts
-/* highlight-delete-start */
+```ts {6-9}
+// Remove the following imports
 - import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
 - import { createConfig } from '@wagmi/core'
 - import { mainnet, arbitrum } from '@wagmi/core/chains'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-/* highlight-add-end */
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {14-18}
 const projectId = 'YOUR_PROJECT_ID'
 const queryClient = new QueryClient()
 
@@ -891,34 +836,27 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
+// Remove the existing Wagmi Config
 - const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
-/* highlight-add-end */
 ```
 
 Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 
-```ts
-/* highlight-delete-start */
+```ts {8-17}
+// Remove the following code lines
 - const modal = createWeb3Modal({
   wagmiConfig,
   projectId,
   chains
 })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit'
+// Add the following code lines
 + const modal = createAppKit({
   adapters: [wagmiAdapter],
   networks: [mainnet, arbitrum],
@@ -928,7 +866,6 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
     analytics: true
   }
 })
-/* highlight-add-end */
 ```
 
 </Tab>
@@ -940,19 +877,17 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following import
 - import { useWeb3Modal } from '@web3modal/wagmi/react'
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following import
 + import { useAppKit } from '@reown/appkit/react'
-/* highlight-add-end */
 
 function HomePage() {
   const { open } = useAppKit()
-
   return <button onClick={open}>Connect</button>
 }
 ```
@@ -962,7 +897,7 @@ function HomePage() {
 Learn more about Reown AppKit [here](../react/core/installation).
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 Use your own button with to open the modal.
 
@@ -996,7 +931,7 @@ Use your own button with to open the modal.
 Learn more about integrating Reown AppKit with Vue [here](../vue/core/installation).
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Use your own button with to open the modal.
 
@@ -1023,7 +958,7 @@ Learn more about integrating Reown AppKit with JavaScript [here](../javascript/c
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
 To upgrade from Web3Modal v3 to Reown AppKit start by removing Web3Modal v3 dependencies `@web3modal/wagmi`. Now you can install AppKit library and update `Wagmi` and `Viem`.
 
@@ -1047,7 +982,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/react-query
 </CodeGroup>
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 To upgrade from Web3Modal v3 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum` and `@web3modal/react`. Now you can install AppKit library and update `@wagmi/core` and `Viem`.
 
@@ -1071,7 +1006,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi
 </CodeGroup>
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 To upgrade from Web3Modal v3 to Reown AppKit start by removing Web3Modal v5 dependencies `@web3modal/ethereum` and `@web3modal/vue`. Now you can install AppKit library and update `Wagmi` and `Viem`.
 
@@ -1103,7 +1038,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vu
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
 You can start the AppKit configuration by using either the **default** or **advanced** mode.
 
@@ -1114,26 +1049,24 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```tsx
-/* highlight-delete-start */
+```tsx {6-10}
+// Remove the following imports
 - import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 - import { arbitrum, mainnet } from 'wagmi/chains'
 - import { WagmiConfig } from 'wagmi'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit/react'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 + import { WagmiProvider } from 'wagmi'
-/* highlight-add-end */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {14-18}
 const projectId = 'YOUR_PROJECT_ID'
 const queryClient = new QueryClient()
 
@@ -1144,29 +1077,23 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
+// Remove the existing Wagmi Config
 + const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 ```
 
 Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-13, 21-22, 30-31}
+// Remove the following code line
 - createWeb3Modal({ wagmiConfig, projectId, chains })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit/react'
+// Add the following code lines
 + createAppKit({
  adapters: [wagmiAdapter],
  networks: [mainnet, arbitrum],
@@ -1176,34 +1103,31 @@ Finally, pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
    analytics: true,
  }
 })
-/* highlight-add-end */
 
 export default function App() {
   return (
     <>
-/* highlight-delete-start */
--      <WagmiConfig config={wagmiConfig}>
-/* highlight-delete-end */
-/* highlight-add-start */
-+      <WagmiProvider config={wagmiAdapter.wagmiConfig}>
-/* highlight-add-end */
+    // Remove the following code line
+-   <WagmiConfig config={wagmiConfig}>
 
-      <QueryClientProvider client={queryClient}>
-          <HomePage />
-       </QueryClientProvider>
-/* highlight-delete-start */
--      </WagmiConfig>
-/* highlight-delete-end */
-/* highlight-add-start */
-+      </WagmiProvider>
-/* highlight-add-end */
+    // Add the following code line
++   <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+    <QueryClientProvider client={queryClient}>
+      <HomePage />
+    </QueryClientProvider>
+
+    // Remove the following code line
+-   </WagmiConfig>
+
+    // Add the following code line
++   </WagmiProvider>
     </>
   )
 }
 ```
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 You can start the AppKit configuration by using either the **default** or **advanced** mode.
 
@@ -1214,23 +1138,21 @@ Make sure to set your configuration outside React components to avoid unwanted r
 
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```tsx
-/* highlight-delete-start */
+```tsx {6-9}
+// Remove the following imports
 - import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/vue'
 - import { WagmiConfig } from 'wagmi'
 - import { arbitrum, mainnet } from 'wagmi/chains'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit/vue'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-/* highlight-add-end */
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {13-17}
 const projectId = 'YOUR_PROJECT_ID'
 
 const metadata = { //optional
@@ -1240,29 +1162,23 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
+// Remove the existing Wagmi Config
 - const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
 ```
 
 Pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-13, 18-19, 21-22}
+// Remove the following code line
 - createWeb3Modal({ wagmiConfig, projectId, chains })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit/vue'
+// Add the following code lines
 + const modal = createAppKit({
  adapters: [wagmiAdapter],
  networks: [mainnet, arbitrum],
@@ -1272,18 +1188,15 @@ Pass `wagmiAdapter` (optional) and other parameters to `createAppKit`
    analytics: true,
  }
 })
-/* highlight-add-end */
 
 export default function App() {
   return (
     <>
-/* highlight-add-start */
-+      <WagmiPlugin config="{{ wagmiAdapter.wagmiConfig }}">
-/* highlight-add-end */
-            <HomePage />
-/* highlight-add-start */
-      </WagmiPlugin>
-/* highlight-add-end */
+    // Add the following code line
++   <WagmiPlugin config="{{ wagmiAdapter.wagmiConfig }}">
+      <HomePage />
+    // Add the following code line
++   </WagmiPlugin>
     </>
   )
 }
@@ -1291,48 +1204,44 @@ export default function App() {
 
 Finally, you need to initialized Vue Query in the `main.ts`
 
-```tsx
+```tsx {3-4, 7-8, 11-12}
 import { createApp } from "vue";
-/* highlight-add-start */
+
+// Add the following imports
 import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query";
-/* highlight-add-end */
 import App from "./App.vue";
 
-/* highlight-add-start */
+// Add the following code line
 const queryClient = new QueryClient();
-/* highlight-add-end */
 
 createApp(App)
-  /* highlight-add-start */
+  // Add the following code line
   .use(VueQueryPlugin, { queryClient })
-  /* highlight-add-end */
   .mount("#app");
 ```
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Start by importing AppKit packages, then create wagmiAdapter using your own settings or the default presets as shown below. Finally, pass wagmiAdapter to AppKit as one of the adapters.
 
 Import `createAppKit` from `@reown/appkit` and the necessary chains from `@reown/appkit/networks`
 
-```ts
-/* highlight-delete-start */
+```ts {6-9}
+// Remove the following imports
 - import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
 - import { createConfig } from '@wagmi/core'
 - import { mainnet, arbitrum } from '@wagmi/core/chains'
-/* highlight-delete-end */
 
-/* highlight-add-start */
+// Add the following imports
 + import { createAppKit } from '@reown/appkit'
 + import { arbitrum, mainnet } from '@reown/appkit/networks'
 + import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-/* highlight-add-end */
 ```
 
 Then create `wagmiAdapter` using `WagmiAdapter` function as shown below
 
-```tsx
+```tsx {14-19}
 const projectId = 'YOUR_PROJECT_ID'
 const queryClient = new QueryClient()
 
@@ -1343,34 +1252,27 @@ const metadata = { //optional
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-/* Remove the existing Wagmi Config */
-/* highlight-delete-start */
+// Remove the existing Wagmi Config
 - const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-/* highlight-delete-end */
 
-/* Create the Wagmi adapter */
-/* highlight-add-start */
+// Create the Wagmi adapter
 + const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum],
   projectId
 })
-/* highlight-add-end */
-/* highlight-add-end */
 ```
 
 Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 
-```ts
-/* highlight-delete-start */
+```ts {8-17}
+// Remove the following code lines
 - const modal = createWeb3Modal({
   wagmiConfig,
   projectId,
   chains
 })
-/* highlight-delete-end */
 
-/* highlight-add-start */
-// import { createAppKit } from '@reown/appkit'
+// Add the following code lines
 + const modal = createAppKit({
   adapters: [wagmiAdapter],
   networks: [mainnet, arbitrum],
@@ -1380,7 +1282,6 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
     analytics: true
   }
 })
-/* highlight-add-end */
 ```
 
 </Tab>
@@ -1392,15 +1293,14 @@ Finally, pass `wagmiAdapter`(optional) and other parameters to `createAppKit`.
 	
 	
 >
-<Tab title="react">
+<Tab title="React">
 
-```tsx
-/* highlight-delete-start */
+```tsx {4-5}
+// Remove the following import
 - import { useWeb3Modal } from '@web3modal/wagmi/react'
-/* highlight-delete-end */
-/* highlight-add-start */
+
+// Add the following import
 + import { useAppKit } from '@reown/appkit/react'
-/* highlight-add-end */
 
 function HomePage() {
   const { open } = useAppKit()
@@ -1414,7 +1314,7 @@ function HomePage() {
 Learn more about Reown AppKit [here](../react/core/installation).
 
 </Tab>
-<Tab title="vue">
+<Tab title="Vue">
 
 Use your own button with to open the modal.
 
@@ -1448,7 +1348,7 @@ Use your own button with to open the modal.
 Learn more about integrating Reown AppKit with Vue [here](../vue/core/installation).
 
 </Tab>
-<Tab title="javascript">
+<Tab title="JavaScript">
 
 Use your own button with to open the modal.
 
