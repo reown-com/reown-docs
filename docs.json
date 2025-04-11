@@ -7,7 +7,7 @@
     "light": "#008847",
     "dark": "#008847"
   },
-
+  
   "integrations": {
     "gtm": {
       "tagId": "GTM-56G35T8X"
@@ -64,7 +64,7 @@
             "pages": [
               {
                 "group": "AppKit Guides",
-                "pages": [
+                "pages":[
                   "appkit/recipes/telegram-mini-app",
                   "appkit/recipes/tenderly-virtual-testnets",
                   "appkit/recipes/wagmi-send-transaction",
@@ -158,11 +158,7 @@
                 "pages": [
                   {
                     "group": "Core",
-                    "pages": [
-                      "advanced/api/core/pairing",
-                      "advanced/api/core/relay",
-                      "advanced/api/core/shared-core"
-                    ]
+                    "pages": ["advanced/api/core/pairing", "advanced/api/core/relay", "advanced/api/core/shared-core"]
                   },
                   {
                     "group": "Notify",
@@ -196,7 +192,7 @@
       {
         "tab": "AppKit",
         "icon": "layer-group",
-        "dropdowns": [
+        "dropdowns": [  
           {
             "dropdown": "AppKit - Overview",
             "icon": "layer-group",
@@ -207,89 +203,84 @@
               },
               {
                 "group": "Features",
-                "pages": [
-                  "appkit/features/index",
-                  "appkit/features/swaps",
-                  "appkit/features/onramp",
-                  "appkit/features/multichain",
-                  "appkit/features/smart-accounts",
-                  "appkit/features/notifications",
-                  "appkit/features/telegram-mini-apps",
-                  "appkit/features/sponsored-transactions"
-                ]
-              },
-              {
-                "group": "Network",
-                "pages": [
-                  "appkit/networks/evm",
-                  "appkit/networks/solana",
-                  "appkit/networks/bitcoin"
-                ]
-              },
-              {
-                "group": "Authentication",
-                "pages": [
-                  "appkit/authentication/socials",
-                  "appkit/authentication/one-click-auth",
-                  "appkit/authentication/siwx/default"
-                ]
-              },
-              {
-                "group": "Guides",
-                "pages": [
-                  "appkit/recipes/telegram-mini-app",
-                  "appkit/recipes/tenderly-virtual-testnets",
-                  "appkit/recipes/wagmi-send-transaction",
-                  "appkit/recipes/ethers-send-transaction",
-                  "appkit/recipes/EVM-smart-contract-interaction",
-                  "appkit/recipes/solana-send-transaction",
-                  "appkit/recipes/bitcoin-send-transaction",
-                  "appkit/recipes/switching-to-send-calls",
-                  "appkit/recipes/sponsoring-first-transaction",
-                  "appkit/recipes/travel-rule"
-                ]
-              },
-              {
-                "group": "Upgrade",
-                "pages": [
+                    "pages": [
+                      "appkit/features/index",
+                      "appkit/features/swaps",
+                      "appkit/features/onramp",
+                      "appkit/features/multichain",
+                      "appkit/features/smart-accounts",
+                      "appkit/features/notifications",
+                      "appkit/features/telegram-mini-apps",
+                      "appkit/features/sponsored-transactions"
+                    ]
+                  },
                   {
-                    "group": "AppKit",
+                    "group": "Network",
+                    "pages": [
+                      "appkit/networks/evm",
+                      "appkit/networks/solana",
+                      "appkit/networks/bitcoin"
+                    ]
+                  },
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/authentication/socials",
+                      "appkit/authentication/one-click-auth",
+                      "appkit/authentication/siwx/default"
+                    ]
+                  },
+                  {
+                    "group": "Guides",
+                    "pages": [
+                      "appkit/recipes/telegram-mini-app",
+                      "appkit/recipes/tenderly-virtual-testnets",
+                      "appkit/recipes/wagmi-send-transaction",
+                      "appkit/recipes/ethers-send-transaction",
+                      "appkit/recipes/EVM-smart-contract-interaction",
+                      "appkit/recipes/solana-send-transaction",
+                      "appkit/recipes/bitcoin-send-transaction",
+                      "appkit/recipes/switching-to-send-calls",
+                      "appkit/recipes/sponsoring-first-transaction",
+                      "appkit/recipes/travel-rule"
+                    ]
+                  },
+                  {
+                    "group": "Upgrade",
                     "pages": [
                       {
-                        "group": "Web3Modal to Reown AppKit",
+                        "group": "AppKit",
                         "pages": [
-                          "appkit/upgrade/from-w3m-to-reown",
                           {
-                            "group": "Reown AppKit - Web",
+                            "group": "Web3Modal to Reown AppKit",
                             "pages": [
-                              "appkit/upgrade/to-reown-appkit-web",
-                              "appkit/upgrade/to-reown-appkit-ethers-web",
-                              "appkit/upgrade/to-reown-appkit-ethers5-web",
-                              "appkit/upgrade/to-reown-appkit-solana-web"
+                              "appkit/upgrade/from-w3m-to-reown",
+                              {
+                                "group": "Reown AppKit - Web",
+                                "pages": ["appkit/upgrade/to-reown-appkit-web", "appkit/upgrade/to-reown-appkit-ethers-web", "appkit/upgrade/to-reown-appkit-ethers5-web", "appkit/upgrade/to-reown-appkit-solana-web"]
+                              },
+                              "appkit/upgrade/from-web3modal-react-native",
+                              "appkit/upgrade/from-web3modal-flutter",
+                              "appkit/upgrade/from-web3modal-android",
+                              "appkit/upgrade/from-web3modal-ios",
+                              "appkit/upgrade/from-web3modal-unity"
                             ]
-                          },
-                          "appkit/upgrade/from-web3modal-react-native",
-                          "appkit/upgrade/from-web3modal-flutter",
-                          "appkit/upgrade/from-web3modal-android",
-                          "appkit/upgrade/from-web3modal-ios",
-                          "appkit/upgrade/from-web3modal-unity"
+                          }
                         ]
                       }
+                    ]
+                  },
+                  {
+                    "group": "Migration",
+                    "pages": [
+                      "appkit/migration/index",
+                      "appkit/migration/from-rainbowkit-next",
+                      "appkit/migration/from-connectkit-next",
+                      "appkit/migration/from-anza-adapter-react"
                     ]
                   }
                 ]
               },
-              {
-                "group": "Migration",
-                "pages": [
-                  "appkit/migration/index",
-                  "appkit/migration/from-rainbowkit-next",
-                  "appkit/migration/from-connectkit-next",
-                  "appkit/migration/from-anza-adapter-react"
-                ]
-              }
-            ]
-          },
           {
             "dropdown": "React",
             "icon": "react",
@@ -467,7 +458,9 @@
               },
               {
                 "group": "Early Access",
-                "pages": ["appkit/vue/early-access/smart-session"]
+                "pages": [
+                  "appkit/vue/early-access/smart-session"
+                ]
               },
               {
                 "group": "Transactions",
@@ -540,7 +533,9 @@
               },
               {
                 "group": "Early Access",
-                "pages": ["appkit/javascript/early-access/smart-session"]
+                "pages": [
+                  "appkit/javascript/early-access/smart-session"
+                ]
               },
               {
                 "group": "Transactions",
@@ -755,7 +750,7 @@
                 "group": "Cloud",
                 "pages": [
                   "appkit/unity/cloud/verify",
-                  "appkit/unity/cloud/relay",
+                  "appkit/unity/cloud/relay", 
                   "appkit/unity/cloud/blockchain-api",
                   "appkit/unity/cloud/analytics"
                 ]
@@ -778,31 +773,31 @@
               },
               {
                 "group": "Features",
-                "pages": [
-                  "walletkit/features/one-click-auth",
-                  "walletkit/features/notifications",
-                  "walletkit/features/verify",
-                  "walletkit/features/chain-abstraction"
-                ]
-              },
-              {
-                "group": "Production",
-                "pages": ["walletkit/best-practices"]
-              },
-              {
-                "group": "Upgrade",
-                "pages": [
-                  {
-                    "group": "Web3Wallet to Reown WalletKit",
                     "pages": [
-                      "walletkit/upgrade/from-web3wallet-to-reown",
-                      "walletkit/upgrade/from-web3wallet-web",
-                      "walletkit/upgrade/from-web3wallet-react-native",
-                      "walletkit/upgrade/from-web3wallet-flutter",
-                      "walletkit/upgrade/from-web3wallet-android",
-                      "walletkit/upgrade/from-web3wallet-ios",
-                      "walletkit/upgrade/from-web3wallet-unity"
+                      "walletkit/features/one-click-auth",
+                      "walletkit/features/notifications",
+                      "walletkit/features/verify",
+                      "walletkit/features/chain-abstraction"
                     ]
+                  },
+                  {
+                    "group": "Production",
+                    "pages": ["walletkit/best-practices"]
+                  },
+                  {
+                    "group": "Upgrade",
+                    "pages": [
+                      {
+                        "group": "Web3Wallet to Reown WalletKit",
+                        "pages": [
+                          "walletkit/upgrade/from-web3wallet-to-reown",
+                          "walletkit/upgrade/from-web3wallet-web",
+                          "walletkit/upgrade/from-web3wallet-react-native",
+                          "walletkit/upgrade/from-web3wallet-flutter",
+                          "walletkit/upgrade/from-web3wallet-android",
+                          "walletkit/upgrade/from-web3wallet-ios",
+                          "walletkit/upgrade/from-web3wallet-unity"
+                      ]
                   }
                 ]
               }
@@ -818,6 +813,7 @@
               "walletkit/web/one-click-auth",
               "walletkit/web/verify",
               "walletkit/web/eip5792",
+              "walletkit/web/chain-abstraction",
               "walletkit/web/best-practices",
               "walletkit/web/resources",
               {
@@ -935,9 +931,9 @@
               "walletkit/flutter/one-click-auth",
               "walletkit/flutter/mobile-linking",
               "walletkit/flutter/link-mode",
-              "walletkit/flutter/chain-abstraction",
               "walletkit/flutter/verify",
               "walletkit/flutter/eip5792",
+              "walletkit/flutter/chain-abstraction",
               {
                 "group": "Cloud",
                 "pages": [
@@ -964,7 +960,6 @@
                   "walletkit/react-native/link-mode",
                   "walletkit/react-native/verify",
                   "walletkit/react-native/eip5792",
-                  "walletkit/react-native/chain-abstraction",
                   "walletkit/react-native/best-practices",
                   "walletkit/react-native/resources"
                 ]
