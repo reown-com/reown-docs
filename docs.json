@@ -139,10 +139,7 @@
                       "walletkit/features/one-click-auth",
                       "walletkit/features/notifications",
                       "walletkit/features/verify",
-                      {
-                        "group": "Early Access",
-                        "pages": ["walletkit/features/early-access/chain-abstraction"]
-                      }
+                      "walletkit/features/chain-abstraction"
                     ]
                   },
                   "walletkit/best-practices",
@@ -835,10 +832,7 @@
               "walletkit/web/one-click-auth",
               "walletkit/web/verify",
               "walletkit/web/eip5792",
-              {
-                "group": "Early Access",
-                "pages": ["walletkit/web/early-access/chain-abstraction"]
-              },
+              "walletkit/web/chain-abstraction",
               "walletkit/web/best-practices",
               "walletkit/web/resources"
             ]
@@ -874,6 +868,7 @@
               "walletkit/ios/link-mode",
               "walletkit/ios/verify",
               "walletkit/ios/eip5792",
+              "walletkit/ios/chain-abstraction",
               {
                 "group": "Notifications",
                 "pages": [
@@ -889,10 +884,6 @@
                   },
                   "walletkit/ios/notifications/push"
                 ]
-              },
-              {
-                "group": "Early Access",
-                "pages": ["walletkit/ios/early-access/chain-abstraction"]
               },
               "walletkit/ios/best-practices",
               "walletkit/ios/resources"
@@ -929,6 +920,7 @@
               "walletkit/android/link-mode",
               "walletkit/android/verify",
               "walletkit/android/eip5792",
+              "walletkit/android/chain-abstraction",
               {
                 "group": "Notifications",
                 "pages": [
@@ -944,10 +936,6 @@
                   },
                   "walletkit/android/notifications/push"
                 ]
-              },
-              {
-                "group": "Early Access",
-                "pages": ["walletkit/android/early-access/chain-abstraction"]
               },
               "walletkit/android/best-practices",
               "walletkit/android/resources"
@@ -984,10 +972,7 @@
               "walletkit/flutter/link-mode",
               "walletkit/flutter/verify",
               "walletkit/flutter/eip5792",
-              {
-                "group": "Early Access",
-                "pages": ["walletkit/flutter/early-access/chain-abstraction"]
-              }
+              "walletkit/flutter/chain-abstraction"
             ]
           },
           {
@@ -1021,10 +1006,7 @@
               "walletkit/react-native/link-mode",
               "walletkit/react-native/verify",
               "walletkit/react-native/eip5792",
-              {
-                "group": "Early Access",
-                "pages": ["walletkit/react-native/early-access/chain-abstraction"]
-              },
+              "walletkit/react-native/chain-abstraction",
               {
                 "group": "Notifications",
                 "pages": [
