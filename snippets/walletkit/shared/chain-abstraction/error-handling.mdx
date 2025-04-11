@@ -1,0 +1,29 @@
+## Error Handling
+
+When implementing Chain Abstraction, you may encounter different types of errors. Here's how to handle them effectively:
+
+### Application-Level Errors
+
+These errors (`PrepareError`) indicate specific issues that need to be addressed and typically require user action:
+
+- **Insufficient Gas Fees**: User needs to add more gas tokens to their wallet
+- **Malformed Transaction Requests**: Transaction parameters are invalid or incomplete
+- **Minimum Bridging Amount Not Met**: Currently set at $0.60
+- **Invalid Token or Network Selection**: Selected token or network is not supported
+
+When handling these errors, you should display clear, user-friendly error messages that provide specific guidance on how to resolve the issue. Allow users to modify their transaction parameters and consider implementing validation checks before initiating transactions.
+
+### Retryable Errors
+
+These errors (`Result::Err`) indicate temporary issues that may be resolved by retrying the operation. 
+Examples of these types of issues include network connection timeouts, TLS negotiation issues, service outages, or other transient errors.
+
+For retryable errors, show a generic "oops" message to users and provide a retry button. Log detailed error information to your error tracking service, but avoid displaying technical details to end users.
+
+<Note>
+For errors in the `execute()` method, a retry may not resolve the issue. In such cases, allow users to cancel the transaction, return them to the application, and let the application initiate a new transaction.
+</Note>
+
+### Critical Errors
+
+Critical errors indicate bugs or implementation issues that should be treated as high-priority incidents: incorrect usage of WalletKit API, wrong data encoding or wrong fields passed to WalletKit, or WalletKit internal bugs.
