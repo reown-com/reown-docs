@@ -2,7 +2,8 @@
 title: Chain Abstraction
 ---
 
-import HowItWorks from "/snippets/walletkit/shared/chain-abstraction-intro.mdx";
+import HowItWorks from "/snippets/walletkit/shared/chain-abstraction/intro.mdx";
+import ErrorHandling from "/snippets/walletkit/shared/chain-abstraction/error-handling.mdx";
 
 <HowItWorks />
 
@@ -23,154 +24,72 @@ Following are the methods from WalletKit that you will use in implementing chain
 This method checks if a transaction requires additional bridging transactions beforehand.
 
 ```typescript
-public prepare(params: {
-  transaction: ChainAbstractionTypes.Transaction;
-}): Promise<ChainAbstractionTypes.CanFulfilResponse>;
+public abstract prepare(params: {
+  transaction: ChainAbstractionTypes.PartialTransaction;
+}): ChainAbstractionTypes.PrepareResponse;
 ```
 
-### Status 
+### Execute 
 
-Helper method used to check the fulfilment status of a bridging operation.
+Helper method used to broadcast the bridging and initial transactions and wait for them to be completed.
 
 ```typescript
-public abstract status(params: {
-  fulfilmentId: string;
-}): Promise<ChainAbstractionTypes.FulfilmentStatusResponse>;
+public abstract execute(params: {
+  orchestrationId: ChainAbstractionTypes.OrchestrationId;
+  bridgeSignedTransactions: ChainAbstractionTypes.SignedTransaction[];
+  initialSignedTransaction: ChainAbstractionTypes.SignedTransaction;
+}): ChainAbstractionTypes.ExecuteResult;
 ```
 
-### Usage
+## Usage
 
-When sending a transaction, first check if chain abstraction is needed using the `prepare` method. If it is needed, you need to sign all the fulfillment transactions and broadcast them in parallel. 
-After that, you need to call the `status` method to check the status of the fulfillment operation. 
-
-If the operation is successful, you need to broadcast the initial transaction and await the transaction hash and receipt. 
-If the operation is not successful, you need to send the JsonRpcError to the dapp and display the error to the user. 
+When sending a transaction, first check if chain abstraction is needed using the `prepare` method. 
+If it is needed, you must sign all the fulfillment transactions and use the `execute` method. 
+Here's a complete example:
 
 ```typescript
-walletkit.on("session_request", async (event) => {
-  const {
-    id,
-    topic,
-    params: { request, chainId },
-  } = event;
-
-  if (request.method === "eth_sendTransaction") {
-    const originalTransaction = request.params[0];
-    
-    // Check if bridging transactions are required
-    const prepareResponse = await wallet.prepare({
-      transaction: {
-        ...originalTransaction,
-        chainId,
-      },
-    });
-
-    if (prepareResponse.status === "error") {
-      // Display error to user and respond to dapp
-      await wallet.respondSessionRequest({
-        topic,
-        response: formatJsonRpcResult(id, prepareResponse.reason),
-      });
-      return;
-    }
-
-    if (prepareResponse.status === "available") {
-      const { transactions, funding, fulfilmentId, checkIn } = prepareResponse.data;
-
-      // Display bridging information to user
-      // Once approved, execute bridging transactions
-      for (const transaction of transactions) {
-        const signedTransaction = await wallet.signTransaction(transaction);
-        await wallet.sendTransaction(signedTransaction);
-      }
-      // await for the completed fulfilment status 
-      await statusResult = await wallet.status({
-        fulfilmentId
-      });
-
-      // Proceed with original transaction
-      const signedTransaction = await wallet.signTransaction(originalTransaction);
-      const result = await wallet.sendTransaction(signedTransaction);
-      
-      await wallet.respondSessionRequest({
-        topic,
-        response: formatJsonRpcResult(id, result)
-      });
-    } else {
-      // No bridging required, process transaction normally
-      const signedTransaction = await wallet.signTransaction(originalTransaction);
-      const result = await wallet.sendTransaction(signedTransaction);
-      
-      await wallet.respondSessionRequest({
-        topic,
-        response: formatJsonRpcResult(id, result)
-      });
-    }
-  }
+// Check if chain abstraction is needed
+const result = await walletKit.chainAbstraction.prepare({
+  transaction: {
+    from: transaction.from as `0x${string}`,
+    to: transaction.to as `0x${string}`,
+    // @ts-ignore - cater for both input or data
+    input: transaction.input || (transaction.data as `0x${string}`),
+    chainId: chainId,
+  },
 });
-```
 
-## Types
+// Handle the prepare result
+if ('success' in result) {
+  if ('notRequired' in result.success) {
+    // No bridging required, proceed with normal transaction
+    console.log('no routing required');
+  } else if ('available' in result.success) {
+    const available = result.success.available;
+    
+    // Sign all bridge transactions and initial transaction
+    const bridgeTxs = available.route.map(tx => tx.transactionHashToSign);
+    const signedBridgeTxs = bridgeTxs.map(tx => wallet.signAny(tx));
+    const signedInitialTx = wallet.signAny(available.initial.transactionHashToSign);
 
-Following are the types that are used in the chain abstraction methods.
-
-```typescript
-namespace ChainAbstractionTypes {
-  type FundingFrom = {
-    tokenContract: string;
-    amount: string;
-    chainId: string;
-    symbol: string;
-  };
-
-  type Transaction = {
-    from: string;
-    to: string;
-    value: string;
-    chainId: string;
-    gas?: string;
-    gasPrice?: string;
-    data?: string;
-    nonce?: string;
-    maxFeePerGas?: string;
-    maxPriorityFeePerGas?: string;
-  };
-
-  type CanFulfilResponse =
-    | {
-        status: "not_required";
-      }
-    | {
-        status: "available";
-        data: {
-          fulfilmentId: string;
-          checkIn: number;
-          transactions: Transaction[];
-          funding: FundingFrom[];
-        };
-      }
-    | {
-        status: "error";
-        reason: string; // reason can be insufficientFunds | insufficientGasFunds | noRoutesAvailable
-      };
-
-  type FulfilmentStatusResponse = {
-    createdAt: number;
-  } & (
-    | {
-        status: "completed";
-      }
-    | { status: "pending"; checkIn: number }
-  );
+    // Execute the chain abstraction
+    const result = await walletKit.chainAbstraction.execute({
+      bridgeSignedTransactions: signedBridgeTxs,
+      initialSignedTransaction: signedInitialTx,
+      orchestrationId: available.routeResponse.orchestrationId,
+    });
+  }
 }
 ```
 
-For example, check out implementation of chain abstraction in [sample wallet](https://github.com/reown-com/react-native-examples/pull/185) with React Native CLI. 
+For example, check out implementation of chain abstraction in [sample wallet](https://github.com/reown-com/react-native-examples/tree/main/wallets/rn_cli_wallet) with React Native CLI. 
+
+<ErrorHandling />
 
 ## Testing 
 
-To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
-You can also use this [sample wallet](https://appdistribution.firebase.google.com/testerapps/1:222905275039:android:799d1c9291d92ebe8c88aa/releases/7tkfoelis7n08) for testing. 
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending any supported [tokens](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
+You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076a3bc9669d3bee) for testing. 
 
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
   <source src="/images/assets/chain-abstraction-demo.mp4" type="video/mp4" />

@@ -7,7 +7,7 @@
     "light": "#008847",
     "dark": "#008847"
   },
-  
+
   "integrations": {
     "gtm": {
       "tagId": "GTM-56G35T8X"
@@ -260,9 +260,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - React",
+        "dropdown": "AppKit - React",
         "icon": "react",
-        "description": "Appkit on React",
+        "description": "AppKit on React",
         "groups": [
           {
             "group": "AppKit",
@@ -346,9 +346,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - Next",
+        "dropdown": "AppKit - Next",
         "icon": "square-n",
-        "description": "Appkit on NextJS",
+        "description": "AppKit on NextJS",
         "groups": [
           {
             "group": "AppKit",
@@ -432,9 +432,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - Vue",
+        "dropdown": "AppKit - Vue",
         "icon": "vuejs",
-        "description": "Appkit on VueJS",
+        "description": "AppKit on VueJS",
         "groups": [
           {
             "group": "AppKit",
@@ -515,9 +515,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - Javascript",
+        "dropdown": "AppKit - Javascript",
         "icon": "js",
-        "description": "Appkit on Javascript",
+        "description": "AppKit on Javascript",
         "groups": [
           {
             "group": "AppKit",
@@ -598,9 +598,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - React Native",
+        "dropdown": "AppKit - React Native",
         "icon": "mobile-screen-button",
-        "description": "Appkit on React Native",
+        "description": "AppKit on React Native",
         "groups": [
           {
             "group": "AppKit",
@@ -666,9 +666,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - Flutter",
+        "dropdown": "AppKit - Flutter",
         "icon": "flutter",
-        "description": "Appkit on Flutter",
+        "description": "AppKit on Flutter",
         "groups": [
           {
             "group": "AppKit",
@@ -707,9 +707,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - Android",
+        "dropdown": "AppKit - Android",
         "icon": "android",
-        "description": "Appkit on Android",
+        "description": "AppKit on Android",
         "groups": [
           {
             "group": "AppKit",
@@ -745,9 +745,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - iOS",
+        "dropdown": "AppKit - iOS",
         "icon": "apple",
-        "description": "Appkit on iOS",
+        "description": "AppKit on iOS",
         "groups": [
           {
             "group": "AppKit",
@@ -782,9 +782,9 @@
         ]
       },
       {
-        "dropdown": "Appkit - Unity",
+        "dropdown": "AppKit - Unity",
         "icon": "unity",
-        "description": "Appkit on Unity",
+        "description": "AppKit on Unity",
         "groups": [
           {
             "group": "AppKit",
@@ -835,6 +835,10 @@
               "walletkit/web/one-click-auth",
               "walletkit/web/verify",
               "walletkit/web/eip5792",
+              {
+                "group": "Early Access",
+                "pages": ["walletkit/web/early-access/chain-abstraction"]
+              },
               "walletkit/web/best-practices",
               "walletkit/web/resources"
             ]
@@ -1017,6 +1021,10 @@
               "walletkit/react-native/link-mode",
               "walletkit/react-native/verify",
               "walletkit/react-native/eip5792",
+              {
+                "group": "Early Access",
+                "pages": ["walletkit/react-native/early-access/chain-abstraction"]
+              },
               {
                 "group": "Notifications",
                 "pages": [
