@@ -35,7 +35,11 @@ Chain abstraction is currently in an early access phase and requires the `@Chain
 ### Prepare 
 
 This method is used to check if chain abstraction is needed. If it is, it will return a `PrepareSuccess.Available` object with the necessary transactions and funding information. 
-If it is not, it will return a `PrepareSuccess.NotRequired` object with the original transaction. Note: accounts field is a list of CAIP-20 accounts sourcing from e.g. solana account
+If it is not, it will return a `PrepareSuccess.NotRequired` object with the original transaction. 
+
+<Note>
+Accounts field is a list of CAIP-20 accounts you are sourcing from e.g. Solana account
+</Note>
 
 ```kotlin 
 @ChainAbstractionExperimentalApi
@@ -123,7 +127,7 @@ To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-la
 You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076a3bc9669d3bee) for testing. 
 
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
-  <source src="/assets/chain-abstraction-demo.mp4" type="video/mp4" />
+  <source src="/images/assets/chain-abstraction-demo.mp4" type="video/mp4" />
 </video>
 
 ## ProGuard rules
