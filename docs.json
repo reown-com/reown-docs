@@ -960,6 +960,7 @@
                   "walletkit/react-native/link-mode",
                   "walletkit/react-native/verify",
                   "walletkit/react-native/eip5792",
+                  "walletkit/react-native/chain-abstraction",
                   "walletkit/react-native/best-practices",
                   "walletkit/react-native/resources"
                 ]
