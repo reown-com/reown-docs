@@ -11,11 +11,11 @@ However, doing so ensures that your project is listed under [WalletGuide](https:
 
 ## Creating a New Project
 
-- Head over to [cloud.reown.com](https://cloud.reown.com/) and create a new project by clicking the "New Project" button in top right corner of the dashboard.
-- Give a suitable name to your project, select whether its an App or Wallet and click the "Create" button. (You can change this later)
+- Head over to [dashboard.reown.com](https://dashboard.reown.com/) and create a new project by clicking the dropdown in the top right corner, selecting your team name, and then clicking the **"+ Project"** button.
+- Give your project a suitable name, select whether it's an App or Wallet, and click the "Add" button. (You can change this later)
 
   <Frame>
-    <img src="/images/cloud/1.png" />
+    <img width="400" height="400" src="/images/cloud/create1.png" />
   </Frame>
 
 ## Project Details
@@ -65,7 +65,7 @@ The following list details our QA flow and how to reproduce it:
 | **Connect to dapp via mobile browser (Deep-link)** | 1. Open [appkit-lab.reown.com](https://appkit-lab.reown.com/) on mobile.  <br/> 2. Select a default option (e.g., Wagmi for EVM chains), click "Custom Wallet," enter wallet name and deep link, then add it. Press "Connect Wallet" and select the new wallet.  <br/> 3. Accept connection request in the wallet app. | 1. N/A  <br/> 2. A form appears to enter wallet data, new wallet option is visible.  <br/> 3. User is redirected to the wallet app, sees a connection request, and successfully connects. On Android, user is redirected back to the website. |
 | **Switch chains - dapp side**                 | 1. After connecting, click the modal button (top right of website).  <br/> 2. Click the first button in the modal to switch chains.  <br/> 3. Select a chain, close the modal, and press "Send Transaction." | 1. Modal with account info appears.  <br/> 2. A new view with supported chains appears.  <br/> 3. The transaction request in the wallet shows the correct chain. |
 | **Switch Chains - wallet side (if supported)** | 1. Check if wallet supports chain switching. If so, switch to a different chain. | 1. The chain change is reflected on the website. The first card displays the current chain ID. |
-| **Accounts Switching - wallet side**          | 1. Switch accounts in the wallet app. | 1. The account switch is reflected in the modal’s account view on the website. |
+| **Accounts Switching - wallet side**          | 1. Switch accounts in the wallet app. | 1. The account switch is reflected in the modal's account view on the website. |
 | **Disconnect a wallet**                       | 1. Press "Disconnect" in the Wallet App (if available).  <br/> 2. Alternatively, press "Disconnect" from the dApp. | 1. The session disappears from both the dApp and Wallet App.  <br/> 2. The session disappears from both the dApp and Wallet App. |
 | **Verify API**                                | 1. Open [malicious-app-verify-simulation.vercel.app](https://malicious-app-verify-simulation.vercel.app/).  <br/> 2. Select a wallet-supported chain, press "Connect."  <br/> 3. Scan the QR code with the wallet. | 1. N/A  <br/> 2. A QR code modal appears.  <br/> 3. The wallet flags the site as malicious. |
 
@@ -79,9 +79,9 @@ The following test cases only apply for wallets supporting a particular set of c
 
 | Test Case                          | Steps                                                                 | Expected Results                                                      |
 |-------------------------------------|-----------------------------------------------------------------------|----------------------------------------------------------------------|
-| **Supporting personal_sign**        | 1. Connect the wallet.<br/>2. Press the “Sign Message” button.<br/>3. Accept the signature request on the wallet. | 1. N/A<br/>2. A modal should popup on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
-| **Supporting eth_signTypedData_v4** | 1. Connect the wallet.<br/>2. Press the “Sign Typed Data” button.<br/>3. Accept the signature request on the wallet. | 1. N/A<br/>2. A modal should popup on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
-| **Supporting eth_sendTransaction**  | 1. Connect the wallet.<br/>2. Press the “Send Transaction” button. | 1. N/A<br/>2. A modal should popup on the wallet app requesting a signature. |
+| **Supporting personal_sign**        | 1. Connect the wallet.<br/>2. Press the "Sign Message" button.<br/>3. Accept the signature request on the wallet. | 1. N/A<br/>2. A modal should popup on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
+| **Supporting eth_signTypedData_v4** | 1. Connect the wallet.<br/>2. Press the "Sign Typed Data" button.<br/>3. Accept the signature request on the wallet. | 1. N/A<br/>2. A modal should popup on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
+| **Supporting eth_sendTransaction**  | 1. Connect the wallet.<br/>2. Press the "Send Transaction" button. | 1. N/A<br/>2. A modal should popup on the wallet app requesting a signature. |
 
 
 </Tab>
@@ -90,9 +90,9 @@ The following test cases only apply for wallets supporting a particular set of c
 
 | Test Case                          | Steps                                                                                          | Expected Results                                                      |
 |-------------------------------------|------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
-| **Supporting solana_signMessage**   | 1. Connect the wallet to [appkit-lab.reown.com/library/solana](https://appkit-lab.reown.com/library/solana).<br/>2. Press the “Sign Message” button.<br/>3. Accept the signature request on the wallet. | 1. N/A.<br/>2. A modal should pop up on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
-| **Supporting solana_signTransaction** | 1. Connect the wallet to [appkit-lab.reown.com/library/solana](https://appkit-lab.reown.com/library/solana).<br/>2. Press the “Sign Transaction” button.<br/>3. Accept the signature request on the wallet. | 1. N/A.<br/>2. A modal should pop up on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
-| **Supporting v0 Transactions**      | 1. Connect the wallet to [appkit-lab.reown.com/library/solana](https://appkit-lab.reown.com/library/solana).<br/>2. Press the “Sign Versioned Transaction” button.<br/>3. Accept the signature request on the wallet. | 1. N/A.<br/>2. A modal should pop up on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
+| **Supporting solana_signMessage**   | 1. Connect the wallet to [appkit-lab.reown.com/library/solana](https://appkit-lab.reown.com/library/solana).<br/>2. Press the "Sign Message" button.<br/>3. Accept the signature request on the wallet. | 1. N/A.<br/>2. A modal should pop up on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
+| **Supporting solana_signTransaction** | 1. Connect the wallet to [appkit-lab.reown.com/library/solana](https://appkit-lab.reown.com/library/solana).<br/>2. Press the "Sign Transaction" button.<br/>3. Accept the signature request on the wallet. | 1. N/A.<br/>2. A modal should pop up on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
+| **Supporting v0 Transactions**      | 1. Connect the wallet to [appkit-lab.reown.com/library/solana](https://appkit-lab.reown.com/library/solana).<br/>2. Press the "Sign Versioned Transaction" button.<br/>3. Accept the signature request on the wallet. | 1. N/A.<br/>2. A modal should pop up on the wallet app requesting a signature.<br/>3. Once accepted and signed, the hash should show up on the website. |
 
 
 </Tab>
