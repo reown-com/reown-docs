@@ -65,9 +65,9 @@ On flutter you don't need to worry about Namespace Builder as Flutter SDK would 
 
 All you have to do is make sure you register...
 
-1. **wallet's accounts** with `_walletKit.registerAccount()` for accounts you want events and methods to be enabled on
-2. **request handlers** with `_walletKit.registerRequestHandler()` for methods you want to support on your wallet
-3. **events emitters** with `_walletKit.registerEventEmitter()` for events you want to support on your wallet
+1. **wallet's accounts** with `_walletKit.registerAccount()` for accounts you want events and methods to be enabled on. This is essential if you want to properly form a session object between your wallet and the requester dapp.
+2. **request handlers** with `_walletKit.registerRequestHandler()` for methods you want to support on your wallet. Optional but **highly recommended** if you want to seamlessly create a session object, as we will see in the coming section.
+3. **events emitters** with `_walletKit.registerEventEmitter()` for events you want to support on your wallet. Optional but recommended if you plan to send events such as `chainChanged` and `accountsChanged`.
 
 And you'll have to do this **for every chain** you want to support on your wallet.
 
@@ -168,10 +168,6 @@ As mentioned before, the `SessionProposalEvent` is emitted when a dapp initiates
 
 To approve a session, subscribe to `onSessionProposal` event and call `approveSession()` passing in the `event.id` and the namespaces object.
 
-<Note>
-As mentioned beforew, `namespaces:` should be either `event.params.generatedNamespaces!` if you decided to use `registerRequestHandler` method to configure your supported methods or a `Map<String, Namespace>` object defined by yourself if you decided **not** to use `registerRequestHandler` method
-</Note>
-
 ```javascript
 _walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) {
   // display a prompt for the user to approve or reject the session
@@ -183,6 +179,10 @@ _walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) {
   );
 });
 ```
+
+<Note>
+As mentioned before, `namespaces:` should be either `event.params.generatedNamespaces!` if you decided to use `registerRequestHandler` method to configure your supported methods or a `Map<String, Namespace>` object defined by yourself if you decided **not** to use `registerRequestHandler` method
+</Note>
 
 #### Pairing
 
