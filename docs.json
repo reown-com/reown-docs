@@ -265,8 +265,7 @@
                               "appkit/upgrade/from-web3modal-ios",
                               "appkit/upgrade/from-web3modal-unity"
                             ]
-                          },
-                          "appkit/upgrade/wcm"
+                          }
                         ]
                       }
                     ]
