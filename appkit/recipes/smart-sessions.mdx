@@ -45,19 +45,19 @@ The API server can have two endpoints:
 ![Approve Transaction](/images/recipes/smartSession.png)
 </Frame>
 
-1. Frontend calls the endpoint `getPublicKey`
+1. Frontend calls the endpoint `getPublicKey`.
 
-2. The `requestPermission` modal appears for the user to approve using their wallet
+2. The `requestPermission` modal appears for the user to approve using their wallet.
 
-3. In the example, executing an action by calling the Server API (you can execute this action in several ways)
+3. In this example, the action is executed by calling the server API (though there are several ways to perform this action).
 
-4. `prepareCalls` RPC Call to the Blockchain API
+4. `prepareCalls` makes an RPC call to the Blockchain API.
 
-5. The server signs the hash with the private key
+5. The server signs the hash with the private key.
 
-6. `sendPrepareCalls` RPC Call to the Blockchain API
+6. `sendPrepareCalls` makes an RPC call to the Blockchain API.
 
-In order to simplify the code, we recommend that you use our util file from the server `util/prepareCalls.js`. All the RPC calls are performed to `https://rpc.walletconnect.org/v1/wallet?projectId=<PROJECT-ID>`
+In order to simplify the code, it is recommended that you use the util file from the server; which can be found here - `util/prepareCalls.js`. All the RPC calls are performed to `https://rpc.walletconnect.org/v1/wallet?projectId=<PROJECT-ID>`.
 
 ## Start building
 
