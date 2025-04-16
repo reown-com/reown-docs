@@ -29,13 +29,16 @@ In this guide we are going to build the front-end from a dApp and a server to si
 
 Front-end
 - The user will connect using their email to our smart wallets and then grant the permission to the server related wallet in order to execute action in their behalf.
+- Check the configuration file in `src/config/configSmartSession.ts`.
 
-The API server can have two endpoints.
-- getPublicKey:
-    - Return the publicKey for the keypair that is going to execute the different function in from the server. In order to achieve this, a private key needs to be added to the .env file.
+API Server
 
-- executeFunction:
-    - Trigger the function and checking the execution.
+The API server can have two endpoints:
+1. getPublicKey: Return the publicKey for the keypair that is going to execute the different function in from the server. In order to achieve this, a private key needs to be added to the .env file.
+
+2. executeFunction: Trigger the function and checking the execution.
+    
+- Check the server configuration file in `config/index.ts`
 
 <Frame height="100">
 ![Approve Transaction](/images/recipes/smartSession.png)
