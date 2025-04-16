@@ -1,0 +1,93 @@
+---
+title: Chain Abstraction
+sidebar_position: 1
+---
+
+import HowItWorks from "/snippets/walletkit/shared/chain-abstraction/intro.mdx";
+import ErrorHandling from "/snippets/walletkit/shared/chain-abstraction/error-handling.mdx";
+
+<HowItWorks />
+
+## Methods
+
+<Info>
+Make sure you are using canary version of `@reown/walletkit`.
+</Info>
+
+Following are the methods from WalletKit that you will use in implementing chain abstraction.
+
+### Prepare 
+
+This method checks if a transaction requires additional bridging transactions beforehand.
+
+```typescript
+public abstract prepare(params: {
+  transaction: ChainAbstractionTypes.PartialTransaction;
+}): ChainAbstractionTypes.PrepareResponse;
+```
+
+### Execute 
+
+Helper method used to broadcast the bridging and initial transactions and wait for them to be completed.
+
+```typescript
+public abstract execute(params: {
+  orchestrationId: ChainAbstractionTypes.OrchestrationId;
+  bridgeSignedTransactions: ChainAbstractionTypes.SignedTransaction[];
+  initialSignedTransaction: ChainAbstractionTypes.SignedTransaction;
+}): ChainAbstractionTypes.ExecuteResult;
+```
+
+## Usage
+
+When sending a transaction, first check if chain abstraction is needed using the `prepare` method. 
+If it is needed, you must sign all the fulfillment transactions and use the `execute` method. 
+Here's a complete example:
+
+```typescript
+// Check if chain abstraction is needed
+const result = await walletKit.chainAbstraction.prepare({
+  transaction: {
+    from: transaction.from as `0x${string}`,
+    to: transaction.to as `0x${string}`,
+    // @ts-ignore - cater for both input or data
+    input: transaction.input || (transaction.data as `0x${string}`),
+    chainId: chainId,
+  },
+});
+
+// Handle the prepare result
+if ('success' in result) {
+  if ('notRequired' in result.success) {
+    // No bridging required, proceed with normal transaction
+    console.log('no routing required');
+  } else if ('available' in result.success) {
+    const available = result.success.available;
+    
+    // Sign all bridge transactions and initial transaction
+    const bridgeTxs = available.route.map(tx => tx.transactionHashToSign);
+    const signedBridgeTxs = bridgeTxs.map(tx => wallet.signAny(tx));
+    const signedInitialTx = wallet.signAny(available.initial.transactionHashToSign);
+
+    // Execute the chain abstraction
+    const result = await walletKit.chainAbstraction.execute({
+      bridgeSignedTransactions: signedBridgeTxs,
+      initialSignedTransaction: signedInitialTx,
+      orchestrationId: available.routeResponse.orchestrationId,
+    });
+  }
+}
+```
+
+For example, check out implementation of chain abstraction in [sample wallet](https://github.com/reown-com/web-examples/tree/main/advanced/wallets/react-wallet-v2) built with React. 
+
+<ErrorHandling />
+
+## Testing 
+
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/experimental/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
+You can also use this [sample wallet](https://react-wallet.walletconnect.com) for testing. 
+
+<video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
+  <source src="/images/assets/chain-abstraction-demo.mp4" type="video/mp4" />
+</video>

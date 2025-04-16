@@ -37,16 +37,24 @@ The user does not have any USDC on Base, but their wallet seamlessly allows them
 ## Get Started
 
 <CardGroup cols={2}>
-  <Card title="Android" icon="android" href="/walletkit/android/early-access/chain-abstraction">
+  <Card title="Android" icon="android" href="/walletkit/android/chain-abstraction">
     Get started with WalletKit in Android.
   </Card>
 
-  <Card title="iOS" icon="apple" href="/walletkit/ios/early-access/chain-abstraction">
+  <Card title="iOS" icon="apple" href="/walletkit/ios/chain-abstraction">
     Get started with WalletKit in iOS.
   </Card>
 
-  <Card title="React Native" icon="react" href="/walletkit/react-native/early-access/chain-abstraction">
+  <Card title="Flutter" icon="flutter" href="/walletkit/flutter/chain-abstraction">
+    Get started with WalletKit in Flutter.
+  </Card>
+
+  <Card title="React Native" icon="react" href="/walletkit/react-native/chain-abstraction">
     Get started with WalletKit in React Native.
+  </Card>
+
+  <Card title="Web" icon="js" href="/walletkit/web/chain-abstraction">
+    Get started with WalletKit in Web.
   </Card>
 </CardGroup>
 
@@ -63,15 +71,16 @@ Chain Abstraction is available on the following networks:
 
 ### What are the supported tokens and networks?
 
-Chain Abstraction supports the following stablecoins across different networks:
+Chain Abstraction supports the following tokens across different networks:
 
-| Network   | Supported tokens |
-|-----------|-----------------|
-| OP Mainnet | USDC, USDT      |
-| Base      | USDC            |
-| Arbitrum  | USDC            |
+| Network | Supported Tokens |
+|---------|-----------------|
+| OP Mainnet | USDC, USDT, ETH |
+| Base | USDC, USDS, ETH |
+| Arbitrum | USDC, USDT, ETH |
+| Solana | USDC |
 
 
 ### What are the limitations?
 
-We currently support 1:1 transfers i.e. sourcing funds from one address to another. Make sure that you're transferring minimum 0.6 [USDC/USDT](/walletkit/../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) and have enough gas to pay bridging fees. 
+We currently support 1:1 transfers i.e. sourcing funds from one address to another. Make sure that you're transferring minimum 0.6$ worth of tokens(/walletkit/../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) and have enough gas to pay bridging fees. 
