@@ -197,11 +197,11 @@ if (response.status === "CONFIRMED") { // check when the tx is confirmed
 }
 ```
 
-## Common known issues
+## Common Known Issues
 
 - "The method `wallet_grantPermissions` does not exist / is not available.’
     - Please double check that your are using the right email adding +smart+session to end. Example: test@gmail.com -> test+smart+session@gmail.com
 
-- Don't forget to add funds to the Server Wallet to pay the gas and to the smart wallet in case you need to deploy it.
+- Don't forget to add funds to the **server wallet** to pay the gas fee and to the smart wallet in case you need to deploy it.
 
-- Sepolia network is now not working with smart sessions. Please use Sepolia Base
+- Ethereum Sepolia isn’t currently working with Smart Sessions. Use Base Sepolia instead for now.
