@@ -25,20 +25,21 @@ You can start a small project following the guidelines from our [installation Re
 
 ## Explain the functionality
 
-In this guide we are going to build the front-end from a dApp and a server to sign the transactions for the user.
+In this guide, we're going to build the front end of a dApp and a server to sign transactions on behalf of the user.
 
-Front-end
-- The user will connect using their email to our smart wallets and then grant the permission to the server related wallet in order to execute action in their behalf.
-- Check the configuration file in `src/config/configSmartSession.ts`.
+### Front-end
 
-API Server
+- The user will connect to AppKit's smart wallet using their email, and then grant permission to the server-linked wallet to execute actions on their behalf.
+- Refer to the configuration file found in `src/config/configSmartSession.ts`.
+
+### API Server
 
 The API server can have two endpoints:
-1. getPublicKey: Return the publicKey for the keypair that is going to execute the different function in from the server. In order to achieve this, a private key needs to be added to the .env file.
+1. getPublicKey: Returns the publicKey for the keypair that is going to execute the different function in from the server. In order to achieve this, a private key needs to be added to the .env file.
 
-2. executeFunction: Trigger the function and checking the execution.
+2. executeFunction: Triggers the function and checking the execution.
     
-- Check the server configuration file in `config/index.ts`
+- Refer to the server configuration file found in `config/index.ts`
 
 <Frame height="100">
 ![Approve Transaction](/images/recipes/smartSession.png)
