@@ -14,6 +14,16 @@ open({ view: "Connect", namespace: "bip122" });
 
 // to connect and show only ethereum wallets
 open({ view: "Connect", namespace: "eip155" });
+
+// to open swap with arguments
+open({
+  view: 'Swap',
+  arguments: {
+    amount: '321.123',
+    fromToken: 'USDC',
+    toToken: 'ETH'
+  }
+})
 ```
 
 List of views you can select
