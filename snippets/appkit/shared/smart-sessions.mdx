@@ -1,7 +1,7 @@
 ## Overview
 
 <Info>
-💡 The support for smart-session is included in the Appkit SDK in the `experimental` package.
+💡 The support for smart-session is included in a separate package Appkit SDK. Please follow the instruction in order to install it
 </Info>
 
 Smart Sessions allow developers to easily integrate session-based permission handling within their decentralized applications (dApps). Using the `grantPermissions` method, can send permission requests to wallets.
@@ -12,11 +12,17 @@ With Smart Sessions, approved actions are carried out by the app's backend durin
 
 This guide will walk you through on how to use the `grantPermissions` method, including the basic setup and an example of how to request permissions from a wallet.
 
-## Implementations
+#  Implementation
 
-The `grantPermissions` method provides an easy way to interact with the smart wallet to request permissions.
+<Card title="AppKit Example with Smart Session" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi-smart-session">
+Clone this Github repository and follow the readme to try it locally.
+</Card>
 
-### Step 1 | Install the library
+<Card icon="code" href="/appkit/recipes/smart-sessions">
+ For a step-by-step implementation, please refer to our **Smart Session guide**.
+</Card>
+
+## Install the library
 
 <CodeGroup>
 
@@ -37,117 +43,13 @@ pnpm add @reown/appkit-experimental
 ```
 </CodeGroup>
 
-### Step 2 | Import the method
-
-First, import the grantPermissions method from the `@reown/appkit-experimental/smart-session` package.
-
-```javascript
-import {
-  grantPermissions,
-  type SmartSessionGrantPermissionsRequest,
-} from "@reown/appkit-experimental/smart-session";
-```
-
-### Step 3 | Define the Permission Request
-
-Create an object adhering to the `SmartSessionGrantPermissionsRequest` type. This object specifies details like the `address`, `chainID`, `signer`, `policies`, `permissions`, and `expiry` time.
-
-Example request object:
-
-```tsx
-const request: SmartSessionGrantPermissionsRequest = {
-  expiry: Math.floor(Date.now() / 1000) + 24 * 60 * 60, // 24 hours
-  chainId: toHex(baseSepolia.id),
-  address: address,
-  signer: {
-    type: "keys",
-    data: {
-      keys: [
-        {
-          type: "secp256k1",
-          publicKey: "0x...", //public key of dapp signer
-        },
-      ],
-    },
-  },
-  permissions: [
-    {
-      type: "contract-call",
-      data: {
-        address: "0x2E65BAfA07238666c3b239E94F32DaD3cDD6498D", // sample donut contract address
-        abi: [
-          {
-            inputs: [
-              { internalType: "uint256", name: "amount", type: "uint256" },
-            ],
-            name: "purchase",
-            outputs: [],
-            stateMutability: "payable",
-            type: "function",
-          },
-        ],
-        functions: [
-          {
-            functionName: "purchase",
-          },
-        ],
-      },
-    },
-  ],
-  policies: [],
-};
-```
-
-### Step 4 | Invoke the Method
-
-Call the `grantPermissions` function, passing the request object. This will trigger the permission request via the connected wallet.
-
-```tsx
-const response = await grantPermissions(request);
-```
-
-### Step 5 | Handle the Response
-
-Upon successful execution, the response will include the granted permissions and the session context. So the response can be handled as needed.
-
-#### Response Format
-
-```tsx
-{
-  chainId: `0x14a34`
-  address: `0x...`
-  expiry: 1727824386
-  permissions: [
-    {
-      type: 'contract-call',
-      data: {
-        address: '0x2E65BAfA07238666c3b239E94F32DaD3cDD6498D', // sample donut contract address
-        abi: [
-          {
-            inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
-            name: 'purchase',
-            outputs: [],
-            stateMutability: 'payable',
-            type: 'function'
-          }
-        ],
-        functions: [ {
-          functionName: 'purchase'
-        } ]
-      }
-    }
-  ],
-  context: '...'  // Context identifier for the session
-}
-```
-
 ## How to use the permissions
 
-The dApp must call the following two endpoints from the wallet services API to use these permissions.
+The dApp must call the following RPC calls to `https://rpc.walletconnect.org/v1/wallet?projectId=<PROJECT-ID>`
 
-    1. `https://rpc.walletconnect.org/v1/wallets/prepareCalls` - Accepts an EIP-5792 `wallet_sendCalls` request.
+    1. `wallet_prepareCalls` - Accepts an EIP-5792 `wallet_sendCalls` request.
     Responds with the prepared calls (in the case of Appkit Embedded Wallet, an Entrypoint v0.7 user operation), some context, and a signature request.
-    2. `https://rpc.walletconnect.org/v1/wallets/sendPreparedCalls` - Accepts prepared calls, a signature, and the context returned from prepareCalls if present. Returns an EIP-5792 calls ID.
+    2. `wallet_sendPreparedCalls` - Accepts prepared calls, a signature, and the context returned from prepareCalls if present. Returns an EIP-5792 calls ID.
 
 ### Steps to follow for executing any async action by the dApp backend.
 
@@ -155,7 +57,7 @@ The dApp must call the following two endpoints from the wallet services API to u
   <img src="/images/assets/smart-sessions.jpg" />
 </Frame>
 
-1. Dapp makes the `wallet_prepareCalls` JSON RPC call to the wallet service API. Accepts an EIP-5792 `wallet_sendCalls` request, and returns the prepared calls according to the account's implementation.
+1. Dapp makes the `wallet_prepareCalls` JSON RPC call. It's Accepts an EIP-5792 `wallet_sendCalls` request, and returns the prepared calls according to the account's implementation.
 
    #### Parameter
 
@@ -235,23 +137,8 @@ The dApp must call the following two endpoints from the wallet services API to u
 
 2. App developers are expected to Sign the `signatureRequest.hash` returned from `wallet_prepareCalls` call using the dApp key (secp256k1 or secp256r1)
 
-3. dApps makes the `wallet_sendPreparedCalls` JSON RPC call to wallet service API. The RPC accepts the prepared response from `wallet_prepareCalls` request along with a signature, and returns an [EIP-5792](https://eip.tools/eip/5792) call bundle ID.
+3. dApps makes the `wallet_sendPreparedCalls` JSON RPC call. The RPC accepts the prepared response from `wallet_prepareCalls` request along with a signature, and returns an [EIP-5792](https://eip.tools/eip/5792) call bundle ID.
 
-## Examples dApp
-
-<Frame>
-  <img src="/images/assets/tictactoe.jpg" />
-</Frame>
-
-- Tic Tac Toe | [Demo](https://smart-sessions-demo.reown.com/demo/tictactoe) | [Video](https://x.com/cyberdrk/status/1830109996841054208)
-- Dollar Cost Average | [Demo](https://smart-sessions-demo.reown.com/demo/dca) | [Explanation](https://x.com/lukaisailovic/status/1871571013319684274) | [Video](https://x.com/cyberdrk/status/1854148190842610124)
-- [Github examples repository](https://github.com/reown-com/web-examples/tree/main/advanced/dapps/smart-sessions-demo)
-
-## Reference
-
-- ERC-7715: Grant Permissions from Wallets | https://eip.tools/eip/7715
-- EIP-5792: Wallet Call API | https://eip.tools/eip/5792
-- ERC-4337 Entry Point | https://github.com/ethereum/ercs/blob/master/ERCS/erc-4337.md#entrypoint-definition
 
 ## Currently supported Permission types
 
@@ -289,3 +176,21 @@ The dApp must call the following two endpoints from the wallet services API to u
       }
     }
     ```
+    
+## Advance Examples
+
+<Frame>
+  <img src="/images/assets/tictactoe.jpg" />
+</Frame>
+
+- Tic Tac Toe | [Demo](https://smart-sessions-demo.reown.com/demo/tictactoe) | [Video](https://x.com/cyberdrk/status/1830109996841054208)
+- Dollar cost average | [Demo](https://smart-sessions-demo.reown.com/demo/dca) | [Explanation](https://x.com/lukaisailovic/status/1871571013319684274) | [Video](https://x.com/cyberdrk/status/1854148190842610124)
+- [Github examples repository](https://github.com/reown-com/web-examples/tree/main/advanced/dapps/smart-sessions-demo)
+- [Simple example implementation](https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi-smart-session)
+
+## Reference
+
+- ERC-7715: Grant Permissions from Wallets | https://eip.tools/eip/7715
+- EIP-5792: Wallet Call API | https://eip.tools/eip/5792
+- ERC-4337 Entry Point | https://github.com/ethereum/ercs/blob/master/ERCS/erc-4337.md#entrypoint-definition
+
