@@ -1,8 +1,18 @@
 ---
 title: Installation
+description: How to install and set up WalletKit SDK in your web application
 ---
 
-Install WalletKit using npm or yarn.
+# Installing WalletKit
+
+## Prerequisites
+
+- Node.js 14.0 or higher
+- A JavaScript/TypeScript project (React, Vue, Angular, or vanilla JS)
+
+## Installation Steps
+
+1. Install WalletKit and its dependencies using your preferred package manager:
 
 <CodeGroup>
 ```bash npm
@@ -18,6 +28,20 @@ bun add @reown/walletkit @walletconnect/utils @walletconnect/core
 pnpm add @reown/walletkit @walletconnect/utils @walletconnect/core
 ```
 </CodeGroup>
+
+2. After installation, you'll need to configure WalletKit in your application. See the next section for setup instructions.
+
+## Verification
+
+To verify your installation was successful, you can check your `package.json` file to confirm the dependencies were added correctly.
+
 ## Next Steps
 
-Now that you've installed WalletKit, you're ready to start integrating it. The next section will walk you through the process of setting up your project to use the SDK.
+Now that you've installed WalletKit, you're ready to start integrating it into your project. The following section will guide you through the configuration process and basic usage examples.
+
+## Troubleshooting
+
+If you encounter any installation issues:
+- Ensure your Node.js version is up to date
+- Try clearing your package manager's cache
+- Check for any peer dependency requirements
