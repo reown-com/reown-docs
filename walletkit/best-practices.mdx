@@ -17,84 +17,28 @@ WalletKit is Reown's official SDK that enables wallets to connect securely with 
 
 This document outlines best practices for implementing WalletKit in your wallet to ensure optimal user experience.
 
-## Quick Start
-
-Initialize WalletKit as early as possible in your application lifecycle:
-
-<Tabs>
-  <Tab title="Web">
-```javascript
-// Initialize WalletKit in your app entry point
-import { WalletKit } from '@reown/walletkit';
-
-const walletKit = await WalletKit.init({
-  projectId: 'YOUR_PROJECT_ID',
-  name: 'Your Wallet Name'
-});
-```
-  </Tab>
-  <Tab title="React Native">
-```javascript
-// Initialize WalletKit in your app entry point
-import { WalletKit } from '@reown/walletkit-react-native';
-
-const walletKit = await WalletKit.init({
-  projectId: 'YOUR_PROJECT_ID',
-  name: 'Your Wallet Name'
-});
-```
-  </Tab>
-  <Tab title="iOS">
-```swift
-// Initialize WalletKit in your AppDelegate
-import WalletKit
-
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    WalletKit.configure(with: WalletKitConfig(
-        projectId: "YOUR_PROJECT_ID",
-        name: "Your Wallet Name"
-    ))
-    return true
-}
-```
-  </Tab>
-  <Tab title="Android">
-```kotlin
-// Initialize WalletKit in your Application class
-import io.reown.walletkit.WalletKit
-
-class YourApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        WalletKit.initialize(
-            context = this,
-            projectId = "YOUR_PROJECT_ID", 
-            name = "Your Wallet Name"
-        )
-    }
-}
-```
-  </Tab>
-</Tabs>
-
 ## Checklist Before Going Live
 
 To ensure your wallet adheres to best practices, implement the following before deployment:
 
-| Category | Best Practice | Priority |
-|----------|---------------|----------|
-| **User Feedback** | Display clear connection/transaction status messages | High |
-| | Show loading indicators during operations | High |
-| | Communicate errors to both user and DApp | High |
-| **Mobile Experience** | Implement deep linking between wallet and DApp | High |
-| | Ensure proper redirection after transactions | Medium |
-| **Performance** | Connection time < 5s (normal conditions) | High |
-| | Connection time < 15s (poor network) | Medium |
-| | Transaction signing < 5s (normal conditions) | High |
-| | Transaction signing < 10s (poor network) | Medium |
-| **Security** | Implement Verify API with all four states | High |
-| **Maintenance** | Use latest SDK version | High |
-| | Subscribe to SDK update notifications | Medium |
+| Category | Best Practice | Details |
+|----------|---------------|---------|
+| **Success and Error Messages** | Display clear messages for all interactions | • Show connection success messages<br/>• Show connection error messages<br/>• Provide loading indicators during waiting periods |
+| | Inform users of connection status | • Display real-time connection state<br/>• Show transaction status updates |
+| | Implement internet availability indicators | • Alert users when connection is lost<br/>• Provide recovery options |
+| | Provide feedback to both users and DApps | • Communicate errors to both user interfaces |
+| **Mobile Linking** | Implement automatic redirection | • Enable seamless transitions between wallet and DApp |
+| | Use deep linking over universal linking | • More reliable direct app launching<br/>• Better parameter passing support |
+| | Ensure proper return to DApp | • Redirect after transaction completion |
+| **Latency** | Optimize performance | • Minimize delays in all interactions |
+| | Connection time in normal conditions | • Target: under 5 seconds |
+| | Connection time in poor network (3G) | • Target: under 15 seconds |
+| | Signing time in normal conditions | • Target: under 5 seconds |
+| | Signing time in poor network (3G) | • Target: under 10 seconds |
+| **Verify API** | Present security status indicators | • Domain match: verified domain<br/>• Unverified: domain not in registry<br/>• Mismatch: domain doesn't match registry<br/>• Threat: flagged as malicious |
+| **SDK Version** | Use latest SDK version | • Benefit from latest features and security updates |
+| | Update SDK regularly | • Fix known bugs<br/>• Improve performance |
+| | Subscribe to SDK updates | • Stay informed of new releases and deprecations |
 
 ## 1. User Feedback and Messaging
 
@@ -115,7 +59,7 @@ Users often face ambiguity determining whether their connection or transactions 
 
 ### Pairing Overview
 
-**What is Pairing?** A pairing is a secure connection between a wallet and a DApp with fixed permissions that allows the DApp to propose sessions. Each pairing can support multiple sessions.
+**What is Pairing?** A pairing is a secure connection between a wallet and a DApp with fixed permissions that allows the DApp to propose sessions.
 
 ### Pairing Process
 
@@ -163,7 +107,7 @@ if let uri {
         }
     }
 }
-````
+```
 </Tab>
 <Tab title="Android">
 ```kotlin
@@ -178,14 +122,14 @@ WalletKit.pair(pairingParams,
         Log.e("WalletKit", "Pairing failed: $error")
     }
 }
-````
+```
 </Tab>
 </Tabs>
 
 ### Pairing State Management
 
 #### Pairing Expiry
-Inactive pairings expire after 5 minutes, while active pairings (with approved sessions) expire after 30 days. Monitor these events to update your UI accordingly.
+All pairings expire after 5 minutes if no successful session is established. After a successful session establishment, monitor these events to update your UI accordingly.
 
 <Tabs>
   <Tab title="Web" >
@@ -234,7 +178,7 @@ val coreDelegate = object : CoreClient.CoreDelegate {
 
 // Set the delegate to receive events
 CoreClient.setDelegate(coreDelegate)
-````
+```
 </Tab>
 </Tabs>
 
@@ -244,8 +188,9 @@ CoreClient.setDelegate(coreDelegate)
 |------------|-------------|-------------|-------------|
 | No Internet | Connection attempt with no network | Retry with active connection | Display error, allow retry |
 | Expired Pairing | QR code/URI has expired | Refresh QR code and scan again | Generate new pairing URI |
-| Duplicate Pairing | Attempt to pair with existing pairing | Generate new pairing | Generate new pairing URI |
-| Invalid URI | Malformed or corrupt pairing URI | Get new URI from DApp | Generate new pairing URI |
+| Pairing Already Exists | Attempting to use an already paired URI | Scan a new QR code | Generate new pairing URI |
+| Malformed Pairing URI | URI does not follow WalletConnect protocol format | Try a different DApp or report issue | Ensure correct implementation of WalletConnect URI format |
+| Invalid URI | Pairing URI structure is incorrect | Get new URI from DApp | Check URI format matches WalletConnect spec |
 
 ## 3. Session Proposal Handling
 
@@ -306,7 +251,7 @@ try {
     hideLoadingIndicator();
     showErrorMessage(`Connection failed: ${error.message}`);
 }
-````
+```
   </Tab>
   <Tab title="React Native">
 ```typescript
@@ -497,6 +442,126 @@ Mobile linking allows seamless transitions between DApps and wallets on mobile d
 - Support passing parameters in the URL
 - Work consistently across platforms
 
+### Why use Mobile Linking?
+
+Mobile Linking uses the mobile device's native OS to automatically redirect between the native wallet app and a native app. This results in few user actions a better UX.
+
+#### Establishing Communication Between Mobile Wallets and Apps
+
+When integrating a wallet with a mobile application, it's essential to understand how they communicate. The process involves two main steps:
+
+1. **QR Code Handshake:** The mobile app (Dapp) generates a unique URI (Uniform Resource Identifier) and displays it as a QR code. This URI acts like a secret handshake. When the user scans the QR code or copy/pastes the URI using their wallet app, they establish a connection. It's like saying, "Hey, let's chat!"
+2. **Deep Links and Universal Links:** The URI from the QR code allows the wallet app to create a [deep link](https://support.google.com/google-ads/answer/10023042) or [universal link](https://developer.apple.com/ios/universal-links/). These links work on both Android and iOS. They enable seamless communication between the wallet and the app.
+
+<Tip>
+
+**Developers should prefer Deep Linking over Universal Linking.**
+
+Universal Linking may redirect the user to a browser, which might not provide the intended user experience. Deep Linking ensures the user is taken directly to the app.
+
+</Tip>
+
+### Key Behavior to Address
+
+In some scenarios, wallets use redirect metadata provided in session proposals to open applications. This can cause unintended behavior, such as:
+
+- Redirecting to the wrong app when multiple apps share the same redirect metadata (e.g., a desktop and mobile version of the same Dapp).
+- Opening an unrelated application if a QR code is scanned on a different device than where the wallet is installed.
+
+#### Recommended Approach
+
+To avoid this behavior, wallets should:
+
+- **Restrict Redirect Metadata to Deep Link Use Cases**: Redirect metadata should only be used when the session proposal is initiated through a deep link. QR code scans should not trigger app redirects using session proposal metadata.
+
+### Connection Flow
+
+1. **Dapp prompts user:** The Dapp asks the user to connect.
+2. **User chooses wallet:** The user selects a wallet from a list of compatible wallets.
+3. **Redirect to wallet:** The user is redirected to their chosen wallet.
+4. **Wallet approval:** The wallet prompts the user to approve or reject the session (similar to granting permission).
+5. **Return to dapp:**
+   - **Manual return:** The wallet asks the user to manually return to the Dapp.
+   - **Automatic return:** Alternatively, the wallet automatically takes the user back to the Dapp.
+6. **User reunites with dapp:** After all the interactions, the user ends up back in the Dapp.
+<Frame>
+![](/images/w3w/mobileLinking-light.png)
+</Frame>
+
+### Sign Request Flow
+
+When the Dapp needs the user to sign something (like a transaction), a similar pattern occurs:
+
+1. **Automatic redirect:** The Dapp automatically sends the user to their previously chosen wallet.
+2. **Approval prompt:** The wallet asks the user to approve or reject the request.
+3. **Return to dapp:**
+   - **Manual return:** The wallet asks the user to manually return to the Dapp.
+   - **Automatic return:** Alternatively, the wallet automatically takes the user back to the Dapp.
+4. **User reconnects:** Eventually, the user returns to the Dapp.
+
+<Frame>
+![](/images/w3w/mobileLinking_sign-light.png)
+</Frame>
+
+
+### Platform Specific Preparation
+
+<Tabs>
+  <Tab title="iOS">
+  Read the specific steps for iOS here: [Platform preparations](./ios/mobile-linking#platform-preparations)
+  </Tab>
+
+<Tab title="Android" label="Android">
+  Read the specific steps for Android here: [Platform
+  preparations](./android/mobile-linking#platform-preparations)
+</Tab>
+
+<Tab title="Flutter" label="Flutter">
+  Read the specific steps for Flutter here: [Platform
+  preparations](./flutter/mobile-linking#platform-preparations)
+</Tab>
+
+  <Tab title="React Native">
+  Read the specific steps for React Native here: [Platform preparations](./react-native/mobile-linking#platform-preparations)
+  </Tab>
+</Tabs>
+
+### How to Test
+
+To experience the desired behavior, try our Sample Wallet and Dapps which use our Mobile linking best practices. These are available on all platforms.
+
+Once you have completed your integration, you can test it against our sample apps to see if it is working as expected. Download the app and and try your mobile linking integration on your device.
+
+<Tabs>
+  <Tab title="iOS">
+  - [Sample Wallet](https://testflight.apple.com/join/09bTAryp) - on TestFlight
+  - [Sample DApp](https://testflight.apple.com/join/7S1GYcjC) - on TestFlight
+  </Tab>
+
+<Tab title="Android" label="Android">
+  - [Sample Wallet](https://appdistribution.firebase.dev/i/6f9437a5f9bf4eec) -
+  on Firebase - [Sample
+  DApp](https://appdistribution.firebase.dev/i/5e4fe4b30c8a208d) - on Firebase
+</Tab>
+
+<Tab title="Flutter" label="Flutter">
+  - Sample Wallet: - [Sample Wallet for
+  iOS](https://testflight.apple.com/join/Uv0XoBuD) - [Sample Wallet for
+  Android](https://appdistribution.firebase.dev/i/2b8b3dce9e2831cd) - AppKit
+  DApp: - [AppKit Dapp for iOS](https://testflight.apple.com/join/6aRJSllc) -
+  [AppKit Dapp for
+  Android](https://appdistribution.firebase.dev/i/2c6573f6956fa7b5)
+</Tab>
+
+  <Tab title="React Native">
+  - Sample Wallet:
+    - [Sample Wallet for Android](https://appdistribution.firebase.dev/i/e7711e780547234e)
+  - Sample DApp:
+    - [Sample App for iOS](https://testflight.apple.com/join/Ivd8bg7s)
+    - [Sample App for Android](https://appdistribution.firebase.dev/i/0297fbd3de8f1e3f)
+  </Tab>
+</Tabs>
+
 ### Implementing Mobile Linking
 
 <Tabs>
@@ -581,7 +646,357 @@ fun redirectBackToDApp(redirectUrl: String?) {
   </Tab>
 </Tabs>
 
-## 5. Testing WalletKit Features
+## 5. Session Request
+
+A session request represents the request sent by a DApp to a wallet.
+
+Whenever user approves or rejects a session request, a wallet should show a loading indicator the moment the button is pressed, until Relay acknowledgement is received for any of these actions.
+
+<Tabs>
+  <Tab title="Web" >
+```typescript
+try {
+    // Show loading indicator when user approves/rejects
+    showLoadingIndicator();
+    
+    // Respond to the session request
+    await walletKit.respondSessionRequest({
+      topic: request.topic,
+      response: {
+        id: request.id,
+        jsonrpc: '2.0',
+        result: response // The response could be a signature or other data
+      }
+    });
+    
+    // Hide loading indicator, show success message
+    hideLoadingIndicator();
+    showSuccessMessage('Request completed');
+} catch (error) {
+    // Hide loading indicator, show error message
+    hideLoadingIndicator();
+    showErrorMessage(`Request failed: ${error.message}`);
+}
+```
+  </Tab>
+  <Tab title="React Native">
+```typescript
+try {
+    // Show loading indicator when user approves/rejects
+    showLoadingIndicator();
+    
+    // Respond to the session request
+    await walletKit.respondSessionRequest({
+      topic: request.topic,
+      response: {
+        id: request.id,
+        jsonrpc: '2.0',
+        result: response // The response could be a signature or other data
+      }
+    });
+    
+    // Hide loading indicator, show success message
+    hideLoadingIndicator();
+    showSuccessMessage('Request completed');
+} catch (error) {
+    // Hide loading indicator, show error message
+    hideLoadingIndicator();
+    showErrorMessage(`Request failed: ${error.message}`);
+}
+```
+  </Tab>
+  <Tab title="iOS">
+```swift
+do {
+    // Show loading indicator when user approves/rejects
+    showLoadingIndicator()
+    
+    // Respond to the session request
+    try await WalletKit.instance.respond(
+        requestId: request.id,
+        signature: signature,
+        from: account
+    )
+    
+    // Hide loading indicator, show success message
+    hideLoadingIndicator()
+    showSuccessMessage("Request completed")
+} catch {
+    // Hide loading indicator, show error message
+    hideLoadingIndicator()
+    showErrorMessage("Request failed: \(error.localizedDescription)")
+}
+```
+  </Tab>
+  <Tab title="Android" label="Android">
+```kotlin
+// Create response parameters
+val responseParams = Wallet.Params.SessionRequestResponse(
+    requestId = request.id,
+    result = result,  // The response data
+    topic = request.topic
+)
+
+// Show loading indicator when user approves/rejects
+showLoadingIndicator()
+
+WalletKit.respondSessionRequest(responseParams,
+    onSuccess = {
+        // Hide loading indicator, show success message
+        hideLoadingIndicator()
+        showSuccessMessage("Request completed")
+    },
+    onError = { error ->
+        // Hide loading indicator, show error message
+        hideLoadingIndicator()
+        showErrorMessage("Request failed: ${error.message}")
+    }
+)
+```
+</Tab>
+</Tabs>
+
+### Session Request Expiry
+
+A session request expiry is defined by a DApp. Its value must be between `now() + 5mins` and `now() + 7 days`. After the session request expires, the below event is emitted and session request modal should be removed from the app's UI.
+
+<Tabs>
+  <Tab title="Web" >
+```typescript
+walletKit.on("session_request_expire", (event) => {
+  // Request expired and any modal displaying it should be removed
+  const { id } = event;
+  // Update UI to remove the request
+  removeRequestFromUI(id);
+});
+```
+  </Tab>
+  <Tab title="React Native">
+```typescript
+walletKit.on("session_request_expire", (event) => {
+  // Request expired and any modal displaying it should be removed
+  const { id } = event;
+  // Update UI to remove the request
+  removeRequestFromUI(id);
+});
+```
+  </Tab>
+  <Tab title="iOS">
+```swift
+WalletKit.instance.requestExpirationPublisher.sink { expiredRequest in
+    // Let user know that request has expired
+    // Remove request from UI
+    removeRequestFromUI(expiredRequest.id)
+}.store(in: &publishers)
+```
+  </Tab>
+  <Tab title="Android" label="Android">
+```kotlin
+val walletDelegate = object : WalletKit.WalletDelegate {
+  override fun onRequestExpired(request: Wallet.Model.ExpiredRequest) {
+      // Here this event is triggered when a session request expires
+      // Update UI to remove the request
+      removeRequestFromUI(request.id)
+  }
+  // ...other callbacks
+}
+WalletKit.setWalletDelegate(walletDelegate)
+```
+</Tab>
+</Tabs>
+
+### Expected Session Request Errors
+
+| Error Type | Description | User Action | DApp Action |
+|------------|-------------|-------------|-------------|
+| Invalid Session | Request made on expired/invalid session | Reconnect to the DApp | Detect session expiry and prompt for reconnection |
+| Session Request Expired | Approval/rejection after request timeout | Handle new requests only | Set appropriate timeout periods |
+| Timeout | No relay acknowledgement within 10 seconds | Retry the action | Implement proper timeout handling |
+| Network Error | Connection issues during request | Check network and retry | Display network status indicators |
+
+## 6. Connection State
+
+The Web Socket connection state tracks the connection with the Relay server. An event is emitted whenever a connection state changes.
+
+<Tabs>
+  <Tab title="Web" >
+```typescript
+core.relayer.on("relayer_connect", () => {
+  // Connection to the relay server is established
+  updateConnectionStatus('connected');
+})
+
+core.relayer.on("relayer_disconnect", () => {
+  // Connection to the relay server is lost
+  updateConnectionStatus('disconnected');
+})
+```
+  </Tab>
+  <Tab title="React Native">
+```typescript
+core.relayer.on("relayer_connect", () => {
+  // Connection to the relay server is established
+  updateConnectionStatus('connected');
+})
+
+core.relayer.on("relayer_disconnect", () => {
+  // Connection to the relay server is lost
+  updateConnectionStatus('disconnected');
+})
+```
+  </Tab>
+  <Tab title="iOS">
+```swift
+WalletKit.instance.socketConnectionStatusPublisher
+  .receive(on: DispatchQueue.main)
+  .sink { status in
+    switch status {
+    case .connected:
+      // Update UI to show connected state
+      updateConnectionStatus(.connected)
+    case .disconnected:
+      // Update UI to show disconnected state
+      updateConnectionStatus(.disconnected)
+    }
+  }.store(in: &publishers)
+```
+  </Tab>
+  <Tab title="Android" label="Android">
+```kotlin
+val walletDelegate = object : WalletKit.WalletDelegate {
+  override fun onConnectionStateChange(state: Wallet.Model.ConnectionState) {
+    // Handle connection state change
+    when (state) {
+      is Wallet.Model.ConnectionState.Connected -> {
+        // Update UI to show connected state
+        updateConnectionStatus(ConnectionStatus.CONNECTED)
+      }
+      is Wallet.Model.ConnectionState.Disconnected -> {
+        // Update UI to show disconnected state
+        updateConnectionStatus(ConnectionStatus.DISCONNECTED)
+      }
+    }
+  }
+  // ...other callbacks
+}
+WalletKit.setWalletDelegate(walletDelegate)
+```
+</Tab>
+</Tabs>
+
+### Connection State Messages
+
+When the connection state changes, show a message in the UI. For example, display a message when the connection is lost or re-established.
+
+## 7. Latency
+
+Our SDK's position in the boot chain can lead to up to 15 seconds in throttled network conditions. Lack of loading indicators exacerbates the perceived latency issues, impacting user experience negatively. Additionally, users often do not receive error messages or codes when issues occur or timeouts happen.
+
+### Target Latency
+
+For **connecting**, the target latency is:
+
+- **Under 5 seconds** in normal conditions
+- **Under 15 seconds** when throttled (3G network speed)
+
+For **signing**, the target latency is:
+
+- **Under 5 seconds** in normal conditions
+- **Under 10 seconds** when throttled (3G network speed)
+
+### How to Test
+
+To test latency under suboptimal network conditions, you can enable throttling on your mobile phone. You can simulate different network conditions to see how your app behaves in various scenarios.
+
+For example, on iOS you need to enable Developer Mode and then go to **Settings > Developer > Network Link Conditioner**. You can then select the network condition you want to simulate. For 3G, you can select **3G** from the list, for no network or timeout simulations, choose **100% Loss**.
+
+Check this article for how to simulate slow internet connection on iOS & Android, with multiple options for both platforms: [How to simulate slow internet connection on iOS & Android](https://www.browserstack.com/guide/how-to-simulate-slow-network-conditions).
+
+## 8. Verify API
+
+Verify API is a security-focused feature that allows wallets to notify end-users when they may be connecting to a suspicious or malicious domain, helping to prevent phishing attacks across the industry. Once a wallet knows whether an end-user is on uniswap.com or eviluniswap.com, it can help them to detect potentially harmful connections through Verify's combined offering of Reown's domain registry.
+
+When a user initiates a connection with an application, Verify API enables wallets to present their users with four key states that can help them determine whether the domain they're about to connect to might be malicious.
+
+Possible states:
+
+- Domain match
+- Unverified
+- Mismatch
+- Threat
+<Frame>
+![Verify States](/images/verify-states-1.png)
+</Frame>
+<Frame>
+![Verify States](/images/verify-states-2.png)
+</Frame>
+
+<Note>
+
+Verify API is not designed to be bulletproof but to make the impersonation attack harder and require a somewhat sophisticated attacker. We are working on a new standard with various partners to close those gaps and make it bulletproof.
+
+</Note>
+
+### Domain Risk Detection
+
+The Verify security system will discriminate session proposals & session requests with distinct validations that can be either `VALID`, `INVALID` or `UNKNOWN`.
+
+- **Domain match:** The domain linked to this request has been verified as this application's domain.
+  - This interface appears when the domain a user is attempting to connect to has been 'verified' in our domain registry as the registered domain of the application the user is trying to connect to, and the domain has not returned as suspicious from either of the security tools we work with. The `verifyContext` included in the request will have a validation of `VALID`.
+- **Unverified:** The domain sending the request cannot be verified.
+  - This interface appears when the domain a user is attempting to connect to has not been verified in our domain registry, but the domain has not returned as suspicious from either of the security tools we work with. The `verifyContext` included in the request will have a validation of `UNKNOWN`.
+- **Mismatch:** The application's domain doesn't match the sender of this request.
+  - This interface appears when the domain a user is attempting to connect to has been flagged as a different domain to the one this application has verified in our domain registry, but the domain has not returned as suspicious from either of the security tools we work with. The `verifyContext` included in the request will have a validation of `INVALID`
+- **Threat:** This domain is flagged as malicious and potentially harmful.
+  - This interface appears when the domain a user is attempting to connect to has been flagged as malicious on one or more of the security tools we work with. The `verifyContext` included in the request will contain parameter `isScam` with value `true`.
+
+### Verify API Implementation
+
+To see how to implement Verify API for your framework, see [Verify API](./features/verify) page and select your platform to see code examples.
+
+### How to Test
+
+To test Verify API with a malicious domain, you can check out the [Malicious React dapp](https://malicious-app-verify-simulation.vercel.app/), created specifically for testing. This app is flagged as malicious and will have the `isScam` parameter set to `true` in the `verifyContext` of the request. You can use this app to test how your wallet behaves when connecting to a malicious domain.
+
+### Error Messages
+<Frame>
+![Verify API flagged domain](/images/assets/verify-api-flagged-domain.png)
+</Frame>
+_A sample error warning when trying to connect to a malicious domain_
+
+## 9. Latest SDK Version
+
+Numerous features have been introduced, bugs have been identified and fixed over time, stability has improved, but many DApps and wallets continue to use older SDK versions with known issues, affecting overall reliability.
+
+Make sure you are using the latest version of the SDK for your platform
+
+<Tabs>
+  <Tab title="iOS">
+  - **WalletConnectSwiftV2**: [Latest release](https://github.com/reown-com/reown-swift/releases/latest/)
+  </Tab>
+
+<Tab title="Android" label="Android">
+  - **WalletConnectKotlinV2**: [Latest
+  release](https://github.com/WalletConnect/WalletConnectKotlinV2/releases/latest)
+</Tab>
+
+<Tab title="Flutter" label="Flutter">
+  - **WalletConnectFlutterV2**: [Latest
+  release](https://github.com/WalletConnect/WalletConnectFlutterV2/releases/latest)
+</Tab>
+
+  <Tab title="React Native">
+  - **AppKit for React Native**: [Latest release](https://github.com/WalletConnect/reown-react-native/releases/latest)
+  </Tab>
+</Tabs>
+
+### Subscribe to Updates
+
+To stay up to date with the latest SDK releases, you can use GitHub's native feature to subscribe to releases. This way, you will be notified whenever a new release is published. You can find the "Watch" button on the top right of the repository page. Click on it, then select "Custom" and "Releases only". You'll get a helpful ping whenever a new release is out.
+
+![Subscribe to releases](/images/assets/subsribe-to-release-updates.png)
+
+## 10. Testing WalletKit Features
 
 ### Test Scenarios
 
@@ -600,7 +1015,7 @@ fun redirectBackToDApp(redirectUrl: String?) {
 | Multiple Connections | Connect to multiple DApps | All connections work independently |
 | WebSocket Connection | Turn off Wi-Fi during session | Reconnection attempt + user notification |
 
-## 6. Troubleshooting
+## 11. Troubleshooting
 
 ### Common Issues
 
@@ -612,21 +1027,8 @@ fun redirectBackToDApp(redirectUrl: String?) {
 | Deep link not working | Improper URL scheme registration | Verify URL scheme in app manifest/Info.plist |
 | Session disconnects frequently | Background process limitations | Implement proper reconnection logic |
 
-### Debugging Tools
+## Resources
 
-- **WalletKit Logs**: Enable debug logs to trace issues
-  ```typescript
-  WalletKit.init({
-    // other options...
-    logger: 'debug'  // Options: 'error', 'warn', 'info', 'debug'
-  })
-  ```
-
-- **Network Inspector**: Use browser developer tools or Charles Proxy to inspect network traffic
-- **Test DApp**: Use our [test DApp](https://test.reown.com) to verify your wallet's compliance with best practices
-
-## Version Information
-- **Current WalletKit Version**: 2.0
-- **Release Date**: 2023-10-15
-- [View Changelog](https://docs.reown.com/walletkit/changelog)
-- [GitHub Repository](https://github.com/reown/walletkit)
+- [React Wallet](https://react-wallet.reown.com/) - for testing DApps, features, Verify API messages, etc.
+- [React DApp](https://react-app.reown.com/) - for testing wallets
+- [Malicious React DApp](https://malicious-app-verify-simulation.vercel.app/) - for testing Verify API with malicious domain
