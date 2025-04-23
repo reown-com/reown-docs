@@ -65,17 +65,18 @@
               {
                 "group": "AppKit Guides",
                 "pages":[
-                  "appkit/recipes/telegram-mini-app",
+                  "appkit/recipes/smart-sessions",
+                  "appkit/recipes/sponsoring-first-transaction",
+                  "appkit/recipes/EVM-smart-contract-interaction",
+                  "appkit/recipes/solana-send-transaction",
                   "appkit/recipes/tenderly-virtual-testnets",
                   "appkit/recipes/wagmi-send-transaction",
                   "appkit/recipes/ethers-send-transaction",
-                  "appkit/recipes/EVM-smart-contract-interaction",
-                  "appkit/recipes/solana-send-transaction",
                   "appkit/recipes/bitcoin-send-transaction",
                   "appkit/recipes/switching-to-send-calls",
-                  "appkit/recipes/sponsoring-first-transaction",
                   "appkit/recipes/travel-rule",
-                  "appkit/recipes/smart-sessions"
+                  
+                  "appkit/recipes/telegram-mini-app"
                 ]
               }
             ]
