@@ -75,7 +75,6 @@
                   "appkit/recipes/bitcoin-send-transaction",
                   "appkit/recipes/switching-to-send-calls",
                   "appkit/recipes/travel-rule",
-                  
                   "appkit/recipes/telegram-mini-app"
                 ]
               }
