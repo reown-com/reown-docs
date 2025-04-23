@@ -8,11 +8,11 @@ import Ethers5Hooks from "/snippets/appkit/next/ethers5/hooks.mdx";
 import SolanaHooks from "/snippets/appkit/next/solana/hooks.mdx";
 import OpenModal from "/snippets/appkit/next/core/open.mdx";
 
-Hooks are functions that will help you control the modal, subscribe to wallet events and interact with them and smart contracts.
+Hooks are React functions that provide access to wallet connection features, modal controls, blockchain interactions, and wallet event subscriptions. They enable you to manage wallet connections, handle user authentication, interact with smart contracts, and respond to wallet events in your application.
 
 ## useAppKit
 
-Hook for controlling the modal.
+The primary hook for controlling the modal's visibility and behavior. Use this hook when you need to programmatically open or close the modal, or when you want to show specific views like the connection screen or account details.
 
 ```ts
 import { useAppKit } from "@reown/appkit/react";
@@ -21,6 +21,12 @@ export default function Component() {
   const { open, close } = useAppKit();
 }
 ```
+
+### Use Cases
+- Opening the modal when a user clicks a "Connect Wallet" button
+- Closing the modal after a successful connection
+- Opening specific views of the modal (e.g., account view, connect view)
+- Handling custom wallet connection flows
 
 ### Returns
 
@@ -33,7 +39,7 @@ export default function Component() {
 
 ## useAppKitAccount
 
-Hook for accessing account data and connection status.
+The essential hook for accessing wallet connection state and user information. Use this hook whenever you need to know if a user is connected, get their wallet address, or access their embedded wallet details.
 
 ```ts
 import { useAppKitAccount } from "@reown/appkit/react";
@@ -41,6 +47,12 @@ import { useAppKitAccount } from "@reown/appkit/react";
 const { address, isConnected, caipAddress, status, embeddedWalletInfo } =
   useAppKitAccount();
 ```
+
+### Use Cases
+- Displaying the connected wallet address in your UI
+- Checking if a user is connected before showing certain features
+- Getting user information for embedded wallets
+- Handling multi-chain scenarios where you need account info for specific chains
 
 Hook for accessing account data and connection status for each namespace when working in a multi-chain environment.
 
@@ -86,7 +98,7 @@ type UseAppKitAccountReturnType = {
 
 ## useAppKitNetwork
 
-Hook for accessing network data and methods.
+The network management hook that provides access to chain information and network switching capabilities. Use this hook when you need to display the current network, switch between networks, or validate network compatibility.
 
 ```ts
 import { useAppKitNetwork } from "@reown/appkit/react";
@@ -96,6 +108,12 @@ export default Component(){
 }
 ```
 
+### Use Cases
+- Displaying the current network/chain in your UI
+- Switching networks when a user selects a different chain
+- Validating if a user is on the correct network for your dApp
+- Handling network-specific features or contracts
+
 ### Returns
 
 - `caipNetwork`: The current network object
@@ -104,19 +122,25 @@ export default Component(){
 - `switchNetwork`: Function to switch the network. Accepts a `caipNetwork` object as argument.
 
 <Note>
-  See how to import or create a networks
-  [here](/appkit/react/core/custom-networks).
+  See how to import or use custom networks
+  [here](/appkit/next/core/custom-networks).
 </Note>
 
 ## useAppKitState
 
-Hook for getting the current value of the modal's state.
+The state management hook that provides real-time access to the modal's current state. Use this hook when you need to react to modal state changes or synchronize your UI with the modal's status.
 
 ```ts
 import { useAppKitState } from "@reown/appkit/react";
 
 const { open, selectedNetworkId } = useAppKitState();
 ```
+
+### Use Cases
+- Syncing your UI with the modal's open/closed state
+- Tracking which network the user has selected
+- Creating custom UI elements that respond to modal state changes
+- Implementing custom loading states based on modal state
 
 ### Returns
 
@@ -125,7 +149,7 @@ const { open, selectedNetworkId } = useAppKitState();
 
 ## useAppKitTheme
 
-Hook for controlling the modal's theme.
+The theming hook that controls the visual appearance of the modal. Use this hook when you need to customize the modal's colors, implement dark/light mode, or match the modal's appearance with your application's theme.
 
 ```ts
 import { useAppKitTheme } from "@reown/appkit/react";
@@ -140,9 +164,15 @@ setThemeVariables({
 });
 ```
 
+### Use Cases
+- Implementing dark/light mode in your dApp
+- Customizing the modal's appearance to match your brand
+- Creating theme-specific UI elements
+- Syncing the modal's theme with your app's theme
+
 ## useAppKitEvents
 
-Hook for subscribing to modal events.
+The event subscription hook that allows you to listen to modal and wallet events. Use this hook when you need to track user interactions, implement analytics, or respond to specific wallet events in your application.
 
 ```ts
 import { useAppKitEvents } from "@reown/appkit/react";
@@ -150,9 +180,15 @@ import { useAppKitEvents } from "@reown/appkit/react";
 const events = useAppKitEvents();
 ```
 
+### Use Cases
+- Tracking user interactions with the modal
+- Implementing analytics for wallet connections
+- Creating custom notifications for connection events
+- Handling specific wallet events in your application
+
 ## useDisconnect
 
-Hook for disconnecting the session.
+The session management hook that handles wallet disconnection. Use this hook when implementing logout functionality or when you need to clean up resources after a user disconnects their wallet.
 
 ```ts
 import { useDisconnect } from "@reown/appkit/react";
@@ -161,6 +197,12 @@ const { disconnect } = useDisconnect();
 
 await disconnect();
 ```
+
+### Use Cases
+- Implementing a "Disconnect Wallet" button
+- Handling logout flows in your application
+- Cleaning up resources when a user disconnects
+- Resetting application state after disconnection
 
 ## useWalletInfo
 
@@ -174,6 +216,12 @@ export default Component(){
   const { walletInfo } = useWalletInfo()
 }
 ```
+
+### Use Cases
+- Displaying wallet-specific information in your UI
+- Implementing wallet-specific features
+- Showing wallet icons or branding
+- Handling wallet-specific behaviors
 
 ## useAppKitWallet
 
@@ -236,6 +284,31 @@ const { isReady, isPending, connect } = useAppKitWallet({
 | QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                   |
 | Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, and `tokenpocket` |
 | Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                          |
+
+#### Use Cases
+
+`useAppKitWallet` enables:
+
+1. **Direct Wallet Integration**
+   - Direct connection to specific wallets (e.g., MetaMask, Coinbase)
+   - Streamlined connection flow without modal
+
+2. **Social Authentication**
+   - Social login options (Google, GitHub, etc.)
+   - Email-based authentication
+
+3. **Custom Wallet Selection**
+   - Branded wallet selection interface
+   - Custom styling and filtering options
+
+4. **Network-Specific Access**
+   - Chain-specific wallet options
+   - Conditional wallet availability
+
+5. **Enhanced UX**
+   - Loading states and error handling
+   - Custom notifications
+   - Responsive connection states
 
 ## Ethereum/Solana Library
 
