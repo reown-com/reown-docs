@@ -21,6 +21,7 @@ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
 import { sepolia } from '@reown/appkit/networks'
 import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
+import type { AppKitNetwork } from '@reown/appkit/networks'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -43,7 +44,7 @@ connectors.push(
   })
 )
 
-export const networks = [sepolia]
+export const networks = [sepolia] as [AppKitNetwork, ...AppKitNetwork[]]
 
 export const wagmiAdapter = new WagmiAdapter({
   storage:

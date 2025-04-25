@@ -21,6 +21,7 @@ import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
 import { sepolia } from '@reown/appkit/networks'
 import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import type { AppKitNetwork } from '@reown/appkit/networks'
 
 const queryClient = new QueryClient()
 
@@ -41,7 +42,7 @@ connectors.push(
   })
 )
 
-export const networks = [sepolia]
+export const networks = [sepolia] as [AppKitNetwork, ...AppKitNetwork[]]
 
 export const wagmiAdapter = new WagmiAdapter({
   storage:
