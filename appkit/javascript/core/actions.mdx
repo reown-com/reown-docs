@@ -147,6 +147,80 @@ const modal = createAppKit({ wagmiConfig, projectId });
 const themeMode = modal.getThemeMode();
 ```
 
+
+## Wallet Buttons
+
+
+Using wallet buttons ([Demo in our Lab](https://appkit-lab.reown.com/library/wagmi-wallet-button/)), you can directly connect to the top 20 wallets, WalletConnect QR and also all the social logins.
+This feature allows to customize dApps, enabling users to connect their wallets effortlessly, all without the need for the traditional modal.
+
+Follow these steps to use the component:
+
+1. Install the package:
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-wallet-button
+```
+
+```bash Yarn
+yarn add @reown/appkit-wallet-button
+```
+
+```bash Bun
+bun a @reown/appkit-wallet-button
+```
+
+```bash pnpm
+pnpm add @reown/appkit-wallet-button
+```
+
+</CodeGroup>
+
+2. Import the library in your project and create the AppKit Wallet Button:
+
+```tsx
+import { createAppKitWalletButton } from '@reown/appkit-wallet-button'
+
+// Create AppKit Wallet Button
+const appKitWalletButton = createAppKitWalletButton()
+```
+
+3. Use this script for your Button called 'walletButton':
+
+```tsx
+document.getElementById('walletButton')?.addEventListener(
+  'click', async () => {
+    // check if it's ready
+    if (appKitWalletButton.isReady()) {
+      appKitWalletButton
+          .connect('walletConnect')
+          .then(data => {
+              console.log('connected', data)
+          })
+          .catch(err => {
+              console.log('error connecting', err)
+          })
+    } else {
+      console.log('appKitWalletButton is not ready')
+    }
+  }
+)
+
+ 
+```
+
+#### Options for wallet property. 
+Change the string parameter `name` from `appKitWalletButton.connect(name)` in order to open a different wallet.
+
+| Type          | Options                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                               |
+| Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `coinbase`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, and `tokenpocket` |
+| Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                                      |
+
+
 ## themeVariables
 
 Set the `themeVariables` after creating the modal
