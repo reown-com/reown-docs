@@ -84,7 +84,7 @@ The development server will automatically reload when you make changes to the do
 
 ### Building a project with AI?
 
-If you're using Cursor IDE (or another AI based IDE) to build a project with Reown AppKit, we provide a `.mdc` file that enhances your development experience. The `reown-appkit.mdc` file in this repository contains Cursor-specific rules and type hints for Reown AppKit.
+If you're using Cursor IDE (or another AI-based IDE) to build a project with Reown AppKit, we provide a `.mdc` file that enhances your development experience. The `reown-appkit.mdc` file in this repository contains Cursor-specific rules and type hints for Reown AppKit.
 
 To use it in your project:
 
