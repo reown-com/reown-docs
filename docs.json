@@ -75,7 +75,8 @@
                   "appkit/recipes/switching-to-send-calls",
                   "appkit/recipes/sponsoring-first-transaction",
                   "appkit/recipes/travel-rule",
-                  "appkit/recipes/smart-sessions"
+                  "appkit/recipes/smart-sessions",
+                  "appkit/recipes/troubleshooting"
                 ]
               }
             ]
@@ -243,7 +244,9 @@
                       "appkit/recipes/bitcoin-send-transaction",
                       "appkit/recipes/switching-to-send-calls",
                       "appkit/recipes/sponsoring-first-transaction",
-                      "appkit/recipes/travel-rule"
+                      "appkit/recipes/travel-rule",
+                      "appkit/recipes/smart-sessions",
+                      "appkit/recipes/troubleshooting"
                     ]
                   },
                   {
