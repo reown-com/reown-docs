@@ -1,0 +1,153 @@
+---
+title: Troubleshooting
+---
+
+You can find some of our troubleshooting guides below when using AppKit. If you encounter another issue, you report us [new issue on GitHub](https://github.com/reown-com/appkit/issues).
+
+### In-app Browser Deeplink Detection
+
+If you have a use case where you need to open AppKit Web SDK inside your mobile app's in-app browser, you need to handle deep links and Universal Links properly. By default, mobile operating systems restrict how these links work in in-app browsers.
+
+To enable wallet connections via deep links, you must explicitly configure your in-app browser to intercept and handle these links. The code examples below show how to properly handle deep links for popular wallet apps like MetaMask and Trust Wallet across different mobile platforms and frameworks.
+
+<Tabs>
+
+  <Tab title="React Native">
+    ```jsx
+    import React from 'react'
+    import { Linking } from 'react-native'
+    import { WebView } from 'react-native-webview'
+
+    export default function MyWebView() {
+      return (
+        <WebView
+          source={{ uri: 'https://yourdomain.com' }}
+          onShouldStartLoadWithRequest={({ url }) => {
+            if (url.startsWith('metamask://') || url.startsWith('trust://')) {
+              Linking.openURL(url).catch(console.warn)
+              return false
+            }
+            return true
+          }}
+        />
+      )
+    }
+    ```
+
+  </Tab>
+
+  <Tab title="iOS/Swift (WKWebView)">
+    ```swift
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+                decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url {
+            let scheme = url.scheme ?? ""
+            if scheme == "metamask" || scheme == "trust" {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                decisionHandler(.cancel)
+                return
+            }
+        }
+        decisionHandler(.allow)
+    }
+    ```
+  </Tab>
+
+  <Tab title="iOS/Objective-C (WKWebView)">
+    ```objective-c
+    - (void)webView:(WKWebView *)webView
+      decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+      decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+
+        NSURL *url = navigationAction.request.URL;
+        NSString *scheme = url.scheme;
+        if ([scheme isEqualToString:@"metamask"] || [scheme isEqualToString:@"trust"]) {
+            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+            decisionHandler(WKNavigationActionPolicyCancel);
+            return;
+        }
+
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
+    ```
+
+  </Tab>
+
+  <Tab title="Android/Kotlin (WebViewClient)">
+    ```kotlin
+    webView.webViewClient = object : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            val url = request?.url.toString()
+            val scheme = request?.url?.scheme ?: ""
+
+            if (scheme == "metamask" || scheme == "trust") {
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    view?.context?.startActivity(intent)
+                } catch (e: Exception) {
+                    Log.e("WebView", "Cannot open $scheme link", e)
+                }
+                return true
+            }
+
+            return false // let WebView handle the rest
+        }
+    }
+    ```
+
+  </Tab>
+
+  <Tab title="Android/Java (WebViewClient)">
+    ```java
+    webView.setWebViewClient(new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            Uri uri = request.getUrl();
+            String scheme = uri.getScheme();
+
+            if ("metamask".equals(scheme) || "trust".equals(scheme)) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    view.getContext().startActivity(intent);
+                } catch (Exception e) {
+                    Log.e("WebView", "Cannot open scheme: " + scheme, e);
+                }
+                return true;
+            }
+
+            return false;
+        }
+    });
+    ```
+
+  </Tab>
+
+  <Tab title="Flutter (webview_flutter)">
+    ```dart
+    import 'package:flutter/material.dart';
+    import 'package:webview_flutter/webview_flutter.dart';
+    import 'package:url_launcher/url_launcher.dart';
+
+    class WebViewPage extends StatelessWidget {
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+          body: WebView(
+            initialUrl: 'https://yourdomain.com',
+            navigationDelegate: (NavigationRequest request) {
+              final uri = Uri.parse(request.url);
+              if (uri.scheme == 'metamask' || uri.scheme == 'trust') {
+                launchUrl(uri);
+                return NavigationDecision.prevent;
+              }
+              return NavigationDecision.navigate;
+            },
+            javascriptMode: JavascriptMode.unrestricted,
+          ),
+        );
+      }
+    }
+    ```
+
+  </Tab>
+</Tabs>
