@@ -43,6 +43,32 @@ const walletKit = await WalletKit.init({
 
 A session is a connection between a dapp and a wallet. It is established when a user approves a session proposal from a dapp. A session is active until the user disconnects from the dapp or the session expires.
 
+### Handling Session Proposals
+
+You can connect your web wallet to a dApp in three ways:
+
+1. Retrieve the WC URI from the dApp via query parameters
+2. Implement a scanner to read the WC URI from a WalletConnect QR code
+3. Allow users to manually enter the WC URI in an input field
+
+When opening the wallet directly from the dApp, the `WC_URI` will be in the following format in the query parameters:
+
+```
+https://{YOUR_WALLET_URL}/wc?uri={WC_URI}
+```
+
+Similarly, when clicking the Sign Message button, it will redirect to the wallet with `requestId` and `sessionTopic` in the query parameters:
+
+```
+https://{YOUR_WALLET_URL}/wc?requestId={REQUEST_ID}&sessionTopic={SESSION_TOPIC}
+```
+
+We recommend closing the web wallet tab after the user approves the request and redirecting back to the dApp. For web requests, redirect to the original browser tab, and for mobile requests, redirect to the native mobile dApp.
+
+<Info>
+To test your web wallet connection flow, use our [Appkit Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL. 
+</Info>
+
 ### Namespace Builder
 
 With WalletKit (and @walletconnect/utils) we've published a helper utility that greatly reduces the complexity of parsing the `required` and `optional` namespaces. It accepts as parameters a `session proposal` along with your user's `chains/methods/events/accounts` and returns ready-to-use `namespaces` object.
