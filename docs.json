@@ -291,7 +291,7 @@
             "description": "AppKit on React",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/react/core/installation",
                   "appkit/react/core/hooks",
@@ -367,7 +367,7 @@
             "description": "AppKit on NextJS",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/next/core/installation",
                   "appkit/next/core/hooks",
@@ -443,7 +443,7 @@
             "description": "AppKit on VueJS",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/vue/core/installation",
                   "appkit/vue/core/composables",
@@ -518,7 +518,7 @@
             "description": "AppKit on Javascript",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/javascript/core/installation",
                   "appkit/javascript/core/actions",
@@ -593,7 +593,7 @@
             "description": "AppKit on React Native",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/react-native/core/installation",
                   "appkit/react-native/core/options",
@@ -651,7 +651,7 @@
             "description": "AppKit on Flutter",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/flutter/core/installation",
                   "appkit/flutter/core/usage",
@@ -682,7 +682,7 @@
             "description": "AppKit on Android",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/android/core/installation",
                   "appkit/android/core/usage",
@@ -710,7 +710,7 @@
             "description": "AppKit on iOS",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/ios/core/installation",
                   "appkit/ios/core/usage",
@@ -737,7 +737,7 @@
             "description": "AppKit on Unity",
             "pages": [
               {
-                "group": "Core",
+                "group": "Fundamentals",
                 "pages": [
                   "appkit/unity/core/installation",
                   "appkit/unity/core/usage",
