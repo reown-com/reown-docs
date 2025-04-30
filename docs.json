@@ -513,9 +513,9 @@
             ]
           },
           {
-            "dropdown": "Javascript",
+            "dropdown": "JavaScript",
             "icon": "js",
-            "description": "AppKit on Javascript",
+            "description": "AppKit on JavaScript",
             "pages": [
               {
                 "group": "Fundamentals",
