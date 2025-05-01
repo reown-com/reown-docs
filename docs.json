@@ -60,55 +60,55 @@
             "pages": ["overview"]
           },
           {
-            "group": "Guides",
+            "group": "AppKit Guides",
             "pages": [
-              {
-                "group": "AppKit Guides",
-                "pages":[
-                  "appkit/recipes/telegram-mini-app",
-                  "appkit/recipes/tenderly-virtual-testnets",
                   "appkit/recipes/wagmi-send-transaction",
-                  "appkit/recipes/ethers-send-transaction",
                   "appkit/recipes/EVM-smart-contract-interaction",
                   "appkit/recipes/solana-send-transaction",
+                  "appkit/recipes/smart-sessions",
+                  "appkit/recipes/telegram-mini-app",
+                  "appkit/recipes/tenderly-virtual-testnets",
+                  "appkit/recipes/ethers-send-transaction",
                   "appkit/recipes/bitcoin-send-transaction",
                   "appkit/recipes/switching-to-send-calls",
                   "appkit/recipes/sponsoring-first-transaction",
                   "appkit/recipes/travel-rule",
-                  "appkit/recipes/smart-sessions",
                   "appkit/recipes/troubleshooting"
-                ]
-              }
+               
             ]
           },
-          {
-            "group": "Cloud",
+          { 
+            "group": "Extras",
             "pages": [
               {
-                "group": "Explorer",
-                "pages": [
-                  "cloud/explorer",
-                  "cloud/explorer-submission",
+                "group": "Cloud",
+                "pages":[
                   {
-                    "group": "Explorer Chains",
-                    "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
+                    "group": "Explorer",
+                    "pages": [
+                      "cloud/explorer",
+                      "cloud/explorer-submission",
+                      {
+                        "group": "Explorer Chains",
+                        "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
+                      },
+                      {
+                        "group": "Explorer Wallets",
+                        "pages": ["cloud/wallets/wallet-list"]
+                      }
+                    ]
                   },
-                  {
-                    "group": "Explorer Wallets",
-                    "pages": ["cloud/wallets/wallet-list"]
-                  }
+                  "cloud/user-management",
+                  "cloud/verify",
+                  "cloud/relay",
+                  "cloud/blockchain-api",
+                  "cloud/analytics",
+                  "cloud/paymaster"
                 ]
+                
               },
-              "cloud/user-management",
-              "cloud/verify",
-              "cloud/relay",
-              "cloud/blockchain-api",
-              "cloud/analytics",
-              "cloud/paymaster"
-            ]
-          },
-          {
-            "group": "Advanced",
+              {
+                "group": "Advanced",
             "pages": [
               {
                 "group": "Multi-Chain",
@@ -184,10 +184,13 @@
               "advanced/push-server",
               "advanced/walletconnect-deprecations"
             ]
-          },
-          {
-            "group": "Technical Reference",
-            "pages": ["link-spec", "external-link-01", "advanced/faq"]
+              },
+              {
+                "group": "Technical Reference",
+                "pages": ["link-spec", "external-link-01", "advanced/faq"]
+              }
+              
+            ]
           }
         ]
       },
