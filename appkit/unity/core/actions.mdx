@@ -53,6 +53,25 @@ Debug.Log(account.ChainId); // e.g. 'eip155:1'
 Debug.Log(account.AccountId); // e.g. 'eip155:1:0x12345...'
 ```
 
+### Direct Wallet Connection
+
+Connect directly to a specific wallet, bypassing the modal UI on native platforms.
+
+```csharp
+// Connect directly to MetaMask, bypassing the modal UI
+// On desktop, this opens a QR code with the MetaMask logo; some wallets will have a web wallet option too.
+// Wallet ID from https://walletguide.walletconnect.network
+await AppKit.ConnectAsync("c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96");
+
+// Also works with unlisted wallets
+await AppKit.ConnectAsync(new Wallet
+{
+    Name = "React Native Wallet",
+    ImageUrl = "https://github.com/reown-com/reown-dotnet/blob/develop/media/wallet-rn.png?raw=true",
+    MobileLink = "rn-web3wallet://"
+});
+```
+
 ### Disconnect
 
 ```csharp
