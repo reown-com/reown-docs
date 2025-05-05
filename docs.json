@@ -51,7 +51,7 @@
     }
   ],
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude"]
+    "options": ["chatgpt", "claude", "copy", "view"]
   },
   "navigation": {
     "tabs": [
