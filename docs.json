@@ -50,6 +50,9 @@
       "destination": "/advanced/multichain/rpc-reference/:path*"
     }
   ],
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude"]
+  },
   "navigation": {
     "tabs": [
       {
