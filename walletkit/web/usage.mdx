@@ -54,13 +54,7 @@ You can connect your web wallet to a dApp in three ways:
 When opening the wallet directly from the dApp, the `WC_URI` will be in the following format in the query parameters:
 
 ```
-https://{YOUR_WALLET_URL}/wc?uri={WC_URI}
-```
-
-Similarly, when clicking the Sign Message button, it will redirect to the wallet with `requestId` and `sessionTopic` in the query parameters:
-
-```
-https://{YOUR_WALLET_URL}/wc?requestId={REQUEST_ID}&sessionTopic={SESSION_TOPIC}
+{YOUR_WALLET_URL}/wc?uri={WC_URI}
 ```
 
 We recommend closing the web wallet tab after the user approves the request and redirecting back to the dApp. For web requests, redirect to the original browser tab, and for mobile requests, redirect to the native mobile dApp.
