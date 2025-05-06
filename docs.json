@@ -1059,11 +1059,12 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/reown_",
-      "github": "https://github.com/reown-com/reown-docs",
       "website": "https://reown.com/",
-      "youtube": "https://www.youtube.com/@re_own",
-      "linkedin": "https://www.linkedin.com/company/re-own"
+      "x": "https://x.com/reown_",
+      "discord": "https://discord.gg/reown",
+      "linkedin": "https://www.linkedin.com/company/re-own",
+      "github": "https://github.com/reown-com/reown-docs",
+      "youtube": "https://www.youtube.com/@re_own"
     }
   }
 }
