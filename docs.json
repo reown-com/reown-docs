@@ -216,7 +216,8 @@
                       "appkit/features/smart-accounts",
                       "appkit/features/notifications",
                       "appkit/features/telegram-mini-apps",
-                      "appkit/features/sponsored-transactions"
+                      "appkit/features/sponsored-transactions",
+                      "appkit/features/appkit-pay"
                     ]
                   },
                   {
@@ -323,7 +324,8 @@
                 "pages": [
                   "appkit/react/transactions/onramp",
                   "appkit/react/transactions/swaps",
-                  "appkit/react/transactions/sponsored-transactions"
+                  "appkit/react/transactions/sponsored-transactions",
+                  "appkit/react/transactions/appkit-pay"
                 ]
               },
               {
@@ -399,7 +401,9 @@
                 "pages": [
                   "appkit/next/transactions/onramp",
                   "appkit/next/transactions/swaps",
-                  "appkit/next/transactions/sponsored-transactions"
+                  "appkit/next/transactions/sponsored-transactions",
+                  "appkit/next/transactions/appkit-pay"
+                  
                 ]
               },
               {
@@ -460,7 +464,8 @@
                   "appkit/vue/core/siwx",
                   "appkit/vue/core/multichain",
                   "appkit/vue/core/theming",
-                  "appkit/vue/core/resources"
+                  "appkit/vue/core/resources",
+                  "appkit/vue/transactions/appkit-pay"
                 ]
               },
               {
@@ -549,7 +554,8 @@
                 "pages": [
                   "appkit/javascript/transactions/onramp",
                   "appkit/javascript/transactions/swaps",
-                  "appkit/javascript/transactions/sponsored-transactions"
+                  "appkit/javascript/transactions/sponsored-transactions",
+                  "appkit/javascript/transactions/appkit-pay"
                 ]
               },
               {

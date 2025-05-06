@@ -1,0 +1,91 @@
+AppKit Pay enables seamless crypto payments by supporting a wide range of wallet types, 
+including non-custodial wallets, as well as custodial platforms like Binance and Coinbase. 
+This flexibility allows users to complete transactions using their preferred method—whether 
+it’s a traditional wallet or directly from their exchange account—without disrupting the on-chain payment flow.
+
+## Quick Start 
+Here you can find a simplify process to integrate AppKit Pay:
+
+### Install the library
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-pay
+```
+
+```bash Yarn
+yarn add @reown/appkit-pay
+```
+
+```bash Bun
+bun a @reown/appkit-pay
+```
+
+```bash pnpm
+pnpm add @reown/appkit-pay
+```
+</CodeGroup>
+
+### Usage
+```ts
+import { usePay } from '@reown/appkit-pay/react';
+```
+
+In order to run the payment, we are using the hook `usePay`. This hook receive two parameter to manage the success or the error in the process.
+
+```ts
+// usePay handles subscriptions internally for robust state updates
+const { open, isPending, isSuccess, data, error } = usePay({
+  onSuccess: handleSuccess, 
+  onError: handleError,
+});
+
+// Configure the paymentAsset
+const paymentAsset: PaymentAsset = {
+    network: 'eip155:8453', // Base Mainnet
+    recipient: addressRecipient,
+    asset: 'native', // Or USDC in Base: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
+    amount: 0.0001,
+    metadata: {
+        name: 'Ethereum', // Or 'USD Coin'
+        symbol: 'ETH',    // Or 'USDC'
+        decimals: 18      // Or 6 for USDC
+    }
+};
+
+// open resolves when the modal closes, but onSuccess/onError handle the actual payment result
+await open({ paymentAsset });
+```
+## Hooks
+
+### usePay
+Simplifies the modal-based payment flow. 
+It internally handles subscriptions to provide reactive state variables (isPending, isSuccess, isError, data, error) 
+and an open function. Callbacks (onSuccess, onError) are triggered reliably.
+
+`usePay(parameters?: UsePayParameters): UsePayReturn`
+  - `parameters`: Optional `onSuccess` and `onError` callbacks.
+  - `returns`: `{ open, isPending, isSuccess, isError, error, data }`
+
+### useAvailableExchanges
+Fetches and manages the state for available exchanges.
+
+`useAvailableExchanges(options?: { isFetchOnInit?: boolean, initialPage?: number }): UseAvailableExchangesReturn`
+    - `options`: Control initial fetch behavior.
+    - `returns`: `{ data, isLoading, error, fetch }`
+
+### usePayUrlActions
+Provides functions (getUrl, openUrl) to interact with specific exchange URLs, returning the sessionId needed for status tracking.
+
+`usePayUrlActions(): { getUrl, openUrl }`
+    - `getUrl(exchangeId, params): Promise<PayUrlResponse>`
+    - `openUrl(exchangeId, params, openInNewTab?): Promise<PayUrlResponse>` (Returns `{ url, sessionId }`)
+
+### useExchangeBuyStatus
+Fetches and polls for the status of a headless payment transaction using exchangeId and sessionId.
+
+`useExchangeBuyStatus(params: UseExchangeBuyStatusParameters): UseExchangeBuyStatusReturn`
+    - `params`: `{ exchangeId, sessionId, pollingInterval?, isEnabled?, onSuccess?, onError? }`
+    - `returns`: `{ data, isLoading, error, refetch }`
+

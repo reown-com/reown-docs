@@ -1,0 +1,85 @@
+---
+title: AppKit Pay using Javascript SDK
+sidebarTitle: AppKit Pay
+---
+
+AppKit Pay enables seamless crypto payments by supporting a wide range of wallet types, 
+including non-custodial wallets, as well as custodial platforms like Binance and Coinbase. 
+This flexibility allows users to complete transactions using their preferred method—whether 
+it’s a traditional wallet or directly from their exchange account—without disrupting the on-chain payment flow.
+
+## Quick Start  
+Here you can find a simplify process to integrate AppKit Pay with Javascript SDK:
+
+### Install the library
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-pay
+```
+
+```bash Yarn
+yarn add @reown/appkit-pay
+```
+
+```bash Bun
+bun a @reown/appkit-pay
+```
+
+```bash pnpm
+pnpm add @reown/appkit-pay
+```
+</CodeGroup>
+
+### Usage
+```ts
+import { usePay } from '@reown/appkit-pay';
+```
+
+In order to run the payment, we are using the function `openPay`. 
+
+```ts
+const paymentAssetDetails = {
+  network: 'eip155:8453', // e.g., Base Mainnet
+  recipient: '0xYourRecipientAddress...',
+  asset: 'native', // or '0xTokenAddress...'
+  amount: 0.001,
+  metadata: { name: 'Ethereum', symbol: 'ETH', decimals: 18 }
+};
+
+// --- Open Modal ---
+await openPay({
+    paymentAsset: paymentAssetDetails
+});
+```
+## Functions
+
+### openPay
+Opens the payment modal. Resolves when the modal is closed by the user or programmatically.
+
+`openPay(options: PaymentOptions): Promise<void>`
+
+### getExchanges
+Fetches available exchanges.
+
+`getExchanges(page?: number): Promise<{ exchanges: Exchange[], total: number }>`
+
+### getPayResult
+Use with caution regarding timing; subscriptions are preferred.
+
+`getPayResult(): PayResult | null`
+
+Returns the result of the last successful payment. 
+
+### getPayError
+Use with caution regarding timing; subscriptions are preferred.
+
+`getPayError(): AppKitPayErrorMessage | null`
+
+Returns the error object if the last payment failed. 
+
+### getIsPaymentInProgress
+Checks if a payment is currently processing.
+
+`getIsPaymentInProgress(): boolean`
