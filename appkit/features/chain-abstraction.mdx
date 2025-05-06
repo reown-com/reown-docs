@@ -27,8 +27,16 @@ Want to see Chain Abstraction in action? Try out the live demo to experience Reo
 
 ## When can you leverage Chain Abstraction?
 
-- **Seamless Cross-Chain Transactions**: Users can transact on a target blockchain network even if their assets reside on a different source network. For example, a user can make a payment on the Base network using USDC held on Arbitrum. 
+1. **Seamless Cross-Chain Transactions**: Users can transact on a target blockchain network even if their assets reside on a different source network. For example, a user can make a payment on the Base network using USDC held on Arbitrum. 
 
-- **Enhanced User Experience**: By abstracting the complexities of cross-chain interactions, dApps can offer a more intuitive and frictionless experience, reducing the need for users to understand or manage the underlying blockchain infrastructure.
+2. **Enhanced User Experience**: By abstracting the complexities of cross-chain interactions, dApps can offer a more intuitive and frictionless experience, reducing the need for users to understand or manage the underlying blockchain infrastructure.
 
-- **Developer-Friendly Integration**: Reown AppKit provides a set of tools and methods, such as prepare and execute, that allow developers to integrate chain abstraction functionality into their dApps with minimal effort. 
+3.  **Developer-Friendly Integration**: Reown AppKit provides a set of tools and methods, such as prepare and execute, that allow developers to integrate chain abstraction functionality into their dApps with minimal effort. 
+
+## How It Works
+
+- **Transaction Preparation**: When a user initiates a transaction, the dApp uses the prepare method to determine if the user has sufficient funds on the target network. If not, it identifies the necessary bridging transactions required to move assets from the source to the target network.
+
+- **Transaction Execution**: Once the necessary transactions are prepared and signed, the execute method broadcasts them, handling the bridging process and completing the original transaction on the target network.
+
+- **Gas Estimation Handling**: To ensure accurate gas estimation, dApps should pass gas: null when sending transactions, allowing the wallet to handle gas calculations appropriately. 
