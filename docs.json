@@ -216,7 +216,8 @@
                       "appkit/features/smart-accounts",
                       "appkit/features/notifications",
                       "appkit/features/telegram-mini-apps",
-                      "appkit/features/sponsored-transactions"
+                      "appkit/features/sponsored-transactions",
+                      "appkit/features/smart-sessions"
                     ]
                   },
                   {
