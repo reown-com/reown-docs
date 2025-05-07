@@ -42,14 +42,14 @@ In order to run the payment, we are using the function `openPay`.
 ```ts
 const paymentAssetDetails = {
   network: 'eip155:8453', // e.g., Base Mainnet
-  recipient: '0xYourRecipientAddress...',
   asset: 'native', // or '0xTokenAddress...'
-  amount: 0.001,
   metadata: { name: 'Ethereum', symbol: 'ETH', decimals: 18 }
 };
 
 // --- Open Modal ---
 await openPay({
+    recipient: '0xYourRecipientAddress...',
+    amount: 0.001,
     paymentAsset: paymentAssetDetails
 });
 ```
@@ -58,7 +58,7 @@ await openPay({
 ### openPay
 Opens the payment modal. Resolves when the modal is closed by the user or programmatically.
 
-`openPay(options: PaymentOptions): Promise<void>`
+`openPay(amount, addressRecipient, options: PaymentOptions): Promise<void>`
 
 ### getExchanges
 Fetches available exchanges.

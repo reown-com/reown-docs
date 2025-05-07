@@ -44,9 +44,7 @@ const { open, isPending, isSuccess, data, error } = usePay({
 // Configure the paymentAsset
 const paymentAsset: PaymentAsset = {
     network: 'eip155:8453', // Base Mainnet
-    recipient: addressRecipient,
     asset: 'native', // Or USDC in Base: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
-    amount: 0.0001,
     metadata: {
         name: 'Ethereum', // Or 'USD Coin'
         symbol: 'ETH',    // Or 'USDC'
@@ -55,7 +53,11 @@ const paymentAsset: PaymentAsset = {
 };
 
 // open resolves when the modal closes, but onSuccess/onError handle the actual payment result
-await open({ paymentAsset });
+await open({ 
+    recipient: addressRecipient,
+    amount: 0.0001,
+    paymentAsset
+});
 ```
 ## Hooks
 
