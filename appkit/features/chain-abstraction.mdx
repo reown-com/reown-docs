@@ -1,0 +1,78 @@
+---
+title: Chain Abstraction
+---
+
+Chain Abstraction is a feature in Reown AppKit that enables dApps to facilitate seamless cross-chain transactions for users. It allows users to spend crypto tokens, such as stablecoins, across different blockchain networks without needing to manually bridge tokens, worry about network-specific tokens, or manage multiple wallets.
+
+<Note>
+Chain Abstraction is currently an early access feature.
+</Note>
+
+<Frame caption="Chain Abstraction Demo">
+<video
+  controls
+  autoPlay
+  className="w-full aspect-video"
+  src="/images/chain-abstraction-demo.mp4"
+></video>
+</Frame>
+
+## Demo
+
+Want to see Chain Abstraction in action? Try out the live demo to experience Reown AppKit's Chain Abstraction flow firsthand. 
+
+<CardGroup cols={2}>
+    <Card icon="flask" title="Try Demo" href="https://ca-demo.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks" external />
+</CardGroup>
+
+## When can you leverage Chain Abstraction?
+
+1. **Seamless Cross-Chain Transactions**: Users can transact on a target blockchain network even if their assets reside on a different source network. For example, a user can make a payment on the Base network using USDC held on Arbitrum. 
+
+2. **Enhanced User Experience**: By abstracting the complexities of cross-chain interactions, dApps can offer a more intuitive and frictionless experience, reducing the need for users to understand or manage the underlying blockchain infrastructure.
+
+3.  **Developer-Friendly Integration**: Reown AppKit provides a set of tools and methods, such as prepare and execute, that allow developers to integrate chain abstraction functionality into their dApps with minimal effort. 
+
+## How It Works
+
+- **Transaction Preparation**: When a user initiates a transaction, the dApp uses the prepare method to determine if the user has sufficient funds on the target network. If not, it identifies the necessary bridging transactions required to move assets from the source to the target network.
+
+- **Transaction Execution**: Once the necessary transactions are prepared and signed, the execute method broadcasts them, handling the bridging process and completing the original transaction on the target network.
+
+- **Gas Estimation Handling**: To ensure accurate gas estimation, dApps should pass gas: null when sending transactions, allowing the wallet to handle gas calculations appropriately. 
+
+## Networks and Assets Supported
+
+Currently, Chain Abstraction on AppKit supports the following assets on the following networks:
+
+| Network   | Assets     |
+|-----------|------------|
+| Optimism  | USDC, USDT |
+| Arbitrum  | USDC, USDT |
+| Base      | USDC, USDT |
+| Solana    | USDC, USDT |
+
+
+## Example Use Case
+
+Consider a scenario where a user wants to **purchase an NFT on the Base network but holds USDC only on the Arbitrum network**. With Chain Abstraction:
+
+- The dApp detects the asset location and prepares the necessary bridging transactions.
+
+- The user signs the transactions, and the assets are bridged from Arbitrum to Base.
+
+- The purchase is completed on the Base network without the user manually bridging assets or switching networks.
+
+You can try out this use case in the [demo above](#demo).
+
+## Get Started
+
+<CardGroup cols={2}>
+    <Card title="React" icon="react" href="/appkit/react/early-access/chain-abstraction">
+        Get started with AppKit in React.
+    </Card>
+
+    <Card title="Next.js" icon="square-n" href="/appkit/next/early-access/chain-abstraction">
+        Get started with AppKit in Next.js.
+    </Card>
+</CardGroup>
