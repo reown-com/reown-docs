@@ -217,17 +217,8 @@
                       "appkit/features/notifications",
                       "appkit/features/telegram-mini-apps",
                       "appkit/features/sponsored-transactions",
-                      "appkit/features/appkit-pay"
                       "appkit/features/smart-sessions",
                       "appkit/features/chain-abstraction"
-                    ]
-                  },
-                  {
-                    "group": "Network",
-                    "pages": [
-                      "appkit/networks/evm",
-                      "appkit/networks/solana",
-                      "appkit/networks/bitcoin"
                     ]
                   },
                   {
@@ -236,6 +227,23 @@
                       "appkit/authentication/socials",
                       "appkit/authentication/one-click-auth",
                       "appkit/authentication/siwx/default"
+                    ]
+                  },
+                  {
+                    "group": "Payments",
+                    "pages": [
+                      "appkit/payments/overview",
+                      "appkit/payments/pay-with-exchange",
+                      "appkit/payments/one-click-checkout",
+                      "appkit/payments/subscriptions"
+                    ]
+                  },
+                  {
+                    "group": "Network",
+                    "pages": [
+                      "appkit/networks/evm",
+                      "appkit/networks/solana",
+                      "appkit/networks/bitcoin"
                     ]
                   },
                   {
@@ -323,12 +331,17 @@
                 ]
               },
               {
+                "group": "Payments",
+                "pages": [
+                  "appkit/react/payments/pay-with-exchange"
+                ]
+              },
+              {
                 "group": "Transactions",
                 "pages": [
                   "appkit/react/transactions/onramp",
                   "appkit/react/transactions/swaps",
-                  "appkit/react/transactions/sponsored-transactions",
-                  "appkit/react/transactions/appkit-pay"
+                  "appkit/react/transactions/sponsored-transactions"
                 ]
               },
               {
@@ -400,13 +413,17 @@
                 ]
               },
               {
+                "group": "Payments",
+                "pages": [
+                  "appkit/next/payments/pay-with-exchange"
+                ]
+              },
+              {
                 "group": "Transactions",
                 "pages": [
                   "appkit/next/transactions/onramp",
                   "appkit/next/transactions/swaps",
-                  "appkit/next/transactions/sponsored-transactions",
-                  "appkit/next/transactions/appkit-pay"
-                  
+                  "appkit/next/transactions/sponsored-transactions"                  
                 ]
               },
               {
@@ -467,14 +484,19 @@
                   "appkit/vue/core/siwx",
                   "appkit/vue/core/multichain",
                   "appkit/vue/core/theming",
-                  "appkit/vue/core/resources",
-                  "appkit/vue/transactions/appkit-pay"
+                  "appkit/vue/core/resources"
                 ]
               },
               {
                 "group": "Early Access",
                 "pages": [
                   "appkit/vue/early-access/smart-session"
+                ]
+              },
+              {
+                "group": "Payments",
+                "pages": [
+                  "appkit/vue/payments/pay-with-exchange"
                 ]
               },
               {
@@ -553,12 +575,17 @@
                 ]
               },
               {
+                "group": "Payments",
+                "pages": [
+                  "appkit/javascript/payments/pay-with-exchange"
+                ]
+              },
+              {
                 "group": "Transactions",
                 "pages": [
                   "appkit/javascript/transactions/onramp",
                   "appkit/javascript/transactions/swaps",
-                  "appkit/javascript/transactions/sponsored-transactions",
-                  "appkit/javascript/transactions/appkit-pay"
+                  "appkit/javascript/transactions/sponsored-transactions"
                 ]
               },
               {
