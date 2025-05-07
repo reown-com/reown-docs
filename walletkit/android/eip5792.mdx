@@ -10,7 +10,9 @@ Applications can specify that these onchain calls be executed taking advantage o
 - `wallet_showCallsStatus`: Requests that a wallet shows information about a given call bundle that was sent with wallet_sendCalls.
 - `wallet_getCapabilities`: This RPC allows an application to request capabilities from a wallet (e.g. batch transactions, paymaster communication).
 
-## wallet_getCapabilities Example
+## Usage
+
+### wallet_getCapabilities Example
 
 The `wallet_getCapabilities` method is used to request information about what capabilities a wallet supports. Following EIP-5792, here's how it should be implemented:
 
@@ -149,3 +151,7 @@ According to EIP-5792, the `atomic` capability specifies how the wallet will exe
 - `unsupported` - The wallet provides no atomicity guarantees
 
 This capability is expressed per chain and is crucial for determining how `wallet_sendCalls` with `atomicRequired: true` will be handled.
+
+## References
+- EIP-5792: https://eips.ethereum.org/EIPS/eip-5792#atomicbatch-capability
+- CAIP-25 namespaces: https://github.com/ChainAgnostic/namespaces/blob/main/eip155/caip25.md
