@@ -274,7 +274,8 @@
                             ]
                           }
                         ]
-                      }
+                      },
+                      "appkit/upgrade/wcm"
                     ]
                   },
                   {
