@@ -1,0 +1,75 @@
+---
+title: Smart Sessions
+
+---
+
+Smart Sessions is a feature in Reown AppKit that allows users to grant decentralized applications (dApps) permission to perform specific blockchain actions on their behalf for a defined period of time. This eliminates the need for users to manually approve each transaction, enhancing the user experience by enabling seamless and automated interactions.
+
+<Note>
+Smart Sessions is currently an early access feature.
+</Note>
+
+<Frame caption="Tic Tac Toe Game using Smart Sessions">
+<video
+  controls
+  autoPlay
+  className="w-full aspect-video"
+  src="/images/smart-sessions-demo.mp4"
+></video>
+</Frame>
+
+## Demo
+
+Want to see Smart Sessions in action? Try out the live demo to experience Reown AppKit's Smart Sessions flow firsthand.
+
+<Note>
+In order to try out the demo, you need to use the email login flow. If your email is test@gmail.com, enter it as test+smart-sessions@gmail.com.
+</Note>
+
+<CardGroup cols={2}>
+    <Card icon="flask" title="Try Demo" href="https://smart-sessions-demo.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks" external />
+</CardGroup>
+
+## When can you leverage Smart Sessions?
+
+1. **Uninterrupted User Experience**: Users can authorize transactions to occur in the background, reducing friction and enhancing engagement, especially in contexts like gaming or decentralized finance (DeFi). 
+
+2. **Enhanced Automation**: Web3 apps can automate routine tasks such as token swaps, staking, or loan repayments without requiring user intervention for each action. 
+
+3. **Flexible Permissions**: Users can specify which functions a dApp is allowed to execute, the duration of the permissions, and other conditions, providing fine-grained control over delegated actions.
+
+## How It Works
+
+- **Permission Granting**: The user connects their wallet (e.g., via email) and grants the dApp permission to perform certain actions by approving a grantPermissions request. 
+
+- **Server Interaction**: The dApp's backend server can then execute the authorized functions on behalf of the user by signing transactions using a predefined key pair. 
+
+- **Transaction Execution**: The server prepares and sends the transactions to the blockchain, and can monitor their status to confirm successful execution. 
+
+## Example Use Cases
+
+- **Recurring Payments**: Automate subscription renewals without requiring user approval each time.
+
+- **Automated Trading**: Set up limit orders or dollar-cost averaging strategies that execute based on predefined conditions.
+
+- **In-Game Transactions**: Allow games to perform actions like purchasing items or allocating resources without interrupting gameplay. 
+
+## Get Started
+
+<CardGroup cols={2}>
+    <Card title="React" icon="react" href="/appkit/react/early-access/smart-session">
+        Get started with AppKit in React.
+    </Card>
+
+    <Card title="Next.js" icon="square-n" href="/appkit/next/early-access/smart-session">
+        Get started with AppKit in Next.js.
+    </Card>
+
+    <Card title="Vue" icon="vuejs" href="/appkit/vue/early-access/smart-session">
+        Get started with AppKit in Vue.
+    </Card>
+
+    <Card title="JavaScript" icon="js" href="/appkit/javascript/early-access/smart-session">
+        Get started with AppKit in JavaScript.
+    </Card>
+</CardGroup>

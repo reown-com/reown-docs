@@ -218,6 +218,8 @@
                       "appkit/features/telegram-mini-apps",
                       "appkit/features/sponsored-transactions",
                       "appkit/features/appkit-pay"
+                      "appkit/features/smart-sessions",
+                      "appkit/features/chain-abstraction"
                     ]
                   },
                   {
@@ -275,7 +277,8 @@
                             ]
                           }
                         ]
-                      }
+                      },
+                      "appkit/upgrade/wcm"
                     ]
                   },
                   {
