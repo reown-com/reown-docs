@@ -42,7 +42,7 @@ const { open, isPending, isSuccess, data, error } = usePay({
 });
 
 // Configure the paymentAsset
-const paymentAsset: PaymentAsset = {
+const paymentAssetDetails = {
     network: 'eip155:8453', // Base Mainnet
     asset: 'native', // Or USDC in Base: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
     metadata: {
@@ -56,7 +56,7 @@ const paymentAsset: PaymentAsset = {
 await open({ 
     recipient: addressRecipient,
     amount: 0.0001,
-    paymentAsset
+    paymentAsset: paymentAssetDetails
 });
 ```
 ## Hooks
