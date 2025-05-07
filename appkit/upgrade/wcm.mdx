@@ -26,6 +26,10 @@ Please, follow the different sections based on which package you were using befo
 
 You first need to install the AppKit package in order to get started. You can do this by running the command below.
 
+<Note>
+  Make sure to use a version equal or greater than v1.7.0
+</Note>
+
 <CodeGroup>
 
 ```bash npm
@@ -45,83 +49,11 @@ pnpm add @reown/appkit
 ```
 </CodeGroup>
 
-<Note>
-  Make sure to use a version equal or greater than v1.7.0
-</Note>
+### Setting up AppKit Core from scratch?
 
-## AppKit Core
+If you are setting up AppKit Core from scratch, you can refer to the "Multichain" section under AppKit "Core" for installation which shows a basic installation of AppKit Core. [Click here](/appkit/react/core/multichain?platform=basic) to learn more.
 
-This is the easiest way for developers to go multi-chain. AppKit Core utilizes the `UniversalProvider` underneath and is a ready-to-use solution with hooks and methods.
-
-<Tabs
-	
-	
->
-<Tab title="React">
-```javascript
-import { createAppKit } from '@reown/appkit/react'
-import { mainnet } from '@reown/appkit/networks'
-
-const modal = createAppKit({
-  adapters: [], //pass an empty array to only use WalletConnect QR
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-  networks: [mainnet]
-})
-
-```
-</Tab>
-
-<Tab title="JavaScript">
-```javascript
-import { createAppKit } from '@reown/appkit'
-import { mainnet } from '@reown/appkit/networks'
-
-const modal = createAppKit({
-  adapters: [], //pass an empty array to only use WalletConnect QR
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-  networks: [mainnet]
-})
-```
-
-</Tab>
-
-<Tab title="Vue">
-```javascript
-import { createAppKit } from '@reown/appkit/vue'
-import { mainnet } from '@reown/appkit/networks'
-
-const modal = createAppKit({
-  adapters: [], //pass an empty array to only use WalletConnect QR
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-  networks: [mainnet]
-})
-
-```
-</Tab>
-
-</Tabs>
-
-You can also refer to the "Multichain" section under AppKit "Core" for installation which shows a basic installation of AppKit Core. [Click here](/appkit/react/core/multichain?platform=basic) to learn more.
-
-### Examples
+#### Examples
 
 Below are the examples for the corresponding library/programming language.
 
@@ -132,37 +64,7 @@ Below are the examples for the corresponding library/programming language.
 
 ## Ethereum Provider
 
-The Ethereum Provider implementation remains the same as before. Below is an example of how you can configure it:
-
-```javascript
-import { EthereumProvider } from '@walletconnect/ethereum-provider'
-
-const provider = await EthereumProvider.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Website',
-    description: 'My Website Description',
-    url: 'https://mywebsite.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  },
-  showQrModal: true,
-  optionalChains: [1, 137, 2020],
-
-  /*Optional - Add custom RPCs for each supported chain*/
-  rpcMap: {
-    1: 'mainnet.rpc...',
-    137: 'polygon.rpc...'
-  }
-})
-
-
-// Connect EthereumProvider, this will open modal
-await provider.connect()
-```
-
-### Changes Required
-
-Projects and developers don't need to change anything in their configuration - upgrading the Ethereum Provider to latest version is sufficient. Projects will automatically receive the new QR modal UI.
+The Ethereum Provider implementation remains the same as before. **Projects and developers don't need to change anything in their configuration; upgrading the Ethereum Provider to latest version is sufficient.** Projects will automatically receive the new QR modal UI.
 
 <Note>
 Not all `themeVariables`will be compatible with the new UI, as `AppKit` uses a different design system than `walletConnectModal`
