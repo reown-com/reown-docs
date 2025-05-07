@@ -144,11 +144,11 @@ The wallet’s response should specify the capabilities it supports, in accordan
 
 ### Atomic Capability
 
-According to EIP-5792, the `atomic` capability specifies how the wallet will execute batches of transactions. It has three possible values:
+According to [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792), the `atomic` capability specifies how the wallet handles batches of transactions. It has three possible values:
 
-- `supported` - The wallet will execute calls atomically and contiguously
-- `ready` - The wallet can upgrade to support atomic execution pending user approval
-- `unsupported` - The wallet provides no atomicity guarantees
+- `supported` — The wallet executes calls atomically and contiguously.
+- `ready` — The wallet can upgrade to support atomic execution, pending user approval.
+- `unsupported` — The wallet provides no atomicity guarantees.
 
 This capability is expressed per chain and is crucial for determining how `wallet_sendCalls` with `atomicRequired: true` will be handled.
 
