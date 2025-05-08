@@ -222,19 +222,28 @@
                     ]
                   },
                   {
-                    "group": "Network",
-                    "pages": [
-                      "appkit/networks/evm",
-                      "appkit/networks/solana",
-                      "appkit/networks/bitcoin"
-                    ]
-                  },
-                  {
                     "group": "Authentication",
                     "pages": [
                       "appkit/authentication/socials",
                       "appkit/authentication/one-click-auth",
                       "appkit/authentication/siwx/default"
+                    ]
+                  },
+                  {
+                    "group": "Payments",
+                    "pages": [
+                      "appkit/payments/overview",
+                      "appkit/payments/pay-with-exchange",
+                      "appkit/payments/one-click-checkout",
+                      "appkit/payments/subscriptions"
+                    ]
+                  },
+                  {
+                    "group": "Network",
+                    "pages": [
+                      "appkit/networks/evm",
+                      "appkit/networks/solana",
+                      "appkit/networks/bitcoin"
                     ]
                   },
                   {
@@ -322,6 +331,12 @@
                 ]
               },
               {
+                "group": "Payments",
+                "pages": [
+                  "appkit/react/payments/pay-with-exchange"
+                ]
+              },
+              {
                 "group": "Transactions",
                 "pages": [
                   "appkit/react/transactions/onramp",
@@ -398,11 +413,17 @@
                 ]
               },
               {
+                "group": "Payments",
+                "pages": [
+                  "appkit/next/payments/pay-with-exchange"
+                ]
+              },
+              {
                 "group": "Transactions",
                 "pages": [
                   "appkit/next/transactions/onramp",
                   "appkit/next/transactions/swaps",
-                  "appkit/next/transactions/sponsored-transactions"
+                  "appkit/next/transactions/sponsored-transactions"                  
                 ]
               },
               {
@@ -470,6 +491,12 @@
                 "group": "Early Access",
                 "pages": [
                   "appkit/vue/early-access/smart-session"
+                ]
+              },
+              {
+                "group": "Payments",
+                "pages": [
+                  "appkit/vue/payments/pay-with-exchange"
                 ]
               },
               {
@@ -545,6 +572,12 @@
                 "group": "Early Access",
                 "pages": [
                   "appkit/javascript/early-access/smart-session"
+                ]
+              },
+              {
+                "group": "Payments",
+                "pages": [
+                  "appkit/javascript/payments/pay-with-exchange"
                 ]
               },
               {

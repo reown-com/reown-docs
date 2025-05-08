@@ -1,0 +1,82 @@
+---
+title: AppKit Pay with Exchange - Javascript
+sidebarTitle: Pay with Exchange
+---
+
+**AppKit Pay with Exchange** unlocks a powerful new flow: users can pay in crypto directly from their Centralized Exchange (CEXs) accounts like Binance or Coinbase, with no new wallets, no app switching, and no lost conversions.
+
+## Quick Start  
+Here you can find a simplify process to integrate AppKit Pay with Javascript SDK:
+
+### Install the library
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-pay
+```
+
+```bash Yarn
+yarn add @reown/appkit-pay
+```
+
+```bash Bun
+bun a @reown/appkit-pay
+```
+
+```bash pnpm
+pnpm add @reown/appkit-pay
+```
+</CodeGroup>
+
+### Usage
+```ts
+import { usePay } from '@reown/appkit-pay';
+```
+
+In order to run the payment, we are using the function `openPay`. 
+
+```ts
+const paymentAssetDetails = {
+  network: 'eip155:8453', // e.g., Base Mainnet
+  asset: 'native', // or '0xTokenAddress...'
+  metadata: { name: 'Ethereum', symbol: 'ETH', decimals: 18 }
+};
+
+// --- Open Modal ---
+await openPay({
+    recipient: '0xYourRecipientAddress...',
+    amount: 0.001,
+    paymentAsset: paymentAssetDetails
+});
+```
+## Functions
+
+### openPay
+Opens the payment modal. Resolves when the modal is closed by the user or programmatically.
+
+`openPay(amount, addressRecipient, options: PaymentOptions): Promise<void>`
+
+### getExchanges
+Fetches available exchanges.
+
+`getExchanges(page?: number): Promise<{ exchanges: Exchange[], total: number }>`
+
+### getPayResult
+Use with caution regarding timing; subscriptions are preferred.
+
+`getPayResult(): PayResult | null`
+
+Returns the result of the last successful payment. 
+
+### getPayError
+Use with caution regarding timing; subscriptions are preferred.
+
+`getPayError(): AppKitPayErrorMessage | null`
+
+Returns the error object if the last payment failed. 
+
+### getIsPaymentInProgress
+Checks if a payment is currently processing.
+
+`getIsPaymentInProgress(): boolean`
