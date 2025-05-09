@@ -9,3 +9,18 @@ Applications can specify that these onchain calls be executed taking advantage o
 - `wallet_getCallsStatus`: Returns the status of a call batch that was sent via wallet_sendCalls.
 - `wallet_showCallsStatus`: Requests that a wallet shows information about a given call bundle that was sent with wallet_sendCalls.
 - `wallet_getCapabilities`: This RPC allows an application to request capabilities from a wallet (e.g. batch transactions, paymaster communication).
+
+## Usage
+
+### wallet_getCallsStatus Example
+
+To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the bundler name in the scoped properties.
+
+When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
+
+To implement this functionality, use `WalletKit.buildWalletService(projectId, methods)` util method that specifies the wallet service URL withing the supported methods:
+
+```kotlin
+val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService("project_id", listOf("wallet_getCallsStatus")))
+WalletKit.approveSession(..., scopedProperties)
+```
