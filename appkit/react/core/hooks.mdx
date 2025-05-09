@@ -185,7 +185,9 @@ And finally, you can use the hook in your project:
 
 ```tsx
 const { isReady, isPending, connect } = useAppKitWallet({
-    onSuccess() {
+    onSuccess(caipAddress) {
+      // Access the parsed CAIP address object
+      // See: https://github.com/reown-com/appkit/blob/main/packages/common/src/utils/ParseUtil.ts#L3-L7
       // ...
     },
     onError(error) {
@@ -468,7 +470,9 @@ And finally, you can use the hook in your project:
 
 ```tsx
 const { isReady, isPending, connect } = useAppKitWallet({
-    onSuccess() {
+    onSuccess(caipAddress) {
+      // Access the parsed CAIP address object
+      // See: https://github.com/reown-com/appkit/blob/main/packages/common/src/utils/ParseUtil.ts#L3-L7
       // ...
     },
     onError(error) {
