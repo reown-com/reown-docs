@@ -22,7 +22,7 @@ The `wallet_getCapabilities` method is used to request information about what ca
   "id": 1,
   "jsonrpc": "2.0",
   "method": "wallet_getCapabilities",
-  "params": []
+  "params": ["0xd46e8dd67c5d32be8058bb8eb970870f07244567", ["0x2105", "0x14A34"]]
 }
 ```
 
@@ -59,14 +59,13 @@ In a connection request, dapps can request capabilities via `sessionProperties`.
 ```json
 "sessionProperties": {
   "expiry": "2022-12-24T17:07:31+00:00",
-  // Universal capabilities (across all chains)
   "caip154": {
     "supported": "true"
   },
   "flow-control": {
     "loose": [], 
     "strict": [],
-    "exoticThirdThing": [] // Unrecognized config will be dropped by wallet
+    "exoticThirdThing": []
   },
   "atomic": {
     "status": "supported"
@@ -80,7 +79,6 @@ For chain-specific capabilities, dapps use `scopedProperties`:
 
 ```json
 "scopedProperties": {
-  // Chain-specific requests
   "eip155:8453": {
     "paymasterService": {
       "supported": true
@@ -117,7 +115,6 @@ A wallet's response should indicate which capabilities it actually supports, fol
 },
 "scopedProperties": {
   "eip155:1": {
-    // Capabilities shared across all addresses in this namespace
     "atomic": {
       "status": "supported"
     }
@@ -128,7 +125,6 @@ A wallet's response should indicate which capabilities it actually supports, fol
     }
   },
   "eip155:84532": {
-    // Address-specific capabilities can include exceptions to scope-wide capabilities
     "eip155:83532:0x0910e12C68d02B561a34569E1367c9AAb42bd810": {
       "auxiliaryFunds": {
         "supported": false
@@ -137,10 +133,11 @@ A wallet's response should indicate which capabilities it actually supports, fol
         "status": "supported"
       }
     }
-    // No need to declare implicit/default capabilities per-address
   }
 }
 ```
+- Capabilities shared across all address in a namespace can be expressed at top-level
+- Address-specific capabilities can include exceptions to scope-wide capabilities
 
 ### Atomic Capability
 
