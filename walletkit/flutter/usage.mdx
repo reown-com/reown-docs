@@ -61,19 +61,64 @@ A session is a connection between a dapp and a wallet. It is established when a 
 
 ### Namespace Builder
 
-On flutter you don't need to worry about Namespace Builder as Flutter SDK would handle that for you and generate a namespace object with the supported ones.
+On flutter you don't need to worry about Namespace Builder as Flutter SDK would handle that for you and generate a namespace object with the supported ones for you to approve.
 
-All you have to do is make sure you are registering
+All you have to do is make sure you register...
 
-1. **events emitters** with `_walletKit.registerEventEmitter()` for events you want to support on your wallet
-2. **request handlers** with `_walletKit.registerRequestHandler()` for methods you want to support on your wallet
-3. **wallet's accounts** with `_walletKit.registerAccount()` for accounts you want these events and methods to be enabled on
+1. **wallet's accounts** with `_walletKit.registerAccount()` for accounts you want events and methods to be enabled on. This is essential if you want to properly form a session object between your wallet and the requester dapp.
+2. **request handlers** with `_walletKit.registerRequestHandler()` for methods you want to support on your wallet. Optional but **highly recommended** if you want to seamlessly create a session object, as we will see in the coming section.
+3. **events emitters** with `_walletKit.registerEventEmitter()` for events you want to support on your wallet. Optional but recommended if you plan to send events such as `chainChanged` and `accountsChanged`.
 
-for every **chain** you want to support.
+And you'll have to do this **for every chain** you want to support on your wallet.
 
-When a dApp propose a session, with declared required and/or optional namespaces, your wallet will be able to approve an **already generated set of namespaces** based on your registered events, methods and accounts.
+```dart
+// Quick example:
 
-You can access this object in **SessionProposalEvent** during `onSessionProposal` event by querying `event.params.generatedNamespaces`. (See next section)
+List<String> supportedChains = ['eip155:1', 'eip155:10', ...];
+List<String> walletAddresses = ['0x1234......'];
+List<String> supportedEvents = ['chainChanged', 'accountsChanged', ...];
+
+Map<String, dynamic Function(String, dynamic)> get _methodHandlers => {
+  'personal_sign': personalSignHandler,
+  'eth_sendTransaction': ethSendTransactionHandler,
+};
+
+for (final chainId in supportedChains) {
+  for (var address in walletAddresses) {
+    _walletKit!.registerAccount(
+      chainId: chainId, // CAIP-2 format chain id
+      accountAddress: address, // 0x.... address
+    );
+  }
+
+  for (var handler in _methodHandlers.entries) {
+    _walletKit.registerRequestHandler(
+      chainId: chainId,
+      method: handler.key,
+      handler: handler.value,
+    );
+  }
+
+  for (final event in supportedEvents) {
+    _walletKit.registerEventEmitter(
+      chainId: chainId,
+      event: event,
+    );
+  }
+}
+```
+
+When a dApp propose a session, with declared namespaces, your wallet will be able to approve an **already generated set of namespaces** based on your registered accounts, methods and events.
+
+You can access this object in **SessionProposalEvent** during `onSessionProposal` event by querying `event.params.generatedNamespaces`. (See [Session Approval](#session-approval) below)
+
+<Note>
+You can choose **not to use** `registerRequestHandler` to configure your supported methods and rather define them during session approval (See [Session Approval](#session-approval) below)
+
+By not using `registerRequestHandler` your methods requests are going to be sent through `onSessionRequest` event subscription.
+
+If you do choose to use `registerRequestHandler` **(highly recommended)** then `onSessionRequest` event subscription is not going to be called.
+</Note>
 
 Flutter SDK provides a handy `MethodsConstants` and `EventsConstants` for already defined set of required and optional values.
 
@@ -121,12 +166,7 @@ In @walletconnect/ethereum-provider, (our abstracted EVM SDK for apps) we suppor
 
 As mentioned before, the `SessionProposalEvent` is emitted when a dapp initiates a new session with your wallet. The event object will include the information about the dapp and requested namespaces. The wallet should display a prompt for the user to approve or reject the session.
 
-To approve a session, call `approveSession()` and pass in the `event.id` and your approved namespaces.
-
-- If you decide to use the `registerRequestHandler()` method to register handlers for supported methods, as explained in previous section, you would use the `generatedNamespaces` object in the `approveSession`
-- If you decide to handle session requests by subscribing to the `onSessionRequest` event, you would need to pass your own set of approved namespaces.
-
-Either way you decide you would subscribe to the `onSessionProposal` event and use `approveSession()` as follows:
+To approve a session, subscribe to `onSessionProposal` event and call `approveSession()` passing in the `event.id` and the namespaces object.
 
 ```javascript
 _walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) {
@@ -135,10 +175,14 @@ _walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) {
   // If approved
   _walletKit.approveSession(
     id: event.id,
-    namespaces: // event.params.generatedNamespaces! or approvedNamespaces,
+    namespaces: event.params.generatedNamespaces ?? {},
   );
 });
 ```
+
+<Note>
+As mentioned before, `namespaces:` should be either `event.params.generatedNamespaces!` if you decided to use `registerRequestHandler` method to configure your supported methods or a `Map<String, Namespace>` object defined by yourself if you decided **not** to use `registerRequestHandler` method
+</Note>
 
 #### Pairing
 
@@ -172,9 +216,9 @@ _walletKit.onSessionProposal.subscribe((SessionProposalEvent? event) async {
 
 ### Responding to Session requests
 
-To handle a session request, such as `personal_sign`, you have two ways and they are mutually exclusive, so, you use either one way or the other:
+To handle a session request, such as `personal_sign`, you have two ways as explained before, and they are mutually exclusive, so, either you use onSessionRequest event subscription or your methods handlers configured with `registerRequestHandler`.
 
-1. Default one is to register a request handler for the methods and chains you want to support. So let's say your wallet supports `eip155:1` and `eip155:137`. This would translate to:
+1. The **recommended one** is to register a request handler for the methods and chains you want to support. So let's say your wallet supports `eip155:1` and `eip155:137`. This would translate to:
 
 ```javascript
 final supportedChains = ['eip155:1', 'eip155:137'];
@@ -182,6 +226,7 @@ Map<String, dynamic Function(String, dynamic)> supportedMethods = {
   'personal_sign': _personalSignHandler,
   'eth_sendTransaction': _ethSendTransactionHandler,
 };
+// Register your handlers as stated in Namespace Builder section
 for (var chainId in supportedChains) {
   for (var method in supportedMethods.entries) {
     _walletKit.registerRequestHandler(
@@ -261,9 +306,7 @@ Future<void> _ethSendTransactionHandler(String topic, dynamic params) async {
 }
 ```
 
-Once you have your handlers registered, these are going to be triggered _INSTEAD OF_ the `onSessionRequest` event.
-
-2. The other way is subscribing to onSessionRequest events and handle the request based on the method that is firing the event
+2. The other way is subscribing to `onSessionRequest` events (if you didn't use `generatedNamespaces` object) and handle the request based on the method that is firing the event.
 
 ```javascript
 _walletKit.onSessionRequest.subscribe(_onSessionRequest);
@@ -308,9 +351,13 @@ void _onSessionRequest(SessionRequestEvent? event) async {
 }
 ```
 
+<Info>
+Remember that if you have handlers registered these are going to be triggered **instead of** the `onSessionRequest` event.
+</Info>
+
 ### Updating a Session
 
-If you wish to include new accounts or chains or methods in an existing session, `updateSession` allows you to do so.
+If you wish to include new accounts, chains or methods in an existing session, `updateSession` allows you to do so.
 You need pass in the `topic` and a new `Namespaces` object that contains all of the existing namespaces as well as the new data you wish to include.
 
 After you update the session, the dapp connected to your wallet will receive a `SessionUpdate` event.
@@ -350,7 +397,7 @@ await _walletKit.core.pairing.disconnect(
 
 #### Supporting session events
 
-In order to support session events, such as `chainChanged` or `accountChanged`, you would have to to register an event emitter for such events, for every chain you want to emit an event for (similar to request handlers).
+In order to support session events, such as `chainChanged` or `accountChanged`, you would have to register an event emitter for such events, for every chain you want to emit an event for (similar to request handlers).
 
 ```javascript
 final supportedChains = ['eip155:1', 'eip155:137'];
