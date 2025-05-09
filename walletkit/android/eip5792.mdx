@@ -9,3 +9,146 @@ Applications can specify that these onchain calls be executed taking advantage o
 - `wallet_getCallsStatus`: Returns the status of a call batch that was sent via wallet_sendCalls.
 - `wallet_showCallsStatus`: Requests that a wallet shows information about a given call bundle that was sent with wallet_sendCalls.
 - `wallet_getCapabilities`: This RPC allows an application to request capabilities from a wallet (e.g. batch transactions, paymaster communication).
+
+## Usage
+
+### wallet_getCapabilities Example
+
+The `wallet_getCapabilities` method is used to request information about the capabilities supported by a wallet. In accordance with EIP-5792, here’s how it should be implemented:
+
+### Request
+```json 
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "wallet_getCapabilities",
+  "params": ["0xd46e8dd67c5d32be8058bb8eb970870f07244567", ["0x2105", "0x14A34"]]
+}
+```
+
+### Response
+The wallet should return a response compliant with EIP-5792, where capabilities are organized by chain ID:
+
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "0x2105": {
+      "atomic": {
+        "status": "supported"
+      }
+    },
+    "0x14A34": {
+      "atomic": {
+        "status": "unsupported"
+      }
+    }
+  }
+}
+```
+
+## Capabilities in CAIP-25 Connection Requests
+
+CAIP-25 defines how capabilities can be expressed in wallet-to-dapp connections. These capabilities control how methods like `wallet_sendCalls` behave.
+
+### Session Properties
+
+In a connection request, dApps can request capabilities through `sessionProperties`. These capabilities can be universal (applying to all chains) or chain-specific:
+
+```json
+"sessionProperties": {
+  "expiry": "2022-12-24T17:07:31+00:00",
+  "caip154": {
+    "supported": "true"
+  },
+  "flow-control": {
+    "loose": [], 
+    "strict": [],
+    "exoticThirdThing": []
+  },
+  "atomic": {
+    "status": "supported"
+  }
+}
+```
+
+### Scoped Properties
+
+For chain-specific capabilities, dapps use `scopedProperties`:
+
+```json
+"scopedProperties": {
+  "eip155:8453": {
+    "paymasterService": {
+      "supported": true
+    },
+    "sessionKeys": {
+      "supported": true
+    }
+  },
+  "eip155:84532": {
+    "auxiliaryFunds": {
+      "supported": true
+    }
+  }
+}
+```
+
+### Wallet Response
+
+The wallet’s response should specify the capabilities it supports, in accordance with EIP-5792 and CAIP-25:
+
+```json
+"sessionProperties": {
+  "expiry": "2022-12-24T17:07:31+00:00",
+  "caip154": {
+    "supported": "true"
+  },
+  "flow-control": {
+    "loose": ["halt", "continue"],
+    "strict": ["continue"]
+  },
+  "atomic": {
+    "status": "ready"
+  }
+},
+"scopedProperties": {
+  "eip155:1": {
+    "atomic": {
+      "status": "supported"
+    }
+  },
+  "eip155:137": {
+    "atomic": {
+      "status": "unsupported"
+    }
+  },
+  "eip155:84532": {
+    "eip155:83532:0x0910e12C68d02B561a34569E1367c9AAb42bd810": {
+      "auxiliaryFunds": {
+        "supported": false
+      },
+      "atomic": {
+        "status": "supported"
+      }
+    }
+  }
+}
+```
+- Capabilities shared across all address in a namespace can be expressed at top-level
+- Address-specific capabilities can include exceptions to scope-wide capabilities
+
+### Atomic Capability
+
+According to [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792), the `atomic` capability specifies how the wallet handles batches of transactions. It has three possible values:
+
+- `supported` — The wallet executes calls atomically and contiguously.
+- `ready` — The wallet can upgrade to support atomic execution, pending user approval.
+- `unsupported` — The wallet provides no atomicity guarantees.
+
+This capability is expressed per chain and is crucial for determining how `wallet_sendCalls` with `atomicRequired: true` will be handled.
+
+## References
+- EIP-5792: https://eips.ethereum.org/EIPS/eip-5792#atomicbatch-capability
+- CAIP-25 namespaces: https://github.com/ChainAgnostic/namespaces/blob/main/eip155/caip25.md
