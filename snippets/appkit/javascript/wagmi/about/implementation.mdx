@@ -8,11 +8,12 @@ In your `main.js` file set up the following configuration.
 import { createAppKit } from '@reown/appkit'
 import { mainnet, arbitrum } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import type { AppKitNetwork } from '@reown/appkit/networks'
 
 // 1. Get a project ID at https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
-export const networks = [mainnet, arbitrum]
+export const networks = [mainnet, arbitrum] as [AppKitNetwork, ...AppKitNetwork[]]
 
 // 2. Set up Wagmi adapter
 const wagmiAdapter = new WagmiAdapter({

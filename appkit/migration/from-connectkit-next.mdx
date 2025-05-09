@@ -50,8 +50,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Include networks from AppKit
 + import { mainnet, arbitrum } from '@reown/appkit/networks'
++ import type { AppKitNetwork } from '@reown/appkit/networks'
 + import { createAppKit } from '@reown/appkit';
-+ export const networks = [mainnet, arbitrum]
++ export const networks = [mainnet, arbitrum] as [AppKitNetwork, ...AppKitNetwork[]]
 
 - const config = createConfig(
 -   getDefaultConfig({
