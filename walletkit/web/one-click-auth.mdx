@@ -1,135 +1,191 @@
 ---
 title: One-click Auth
+description: Implement streamlined authentication for your wallet
 ---
 
-## Introduction
+# One-click Authentication
 
-This section outlines an innovative protocol method that facilitates the initiation of a Sign session and the authentication of a wallet through a [Sign-In with Ethereum](https://eips.ethereum.org/EIPS/eip-4361) (SIWE) message, enhanced by [ReCaps](https://eips.ethereum.org/EIPS/eip-5573) (ReCap Capabilities).
+## What is One-click Auth?
 
-This enhancement not only offers immediate authentication for dApps, paving the way for prompt user logins, but also integrates informed consent for authorization. Through this mechanism, dApps can request the delegation of specific capabilities to perform actions on behalf of the wallet user. These capabilities, encapsulated within SIWE messages as ReCap URIs, detail the scope of actions authorized by the user in an explicit and human-readable form.
+One-click Auth is a streamlined authentication protocol that allows users to:
+- Sign in to dApps quickly with their Ethereum wallet
+- Authorize specific permissions in a single step
+- Enjoy a smoother user experience with fewer confirmation prompts
 
-By incorporating ReCaps, this method extends the utility of SIWE messages, allowing dApps to combine authentication with a nuanced authorization model. This model specifies the actions a dApp is authorized to execute on the user's behalf, enhancing security and user autonomy by providing clear consent for each delegated capability. As a result, dApps can utilize these consent-backed messages to perform predetermined actions, significantly enriching the interaction between dApps, wallets, and users within the Ethereum ecosystem.
+This protocol combines [Sign-In with Ethereum](https://eips.ethereum.org/EIPS/eip-4361) (SIWE) messages with [ReCaps](https://eips.ethereum.org/EIPS/eip-5573) (ReCap Capabilities) to create a secure, consent-based authentication flow.
+
 <Frame>
-![](/images/w3w/authenticatedSessions-light.png)
+![One-click Authentication Flow](/images/w3w/authenticatedSessions-light.png)
 </Frame>
 
-## Handling Authentication Requests
+## Key Benefits
 
-To handle incoming authentication requests, subscribe to the `session_authenticate` event. This will notify you of any authentication requests that need to be processed, allowing you to either approve or reject them based on your application logic.
+1. **Combined Authentication and Authorization**: Users can authenticate and grant specific permissions in one step
+2. **Explicit Consent**: All authorized actions are clearly defined in human-readable format
+3. **Enhanced Security**: Granular permissions prevent unauthorized access
+4. **Improved UX**: Fewer confirmation steps for users
+
+## Implementation Guide
+
+### Step 1: Listen for Authentication Requests
+
+First, set up an event listener for incoming authentication requests:
 
 ```typescript
 walletKit.on("session_authenticate", async (payload) => {
-  // Process the authentication request here.
-  // Steps include:
-  // 1. Populate the authentication payload with the supported chains and methods
-  // 2. Format the authentication message using the payload and the user's account
-  // 3. Present the authentication message to the user
-  // 4. Sign the authentication message(s) to create a verifiable authentication object(s)
-  // 5. Approve the authentication request with the authentication object(s)
+  // We'll implement the authentication flow in the next steps
+  console.log("Received authentication request:", payload);
 });
 ```
 
-## Authentication Objects/Payloads
+### Step 2: Create the Authentication Payload
+
+When an authentication request is received, populate it with your wallet's supported chains and methods:
 
 ```typescript
 import { populateAuthPayload } from "@walletconnect/utils";
 
-// EVM chains that your wallet supports
-const supportedChains = ["eip155:1", "eip155:2", 'eip155:137'];
-// EVM methods that your wallet supports
-const supportedMethods = ["personal_sign", "eth_sendTransaction", "eth_signTypedData"];
-// Populate the authentication payload with the supported chains and methods
+// Define chains and methods your wallet supports
+const supportedChains = [
+  "eip155:1",   // Ethereum Mainnet
+  "eip155:137"  // Polygon
+];
+
+const supportedMethods = [
+  "personal_sign",
+  "eth_sendTransaction", 
+  "eth_signTypedData"
+];
+
+// Populate the authentication payload
 const authPayload = populateAuthPayload({
   authPayload: payload.params.authPayload,
   chains: supportedChains,
   methods: supportedMethods,
 });
-// Prepare the user's address in CAIP10(https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md) format
-const iss = `eip155:1:0x0Df6d2a56F90e8592B4FfEd587dB3D5F5ED9d6ef`;
-// Now you can use the authPayload to format the authentication message
+```
+
+### Step 3: Format the Authentication Message
+
+Create a SIWE message that the user will sign:
+
+```typescript
+// Format user's address according to CAIP-10 standard
+// Format: namespace:chainId:address
+const userAddress = "0x0Df6d2a56F90e8592B4FfEd587dB3D5F5ED9d6ef";
+const iss = `eip155:1:${userAddress}`;
+
+// Generate the authentication message
 const message = walletKit.formatAuthMessage({
   request: authPayload,
   iss
 });
 
-// Present the authentication message to the user
-...
+// Display this message to the user for review before signing
+showMessageToUser(message);
 ```
 
-## Approving Authentication Requests
+### Step 4: Approve Authentication (Two Approaches)
 
-<Note>
-**Note**
+#### Approach 1: Single Authentication Object
 
-1. The recommended approach for secure authentication across multiple chains involves signing a SIWE (Sign-In with Ethereum) message for each chain and account. However, at a minimum, one SIWE message must be signed to establish a session. It is possible to create a session for multiple chains with just one issued authentication object.
-2. Sometimes a dapp may want to only authenticate the user without creating a session, not every approval will result with a new session.
-</Note>
+For simple cases, you can create a single authentication object:
 
 ```typescript
-// Approach 1
-// Sign the authentication message(s) to create a verifiable authentication object(s)
-const signature = await cryptoWallet.signMessage(message, privateKey);
-// Build the authentication object(s)
+// After user approves the message
+const signature = await wallet.signMessage(message);
+
+// Build the authentication object
 const auth = buildAuthObject(
   authPayload,
   {
-    t: "eip191",
-    s: signature,
+    t: "eip191",  // Signature type (EIP-191)
+    s: signature, // The signature
   },
   iss
 );
 
-// Approve
+// Approve the authentication request
 await walletKit.approveSessionAuthenticate({
   id: payload.id,
   auths: [auth],
 });
+```
 
-// Approach 2
-// Note that you can also sign multiple messages for every requested chain/address pair
+#### Approach 2: Multiple Authentication Objects (Recommended for Multi-chain)
+
+For better security with multiple chains, sign a separate message for each chain:
+
+```typescript
 const auths = [];
-authPayload.chains.forEach(async (chain) => {
-  const message = walletKit.formatAuthMessage({
+
+// Create authentication objects for each chain
+for (const chain of authPayload.chains) {
+  // Create message specific to this chain
+  const chainMessage = walletKit.formatAuthMessage({
     request: authPayload,
-    iss: `${chain}:${cryptoWallet.address}`,
+    iss: `${chain}:${wallet.address}`,
   });
-  const signature = await cryptoWallet.signMessage(message);
+  
+  // Sign the message
+  const signature = await wallet.signMessage(chainMessage);
+  
+  // Build authentication object for this chain
   const auth = buildAuthObject(
     authPayload,
     {
-      t: "eip191", // signature type
+      t: "eip191",
       s: signature,
     },
-    `${chain}:${cryptoWallet.address}`
+    `${chain}:${wallet.address}`
   );
+  
   auths.push(auth);
-});
+}
 
-// Approve
+// Approve with multiple authentication objects
 await walletKit.approveSessionAuthenticate({
   id: payload.id,
   auths,
 });
 ```
 
-## Rejecting Authentication Requests
+> **Note**: While you can authenticate multiple chains with a single signature, creating separate signatures for each chain provides better security.
 
-If the authentication request cannot be approved or if the user chooses to reject it, use the rejectSession method.
+### Step 5: Rejecting Authentication Requests
+
+If the user decides not to approve the authentication request:
 
 ```typescript
 import { getSdkError } from "@walletconnect/utils";
 
 await walletKit.rejectSessionAuthenticate({
   id: payload.id,
-  reason: getSdkError("USER_REJECTED"), // or choose a different reason if applicable
+  reason: getSdkError("USER_REJECTED"),
 });
 ```
 
-## Testing One-click Auth
+## Important Considerations
 
-You can use [AppKit Lab](https://appkit-lab.reown.com/library/ethers-siwe/) to test and verify that your wallet supports One-click Auth properly.
+1. **Session Creation**: Not all authentication approvals result in a new session. Some dApps may want to authenticate users without creating a persistent session.
+
+2. **Message Display**: Always show the authentication message to users before signing so they can review the permissions they're granting.
+
+3. **Signature Types**: The examples use EIP-191 signatures, which are standard for Ethereum wallets.
+
+## Testing Your Implementation
+
+You can test your One-click Auth implementation using the AppKit Lab:
 
 <Card
-  title="Test One-click Auth"
+  title="Test One-click Auth Integration"
   href="https://appkit-lab.reown.com/library/ethers-siwe/"
+  icon="flask"
+  color="#4D72DA"
 />
+
+## Common Issues and Solutions
+
+- **Invalid Signature**: Ensure you're using the correct private key and message format
+- **Chain Mismatch**: Verify that the chains in your authentication payload match what the dApp is requesting
+- **Missing Methods**: Confirm that your supported methods include what the dApp needs
