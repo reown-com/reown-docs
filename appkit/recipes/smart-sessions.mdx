@@ -149,7 +149,7 @@ const { publicKey: dAppECDSAPublicKey } = await response.json();
     const approvedPermissions = await grantPermissions(request);
 ```
 
-7. The user must log in with their email in a special way. If the email is `test@gmail.com`. Change it to `test+smart+session@gmail.com` to enable smart session support.
+7. The user must log in with their email in a special way. If the email is `test@gmail.com`. Change it to `test+smart-sessions@gmail.com` to enable smart session support.
 
 8. After approving the grant permission, the server can interact in their behalf.
 
