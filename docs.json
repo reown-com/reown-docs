@@ -817,10 +817,11 @@
               {
                 "group": "Features",
                     "pages": [
-                      "walletkit/features/one-click-auth",
-                      "walletkit/features/notifications",
                       "walletkit/features/verify",
-                      "walletkit/features/chain-abstraction"
+                      "walletkit/features/link-mode",
+                      "walletkit/features/one-click-auth",
+                      "walletkit/features/chain-abstraction",
+                      "walletkit/features/notifications"
                     ]
                   },
                   {
