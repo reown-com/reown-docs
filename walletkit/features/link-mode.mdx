@@ -1,0 +1,39 @@
+---
+title: Link Mode
+---
+
+WalletKit Link Mode is a low latency mechanism for transporting One-Click Auth requests and session requests over Universal Links, reducing the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with network connections, especially when the user has an unstable internet connection.
+
+<Frame caption="Link Mode in action">
+<video
+  controls
+  autoPlay
+  src="/images/link-mode.mp4"
+  height="400" width="300"
+></video>
+</Frame>
+
+## When and How can Link Mode help?
+
+Let's assume that a user is trying to connect their wallet to a native (mobile) dApp while commuting on a train with spotty internet.
+
+Now, if the user wants to sign a message on the dApp using their mobile wallet and the dApp relies on typical WebSocket connections to relay the session request. Due to unstable connectivity, the connection drops or lags, causing the wallet to not receive the sign message request promptly.
+
+**Using Link Mode, the dApp sends a Universal Link directly to the wallet app.** Since this doesn’t rely on maintaining a WebSocket session, the wallet receives the connection or signature request instantly and reliably, even in weak network conditions.
+
+## Get Started
+
+<CardGroup cols={2}>
+    <Card title="Android" icon="android" href="/walletkit/android/link-mode">
+        Get started with Link Mode in WalletKit - Android.
+    </Card>
+    <Card title="iOS" icon="apple" href="/walletkit/ios/link-mode">
+        Get started with Link Mode in WalletKit - iOS.
+    </Card>
+    <Card title="Flutter" icon="flutter" href="/walletkit/flutter/link-mode">
+        Get started with Link Mode in WalletKit - Flutter.
+    </Card>
+    <Card title="React Native" icon="react" href="/walletkit/react-native/link-mode">
+        Get started with Link Mode in WalletKit - React Native.
+    </Card>
+</CardGroup>
