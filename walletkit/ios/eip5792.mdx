@@ -12,7 +12,7 @@ Applications can specify that these onchain calls be executed taking advantage o
 
 ## Usage
 
-To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the bundler name in the session properties.
+To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the Wallet Service URL in the scoped properties.
 
 When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
 

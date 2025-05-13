@@ -14,13 +14,13 @@ Applications can specify that these onchain calls be executed taking advantage o
 
 ### wallet_getCallsStatus Example
 
-To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the bundler name in the scoped properties.
+To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the Wallet Service URL in the scoped properties.
 
 When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
 
-To implement this functionality, use `WalletKit.buildWalletService(projectId, methods)` util method that specifies the wallet service URL withing the supported methods:
+To implement this functionality, use `WalletKit.buildWalletService(methods)` util method that specifies the wallet service URL withing the supported methods:
 
 ```kotlin
-val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService("project_id", listOf("wallet_getCallsStatus")))
+val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService(listOf("wallet_getCallsStatus")))
 WalletKit.approveSession(..., scopedProperties)
 ```
