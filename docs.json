@@ -872,53 +872,6 @@
             ]
           },
           {
-            "dropdown": "iOS",
-            "icon": "apple",
-            "description": "WalletKit on iOS",
-            "pages": [
-              {
-                "group": "Core",
-                "pages": [
-                  "walletkit/ios/installation",
-                  "walletkit/ios/usage",
-                  "walletkit/ios/one-click-auth",
-                  "walletkit/ios/mobile-linking",
-                  "walletkit/ios/link-mode",
-                  "walletkit/ios/verify",
-                  "walletkit/ios/eip5792",
-                  "walletkit/ios/chain-abstraction",
-                  "walletkit/ios/best-practices",
-                  "walletkit/ios/resources"
-                ]
-              },
-              {
-                "group": "Notifications",
-                "pages": [
-                  {
-                    "group": "Notify",
-                    "pages": [
-                      "walletkit/ios/notifications/notify/overview",
-                      "walletkit/ios/notifications/notify/installation",
-                      "walletkit/ios/notifications/notify/usage",
-                      "walletkit/ios/notifications/notify/spam-protection",
-                      "walletkit/ios/notifications/notify/resources"
-                    ]
-                  },
-                  "walletkit/ios/notifications/push"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "walletkit/ios/cloud/explorer-submission",
-                  "walletkit/ios/cloud/verify",
-                  "walletkit/ios/cloud/relay",
-                  "walletkit/ios/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
             "dropdown": "Android",
             "icon": "android",
             "description": "WalletKit on Android",
@@ -961,6 +914,53 @@
                   "walletkit/android/cloud/verify",
                   "walletkit/android/cloud/relay",
                   "walletkit/android/cloud/analytics"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "iOS",
+            "icon": "apple",
+            "description": "WalletKit on iOS",
+            "pages": [
+              {
+                "group": "Core",
+                "pages": [
+                  "walletkit/ios/installation",
+                  "walletkit/ios/usage",
+                  "walletkit/ios/one-click-auth",
+                  "walletkit/ios/mobile-linking",
+                  "walletkit/ios/link-mode",
+                  "walletkit/ios/verify",
+                  "walletkit/ios/eip5792",
+                  "walletkit/ios/chain-abstraction",
+                  "walletkit/ios/best-practices",
+                  "walletkit/ios/resources"
+                ]
+              },
+              {
+                "group": "Notifications",
+                "pages": [
+                  {
+                    "group": "Notify",
+                    "pages": [
+                      "walletkit/ios/notifications/notify/overview",
+                      "walletkit/ios/notifications/notify/installation",
+                      "walletkit/ios/notifications/notify/usage",
+                      "walletkit/ios/notifications/notify/spam-protection",
+                      "walletkit/ios/notifications/notify/resources"
+                    ]
+                  },
+                  "walletkit/ios/notifications/push"
+                ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "walletkit/ios/cloud/explorer-submission",
+                  "walletkit/ios/cloud/verify",
+                  "walletkit/ios/cloud/relay",
+                  "walletkit/ios/cloud/analytics"
                 ]
               }
             ]
