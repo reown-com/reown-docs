@@ -4,6 +4,7 @@ title: Options
 
 ```javascript
 final _appKitModal = ReownAppKitModal(
+  logLevel: LogLevel.error,
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
@@ -14,7 +15,7 @@ final _appKitModal = ReownAppKitModal(
     redirect: Redirect( // OPTIONAL
       native: 'exampleapp://',
       universal: 'https://reown.com/exampleapp',
-      linkMode: false,
+      linkMode: true|false,
     ),
   ),
   // disconnectOnDispose: false,
@@ -25,12 +26,19 @@ final _appKitModal = ReownAppKitModal(
   //   socials: [...], // OPTIONAL - empty by default
   //   showMainWallets: true, // OPTIONAL - true by default
   // ),
-  // getBalanceFallback: () async { }, OPTIONAL - null by default
-  // requiredNamespaces: {}, OPTIONAL - null by default
-  // optionalNamespaces: {}, OPTIONAL - null by default
-  // featuredWalletIds: {}, OPTIONAL - null by default
-  // includedWalletIds: {}, OPTIONAL - null by default
-  // excludedWalletIds: {}, OPTIONAL - null by default
+  // getBalanceFallback: () async { }, // OPTIONAL - null by default
+  // requiredNamespaces: {}, // OPTIONAL - null by default
+  // optionalNamespaces: {}, // OPTIONAL - null by default
+  // featuredWalletIds: {}, // OPTIONAL - null by default
+  // includedWalletIds: {}, // OPTIONAL - null by default
+  // excludedWalletIds: {}, // OPTIONAL - null by default
+  // customWallets: [ // OPTIONAL - null by default
+  //   ReownAppKitModalWalletInfo(
+  //     listing: AppKitModalWalletListing(
+  //       ...
+  //     ),
+  //   ),
+  // ],
 );
 ```
 
@@ -56,7 +64,7 @@ This callback method will be triggered if getting the balance from our blockchai
 
 These are the set of namespaces that will be requested to the wallet you are connecting to.
 
-These values are optionals and, in most cases, not required since AppKit already defines every required and optional namespace internally based on configured networks.
+These values are optionals and, in most cases, not required since AppKit already defines every required and optional namespace internally based on configured networks (EVM and Solana by default).
 
 However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) these are the object you should modify. See [Custom Networks](../core/custom-chains). section.
 
@@ -96,3 +104,27 @@ final Set<String> excludedWalletIds = {
   'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa', // Coinbase Wallet
 }
 ```
+
+### customWallets:
+
+A list of user defined wallets. Example:
+
+```javascript
+customWallets: [
+  ReownAppKitModalWalletInfo(
+    listing: AppKitModalWalletListing(
+      id: '00001',
+      name: 'Reown Web Sample',
+      homepage: 'https://react-wallet.walletconnect.com',
+      imageId:
+          'https://avatars.githubusercontent.com/u/179229932?s=200&v=4',
+      order: 1,
+      webappLink: 'https://react-wallet.walletconnect.com',
+    ),
+  ),
+],
+```
+
+### disconnectOnDispose:
+
+Whether if you want to disconnect the user when disposing the context that holds  your modal instance
