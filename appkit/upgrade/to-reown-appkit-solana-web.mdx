@@ -43,19 +43,19 @@ Next, install the Reown AppKit and Solana wallet adapter packages.
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+npm install @reown/appkit @reown/appkit-adapter-solana
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+yarn add @reown/appkit @reown/appkit-adapter-solana 
 ```
 
 ```bash Bun
-bun a @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+bun a @reown/appkit @reown/appkit-adapter-solana
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-solana @solana/wallet-adapter-wallets
+pnpm add @reown/appkit @reown/appkit-adapter-solana
 ```
 </CodeGroup>
 
@@ -88,12 +88,10 @@ The `metadata` and the `projectId` are the same as before.
 ```tsx {5-15}
 // Remove the following code lines
 - const solanaConfig = defaultSolanaConfig({ ... });
-- createWeb3Modal( ... });
+- createWeb3Modal( ... );
 
 // Add the following code lines
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
++ const solanaAdapter = new SolanaAdapter()
 
 + const modal = createAppKit({
 +   projectId,
@@ -126,12 +124,10 @@ The `metadata` and the `projectId` are the same as before.
 ```tsx {5-15}
 // Remove the following code lines
 - const solanaConfig = defaultSolanaConfig({ ... });
-- createWeb3Modal( ... });
+- createWeb3Modal( ... );
 
 // Add the following code lines
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
++ const solanaAdapter = new SolanaAdapter()
 
 + const modal = createAppKit({
 +   projectId,
@@ -165,12 +161,10 @@ The `metadata` and the `projectId` are the same as before.
 ```tsx {5-15}
 // Remove the following code lines
 - const solanaConfig = defaultSolanaConfig({ ... });
-- createWeb3Modal( ... });
+- createWeb3Modal( ... );
 
 // Add the following code lines
-+ const solanaAdapter = new SolanaAdapter({
-+   wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-+ })
++ const solanaAdapter = new SolanaAdapter()
 
 + const modal = createAppKit({
 +   projectId,
