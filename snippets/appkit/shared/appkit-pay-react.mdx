@@ -36,6 +36,7 @@ pnpm add @reown/appkit-pay
 ### Usage
 ```ts
 import { usePay } from '@reown/appkit-pay/react';
+import { baseSepoliaETH } from '@reown/appkit-pay' 
 ```
 
 In order to run the payment, use the hook `usePay`. This hook receives two parameter to manage the success or the error in the process.
@@ -47,6 +48,24 @@ const { open, isPending, isSuccess, data, error } = usePay({
   onError: handleError,
 });
 
+// open resolves when the modal closes, but onSuccess/onError handle the actual payment result
+await open({ 
+    recipient: addressRecipient,
+    amount: 0.0001,
+    paymentAsset: baseSepoliaETH
+});
+```
+## Assets Configuration
+
+For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
+
+```ts
+import { baseETH, baseSepoliaETH, baseUSDC } from '@reown/appkit-pay' 
+```
+
+For custom assets, you can create a paymentAsset object with all the information:
+
+```ts
 // Configure the paymentAsset
 const paymentAssetDetails = {
     network: 'eip155:8453', // Base Mainnet
@@ -57,14 +76,8 @@ const paymentAssetDetails = {
         decimals: 18      // Or 6 for USDC
     }
 };
-
-// open resolves when the modal closes, but onSuccess/onError handle the actual payment result
-await open({ 
-    recipient: addressRecipient,
-    amount: 0.0001,
-    paymentAsset: paymentAssetDetails
-});
 ```
+
 ## Hooks
 
 ### usePay
