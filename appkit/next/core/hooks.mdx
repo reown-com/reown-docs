@@ -10,6 +10,49 @@ import OpenModal from "/snippets/appkit/next/core/open.mdx";
 
 Hooks are React functions that provide access to wallet connection features, modal controls, blockchain interactions, and wallet event subscriptions. They enable you to manage wallet connections, handle user authentication, interact with smart contracts, and respond to wallet events in your application.
 
+## Hook Ecosystem
+
+AppKit provides a comprehensive set of React hooks that work together to provide a complete wallet connection and blockchain interaction experience. These hooks can be categorized into several functional groups:
+
+- **Connection Hooks**: Manage wallet connections and user authentication (`useAppKit`, `useAppKitAccount`, `useDisconnect`)
+- **Network Hooks**: Handle blockchain network selection and information (`useAppKitNetwork`)
+- **UI Control Hooks**: Control the modal and UI elements (`useAppKitState`, `useAppKitTheme`)
+- **Data Access Hooks**: Access wallet and blockchain data (`useAppKitBalance`, `useWalletInfo`)
+- **Event Hooks**: Subscribe to wallet and connection events (`useAppKitEvents`)
+
+The diagram below illustrates how these hooks relate to each other and to the core AppKit functionality:
+
+```mermaid
+graph TD
+  AppKit[AppKit Core] --> ConnHooks[Connection Hooks]
+  AppKit --> NetworkHooks[Network Hooks]
+  AppKit --> UIHooks[UI Control Hooks]
+  AppKit --> DataHooks[Data Access Hooks]
+  AppKit --> EventHooks[Event Hooks]
+  
+  ConnHooks --> useAppKit
+  ConnHooks --> useAppKitAccount
+  ConnHooks --> useDisconnect
+  ConnHooks --> useAppKitWallet
+  
+  NetworkHooks --> useAppKitNetwork
+  
+  UIHooks --> useAppKitState
+  UIHooks --> useAppKitTheme
+  
+  DataHooks --> useWalletInfo
+  DataHooks --> useAppKitBalance
+  
+  EventHooks --> useAppKitEvents
+  
+  useAppKit -.-> useAppKitAccount
+  useAppKitAccount -.-> useAppKitBalance
+  useAppKitNetwork -.-> useAppKitBalance
+  useAppKitWallet -.-> useAppKitAccount
+```
+
+These hooks provide a modular way to integrate wallet functionality into your application, allowing you to use only the features you need.
+
 ## useAppKit
 
 The primary hook for controlling the modal's visibility and behavior. Use this hook when you need to programmatically open or close the modal, or when you want to show specific views like the connection screen or account details.
@@ -54,6 +97,10 @@ const { address, isConnected, caipAddress, status, embeddedWalletInfo } =
 - Getting user information for embedded wallets
 - Handling multi-chain scenarios where you need account info for specific chains
 
+<Note>
+  Related hooks: [useAppKitWallet](#useappkitwallet), [useDisconnect](#usedisconnect)
+</Note>
+
 Hook for accessing account data and connection status for each namespace when working in a multi-chain environment.
 
 ```ts
@@ -76,8 +123,8 @@ const bip122Account = useAppKitAccount({ namespace: "bip122" }); // for bitcoin
 ```typescript
 type EmbeddedWalletInfo {
   user: {
-    username: string
-    email: string
+    email?: string | null | undefined
+    username?: string | null | undefined
   },
   accountType: 'eoa' | 'smartAccount',
   authProvider: 'google' | 'apple' | 'facebook' | 'x' | 'discord' | 'farcaster' | 'github' | 'email',
@@ -95,6 +142,100 @@ type UseAppKitAccountReturnType = {
   embeddedWalletInfo?: EmbeddedWalletInfo
 }
 ```
+
+## useAppKitWallet
+
+<Frame>
+  <img src="/images/assets/walletButtons.jpg" />
+</Frame>
+
+The direct wallet connection hook that enables connectivity to specific wallets without opening the modal. Use this hook when you want to provide direct wallet buttons, create a customized wallet selection interface, or implement social login options.
+
+Using the wallet button hooks ([Demo in our Lab](https://appkit-lab.reown.com/library/wagmi-wallet-button/)), you can directly connect to the top 20 wallets, WalletConnect QR and also all the social logins.
+This hook allows to customize dApps, enabling users to connect their wallets effortlessly, all without the need to open the traditional modal.
+Execute this command to install the library for use it:
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-wallet-button
+```
+
+```bash Yarn
+yarn add @reown/appkit-wallet-button
+```
+
+```bash Bun
+bun a @reown/appkit-wallet-button
+```
+
+```bash pnpm
+pnpm add @reown/appkit-wallet-button
+```
+
+</CodeGroup>
+
+Then you have to import the hook in your project:
+
+```tsx
+import { useAppKitWallet } from "@reown/appkit-wallet-button/react";
+```
+
+And finally, you can use the hook in your project:
+
+```tsx
+const { isReady, isPending, connect } = useAppKitWallet({
+    onSuccess(parsedCaipAddress) {
+      // Access the parsed CAIP address object
+      // See: https://github.com/reown-com/appkit/blob/main/packages/common/src/utils/ParseUtil.ts#L3-L7
+      // ...
+    },
+    onError(error) {
+      // ...
+    }
+  })
+
+...
+
+// Connect to WalletConnect
+<Button onClick={() => connect("walletConnect")} />
+```
+
+#### Options for the connect parameter
+
+AppKit supports the [top 32 wallets](https://github.com/reown-com/appkit/blob/main/packages/wallet-button/src/utils/ConstantsUtil.ts#L11-L44), WalletConnect, social logins, and email authentication:
+
+| Type          | Options                                                                                                                                                                                                                                                                                                                                                           |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                   |
+| Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, and `tokenpocket` |
+| Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                          |
+| Email         | `email`                                                                                                                                                                                                                                                                                                                                                           |
+
+#### Use Cases
+
+`useAppKitWallet` enables:
+
+1. **Direct Wallet Integration**
+   - Direct connection to specific wallets (e.g., MetaMask, Coinbase)
+   - Streamlined connection flow without modal
+
+2. **Social Authentication**
+   - Social login options (Google, GitHub, etc.)
+   - Email-based authentication
+
+3. **Custom Wallet Selection**
+   - Branded wallet selection interface
+   - Custom styling and filtering options
+
+4. **Network-Specific Access**
+   - Chain-specific wallet options
+   - Conditional wallet availability
+
+5. **Enhanced UX**
+   - Loading states and error handling
+   - Custom notifications
+   - Responsive connection states
 
 ## useAppKitNetwork
 
@@ -114,6 +255,10 @@ export default Component(){
 - Validating if a user is on the correct network for your dApp
 - Handling network-specific features or contracts
 
+<Note>
+  Related hooks: [useAppKitBalance](#useappkitbalance), [useWalletInfo](#usewalletinfo)
+</Note>
+
 ### Returns
 
 - `caipNetwork`: The current network object
@@ -125,6 +270,59 @@ export default Component(){
   See how to import or use custom networks
   [here](/appkit/next/core/custom-networks).
 </Note>
+
+## useAppKitBalance
+
+The balance management hook that provides functions to fetch the native token balance of the connected wallet. Use this hook when you need to display the user's balance, check if they have sufficient funds for a transaction, or track balance changes.
+
+```ts
+import { useAppKitBalance } from "@reown/appkit/react";
+
+function BalanceDisplay() {
+  const { fetchBalance } = useAppKitBalance();
+  const [balance, setBalance] = useState();
+  const { isConnected } = useAppKitAccount();
+  
+  useEffect(() => {
+    if (isConnected) {
+      fetchBalance().then(setBalance);
+    }
+  }, [isConnected, fetchBalance]);
+
+  return (
+    <div>
+      {balance && (
+        <p>Balance: {balance.data?.formatted} {balance.data?.symbol}</p>
+      )}
+    </div>
+  );
+}
+```
+
+### Use Cases
+- Displaying the user's wallet balance in your UI
+- Checking if a user has sufficient funds before initiating a transaction
+- Monitoring balance changes after transactions
+- Implementing balance-based features or UIs
+
+<Note>
+  Related hooks: [useAppKitAccount](#useappkitaccount), [useAppKitNetwork](#useappkitnetwork)
+</Note>
+
+### Returns
+
+- `fetchBalance`: Async function that returns the current balance of the connected wallet
+  ```ts
+  type BalanceResult = {
+    data?: {
+      formatted: string;
+      symbol: string;
+    };
+    error: string | null;
+    isSuccess: boolean;
+    isError: boolean;
+  }
+  ```
 
 ## useAppKitState
 
@@ -208,12 +406,23 @@ await disconnect();
 
 Hook for accessing wallet information.
 
-```ts
+```tsx
 import { useWalletInfo } from '@reown/appkit/react'
 
 
-export default Component(){
-  const { walletInfo } = useWalletInfo()
+function WalletDisplay() {
+  const { walletInfo } = useWalletInfo();
+  
+  return (
+    <div className="wallet-info">
+      {walletInfo?.name && (
+        <>
+          <img src={walletInfo.icon} alt={walletInfo.name} />
+          <span>{walletInfo.name}</span>
+        </>
+      )}
+    </div>
+  );
 }
 ```
 
@@ -263,7 +472,9 @@ And finally, you can use the hook in your project:
 
 ```tsx
 const { isReady, isPending, connect } = useAppKitWallet({
-    onSuccess() {
+    onSuccess(parsedCaipAddress) {
+      // Access the parsed CAIP address object
+      // See: https://github.com/reown-com/appkit/blob/main/packages/common/src/utils/ParseUtil.ts#L3-L7
       // ...
     },
     onError(error) {
@@ -273,7 +484,7 @@ const { isReady, isPending, connect } = useAppKitWallet({
 
 ...
 
-// Connect to a wallet
+// Connect to WalletConnect
 <Button onClick={() => connect("walletConnect")} />
 ```
 
@@ -284,6 +495,7 @@ const { isReady, isPending, connect } = useAppKitWallet({
 | QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                   |
 | Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, and `tokenpocket` |
 | Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                          |
+| Email         | `email`                                                                                                                                                                                                                                                                                                                                                           |
 
 #### Use Cases
 
