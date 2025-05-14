@@ -482,46 +482,6 @@ const { isReady, isPending, connect } = useAppKitWallet({
 
 ...
 
-// Connect to WalletConnect
-<Button onClick={() => connect("walletConnect")} />
-```
-
-#### Options for the connect parameter
-
-AppKit supports the [top 32 wallets](https://github.com/reown-com/appkit/blob/main/packages/wallet-button/src/utils/ConstantsUtil.ts#L11-L44), WalletConnect, social logins, and email authentication:
-
-| Type          | Options                                                                                                                                                                                                                                                                                                    |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| QR Code       | walletConnect                                                                                                                                                                                                                                                                                              |
-| Wallets       | metamask, trust, coinbase, rainbow, coinbase, jupiter, solflare, coin98, magic-eden, backpack, frontier, xverse, okx, bitget, leather, binance, uniswap, safepal, bybit, phantom, ledger, timeless-x, safe, zerion, oneinch, crypto-com, imtoken, kraken, ronin, robinhood, exodus, argent and tokenpocket |
-| Social logins | google, github, apple, facebook, x, discord and farcaster                                                                                                                                                                                                                                                  |
-| Email         | email                                                                                                                                                                                                                                                                                                      |
-
-#### Use Cases
-
-`useAppKitWallet` enables:
-
-1. **Direct Wallet Integration**
-   - Direct connection to specific wallets (e.g., MetaMask, Coinbase)
-   - Streamlined connection flow without modal
-
-2. **Social Authentication**
-   - Social login options (Google, GitHub, etc.)
-   - Email-based authentication
-
-3. **Custom Wallet Selection**
-   - Branded wallet selection interface
-   - Custom styling and filtering options
-
-4. **Network-Specific Access**
-   - Chain-specific wallet options
-   - Conditional wallet availability
-
-5. **Enhanced UX**
-   - Loading states and error handling
-   - Custom notifications
-   - Responsive connection states
-
 ## Ethereum/Solana Library
 
 <Tabs>
