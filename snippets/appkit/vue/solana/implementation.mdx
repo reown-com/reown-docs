@@ -3,10 +3,6 @@ In your `App.vue` file set up the following configuration.
 ```html
 <script setup lang="ts">
   import { createAppKit, useAppKit } from "@reown/appkit-solana/vue";
-  import {
-    PhantomWalletAdapter,
-    SolflareWalletAdapter,
-  } from "@solana/wallet-adapter-wallets";
   import { SolanaAdapter } from "@reown/appkit-adapter-solana/vue";
   import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
 
@@ -22,17 +18,14 @@ In your `App.vue` file set up the following configuration.
   };
 
   // 3. Set up Solana Adapter
-  const solanaWeb3JsAdapter = new SolanaAdapter({
-    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
-  });
+  const solanaWeb3JsAdapter = new SolanaAdapter();
 
   // 4. Create modal
   createAppKit({
     adapters: [solanaWeb3JsAdapter],
     metadata,
     networks: [solana, solanaTestnet, solanaDevnet],
-    projectId,
-    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
+    projectId
   });
 </script>
 

@@ -242,10 +242,6 @@ import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks';
 import { mainnet, arbitrum, sepolia } from "@reown/appkit/networks";
 
-import {
-  SolflareWalletAdapter,
-  PhantomWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
 
 const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet]
 
@@ -253,9 +249,7 @@ const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepoli
 export const ethersAdapter = new EthersAdapter()
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-})
+const solanaWeb3JsAdapter = new SolanaAdapter()
 
 // 2. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -291,15 +285,11 @@ import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 
-import { SolflareWalletAdapter, PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
-
 // 0. Create the Ethers adapter
 export const ethersAdapter = new EthersAdapter()
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-})
+const solanaWeb3JsAdapter = new SolanaAdapter()
 
 // 2. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'

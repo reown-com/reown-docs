@@ -21,9 +21,7 @@ In your `App.vue` file set up the following configuration
   }
 
   // 3. Create Wagmi Adapter
-  const solanaWeb3JsAdapter = new SolanaAdapter({
-    wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
-  })
+  const solanaWeb3JsAdapter = new SolanaAdapter()
 
   reconnect(solanaConfig)
 

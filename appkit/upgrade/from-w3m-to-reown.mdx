@@ -65,9 +65,7 @@ export const wagmiAdapter = new WagmiAdapter({
 });
 
 // 2. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
-});
+const solanaWeb3JsAdapter = new SolanaAdapter();
 ```
 
 Currently, AppKit supports over 300 EVM chains and Solana, with more non-EVM chains coming soon [Learn more here](https://reown.com/blog/how-to-get-started-with-reown-appkit-on-any-evm-chain).
