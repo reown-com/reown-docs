@@ -55,6 +55,7 @@ await open({
     paymentAsset: baseSepoliaETH
 });
 ```
+
 ## Assets Configuration
 
 For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
@@ -92,9 +93,16 @@ and an open function. Callbacks (onSuccess, onError) are triggered reliably.
 ### useAvailableExchanges
 Fetches and manages the state for available exchanges.
 
-`useAvailableExchanges(options?: { isFetchOnInit?: boolean, initialPage?: number }): UseAvailableExchangesReturn`
+`useAvailableExchanges(options?: { isFetchOnInit?: boolean } & GetExchangesParams): UseAvailableExchangesReturn`
     - `options`: Control initial fetch behavior.
     - `returns`: `{ data, isLoading, error, fetch }`
+
+type GetExchangesParams = {
+  page?: number
+  asset?: string
+  amount?: number | string
+  network?: CaipNetworkId
+}
 
 ### usePayUrlActions
 Provides functions (getUrl, openUrl) to interact with specific exchange URLs, returning the sessionId needed for status tracking.
