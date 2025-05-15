@@ -40,24 +40,44 @@ pnpm add @reown/appkit-pay
 ### Usage
 ```ts
 import { usePay } from '@reown/appkit-pay';
+import { baseSepoliaETH } from '@reown/appkit-pay' 
 ```
 
 In order to run the payment, we are using the function `openPay`. 
 
 ```ts
-const paymentAssetDetails = {
-  network: 'eip155:8453', // e.g., Base Mainnet
-  asset: 'native', // or '0xTokenAddress...'
-  metadata: { name: 'Ethereum', symbol: 'ETH', decimals: 18 }
-};
-
 // --- Open Modal ---
 await openPay({
-    recipient: '0xYourRecipientAddress...',
-    amount: 0.001,
-    paymentAsset: paymentAssetDetails
+    recipient: addressRecipient,
+    amount: 0.0001,
+    paymentAsset: baseSepoliaETH
 });
 ```
+
+
+## Assets Configuration
+
+For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
+
+```ts
+import { baseETH, baseSepoliaETH, baseUSDC } from '@reown/appkit-pay' 
+```
+
+For custom assets, you can create a paymentAsset object with all the information:
+
+```ts
+// Configure the paymentAsset
+const paymentAssetDetails = {
+    network: 'eip155:8453', // Base Mainnet
+    asset: 'native', // Or USDC in Base: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
+    metadata: {
+        name: 'Ethereum', // Or 'USD Coin'
+        symbol: 'ETH',    // Or 'USDC'
+        decimals: 18      // Or 6 for USDC
+    }
+};
+```
+
 ## Functions
 
 ### openPay
