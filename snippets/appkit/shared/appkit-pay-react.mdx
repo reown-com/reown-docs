@@ -8,6 +8,14 @@ Here you can find a simplified process to integrate AppKit Pay:
     Projects first need to install and set up Reown AppKit before integrating AppKit Pay. If you haven't done so, please refer to the [Reown AppKit docs](/appkit/overview#quickstart).
 </Warning>
 
+## Code Example
+
+
+<Card title="AppKit Pay Example" icon="github" href="ttps://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi-smart-session">
+Check the React example
+</Card>
+
+
 ### Install the library
 
 <Note>
@@ -97,12 +105,12 @@ Fetches and manages the state for available exchanges.
     - `options`: Control initial fetch behavior.
     - `returns`: `{ data, isLoading, error, fetch }`
 
-type GetExchangesParams = {
+`type GetExchangesParams= {
   page?: number
   asset?: string
   amount?: number | string
   network?: CaipNetworkId
-}
+}` 
 
 ### usePayUrlActions
 Provides functions (getUrl, openUrl) to interact with specific exchange URLs, returning the sessionId needed for status tracking.
