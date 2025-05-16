@@ -17,20 +17,28 @@ ValueListenableBuilder<String>(
 
 ```
 
-### - Launch the current wallet
-
-If you connected your dApp through deep linking to a Wallet app you can launch that wallet app with the following:
-
-```javascript
-_appKitModal.launchConnectedWallet();
-```
-
-### - Launch block explorer
+### Launch block explorer
 
 You can open the selected chain's block explorer easily:
 
 ```javascript
 _appKitModal.launchBlockExplorer();
+```
+
+### - Reconnect relay
+
+In most cases it shouldn't be needed as it is called internally but this method is useful to reconnect the relay when internet connection is back after inactivity.
+
+```javascript
+await _appKitModal.reconnectRelay();
+```
+
+### - Load account data such as balance and identity
+
+In most cases it shouldn't be needed as it is called internally but this method is useful to reload account data such as balance and identity. Particularly useful after a transaction.
+
+```javascript
+await _appKitModal.loadAccountData();
 ```
 
 ### - Send an RPC request
@@ -73,6 +81,16 @@ _appKitModal.getApprovedMethods();
 
 ```javascript
 _appKitModal.getApprovedEvents();
+```
+
+### - Request switch to or add chain
+
+If you add a new chain on an ongoing session you should call `requestSwitchToChain()` so the wallet can add it as well. Otherwise it will just be not usable.
+`requestAddChain()` is called automatically by `requestSwitchToChain()` in case of failing with the proper error from the wallet.
+
+```javascript
+await _appKitModal.requestSwitchToChain(ReownAppKitModalNetworkInfo newChain);
+await _appKitModal.requestAddChain(ReownAppKitModalNetworkInfo newChain);
 ```
 
 ### - Interact with Smart Contracts

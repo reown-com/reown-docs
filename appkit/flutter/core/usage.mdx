@@ -23,6 +23,7 @@ In order to initialize `ReownAppKitModal()` instance you must provide a _project
 ```javascript
 // AppKit Modal instance
 final _appKitModal = ReownAppKitModal(
+  logLevel: LogLevel.error,
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
@@ -30,12 +31,24 @@ final _appKitModal = ReownAppKitModal(
     description: 'Example app description',
     url: 'https://example.com/',
     icons: ['https://example.com/logo.png'],
-    redirect: Redirect(  // OPTIONAL
+    redirect: Redirect(
       native: 'exampleapp://',
       universal: 'https://reown.com/exampleapp',
       linkMode: true|false,
     ),
   ),
+  enableAnalytics: true,
+  siweConfig: SIWEConfig(...),
+  featuresConfig: FeaturesConfig(...),
+  getBalanceFallback: () async {},
+  disconnectOnDispose: true|false,
+  customWallets: [
+    ReownAppKitModalWalletInfo(
+      listing: AppKitModalWalletListing(
+        ...
+      ),
+    ),
+  ],
 );
 
 // Register here the event callbacks on the service you'd like to use. See `Events` section.
