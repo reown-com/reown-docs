@@ -4,7 +4,23 @@
 
 Here you can find a simplified process to integrate AppKit Pay:
 
+<Warning>
+    Projects first need to install and set up Reown AppKit before integrating AppKit Pay. If you haven't done so, please refer to the [Reown AppKit docs](/appkit/overview#quickstart).
+</Warning>
+
+## Code Example
+
+
+<Card title="AppKit Pay Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi-appkit-pay">
+Check the React example
+</Card>
+
+
 ### Install the library
+
+<Note>
+Projects currently using Reown AppKit, or planning to use it to build custom payment flows with self-custodial wallets, should use AppKit Pay for a streamlined integration and significantly improved user experience out of the box. AppKit Pay can be found in `@reown/appkit-pay` npm package.
+</Note>
 
 <CodeGroup>
 
@@ -28,6 +44,7 @@ pnpm add @reown/appkit-pay
 ### Usage
 ```ts
 import { usePay } from '@reown/appkit-pay/react';
+import { baseSepoliaETH } from '@reown/appkit-pay' 
 ```
 
 In order to run the payment, use the hook `usePay`. This hook receives two parameter to manage the success or the error in the process.
@@ -39,6 +56,25 @@ const { open, isPending, isSuccess, data, error } = usePay({
   onError: handleError,
 });
 
+// open resolves when the modal closes, but onSuccess/onError handle the actual payment result
+await open({ 
+    recipient: addressRecipient,
+    amount: 0.0001,
+    paymentAsset: baseSepoliaETH
+});
+```
+
+## Assets Configuration
+
+For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
+
+```ts
+import { baseETH, baseSepoliaETH, baseUSDC } from '@reown/appkit-pay' 
+```
+
+For custom assets, you can create a paymentAsset object with all the information:
+
+```ts
 // Configure the paymentAsset
 const paymentAssetDetails = {
     network: 'eip155:8453', // Base Mainnet
@@ -49,14 +85,8 @@ const paymentAssetDetails = {
         decimals: 18      // Or 6 for USDC
     }
 };
-
-// open resolves when the modal closes, but onSuccess/onError handle the actual payment result
-await open({ 
-    recipient: addressRecipient,
-    amount: 0.0001,
-    paymentAsset: paymentAssetDetails
-});
 ```
+
 ## Hooks
 
 ### usePay
@@ -71,9 +101,16 @@ and an open function. Callbacks (onSuccess, onError) are triggered reliably.
 ### useAvailableExchanges
 Fetches and manages the state for available exchanges.
 
-`useAvailableExchanges(options?: { isFetchOnInit?: boolean, initialPage?: number }): UseAvailableExchangesReturn`
+`useAvailableExchanges(options?: { isFetchOnInit?: boolean } & GetExchangesParams): UseAvailableExchangesReturn`
     - `options`: Control initial fetch behavior.
     - `returns`: `{ data, isLoading, error, fetch }`
+
+`type GetExchangesParams= {
+  page?: number
+  asset?: string
+  amount?: number | string
+  network?: CaipNetworkId
+}` 
 
 ### usePayUrlActions
 Provides functions (getUrl, openUrl) to interact with specific exchange URLs, returning the sessionId needed for status tracking.
