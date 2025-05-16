@@ -48,6 +48,11 @@ Chain activeChain = AppKit.NetworkController.ActiveChain;
 // Get active account in CAIP-10 format
 Account account = AppKit.GetAccountAsync();
 
+// Get account for a specific blockchain network using namespace parameter
+Account eip155Account = AppKit.GetAccountAsync("eip155"); // for EVM chains
+Account solanaAccount = AppKit.GetAccountAsync("solana");
+Account bip122Account = AppKit.GetAccountAsync("bip122"); // for bitcoin
+
 Debug.Log(account.Address); // e.g. '0x12345...'
 Debug.Log(account.ChainId); // e.g. 'eip155:1'
 Debug.Log(account.AccountId); // e.g. 'eip155:1:0x12345...'

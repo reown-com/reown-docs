@@ -109,6 +109,11 @@ Returns the current active account connected via AppKit
 
 ```kotlin
 AppKit.getAccount()
+
+// With optional namespace parameter for specific blockchain network
+AppKit.getAccount("eip155") // for EVM chains
+AppKit.getAccount("solana")
+AppKit.getAccount("bip122") // for bitcoin
 ```
 
 ### Get Connection type
