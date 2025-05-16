@@ -46,7 +46,6 @@ connectors.push(
 export const networks = [sepolia]
 
 export const wagmiAdapter = new WagmiAdapter({
-  storage: localStorage,
   transports: {
     [sepolia.id]: http()
   },
