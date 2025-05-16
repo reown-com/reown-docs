@@ -2,7 +2,7 @@
 title: Custom connectors
 ---
 
-Custom connectors, such as social logins, WalletConnect QR, Coinbasewallet, etc., can be integrated into your Modal. A simple example of how to incorporate them for Wagmi library.
+In AppKit, a 'connector' is the bridge between your app and a user's wallet. This page shows how to add custom connectors beyond the default ones, allowing your users to connect with additional wallet types and authentication methods.
 
 <Tabs>
 
@@ -46,7 +46,6 @@ connectors.push(
 export const networks = [sepolia]
 
 export const wagmiAdapter = new WagmiAdapter({
-  storage:
   transports: {
     [sepolia.id]: http()
   },
@@ -72,7 +71,7 @@ export function ContextProvider({ children }) {
 }
 ```
 
-Check our React Wagmi demo in [Github](https://github.com/reown-com/web-examples/tree/main/dapps/appkit/)
+Check our React Wagmi demo in [Github](https://github.com/reown-com/appkit-web-examples/)
 
 </Tab>
 
