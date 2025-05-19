@@ -16,6 +16,25 @@ Applications can specify that these onchain calls be executed taking advantage o
 
 The `wallet_getCapabilities` method is used to request information about what capabilities a wallet supports. Following EIP-5792, here's how it should be implemented:
 
+### wallet_getCallsStatus Example
+
+To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the Wallet Service URL in the scoped properties.
+
+When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
+
+To implement this functionality, specify the `scopedProperties` when approving a session:
+
+```json
+"scopedProperties": {
+    "eip155": {
+        "walletService": [{
+            "url": "<wallet service URL>",
+            "methods": ["wallet_getCallsStatus"]
+        }]
+    }
+}
+```
+
 ### Request
 ```json
 {
