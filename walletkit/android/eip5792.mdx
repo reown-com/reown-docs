@@ -27,6 +27,21 @@ val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService(listOf("wa
 WalletKit.approveSession(..., scopedProperties)
 ```
 
+## Usage
+
+### wallet_getCallsStatus Example
+
+To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the Wallet Service URL in the scoped properties.
+
+When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
+
+To implement this functionality, use `WalletKit.buildWalletService(methods)` util method that specifies the wallet service URL withing the supported methods:
+
+```kotlin
+val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService(listOf("wallet_getCallsStatus")))
+WalletKit.approveSession(..., scopedProperties)
+```
+
 ### wallet_getCapabilities Example
 
 The `wallet_getCapabilities` method is used to request information about the capabilities supported by a wallet. In accordance with EIP-5792, here’s how it should be implemented:
