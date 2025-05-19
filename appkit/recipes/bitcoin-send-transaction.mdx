@@ -47,7 +47,7 @@ import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
 
 ```js
 // Get the wallet provider with the AppKit hook
-const { walletProvider } = useAppKitProvider < BitcoinConnector > "bip122";
+const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
 
 // AppKit hook to get the address and check if the user is connected
 const { allAccounts, address, isConnected } = useAppKitAccount();

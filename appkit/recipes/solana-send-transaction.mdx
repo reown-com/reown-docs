@@ -117,7 +117,7 @@ import type { Provider } from "@reown/appkit-adapter-solana/react";
 
 ```js
 // Get the wallet provider with the AppKit hook
-const { walletProvider } = useAppKitProvider < Provider > "solana";
+const { walletProvider } = useAppKitProvider<Provider>("solana");
 
 // AppKit hook to get the address and check if the user is connected
 const { address, isConnected } = useAppKitAccount();
@@ -169,7 +169,7 @@ import type { Provider } from "@reown/appkit-adapter-solana/react";
 ```js
 const { isConnected, address } = useAppKitAccount();
 const { connection } = useAppKitConnection();
-const { walletProvider } = useAppKitProvider < Provider > "solana";
+const { walletProvider } = useAppKitProvider<Provider>("solana");
 ```
 
 3. Create the function to raise the modal to send the transaction
