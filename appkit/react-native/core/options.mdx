@@ -2,92 +2,175 @@
 title: Options
 ---
 
-The following options can be passed to the `createAppKit` function:
+AppKit for React Native is configured by calling the `createAppKit` function and passing a configuration object to it. This function initializes and returns the AppKit instance that you will use throughout your application, typically by providing it via the `AppKitProvider`.
 
-```ts
-createAppKit({ projectId, chains, ...options });
+```typescript
+import { createAppKit } from '@reown/appkit-react-native';
+import { EthersAdapter } from '@reown/appkit-ethers-react-native'; // Example adapter
+import { SolanaAdapter } from '@reown/appkit-solana-react-native'; // Example adapter
+// Import other adapters as needed (e.g., BitcoinAdapter)
+
+// Define your network configurations (see 'networks' option below for details)
+const ethMainnet = { id: '1', name: 'Ethereum', chainNamespace: 'eip155', caipNetworkId: 'eip155:1', /* ... */ };
+const solanaMainnet = { id: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp', name: 'Solana', chainNamespace: 'solana',  /* ... */ };
+
+export const appKit = createAppKit({
+  projectId: 'YOUR_WALLETCONNECT_PROJECT_ID',
+  metadata: { /* ... dApp metadata ... */ },
+  networks: [ethMainnet, solanaMainnet], // Define all supported networks
+  adapters: [ // Provide an array of initialized adapters
+    new EthersAdapter({ /* ... ethers adapter config, e.g., for EVM networks ... */ }),
+    new SolanaAdapter({ /* ... solana adapter config ... */ })
+  ],
+  // ... other options detailed below
+});
+
+// This appKit instance is then passed to AppKitProvider
 ```
 
-## defaultChain
+Below are the detailed configuration options you can pass to `createAppKit`:
 
-You can set a desired chain for the initial connection:
+## Core Configuration
 
-<Tabs>
+### `projectId`
+*   **Type:** `String`
+*   **Required:** Yes
+*   **Description:** Your project ID from [WalletConnect Cloud](https://cloud.walletconnect.com/). This is essential for enabling WalletConnect functionality, which AppKit uses for connecting with a wide range of wallets.
 
-<Tab title="Wagmi">
-```ts
-import { mainnet } from '@wagmi/core/chains'
+```typescript
+{
+  projectId: 'YOUR_WALLETCONNECT_PROJECT_ID'
+}
+```
 
-createAppKit({
-//...
-defaultChain: mainnet
-})
+### `metadata`
+*   **Type:** `Object`
+*   **Required:** Yes
+*   **Description:** Information about your decentralized application (dApp) that is displayed to users in wallet connection prompts and used for deep linking.
+    *   `name`: (String) The name of your dApp.
+    *   `description`: (String) A brief description of your dApp.
+    *   `url`: (String) The official URL of your dApp.
+    *   `icons`: (Array of Strings) URLs to icon images for your dApp.
+    *   `redirect`: (Object) Configuration for redirecting users back to your app after wallet interactions, especially for mobile wallets.
+        *   `native`: (String) Your app's custom URL scheme for deep linking (e.g., `'yourappscheme://'`).
+        *   `universal`: (String) Your app's universal link URL (e.g., `'https://yourdapp.com/connect'`).
 
-````
-</Tab>
-
-<Tab title="Ethers">
-```ts
-const mainnet = {
-  chainId: 1,
-  name: 'Ethereum',
-  currency: 'ETH',
-  explorerUrl: 'https://etherscan.io',
-  rpcUrl: 'https://cloudflare-eth.com',
-};
-
-createAppKit({
-  //...
-  defaultChain: mainnet
-})
-````
-
-</Tab>
-
-<Tab title="Ethers v5">
-```ts
-const mainnet = {
-  chainId: 1,
-  name: 'Ethereum',
-  currency: 'ETH',
-  explorerUrl: 'https://etherscan.io',
-  rpcUrl: 'https://cloudflare-eth.com',
-};
-
-createAppKit({
-//...
-defaultChain: mainnet
-})
-
-````
-</Tab>
-
-</Tabs>
-
-## clipboardClient
-
-Use your preferred clipboard library to allow AppKit use the clipboard to copy addresses & URIs
-
-```ts
-import * as Clipboard from 'expo-clipboard' // or `@react-native-clipboard/clipboard`
-
-createAppKit({
-  //...
-  clipboardClient: {
-    setString: async (value: string) => {
-      await Clipboard.setStringAsync(value)
+```typescript
+{
+  metadata: {
+    name: 'My Awesome dApp',
+    description: 'Connecting you to the decentralized web!',
+    url: 'https://myapp.com',
+    icons: ['https://myapp.com/logo.png'],
+    redirect: {
+      native: 'mydappscheme://',
+      universal: 'https://myapp.com/walletconnect' // Or your specific universal link path
     }
   }
-})
-````
+}
+```
 
-## customWallets
+### `networks`
+*   **Type:** `Array<AppKitNetwork>`
+*   **Required:** Yes
+*   **Description:** An array of network objects that your dApp supports. Each object must conform to the `AppKitNetwork` type, which can be imported: `import type { AppKitNetwork } from '@reown/appkit-common-react-native';`. The full definition can be found in [`packages/common/src/utils/TypeUtil.ts`](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/common/src/utils/TypeUtil.ts#L30).
+    AppKit uses the `id` (numeric or string form of chain ID), `chainNamespace` (e.g., 'eip155', 'solana', 'bitcoin'), and `caipNetworkId` (e.g., 'eip155:1', 'solana:mainnet') from these network objects to associate them with the correct adapter.
 
-Add custom wallets to the modal's main view. `customWallets` is an array of objects, where each object contains specific information of a custom wallet.
+    <Note>
+    If `chainNamespace` is not provided for a network, it will default to `'eip155'`. If `caipNetworkId` is not provided, it will be constructed as `chainNamespace:id`.
+    Ensure these fields are correctly set for proper adapter mapping, especially for non-EVM chains.
+    </Note>
 
-```ts
-createAppKit({
-  //...
+**Example Sources for Network Configurations:**
+
+1.  **Pre-exported by AppKit:** For convenience, AppKit exports configurations for some common networks.
+
+    ```typescript
+    import { solana, bitcoin } from '@reown/appkit-react-native'; // Verify exact import path and names
+
+    const configuredNetworks = [solana, bitcoin];
+    ```
+    *Example of pre-exported Solana network: [packages/appkit/src/networks/solana.ts](https://github.com/reown-com/appkit-react-native/blob/feat/multichain/packages/appkit/src/networks/solana.ts)*
+
+2.  **Using `viem/chains` or `wagmi/chains` for EVM Networks:** You can often use standard chain definitions from libraries like `viem` or `wagmi` directly, as they typically conform to a compatible structure. AppKit will default `chainNamespace` to `'eip155'` for these if not specified.
+
+    ```typescript
+    import { mainnet as viemMainnet, polygon as viemPolygon } from 'viem/chains';
+
+    const configuredNetworks = [viemMainnet, viemPolygon];
+    ```
+
+3.  **Custom Network Definitions:** You can always define network objects manually. This is necessary for non-EVM chains if not pre-exported, or for custom EVM chains.
+
+    ```typescript
+    import type { AppKitNetwork } from '@reown/appkit-common-react-native';
+
+    const myCustomSolanaDevnet: AppKitNetwork = {
+      id: 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1',
+      name: 'Solana Devnet',
+      chainNamespace: 'solana',
+      caipNetworkId: 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1',
+      nativeCurrency: { name: 'Solana', symbol: 'SOL', decimals: 9 },
+      rpcUrls: {
+        default: { http: ['https://rpc.walletconnect.org/v1'] }
+      },
+      blockExplorers: { 
+        default: { name: 'Solscan', url: 'https://solscan.io' } 
+      },
+      testnet: true
+    };
+
+    const configuredNetworks = [myCustomSolanaDevnet];
+    ```
+
+**Final Configuration Example:**
+
+```typescript
+{
+  networks: configuredNetworks // Use one of the methods above to define this array
+}
+```
+
+### `adapters`
+*   **Type:** `Array<Adapter>`
+*   **Required:** Yes
+*   **Description:** An array of initialized chain adapter instances. Each adapter is responsible for handling a specific blockchain namespace (e.g., 'eip155' for EVM chains, 'solana' for Solana). AppKit will map the networks provided in the `networks` option to the appropriate adapter based on the namespace derived from the network's `id` and the namespaces supported by each adapter.
+
+```typescript
+import { EthersAdapter } from '@reown/appkit-ethers-react-native';
+import { SolanaAdapter } from '@reown/appkit-solana-react-native';
+// import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
+
+const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defined
+
+{
+  adapters: [
+    new EthersAdapter({ projectId }),
+    new SolanaAdapter({ projectId }),
+    // new BitcoinAdapter({ projectId /* ... other bitcoin adapter config ... */ })
+  ]
+}
+```
+
+### `defaultNetwork`
+*   **Type:** `AppKitNetwork` (Optional)
+*   **Description:** The network that AppKit should attempt to connect to by default, or highlight initially if no prior session exists. This object must be one of the networks defined in your `networks` array.
+
+```typescript
+{
+  // Assuming ethereumMainnet is a valid AppKitNetwork object defined in your 'networks' array
+  defaultNetwork: ethereumMainnet
+}
+```
+
+## Modal & Wallet Display Customization
+
+### `customWallets`
+*   **Type:** `Array<WalletEntry>` (Optional)
+*   **Description:** Allows you to add custom wallet entries to the connection modal. Each object in the array defines a wallet not available through WalletConnect's default registry. Refer to `WalletEntry` type for exact properties.
+
+```typescript
+{
   customWallets: [
     {
       id: "myCustomWallet",
@@ -100,163 +183,170 @@ createAppKit({
       app_store: "app_store", // Optional
       play_store: "play_store", // Optional
     },
-  ],
-});
+  ]
+}
 ```
 
-## featuredWalletIds
+### `featuredWalletIds`
+*   **Type:** `Array<String>` (Optional)
+*   **Description:** Select wallets that are going to be shown on the modal's main view. Array of wallet IDs defined will be prioritized (order is respected). These wallets will also show up first in `All Wallets` view. You can find the wallets ids in [WalletGuide](https://walletguide.walletconnect.network/).
 
-Select wallets that are going to be shown on the modal's main view. Array of wallet IDs defined will be prioritized (order is respected).
-These wallets will also show up first in `All Wallets` view.
-You can find the wallets ids in [WalletGuide](https://walletguide.walletconnect.network/)
-
-```ts
-createAppKit({
-  //...
+```ts 
+// Within createAppKit call
+{
   featuredWalletIds: [
     "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369", // Rainbow
     "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
-  ],
-});
+  ]
+}
 ```
 
-## includeWalletIds
+### `includeWalletIds`
+*   **Type:** `Array<String>` (Optional)
+*   **Description:** If provided, only wallets whose IDs are in this array will be shown in the modal. This effectively creates an allowlist, overriding the default WalletConnect registry listings.
 
-Override default recommended wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/).
-Array of wallet ids defined will be shown (order is respected).
-Unlike `featuredWalletIds`, these wallets will be the **only** ones shown in `All Wallets` view and as recommended wallets.
-You can get these ids from the explorer link mentioned before by clicking on a copy icon of desired wallet card.
-
-```ts
-createAppKit({
-  //...
+```typescript
+{
   includeWalletIds: [
-    "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369", // Rainbow
-    "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
-  ],
-});
+    "c57ca95b47569778a828d19178114f2db125b25b778adf5cba72bd778e231769", // Example: MetaMask
+    // ... only include these wallets
+  ]
+}
 ```
 
-## excludeWalletIds
+### `excludeWalletIds`
+*   **Type:** `Array<String>` (Optional)
+*   **Description:** An array of wallet IDs to be hidden from the modal. This allows you to remove specific wallets from the default WalletConnect registry listings.
 
-Exclude wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/).
-Array of wallet ids defined will be excluded.
-All other wallets will be shown in respective places.
-You can find the wallets IDs in our [Wallets List](/cloud/wallets/wallet-list).
-
-```ts
-createAppKit({
-  //...
+```typescript
+{
   excludeWalletIds: [
-    "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
-    "fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa", // Coinbase
-  ],
-});
+    "fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa", // Example: Coinbase Wallet (if you wish to exclude it)
+  ]
+}
 ```
 
-## debug
+## Theming & UI Customization
 
-Enable or disable debug mode in your AppKit. This is useful if you want to see UI alerts when debugging. Default is `false`.
+### `themeMode`
+*   **Type:** `'light' | 'dark'` (Optional)
+*   **Description:** Sets the initial theme for the AppKit modal. Defaults to the system theme or 'light' if system theme is unavailable.
 
-```ts
-createAppKit({
-  //...
-  debug: true,
-});
+```typescript
+{
+  themeMode: 'dark'
+}
 ```
 
-## features
+### `themeVariables`
+*   **Type:** `Object` (Optional)
+*   **Description:** Allows you to customize the accent color of the AppKit modal. Refer to the Theming documentation for details.
 
-Allows you to toggle (enable or disable) additional features provided by AppKit. Features such as email and social logins, swaps, etc., can be enabled using this parameter.
+```typescript
+{
+  themeVariables: {
+    'accent': '#4E88F7'
+  }
+}
+```
 
-### swaps
+### `networkImages` (Formerly `chainImages`)
+*   **Type:** `Record<string, string>` (Optional)
+*   **Description:** An object to provide custom image URLs for network icons in the modal. Keys should be network IDs (e.g., 'eip155:1', 'solana:mainnet').
 
-Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transactions/swaps) feature is enabled by default.
+```typescript
+{
+  networkImages: {
+    'eip155:1': 'https://example.com/images/ethereum.png',
+    'solana:mainnet': 'https://example.com/images/solana.png'
+  }
+}
+```
 
-```ts
-createAppKit({
-  //...
+## Token Balance Configuration
+
+### `tokens`
+*   **Type:** `Record<string, { address: string }>` (Optional)
+*   **Description:** An object to configure specific tokens for which AppKit should display balances. The keys are CAIP-2 network IDs (e.g., 'eip155:1' for Ethereum Mainnet, 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1' for a specific Solana network instance if required by ID structure). The value for each network ID is an object containing the token's contract `address` on that network.
+
+```typescript
+{
+  tokens: {
+    'eip155:1': { // Ethereum Mainnet
+      address: '0xdAC17F958D2ee523a2206206994597C13D831ec7' // USDT on Ethereum
+    },
+    'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp': { // Solana Mainnet
+      address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v' // USDC on Solana
+    }
+    // Add other tokens for other configured networks as needed
+  }
+}
+```
+
+## Utility & Advanced Options
+
+### `clipboardClient`
+*   **Type:** `Object`
+*   **Required:** No (but functionally required for copy features)
+*   **Description:** Allows you to provide your own clipboard implementation. **If this client is not provided, all UI elements within AppKit that offer a "copy to clipboard" functionality (e.g., for addresses, QR code URIs) will be hidden.** To enable copy features, you must supply this client.
+    It requires an async `setString` method that takes a string value to be copied.
+
+```typescript
+import * as Clipboard from 'expo-clipboard'; // or from '@react-native-clipboard/clipboard'
+
+{
+  clipboardClient: {
+    setString: async (value: string) => {
+      await Clipboard.setStringAsync(value);
+      // Optionally, add user feedback e.g., a toast message
+      // console.log('Copied to clipboard!');
+    }
+  }
+}
+```
+
+### `enableAnalytics`
+*   **Type:** `boolean` (Optional)
+*   **Default:** `true`
+*   **Description:** Set to `true` to enable analytics and gather insights on user activity within your [Reown Cloud dashboard](https://cloud.reown.com).
+
+```typescript
+{
+  enableAnalytics: true
+}
+```
+
+### `debug`
+*   **Type:** `boolean` (Optional)
+*   **Default:** `false`
+*   **Description:** Set to `true` to enable debug mode. This may show additional UI alerts or console logs helpful for development and troubleshooting.
+
+```typescript
+{
+  debug: true
+}
+```
+
+## Feature Flags
+
+### `features`
+*   **Type:** `Object` (Optional)
+*   **Description:** An object to toggle additional AppKit features on or off.
+
+    *   `swaps`: (Boolean, Optional) Enable/disable the token swap feature. Default: `true` (Verify default).
+    *   `email`: (Boolean, Optional) Enable/disable email-based login/wallet functionality. Default: `true` (Verify default).
+    *   `socials`: (Array of Strings or Boolean, Optional) Configure social login options. Provide an array like `["x", "discord", "apple"]` to enable specific platforms. Set to `false` or an empty array `[]` to disable all social logins. Default: All available socials enabled (Verify default).
+    *   `emailShowWallets`: (Boolean, Optional) If `email` login is enabled, this controls whether wallet options are shown on the initial connect screen alongside email. If `false` and socials are also enabled, a button might direct to a separate screen for wallet options. Default: `true` (Verify default).
+
+```typescript
+{
   features: {
-    swaps: true,
-  },
-});
-```
-
-### email
-
-This boolean defines whether you want to enable email login. This feature is enabled by default.
-
-```ts
-createAppKit({
-  //...
-  features: {
+    swaps: false, // Disable swaps
     email: true,
-  },
-});
+    socials: ["x", "discord"], // Only enable X and Discord
+    emailShowWallets: true
+  }
+}
 ```
 
-### socials
-
-This array contains the list of social platforms that you want to enable for user authentication. The platforms supported are X, Discord and Apple. The default value of undefined displays everything. Set it to false to disable this feature. You can also pass an empty array to disable it.
-
-```ts
-createAppKit({
-  //...
-  features: {
-    socials: ["x", "discord", "apple"],
-  },
-});
-```
-
-### emailShowWallets
-
-This boolean defines whether you want to show the wallet options on the first connect screen. If this is false and socials are enabled, it will show a button that directs you to a new screen displaying the wallet options. This feature is enabled by default.
-
-```ts
-createAppKit({
-  //...
-  features: {
-    emailShowWallets: false,
-  },
-});
-```
-
-## enableAnalytics
-
-Enable analytics to get more insights on your users activity within your [Reown Cloud's dashboard](https://cloud.reown.com)
-
-```ts
-createAppKit({
-  //...
-  enableAnalytics: true,
-});
-```
-
-<Card title="Learn More" href="/cloud/analytics" />
-
-## chainImages
-
-Add or override the modal's network images.
-
-```ts
-createAppKit({
-  // ...
-  chainImages: {
-    1: "https://my.images.com/eth.png",
-  },
-});
-```
-
-## connectorImages
-
-Set or override the images of any connector.
-
-```ts
-createAppKit({
-  connectorImages: {
-    coinbaseWallet: "https://images.mydapp.com/coinbase.png",
-    walletConnect: "https://images.mydapp.com/walletconnect.png",
-    appKitAuth: "https://images.mydapp.com/auth.png",
-  },
-});
-```
+*This list may not be exhaustive. Always refer to the arguments of the `createAppKit` function and associated type definitions in the source code for the most up-to-date and complete list of options and their structures.*
