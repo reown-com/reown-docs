@@ -171,13 +171,26 @@ Allows you to toggle (enable or disable) additional features provided by AppKit.
 
 ### swaps
 
-Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transactions/swaps) feature is enabled by default.
+Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react-native/transactions/swaps) feature is enabled by default.
 
 ```ts
 createAppKit({
   //...
   features: {
     swaps: true,
+  },
+});
+```
+
+### onramp
+
+Enable or disable the On-Ramp feature in your AppKit. [On-Ramp](/appkit/react-native/transactions/onramp) feature is enabled by default.
+
+```ts
+createAppKit({
+  //...
+  features: {
+    onramp: true,
   },
 });
 ```
