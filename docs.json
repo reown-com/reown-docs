@@ -647,6 +647,13 @@
                 ]
               },
               {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/react-native/transactions/swaps",
+                  "appkit/react-native/transactions/onramp"
+                ]
+              },
+              {
                 "group": "Notifications",
                 "pages": [
                   "appkit/react-native/notifications/overview",
