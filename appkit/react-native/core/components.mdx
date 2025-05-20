@@ -2,24 +2,26 @@
 title: Components
 ---
 
-# Components
+AppKit comes with a set of pre-built UI components to help you quickly integrate wallet connection and display functionalities into your React Native application. You can import them directly from `@reown/appkit-react-native`.
 
-AppKit comes with a set of components in case you want to integrate fast.
-You can import them from `@reown/appkit-wagmi-react-native` or `@reown/appkit-ethers-react-native`
-
-### List of components available in AppKit package
 
 ### `<AppKitButton />`
+
+The `AppKitButton` is a versatile component that intelligently adapts its appearance and behavior based on the current connection status. 
+- When no wallet is connected, it functions as a "Connect Wallet" button.
+- When a wallet is connected, it functions as an "Account" button, typically displaying account information and a disconnect option.
 
 | Variable       | Description                                          | Type               |
 | -------------- | ---------------------------------------------------- | ------------------ |
 | `disabled`     | Enable or disable the button.                        | `boolean`          |
 | `balance`      | Show or hide the user's balance.                     | `'show' \| 'hide'` |
 | `size`         | Default size for the button.                         | `'md' \| 'sm'`     |
-| `label`        | The text shown in the button.                        | `string`           |
+| `label`        | The text shown in the button (primarily when disconnected). | `string`           |
 | `loadingLabel` | The text shown in the button when the modal is open. | `string`           |
 
 ### `<AccountButton />`
+
+This button is specifically designed to display when a user is connected. It typically shows account information and provides a way to disconnect or manage the connected account.
 
 | Variable   | Description                      | Type               |
 | ---------- | -------------------------------- | ------------------ |
@@ -28,6 +30,8 @@ You can import them from `@reown/appkit-wagmi-react-native` or `@reown/appkit-et
 
 ### `<ConnectButton />`
 
+This button is primarily used to initiate the connection process when no user is connected.
+
 | Variable       | Description                                          | Type           |
 | -------------- | ---------------------------------------------------- | -------------- |
 | `size`         | Default size for the button.                         | `'md' \| 'sm'` |
@@ -35,6 +39,8 @@ You can import them from `@reown/appkit-wagmi-react-native` or `@reown/appkit-et
 | `loadingLabel` | The text shown in the button when the modal is open. | `string`       |
 
 ### `<NetworkButton />`
+
+This button displays the currently active network of the connection. When pressed, it opens the network selection view within the AppKit modal, allowing users to switch networks.
 
 | Variable   | Description                   | Type      |
 | ---------- | ----------------------------- | --------- |
