@@ -639,7 +639,8 @@
                   "appkit/react-native/core/hooks",
                   "appkit/react-native/core/components",
                   "appkit/react-native/core/theming",
-                  "appkit/react-native/core/resources"
+                  "appkit/react-native/core/resources",
+                  "appkit/react-native/core/migration-multichain"
                 ]
               },
               {
