@@ -30,16 +30,16 @@ pnpm remove @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wal
 </CodeGroup>
 <CodeGroup>
 ```bash npm
-npm install @web3modal/solana
+npm install @reown/appkit @reown/appkit-adapter-solana
 ```
 ```bash Yarn
-yarn add @web3modal/solana
+yarn add @reown/appkit @reown/appkit-adapter-solana
 ```
 ```bash Bun
-bun add @web3modal/solana
+bun add @reown/appkit @reown/appkit-adapter-solana
 ```
 ```bash pnpm
-pnpm add @web3modal/solana
+pnpm add @reown/appkit @reown/appkit-adapter-solana
 ```
 </CodeGroup>
 ### c. Add imports to the top of the `App.tsx`
@@ -54,22 +54,21 @@ Remove old imports:
 
 Add the new imports:
 
-```tsx {1-2}
-+ import { createWeb3Modal, defaultSolanaConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
-+ import { solana, solanaTestnet, solanaDevnet } from '@web3modal/solana/chains'
+```tsx {1-3}
++ import { createAppKit } from '@reown/appkit/react'
++ import { SolanaAdapter } from '@reown/appkit-adapter-solana/react'
++ import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
 ```
 
 Update the code:
 
 ```tsx
-// 0. Setup chains
-const chains = [solana, solanaTestnet, solanaDevnet]
 
-//  Get projectId at https://cloud.reown.com
+// 1. Get projectId at https://cloud.reown.com
 const projectId = import.meta.env.VITE_PROJECT_ID
 if (!projectId) throw new Error('Project ID is undefined')
 
-// 2. Create solanaConfig
+// 2. Create Metadata
 const metadata = {
   name: 'Appkit Solana Example',
   description: 'Appkit Solana Example',
@@ -77,27 +76,23 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-const solanaConfig = defaultSolanaConfig({
-  metadata,
-  chains,
-  projectId,
-  auth: {
-    email: true,
-    socials: ['google', 'x', 'farcaster', 'github']
-  }
-})
+// 3. Set up Solana Adapter
+const solanaWeb3JsAdapter = new SolanaAdapter()
 
-//  Create modal
-createWeb3Modal({
+// 4. Initialize AppKit
+createAppKit({
+  projectId,
   metadata,
-  solanaConfig,
-  chains,
-  projectId
+  networks: [solana, solanaTestnet, solanaDevnet],
+  adapters: [solanaWeb3JsAdapter],
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
 })
 ```
 
 <Note>
-Email an social logins are enabled by default.
+Email and social logins are enabled by default.See our section on [configuration](/appkit/react/core/socials)
 </Note>
 
 ### d. Update the `App.tsx` component
@@ -108,13 +103,10 @@ Use the AppKit Button. It can be configure following these [guidelines](https://
 AppKit's web components are global HTML elements that don't require importing.
 </Note>
 
-```tsx {5}
+```tsx {3}
 const Content: FC = () => {
-
 -   return <WalletMultiButton />;
-
 +   return <appkit-button />
-
 };
 
 ```
@@ -128,47 +120,48 @@ VITE_PROJECT_ID=<Add_your_project_id>
 ## Step 2. Interact with the Solana network
 
 After integrating AppKit, you can interact with the Solana network using the `@solana/web3.js` library.
-You can check our [example](https://github.com/WalletConnect/web-examples/tree/main/dapps/web3modal/react-solana) on how to fully interact or read our [documentation](https://docs.walletconnect.com/appkit/react/core/installation#smart-contract-interaction) for more information.
+You can check our [example](https://github.com/reown-com/appkit-web-examples/tree/main/react/react-solana) on how to fully interact or read our [guide](https://docs.reown.com/appkit/recipes/solana-send-transaction) for more information.
 
 ### a. Add all the imports you need to interact with the Solana network:
 
 ```tsx
-import { useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/solana/react'
-import { PublicKey, Transaction, SystemProgram, Connection } from '@solana/web3.js'
+import { useAppKitConnection } from "@reown/appkit-adapter-solana/react";
+import { PublicKey, Transaction, SystemProgram } from "@solana/web3.js";
+import { useAppKitAccount, useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
 ```
 
-### b. call the hooks `useWeb3ModalAccount` and `useWeb3ModalProvider`:
+### b. call the hooks `useAppKitAccount`, `useAppKitProvider` and `useAppKitConnection`:
 
 ```tsx
-const { address } = useWeb3ModalAccount()
-const { walletProvider, connection } = useWeb3ModalProvider()
+const { isConnected, address } = useAppKitAccount();
+const { connection } = useAppKitConnection();
+const { walletProvider } = useAppKitProvider<Provider>("solana");
 ```
 
 ### c. Create a function to generate a transaction:
 
 ```tsx
 const handleSendTransaction = async () => {
-  if (!walletProvider || !address || !connection) {
-    // walletProvider, connection or address are undefined
-    return
-  }
+  const latestBlockhash = await connection.getLatestBlockhash();
 
-  // Recipient address
-  const recipientAddress = new PublicKey('DG1Bq6muEMqaW6MHzWZFfQ8MmHiwvEuQcjVefVmPoV3j')
+    // create the transaction
+    const transaction= new Transaction({
+        feePayer: wallet,
+        recentBlockhash: latestBlockhash?.blockhash,
+      }).add(
+        SystemProgram.transfer({
+          fromPubkey: wallet,
+          toPubkey: new PublicKey(address), // destination address
+          lamports: 1000,
+        })
+      );
 
-  // Create a new transaction
-  const transaction = new Transaction().add(
-    SystemProgram.transfer({
-      fromPubkey: walletProvider.publicKey,
-      toPubkey: recipientAddress,
-      lamports: 10000000 //0.01 SOL
-    })
-  )
-  transaction.feePayer = walletProvider.publicKey
+    // raise the modal
+    const signature = await walletProvider.sendTransaction(transaction, connection)
 
-  const { blockhash } = await connection.getLatestBlockhash()
-  transaction.recentBlockhash = blockhash
-  const tx = await walletProvider.sendTransaction(transaction, connection as Connection)
+    // print the Transaction Signature
+    console.log(signature);
 }
 ```
 
@@ -211,6 +204,7 @@ npm run dev
 pnpm run dev
 ```
 </CodeGroup>
+
 # Final notes
 
 - Check our [Solana AppKit React Docs](/appkit/react/core/installation?platform=solana) for more information on how to customize your project.
