@@ -581,3 +581,14 @@ You can override any of the following properties:
 - `events`: Events to subscribe to for each namespace
 - `rpcMap`: Custom RPC URLs for specific chains
 - `defaultChain`: The default chain to connect to
+
+## allowUnsupportedChain
+
+Allow users to switch to an unsupported chain. This parameter prevents the switch network dialog when a user connects to a network not listed under the `networks` attribute.
+
+```ts
+createAppKit({
+  //...
+  allowUnsupportedChain: true,
+});
+```
