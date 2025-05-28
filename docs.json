@@ -399,15 +399,20 @@
                   "appkit/next/core/hooks",
                   "appkit/next/core/options",
                   "appkit/next/core/components",
-                  "appkit/next/core/socials",
                   "appkit/next/core/smart-accounts",
                   "appkit/next/core/custom-connectors",
                   "appkit/next/core/custom-networks",
-                  "appkit/next/core/siwe",
-                  "appkit/next/core/siwx",
                   "appkit/next/core/multichain",
                   "appkit/next/core/theming",
                   "appkit/next/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/next/core/socials",
+                  "appkit/next/core/siwe",
+                  "appkit/next/core/siwx"
                 ]
               },
               {
