@@ -790,8 +790,13 @@
                   "appkit/ios/core/usage",
                   "appkit/ios/core/options",
                   "appkit/ios/core/actions",
-                  "appkit/ios/core/one-click-auth",
                   "appkit/ios/core/custom-chains"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/ios/core/one-click-auth"
                 ]
               },
               {
