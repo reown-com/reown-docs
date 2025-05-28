@@ -658,12 +658,17 @@
                   "appkit/react-native/core/options",
                   "appkit/react-native/core/hooks",
                   "appkit/react-native/core/components",
-                  "appkit/react-native/core/email",
                   "appkit/react-native/core/smart-accounts",
-                  "appkit/react-native/core/siwe",
                   "appkit/react-native/core/link-mode",
                   "appkit/react-native/core/theming",
                   "appkit/react-native/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/react-native/core/email",
+                  "appkit/react-native/core/siwe"
                 ]
               },
               {
