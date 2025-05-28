@@ -720,13 +720,18 @@
                   "appkit/flutter/core/installation",
                   "appkit/flutter/core/usage",
                   "appkit/flutter/core/options",
-                  "appkit/flutter/core/email",
-                  "appkit/flutter/core/siwe",
                   "appkit/flutter/core/link-mode",
                   "appkit/flutter/core/actions",
                   "appkit/flutter/core/events",
                   "appkit/flutter/core/theming",
                   "appkit/flutter/core/custom-chains"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/flutter/core/email",
+                  "appkit/flutter/core/siwe"
                 ]
               },
               {
