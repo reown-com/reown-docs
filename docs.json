@@ -572,15 +572,20 @@
                   "appkit/javascript/core/actions",
                   "appkit/javascript/core/options",
                   "appkit/javascript/core/components",
-                  "appkit/javascript/core/socials",
                   "appkit/javascript/core/smart-accounts",
                   "appkit/javascript/core/custom-connectors",
                   "appkit/javascript/core/custom-networks",
-                  "appkit/javascript/core/siwe",
-                  "appkit/javascript/core/siwx",
                   "appkit/javascript/core/multichain",
                   "appkit/javascript/core/theming",
                   "appkit/javascript/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/javascript/core/socials",
+                  "appkit/javascript/core/siwe",
+                  "appkit/javascript/core/siwx"
                 ]
               },
               {
