@@ -757,9 +757,14 @@
                   "appkit/android/core/usage",
                   "appkit/android/core/options",
                   "appkit/android/core/actions",
-                  "appkit/android/core/one-click-auth",
                   "appkit/android/core/components",
                   "appkit/android/core/theming"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/android/core/one-click-auth"
                 ]
               },
               {
