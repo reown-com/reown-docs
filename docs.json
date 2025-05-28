@@ -486,15 +486,20 @@
                   "appkit/vue/core/composables",
                   "appkit/vue/core/options",
                   "appkit/vue/core/components",
-                  "appkit/vue/core/socials",
                   "appkit/vue/core/smart-accounts",
                   "appkit/vue/core/custom-connectors",
                   "appkit/vue/core/custom-networks",
-                  "appkit/vue/core/siwe",
-                  "appkit/vue/core/siwx",
                   "appkit/vue/core/multichain",
                   "appkit/vue/core/theming",
                   "appkit/vue/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/vue/core/socials",
+                  "appkit/vue/core/siwe",
+                  "appkit/vue/core/siwx"
                 ]
               },
               {
