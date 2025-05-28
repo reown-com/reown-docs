@@ -312,15 +312,20 @@
                   "appkit/react/core/hooks",
                   "appkit/react/core/options",
                   "appkit/react/core/components",
-                  "appkit/react/core/socials",
                   "appkit/react/core/smart-accounts",
                   "appkit/react/core/custom-connectors",
                   "appkit/react/core/custom-networks",
-                  "appkit/react/core/siwe",
-                  "appkit/react/core/siwx",
                   "appkit/react/core/multichain",
                   "appkit/react/core/theming",
                   "appkit/react/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/react/core/socials",
+                  "appkit/react/core/siwe",
+                  "appkit/react/core/siwx"
                 ]
               },
               {
