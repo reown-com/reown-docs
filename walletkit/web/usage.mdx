@@ -57,11 +57,25 @@ When opening the wallet directly from the dApp, the `WC_URI` will be in the foll
 {YOUR_WALLET_URL}/wc?uri={WC_URI}
 ```
 
+<Note>
+To test your web wallet connection flow, use our [Appkit Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL. 
+</Note>
+
 We recommend closing the web wallet tab after the user approves the request and redirecting back to the dApp. For web requests, redirect to the original browser tab, and for mobile requests, redirect to the native mobile dApp.
 
-<Info>
+### Handling Session Requests
+
+When a dApp sends a session request to your wallet, the request will be available in the following format in the query parameters:
+
+```
+{YOUR_WALLET_URL}/wc?requestId={requestId}&sessionTopic={session.Topic}
+```
+
+This format allows your wallet to identify both the specific request and the session it belongs to.
+
+<Note>
 To test your web wallet connection flow, use our [Appkit Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL. 
-</Info>
+</Note>
 
 ### Namespace Builder
 
