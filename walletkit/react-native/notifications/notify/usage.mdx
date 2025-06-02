@@ -129,13 +129,13 @@ await notifyClient.register({
 To begin receiving notifications from a dapp, users must opt-in by subscribing. This subscription process grants permission for the dapp to send notifications to the user. These notifications can serve a variety of purposes, such as providing updates on the user's blockchain account activities or informing them about ongoing campaigns within the dapp. Upon initial subscription, clients will be automatically enrolled to receive all types of notifications as defined by the dapp at that moment. Users have the flexibility to modify their notification settings later, allowing them to tailor the types of alerts they receive according to their preferences.
 
 <Note>
-To identify dapps that can be subscribed to via Notify, we can query the following Explorer API endpoint:
+To identify dapps that can be subscribed to via Notify, we can query the following WalletGuide API endpoint:
 
 https://explorer-api.walletconnect.com/v3/dapps?projectId=YOUR_PROJECT_ID&is_notify_enabled=true
 </Note>
 
 ```javascript
-// Get the domain of the target dapp from the Explorer API response
+// Get the domain of the target dapp from the WalletGuide API response
 const appDomain = new URL(fetchedExplorerDapp.platform_browser).hostname;
 
 // Subscribe to `fetchedExplorerDapp` by passing the account to be subscribed and the domain of the target dapp.

@@ -199,17 +199,17 @@ await notifyClient.unregister({
 #### Creating a new subscription
 
 <Note>
-To identify dapps that can be subscribed to via Notify, we can query the following Explorer API endpoint:
+To identify dapps that can be subscribed to via Notify, we can query the following WalletGuide API endpoint:
 
 https://explorer-api.walletconnect.com/v3/dapps?projectId=YOUR_PROJECT_ID&is_notify_enabled=true
 
 </Note>
 
 ```javascript
-// Get the domain of the target dapp from the Explorer API response
+// Get the domain of the target dapp from the WalletGuide API response
 const appDomain = new URL(fetchedExplorerDapp.platform_browser).hostname;
 
-// Subscribe to `fetchedExplorerDapp` by passing the account to be subscribed and the domain of the target dapp.
+// Subscribe to `fetchedWalletGuideDapp` by passing the account to be subscribed and the domain of the target dapp.
 await notifyClient.subscribe({
   account,
   appDomain,
@@ -952,17 +952,17 @@ await notifyClient.register({
 #### Creating a new subscription
 
 <Note>
-To identify dapps that can be subscribed to via Notify, we can query the following Explorer API endpoint:
+To identify dapps that can be subscribed to via Notify, we can query the following WalletGuide API endpoint:
 
 https://explorer-api.walletconnect.com/v3/dapps?projectId=YOUR_PROJECT_ID&is_notify_enabled=true
 
 </Note>
 
 ```javascript
-// Get the domain of the target dapp from the Explorer API response
+// Get the domain of the target dapp from the WalletGuide API response
 const appDomain = new URL(fetchedExplorerDapp.platform_browser).hostname;
 
-// Subscribe to `fetchedExplorerDapp` by passing the account to be subscribed and the domain of the target dapp.
+// Subscribe to `fetchedWalletGuideDapp` by passing the account to be subscribed and the domain of the target dapp.
 await notifyClient.subscribe({
   account,
   appDomain,

@@ -88,16 +88,16 @@
             "group": "Cloud",
             "pages": [
               {
-                "group": "Explorer",
+                "group": "WalletGuide",
                 "pages": [
                   "cloud/explorer",
                   "cloud/explorer-submission",
                   {
-                    "group": "Explorer Chains",
+                    "group": "WalletGuide Chains",
                     "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
                   },
                   {
-                    "group": "Explorer Wallets",
+                    "group": "WalletGuide Wallets",
                     "pages": ["cloud/wallets/wallet-list"]
                   }
                 ]
