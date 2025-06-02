@@ -48,6 +48,86 @@ The wallet should return a response following EIP-5792, where capabilities are o
 }
 ```
 
+### wallet_sendCalls Implementation Requirements
+
+When implementing `wallet_sendCalls`, wallets must follow these requirements:
+
+1. **Connection Approval**:
+   - Only approve this method during the connection approval flow if your wallet can implement it correctly
+   - Define the `atomic` capability per chain/account in the CAIP-25 response
+
+2. **Request Format**:
+```json
+{
+  "id": 12345,
+  "version": "2.0",
+  "method": "wc_sessionRequest",
+  "params": {
+    "chainId": "caip-2-chain-id",
+    "request": {
+      "method": "wallet_sendCalls",
+      "params": {
+        "from": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+        "chainId": "0x01",
+        "atomicRequired": true,
+        "calls": [
+          {
+            "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+            "value": "0x9184e72a",
+            "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
+          },
+          {
+            "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+            "value": "0x182183",
+            "data": "0xfbadbaf01"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+3. **Core Implementation Requirements**:
+   - Execute calls in the exact order specified in the request
+   - Do not wait for any calls to be finalized before completing the batch
+   - If the user rejects the request, do not send any calls
+
+4. **Atomic Execution Behavior**:
+   When `atomicRequired` is `true`:
+   - Execute all calls atomically (either all succeed or none have any effect)
+   - Execute all calls contiguously (no other transactions between batch calls)
+   - If your wallet can upgrade from `ready` to `supported` atomicity, do so before executing
+
+   When `atomicRequired` is `false`:
+   - You may execute calls sequentially without atomicity guarantees
+   - You may execute atomically if your wallet supports it
+   - You may upgrade to `supported` atomicity and execute atomically
+
+### wallet_getCallsStatus Response Format
+
+The response format for `wallet_getCallsStatus` varies based on the execution method:
+
+1. **For Atomic Execution**:
+```json
+{
+  "receipts": [/* single receipt or array of receipts */],
+  "atomic": true
+}
+```
+
+2. **For Non-Atomic Execution**:
+```json
+{
+  "receipts": [/* array of receipts for all transactions */],
+  "atomic": false
+}
+```
+
+<Note>
+For non-atomic execution, include all transactions in the receipts array, even those that were included on-chain but eventually reverted.
+</Note>
+
 ## Capabilities in CAIP-25 Connection Requests
 
 CAIP-25 defines how capabilities can be expressed in wallet-to-dapp connections. These capabilities control how methods like `wallet_sendCalls` behave.
