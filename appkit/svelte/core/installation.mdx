@@ -161,6 +161,27 @@ Check the Svelte Ethers example
 
 ## Trigger the modal
 
+The recommended way to trigger the modal in Svelte is to use the `<appkit-button />` web component. After setting up AppKit in your application, you can simply use the button component anywhere in your Svelte templates:
+
+```svelte
+<script lang="ts">
+  // Import your AppKit configuration to ensure it's initialized
+  import '$lib/appkit';
+</script>
+
+<main>
+  <h1>Svelte + AppKit Integration</h1>
+  
+  <div class="card">
+    <appkit-button />
+  </div>
+</main>
+```
+
+The `<appkit-button />` is a web component that's automatically registered when AppKit is initialized. No additional imports are required.
+
+### Alternative approaches
+
 <Tabs>
 <Tab title="Wagmi">
 

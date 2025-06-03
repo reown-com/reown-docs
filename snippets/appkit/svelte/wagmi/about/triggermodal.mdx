@@ -1,4 +1,19 @@
-You can trigger the modal by calling the `open` method from AppKit instance.
+The recommended way to trigger the modal is using the `initializeAppKit` function and web components:
+
+```svelte
+<script lang="ts">
+  import { initializeAppKit } from './lib/stores/appkit';
+
+  // Initialize AppKit with your project ID
+  initializeAppKit('YOUR_PROJECT_ID');
+</script>
+
+<main>
+  <appkit-button />
+</main>
+```
+
+You can also trigger the modal programmatically by calling the `open` method from AppKit instance:
 
 ```svelte
 <!-- +page.svelte -->
@@ -13,7 +28,7 @@ You can trigger the modal by calling the `open` method from AppKit instance.
 <button on:click={openModal}>Open Modal</button>
 ```
 
-You can also select the modal's view when calling the `open` function.
+You can select the modal's view when calling the `open` function:
 
 ```svelte
 <script>
