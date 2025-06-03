@@ -30,6 +30,10 @@ Applications can specify that these onchain calls be executed taking advantage o
     #### Response
     The wallet should return a response following EIP-5792, where capabilities are organized by chain ID:
 
+    <Note>
+    For non-atomic execution, include all transactions in the receipts array, even those that were included on-chain but eventually reverted.
+    </Note>
+
     ```json
     {
       "id": 1,
@@ -138,10 +142,6 @@ Applications can specify that these onchain calls be executed taking advantage o
       "atomic": false
     }
     ```
-
-    <Note>
-    For non-atomic execution, include all transactions in the receipts array, even those that were included on-chain but eventually reverted.
-    </Note>
   </Accordion>
 </AccordionGroup>
 
