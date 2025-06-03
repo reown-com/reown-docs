@@ -678,50 +678,10 @@
                 ]
               },
               {
-                "group": "Early Access",
-                "pages": [
-                  "appkit/svelte/early-access/smart-session"
-                ]
-              },
-              {
-                "group": "Payments",
-                "pages": [
-                  "appkit/svelte/payments/pay-with-exchange"
-                ]
-              },
-              {
                 "group": "Transactions",
                 "pages": [
                   "appkit/svelte/transactions/onramp",
-                  "appkit/svelte/transactions/swaps",
-                  "appkit/svelte/transactions/sponsored-transactions"
-                ]
-              },
-              {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/svelte/notifications/overview",
-                  "appkit/svelte/notifications/cloud-setup",
-                  "appkit/svelte/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/svelte/notifications/frontend-integration/usage",
-                      "appkit/svelte/notifications/frontend-integration/api",
-                      "appkit/svelte/notifications/frontend-integration/examples",
-                      "appkit/svelte/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/svelte/notifications/backend-integration",
-                  "appkit/svelte/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/svelte/notifications/authorization-signatures/overview",
-                      "appkit/svelte/notifications/authorization-signatures/this-app",
-                      "appkit/svelte/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
+                  "appkit/svelte/transactions/swaps"
                 ]
               },
               {
