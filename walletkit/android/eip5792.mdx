@@ -117,10 +117,11 @@ Applications can specify that these onchain calls be executed taking advantage o
 
     When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
 
-    To implement this functionality, use `WalletKit.buildWalletService(methods)` util method that specifies the wallet service URL withing the supported methods:
+    To implement this functionality, use `WalletKit.buildWalletService(bundlerUrl, methods)` util method that specifies the wallet service URL and bundler URL for the supported methods:
 
     ```kotlin
     val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService(listOf("wallet_getCallsStatus")))
+    val scopedProperties = mapOf("eip155" to "$walletServiceUtils")
     WalletKit.approveSession(..., scopedProperties)
     ```
 
@@ -194,7 +195,7 @@ For chain-specific capabilities, dapps use `scopedProperties`:
 
 ### Wallet Response
 
-The wallet’s response should specify the capabilities it supports, in accordance with EIP-5792 and CAIP-25:
+The wallet's response should specify the capabilities it supports, in accordance with EIP-5792 and CAIP-25:
 
 ```json
 "sessionProperties": {
