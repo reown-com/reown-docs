@@ -147,13 +147,19 @@ createAppKit({
 <Tabs>
 <Tab title="Wagmi">
 
-Set or override the images of any [connector](https://wagmi.sh/core/connectors/injected). The key of each property must match the id of the connector.
+Set or override the images of any [connector](https://wagmi.sh/core/connectors/injected). AppKit supports two types of connector identification:
+- **EIP6963 wallets** (announced wallets): Use RDNS format like `'io.metamask'`, `'io.coinbase'`, `'app.phantom'`
+- **Other wallets**: Use normal connector IDs like `walletConnect`, `injected`, `appKitAuth`
 
 ```ts
 createAppKit({
   connectorImages: {
+    // EIP6963 wallets (announced wallets use RDNS)
     'io.coinbase': "https://images.mydapp.com/coinbase.png",
     'io.metamask': "https://images.mydapp.com/metamask.png",
+    // Other wallets (use normal connector IDs)
+    walletConnect: "https://images.mydapp.com/walletconnect.png",
+    injected: "https://images.mydapp.com/browser-wallet.png",
   },
 });
 ```
@@ -166,7 +172,9 @@ Set or override the images of any connector.
 ```ts
 createAppKit({
   connectorImages: {
+    // EIP6963 wallets (announced wallets use RDNS)
     'io.coinbase': "https://images.mydapp.com/coinbase.png",
+    // Other wallets (use normal connector IDs)
     walletConnect: "https://images.mydapp.com/walletconnect.png",
   },
 });
@@ -180,8 +188,10 @@ Set or override the images of any connector.
 ```ts
 createAppKit({
   connectorImages: {
+    // EIP6963 wallets (announced wallets use RDNS)
     'io.coinbase': "https://images.mydapp.com/coinbase.png",
     'app.phantom': "https://images.mydapp.com/phantom.png",
+    // Other wallets (use normal connector IDs)
     walletConnect: "https://images.mydapp.com/walletconnect.png",
   },
 });
