@@ -59,7 +59,7 @@ export const walletInfo = writable({})
 <script lang="ts">
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
-  import { modal } from '$lib/appkit'
+  import { modal } from '@reown/appkit'
   import { accountState, networkState, appKitState, themeState, events, walletInfo } from '$lib/store'
 
   $: if (browser) {

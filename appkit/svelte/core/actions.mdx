@@ -11,7 +11,7 @@ Actions are functions that will help you control the modal, subscribe to wallet 
 ## Open and close the modal
 
 ```ts
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 modal?.open();
 
@@ -62,7 +62,7 @@ List of views you can select
 ## Disconnect
 
 ```ts
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 modal?.adapter?.connectionControllerClient?.disconnect();
 ```
@@ -73,7 +73,7 @@ Metadata information from the connected wallet
 
 ```ts
 import { onMount } from 'svelte'
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 onMount(() => {
   if (!modal) return
@@ -110,7 +110,7 @@ onMount(() => {
 Get the current value of the modal's state
 
 ```ts
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 const { open, selectedNetworkId } = modal?.getState();
 ```
@@ -126,7 +126,7 @@ You can also subscribe to the modal's state changes.
 
 ```ts
 import { onMount } from 'svelte'
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 onMount(() => {
   if (!modal) return
@@ -140,7 +140,7 @@ onMount(() => {
 Set the `themeMode` after creating the modal
 
 ```ts
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 modal?.setThemeMode("dark");
 ```
@@ -148,7 +148,7 @@ modal?.setThemeMode("dark");
 Get the current `themeMode` value by calling the `getThemeMode` function
 
 ```ts
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 const themeMode = modal?.getThemeMode();
 ```
@@ -227,7 +227,7 @@ Change the string parameter `name` from `appKitWalletButton.connect(name)` in or
 Set the `themeVariables` after creating the modal
 
 ```ts
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 modal?.setThemeVariables({ ... })
 ```
@@ -235,7 +235,7 @@ modal?.setThemeVariables({ ... })
 Get the current `themeVariables` value by calling the `getThemeVariables` function
 
 ```ts
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 const themeMode = modal?.getThemeVariables();
 ```
@@ -244,7 +244,7 @@ const themeMode = modal?.getThemeVariables();
 
 ```ts
 import { onMount } from 'svelte'
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 onMount(() => {
   if (!modal) return
@@ -258,7 +258,7 @@ onMount(() => {
 ## Track modal events
 
 ```ts
-import { modal } from '$lib/appkit'
+import { modal } from '@reown/appkit'
 
 modal?.getEvent(); // get last event
 modal?.subscribeEvents((event) => console.log(event)); // subscribe to events
