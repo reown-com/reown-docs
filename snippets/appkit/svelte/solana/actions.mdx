@@ -1,7 +1,7 @@
 ### getAddress
 
 ```ts
-import { modal } from '@reown/appkit'
+import { modal } from '$lib/appkit'
 
 const address = modal?.getAddress()
 ```
@@ -9,7 +9,7 @@ const address = modal?.getAddress()
 ### getError
 
 ```ts
-import { modal } from '@reown/appkit'
+import { modal } from '$lib/appkit'
 
 const error = modal?.getError()
 ```
@@ -17,7 +17,7 @@ const error = modal?.getError()
 ### getChainId
 
 ```ts
-import { modal } from '@reown/appkit'
+import { modal } from '$lib/appkit'
 
 const chainId = modal?.getChainId()
 ```
@@ -25,7 +25,7 @@ const chainId = modal?.getChainId()
 ### getIsConnected
 
 ```ts
-import { modal } from '@reown/appkit'
+import { modal } from '$lib/appkit'
 
 const isConnected = modal?.getIsConnected()
 ```
@@ -33,7 +33,7 @@ const isConnected = modal?.getIsConnected()
 ### getWalletProvider
 
 ```ts
-import { modal } from '@reown/appkit'
+import { modal } from '$lib/appkit'
 
 const walletProvider = modal?.getWalletProvider()
 ```
@@ -41,7 +41,7 @@ const walletProvider = modal?.getWalletProvider()
 ### getWalletProviderType
 
 ```ts
-import { modal } from '@reown/appkit'
+import { modal } from '$lib/appkit'
 
 const walletProviderType = modal?.getWalletProviderType()
 ```
@@ -50,7 +50,7 @@ const walletProviderType = modal?.getWalletProviderType()
 
 ```ts
 import { onMount } from 'svelte'
-import { modal } from '@reown/appkit'
+import { modal } from '$lib/appkit'
 
 onMount(() => {
   if (!modal) return
