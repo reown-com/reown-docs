@@ -254,7 +254,9 @@ Set or override the images of any connector.
 ```ts
 createAppKit({
   connectorImages: {
-    coinbaseWallet: "https://images.mydapp.com/coinbase.png",
+    // EIP6963 wallets (announced wallets use RDNS)
+    'io.coinbase': "https://images.mydapp.com/coinbase.png",
+    // Other wallets (use normal connector IDs)
     walletConnect: "https://images.mydapp.com/walletconnect.png",
     appKitAuth: "https://images.mydapp.com/auth.png",
   },
