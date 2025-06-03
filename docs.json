@@ -650,6 +650,41 @@
             ]
           },
           {
+            "dropdown": "Svelte",
+            "icon": "code",
+            "description": "AppKit on Svelte",
+            "pages": [
+              {
+                "group": "Fundamentals",
+                "pages": [
+                  "appkit/svelte/core/installation",
+                  "appkit/svelte/core/actions",
+                  "appkit/svelte/core/options",
+                  "appkit/svelte/core/components",
+                  "appkit/svelte/core/smart-accounts",
+                  "appkit/svelte/core/custom-connectors",
+                  "appkit/svelte/core/custom-networks",
+                  "appkit/svelte/core/multichain",
+                  "appkit/svelte/core/theming",
+                  "appkit/svelte/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/svelte/core/socials"
+                ]
+              },
+              {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/svelte/transactions/onramp",
+                  "appkit/svelte/transactions/swaps"
+                ]
+              }
+            ]
+          },
+          {
             "dropdown": "React Native",
             "icon": "mobile-screen-button",
             "description": "AppKit on React Native",
