@@ -2,6 +2,37 @@
 title: Relay
 ---
 
-import CloudRelay from "/snippets/appkit/shared/cloud/relay.mdx";
+# Relay
 
-<CloudRelay />
+Reown Relay provides secure WebSocket connections for wallet communication.
+
+## Overview
+
+The Relay service enables real-time communication between dApps and wallets through encrypted WebSocket connections.
+
+## Configuration
+
+Relay is automatically configured when you initialize AppKit:
+
+```ts
+import { createAppKit } from '@reown/appkit'
+
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId, // Relay is automatically enabled with your project ID
+  features: {
+    analytics: true
+  }
+})
+```
+
+## Features
+
+- **Secure Communication**: End-to-end encrypted messaging
+- **Real-time Updates**: Instant wallet state synchronization
+- **Cross-platform**: Works across web, mobile, and desktop
+- **Reliable**: Built-in reconnection and error handling
+
+Relay ensures secure and reliable communication between your dApp and connected wallets.

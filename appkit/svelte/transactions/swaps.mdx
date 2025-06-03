@@ -2,6 +2,43 @@
 title: Swaps
 ---
 
-import Swaps from "/snippets/appkit/shared/transactions/swaps.mdx";
+# Swaps
 
-<Swaps />
+AppKit provides built-in swap functionality through integrated DEX aggregators.
+
+## Overview
+
+The swap feature allows users to exchange tokens directly within your application without leaving the wallet interface.
+
+## Implementation
+
+```svelte
+<script>
+  import { onMount } from 'svelte'
+  import { modal } from '$lib/appkit'
+
+  const openSwaps = () => {
+    modal.open({ view: 'Swap' })
+  }
+</script>
+
+<button on:click={openSwaps}>
+  Open Swaps
+</button>
+```
+
+## Configuration
+
+Enable swaps in your AppKit configuration:
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    swaps: true
+  }
+})
+```

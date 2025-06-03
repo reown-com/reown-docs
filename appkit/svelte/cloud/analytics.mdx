@@ -2,6 +2,34 @@
 title: Analytics
 ---
 
-import CloudAnalytics from "/snippets/appkit/shared/cloud/analytics.mdx";
+# Analytics
 
-<CloudAnalytics />
+Monitor your AppKit integration with comprehensive analytics through Reown Cloud.
+
+## Overview
+
+Analytics provide insights into:
+- User connection patterns
+- Transaction volumes
+- Network usage
+- Error rates
+
+## Configuration
+
+Enable analytics in your AppKit configuration:
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: true
+  }
+})
+```
+
+## Dashboard
+
+View analytics data in your [Reown Cloud Dashboard](https://cloud.reown.com).
