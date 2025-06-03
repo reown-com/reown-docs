@@ -2,6 +2,29 @@
 title: Onramp
 ---
 
-import Onramp from "/snippets/appkit/shared/transactions/onramp.mdx";
+# Onramp
 
-<Onramp />
+AppKit provides built-in onramp functionality to allow users to purchase cryptocurrency directly within your application.
+
+## Configuration
+
+Enable onramp in your AppKit configuration:
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    onramp: true
+  }
+})
+```
+
+## Usage
+
+Users can access onramp functionality through the AppKit modal interface to purchase cryptocurrency using fiat payment methods.

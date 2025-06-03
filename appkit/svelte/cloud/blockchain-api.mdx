@@ -2,6 +2,58 @@
 title: Blockchain API
 ---
 
-import CloudBlockchainApi from "/snippets/appkit/shared/cloud/blockchain-api.mdx";
+Access blockchain data and interact with networks through Reown's Blockchain API.
 
-<CloudBlockchainApi />
+## Overview
+
+The Blockchain API provides comprehensive access to blockchain data, including:
+
+- **Account Information**: Get wallet balances, transaction history, and account details
+- **Network Data**: Access block information, gas prices, and network statistics  
+- **Transaction Operations**: Send transactions, estimate gas, and track confirmations
+- **Token Information**: Query token metadata, prices, and contract details
+
+## Configuration
+
+Configure the Blockchain API in your AppKit setup:
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+const wagmiAdapter = new WagmiAdapter({
+  networks: [mainnet, arbitrum],
+  projectId
+})
+
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+    onramp: true
+  }
+})
+```
+
+## Usage
+
+Access blockchain data through the modal instance:
+
+```ts
+// Get account balance
+const balance = await modal.getBalance()
+
+// Get transaction history
+const transactions = await modal.getTransactions()
+
+// Send transaction
+const txHash = await modal.sendTransaction({
+  to: '0x...',
+  value: '0.1'
+})
+```
+
+The Blockchain API provides reliable access to blockchain data for your Svelte application.

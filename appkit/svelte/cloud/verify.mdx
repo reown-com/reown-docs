@@ -2,6 +2,41 @@
 title: Verify
 ---
 
-import CloudVerify from "/snippets/appkit/shared/cloud/verify.mdx";
+# Verify
 
-<CloudVerify />
+Reown Verify provides secure verification services for your AppKit integration.
+
+## Overview
+
+Verify helps ensure the authenticity and security of wallet connections and transactions in your Svelte application.
+
+## Configuration
+
+Configure Verify in your AppKit setup:
+
+```ts
+// lib/appkit.ts
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+const wagmiAdapter = new WagmiAdapter({
+  networks: [mainnet, arbitrum],
+  projectId
+})
+
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    verify: true // Enable verification
+  }
+})
+
+export { modal }
+```
+
+## Usage
+
+Verify automatically validates wallet connections and provides security indicators in the AppKit interface.

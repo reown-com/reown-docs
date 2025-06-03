@@ -3,6 +3,77 @@ title: SIWE
 pagination_next: appkit/svelte/core/siwx
 ---
 
-import SiweIndex from "/snippets/appkit/shared/siwe/index.mdx";
+# Sign-In with Ethereum (SIWE)
 
-<SiweIndex />
+SIWE enables users to authenticate with your dApp using their Ethereum wallet, providing a secure and decentralized authentication method.
+
+## Implementation
+
+```svelte
+<script>
+  import { onMount } from 'svelte'
+  import { modal } from '$lib/appkit'
+  
+  let isAuthenticated = false
+  let userAddress = ''
+  
+  onMount(() => {
+    // Check if user is already authenticated
+    modal.subscribeAccount((account) => {
+      isAuthenticated = account.isConnected
+      userAddress = account.address || ''
+    })
+  })
+  
+  const signIn = async () => {
+    try {
+      await modal.siweAuthenticate()
+      console.log('SIWE authentication successful')
+    } catch (error) {
+      console.error('SIWE authentication failed:', error)
+    }
+  }
+  
+  const signOut = async () => {
+    try {
+      await modal.siweSignOut()
+      console.log('SIWE sign out successful')
+    } catch (error) {
+      console.error('SIWE sign out failed:', error)
+    }
+  }
+</script>
+
+{#if isAuthenticated}
+  <div>
+    <p>Authenticated as: {userAddress}</p>
+    <button on:click={signOut}>Sign Out</button>
+  </div>
+{:else}
+  <button on:click={signIn}>Sign In with Ethereum</button>
+{/if}
+```
+
+## Configuration
+
+Configure SIWE in your AppKit setup:
+
+```ts
+// lib/appkit.ts
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  siweConfig: {
+    enabled: true,
+    nonceRefetchIntervalMs: 300000,
+    sessionRefetchIntervalMs: 300000,
+    signOutOnDisconnect: true,
+    signOutOnAccountChange: true
+  }
+})
+```
