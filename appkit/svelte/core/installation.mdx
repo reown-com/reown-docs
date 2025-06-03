@@ -182,6 +182,38 @@ The `<appkit-button />` is a web component that's automatically registered when 
 
 ### Alternative approaches
 
+You can also trigger the modal programmatically using the AppKit instance:
+
+```svelte
+<script lang="ts">
+  import { appKit } from '$lib/appkit';
+
+  function openModal() {
+    appKit?.open();
+  }
+
+  function openConnectModal() {
+    appKit?.open({ view: 'Connect' });
+  }
+
+  function openAccountModal() {
+    appKit?.open({ view: 'Account' });
+  }
+</script>
+
+<button on:click={openModal}>Open Modal</button>
+<button on:click={openConnectModal}>Connect Wallet</button>
+<button on:click={openAccountModal}>View Account</button>
+```
+
+Or use other AppKit web components:
+
+```svelte
+<appkit-connect-button />
+<appkit-account-button />
+<appkit-network-button />
+```
+
 <Tabs>
 <Tab title="Wagmi">
 
