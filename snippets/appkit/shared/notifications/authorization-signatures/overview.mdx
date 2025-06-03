@@ -1,0 +1,45 @@
+Authorization signatures provide secure authentication for notification services.
+
+## Overview
+
+Authorization signatures ensure that notification requests are authentic and authorized by the wallet owner.
+
+## How It Works
+
+1. **Signature Request**: User signs a message to authorize notifications
+2. **Verification**: Backend verifies the signature authenticity
+3. **Token Generation**: Secure token is generated for notification access
+4. **Service Access**: Token is used to send/receive notifications
+
+## Implementation
+
+```ts
+// Request authorization signature
+const requestNotificationAuth = async () => {
+  const message = `Authorize notifications for ${dappName}\nTimestamp: ${Date.now()}`
+  
+  const signature = await modal.signMessage(message)
+  
+  // Send to backend for verification
+  const response = await fetch('/api/auth/notifications', {
+    method: 'POST',
+    body: JSON.stringify({
+      message,
+      signature,
+      address: modal.getAddress()
+    })
+  })
+  
+  const { token } = await response.json()
+  return token
+}
+```
+
+## Security Benefits
+
+- **Wallet Ownership**: Proves user owns the wallet
+- **Message Integrity**: Prevents message tampering
+- **Time-bound**: Signatures can include timestamps
+- **Revocable**: Authorization can be revoked
+
+Authorization signatures provide a secure foundation for notification services while maintaining user control.

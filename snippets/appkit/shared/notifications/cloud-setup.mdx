@@ -1,0 +1,37 @@
+Set up cloud-based notifications through Reown Cloud for enhanced delivery and management.
+
+## Cloud Configuration
+
+1. Visit [Reown Cloud](https://cloud.reown.com)
+2. Navigate to your project settings
+3. Enable the Notifications service
+4. Configure delivery channels (email, push, webhook)
+
+## AppKit Integration
+
+Enable cloud notifications in your AppKit configuration:
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+    notifications: {
+      enabled: true,
+      cloud: true // Enable cloud delivery
+    }
+  }
+})
+```
+
+## Delivery Channels
+
+- **Email**: Send notifications to user email addresses
+- **Push**: Mobile and browser push notifications
+- **Webhook**: Server-to-server notification delivery
+- **In-App**: Real-time in-application notifications
+
+Cloud notifications provide reliable delivery and advanced management features for your dApp's notification system.

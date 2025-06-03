@@ -1,0 +1,35 @@
+Sponsored transactions allow dApps to pay gas fees on behalf of users, improving user experience.
+
+## Configuration
+
+Enable sponsored transactions in your AppKit configuration:
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+    sponsoredTransactions: true // Enable sponsored transactions
+  }
+})
+```
+
+## Benefits
+
+Sponsored transactions provide:
+
+- **Gasless Transactions**: Users don't need ETH for gas
+- **Onboarding**: Easier user onboarding without gas requirements
+- **Improved UX**: Seamless transaction experience
+- **Cost Control**: Predictable gas costs for dApps
+
+## Implementation
+
+Sponsored transactions are automatically handled when enabled. Configure sponsorship rules and limits through [Reown Cloud](https://cloud.reown.com).
+
+## Monitoring
+
+Track sponsorship usage and costs through your Reown Cloud dashboard to maintain control over gas expenditure.

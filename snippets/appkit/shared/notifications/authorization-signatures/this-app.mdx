@@ -1,0 +1,60 @@
+Configure authorization signatures for notifications within your specific application.
+
+## App-Specific Authorization
+
+Set up notification authorization for your dApp:
+
+```ts
+// Configure app-specific notification auth
+const setupNotificationAuth = async () => {
+  const appMessage = `${metadata.name} requests permission to send notifications\n` +
+                    `Domain: ${metadata.url}\n` +
+                    `Timestamp: ${Date.now()}`
+  
+  try {
+    const signature = await modal.signMessage(appMessage)
+    
+    // Store authorization locally
+    localStorage.setItem('notificationAuth', JSON.stringify({
+      signature,
+      message: appMessage,
+      timestamp: Date.now(),
+      address: modal.getAddress()
+    }))
+    
+    // Enable notifications for this app
+    modal.enableNotifications({
+      appSpecific: true,
+      signature,
+      message: appMessage
+    })
+    
+  } catch (error) {
+    console.error('Notification authorization failed:', error)
+  }
+}
+```
+
+## Verification Process
+
+Verify the authorization on your backend:
+
+```ts
+// Backend verification
+app.post('/api/notifications/authorize', async (req, res) => {
+  const { signature, message, address } = req.body
+  
+  // Verify signature
+  const isValid = await verifySignature(signature, message, address)
+  
+  if (isValid) {
+    // Generate app-specific notification token
+    const token = generateNotificationToken(address, metadata.name)
+    res.json({ token, authorized: true })
+  } else {
+    res.status(401).json({ error: 'Invalid signature' })
+  }
+})
+```
+
+App-specific authorization ensures notifications are only sent with explicit user consent for your application.

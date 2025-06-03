@@ -1,0 +1,74 @@
+How to use AppKit Notifications in your frontend application.
+
+## Basic Setup
+
+Initialize notifications in your application:
+
+```ts
+import { onMount } from 'svelte'
+
+onMount(() => {
+  // Subscribe to notification events
+  const unsubscribe = modal.subscribeNotifications((notifications) => {
+    // Update UI with new notifications
+    updateNotificationUI(notifications)
+  })
+  
+  return unsubscribe
+})
+```
+
+## Notification Display
+
+Create a notification component:
+
+```svelte
+<!-- NotificationList.svelte -->
+<script>
+  import { onMount } from 'svelte'
+  
+  let notifications = []
+  
+  onMount(() => {
+    const unsubscribe = modal.subscribeNotifications((newNotifications) => {
+      notifications = newNotifications
+    })
+    
+    return unsubscribe
+  })
+  
+  const markAsRead = (id) => {
+    modal.markNotificationAsRead(id)
+  }
+</script>
+
+<div class="notifications">
+  {#each notifications as notification}
+    <div class="notification" class:unread={!notification.read}>
+      <h4>{notification.title}</h4>
+      <p>{notification.message}</p>
+      <button on:click={() => markAsRead(notification.id)}>
+        Mark as Read
+      </button>
+    </div>
+  {/each}
+</div>
+```
+
+## Notification Permissions
+
+Request notification permissions:
+
+```ts
+// Request browser notification permissions
+const requestPermissions = async () => {
+  if ('Notification' in window) {
+    const permission = await Notification.requestPermission()
+    if (permission === 'granted') {
+      modal.enableBrowserNotifications()
+    }
+  }
+}
+```
+
+This usage guide helps you integrate notifications seamlessly into your application's user interface.

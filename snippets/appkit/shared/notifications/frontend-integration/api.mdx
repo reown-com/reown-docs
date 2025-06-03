@@ -1,0 +1,65 @@
+Frontend API for managing AppKit Notifications.
+
+## Notification API
+
+Access notification functionality through the AppKit modal:
+
+```ts
+// Subscribe to notifications
+modal.subscribeNotifications((notifications) => {
+  console.log('New notifications:', notifications)
+})
+
+// Get current notifications
+const notifications = modal.getNotifications()
+
+// Mark notification as read
+modal.markNotificationAsRead(notificationId)
+
+// Clear all notifications
+modal.clearNotifications()
+```
+
+## Notification Object
+
+```ts
+interface Notification {
+  id: string
+  type: 'transaction' | 'connection' | 'network' | 'custom'
+  title: string
+  message: string
+  timestamp: number
+  read: boolean
+  data?: any
+}
+```
+
+## Event Handlers
+
+```ts
+// Listen for new notifications
+modal.on('notification', (notification) => {
+  console.log('New notification:', notification)
+})
+
+// Listen for notification interactions
+modal.on('notificationClick', (notification) => {
+  console.log('Notification clicked:', notification)
+})
+```
+
+## Custom Notifications
+
+Send custom notifications through your dApp:
+
+```ts
+// Send custom notification
+modal.notify({
+  type: 'custom',
+  title: 'Custom Alert',
+  message: 'This is a custom notification',
+  data: { customField: 'value' }
+})
+```
+
+The frontend API provides complete control over notification display and interaction within your application.

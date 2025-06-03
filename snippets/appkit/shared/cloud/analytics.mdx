@@ -1,0 +1,15 @@
+Analytics are enabled by default. You can disable them by setting the `analytics` feature to `false` in your AppKit configuration.
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: false // Optional - defaults to true
+  }
+})
+```
+
+Analytics help us understand how users interact with AppKit and improve the user experience. No personal data is collected.

@@ -1,0 +1,76 @@
+Practical examples of AppKit Notifications in frontend applications.
+
+## Transaction Notifications
+
+```ts
+// Monitor transaction status
+const sendTransaction = async () => {
+  try {
+    const tx = await modal.sendTransaction({
+      to: '0x...',
+      value: '0.1'
+    })
+    
+    // Show pending notification
+    modal.notify({
+      type: 'transaction',
+      title: 'Transaction Pending',
+      message: `Transaction ${tx.hash} is being processed`
+    })
+    
+    // Wait for confirmation
+    const receipt = await tx.wait()
+    
+    // Show success notification
+    modal.notify({
+      type: 'transaction',
+      title: 'Transaction Confirmed',
+      message: `Transaction completed successfully!`
+    })
+    
+  } catch (error) {
+    // Show error notification
+    modal.notify({
+      type: 'error',
+      title: 'Transaction Failed',
+      message: error.message
+    })
+  }
+}
+```
+
+## Connection Status
+
+```ts
+// Monitor wallet connection
+modal.subscribeAccount((account) => {
+  if (account.isConnected) {
+    modal.notify({
+      type: 'connection',
+      title: 'Wallet Connected',
+      message: `Connected to ${account.address}`
+    })
+  } else {
+    modal.notify({
+      type: 'connection',
+      title: 'Wallet Disconnected',
+      message: 'Please reconnect your wallet'
+    })
+  }
+})
+```
+
+## Network Changes
+
+```ts
+// Monitor network changes
+modal.subscribeNetwork((network) => {
+  modal.notify({
+    type: 'network',
+    title: 'Network Changed',
+    message: `Switched to ${network.name}`
+  })
+})
+```
+
+These examples demonstrate common notification patterns for wallet interactions and dApp events.

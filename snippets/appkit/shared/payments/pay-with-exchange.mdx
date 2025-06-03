@@ -1,0 +1,56 @@
+Pay with Exchange allows users to make payments using cryptocurrency from exchange accounts.
+
+## Configuration
+
+Enable exchange payments in your AppKit configuration:
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+    exchangePayments: true // Enable exchange payments
+  }
+})
+```
+
+## Supported Exchanges
+
+Integrated exchange partners:
+
+- **Coinbase**: Direct Coinbase account payments
+- **Binance**: Binance account integration
+- **Kraken**: Kraken exchange payments
+- **Gemini**: Gemini account support
+
+## Payment Flow
+
+Initiate exchange payments:
+
+```ts
+// Open exchange payment modal
+modal.open({
+  view: 'ExchangePayment',
+  arguments: {
+    amount: '100.00',
+    currency: 'USDC',
+    recipient: '0x...',
+    description: 'Payment for services'
+  }
+})
+```
+
+## Benefits
+
+Exchange payments provide:
+
+- **No Gas Fees**: Payments processed off-chain
+- **Instant Settlement**: Immediate payment confirmation
+- **Fiat Integration**: Direct fiat-to-crypto conversion
+- **Compliance**: Built-in AML/KYC compliance
+- **Global Reach**: Support for international payments
+
+Exchange payments enable seamless cryptocurrency payments without requiring users to manage private keys or gas fees.
