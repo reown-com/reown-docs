@@ -1,0 +1,38 @@
+```ts
+// lib/appkit.ts
+import { browser } from '$app/environment'
+import { createAppKit } from '@reown/appkit'
+import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
+import { bitcoin, bitcoinTestnet } from '@reown/appkit/networks'
+
+let modal: ReturnType<typeof createAppKit> | undefined = undefined
+
+if (browser) {
+  const projectId = import.meta.env.VITE_PROJECT_ID
+  if (!projectId) {
+    throw new Error('VITE_PROJECT_ID is not set')
+  }
+
+  const bitcoinAdapter = new BitcoinAdapter()
+
+  const metadata = {
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://reown.com/appkit',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+  }
+
+  modal = createAppKit({
+    adapters: [bitcoinAdapter],
+    networks: [bitcoin, bitcoinTestnet],
+    defaultNetwork: bitcoin,
+    projectId,
+    metadata,
+    features: {
+      analytics: true
+    }
+  })
+}
+
+export { modal }
+```

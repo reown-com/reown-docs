@@ -1,0 +1,32 @@
+---
+title: Custom Connectors
+---
+
+By default, [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and WC connectors are provided out of the box.
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
+import { arbitrum } from '@reown/appkit/networks'
+import { abstractWalletConnector } from "@abstract-foundation/agw-react/connectors";
+
+const projectId = 'YOUR_PROJECT_ID'
+
+const wagmiAdapter = new WagmiAdapter({
+  networks: [arbitrum],
+  projectId,
+  connectors: [
+    abstractWalletConnector() as CreateConnectorFn
+  ]
+})
+
+createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [arbitrum],
+  projectId
+})
+```
+
+Check our Svelte Wagmi demo in [Github](https://github.com/reown-com/appkit-web-examples/)

@@ -650,6 +650,92 @@
             ]
           },
           {
+            "dropdown": "Svelte",
+            "icon": "svelte",
+            "description": "AppKit on Svelte",
+            "pages": [
+              {
+                "group": "Fundamentals",
+                "pages": [
+                  "appkit/svelte/core/installation",
+                  "appkit/svelte/core/actions",
+                  "appkit/svelte/core/options",
+                  "appkit/svelte/core/components",
+                  "appkit/svelte/core/smart-accounts",
+                  "appkit/svelte/core/custom-connectors",
+                  "appkit/svelte/core/custom-networks",
+                  "appkit/svelte/core/multichain",
+                  "appkit/svelte/core/theming",
+                  "appkit/svelte/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/svelte/core/socials",
+                  "appkit/svelte/core/siwe",
+                  "appkit/svelte/core/siwx"
+                ]
+              },
+              {
+                "group": "Early Access",
+                "pages": [
+                  "appkit/svelte/early-access/smart-session"
+                ]
+              },
+              {
+                "group": "Payments",
+                "pages": [
+                  "appkit/svelte/payments/pay-with-exchange"
+                ]
+              },
+              {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/svelte/transactions/onramp",
+                  "appkit/svelte/transactions/swaps",
+                  "appkit/svelte/transactions/sponsored-transactions"
+                ]
+              },
+              {
+                "group": "Notifications",
+                "pages": [
+                  "appkit/svelte/notifications/overview",
+                  "appkit/svelte/notifications/cloud-setup",
+                  "appkit/svelte/notifications/cloud-sending",
+                  {
+                    "group": "Frontend Integration",
+                    "pages": [
+                      "appkit/svelte/notifications/frontend-integration/usage",
+                      "appkit/svelte/notifications/frontend-integration/api",
+                      "appkit/svelte/notifications/frontend-integration/examples",
+                      "appkit/svelte/notifications/frontend-integration/migration-guide"
+                    ]
+                  },
+                  "appkit/svelte/notifications/backend-integration",
+                  "appkit/svelte/notifications/demo",
+                  {
+                    "group": "Authorization Signatures",
+                    "pages": [
+                      "appkit/svelte/notifications/authorization-signatures/overview",
+                      "appkit/svelte/notifications/authorization-signatures/this-app",
+                      "appkit/svelte/notifications/authorization-signatures/all-apps"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Cloud",
+                "pages": [
+                  "appkit/svelte/cloud/verify",
+                  "appkit/svelte/cloud/relay",
+                  "appkit/svelte/cloud/blockchain-api",
+                  "appkit/svelte/cloud/analytics"
+                ]
+              }
+            ]
+          },
+          {
             "dropdown": "React Native",
             "icon": "mobile-screen-button",
             "description": "AppKit on React Native",

@@ -1,0 +1,18 @@
+To open AppKit you can use our [**web component**](../../core/components) or build your own button with AppKit [**actions**](../../core/actions.mdx#open-and-close-the-modal).
+
+```svelte
+<!-- routes/+page.svelte -->
+<script lang="ts">
+  import { modal } from '$lib/appkit'
+
+  function openModal() {
+    modal?.open()
+  }
+</script>
+
+<div>
+  <button on:click={openModal}>Open Modal</button>
+  <appkit-button />
+  <appkit-network-button />
+</div>
+```

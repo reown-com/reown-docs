@@ -1,0 +1,108 @@
+```ts
+// lib/appkit.ts
+import { browser } from '$app/environment'
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+
+let modal: ReturnType<typeof createAppKit> | undefined = undefined
+
+if (browser) {
+  const projectId = import.meta.env.VITE_PROJECT_ID
+  if (!projectId) {
+    throw new Error('VITE_PROJECT_ID is not set')
+  }
+
+  const networks = [mainnet, arbitrum]
+
+  const wagmiAdapter = new WagmiAdapter({
+    networks,
+    projectId
+  })
+
+  const metadata = {
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://reown.com/appkit',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+  }
+
+  modal = createAppKit({
+    adapters: [wagmiAdapter],
+    networks,
+    defaultNetwork: mainnet,
+    projectId,
+    metadata,
+    features: {
+      analytics: true
+    }
+  })
+}
+
+export { modal }
+```
+
+```ts
+// lib/store.ts
+import { writable } from 'svelte/store'
+
+export const accountState = writable({})
+export const networkState = writable({})
+export const appKitState = writable({})
+export const themeState = writable({ themeMode: 'light', themeVariables: {} })
+export const events = writable([])
+export const walletInfo = writable({})
+```
+
+```svelte
+<!-- routes/+layout.svelte -->
+<script lang="ts">
+  import { onMount } from 'svelte'
+  import { browser } from '$app/environment'
+  import { modal } from '$lib/appkit'
+  import { accountState, networkState, appKitState, themeState, events, walletInfo } from '$lib/store'
+
+  $: if (browser) {
+    document.documentElement.setAttribute('data-theme', $themeState.themeMode)
+  }
+
+  onMount(() => {
+    if (!modal) return
+
+    if (browser) {
+      document.documentElement.setAttribute('data-theme', $themeState.themeMode)
+      document.body.className = $themeState.themeMode
+    }
+
+    modal.subscribeAccount((state) => {
+      $accountState = state
+    })
+
+    modal.subscribeNetwork((state) => {
+      $networkState = state
+    })
+
+    modal.subscribeState((state) => {
+      $appKitState = state
+    })
+
+    modal.subscribeTheme((state) => {
+      $themeState = state
+      if (browser) {
+        document.documentElement.setAttribute('data-theme', state.themeMode)
+        document.body.className = state.themeMode
+      }
+    })
+
+    modal.subscribeEvents((state) => {
+      $events = state
+    })
+
+    modal.subscribeWalletInfo((state) => {
+      $walletInfo = state
+    })
+  })
+</script>
+
+<slot />
+```

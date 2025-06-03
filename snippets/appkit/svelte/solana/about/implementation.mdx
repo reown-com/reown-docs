@@ -1,0 +1,40 @@
+```ts
+// lib/appkit.ts
+import { browser } from '$app/environment'
+import { createAppKit } from '@reown/appkit'
+import { SolanaAdapter } from '@reown/appkit-adapter-solana'
+import { solana, solanaTestnet, solanaDevnet } from '@reown/appkit/networks'
+
+let modal: ReturnType<typeof createAppKit> | undefined = undefined
+
+if (browser) {
+  const projectId = import.meta.env.VITE_PROJECT_ID
+  if (!projectId) {
+    throw new Error('VITE_PROJECT_ID is not set')
+  }
+
+  const solanaWeb3JsAdapter = new SolanaAdapter({
+    wallets: []
+  })
+
+  const metadata = {
+    name: 'AppKit',
+    description: 'AppKit Example',
+    url: 'https://reown.com/appkit',
+    icons: ['https://avatars.githubusercontent.com/u/179229932']
+  }
+
+  modal = createAppKit({
+    adapters: [solanaWeb3JsAdapter],
+    networks: [solana, solanaTestnet, solanaDevnet],
+    defaultNetwork: solana,
+    projectId,
+    metadata,
+    features: {
+      analytics: true
+    }
+  })
+}
+
+export { modal }
+```

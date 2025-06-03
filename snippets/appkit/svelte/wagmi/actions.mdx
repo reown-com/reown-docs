@@ -1,0 +1,69 @@
+### getAccount
+
+```ts
+import { modal } from '$lib/appkit'
+import { accountState } from '$lib/store'
+
+const account = modal?.getAccount()
+```
+
+### getError
+
+```ts
+import { modal } from '$lib/appkit'
+
+const error = modal?.getError()
+```
+
+### getChainId
+
+```ts
+import { modal } from '$lib/appkit'
+
+const chainId = modal?.getChainId()
+```
+
+### getIsConnected
+
+```ts
+import { modal } from '$lib/appkit'
+
+const isConnected = modal?.getIsConnected()
+```
+
+### getWalletProvider
+
+```ts
+import { modal } from '$lib/appkit'
+
+const walletProvider = modal?.getWalletProvider()
+```
+
+### getWalletProviderType
+
+```ts
+import { modal } from '$lib/appkit'
+
+const walletProviderType = modal?.getWalletProviderType()
+```
+
+### subscribeProvider
+
+```ts
+import { onMount } from 'svelte'
+import { modal } from '$lib/appkit'
+
+onMount(() => {
+  if (!modal) return
+
+  const unsubscribe = modal.subscribeProvider((newState) => {
+    console.log(newState)
+  })
+
+  return unsubscribe
+})
+```
+
+<Card title="Wagmi Actions" icon="github" href="https://wagmi.sh/core/api/actions">
+  You can also use Wagmi actions to interact with the wallets
+</Card>
