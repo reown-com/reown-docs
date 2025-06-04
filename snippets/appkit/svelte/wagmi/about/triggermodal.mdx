@@ -1,6 +1,6 @@
 The recommended way to trigger the modal is using the `initializeAppKit` function and web components:
 
-```svelte
+``` svelte
 <script lang="ts">
   import { initializeAppKit } from './lib/stores/appkit';
 
@@ -15,7 +15,7 @@ The recommended way to trigger the modal is using the `initializeAppKit` functio
 
 You can also trigger the modal programmatically by calling the `open` method from AppKit instance:
 
-```svelte
+``` svelte
 <!-- +page.svelte -->
 <script>
   import { appKit } from '$lib/appkit'
@@ -30,7 +30,7 @@ You can also trigger the modal programmatically by calling the `open` method fro
 
 You can select the modal's view when calling the `open` function:
 
-```svelte
+``` svelte
 <script>
   import { appKit } from '$lib/appkit'
   
