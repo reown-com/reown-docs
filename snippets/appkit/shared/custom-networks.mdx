@@ -1,0 +1,46 @@
+Custom networks allow you to connect to blockchain networks that are not included by default in AppKit.
+
+## Adding Custom Networks
+
+You can add custom networks to your AppKit configuration:
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { mainnet } from '@reown/appkit/networks'
+
+// Define your custom network
+const customNetwork = {
+  id: 1234,
+  name: 'Custom Network',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Custom Token',
+    symbol: 'CTK',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc.custom-network.com'],
+    },
+    public: {
+      http: ['https://rpc.custom-network.com'],
+    },
+  },
+  blockExplorers: {
+    default: { name: 'Custom Explorer', url: 'https://explorer.custom-network.com' },
+  },
+}
+
+const wagmiAdapter = new WagmiAdapter({
+  networks: [mainnet, customNetwork],
+  projectId
+})
+
+const appKit = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, customNetwork],
+  projectId
+})
+```
+
+Make sure your custom network follows the proper network configuration format for your chosen adapter.
