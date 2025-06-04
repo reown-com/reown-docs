@@ -51,14 +51,3 @@ export { appKit }
 <Note>
   The `browser` check ensures AppKit is only initialized in the browser environment, which is important for SvelteKit's SSR compatibility.
 </Note>
-
-Then import this configuration in your app layout to ensure AppKit is initialized:
-
-```svelte
-<!-- src/routes/+layout.svelte -->
-<script>
-  import '$lib/appkit';
-</script>
-
-<slot />
-```
