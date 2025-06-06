@@ -1,0 +1,87 @@
+---
+title: "FAQs"
+---
+
+## Error: Invalid App Configuration
+
+<img src="/images/faq/invalidAppConfiguration.png" />
+
+This is a very common error that happens mainly when you didn't make a correct setup of the projectId. Please create and use a valid projectid from https://cloud.reown.com/
+
+```javascript
+const modal = createAppKit({
+  ...
+  projectId: "..." // add a valid projectId 
+});
+```
+
+## No wallets are visible, only the title "Connect Wallet."
+
+Problem: After clicking in the connect button users are only seeing the modal with the title "Connect Wallet".
+
+Solution: In general there are two possibilities for this error.
+
+1. Check all the libraries from @reown are using the **same version** in the packages.json.
+
+``` json
+  ...
+  "dependencies": {
+    "@reown/appkit": "1.7.8",
+    "@reown/appkit-adapter-wagmi": "1.7.8",
+    ...
+  }
+```
+
+2. The `createAppKit` call must be outside the component in order to work correctly.
+
+```javascript
+// Create modal
+createAppKit({
+  adapters: [wagmiAdapter],
+  ...generalConfig,
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
+})
+
+export function App() {
+  return (
+     <WagmiProvider ...>
+        <QueryClientProvider ...>
+          <appkit-button />
+        </QueryClientProvider>
+    </WagmiProvider>
+}
+
+```
+
+## When will reown supports off-ramp?
+
+For the moment, Reown do not have plans to do off-ramp.
+
+## How can i retrieve more than one address from the currently connected wallets?
+
+To resolve this issue, please refer to our multichain example:
+
+- https://appkit-web-examples-react-multichain.reown.com/
+
+- https://github.com/reown-com/appkit-web-examples/tree/main/react/react-multichain
+
+These are some code snippets for React SDK:
+
+``` javascript
+import { useAppKitAccount } from '@reown/appkit/react'
+const eip155AccountState = useAppKitAccount({ namespace: 'eip155' })
+const solanaAccountState = useAppKitAccount({ namespace: 'solana' })
+```
+
+``` javascript
+<>
+  Address EVM : {eip155AccountState.address}<br />
+  Addresss Solana: {solanaAccountState.address}<br />
+</>
+```
+
+## How to hide UX by reown ?
+
+Currently, only enterprise clients can hide "UX by reown" in our modal by adjusting this option on our Dashboard.

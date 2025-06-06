@@ -300,6 +300,10 @@
                       "appkit/migration/from-connectkit-next",
                       "appkit/migration/from-anza-adapter-react"
                     ]
+                  },
+                  {
+                    "group": "Technical Reference",
+                    "pages": ["appkit/faq"]
                   }
                 ]
               },
