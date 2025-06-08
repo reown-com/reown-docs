@@ -1,12 +1,13 @@
 ---
-title: "FAQs"
+title: "AppKit FAQs"
+sidebarTitle: "FAQs"
 ---
 
 ## Error: Invalid App Configuration
 
 <img src="/images/faq/invalidAppConfiguration.png" />
 
-This is a very common error that happens mainly when you didn't make a correct setup of the projectId. Please create and use a valid projectid from https://cloud.reown.com/
+This is a very common error that happens mainly when you did not set up the `projectId` correctly. Please create and use a valid projectId from https://cloud.reown.com/
 
 ```javascript
 const modal = createAppKit({
@@ -17,11 +18,11 @@ const modal = createAppKit({
 
 ## No wallets are visible, only the title "Connect Wallet."
 
-Problem: After clicking in the connect button users are only seeing the modal with the title "Connect Wallet".
+Problem: After clicking the connect button users are only seeing the modal with the title "Connect Wallet".
 
 Solution: In general there are two possibilities for this error.
 
-1. Check all the libraries from @reown are using the **same version** in the packages.json.
+1. Check all the libraries from @reown are using the **same version** in `packages.json`.
 
 ``` json
   ...
@@ -32,7 +33,7 @@ Solution: In general there are two possibilities for this error.
   }
 ```
 
-2. The `createAppKit` call must be outside the component in order to work correctly.
+2. Call `createAppKit` outside of the component to ensure correct behavior.".
 
 ```javascript
 // Create modal
@@ -55,11 +56,11 @@ export function App() {
 
 ```
 
-## When will reown supports off-ramp?
+## When will Reown support off-ramp?
 
-For the moment, Reown do not have plans to do off-ramp.
+For the moment, Reown does not currently plan to support off-ramp.
 
-## How can i retrieve more than one address from the currently connected wallets?
+## How can I retrieve more than one address from the currently connected wallets?
 
 To resolve this issue, please refer to our multichain example:
 
@@ -78,10 +79,32 @@ const solanaAccountState = useAppKitAccount({ namespace: 'solana' })
 ``` javascript
 <>
   Address EVM : {eip155AccountState.address}<br />
-  Addresss Solana: {solanaAccountState.address}<br />
+  Address Solana: {solanaAccountState.address}<br />
 </>
 ```
 
-## How to hide UX by reown ?
+## How can I hide `UX by Reown`?
 
 Currently, only enterprise clients can hide "UX by reown" in our modal by adjusting this option on our Dashboard.
+
+## Do I need to wait for my dApp approval before using it, as it is still in "Pending Review"?
+
+No, dApps do not need approval in order to use your projectId. 
+
+## Can `createAppKit` be lazily initialized and torn down for re-initialization with a different network configuration?
+
+A: Currently, `createAppKit` can only be called once during the application's lifecycle. 
+It cannot be lazily initialized and then torn down for re-initialization. 
+This means you must pass in all the networks you plan to support during the initial setup.
+
+## Can we use our own RPC in APPkit?
+A: Yes, you can use your own RPC by setting the customRpcUrls option in the APPkit configuration. This lets you define custom RPC URLs for specific chains. Each entry must follow the format:
+
+``` javascript
+customRpcUrls: {
+  [ChainId.Ethereum]: 'https://your.custom.rpc.url',
+  [ChainId.Polygon]: 'https://your.polygon.rpc.url',
+}
+```
+
+APPkit will prioritize these URLs over the default ones.
