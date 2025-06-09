@@ -214,7 +214,19 @@ This capability is expressed per chain and is crucial for determining how `walle
 
     When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
 
-    To implement this functionality, specify the `scopedProperties` when approving a session:
+     To implement this functionality, use `WalletKit.buildWalletService(bundlerUrl, methods)` util method that specifies the wallet service URL and bundler URL for the supported methods:
+
+    ```dart
+    final Map<String, dynamic> scopedProperties = {
+      'eip155': WalletKit.buildWalletService(
+        'https://wallet-service-url.com',
+        ['wallet_getCallsStatus'],
+      ),
+    };
+    WalletKit.approveSession(..., scopedProperties);
+    ```
+
+    Specify the `scopedProperties` when approving a session:
 
     ```json
     "scopedProperties": {
