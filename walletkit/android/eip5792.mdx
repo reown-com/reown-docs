@@ -217,7 +217,7 @@ This capability is expressed per chain and is crucial for determining how `walle
     To implement this functionality, use `WalletKit.buildWalletService(bundlerUrl, methods)` util method that specifies the wallet service URL and bundler URL for the supported methods:
 
     ```kotlin
-    val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService(listOf("wallet_getCallsStatus")))
+    val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService("${bundler_url}", listOf("wallet_getCallsStatus")))
     val scopedProperties = mapOf("eip155" to "$walletServiceUtils")
     WalletKit.approveSession(..., scopedProperties)
     ```
