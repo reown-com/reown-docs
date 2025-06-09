@@ -182,7 +182,10 @@
               },
               {
                 "group": "Security",
-                "pages": ["advanced/security/content-security-policy"]
+                "pages": [
+                  "advanced/security/security-information",
+                  "advanced/security/content-security-policy"
+                ]
               },
               "advanced/push-server",
               "advanced/walletconnect-deprecations"
@@ -298,6 +301,10 @@
                       "appkit/migration/from-connectkit-next",
                       "appkit/migration/from-anza-adapter-react"
                     ]
+                  },
+                  {
+                    "group": "Technical Reference",
+                    "pages": ["appkit/faq"]
                   }
                 ]
               },

@@ -7,11 +7,19 @@ title: Installation
 
 <Note>
 
-Depending on your platform, you will have to add different permissions to get the package to work.
+If you are on **Android** add jitpack support to your android (project's) build.gradle file
 
-**MacOS**
+ ```
+ allprojects {
+     repositories {
+         google()
+         mavenCentral()
+         maven { url 'https://jitpack.io' } // <- add jipack url
+     }
+ }
+ ```
 
-Add the following to your `DebugProfile.entitlements` and `Release.entitlements` files so that it can connect to the WebSocket server.
+If you are on **MacOS** add the following to your `DebugProfile.entitlements` and `Release.entitlements` files to connect to the WebSocket server.
 
 ```xml
 <key>com.apple.security.network.client</key>
