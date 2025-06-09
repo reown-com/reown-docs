@@ -2,20 +2,29 @@
 title: Embedded Wallets Interactions (EIP-5792)
 ---
 
-AppKit integrates with EIP-5792 to interact with embedded Wallets (smart accounts) through wallet capabilities. It focuses on three primary methods: `wallet_getCapabilities`, `wallet_sendCalls`, and `wallet_getCallsStatus`. It shows how to check if atomic batch transactions are supported and how to use them.
+AppKit integrates with [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792) to interact with embedded Wallets (smart accounts) through wallet capabilities. 
+EIP-5792 introduces a general mechanism for wallets to expose structured execution capabilities to dApps. AppKit currently focuses on key capabilities like atomic batch transactions, but the interface is extensible and can support future capabilities defined by the spec.
+AppKit uses the following primary methods defined in EIP-5792:
+
+- wallet_getCapabilities
+
+- wallet_sendCalls
+
+- wallet_getCallsStatus
 
 ## wallet_getCapabilities
-
-Appkit checks the `atomic` capability from `wallet_getCapabilities` of the wallet in order to know if a wallet required to handle the batch of calls atomically or not.
+This method queries the wallet for its supported execution capabilities. AppKit inspects the response to determine what features are supported by the wallet, including (but not limited to) atomic batch execution.
 Wallets should include the [EIP-5792 capabilities in CAIP-25](/walletkit/android/eip5792#wallet-response). 
 
 ## wallet_sendCalls
 
-Depending on the 3 different values from the `atomic` capability, AppKit will trigger the `wallet_sendCalls`:
+Used to send one or more contract calls to the wallet for execution. The behavior depends on the specific capabilities returned by wallet_getCapabilities. For example:
 
-- `supported` means that the wallet supports atomic batch transactions for the account and chain ID. The wallet executes calls atomically and contiguously
-- `ready` means that the wallet can upgrade to support atomic execution, pending user approval.
-- `unsupported` means that the wallet does not provide any atomicity or contiguity guarantees, and it will not suggest an upgrade to the user. The dApp should fallback to **`eth_sendTransaction`** instead of **`wallet_sendCalls`**, and **`eth_getTransactionReceipt`** instead of **`wallet_getCallsStatus`**
+- `atomic: "supported"` -> The wallet guarantees atomic and contiguous execution.
+- `atomic: "ready"` -> The wallet may support atomic execution pending user action.
+- `atomic: "unsupported"` -> The wallet does not guarantee atomic execution.
+
+If a required capability is not supported, the dApp should fall back to legacy methods (e.g. eth_sendTransaction, eth_getTransactionReceipt).
 
 Request Example
 ```json
@@ -38,13 +47,11 @@ Request Example
   }
   ```
 
-  - `atomicRequired` -  can be set to either `true` or `false`.
-    - If the `atomic` capability is not supported set to `false`
-    - If the `atomic` capability is supported set to `true`
+  - `atomicRequired` should be set to true only if the dApp requires atomic execution and the wallet has advertised support.
 
 ## wallet_getCallsStatus
 
-Call this function to get the information about the batch execution. 
+This method returns the status and receipt(s) of a previously submitted batch. 
 
 - The `batchId` field, returned from the `wallet_sendCalls` will be used to identify the batch call.
 
