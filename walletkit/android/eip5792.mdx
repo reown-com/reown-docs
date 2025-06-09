@@ -14,143 +14,11 @@ Applications can specify that these onchain calls be executed taking advantage o
 
 <AccordionGroup>
   <Accordion title="wallet_getCapabilities" defaultOpen>
-  ### Example
-    The `wallet_getCapabilities` method is used to request information about what capabilities a wallet supports. Following EIP-5792, here's how it should be implemented:
+  ## Capabilities in CAIP-25 Connection Requests
 
-    #### Request
-    ```json
-    {
-      "id": 1,
-      "jsonrpc": "2.0",
-      "method": "wallet_getCapabilities",
-      "params": ["0xd46e8dd67c5d32be8058bb8eb970870f07244567", ["0x2105", "0x14A34"]]
-    }
-    ```
+  CAIP-25 defines how capabilities can be expressed in wallet-to-dapp connections. These capabilities control how methods like `wallet_sendCalls` behave.
 
-    #### Response
-    The wallet should return a response following EIP-5792, where capabilities are organized by chain ID:
-
-    <Note>
-    For non-atomic execution, include all transactions in the receipts array, even those that were included on-chain but eventually reverted.
-    </Note>
-
-    ```json
-    {
-      "id": 1,
-      "jsonrpc": "2.0",
-      "result": {
-        "0x2105": {
-          "atomic": {
-            "status": "supported"
-          }
-        },
-        "0x14A34": {
-          "atomic": {
-            "status": "unsupported"
-          }
-        }
-      }
-    }
-    ```
-  </Accordion>
-
-  <Accordion title="wallet_sendCalls">
-    ### Implementation
-    When implementing `wallet_sendCalls`, wallets must follow these requirements:
-
-    #### Connection Approval
-    - Only approve this method during the connection approval flow if your wallet can implement it correctly
-    - Define the `atomic` capability per chain/account in the CAIP-25 response
-
-    #### Request Format
-    ```json
-    {
-      "id": 12345,
-      "version": "2.0",
-      "method": "wc_sessionRequest",
-      "params": {
-        "chainId": "caip-2-chain-id",
-        "request": {
-          "method": "wallet_sendCalls",
-          "params": {
-            "from": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
-            "chainId": "0x01",
-            "atomicRequired": true,
-            "calls": [
-              {
-                "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
-                "value": "0x9184e72a",
-                "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
-              },
-              {
-                "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
-                "value": "0x182183",
-                "data": "0xfbadbaf01"
-              }
-            ]
-          }
-        }
-      }
-    }
-    ```
-
-    #### Core Implementation Requirements
-    - Execute calls in the exact order specified in the request
-    - Do not wait for any calls to be finalized before completing the batch
-    - If the user rejects the request, do not send any calls
-
-    #### Atomic Execution Behavior
-    When `atomicRequired` is `true`:
-    - Execute all calls atomically (either all succeed or none have any effect)
-    - Execute all calls contiguously (no other transactions between batch calls)
-    - If your wallet can upgrade from `ready` to `supported` atomicity, do so before executing
-
-    When `atomicRequired` is `false`:
-    - You may execute calls sequentially without atomicity guarantees
-    - You may execute atomically if your wallet supports it
-    - You may upgrade to `supported` atomicity and execute atomically
-  </Accordion>
-
-  <Accordion title="wallet_getCallsStatus">
-    ### Example
-    To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the Wallet Service URL in the scoped properties.
-
-    When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
-
-    To implement this functionality, use `WalletKit.buildWalletService(bundlerUrl, methods)` util method that specifies the wallet service URL and bundler URL for the supported methods:
-
-    ```kotlin
-    val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService(listOf("wallet_getCallsStatus")))
-    val scopedProperties = mapOf("eip155" to "$walletServiceUtils")
-    WalletKit.approveSession(..., scopedProperties)
-    ```
-
-    ### Response Format
-    The response format for `wallet_getCallsStatus` varies based on the execution method:
-
-    #### For Atomic Execution
-    ```json
-    {
-      "receipts": [/* single receipt or array of receipts */],
-      "atomic": true
-    }
-    ```
-
-    #### For Non-Atomic Execution
-    ```json
-    {
-      "receipts": [/* array of receipts for all transactions */],
-      "atomic": false
-    }
-    ```
-  </Accordion>
-</AccordionGroup>
-
-## Capabilities in CAIP-25 Connection Requests
-
-CAIP-25 defines how capabilities can be expressed in wallet-to-dapp connections. These capabilities control how methods like `wallet_sendCalls` behave.
-
-### Session Properties
+  ### Session Properties
 
 In a connection request, dApps can request capabilities through `sessionProperties`. These capabilities can be universal (applying to all chains) or chain-specific:
 
@@ -246,6 +114,138 @@ According to [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792), the `atomic` c
 - `unsupported` — The wallet provides no atomicity guarantees.
 
 This capability is expressed per chain and is crucial for determining how `wallet_sendCalls` with `atomicRequired: true` will be handled.
+
+  ### Example
+    The `wallet_getCapabilities` method is used to request information about what capabilities a wallet supports. Following EIP-5792, here's how it should be implemented:
+
+    #### Request
+    ```json
+    {
+      "id": 1,
+      "jsonrpc": "2.0",
+      "method": "wallet_getCapabilities",
+      "params": ["0xd46e8dd67c5d32be8058bb8eb970870f07244567", ["0x2105", "0x14A34"]]
+    }
+    ```
+
+    #### Response
+    The wallet should return a response following EIP-5792, where capabilities are organized by chain ID:
+
+    ```json
+    {
+      "id": 1,
+      "jsonrpc": "2.0",
+      "result": {
+        "0x2105": {
+          "atomic": {
+            "status": "supported"
+          }
+        },
+        "0x14A34": {
+          "atomic": {
+            "status": "unsupported"
+          }
+        }
+      }
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="wallet_sendCalls">
+    ### Implementation
+    When implementing `wallet_sendCalls`, wallets must follow these requirements:
+
+    #### Connection Approval
+    - Only approve this method during the connection approval flow if your wallet can implement it correctly
+    - Define the `atomic` capability per chain/account in the CAIP-25 response
+
+    #### Request Format
+    ```json
+    {
+      "id": 12345,
+      "version": "2.0",
+      "method": "wc_sessionRequest",
+      "params": {
+        "chainId": "caip-2-chain-id",
+        "request": {
+          "method": "wallet_sendCalls",
+          "params": {
+            "from": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+            "chainId": "0x01",
+            "atomicRequired": true,
+            "calls": [
+              {
+                "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+                "value": "0x9184e72a",
+                "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
+              },
+              {
+                "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+                "value": "0x182183",
+                "data": "0xfbadbaf01"
+              }
+            ]
+          }
+        }
+      }
+    }
+    ```
+
+    #### Core Implementation Requirements
+    - Execute calls in the exact order specified in the request
+    - Do not wait for any calls to be finalized before completing the batch
+    - If the user rejects the request, do not send any calls
+
+    #### Atomic Execution Behavior
+    When `atomicRequired` is `true`:
+    - Execute all calls atomically (either all succeed or none have any effect)
+    - Execute all calls contiguously (no other transactions between batch calls)
+    - If your wallet can upgrade from `ready` to `supported` atomicity, do so before executing
+
+    When `atomicRequired` is `false`:
+    - You may execute calls sequentially without atomicity guarantees
+    - You may execute atomically if your wallet supports it
+    - You may upgrade to `supported` atomicity and execute atomically
+  </Accordion>
+
+  <Accordion title="wallet_getCallsStatus">
+    ### Example
+    To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the Wallet Service URL in the scoped properties.
+
+    When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
+
+    To implement this functionality, use `WalletKit.buildWalletService(bundlerUrl, methods)` util method that specifies the wallet service URL and bundler URL for the supported methods:
+
+    ```kotlin
+    val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService(listOf("wallet_getCallsStatus")))
+    val scopedProperties = mapOf("eip155" to "$walletServiceUtils")
+    WalletKit.approveSession(..., scopedProperties)
+    ```
+
+    ### Response Format
+    The response format for `wallet_getCallsStatus` varies based on the execution method:
+    
+    <Note>
+    For non-atomic execution, include all transactions in the receipts array, even those that were included on-chain but eventually reverted.
+    </Note>
+
+    #### For Atomic Execution
+    ```json
+    {
+      "receipts": [/* single receipt or array of receipts */],
+      "atomic": true
+    }
+    ```
+
+    #### For Non-Atomic Execution
+    ```json
+    {
+      "receipts": [/* array of receipts for all transactions */],
+      "atomic": false
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
 
 ## References
 - EIP-5792: https://eips.ethereum.org/EIPS/eip-5792#atomicbatch-capability
