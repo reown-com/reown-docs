@@ -219,7 +219,7 @@ This capability is expressed per chain and is crucial for determining how `walle
     ```swift
     let scopedProperties: [String: Any] = [
         "eip155": WalletKit.buildWalletService(
-            "https://wallet-service-url.com",
+           "${bundler_url}",
             ["wallet_getCallsStatus"]
         )
     ]
