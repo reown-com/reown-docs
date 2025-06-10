@@ -1,0 +1,48 @@
+The recommended way to trigger the modal is using the `initializeAppKit` function and web components:
+
+``` javascript
+<script lang="ts">
+  import { initializeAppKit } from './lib/stores/appkit';
+
+  // Initialize AppKit with your project ID
+  initializeAppKit('YOUR_PROJECT_ID');
+</script>
+
+<main>
+  <appkit-button />
+</main>
+```
+
+You can also trigger the modal programmatically by calling the `open` method from AppKit instance:
+
+``` javascript
+<!-- +page.svelte -->
+<script>
+  import { appKit } from '$lib/appkit'
+  
+  function openModal() {
+    appKit?.open()
+  }
+</script>
+
+<button on:click={openModal}>Open Modal</button>
+```
+
+You can select the modal's view when calling the `open` function:
+
+``` javascript
+<script>
+  import { appKit } from '$lib/appkit'
+  
+  function openConnectModal() {
+    appKit?.open({ view: 'Connect' })
+  }
+  
+  function openAccountModal() {
+    appKit?.open({ view: 'Account' })
+  }
+</script>
+
+<button on:click={openConnectModal}>Connect Wallet</button>
+<button on:click={openAccountModal}>View Account</button>
+```

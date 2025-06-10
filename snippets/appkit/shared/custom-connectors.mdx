@@ -1,0 +1,27 @@
+Custom connectors allow you to integrate wallets that are not natively supported by AppKit.
+
+## Adding Custom Connectors
+
+You can add custom connectors to your AppKit configuration:
+
+```ts
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+
+const wagmiAdapter = new WagmiAdapter({
+  networks: [mainnet, arbitrum],
+  projectId
+})
+
+const appKit = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  projectId,
+  connectors: [
+    // Add your custom connectors here
+  ]
+})
+```
+
+For more information on creating custom connectors, refer to the [Wagmi documentation](https://wagmi.sh/core/connectors/custom).

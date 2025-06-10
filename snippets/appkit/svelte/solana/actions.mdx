@@ -1,0 +1,36 @@
+You can use [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) to interact with wallets and smart contracts:
+
+```ts
+import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js'
+
+const connection = new Connection('https://api.mainnet-beta.solana.com')
+
+async function sendTransaction() {
+  const provider = await appKit.subscribeProviders((state) => {
+    return state['solana']
+  })
+
+  const account = await appKit.subscribeAccount((state) => {
+    return state
+  })
+
+  if (!provider || !account) throw Error('No provider or account found')
+
+  const transaction = new Transaction().add(
+    SystemProgram.transfer({
+      fromPubkey: new PublicKey(account.address),
+      toPubkey: new PublicKey('...'), // destination address
+      lamports: 0.01 * LAMPORTS_PER_SOL
+    })
+  )
+
+  const { blockhash } = await connection.getLatestBlockhash()
+  transaction.recentBlockhash = blockhash
+  transaction.feePayer = new PublicKey(account.address)
+
+  const signedTransaction = await provider.signTransaction(transaction)
+  const signature = await connection.sendRawTransaction(signedTransaction.serialize())
+  
+  console.log('Transaction signature:', signature)
+}
+```
