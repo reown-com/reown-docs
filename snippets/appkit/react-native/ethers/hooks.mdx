@@ -3,12 +3,23 @@
 Hook that returns the client's information.
 
 ```tsx
-import { useAppKitAccount } from "@reown/appkit-ethers-react-native";
+import { useAppKitAccount } from '@reown/appkit-ethers-react-native';
+import { Text, View } from 'react-native';
 
-function Components() {
+export default function AccountInfoEthers() {
   const { address, chainId, isConnected } = useAppKitAccount();
 
-  //...
+  if (!isConnected) {
+    return <Text>Disconnected. Please connect your wallet.</Text>;
+  }
+
+  return (
+    <View>
+      <Text>Connected Account (Ethers):</Text>
+      <Text>Address: {address}</Text>
+      <Text>Chain ID: {chainId}</Text>
+    </View>
+  );
 }
 ```
 
@@ -32,18 +43,6 @@ function Components() {
   }
 
   return <button onClick={() => onSignMessage()}>Sign Message</button>;
-}
-```
-
-#### useAppKitError
-
-```ts
-import { useAppKitError } from "@reown/appkit-ethers-react-native";
-
-function Components() {
-  const { error } = useAppKitError();
-
-  //...
 }
 ```
 

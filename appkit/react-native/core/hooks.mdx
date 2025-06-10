@@ -8,53 +8,68 @@ import Ethers5Hooks from "/snippets/appkit/react-native/ethers5/hooks.mdx";
 
 ## useAppKit
 
-Control the modal with the `useAppKit` hook
+The `useAppKit` hook provides functions to control the modal's visibility. You can use it to programmatically open or close the modal.
 
 <Tabs>
 
 <Tab title="Wagmi">
 ```ts
 import { useAppKit } from '@reown/appkit-wagmi-react-native'
+import { Button } from 'react-native';
 
 export default function Component() {
   const { open, close } = useAppKit()
 
-open()
-
-//...
+  return (
+    <>
+      <Button title="Open Modal" onPress={() => open()} />
+      <Button title="Open Account View" onPress={() => open({ view: 'Account' })} />
+      <Button title="Close Modal" onPress={() => close()} />
+    </>
+  );
 }
 
-````
+```
 </Tab>
 
 <Tab title="Ethers">
 ```ts
 import { useAppKit } from '@reown/appkit-ethers-react-native'
+import { Button } from 'react-native';
 
 export default function Component() {
   const { open, close } = useAppKit()
 
-  open()
-
-  //...
+  return (
+    <>
+      <Button title="Open Modal" onPress={() => open()} />
+      <Button title="Open Account View" onPress={() => open({ view: 'Account' })} />
+      <Button title="Close Modal" onPress={() => close()} />
+    </>
+  );
 }
-````
 
+```
 </Tab>
 
 <Tab title="Ethers v5">
 ```ts
 import { useAppKit } from '@reown/appkit-ethers5-react-native'
+import { Button } from 'react-native';
 
 export default function Component() {
   const { open, close } = useAppKit()
 
-open()
-
-//...
+  return (
+    <>
+      <Button title="Open Modal" onPress={() => open()} />
+      <Button title="Open Account View" onPress={() => open({ view: 'Account' })} />
+      <Button title="Close Modal" onPress={() => close()} />
+    </>
+  );
 }
 
-````
+```
 </Tab>
 
 </Tabs>
@@ -63,25 +78,13 @@ You can also select the modal's view when calling the `open` function
 
 ```ts
 open({ view: 'Account' })
-
-// to connect and show multi wallets view
-open({ view: 'Connect'})
-
-// to connect and show only solana wallets
-open({ view: 'Connect', namespace: 'solana' })
-
-// to connect and show only bitcoin wallets
-open({ view: 'Connect', namespace: 'bip122' })
-
-// to connect and show only ethereum wallets
-open({ view: 'Connect', namespace: 'eip155' })
 ````
 
 List of views you can select
 
 | Variable         | Description                                                                                                                                              |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Connect`        | Principal view of the modal - default view when disconnected. A `namespace` can be selected to connect to a specific network (solana, bip122 or eip155). |
+| `Connect`        | Principal view of the modal - default view when disconnected.
 | `Account`        | User profile - default view when connected.                                                                                                              |
 | `Networks`       | List of available networks - you can select and target a specific network before connecting.                                                             |
 | `WhatIsANetwork` | "What is a network" onboarding view.                                                                                                                     |
@@ -96,17 +99,36 @@ Get the current value of the modal's state
 <Tab title="Wagmi">
 ```ts
 import { useAppKitState } from '@reown/appkit-wagmi-react-native'
+import { Text, View } from 'react-native';
 
-const { open, selectedNetworkId } = useAppKitState()
+export default function Component() {
+  const { open, selectedNetworkId } = useAppKitState();
 
-````
+  return (
+    <View>
+      <Text>Modal Open: {String(open)}</Text>
+      <Text>Selected Network ID: {selectedNetworkId}</Text>
+    </View>
+  );
+}
+```
 </Tab>
 
 <Tab title="Ethers">
 ```ts
 import { useAppKitState } from '@reown/appkit-ethers-react-native'
+import { Text, View } from 'react-native';
 
-const { open, selectedNetworkId } = useAppKitState()
+export default function Component() {
+  const { open, selectedNetworkId } = useAppKitState();
+
+  return (
+    <View>
+      <Text>Modal Open: {String(open)}</Text>
+      <Text>Selected Network ID: {selectedNetworkId}</Text>
+    </View>
+  );
+}
 ```
 
 </Tab>
@@ -114,8 +136,18 @@ const { open, selectedNetworkId } = useAppKitState()
 <Tab title="Ethers v5">
 ```ts
 import { useAppKitState } from '@reown/appkit-ethers5-react-native'
+import { Text, View } from 'react-native';
 
-const { open, selectedNetworkId } = useAppKitState()
+export default function Component() {
+  const { open, selectedNetworkId } = useAppKitState();
+
+  return (
+    <View>
+      <Text>Modal Open: {String(open)}</Text>
+      <Text>Selected Network ID: {selectedNetworkId}</Text>
+    </View>
+  );
+}
 ```
 </Tab>
 
@@ -137,10 +169,25 @@ Get the last tracked modal event. The hook accepts an optional callback function
 <Tab title="Wagmi">
 ```ts
 import { useAppKitEvents } from '@reown/appkit-wagmi-react-native'
+import { useEffect } from 'react';
 
-const event = useAppKitEvents(event => {
-  // your code here
-})
+export default function Component() {
+  const event = useAppKitEvents(newEvent => {
+    console.log('New AppKit Event:', newEvent);
+    // Example: Handle a specific event type
+    if (newEvent?.type === 'MODAL_CLOSED') {
+      // Do something when the modal is closed
+    }
+  });
+
+  useEffect(() => {
+    if (event) {
+      console.log('Last AppKit Event:', event);
+    }
+  }, [event]);
+
+  return null; // Or your component JSX
+}
 ```
 
 </Tab>
@@ -148,10 +195,25 @@ const event = useAppKitEvents(event => {
 <Tab title="Ethers">
 ```ts
 import { useAppKitEvents } from '@reown/appkit-ethers-react-native'
+import { useEffect } from 'react';
 
-const event = useAppKitEvents(event => {
-  // your code here
-})
+export default function Component() {
+  const event = useAppKitEvents(newEvent => {
+    console.log('New AppKit Event:', newEvent);
+    // Example: Handle a specific event type
+    if (newEvent?.type === 'MODAL_CLOSED') {
+      // Do something when the modal is closed
+    }
+  });
+
+  useEffect(() => {
+    if (event) {
+      console.log('Last AppKit Event:', event);
+    }
+  }, [event]);
+
+  return null; // Or your component JSX
+}
 ```
 
 </Tab>
@@ -159,10 +221,25 @@ const event = useAppKitEvents(event => {
 <Tab title="Ethers v5">
 ```ts
 import { useAppKitEvents } from '@reown/appkit-ethers5-react-native'
+import { useEffect } from 'react';
 
-const event = useAppKitEvents(event => {
-  // your code here
-})
+export default function Component() {
+  const event = useAppKitEvents(newEvent => {
+    console.log('New AppKit Event:', newEvent);
+    // Example: Handle a specific event type
+    if (newEvent?.type === 'MODAL_CLOSED') {
+      // Do something when the modal is closed
+    }
+  });
+
+  useEffect(() => {
+    if (event) {
+      console.log('Last AppKit Event:', event);
+    }
+  }, [event]);
+
+  return null; // Or your component JSX
+}
 ```
 
 </Tab>
@@ -178,10 +255,21 @@ Subscribe to modal specific events
 <Tab title="Wagmi">
 ```ts
 import { useAppKitEventSubscription } from '@reown/appkit-wagmi-react-native'
+import { useEffect } from 'react';
 
-useAppKitEventSubscription('MODAL_OPEN', newEvent => {
-  // your code here
-});
+export default function Component() {
+  useAppKitEventSubscription('MODAL_OPEN', newEvent => {
+    console.log('Modal Opened Event:', newEvent);
+    // Perform actions when the modal opens
+  });
+
+  useAppKitEventSubscription('MODAL_CLOSED', newEvent => {
+    console.log('Modal Closed Event:', newEvent);
+    // Perform actions when the modal closes
+  });
+  
+  return null; // Or your component JSX
+}
 ```
 
 </Tab>
@@ -189,20 +277,42 @@ useAppKitEventSubscription('MODAL_OPEN', newEvent => {
 <Tab title="Ethers">
 ```ts
 import { useAppKitEventSubscription } from '@reown/appkit-ethers-react-native'
+import { useEffect } from 'react';
 
-useAppKitEventSubscription('MODAL_OPEN', newEvent => {
-  // your code here
-});
+export default function Component() {
+  useAppKitEventSubscription('MODAL_OPEN', newEvent => {
+    console.log('Modal Opened Event:', newEvent);
+    // Perform actions when the modal opens
+  });
+
+  useAppKitEventSubscription('MODAL_CLOSED', newEvent => {
+    console.log('Modal Closed Event:', newEvent);
+    // Perform actions when the modal closes
+  });
+
+  return null; // Or your component JSX
+}
 ```
 </Tab>
 
 <Tab title="Ethers v5">
 ```ts
 import { useAppKitEventSubscription } from '@reown/appkit-ethers5-react-native'
+import { useEffect } from 'react';
 
-useAppKitEventSubscription('MODAL_OPEN', newEvent => {
-  // your code here
-});
+export default function Component() {
+  useAppKitEventSubscription('MODAL_OPEN', newEvent => {
+    console.log('Modal Opened Event:', newEvent);
+    // Perform actions when the modal opens
+  });
+
+  useAppKitEventSubscription('MODAL_CLOSED', newEvent => {
+    console.log('Modal Closed Event:', newEvent);
+    // Perform actions when the modal closes
+  });
+
+  return null; // Or your component JSX
+}
 ```
 
 </Tab>
@@ -218,27 +328,68 @@ Get the metadata information from the connected wallet
 <Tab title="Wagmi">
 ```ts
 import { useWalletInfo } from '@reown/appkit-wagmi-react-native'
+import { Text, View } from 'react-native';
 
-const { walletInfo } = useWalletInfo()
-````
+export default function Component() {
+  const { walletInfo } = useWalletInfo();
+
+  if (!walletInfo) {
+    return <Text>No wallet connected or info unavailable.</Text>;
+  }
+
+  return (
+    <View>
+      <Text>Wallet Name: {walletInfo.name}</Text>
+      <Text>Wallet Icon: {walletInfo.icon}</Text> 
+    </View>
+  );
+}
+```
 
 </Tab>
 
 <Tab title="Ethers">
 ```ts
 import { useWalletInfo } from '@reown/appkit-ethers-react-native'
+import { Text, View } from 'react-native';
 
-const { walletInfo } = useWalletInfo()
+export default function Component() {
+  const { walletInfo } = useWalletInfo();
 
-````
+  if (!walletInfo) {
+    return <Text>No wallet connected or info unavailable.</Text>;
+  }
+
+  return (
+    <View>
+      <Text>Wallet Name: {walletInfo.name}</Text>
+      <Text>Wallet Icon: {walletInfo.icon}</Text>
+    </View>
+  );
+}
+```
 </Tab>
 
 <Tab title="Ethers v5">
 ```ts
 import { useWalletInfo } from '@reown/appkit-ethers5-react-native'
+import { Text, View } from 'react-native';
 
-const { walletInfo } = useWalletInfo()
-````
+export default function Component() {
+  const { walletInfo } = useWalletInfo();
+
+  if (!walletInfo) {
+    return <Text>No wallet connected or info unavailable.</Text>;
+  }
+
+  return (
+    <View>
+      <Text>Wallet Name: {walletInfo.name}</Text>
+      <Text>Wallet Icon: {walletInfo.icon}</Text>
+    </View>
+  );
+}
+```
 
 </Tab>
 
