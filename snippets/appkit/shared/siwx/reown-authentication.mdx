@@ -46,3 +46,36 @@ const appkit = createAppKit({
 ```
 
 Now your Dapp is ready to use the **Reown Authentication** within you SIWX configuration.
+
+### Extra configuration
+
+With `ReownAuthentication` you don't need to do anything else, it will work out of the box, but you can configure some parameters to customize the experience.
+
+#### Available Parameters
+
+```typescript
+new ReownAuthentication({
+  localAuthStorageKey?: string    // Default: '@appkit/siwx-auth-token'
+  localNonceStorageKey?: string   // Default: '@appkit/siwx-nonce-token'
+  required?: boolean              // Default: true
+})
+```
+
+#### Examples
+
+**Custom storage keys:**
+
+```typescript
+new ReownAuthentication({
+  localAuthStorageKey: 'my-app-auth',
+  localNonceStorageKey: 'my-app-nonce'
+})
+```
+
+**Optional authentication (wallet stays connected if user denies signing):**
+
+```typescript
+new ReownAuthentication({
+  required: false
+})
+```
