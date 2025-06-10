@@ -1,0 +1,100 @@
+For this example, we'll be using **Wagmi** and **Viem** with Nuxt.
+
+First, configure your Nuxt application for SSR compatibility by updating your `nuxt.config.ts`:
+
+```javascript
+export default defineNuxtConfig({
+  ssr: false,
+  modules: ['@wagmi/vue/nuxt'],
+  runtimeConfig: {
+    public: {
+      projectId: process.env.NUXT_PROJECT_ID
+    }
+  }
+})
+```
+
+Create Nuxt plugins for vue-query and wagmi setup:
+
+```javascript
+// plugins/1.vue-query.ts
+import { defineNuxtPlugin } from '#imports'
+import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
+
+export default defineNuxtPlugin(nuxt => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { staleTime: 5000 } }
+  })
+
+  nuxt.vueApp.use(VueQueryPlugin, {
+    queryClient,
+    enableDevtoolsV6Plugin: true
+  })
+})
+```
+
+```javascript
+// plugins/2.wagmi.ts
+import { WagmiPlugin } from '@wagmi/vue'
+import { defineNuxtPlugin } from 'nuxt/app'
+import { wagmiAdapter } from '~/config/appkit'
+
+export default defineNuxtPlugin(nuxtApp => {
+  nuxtApp.vueApp.use(WagmiPlugin, { config: wagmiAdapter.wagmiConfig })
+})
+```
+
+Create your AppKit configuration:
+
+```javascript
+// config/appkit.ts
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+
+export const projectId = process.env.NUXT_PROJECT_ID || 'YOUR_PROJECT_ID'
+
+export const networks = [mainnet, arbitrum]
+
+export const wagmiAdapter = new WagmiAdapter({
+  networks,
+  projectId
+})
+```
+
+Then in your `app.vue` file, set up AppKit:
+
+```javascript
+<script setup lang="ts">
+import { createAppKit } from '@reown/appkit/vue'
+import { wagmiAdapter, networks, projectId } from './config/appkit'
+
+createAppKit({
+  adapters: [wagmiAdapter],
+  networks,
+  projectId,
+  metadata: {
+    name: 'AppKit Nuxt Wagmi Example',
+    description: 'AppKit Nuxt Wagmi Example',
+    url: 'https://reown.com/appkit',
+    icons: ['https://avatars.githubusercontent.com/u/179229932?s=200&v=4']
+  }
+})
+</script>
+
+<template>
+  <client-only>
+    <div class="page-container">
+      <h1>Nuxt Wagmi Example</h1>
+      <appkit-button />
+    </div>
+  </client-only>
+</template>
+```
+
+<Note>
+  Make sure to set your `NUXT_PROJECT_ID` environment variable which you can get from [Reown Cloud](https://cloud.reown.com).
+</Note>
+
+<Note>
+  The `ssr: false` configuration and `<client-only>` wrapper ensure AppKit works correctly with Nuxt's SSR environment.
+</Note>

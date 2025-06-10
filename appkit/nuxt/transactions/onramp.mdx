@@ -1,0 +1,27 @@
+---
+title: On-Ramp
+---
+
+import Component from "/snippets/appkit/shared/onramp.mdx";
+
+<Component />
+
+## API
+
+```javascript
+<script setup lang="ts">
+import { useAppKit } from '@reown/appkit/vue'
+
+const { open } = useAppKit()
+
+function openOnRamp() {
+  open({ view: 'OnRampProviders' })
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="openOnRamp">Buy Crypto</button>
+  </client-only>
+</template>
+```

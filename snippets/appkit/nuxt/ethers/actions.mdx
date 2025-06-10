@@ -1,0 +1,135 @@
+You can use actions to control the modal, subscribe to wallet events and interact with them and smart contracts.
+
+## useAppKit
+
+Hook for controlling the modal.
+
+```javascript
+<script setup lang="ts">
+import { useAppKit } from '@reown/appkit/vue'
+
+const { open, close } = useAppKit()
+</script>
+
+<template>
+  <client-only>
+    <button @click="open">Open Modal</button>
+    <button @click="close">Close Modal</button>
+  </client-only>
+</template>
+```
+
+## useAppKitAccount
+
+Hook for accessing account data.
+
+```javascript
+<script setup lang="ts">
+import { useAppKitAccount } from '@reown/appkit/vue'
+
+const { address, caipAddress, isConnected, status } = useAppKitAccount()
+</script>
+
+<template>
+  <client-only>
+    <div v-if="isConnected">
+      <p>Address: {{ address }}</p>
+      <p>CAIP Address: {{ caipAddress }}</p>
+      <p>Status: {{ status }}</p>
+    </div>
+    <div v-else>
+      <p>Not connected</p>
+    </div>
+  </client-only>
+</template>
+```
+
+## useAppKitProvider
+
+Hook for accessing the Ethers provider.
+
+```javascript
+<script setup lang="ts">
+import { BrowserProvider, Contract, parseEther } from 'ethers'
+import { useAppKitProvider, useAppKitAccount } from '@reown/appkit/vue'
+
+const { walletProvider } = useAppKitProvider('eip155')
+const { address } = useAppKitAccount()
+
+async function sendTransaction() {
+  if (!walletProvider || !address.value) return
+  
+  const ethersProvider = new BrowserProvider(walletProvider)
+  const signer = await ethersProvider.getSigner()
+  
+  const tx = await signer.sendTransaction({
+    to: '0x...',
+    value: parseEther('0.001')
+  })
+  
+  console.log('Transaction:', tx)
+}
+
+async function signMessage() {
+  if (!walletProvider || !address.value) return
+  
+  const ethersProvider = new BrowserProvider(walletProvider)
+  const signer = await ethersProvider.getSigner()
+  
+  const signature = await signer.signMessage('Hello World!')
+  console.log('Signature:', signature)
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="sendTransaction">Send Transaction</button>
+    <button @click="signMessage">Sign Message</button>
+  </client-only>
+</template>
+```
+
+## Contract Interaction
+
+```javascript
+<script setup lang="ts">
+import { BrowserProvider, Contract } from 'ethers'
+import { useAppKitProvider, useAppKitAccount } from '@reown/appkit/vue'
+
+const { walletProvider } = useAppKitProvider('eip155')
+const { address } = useAppKitAccount()
+
+const contractABI = [
+  'function balanceOf(address owner) view returns (uint256)',
+  'function transfer(address to, uint256 amount) returns (bool)'
+]
+
+async function readContract() {
+  if (!walletProvider) return
+  
+  const ethersProvider = new BrowserProvider(walletProvider)
+  const contract = new Contract('0x...', contractABI, ethersProvider)
+  
+  const balance = await contract.balanceOf(address.value)
+  console.log('Balance:', balance.toString())
+}
+
+async function writeContract() {
+  if (!walletProvider) return
+  
+  const ethersProvider = new BrowserProvider(walletProvider)
+  const signer = await ethersProvider.getSigner()
+  const contract = new Contract('0x...', contractABI, signer)
+  
+  const tx = await contract.transfer('0x...', parseEther('1'))
+  console.log('Transaction:', tx)
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="readContract">Read Contract</button>
+    <button @click="writeContract">Write Contract</button>
+  </client-only>
+</template>
+```

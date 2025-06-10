@@ -689,6 +689,42 @@
             ]
           },
           {
+            "dropdown": "Nuxt",
+            "icon": "code",
+            "description": "AppKit on Nuxt",
+            "pages": [
+              {
+                "group": "Fundamentals",
+                "pages": [
+                  "appkit/nuxt/core/installation",
+                  "appkit/nuxt/core/actions",
+                  "appkit/nuxt/core/options",
+                  "appkit/nuxt/core/components",
+                  "appkit/nuxt/core/composables",
+                  "appkit/nuxt/core/smart-accounts",
+                  "appkit/nuxt/core/custom-connectors",
+                  "appkit/nuxt/core/custom-networks",
+                  "appkit/nuxt/core/multichain",
+                  "appkit/nuxt/core/theming",
+                  "appkit/nuxt/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/nuxt/core/socials"
+                ]
+              },
+              {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/nuxt/transactions/onramp",
+                  "appkit/nuxt/transactions/swaps"
+                ]
+              }
+            ]
+          },
+          {
             "dropdown": "React Native",
             "icon": "mobile-screen-button",
             "description": "AppKit on React Native",
