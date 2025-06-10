@@ -883,6 +883,7 @@
                   {
                     "group": "Upgrade",
                     "pages": [
+                      "walletkit/upgrade/staying-up-to-date",
                       {
                         "group": "Web3Wallet to Reown WalletKit",
                         "pages": [
