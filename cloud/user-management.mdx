@@ -2,42 +2,68 @@
 title: Reown Authentication
 ---
 
-Easily view and manage all authenticated users through AppKit [Reown Authentication](/appkit/authentication/siwx/reown-authentication), a drop-in hosted SIWX server that provides key insights into your user base.
+**Reown Authentication is our flagship SIWX (Sign In With X) solution** - the recommended way to handle user authentication for modern web3 applications. Built specifically for multi-chain environments, it abstracts away the complexity of validating wallets across **EVM, Solana, and Bitcoin networks**.
 
-## Usage
+## Getting Started
 
-Refer to [Reown Authentication](/appkit/authentication/siwx/reown-authentication) for instructions on enabling this feature with AppKit.
+Transform your web3 application's authentication experience today. Our [AppKit integration guide](/appkit/authentication/siwx/reown-authentication) will have you up and running in minutes.
 
-## Dashboard
+**Questions?** Reach out to our team - we're here to help you build the best authentication experience for your users.
 
-The dashboard provides a list of all accounts (chain + address) connected to your dapp, including the country they connected from, the last connection time, and the authentication method (wallet or social login).
+## Why Choose Reown Authentication?
 
-<Frame>![Reown Authentication](/images/assets/user-management.png)</Frame>
-## Insights
+### **Production-Ready from Day One**
 
-We plan to add more insights over time. Currently, it includes:
+Skip the complexity of building and maintaining your own authentication infrastructure. Our hosted solution is battle-tested, globally distributed via Cloudflare Workers, and includes built-in rate limiting.
 
-- **Connections**: Authenticated users over time
-- **Geographic Distribution**: User distribution by country
-- **Wallet Analytics**: Which wallets are most commonly used
-- **30-Day History**: Historical data for the past 30 days
+### **Multi-Chain Native**
 
-<Frame>![Reown Authentication](/images/assets/insights.png)</Frame># SIWX API
+Reown Authentication supports all the networks supported by AppKit, with Reown Authentication you can seamlessly integrate with:
 
-The Reown Authentication API is a hosted server implementing [Sign In With X/Anything (SIWX)](https://chainagnostic.org/CAIPs/caip-122). SIWX is a chain-agnostic variant of [Sign In With Ethereum (SIWE)](https://eips.ethereum.org/EIPS/eip-4361). To connect to your dapp, users must sign a message. The message signature is forwarded to our server, which verifies it and issues a JWT upon successful authentication.
+- **EVM Networks**
+- **Solana Networks**
+- **Bitcoin Networks**
 
-## Why Use Our API Instead of Building Your Own?
+### User Management Dashboard
 
-Our solution abstracts the complexity and maintenance costs of running a SIWX server. Another benefit is immediate access to key user insights in your dashboard, as shown above. The API leverages Cloudflare Workers for global distribution and has built-in rate limiting.
+Monitor and understand your authenticated users through our comprehensive dashboard:
 
-## Limitations
+- **Complete user registry** with chain addresses and connection history
+- **Geographic insights** showing where your users connect from
+- **Authentication method tracking** (wallet vs social login)
+- **Real-time connection analytics**
 
-<Warning>The feature is currently in beta.</Warning>
+<Frame caption="User Management">
+  ![User Management Dashboard](/images/assets/user-management.png)
+</Frame>
 
-Currently, this feature and its API are only available for AppKit projects and only supports EVM networks. We plan to make it available for all Reown projects and will add more networks in upcoming versions. Get in touch via Discord if you are interested.
+<br />
 
-# Programmatic Access & Webhooks
+<Frame caption="User Insights">![Analytics Dashboard](/images/assets/insights.png)</Frame>
 
-We are planning on enabling your backend to interact with our hosted backend via [OIDC](https://openid.net/developers/how-connect-works/). This allows you to confirm whether a user is logged in and qualify their scopes.
+## How it works
 
-We are also planning on exposing the list of users programmatically and webhooks such that you can subscribe to signup, login, and other events.
+Our SIWX API implements the [Sign In With X (SIWX)](https://chainagnostic.org/CAIPs/caip-122) standard - a chain-agnostic evolution of [Sign In With Ethereum (SIWE)](https://eips.ethereum.org/EIPS/eip-4361).
+
+1. Users sign a cryptographic message with their wallet
+2. Message signature is securely forwarded to our verification servers
+3. Upon successful validation, a JWT token is issued for your application
+4. Seamless integration with your existing authentication flows
+
+## Roadmap
+
+Reown Authentication is rapidly evolving with exciting features on the horizon:
+
+### Available Now
+
+- **User Management Dashboard** - Comprehensive analytics and user management
+- **Multi-chain wallet validation** - EVM, Solana, Bitcoin support
+- **Global infrastructure** - Cloudflare Workers distribution
+- **Custom User Metadata Storage** - Store additional user data
+
+### Coming Soon
+
+- **Email Collection** - Collect user emails during authentication
+- **User Data Exports** - Programmatic access to your user data
+- **Webhooks** - Real-time notifications for signup, login, and user events
+- **User Profiles** - Enhanced user identity management

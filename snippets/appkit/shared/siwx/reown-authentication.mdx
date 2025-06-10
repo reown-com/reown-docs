@@ -1,6 +1,6 @@
-Reown Authentication is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions.
+**Reown Authentication is our flagship SIWX (Sign In With X) solution** - the recommended way to handle user authentication for modern web3 applications. Built specifically for multi-chain environments, it abstracts away the complexity of validating wallets across **EVM, Solana, and Bitcoin networks**.
 
-With Reown Authentication you will be able to see and control the sessions of your users using the [Reown Authentication Dashboard](#reown-authentication).
+With Reown Authentication you will be able to see and control the sessions of your users, get insights and much more. Read more about [Reown Authentication](/cloud/user-management) features in the dedicated documentation.
 
 <Warning>
   `ReownAuthentication` was previously named `CloudAuthSIWX`, it has been renamed. If you were using
@@ -31,7 +31,7 @@ pnpm add @reown/appkit-siwx
 
 ### Usage
 
-```ts {2-3, 9-10}
+```typescript
 import { createAppKit } from '@reown/appkit'
 // Add the following code line
 import { ReownAuthentication } from '@reown/appkit-siwx'
@@ -45,29 +45,4 @@ const appkit = createAppKit({
 })
 ```
 
-Now you are ready to use the **SIWX** feature in your Dapp.
-
-## Reown Authentication
-
-Easily view and manage all authenticated users through AppKit [Reown Authentication](/appkit/authentication/siwx/reown-authentication), a drop-in hosted SIWX server that provides key insights into your user base.
-
-### Dashboard
-
-The dashboard provides a list of all accounts (chain + address) connected to your dapp, including the country they connected from, the last connection time, and the authentication method (wallet or social login).
-
-<Frame caption="Reown Authentication">
-  <img src="/images/assets/user-management.png" />
-</Frame>
-
-### Insights
-
-We plan to add more insights over time. Currently, it includes:
-
-- **Connections**: Authenticated users over time
-- **Geographic Distribution**: User distribution by country
-- **Wallet Analytics**: Which wallets are most commonly used
-- **30-Day History**: Historical data for the past 30 days
-
-<Frame caption="Reown Authentication">
-  <img src="/images/assets/insights.png" />
-</Frame>{' '}
+Now your Dapp is ready to use the **Reown Authentication** within you SIWX configuration.
