@@ -231,7 +231,7 @@ export const appKit = createAppKit({
 
 Wrap your application with the `AppKitProvider` to make the `AppKit` instance available throughout your component tree via context.
 
-```tsx
+```tsx {3,9}
 // App.tsx
 import React from 'react';
 import { AppKitProvider } from '@reown/appkit-react-native';
@@ -253,7 +253,7 @@ export default App;
 
 To display the AppKit modal and other potential UI elements, you need to include the `<AppKit />` component in your application. If you want the modal to be accessible from anywhere in your app, it's best to place this component within your main application root component (e.g., the `YourAppRootComponent` from the example above, or directly in `App.tsx` if it serves as your main layout).
 
-```tsx
+```tsx {3,15}
 // YourAppRootComponent.tsx (or App.tsx if it contains your main layout)
 import React from 'react';
 import { AppKit } from '@reown/appkit-react-native';
@@ -304,6 +304,137 @@ function ConnectButton() {
 export default ConnectButton;
 ```
 For detailed examples on specific actions like signing messages, sending transactions, or switching networks, please refer to the [Hooks](./hooks#useprovider) and [Examples](#examples) sections.
+
+### 5. Configure Storage
+
+For data to persist across sessions, you need to provide a storage solution. The `createAppKit` function accepts a `storage` option that must conform to the `Storage` interface.
+
+The `Storage` interface, which can be imported from `@reown/appkit-react-native`, is defined as follows:
+
+```typescript
+export interface Storage {
+  /**
+   * Returns all keys in storage.
+   */
+  getKeys(): Promise<string[]>;
+
+  /**
+   * Returns all key-value entries in storage.
+   */
+  getEntries<T = any>(): Promise<[string, T][]>;
+
+  /**
+   * Get an item from storage for a given key.
+   * @param key The key to retrieve.
+   */
+  getItem<T = any>(key: string): Promise<T | undefined>;
+
+  /**
+   * Set an item in storage for a given key.
+   * @param key The key to set.
+   * @param value The value to set.
+   */
+  setItem<T = any>(key: string, value: T): Promise<void>;
+
+  /**
+   * Remove an item from storage for a given key.
+   * @param key The key to remove.
+   */
+  removeItem(key: string): Promise<void>;
+}
+```
+
+**Example with AsyncStorage**
+
+You can implement this interface using a library like `@react-native-async-storage/async-storage`. Create a new file, for example `src/StorageUtil.ts`, with the following content:
+
+```typescript
+// src/StorageUtil.ts
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { safeJsonParse, safeJsonStringify } from '@walletconnect/safe-json';
+import type { Storage } from '@reown/appkit-react-native';
+
+export const storage: Storage = {
+  getKeys: async () => {
+    return AsyncStorage.getAllKeys() as Promise<string[]>;
+  },
+  getEntries: async <T = any>(): Promise<[string, T][]> => {
+    function parseEntry(entry: [string, string | null]): [string, any] {
+      return [entry[0], safeJsonParse(entry[1] ?? '')];
+    }
+
+    const keys = await AsyncStorage.getAllKeys();
+    const entries = await AsyncStorage.multiGet(keys);
+
+    return entries.map(parseEntry);
+  },
+  setItem: async (key: string, value: any) => {
+    return await AsyncStorage.setItem(key, safeJsonStringify(value));
+  },
+  getItem: async <T = any>(key: string): Promise<T | undefined> => {
+    const item = await AsyncStorage.getItem(key);
+    if (typeof item === 'undefined' || item === null) {
+      return undefined;
+    }
+
+    return safeJsonParse(item) as T;
+  },
+  removeItem: async (key: string) => {
+    return await AsyncStorage.removeItem(key);
+  }
+};
+```
+
+**Update AppKit Configuration**
+
+Finally, import your custom storage and pass it to `createAppKit` in your `AppKitConfig.ts`. This example builds on the configuration from [Initialize AppKit](#1-initialize-appkit):
+
+```typescript {7,31}
+// src/AppKitConfig.ts (or wherever you prefer to configure it)
+import "@walletconnect/react-native-compat";
+import { createAppKit, bitcoin, solana, type AppKitNetwork } from '@reown/appkit-react-native';
+import { EthersAdapter } from '@reown/appkit-ethers-react-native';
+import { SolanaAdapter } from '@reown/appkit-solana-react-native';
+import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
+import { storage } from './StorageUtil'; // 1. Import your custom storage
+
+// You can use 'viem/chains' or define your own chains using `AppKitNetwork` type. Check Options/networks for more detailed info
+import { mainnet, polygon } from 'viem/chains';
+
+const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
+
+const ethersAdapter = new EthersAdapter({
+  projectId
+});
+
+const solanaAdapter = new SolanaAdapter({
+  projectId
+});
+
+const bitcoinAdapter = new BitcoinAdapter({
+  projectId
+});
+
+export const appKit = createAppKit({
+  projectId,
+  networks: [mainnet, polygon, solana, bitcoin],
+  defaultNetwork: mainnet,
+  adapters: [ethersAdapter, solanaAdapter, bitcoinAdapter],
+  storage,
+
+  // Other AppKit options (e.g., metadata for your dApp)
+  metadata: {
+    name: 'My Awesome dApp',
+    description: 'My dApp description',
+    url: 'https://myapp.com',
+    icons: ['https://myapp.com/icon.png'],
+    redirect: {
+      native: "YOUR_APP_SCHEME://",
+      universal: "YOUR_APP_UNIVERSAL_LINK.com",
+    },
+  }
+});
+```
 
 ## Enable Wallet Detection
 
