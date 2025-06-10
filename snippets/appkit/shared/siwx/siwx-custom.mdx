@@ -1,5 +1,4 @@
-
-Alternatively from the [Default Implementation](./siwx-default), you can create your own implementation of the **SIWX** feature to suit your specific requirements.
+Beyond the recommended [Reown Authentication](./reown-authentication) and [Default Implementation](./siwx-default), you can create your own implementation of the **SIWX** feature to suit your specific requirements.
 
 **SIWX** is developed to work as a plugin system for AppKit and to enable correctly it you need to fulfill the expected interface within the `createAppKit` function.
 
@@ -20,7 +19,7 @@ interface SIWXConfig {
 All the typings used are exposed by `@reown/appkit-core` package. You may check the source code [here](https://github.com/reown-com/appkit/blob/main/packages/core/src/utils/SIWXUtil.ts).
 
 <Accordion title="Full Detailed Interfaces">
-````ts
+````typescript
 /**
  * This interface represents the SIWX configuration plugin, which is used to create and manage SIWX messages and sessions.
  * AppKit provides predefined implementations for this interface through `@reown/appkit-siwx`.
@@ -229,9 +228,9 @@ This method will be called to get all the sessions stored for a specific chain a
 
 ## Example
 
-Here is an example of how you can implement use your `SWIXConfig` interface:
+Here is an example of how you can implement use your `SIWXConfig` interface:
 
-```ts
+````typescript
 import { createAppKit, type SIWXConfig } from '@reown/appkit'
 
 const siwx: SIWXConfig = {

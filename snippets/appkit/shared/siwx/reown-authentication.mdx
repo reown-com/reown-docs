@@ -1,0 +1,73 @@
+Reown Authentication is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions.
+
+With Reown Authentication you will be able to see and control the sessions of your users using the [Reown Authentication Dashboard](#reown-authentication).
+
+<Warning>
+  `ReownAuthentication` was previously named `CloudAuthSIWX`, it has been renamed. If you were using
+  the previous class, you will not need to update your code, both class names work identically.
+</Warning>
+
+### Installation
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-siwx
+```
+
+```bash Yarn
+yarn add @reown/appkit-siwx
+```
+
+```bash Bun
+bun a @reown/appkit-siwx
+```
+
+```bash pnpm
+pnpm add @reown/appkit-siwx
+```
+
+</CodeGroup>
+
+### Usage
+
+```ts {2-3, 9-10}
+import { createAppKit } from '@reown/appkit'
+// Add the following code line
+import { ReownAuthentication } from '@reown/appkit-siwx'
+
+const appkit = createAppKit({
+  projectId,
+  networks,
+  metadata,
+  // Add the following code line
+  siwx: new ReownAuthentication()
+})
+```
+
+Now you are ready to use the **SIWX** feature in your Dapp.
+
+## Reown Authentication
+
+Easily view and manage all authenticated users through AppKit [Reown Authentication](/appkit/authentication/siwx/reown-authentication), a drop-in hosted SIWX server that provides key insights into your user base.
+
+### Dashboard
+
+The dashboard provides a list of all accounts (chain + address) connected to your dapp, including the country they connected from, the last connection time, and the authentication method (wallet or social login).
+
+<Frame caption="Reown Authentication">
+  <img src="/images/assets/user-management.png" />
+</Frame>
+
+### Insights
+
+We plan to add more insights over time. Currently, it includes:
+
+- **Connections**: Authenticated users over time
+- **Geographic Distribution**: User distribution by country
+- **Wallet Analytics**: Which wallets are most commonly used
+- **30-Day History**: Historical data for the past 30 days
+
+<Frame caption="Reown Authentication">
+  <img src="/images/assets/insights.png" />
+</Frame>{' '}
