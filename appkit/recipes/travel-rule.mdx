@@ -76,13 +76,14 @@ Once you have AppKit set up in your dApp, you can easily enable SIWX by adding t
 
 ```ts {2, 8}
 import { createAppKit } from '@reown/appkit'
-import { DefaultSIWX } from '@reown/appkit-siwx'
+import { ReownAuthentication } from '@reown/appkit-siwx'
 
 const appkit = createAppKit({
   projectId,
   networks,
   metadata,
-  siwx: new DefaultSIWX() // add this line to enable SIWX
+  siwx: new ReownAuthentication() // add this line to enable SIWX
+  
 })
 ```
 

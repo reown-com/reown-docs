@@ -41,20 +41,20 @@ pnpm add @reown/appkit-siwx
 ```ts {2-3, 9-10}
 import { createAppKit } from '@reown/appkit'
 // Add the following code line
-import { DefaultSIWX } from '@reown/appkit-siwx'
+import { ReownAuthentication } from '@reown/appkit-siwx'
 
 const appkit = createAppKit({
   projectId,
   networks,
   metadata,
   // Add the following code line
-  siwx: new DefaultSIWX() // add this line to enable SIWX
+  siwx: new ReownAuthentication() // add this line to enable SIWX
 })
 ```
 
 You should now have the **SIWX** feature up and running in your Dapp.
 
-The `DefaultSIWX` configuration will use the predefined components to handle the message generation, verification and storage of the sessions. You can customize the default implementation by providing your own components as in the following sections.
+The `ReownAuthentication` configuration will use the predefined components to handle the message generation, verification and storage of the sessions. You can customize the default implementation by providing your own components as in the following sections.
 
 ## Customizing the SIWXDefault Class
 
