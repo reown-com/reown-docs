@@ -1,0 +1,129 @@
+---
+title: "Sui"
+description: Sui JSON-RPC Methods
+---
+
+These are the methods that wallets should implement to handle Sui transactions and messages via WalletConnect.
+
+### sui_signTransaction
+
+Sign a Sui transaction without executing it.
+
+#### Parameters
+
+1. `transaction` (object) - The transaction to sign:
+   - `transaction` (string) - The base64 encoded transaction block
+   - `address` (string) - The sender's Sui address
+
+#### Returns
+
+`object` - The signed transaction:
+- `signature` (string) - The base64 encoded signature
+- `transactionBytes` (string) - The base64 encoded signed transaction bytes
+
+#### Example
+
+```javascript
+// Request
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "sui_signTransaction",
+  "params": {
+    "transaction": "ewogICJ2ZXJzaW9uIjogMiwKICAic2VuZGVyIjogIjB4ZDVmNjQ3ZWRiNzdkNGZkYTMxZDAzMDQ1MDY0NDdmYjNjOTJlNTVhYWY3N2JjNWVkNGI3N2MzMzJkZDQ2MDVmYSIsCiAgImV4cGlyYXRpb24iOiBudWxsLAogICJnYXNEYXRhIjogewogICAgImJ1ZGdldCI6IG51bGwsCiAgICAicHJpY2UiOiBudWxsLAogICAgIm93bmVyIjogbnVsbCwKICAgICJwYXltZW50IjogbnVsbAogIH0sCiAgImlucHV0cyI6IFsKICAgIHsKICAgICAgIlB1cmUiOiB7CiAgICAgICAgImJ5dGVzIjogIlpBQUFBQUFBQUFBPSIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIlB1cmUiOiB7CiAgICAgICAgImJ5dGVzIjogIjFmWkg3YmQ5VDlveDBEQkZCa1IvczhrdVZhcjNlOFh0UzNmRE10MUdCZm89IgogICAgICB9CiAgICB9CiAgXSwKICAiY29tbWFuZHMiOiBbCiAgICB7CiAgICAgICJTcGxpdENvaW5zIjogewogICAgICAgICJjb2luIjogewogICAgICAgICAgIkdhc0NvaW4iOiB0cnVlCiAgICAgICAgfSwKICAgICAgICAiYW1vdW50cyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgIklucHV0IjogMAogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIlRyYW5zZmVyT2JqZWN0cyI6IHsKICAgICAgICAib2JqZWN0cyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgIk5lc3RlZFJlc3VsdCI6IFsKICAgICAgICAgICAgICAwLAogICAgICAgICAgICAgIDAKICAgICAgICAgICAgXQogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgImFkZHJlc3MiOiB7CiAgICAgICAgICAiSW5wdXQiOiAxCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9",
+    "address": "0xd5f647edb77d4fda31d0304506447fb3c92e55aaf77bc5ed4b77c332dd4605fa"
+  }
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "signature": "ACRvdr3yI2mdpeOK+NsJIimdNGcE9R//jjT3HALZ17fFyu818op4jZi/64lPBjpKMDX6ZtxnCFZExTOFdpi3MwEZXLv/ORduxMYX0fw8dbHlnWC8WG0ymrlAmARpEibbhw==",
+    "transactionBytes": "ACRvdr3yI2mdpeOK+NsJIimdNGcE9R//jjT3HALZ17fFyu818op4jZi/64lPBjpKMDX6ZtxnCFZExTOFdpi3MwEZXLv/ORduxMYX0fw8dbHlnWC8WG0ymrlAmARpEibbhw=="
+  },
+  "id": 1
+}
+```
+
+### sui_signAndExecuteTransaction
+
+Sign and execute a Sui transaction.
+
+#### Parameters
+
+1. `transaction` (object) - The transaction to sign and execute:
+   - `transaction` (string) - The base64 encoded transaction block
+   - `address` (string) - The sender's Sui address
+
+#### Returns
+
+`object` - The transaction result:
+- `digest` (string) - The transaction digest that can be used to look up the transaction in the explorer
+
+#### Example
+
+```javascript
+// Request
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "sui_signAndExecuteTransaction",
+  "params": {
+    "transaction": "ewogICJ2ZXJzaW9uIjogMiwKICAic2VuZGVyIjogIjB4ZDVmNjQ3ZWRiNzdkNGZkYTMxZDAzMDQ1MDY0NDdmYjNjOTJlNTVhYWY3N2JjNWVkNGI3N2MzMzJkZDQ2MDVmYSIsCiAgImV4cGlyYXRpb24iOiBudWxsLAogICJnYXNEYXRhIjogewogICAgImJ1ZGdldCI6IG51bGwsCiAgICAicHJpY2UiOiBudWxsLAogICAgIm93bmVyIjogbnVsbCwKICAgICJwYXltZW50IjogbnVsbAogIH0sCiAgImlucHV0cyI6IFsKICAgIHsKICAgICAgIlB1cmUiOiB7CiAgICAgICAgImJ5dGVzIjogIlpBQUFBQUFBQUFBPSIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIlB1cmUiOiB7CiAgICAgICAgImJ5dGVzIjogIjFmWkg3YmQ5VDlveDBEQkZCa1IvczhrdVZhcjNlOFh0UzNmRE10MUdCZm89IgogICAgICB9CiAgICB9CiAgXSwKICAiY29tbWFuZHMiOiBbCiAgICB7CiAgICAgICJTcGxpdENvaW5zIjogewogICAgICAgICJjb2luIjogewogICAgICAgICAgIkdhc0NvaW4iOiB0cnVlCiAgICAgICAgfSwKICAgICAgICAiYW1vdW50cyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgIklucHV0IjogMAogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIlRyYW5zZmVyT2JqZWN0cyI6IHsKICAgICAgICAib2JqZWN0cyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgIk5lc3RlZFJlc3VsdCI6IFsKICAgICAgICAgICAgICAwLAogICAgICAgICAgICAgIDAKICAgICAgICAgICAgXQogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgImFkZHJlc3MiOiB7CiAgICAgICAgICAiSW5wdXQiOiAxCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9",
+    "address": "0xd5f647edb77d4fda31d0304506447fb3c92e55aaf77bc5ed4b77c332dd4605fa"
+  }
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "digest": "GBqPRFR9sYfWA8rt2wCkcgZrctyYMj8Ufunxkjg5G8zt"
+  },
+  "id": 1
+}
+```
+
+### sui_signPersonalMessage
+
+Sign a personal message.
+
+#### Parameters
+
+1. `message` (object) - The message to sign:
+   - `message` (string) - The message to sign (plain text)
+   - `address` (string) - The account address to sign with
+
+#### Returns
+
+`object` - The signed message:
+- `signature` (string) - The base64 encoded signature
+
+#### Example
+
+```javascript
+// Request
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "sui_signPersonalMessage",
+  "params": {
+    "message": "This is a message to be signed for SUI",
+    "address": "0xd5f647edb77d4fda31d0304506447fb3c92e55aaf77bc5ed4b77c332dd4605fa"
+  }
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "signature": "APsZ7PvuAynXYxxfeo0Py4DWOnrUpwqHhJJ1F8aGB2nmS5Wv9dvVo8Gr7DKaXwPMqFaFNKsHb0Hej07R0L0NpQsZXLv/ORduxMYX0fw8dbHlnWC8WG0ymrlAmARpEibbhw=="
+  },
+  "id": 1
+}
+```
+
+## Additional Resources
+
+For more information about Sui RPC methods and implementation details, please refer to the [official Sui documentation](https://docs.sui.io/sui-api-ref).
