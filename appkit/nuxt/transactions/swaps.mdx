@@ -1,0 +1,27 @@
+---
+title: Swaps
+---
+
+import Component from "/snippets/appkit/shared/swaps.mdx";
+
+<Component />
+
+## API
+
+```javascript
+<script setup lang="ts">
+import { useAppKit } from '@reown/appkit/vue'
+
+const { open } = useAppKit()
+
+function openSwaps() {
+  open({ view: 'Swap' })
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="openSwaps">Open Swaps</button>
+  </client-only>
+</template>
+```

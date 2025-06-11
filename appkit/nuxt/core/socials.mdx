@@ -1,0 +1,28 @@
+---
+title: Email & Socials
+---
+
+import Socials from "/snippets/appkit/shared/socials.mdx";
+
+<Socials />
+
+## Nuxt-specific considerations
+
+When implementing social authentication in Nuxt, make sure to handle the authentication flow within `<client-only>` components to avoid SSR issues:
+
+```javascript
+<script setup lang="ts">
+import { useAppKitAccount } from '@reown/appkit/vue'
+
+const { isConnected } = useAppKitAccount()
+</script>
+
+<template>
+  <client-only>
+    <div v-if="isConnected">
+      <p>Connected via social login!</p>
+    </div>
+    <appkit-button v-else />
+  </client-only>
+</template>
+```

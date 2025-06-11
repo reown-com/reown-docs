@@ -1,0 +1,69 @@
+import BitcoinProviderInterface from "/snippets/appkit/shared/bitcoin-provider.mdx";
+
+AppKit Bitcoin provides a set of Vue components and composables to easily connect Bitcoin wallets with your Nuxt application.
+
+First, configure your `nuxt.config.ts` for SSR compatibility:
+
+```javascript
+export default defineNuxtConfig({
+  ssr: false,
+  runtimeConfig: {
+    public: {
+      projectId: process.env.NUXT_PROJECT_ID
+    }
+  }
+})
+```
+
+In your `app.vue` file set up the following configuration:
+
+```javascript
+<script setup lang="ts">
+import { createAppKit } from '@reown/appkit/vue'
+import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
+import { bitcoin } from '@reown/appkit/networks'
+
+const config = useRuntimeConfig()
+const projectId = config.public.projectId
+
+const networks = [bitcoin]
+
+const bitcoinAdapter = new BitcoinAdapter({
+  projectId
+})
+
+const metadata = {
+  name: 'AppKit Nuxt',
+  description: 'AppKit Nuxt Bitcoin Example',
+  url: 'https://example.com',
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+createAppKit({
+  adapters: [bitcoinAdapter],
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+    email: false,
+    socials: []
+  }
+})
+</script>
+
+<template>
+  <client-only>
+    <div class="page-container">
+      <h1>Nuxt Bitcoin Example</h1>
+      <appkit-button />
+    </div>
+  </client-only>
+</template>
+```
+
+<BitcoinProviderInterface />
+
+<Note>
+  The `ssr: false` configuration and `<client-only>` wrapper ensure AppKit works correctly with Nuxt's SSR environment.
+</Note>

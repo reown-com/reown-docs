@@ -1,0 +1,29 @@
+---
+title: Theming
+---
+
+import Theming from "/snippets/appkit/shared/theming.mdx";
+
+<Theming />
+
+## Nuxt-specific theming
+
+When working with theming in Nuxt, you can use the `useAppKitTheme` composable within `<client-only>` components:
+
+```javascript
+<script setup lang="ts">
+import { useAppKitTheme } from '@reown/appkit/vue'
+
+const { setThemeMode, setThemeVariables } = useAppKitTheme()
+
+function toggleTheme() {
+  setThemeMode('dark')
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="toggleTheme">Toggle Dark Mode</button>
+  </client-only>
+</template>
+```
