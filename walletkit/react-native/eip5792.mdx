@@ -198,8 +198,8 @@ This capability is expressed per chain and is crucial for determining how `walle
     - When using Wallet Service to get calls status from the bundler (see [wallet_getCallsStatus](#wallet_getcallsstatus)), the returned batchId must be a base64 encoded JSON object with `chainId` and `userOpHash` fields, example:
       ```json
       {
-        "chainId": "0x01",
-        "userOpHash": "0xffff"
+        "chain_id": "0x01",
+        "user_op_hash": "0xffff"
       }
       ```
 
