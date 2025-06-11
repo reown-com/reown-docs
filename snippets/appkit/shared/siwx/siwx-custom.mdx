@@ -1,4 +1,4 @@
-Beyond the recommended [Reown Authentication](./reown-authentication) and [Default Implementation](./siwx-default), you can create your own implementation of the **SIWX** feature to suit your specific requirements.
+Beyond the recommended [Reown Authentication](./reown-authentication) and [SIWXDefault](./siwx-default), you can create your own implementation of the **SIWX** feature to suit your specific requirements.
 
 **SIWX** is developed to work as a plugin system for AppKit and to enable correctly it you need to fulfill the expected interface within the `createAppKit` function.
 
@@ -38,67 +38,73 @@ export interface SIWXConfig {
    */
   createMessage: (input: SIWXMessage.Input) => Promise<SIWXMessage>
 
-  /**
-   * This method will be called to store a new single session.
-   *
-   * Constraints:
-   * - This method MUST verify if the session is valid and store it in the storage successfully.
-   *
-   * @param session SIWXSession
-   */
+/\*\*
+
+- This method will be called to store a new single session.
+-
+- Constraints:
+- - This method MUST verify if the session is valid and store it in the storage successfully.
+-
+- @param session SIWXSession
+  \*/
   addSession: (session: SIWXSession) => Promise<void>
 
-  /**
-   * This method will be called to revoke all the sessions stored for a specific chain and address.
-   *
-   * Constraints:
-   * - This method MUST delete all the sessions stored for the specific chain and address successfully.
-   *
-   * @param chainId CaipNetworkId
-   * @param address string
-   */
+/\*\*
+
+- This method will be called to revoke all the sessions stored for a specific chain and address.
+-
+- Constraints:
+- - This method MUST delete all the sessions stored for the specific chain and address successfully.
+-
+- @param chainId CaipNetworkId
+- @param address string
+  \*/
   revokeSession: (chainId: CaipNetworkId, address: string) => Promise<void>
 
-  /**
-   * This method will be called to replace all the sessions in the storage with the new ones.
-   *
-   * Constraints:
-   * - This method MUST verify all the sessions before storing them in the storage;
-   * - This method MUST replace all the sessions in the storage with the new ones successfully otherwise it MUST throw an error.
-   *
-   * @param sessions SIWXSession[]
-   */
+/\*\*
+
+- This method will be called to replace all the sessions in the storage with the new ones.
+-
+- Constraints:
+- - This method MUST verify all the sessions before storing them in the storage;
+- - This method MUST replace all the sessions in the storage with the new ones successfully otherwise it MUST throw an error.
+-
+- @param sessions SIWXSession[]
+  \*/
   setSessions: (sessions: SIWXSession[]) => Promise<void>
 
-  /**
-   * This method will be called to get all the sessions stored for a specific chain and address.
-   *
-   * Constraints:
-   * - This method MUST return only sessions that are verified and valid;
-   * - This method MUST NOT return expired sessions.
-   *
-   * @param chainId CaipNetworkId
-   * @param address string
-   * @returns
-   */
-  getSessions: (chainId: CaipNetworkId, address: string) => Promise<SIWXSession[]>
-}
+/\*\*
 
-/**
- * This interface represents a SIWX session, which is used to store the user's identity information.
- */
-export interface SIWXSession {
+- This method will be called to get all the sessions stored for a specific chain and address.
+-
+- Constraints:
+- - This method MUST return only sessions that are verified and valid;
+- - This method MUST NOT return expired sessions.
+-
+- @param chainId CaipNetworkId
+- @param address string
+- @returns
+  \*/
+  getSessions: (chainId: CaipNetworkId, address: string) => Promise<SIWXSession[]>
+  }
+
+/\*\*
+
+- This interface represents a SIWX session, which is used to store the user's identity information.
+  \*/
+  export interface SIWXSession {
   data: SIWXMessage.Data
   message: string
   signature: string
   cacao?: Cacao
-}
+  }
 
-/**
- * This interface represents a SIWX message, which is used to create a message to be signed by the user.
- * This must contain the necessary information to verify the user's identity and how to generate the string message.
- */
-export interface SIWXMessage extends SIWXMessage.Data, SIWXMessage.Methods {}
+/\*\*
+
+- This interface represents a SIWX message, which is used to create a message to be signed by the user.
+- This must contain the necessary information to verify the user's identity and how to generate the string message.
+  \*/
+  export interface SIWXMessage extends SIWXMessage.Data, SIWXMessage.Methods {}
 
 export namespace SIWXMessage {
   /**
@@ -106,88 +112,95 @@ export namespace SIWXMessage {
    */
   export interface Data extends Input, Metadata, Identifier {}
 
-  /**
-   * This interface represents the SIWX message input.
-   * Here must contain what is different for each user of the application.
-   */
+/\*\*
+
+- This interface represents the SIWX message input.
+- Here must contain what is different for each user of the application.
+  \*/
   export interface Input {
-    accountAddress: string
-    chainId: CaipNetworkId
-    notBefore?: Timestamp
+  accountAddress: string
+  chainId: CaipNetworkId
+  notBefore?: Timestamp
   }
 
-  /**
-   * This interface represents the SIWX message metadata.
-   * Here must contain the main data related to the app.
-   */
+/\*\*
+
+- This interface represents the SIWX message metadata.
+- Here must contain the main data related to the app.
+  \*/
   export interface Metadata {
-    domain: string
-    uri: string
-    version: string
-    nonce: string
-    statement?: string
-    resources?: string[]
+  domain: string
+  uri: string
+  version: string
+  nonce: string
+  statement?: string
+  resources?: string[]
   }
 
-  /**
-   * This interface represents the SIWX message identifier.
-   * Here must contain the request id and the timestamps.
-   */
+/\*\*
+
+- This interface represents the SIWX message identifier.
+- Here must contain the request id and the timestamps.
+  \*/
   export interface Identifier {
-    requestId?: string
-    issuedAt?: Timestamp
-    expirationTime?: Timestamp
+  requestId?: string
+  issuedAt?: Timestamp
+  expirationTime?: Timestamp
   }
 
-  /**
-   * This interface represents the SIWX message methods.
-   * Here must contain the method to generate the message string and any other method performed by the SIWX message.
-   */
+/\*\*
+
+- This interface represents the SIWX message methods.
+- Here must contain the method to generate the message string and any other method performed by the SIWX message.
+  \*/
   export interface Methods {
-    toString: () => string
+  toString: () => string
   }
 
-  /**
-   * The timestamp is a UTC string representing the time in ISO 8601 format.
-   */
-  export type Timestamp = string
-}
+/\*\*
 
-/**
- * The Cacao interface is a reference of CAIP-74 and represents a chain-agnostic Object Capability (OCAP).
- * https://chainagnostic.org/CAIPs/caip-74
- */
-export interface Cacao {
+- The timestamp is a UTC string representing the time in ISO 8601 format.
+  \*/
+  export type Timestamp = string
+  }
+
+/\*\*
+
+- The Cacao interface is a reference of CAIP-74 and represents a chain-agnostic Object Capability (OCAP).
+- https://chainagnostic.org/CAIPs/caip-74
+  \*/
+  export interface Cacao {
   h: Cacao.Header
   p: Cacao.Payload
   s: {
-    t: 'eip191' | 'eip1271'
-    s: string
-    m?: string
+  t: 'eip191' | 'eip1271'
+  s: string
+  m?: string
   }
-}
+  }
 
 export namespace Cacao {
   export interface Header {
     t: 'caip122'
   }
 
-  export interface Payload {
-    domain: string
-    aud: string
-    nonce: string
-    iss: string
-    version?: string
-    iat?: string
-    nbf?: string
-    exp?: string
-    statement?: string
-    requestId?: string
-    resources?: string[]
-    type?: string
-  }
+export interface Payload {
+domain: string
+aud: string
+nonce: string
+iss: string
+version?: string
+iat?: string
+nbf?: string
+exp?: string
+statement?: string
+requestId?: string
+resources?: string[]
+type?: string
 }
-````
+}
+
+`````
 </Accordion>
 
 ## Constraints
@@ -257,4 +270,4 @@ createAppKit({
   // ... your configuration
   siwx
 })
-````
+`````

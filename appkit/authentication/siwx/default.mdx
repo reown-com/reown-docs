@@ -22,7 +22,7 @@ This feature allows developers using our SDK to implement authentication by havi
 **SIWX** works as a plugin system for AppKit and you are going to add the plugin in the AppKit configuration. There are some ways to implement the **SIWX** feature:
 
 - Use Reown Authentication to manage the sessions in the Cloud Dashboard
-- Use the default implementation provided by AppKit
+- Use the `SIWXDefault` class provided by AppKit
 - Create a custom implementation to suit your specific requirements.
 
 To initialize the **SIWX** feature, you need to add the `siwx` parameter to the `createAppKit` function.
@@ -33,11 +33,11 @@ Reown Authentication is a predefined implementation of the SIWX configuration pl
 
 Read more about the [Reown Authentication Implementation](./reown-authentication).
 
-### Default Implementation
+### SIWXDefault
 
-By using the default implementation, you can quickly integrate the **SIWX** feature into your Dapp. The default implementation provides a set of pre-built components that allow you to have the feature up and running in no time.
+`SIWXDefault` is a scaffold implementation of the SIWX feature for quick integration. This option provides a set of pre-built components that allow you to have the feature up and running in no time.
 
-Read more about the [Default Implementation](./siwx-default).
+Read more about the [SIWXDefault Implementation](./siwx-default).
 
 ### Custom Implementation
 
