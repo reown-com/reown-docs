@@ -104,8 +104,33 @@ const stateData = useAppKitState();
 
 ### Returns
 
+- `stateData.initialized`: Boolean that indicates if the AppKit has been initialized. This sets to true when all controllers, adapters and internal state is ready
+- `stateData.loading`: Boolean that indicates if the AppKit is loading
 - `stateData.open`: Boolean that indicates if the modal is open
-- `stateData.selectedNetworkId`: The current chain id selected by the user
+- `stateData.selectedNetworkId`: The current chain id selected by the user in CAIP-2 format
+- `stateData.activeChain`: The active chain namespace (e.g., 'eip155', 'solana', 'bip122')
+
+### Example Usage
+
+```vue
+<template>
+  <div>
+    <div v-if="!stateData.initialized">Initializing AppKit...</div>
+    <div v-else-if="stateData.loading">Loading...</div>
+    <div v-else>
+      <p>Modal is {{ stateData.open ? 'open' : 'closed' }}</p>
+      <p>Selected Network: {{ stateData.selectedNetworkId }}</p>
+      <p>Active Chain: {{ stateData.activeChain }}</p>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { useAppKitState } from "@reown/appkit/vue";
+
+const stateData = useAppKitState();
+</script>
+```
 
 ## useAppKitTheme
 
