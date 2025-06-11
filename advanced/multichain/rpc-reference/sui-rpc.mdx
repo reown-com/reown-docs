@@ -1,33 +1,27 @@
 ---
 title: "Sui"
-description: Core Sui JSON-RPC Methods
+description: WalletConnect Sui JSON-RPC Methods
 ---
 
-## Read API Core Methods
+## WalletConnect Sui Methods
 
-### sui_getObject
+These are the methods that wallets should implement to handle Sui transactions and messages via WalletConnect.
 
-Return the object information for a specified object ID.
+### sui_signTransaction
+
+Sign a Sui transaction without executing it.
 
 #### Parameters
 
-1. `objectId` (string) - The object ID to get information for
-2. `options` (object, optional) - Options object containing:
-   - `showType`: boolean - Whether to show the type of the object
-   - `showContent`: boolean - Whether to show the content of the object
-   - `showOwner`: boolean - Whether to show the owner of the object
-   - `showPreviousTransaction`: boolean - Whether to show the previous transaction
-   - `showStorageRebate`: boolean - Whether to show the storage rebate
-   - `showDisplay`: boolean - Whether to show the display fields
+1. `transaction` (object) - The transaction to sign:
+   - `transaction` (string) - The base64 encoded transaction block
+   - `address` (string) - The sender's Sui address
 
 #### Returns
 
-`SuiObjectResponse` - Object information:
-- `data`: object - The object data
-- `owner`: object - The owner information
-- `previousTransaction`: string - The previous transaction digest
-- `storageRebate`: string - The storage rebate
-- `display`: object - The display fields
+`object` - The signed transaction:
+- `signature` (string) - The base64 encoded signature
+- `transactionBytes` (string) - The base64 encoded signed transaction bytes
 
 #### Example
 
@@ -36,73 +30,38 @@ Return the object information for a specified object ID.
 {
   "jsonrpc": "2.0",
   "id": 1,
-  "method": "sui_getObject",
-  "params": [
-    "0x123...abc",
-    {
-      "showType": true,
-      "showContent": true,
-      "showOwner": true
-    }
-  ]
+  "method": "sui_signTransaction",
+  "params": {
+    "transaction": "ewogICJ2ZXJzaW9uIjogMiwKICAic2VuZGVyIjogIjB4ZDVmNjQ3ZWRiNzdkNGZkYTMxZDAzMDQ1MDY0NDdmYjNjOTJlNTVhYWY3N2JjNWVkNGI3N2MzMzJkZDQ2MDVmYSIsCiAgImV4cGlyYXRpb24iOiBudWxsLAogICJnYXNEYXRhIjogewogICAgImJ1ZGdldCI6IG51bGwsCiAgICAicHJpY2UiOiBudWxsLAogICAgIm93bmVyIjogbnVsbCwKICAgICJwYXltZW50IjogbnVsbAogIH0sCiAgImlucHV0cyI6IFsKICAgIHsKICAgICAgIlB1cmUiOiB7CiAgICAgICAgImJ5dGVzIjogIlpBQUFBQUFBQUFBPSIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIlB1cmUiOiB7CiAgICAgICAgImJ5dGVzIjogIjFmWkg3YmQ5VDlveDBEQkZCa1IvczhrdVZhcjNlOFh0UzNmRE10MUdCZm89IgogICAgICB9CiAgICB9CiAgXSwKICAiY29tbWFuZHMiOiBbCiAgICB7CiAgICAgICJTcGxpdENvaW5zIjogewogICAgICAgICJjb2luIjogewogICAgICAgICAgIkdhc0NvaW4iOiB0cnVlCiAgICAgICAgfSwKICAgICAgICAiYW1vdW50cyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgIklucHV0IjogMAogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIlRyYW5zZmVyT2JqZWN0cyI6IHsKICAgICAgICAib2JqZWN0cyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgIk5lc3RlZFJlc3VsdCI6IFsKICAgICAgICAgICAgICAwLAogICAgICAgICAgICAgIDAKICAgICAgICAgICAgXQogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgImFkZHJlc3MiOiB7CiAgICAgICAgICAiSW5wdXQiOiAxCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9",
+    "address": "0xd5f647edb77d4fda31d0304506447fb3c92e55aaf77bc5ed4b77c332dd4605fa"
+  }
 }
 
 // Response
 {
   "jsonrpc": "2.0",
   "result": {
-    "data": {
-      "objectId": "0x123...abc",
-      "version": 1,
-      "digest": "0x456...def",
-      "type": "0x2::coin::Coin<0x2::sui::SUI>",
-      "content": {
-        "dataType": "moveObject",
-        "type": "0x2::coin::Coin<0x2::sui::SUI>",
-        "hasPublicTransfer": true,
-        "fields": {
-          "balance": "1000000000",
-          "id": {
-            "id": "0x123...abc"
-          }
-        }
-      }
-    },
-    "owner": {
-      "AddressOwner": "0x789...ghi"
-    },
-    "previousTransaction": "0xabc...def",
-    "storageRebate": "1000000"
+    "signature": "ACRvdr3yI2mdpeOK+NsJIimdNGcE9R//jjT3HALZ17fFyu818op4jZi/64lPBjpKMDX6ZtxnCFZExTOFdpi3MwEZXLv/ORduxMYX0fw8dbHlnWC8WG0ymrlAmARpEibbhw==",
+    "transactionBytes": "ACRvdr3yI2mdpeOK+NsJIimdNGcE9R//jjT3HALZ17fFyu818op4jZi/64lPBjpKMDX6ZtxnCFZExTOFdpi3MwEZXLv/ORduxMYX0fw8dbHlnWC8WG0ymrlAmARpEibbhw=="
   },
   "id": 1
 }
 ```
 
-### sui_getTransactionBlock
+### sui_signAndExecuteTransaction
 
-Return the transaction information for a specified transaction digest.
+Sign and execute a Sui transaction.
 
 #### Parameters
 
-1. `digest` (string) - The transaction digest to get information for
-2. `options` (object, optional) - Options object containing:
-   - `showInput`: boolean - Whether to show the input of the transaction
-   - `showEffects`: boolean - Whether to show the effects of the transaction
-   - `showEvents`: boolean - Whether to show the events of the transaction
-   - `showObjectChanges`: boolean - Whether to show the object changes
-   - `showBalanceChanges`: boolean - Whether to show the balance changes
+1. `transaction` (object) - The transaction to sign and execute:
+   - `transaction` (string) - The base64 encoded transaction block
+   - `address` (string) - The sender's Sui address
 
 #### Returns
 
-`TransactionBlockResponse` - Transaction information:
-- `digest`: string - The transaction digest
-- `transaction`: object - The transaction data
-- `effects`: object - The transaction effects
-- `events`: array - The transaction events
-- `objectChanges`: array - The object changes
-- `balanceChanges`: array - The balance changes
-- `timestampMs`: number - The transaction timestamp in milliseconds
-- `checkpoint`: number - The checkpoint number
+`object` - The transaction result:
+- `digest` (string) - The transaction digest that can be used to look up the transaction in the explorer
 
 #### Example
 
@@ -111,96 +70,37 @@ Return the transaction information for a specified transaction digest.
 {
   "jsonrpc": "2.0",
   "id": 1,
-  "method": "sui_getTransactionBlock",
-  "params": [
-    "0xabc...def",
-    {
-      "showInput": true,
-      "showEffects": true,
-      "showEvents": true
-    }
-  ]
+  "method": "sui_signAndExecuteTransaction",
+  "params": {
+    "transaction": "ewogICJ2ZXJzaW9uIjogMiwKICAic2VuZGVyIjogIjB4ZDVmNjQ3ZWRiNzdkNGZkYTMxZDAzMDQ1MDY0NDdmYjNjOTJlNTVhYWY3N2JjNWVkNGI3N2MzMzJkZDQ2MDVmYSIsCiAgImV4cGlyYXRpb24iOiBudWxsLAogICJnYXNEYXRhIjogewogICAgImJ1ZGdldCI6IG51bGwsCiAgICAicHJpY2UiOiBudWxsLAogICAgIm93bmVyIjogbnVsbCwKICAgICJwYXltZW50IjogbnVsbAogIH0sCiAgImlucHV0cyI6IFsKICAgIHsKICAgICAgIlB1cmUiOiB7CiAgICAgICAgImJ5dGVzIjogIlpBQUFBQUFBQUFBPSIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIlB1cmUiOiB7CiAgICAgICAgImJ5dGVzIjogIjFmWkg3YmQ5VDlveDBEQkZCa1IvczhrdVZhcjNlOFh0UzNmRE10MUdCZm89IgogICAgICB9CiAgICB9CiAgXSwKICAiY29tbWFuZHMiOiBbCiAgICB7CiAgICAgICJTcGxpdENvaW5zIjogewogICAgICAgICJjb2luIjogewogICAgICAgICAgIkdhc0NvaW4iOiB0cnVlCiAgICAgICAgfSwKICAgICAgICAiYW1vdW50cyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgIklucHV0IjogMAogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIlRyYW5zZmVyT2JqZWN0cyI6IHsKICAgICAgICAib2JqZWN0cyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgIk5lc3RlZFJlc3VsdCI6IFsKICAgICAgICAgICAgICAwLAogICAgICAgICAgICAgIDAKICAgICAgICAgICAgXQogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgImFkZHJlc3MiOiB7CiAgICAgICAgICAiSW5wdXQiOiAxCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9",
+    "address": "0xd5f647edb77d4fda31d0304506447fb3c92e55aaf77bc5ed4b77c332dd4605fa"
+  }
 }
 
 // Response
 {
   "jsonrpc": "2.0",
   "result": {
-    "digest": "0xabc...def",
-    "transaction": {
-      "data": {
-        "sender": "0x789...ghi",
-        "gasData": {
-          "payment": [
-            {
-              "objectId": "0x123...abc",
-              "version": 1,
-              "digest": "0x456...def"
-            }
-          ],
-          "owner": "0x789...ghi",
-          "price": "1000",
-          "budget": "1000000"
-        },
-        "kind": "transferObject",
-        "transferObject": {
-          "recipient": "0xdef...ghi",
-          "object_ref": {
-            "objectId": "0x123...abc",
-            "version": 1,
-            "digest": "0x456...def"
-          }
-        }
-      }
-    },
-    "effects": {
-      "status": {
-        "status": "success"
-      },
-      "gasUsed": {
-        "computationCost": "1000",
-        "storageCost": "1000",
-        "storageRebate": "1000"
-      }
-    },
-    "events": [
-      {
-        "id": {
-          "txDigest": "0xabc...def",
-          "eventSeq": 0
-        },
-        "packageId": "0x2",
-        "transactionModule": "transfer",
-        "sender": "0x789...ghi",
-        "type": "0x2::transfer::TransferObject",
-        "parsedJson": {
-          "recipient": "0xdef...ghi",
-          "object_id": "0x123...abc"
-        }
-      }
-    ],
-    "timestampMs": 1678234567890,
-    "checkpoint": 12345
+    "digest": "GBqPRFR9sYfWA8rt2wCkcgZrctyYMj8Ufunxkjg5G8zt"
   },
   "id": 1
 }
 ```
 
-### sui_getLatestCheckpoint
+### sui_signPersonalMessage
 
-Return the latest checkpoint information.
+Sign a personal message.
+
+#### Parameters
+
+1. `message` (object) - The message to sign:
+   - `message` (string) - The message to sign (plain text)
+   - `address` (string) - The account address to sign with
 
 #### Returns
 
-`Checkpoint` - Checkpoint information:
-- `epoch`: number - The epoch number
-- `sequenceNumber`: number - The checkpoint sequence number
-- `digest`: string - The checkpoint digest
-- `networkTotalTransactions`: number - Total transactions in the network
-- `previousDigest`: string - The previous checkpoint digest
-- `epochRollingGasCostSummary`: object - Gas cost summary
-- `timestampMs`: number - The checkpoint timestamp in milliseconds
-- `transactions`: array - The transaction digests in this checkpoint
+`object` - The signed message:
+- `signature` (string) - The base64 encoded signature
 
 #### Example
 
@@ -209,383 +109,23 @@ Return the latest checkpoint information.
 {
   "jsonrpc": "2.0",
   "id": 1,
-  "method": "sui_getLatestCheckpoint"
+  "method": "sui_signPersonalMessage",
+  "params": {
+    "message": "This is a message to be signed for SUI",
+    "address": "0xd5f647edb77d4fda31d0304506447fb3c92e55aaf77bc5ed4b77c332dd4605fa"
+  }
 }
 
 // Response
 {
   "jsonrpc": "2.0",
   "result": {
-    "epoch": 0,
-    "sequenceNumber": 12345,
-    "digest": "0xabc...def",
-    "networkTotalTransactions": 1000000,
-    "previousDigest": "0xdef...ghi",
-    "epochRollingGasCostSummary": {
-      "computationCost": "1000",
-      "storageCost": "1000",
-      "storageRebate": "1000"
-    },
-    "timestampMs": 1678234567890,
-    "transactions": ["0x123...abc", "0x456...def"]
+    "signature": "APsZ7PvuAynXYxxfeo0Py4DWOnrUpwqHhJJ1F8aGB2nmS5Wv9dvVo8Gr7DKaXwPMqFaFNKsHb0Hej07R0L0NpQsZXLv/ORduxMYX0fw8dbHlnWC8WG0ymrlAmARpEibbhw=="
   },
   "id": 1
 }
 ```
 
-### sui_getReferenceGasPrice
+## Additional Resources
 
-Return the reference gas price for the network.
-
-#### Returns
-
-`string` - The reference gas price in MIST (1 SUI = 1,000,000,000 MIST)
-
-#### Example
-
-```javascript
-// Request
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "sui_getReferenceGasPrice"
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": "1000",
-  "id": 1
-}
-```
-
-## Extended API Core Methods
-
-### suix_getBalance
-
-Return the total balance for one coin type owned by the address owner.
-
-#### Parameters
-
-1. `owner` (SuiAddress) - The owner's Sui address
-2. `coinType` (string) - The coin type to get balance for
-
-#### Returns
-
-`Balance` - Balance information:
-- `coinType`: string - The coin type
-- `coinObjectCount`: number - Number of coin objects
-- `totalBalance`: string - Total balance in base units
-- `lockedBalance`: object - Locked balance information
-
-#### Example
-
-```javascript
-// Request
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "suix_getBalance",
-  "params": [
-    "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961",
-    "0x2::sui::SUI"
-  ]
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "coinType": "0x2::sui::SUI",
-    "coinObjectCount": 15,
-    "totalBalance": "3000000000",
-    "lockedBalance": {}
-  },
-  "id": 1
-}
-```
-
-### suix_getAllBalances
-
-Return the total coin balance for all coin types owned by the address owner.
-
-#### Parameters
-
-1. `owner` (SuiAddress) - The owner's Sui address
-
-#### Returns
-
-`Vec<Balance>` - Array of balance information:
-- `coinType`: string - The coin type
-- `coinObjectCount`: number - Number of coin objects
-- `totalBalance`: string - Total balance in base units
-- `lockedBalance`: object - Locked balance information
-
-#### Example
-
-```javascript
-// Request
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "suix_getAllBalances",
-  "params": [
-    "0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961"
-  ]
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": [
-    {
-      "coinType": "0x2::sui::SUI",
-      "coinObjectCount": 15,
-      "totalBalance": "3000000000",
-      "lockedBalance": {}
-    }
-  ],
-  "id": 1
-}
-```
-
-### suix_getAllCoins
-
-Return all Coin objects owned by an address.
-
-#### Parameters
-
-1. `owner` (SuiAddress) - The owner's Sui address
-2. `cursor` (string, optional) - Optional paging cursor
-3. `limit` (uint, optional) - Maximum number of items per page
-
-#### Returns
-
-`CoinPage` - Paginated coin information:
-- `data`: array - Array of Coin objects
-- `hasNextPage`: boolean - Whether there are more pages
-- `nextCursor`: string | null - Cursor for the next page
-
-#### Example
-
-```javascript
-// Request
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "suix_getAllCoins",
-  "params": [
-    "0x41f5975e3c6bd5c95f041a8493ad7e9934be26e69152d2c2e86d8a9bdbd242b3",
-    "0x2564cd31a71cf9833609b111436d8f0f47b7f8b9927ec3f8975a1dcbf9b25564",
-    3
-  ]
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "data": [
-      {
-        "coinType": "0x2::sui::SUI",
-        "coinObjectId": "0x861c5e055605b2bb1199faf653a8771e448930bc95a0369fad43a9870a2e5878",
-        "version": "103626",
-        "digest": "Ao1QyN9UTmYzb2ead3D5xhSBk7TvACRvmnJW8gRbwP99",
-        "balance": "200000000",
-        "previousTransaction": "7dp5WtTmtGp83EXYYFMzjBJRFeSgR67AzqMETLrfgeFx"
-      }
-    ],
-    "hasNextPage": true,
-    "nextCursor": "0x2564cd31a71cf9833609b111436d8f0f47b7f8b9927ec3f8975a1dcbf9b25564"
-  },
-  "id": 1
-}
-```
-
-### suix_getTotalSupply
-
-Return the total supply for a coin type.
-
-#### Parameters
-
-1. `coinType` (string) - The coin type to get total supply for
-
-#### Returns
-
-`Supply` - Supply information:
-- `value`: string - The total supply in base units
-- `type`: string - The coin type
-
-#### Example
-
-```javascript
-// Request
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "suix_getTotalSupply",
-  "params": [
-    "0x2::sui::SUI"
-  ]
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "value": "10000000000",
-    "type": "0x2::sui::SUI"
-  },
-  "id": 1
-}
-```
-
-## Write API Core Methods
-
-### sui_executeTransactionBlock
-
-Execute a transaction block.
-
-#### Parameters
-
-1. `txBytes` (string) - The transaction block bytes (base64 encoded)
-2. `signatures` (array) - Array of transaction signatures
-3. `options` (object, optional) - Options object containing:
-   - `showInput`: boolean - Whether to show the input of the transaction
-   - `showEffects`: boolean - Whether to show the effects of the transaction
-   - `showEvents`: boolean - Whether to show the events of the transaction
-   - `showObjectChanges`: boolean - Whether to show the object changes
-   - `showBalanceChanges`: boolean - Whether to show the balance changes
-
-#### Returns
-
-`TransactionBlockResponse` - Transaction information (same as sui_getTransactionBlock)
-
-#### Example
-
-```javascript
-// Request
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "sui_executeTransactionBlock",
-  "params": [
-    "AQAAACD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
-    ["AA=="],
-    {
-      "showEffects": true,
-      "showEvents": true
-    }
-  ]
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "digest": "0xabc...def",
-    "effects": {
-      "status": {
-        "status": "success"
-      },
-      "gasUsed": {
-        "computationCost": "1000",
-        "storageCost": "1000",
-        "storageRebate": "1000"
-      }
-    },
-    "events": [
-      {
-        "id": {
-          "txDigest": "0xabc...def",
-          "eventSeq": 0
-        },
-        "packageId": "0x2",
-        "transactionModule": "transfer",
-        "sender": "0x789...ghi",
-        "type": "0x2::transfer::TransferObject",
-        "parsedJson": {
-          "recipient": "0xdef...ghi",
-          "object_id": "0x123...abc"
-        }
-      }
-    ]
-  },
-  "id": 1
-}
-```
-
-### sui_dryRunTransactionBlock
-
-Dry run a transaction block.
-
-#### Parameters
-
-1. `txBytes` (string) - The transaction block bytes (base64 encoded)
-2. `options` (object, optional) - Options object containing:
-   - `showInput`: boolean - Whether to show the input of the transaction
-   - `showEffects`: boolean - Whether to show the effects of the transaction
-   - `showEvents`: boolean - Whether to show the events of the transaction
-   - `showObjectChanges`: boolean - Whether to show the object changes
-   - `showBalanceChanges`: boolean - Whether to show the balance changes
-
-#### Returns
-
-`TransactionBlockResponse` - Transaction information (same as sui_getTransactionBlock)
-
-#### Example
-
-```javascript
-// Request
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "sui_dryRunTransactionBlock",
-  "params": [
-    "AQAAACD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
-    {
-      "showEffects": true,
-      "showEvents": true
-    }
-  ]
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "digest": "0xabc...def",
-    "effects": {
-      "status": {
-        "status": "success"
-      },
-      "gasUsed": {
-        "computationCost": "1000",
-        "storageCost": "1000",
-        "storageRebate": "1000"
-      }
-    },
-    "events": [
-      {
-        "id": {
-          "txDigest": "0xabc...def",
-          "eventSeq": 0
-        },
-        "packageId": "0x2",
-        "transactionModule": "transfer",
-        "sender": "0x789...ghi",
-        "type": "0x2::transfer::TransferObject",
-        "parsedJson": {
-          "recipient": "0xdef...ghi",
-          "object_id": "0x123...abc"
-        }
-      }
-    ]
-  },
-  "id": 1
-}
-```
-
-## Additional Methods
-
-For a complete list of all available Sui RPC methods, including additional read, write, and extended API methods, please refer to the [official Sui RPC API documentation](https://docs.sui.io/sui-api-ref).
+For more information about Sui RPC methods and implementation details, please refer to the [official Sui documentation](https://docs.sui.io/sui-api-ref).
