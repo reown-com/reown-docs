@@ -66,6 +66,10 @@ const core = new Core({
 });
 ```
 
+<Warning>
+Don't use randomly generated `customStoragePrefix` in production - this will cause the client to create new storage each time it is initialized. The client will not be able to persist/read existing data and all existing sessions will be lost after each reload.
+</Warning>
+
 #### Option 2: Disable global Core sharing
 
 ```javascript

@@ -64,6 +64,10 @@ var options = new CoreOptions()
 var core = new CoreClient(options);
 ```
 
+<Warning>
+Don't use randomly generated `CustomStoragePrefix` in production - this will cause the client to create new storage each time it is initialized. The client will not be able to persist/read existing data and all existing sessions will be lost after each reload.
+</Warning>
+
 <Note>
 The global Core sharing behavior was introduced to prevent resource waste when multiple SDK instances are created. If you're running parallel tests and experiencing cross-test interference, use the `CustomStoragePrefix` option to ensure proper test isolation.
 </Note>
