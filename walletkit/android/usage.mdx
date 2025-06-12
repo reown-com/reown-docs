@@ -62,6 +62,31 @@ WalletKit.initialize(initParams) { error ->
 }
 ```
 
+### Core Instance Sharing
+
+Starting from newer versions of WalletKit, Core instances are shared globally by default to optimize resource usage. This means that multiple Core instances with the same configuration will reuse the same underlying Core.
+
+**For parallel testing scenarios** where you need isolated Core instances, you can use a unique storage prefix:
+
+```kotlin
+val appMetaData = Core.Model.AppMetaData(
+    name = "Wallet Name",
+    description = "Wallet Description",
+    url = "Wallet URL",
+    icons = /*list of icon url strings*/,
+    redirect = "kotlin-wallet-wc:/request",
+    customStoragePrefix = "test-${System.currentTimeMillis()}" // Unique prefix for each test
+)
+
+CoreClient.initialize(
+    projectId = projectId, 
+    connectionType = connectionType, 
+    application = this, 
+    metaData = appMetaData, 
+    telemetryEnabled = telemetryEnabled
+)
+```
+
 The WalletKit client will always be responsible for exposing accounts (CAIP10 compatible) to a Dapp and therefore is also in charge of signing.
 To initialize the WalletKit client, create a `Wallet.Params.Init` object in the Android Application class with the Core Client. The `Wallet.Params.Init` object will then be passed to the `WalletKit`initialize function.
 

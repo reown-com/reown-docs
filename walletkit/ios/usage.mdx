@@ -64,6 +64,16 @@ WalletKit.configure(
 )
 ```
 
+### Core Instance Sharing
+
+Starting from newer versions of WalletKit, Core instances are shared globally by default to optimize resource usage. This means that multiple Core instances with the same configuration will reuse the same underlying Core.
+
+**For parallel testing scenarios** where you need isolated Core instances, you can configure a unique storage prefix through the Core configuration. The iOS SDK handles Core instance management internally through the `WalletKit.configure()` method.
+
+<Note>
+The global Core sharing behavior was introduced to prevent resource waste when multiple SDK instances are created. If you're running parallel tests and experiencing cross-test interference, consult the iOS SDK documentation for Core isolation options or contact support for platform-specific guidance.
+</Note>
+
 In order to allow users to receive push notifications you have to communicate with Apple Push Notification service and receive unique device token. Register that token with following method:
 
 ```swift

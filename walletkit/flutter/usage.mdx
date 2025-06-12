@@ -55,6 +55,35 @@ final _walletKit = ReownWalletKit(
 );
 ```
 
+### Core Instance Sharing
+
+Starting from newer versions of WalletKit, Core instances are shared globally by default to optimize resource usage. This means that multiple Core instances with the same configuration will reuse the same underlying Core.
+
+**For parallel testing scenarios** where you need isolated Core instances, you can use a unique storage prefix:
+
+```dart
+final _walletKit = ReownWalletKit(
+  core: ReownCore(
+    projectId: '{YOUR_PROJECT_ID}',
+    customStoragePrefix: 'test-${DateTime.now().millisecondsSinceEpoch}', // Unique prefix for each test
+  ),
+  metadata: PairingMetadata(
+    name: 'Example Wallet',
+    description: 'Example wallet description',
+    url: 'https://example.com/',
+    icons: ['https://example.com/logo.png'],
+    redirect: Redirect(
+      native: 'examplewallet://',
+      universal: 'https://reown.com/examplewallet',
+    ),
+  ),
+);
+```
+
+<Note>
+The global Core sharing behavior was introduced to prevent resource waste when multiple SDK instances are created. If you're running parallel tests and experiencing cross-test interference, use the `customStoragePrefix` option to ensure proper test isolation.
+</Note>
+
 ## Session
 
 A session is a connection between a dapp and a wallet. It is established when a user approves a session proposal from a dapp. A session is active until the user disconnects from the dapp or the session expires.
