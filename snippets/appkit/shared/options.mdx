@@ -43,6 +43,21 @@ This information will primarily be used in modals when signing a transaction or 
 
 For custom networks, refer to this [doc page](/appkit/react/core/custom-networks).
 
+<AccordionGroup>
+  <Accordion title="The icon can be an encoded image">
+``` typescript
+const icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+createAppKit({
+  // ...
+  metadata: {
+    // ...
+    icons: [icon]
+  }
+})
+```
+  </Accordion>
+</AccordionGroup>
+
 ## defaultNetwork
 
 Desired network for the initial connection as default:
