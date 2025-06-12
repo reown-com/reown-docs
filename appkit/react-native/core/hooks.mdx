@@ -97,13 +97,7 @@ Get the current value of the modal's state
 ```ts
 import { useAppKitState } from '@reown/appkit-wagmi-react-native'
 
-const { 
-  initialized, 
-  loading, 
-  open, 
-  selectedNetworkId, 
-  activeChain 
-} = useAppKitState()
+const { open, selectedNetworkId } = useAppKitState()
 
 ````
 </Tab>
@@ -112,13 +106,7 @@ const {
 ```ts
 import { useAppKitState } from '@reown/appkit-ethers-react-native'
 
-const { 
-  initialized, 
-  loading, 
-  open, 
-  selectedNetworkId, 
-  activeChain 
-} = useAppKitState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 
 </Tab>
@@ -127,61 +115,18 @@ const {
 ```ts
 import { useAppKitState } from '@reown/appkit-ethers5-react-native'
 
-const { 
-  initialized, 
-  loading, 
-  open, 
-  selectedNetworkId, 
-  activeChain 
-} = useAppKitState()
+const { open, selectedNetworkId } = useAppKitState()
 ```
 </Tab>
 
 </Tabs>
 
-### Returns
-
-- `initialized`: Boolean that indicates if the AppKit has been initialized. This sets to true when all controllers, adapters and internal state is ready
-- `loading`: Boolean that indicates if the AppKit is loading
-- `open`: Boolean that indicates if the modal is open
-- `selectedNetworkId`: The current chain id selected by the user in CAIP-2 format
-- `activeChain`: The active chain namespace (e.g., 'eip155', 'solana', 'bip122')
-
-### Example Usage
-
-```tsx
-import { useAppKitState } from '@reown/appkit-wagmi-react-native'
-
-function AppStatus() {
-  const { initialized, loading, open, selectedNetworkId, activeChain } = useAppKitState();
-
-  if (!initialized) {
-    return <Text>Initializing AppKit...</Text>;
-  }
-
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
-  return (
-    <View>
-      <Text>Modal is {open ? 'open' : 'closed'}</Text>
-      <Text>Selected Network: {selectedNetworkId}</Text>
-      <Text>Active Chain: {activeChain}</Text>
-    </View>
-  );
-}
-```
-
-The modal state consists of five reactive values:
+The modal state consists of two reactive values:
 
 | State              | Description                                                                 | Type      |
 |--------------------|-----------------------------------------------------------------------------|-----------|
-| `initialized`      | Indicates if the AppKit has been initialized. This sets to true when all controllers, adapters and internal state is ready. | `boolean` |
-| `loading`          | Indicates if the AppKit is loading.                                        | `boolean` |
 | `open`             | Open state will be true when the modal is open and false when closed.       | `boolean` |
-| `selectedNetworkId`| The current chain id selected by the user in CAIP-2 format.               | `CaipNetworkId` |
-| `activeChain`      | The active chain namespace (e.g., 'eip155', 'solana', 'bip122').          | `ChainNamespace` |
+| `selectedNetworkId`| The current chain id selected by the user.                                 | `number`  |
 
 ## useAppKitEvents
 
