@@ -331,7 +331,13 @@ The state management hook that provides real-time access to the modal's current 
 ```ts
 import { useAppKitState } from "@reown/appkit/react";
 
-const { open, selectedNetworkId } = useAppKitState();
+const { 
+  initialized, 
+  loading, 
+  open, 
+  selectedNetworkId, 
+  activeChain 
+} = useAppKitState();
 ```
 
 ### Use Cases
@@ -339,11 +345,42 @@ const { open, selectedNetworkId } = useAppKitState();
 - Tracking which network the user has selected
 - Creating custom UI elements that respond to modal state changes
 - Implementing custom loading states based on modal state
+- Checking if AppKit has been fully initialized before rendering components
+- Displaying chain-specific UI based on the active blockchain namespace
 
 ### Returns
 
+- `initialized`: Boolean that indicates if AppKit has been initialized. This sets to true when all controllers, adapters and internal state is ready
+- `loading`: Boolean that indicates if AppKit is loading
 - `open`: Boolean that indicates if the modal is open
-- `selectedNetworkId`: The current chain id selected by the user
+- `selectedNetworkId`: The current chain id selected by the user in CAIP-2 format
+- `activeChain`: The active chain namespace (e.g., 'eip155', 'solana', 'bip122')
+
+### Example Usage
+
+```tsx
+import { useAppKitState } from "@reown/appkit/react";
+
+function AppStatus() {
+  const { initialized, loading, open, selectedNetworkId, activeChain } = useAppKitState();
+
+  if (!initialized) {
+    return <div>Initializing AppKit...</div>;
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <p>Modal is {open ? 'open' : 'closed'}</p>
+      <p>Selected Network: {selectedNetworkId}</p>
+      <p>Active Chain: {activeChain}</p>
+    </div>
+  );
+}
+```
 
 ## useAppKitTheme
 
