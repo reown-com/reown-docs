@@ -66,30 +66,13 @@ WalletKit.initialize(initParams) { error ->
 
 Starting from newer versions of WalletKit, Core instances are shared globally by default to optimize resource usage. This means that multiple Core instances with the same configuration will reuse the same underlying Core.
 
-**For parallel testing scenarios** where you need isolated Core instances, you can use a unique storage prefix:
+**For Android SDK**, Core instance management is handled internally through the SDK's internal database system. Unlike other platforms, Android does not use storage prefixes for Core isolation.
 
-```kotlin
-val appMetaData = Core.Model.AppMetaData(
-    name = "Wallet Name",
-    description = "Wallet Description",
-    url = "Wallet URL",
-    icons = /*list of icon url strings*/,
-    redirect = "kotlin-wallet-wc:/request",
-    customStoragePrefix = "test-${System.currentTimeMillis()}" // Unique prefix for each test
-)
+**For parallel testing scenarios** where you need isolated Core instances on Android, consult the Android SDK documentation for platform-specific isolation methods or contact support for guidance on proper test setup.
 
-CoreClient.initialize(
-    projectId = projectId, 
-    connectionType = connectionType, 
-    application = this, 
-    metaData = appMetaData, 
-    telemetryEnabled = telemetryEnabled
-)
-```
-
-<Warning>
-Don't use randomly generated `customStoragePrefix` in production - this will cause the client to create new storage each time it is initialized. The client will not be able to persist/read existing data and all existing sessions will be lost after each reload.
-</Warning>
+<Note>
+The global Core sharing behavior was introduced to prevent resource waste when multiple SDK instances are created. The Android SDK manages Core instances differently than other platforms due to its internal database architecture.
+</Note>
 
 The WalletKit client will always be responsible for exposing accounts (CAIP10 compatible) to a Dapp and therefore is also in charge of signing.
 To initialize the WalletKit client, create a `Wallet.Params.Init` object in the Android Application class with the Core Client. The `Wallet.Params.Init` object will then be passed to the `WalletKit`initialize function.
