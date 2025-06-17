@@ -254,6 +254,55 @@ await provider.connect({
 ```
 </Accordion>
 
+<Accordion title="Others networks">
+
+Install this library with the same version as the other @reown packages.
+
+```bash npm
+npm uninstall @reown/appkit-common
+```
+
+
+```javascript
+import type { InferredCaipNetwork } from '@reown/appkit-common'
+import { defineChain } from '@reown/appkit/networks'
+
+...
+
+const sui: InferredCaipNetwork = {
+  id: 784,
+  chainNamespace: 'sui' as const,
+  caipNetworkId: 'sui:mainnet',
+  name: 'Sui',
+  nativeCurrency: { name: 'SUI', symbol: 'SUI', decimals: 9 },
+  rpcUrls: { default: { http: ['https://fullnode.mainnet.sui.io:443'] } }
+}
+
+...
+
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [sui],
+  universalProvider: provider as any,
+  manualWCControl: true,
+  features: {
+        analytics: true // Optional - defaults to your Cloud configuration
+  }
+})
+
+await provider.connect({
+  optionalNamespaces: {
+    sui: {
+      methods: ['sui_signPersonalMessage'],
+      chains: [sui.caipNetworkId],
+      events: []
+    }
+  }
+})
+
+```
+</Accordion>
+
 </AccordionGroup>
 
 ### Examples
@@ -432,6 +481,55 @@ const { uri, approval } = await signClient.connect({
       cosmos: {
         methods: ['cosmos_signDirect'],
         chains: [cosmos.caipNetworkId],
+        events: []
+      }
+    }
+  })
+
+... 
+```
+</Accordion>
+
+
+<Accordion title="Others networks">
+
+Install this library with the same version as the other @reown packages.
+
+```bash npm
+npm uninstall @reown/appkit-common
+```
+
+```javascript
+import type { InferredCaipNetwork } from '@reown/appkit-common'
+
+...
+
+const sui: InferredCaipNetwork = {
+  id: 784,
+  chainNamespace: 'sui' as const,
+  caipNetworkId: 'sui:mainnet',
+  name: 'Sui',
+  nativeCurrency: { name: 'SUI', symbol: 'SUI', decimals: 9 },
+  rpcUrls: { default: { http: ['https://fullnode.mainnet.sui.io:443'] } }
+}
+
+...
+
+const modal = createAppKit({
+  projectId: 'YOUR_PROJECT_ID',
+  networks: [sui],
+  manualWCControl: true,
+  features: {
+        analytics: true // Optional - defaults to your Cloud configuration
+  }
+})
+
+// connect signClient and feed uri to modal
+const { uri, approval } = await signClient.connect({
+    requiredNamespaces: {
+      sui: {
+        methods: ['sui_signPersonalMessage'],
+        chains: [sui.caipNetworkId],
         events: []
       }
     }
