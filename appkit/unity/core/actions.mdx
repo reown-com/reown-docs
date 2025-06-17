@@ -354,7 +354,7 @@ TransactionReceipt receipt = await AppKit.EVM.GetTransactionReceiptAsync(
     TimeSpan.FromSeconds(120) // custom timeout
 );
 
-// With custom timeout and polling interval (default polling is 1 second)
+// With custom timeout and polling interval (default polling is 12 seconds)
 TransactionReceipt receipt = await AppKit.EVM.GetTransactionReceiptAsync(
     "0x123...", // transaction hash
     TimeSpan.FromSeconds(120), // custom timeout
@@ -366,7 +366,7 @@ using var cts = new CancellationTokenSource();
 TransactionReceipt receipt = await AppKit.EVM.GetTransactionReceiptAsync(
     "0x123...", // transaction hash
     TimeSpan.FromSeconds(60), // timeout
-    TimeSpan.FromSeconds(1), // polling interval
+    TimeSpan.FromSeconds(12), // polling interval
     cts.Token // cancellation token
 );
 ```
