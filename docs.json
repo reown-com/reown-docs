@@ -48,6 +48,10 @@
     {
       "source": "/advanced/rpc-reference/:path*",
       "destination": "/advanced/multichain/rpc-reference/:path*"
+    },
+    {
+      "source": "/appkit/features/telegram-mini-apps",
+      "destination": "/appkit/integrations/telegram-mini-apps"
     }
   ],
   "contextual": {
@@ -220,7 +224,6 @@
                       "appkit/features/smart-accounts",
                       "appkit/features/smart-accounts-interaction",
                       "appkit/features/notifications",
-                      "appkit/features/telegram-mini-apps",
                       "appkit/features/sponsored-transactions",
                       "appkit/features/smart-sessions",
                       "appkit/features/chain-abstraction"
@@ -232,6 +235,13 @@
                       "appkit/authentication/socials",
                       "appkit/authentication/one-click-auth",
                       "appkit/authentication/siwx/default"
+                    ]
+                  },
+                  {
+                    "group": "Integrations",
+                    "pages": [
+                      "appkit/integrations/telegram-mini-apps",
+                      "appkit/integrations/farcaster-mini-apps"
                     ]
                   },
                   {
