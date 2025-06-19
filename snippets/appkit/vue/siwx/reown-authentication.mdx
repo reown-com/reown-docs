@@ -1,0 +1,105 @@
+## Interacting with Reown Authentication
+
+AppKit provides a `useAppKitSIWX` composable that allows you to grab and interact with Reown Authentication.
+
+```vue
+<script setup>
+import type { ReownAuthentication } from '@reown/appkit-siwx'
+import { useAppKitSIWX } from '@reown/appkit-siwx/vue'
+
+const siwx = useAppKitSIWX<ReownAuthentication>()
+</script>
+```
+
+### Interactions
+
+#### `getSessionAccount`
+
+You can retrieve the session account data using the `getSessionAccount` method:
+
+```vue
+<script setup>
+import { ref, onMounted } from 'vue'
+import type { ReownAuthentication } from '@reown/appkit-siwx'
+import { useAppKitSIWX } from '@reown/appkit-siwx/vue'
+
+const siwx = useAppKitSIWX<ReownAuthentication>()
+const sessionAccount = ref()
+
+onMounted(async () => {
+  if (!siwx.value) return
+
+  sessionAccount.value = await siwx.value.getSessionAccount()
+})
+</script>
+```
+
+#### `setSessionAccountMetadata`
+
+Reown Authentication provides a way for you to store arbitrary information about your users through the AppKit Account Metadata.
+
+Updating the session account metadata is done using the `setSessionAccountMetadata` method:
+
+```vue
+<script setup>
+import type { ReownAuthentication } from '@reown/appkit-siwx'
+import { useAppKitSIWX } from '@reown/appkit-siwx/vue'
+
+const siwx = useAppKitSIWX<ReownAuthentication>()
+
+const mutateMetadata = async (metadata: object) => {
+  if (!siwx.value) return
+
+  await siwx.value.setSessionAccountMetadata(metadata)
+}
+</script>
+```
+
+You may use the session metadata through the `getSessionAccount` method:
+
+```vue
+<script setup>
+import type { ReownAuthentication } from '@reown/appkit-siwx'
+import { useAppKitSIWX } from '@reown/appkit-siwx/vue'
+
+const siwx = useAppKitSIWX<ReownAuthentication>()
+
+const queryMetadata = async () => {
+  if (!siwx.value) return
+
+  const account = await siwx.value.getSessionAccount()
+
+  return account.appKitAccount?.metadata
+}
+</script>
+```
+
+#### `events`
+
+Reown Authentication provides events that you can listen to for session management and authentication state changes:
+
+```vue
+<script setup>
+import { onMounted, onUnmounted } from 'vue'
+import type { SIWXSession, ReownAuthentication } from '@reown/appkit-siwx'
+import { useAppKitSIWX } from '@reown/appkit-siwx/vue'
+
+const siwx = useAppKitSIWX<ReownAuthentication>()
+
+onMounted(() => {
+  if (!siwx.value) return
+
+  // Add event listeners
+  const unsubscribe = siwx.value.on('sessionChanged', (session: SIWXSession | undefined) => {
+    console.log('Session changed:', session)
+  })
+
+  // Cleanup listeners
+  onUnmounted(() => {
+    unsubscribe()
+    // or
+    siwx.value.removeAllListeners()
+  })
+})
+</script>
+```

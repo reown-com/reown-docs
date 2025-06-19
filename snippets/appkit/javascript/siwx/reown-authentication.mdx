@@ -1,0 +1,74 @@
+## Interacting with Reown Authentication
+
+AppKit provides a `getSIWX` function that allows you to grab and interact with Reown Authentication.
+
+```js
+import type { ReownAuthentication } from '@reown/appkit-siwx'
+
+const siwx = appkit.getSIWX<ReownAuthentication>()
+```
+
+### Interactions
+
+#### `getSessionAccount`
+
+You can retrieve the session account data using the `getSessionAccount` method:
+
+```js
+const siwx = appkit.getSIWX<ReownAuthentication>()
+
+if (siwx) {
+  const sessionAccount = await siwx.getSessionAccount()
+  console.log(sessionAccount)
+}
+```
+
+#### `setSessionAccountMetadata`
+
+Reown Authentication provides a way for you to store arbitrary information about your users through the AppKit Account Metadata.
+
+Updating the session account metadata is done using the `setSessionAccountMetadata` method:
+
+```js
+const siwx = appkit.getSIWX<ReownAuthentication>()
+
+const metadata = { username: 'satoshi', preferences: { theme: 'dark' } }
+
+if (siwx) {
+  await siwx.setSessionAccountMetadata(metadata)
+}
+```
+
+You may use the session metadata through the `getSessionAccount` method:
+
+```js
+const siwx = appkit.getSIWX<ReownAuthentication>()
+
+if (siwx) {
+  const account = await siwx.getSessionAccount()
+  const metadata = account.appKitAccount?.metadata
+  console.log(metadata)
+}
+```
+
+#### `events`
+
+Reown Authentication provides events that you can listen to for session management and authentication state changes:
+
+```js
+import type { SIWXSession, ReownAuthentication } from '@reown/appkit-siwx'
+
+const siwx = appkit.getSIWX<ReownAuthentication>()
+
+if (siwx) {
+  // Add event listeners
+  const unsubscribe = siwx.on('sessionChanged', (session) => {
+    console.log('Session changed:', session)
+  })
+
+  // Cleanup listeners when needed
+  unsubscribe()
+  // or
+  siwx.removeAllListeners()
+}
+```

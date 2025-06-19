@@ -106,7 +106,7 @@
                   }
                 ]
               },
-              "cloud/user-management",
+              "cloud/reown-authentication",
               "cloud/verify",
               "cloud/relay",
               "cloud/blockchain-api",
