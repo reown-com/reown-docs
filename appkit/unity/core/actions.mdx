@@ -335,6 +335,42 @@ Get the current gas price in wei.
 BigInteger gasPrice = await AppKit.EVM.GetGasPriceAsync();
 ```
 
+### Get Transaction Receipt
+
+Get the receipt for a transaction by its hash. This method polls the blockchain until the transaction is confirmed or times out.
+
+```csharp
+// Basic usage - get receipt for a transaction
+TransactionReceipt receipt = await AppKit.EVM.GetTransactionReceiptAsync("0x123...");
+
+Debug.Log($"Transaction Hash: {receipt.TransactionHash}");
+Debug.Log($"Block Hash: {receipt.BlockHash}");
+Debug.Log($"Status: {(receipt.StatusSuccessful ? "Success" : "Failed")}");
+Debug.Log($"Gas Used: {receipt.GasUsed}");
+
+// With custom timeout (default is 3 minutes)
+TransactionReceipt receipt = await AppKit.EVM.GetTransactionReceiptAsync(
+    "0x123...", // transaction hash
+    TimeSpan.FromSeconds(120) // custom timeout
+);
+
+// With custom timeout and polling interval (default polling is 12 seconds)
+TransactionReceipt receipt = await AppKit.EVM.GetTransactionReceiptAsync(
+    "0x123...", // transaction hash
+    TimeSpan.FromSeconds(120), // custom timeout
+    TimeSpan.FromMilliseconds(500) // poll every 500ms
+);
+
+// With cancellation token for manual cancellation
+using var cts = new CancellationTokenSource();
+TransactionReceipt receipt = await AppKit.EVM.GetTransactionReceiptAsync(
+    "0x123...", // transaction hash
+    TimeSpan.FromMinutes(3), // timeout
+    TimeSpan.FromSeconds(12), // polling interval
+    cts.Token // cancellation token
+);
+```
+
 ### RPC Request
 
 Make a direct RPC request to the blockchain node.
