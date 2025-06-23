@@ -14,7 +14,7 @@ Hooks are React functions that provide access to wallet connection features, mod
 
 AppKit provides a comprehensive set of React hooks that work together to provide a complete wallet connection and blockchain interaction experience. These hooks can be categorized into several functional groups:
 
-- **Connection Hooks**: Manage wallet connections and user authentication (`useAppKit`, `useAppKitAccount`, `useDisconnect`)
+- **Connection Hooks**: Manage wallet connections and user authentication (`useAppKit`, `useAppKitAccount`, `useAppKitProvider`, `useDisconnect`)
 - **Network Hooks**: Handle blockchain network selection and information (`useAppKitNetwork`)
 - **UI Control Hooks**: Control the modal and UI elements (`useAppKitState`, `useAppKitTheme`)
 - **Data Access Hooks**: Access wallet and blockchain data (`useAppKitBalance`, `useWalletInfo`)
@@ -32,6 +32,7 @@ graph TD
   
   ConnHooks --> useAppKit
   ConnHooks --> useAppKitAccount
+  ConnHooks --> useAppKitProvider
   ConnHooks --> useDisconnect
   ConnHooks --> useAppKitWallet
   
@@ -491,6 +492,62 @@ function WalletDisplay() {
 - Implementing wallet-specific features
 - Showing wallet icons or branding
 - Handling wallet-specific behaviors
+
+## useAppKitProvider
+
+Hook that returns the `walletProvider` and the `WalletProviderType` for interacting with the connected wallet across different blockchain adapters.
+
+```ts
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+### Use Cases
+- Accessing the wallet provider for direct blockchain interactions
+- Signing transactions and messages with the connected wallet
+- Integrating with blockchain-specific libraries (ethers, solana web3, etc.)
+- Building custom wallet interactions across different chains
+
+### Adapter Examples
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+</Tab>
+<Tab title="Solana">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("solana");
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
+
+const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
+```
+
+</Tab>
+</Tabs>
+
+<Note>
+  Related hooks: [useAppKitAccount](#useappkitaccount), [useAppKitNetwork](#useappkitnetwork)
+</Note>
 
 ## Ethereum/Solana Library
 

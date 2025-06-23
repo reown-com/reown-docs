@@ -226,6 +226,62 @@ export default Component(){
 }
 ```
 
+## useAppKitProvider
+
+Composable function that returns the `walletProvider` and the `WalletProviderType` for interacting with the connected wallet across different blockchain adapters.
+
+```ts
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+### Use Cases
+- Accessing the wallet provider for direct blockchain interactions
+- Signing transactions and messages with the connected wallet
+- Integrating with blockchain-specific libraries (ethers, solana web3, etc.)
+- Building custom wallet interactions across different chains
+
+### Adapter Examples
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+</Tab>
+<Tab title="Solana">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit-adapter-solana/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("solana");
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
+
+const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
+```
+
+</Tab>
+</Tabs>
+
+<Note>
+  Related composables: [useAppKitAccount](#useappkitaccount), [useAppKitNetwork](#useappkitnetwork)
+</Note>
+
 ## Ethereum/Solana Library
 
 <Tabs>
