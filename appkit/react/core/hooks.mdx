@@ -511,7 +511,9 @@ const { walletProvider } = useAppKitProvider<Provider>("eip155");
 
 ### Adapter Examples
 
-#### EIP155 (Ethereum) Adapter
+<Tabs>
+<Tab title="EVM (eip155)">
+
 ```tsx
 import { useAppKitProvider } from "@reown/appkit/react";
 import type { Provider } from "@reown/appkit/react";
@@ -519,7 +521,9 @@ import type { Provider } from "@reown/appkit/react";
 const { walletProvider } = useAppKitProvider<Provider>("eip155");
 ```
 
-#### Solana Adapter
+</Tab>
+<Tab title="Solana">
+
 ```tsx
 import { useAppKitProvider } from "@reown/appkit/react";
 import type { Provider } from "@reown/appkit-adapter-solana/react";
@@ -527,13 +531,18 @@ import type { Provider } from "@reown/appkit-adapter-solana/react";
 const { walletProvider } = useAppKitProvider<Provider>("solana");
 ```
 
-#### Bitcoin Adapter
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
 ```tsx
 import { useAppKitProvider } from "@reown/appkit/react";
 import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
 
 const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
 ```
+
+</Tab>
+</Tabs>
 
 <Note>
   Related hooks: [useAppKitAccount](#useappkitaccount), [useAppKitNetwork](#useappkitnetwork)
