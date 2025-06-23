@@ -144,6 +144,29 @@ type UseAppKitAccountReturnType = {
 }
 ```
 
+### Getting Bitcoin Public Keys
+
+When working with Bitcoin accounts, you can extract public keys from the connected accounts:
+
+```tsx
+import { useAppKitAccount } from "@reown/appkit/react";
+
+function BitcoinComponent() {
+  const { allAccounts } = useAppKitAccount({ chainNamespace: 'bip122' });
+  const publicKeys = allAccounts.map(acc => acc.publicKey);
+  
+  return (
+    <div>
+      {publicKeys.map((key, index) => (
+        <div key={index}>Public Key: {key}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+This is particularly useful when you need to access Bitcoin public keys for transaction signing or address derivation.
+
 ## useAppKitWallet
 
 <Frame>
