@@ -58,6 +58,30 @@ const bip122Account = useAppKitAccount({ namespace: "bip122" }); // for bitcoin
 - `accountData.value.isConnected`: Boolean that indicates if the user is connected
 - `accountData.value.status`: The current connection status
 
+### Getting Bitcoin Public Keys
+
+When working with Bitcoin accounts, you can extract public keys from the connected accounts:
+
+```vue
+<template>
+  <div>
+    <div v-for="(key, index) in publicKeys" :key="index">
+      Public Key: {{ key }}
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { useAppKitAccount } from "@reown/appkit/vue";
+import { computed } from 'vue';
+
+const { allAccounts } = useAppKitAccount({ chainNamespace: 'bip122' });
+const publicKeys = computed(() => allAccounts.value.map(acc => acc.publicKey));
+</script>
+```
+
+This is particularly useful when you need to access Bitcoin public keys for transaction signing or address derivation.
+
 ## useAppKitNetwork
 
 Composable function for accessing network data and methods.
