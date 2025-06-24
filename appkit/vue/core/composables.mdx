@@ -210,8 +210,25 @@ import { useDisconnect } from "@reown/appkit/vue";
 
 const { disconnect } = useDisconnect();
 
+// Disconnect from all namespaces
 await disconnect();
+
+// Disconnect from specific namespace
+await disconnect({ namespace: 'eip155' }); // Disconnect from Ethereum
+await disconnect({ namespace: 'solana' }); // Disconnect from Solana
+await disconnect({ namespace: 'bip122' }); // Disconnect from Bitcoin
 ```
+
+### Parameters
+
+- `namespace` (optional): The specific chain namespace to disconnect from. If not provided, disconnects from all connected namespaces.
+
+### Use Cases
+- Implementing a "Disconnect Wallet" button
+- Handling logout flows in your application
+- Cleaning up resources when a user disconnects
+- Resetting application state after disconnection
+- Disconnecting from specific chains in multi-chain applications
 
 ## useWalletInfo
 
