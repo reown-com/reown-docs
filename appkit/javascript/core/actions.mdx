@@ -85,6 +85,80 @@ modal.subscribeWalletInfo(handler);
 const { name, icon } = modal.getWalletInfo();
 ```
 
+## Provider Access
+
+Access wallet providers for direct blockchain interactions across different namespaces.
+
+### subscribeProviders
+
+Subscribe to provider state changes and access wallet providers for different blockchain namespaces.
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  projectId,
+});
+
+const unsubscribe = modal.subscribeProviders((state) => {
+  const eip155Provider = state["eip155"];
+  const solanaProvider = state["solana"];
+  const bitcoinProvider = state["bip122"];
+  
+  console.log("Providers updated:", { eip155Provider, solanaProvider, bitcoinProvider });
+});
+
+const providers = modal.getProviders();
+const eip155Provider = providers["eip155"];
+```
+
+### Examples by Namespace
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```ts
+import { BrowserProvider, Contract, parseEther } from "ethers";
+
+const provider = await modal.subscribeProviders((state) => {
+  return state["eip155"];
+});
+
+if (!provider) throw Error("No EVM provider found");
+
+const ethersProvider = new BrowserProvider(provider);
+const signer = await ethersProvider.getSigner();
+```
+
+</Tab>
+<Tab title="Solana">
+
+```ts
+const provider = await modal.subscribeProviders((state) => {
+  return state["solana"];
+});
+
+if (!provider) throw Error("No Solana provider found");
+
+const signature = await provider.signMessage(new TextEncoder().encode("Hello"));
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```ts
+const provider = await modal.subscribeProviders((state) => {
+  return state["bip122"];
+});
+
+if (!provider) throw Error("No Bitcoin provider found");
+
+const signature = await provider.signMessage("Hello from AppKit");
+```
+
+</Tab>
+</Tabs>
+
 ## Ethereum Library
 
 <Tabs>
