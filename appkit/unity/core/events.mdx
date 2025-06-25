@@ -2,28 +2,265 @@
 title: Events
 ---
 
+AppKit Unity provides a comprehensive event system that allows you to respond to various state changes in your application. All events are automatically dispatched on Unity's main thread, making them safe to use for UI updates.
+
 ## AppKit Events
 
+### Core Events
+
 ```csharp
-//Invoked after successful initialization of AppKit
-AppKit.Initialized += (sender, eventArgs) => { };
+// Invoked after successful initialization of AppKit
+AppKit.Initialized += (sender, eventArgs) => {
+    Debug.Log("AppKit initialized successfully");
+};
 
 // Invoked after successful connection of an account
 AppKit.AccountConnected += (sender, eventArgs) => {
-    Account activeAccount = eventArgs.GetAccount();
+    Account activeAccount = eventArgs.Account;
+    Debug.Log($"Account connected: {activeAccount.Address}");
+    
+    // Access all connected accounts
+    foreach (var account in eventArgs.Accounts)
+    {
+        Debug.Log($"Available account: {account.Address} on {account.ChainId}");
+    }
 };
 
 // Invoked after successful disconnection of an account
-AppKit.AccountDisconnected += (sender, eventArgs) => { };
+AppKit.AccountDisconnected += (sender, eventArgs) => {
+    Debug.Log("Account disconnected");
+};
 
 // Invoked after account has changed
-// This happens when the wallet updates a session or the user changes the active chain.
+// This happens when the wallet updates a session or the user changes the active account
 AppKit.AccountChanged += (sender, eventArgs) => {
     Account newAccount = eventArgs.Account;
+    Debug.Log($"Account changed to: {newAccount.Address}");
 };
 
 // Invoked after active chain has changed
 AppKit.ChainChanged += (sender, eventArgs) => {
-    Chain newChain = eventArgs.Chain;
+    Chain previousChain = eventArgs.PreviousChain;
+    Chain newChain = eventArgs.NewChain;
+    
+    Debug.Log($"Chain changed from {previousChain?.Name} to {newChain?.Name}");
+    Debug.Log($"New chain ID: {newChain?.ChainId}");
 };
+```
+
+## SignClient Unity Events
+
+For advanced use cases, you can also subscribe to lower-level SignClient events through `AppKit.Instance.SignClient`:
+
+```csharp
+// Subscribe to SignClient Unity events
+AppKit.Instance.SignClient.SessionConnectedUnity += (sender, session) => {
+    Debug.Log($"Session connected: {session.Topic}");
+};
+
+AppKit.Instance.SignClient.SessionUpdatedUnity += (sender, session) => {
+    Debug.Log($"Session updated: {session.Topic}");
+};
+
+AppKit.Instance.SignClient.SessionDisconnectedUnity += (sender, eventArgs) => {
+    Debug.Log("Session disconnected");
+};
+
+AppKit.Instance.SignClient.SessionRequestSentUnity += (sender, sessionRequest) => {
+    Debug.Log($"Session request sent: {sessionRequest.Id}");
+};
+```
+
+## Event Arguments
+
+### InitializeEventArgs
+Empty event arguments indicating successful initialization.
+
+### AccountConnectedEventArgs
+- `Account Account` - The currently active connected account
+- `IEnumerable<Account> Accounts` - All connected accounts
+- `Func<Task<Account>> GetAccountAsync` - (Deprecated) Use Account property instead
+- `Func<Task<Account[]>> GetAccountsAsync` - (Deprecated) Use Accounts property instead
+
+### AccountDisconnectedEventArgs
+Empty event arguments indicating account disconnection.
+
+### AccountChangedEventArgs
+- `Account Account` - The new active account
+
+### ChainChangedEventArgs
+- `Chain PreviousChain` - The previously active chain (can be null)
+- `Chain NewChain` - The newly active chain
+
+## Best Practices
+
+### Event Subscription and Cleanup
+
+Always unsubscribe from events to prevent memory leaks:
+
+```csharp
+public class WalletManager : MonoBehaviour
+{
+    private void OnEnable()
+    {
+        // Subscribe to events
+        AppKit.AccountConnected += OnAccountConnected;
+        AppKit.AccountDisconnected += OnAccountDisconnected;
+        AppKit.ChainChanged += OnChainChanged;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from events
+        AppKit.AccountConnected -= OnAccountConnected;
+        AppKit.AccountDisconnected -= OnAccountDisconnected;
+        AppKit.ChainChanged -= OnChainChanged;
+    }
+
+    private void OnAccountConnected(object sender, Connector.AccountConnectedEventArgs e)
+    {
+        // Handle account connection
+        UpdateUI(e.Account);
+    }
+
+    private void OnAccountDisconnected(object sender, Connector.AccountDisconnectedEventArgs e)
+    {
+        // Handle account disconnection
+        ClearUI();
+    }
+
+    private void OnChainChanged(object sender, NetworkController.ChainChangedEventArgs e)
+    {
+        // Handle chain change
+        UpdateChainUI(e.NewChain);
+    }
+}
+```
+
+### Error Handling
+
+Always wrap event handlers in try-catch blocks to prevent exceptions from breaking the event chain:
+
+```csharp
+AppKit.AccountConnected += (sender, eventArgs) => {
+    try
+    {
+        // Your event handling code
+        UpdateAccountUI(eventArgs.Account);
+    }
+    catch (Exception ex)
+    {
+        Debug.LogError($"Error handling AccountConnected event: {ex.Message}");
+    }
+};
+```
+
+### Thread Safety
+
+All AppKit events are automatically dispatched on Unity's main thread, making them safe for:
+- UI updates
+- GameObject manipulation
+- Component access
+
+No additional thread synchronization is required.
+
+## Platform Considerations
+
+### WebGL vs Native
+
+- **Native platforms** (iOS, Android, Desktop): Full event support with persistent storage
+- **WebGL**: All events work the same way, but storage is handled differently using PlayerPrefs
+
+### SignClient Storage
+
+The SignClient automatically handles storage differences between platforms:
+- **Native**: Uses file system storage at `Application.persistentDataPath/Reown/storage.json`
+- **WebGL**: Uses PlayerPrefs with Unity's synchronization context
+
+## Common Use Cases
+
+### Updating UI on Account Changes
+
+```csharp
+public class AccountDisplay : MonoBehaviour
+{
+    [SerializeField] private Text accountText;
+    [SerializeField] private Text chainText;
+
+    private void OnEnable()
+    {
+        AppKit.AccountConnected += UpdateAccountDisplay;
+        AppKit.AccountChanged += UpdateAccountDisplay;
+        AppKit.ChainChanged += UpdateChainDisplay;
+        AppKit.AccountDisconnected += ClearDisplay;
+    }
+
+    private void OnDisable()
+    {
+        AppKit.AccountConnected -= UpdateAccountDisplay;
+        AppKit.AccountChanged -= UpdateAccountDisplay;
+        AppKit.ChainChanged -= UpdateChainDisplay;
+        AppKit.AccountDisconnected -= ClearDisplay;
+    }
+
+    private void UpdateAccountDisplay(object sender, Connector.AccountConnectedEventArgs e)
+    {
+        accountText.text = $"Account: {e.Account.Address}";
+    }
+
+    private void UpdateChainDisplay(object sender, NetworkController.ChainChangedEventArgs e)
+    {
+        chainText.text = $"Chain: {e.NewChain?.Name ?? "Unknown"}";
+    }
+
+    private void ClearDisplay(object sender, Connector.AccountDisconnectedEventArgs e)
+    {
+        accountText.text = "No account connected";
+        chainText.text = "No chain selected";
+    }
+}
+```
+
+### Handling Connection State
+
+```csharp
+public class ConnectionManager : MonoBehaviour
+{
+    [SerializeField] private Button connectButton;
+    [SerializeField] private Button disconnectButton;
+
+    private void OnEnable()
+    {
+        AppKit.AccountConnected += OnAccountConnected;
+        AppKit.AccountDisconnected += OnAccountDisconnected;
+        
+        // Set initial state
+        UpdateButtonStates();
+    }
+
+    private void OnDisable()
+    {
+        AppKit.AccountConnected -= OnAccountConnected;
+        AppKit.AccountDisconnected -= OnAccountDisconnected;
+    }
+
+    private void OnAccountConnected(object sender, Connector.AccountConnectedEventArgs e)
+    {
+        UpdateButtonStates();
+        Debug.Log("Wallet connected successfully!");
+    }
+
+    private void OnAccountDisconnected(object sender, Connector.AccountDisconnectedEventArgs e)
+    {
+        UpdateButtonStates();
+        Debug.Log("Wallet disconnected");
+    }
+
+    private void UpdateButtonStates()
+    {
+        bool isConnected = AppKit.IsAccountConnected;
+        connectButton.gameObject.SetActive(!isConnected);
+        disconnectButton.gameObject.SetActive(isConnected);
+    }
+}
 ```
