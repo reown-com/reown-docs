@@ -2,11 +2,9 @@
 title: Events
 ---
 
-AppKit Unity provides a comprehensive event system that allows you to respond to various state changes in your application. All events are automatically dispatched on Unity's main thread, making them safe to use for UI updates.
+AppKit Unity provides a comprehensive event system that allows you to respond to various state changes in your application. All events are automatically dispatched on Unity's main thread, making them safe to use for UI updates and GameObject manipulation.
 
 ## AppKit Events
-
-### Core Events
 
 ```csharp
 // Invoked after successful initialization of AppKit
@@ -48,29 +46,6 @@ AppKit.ChainChanged += (sender, eventArgs) => {
 };
 ```
 
-## SignClient Unity Events
-
-For advanced use cases, you can also subscribe to lower-level SignClient events through `AppKit.Instance.SignClient`:
-
-```csharp
-// Subscribe to SignClient Unity events
-AppKit.Instance.SignClient.SessionConnectedUnity += (sender, session) => {
-    Debug.Log($"Session connected: {session.Topic}");
-};
-
-AppKit.Instance.SignClient.SessionUpdatedUnity += (sender, session) => {
-    Debug.Log($"Session updated: {session.Topic}");
-};
-
-AppKit.Instance.SignClient.SessionDisconnectedUnity += (sender, eventArgs) => {
-    Debug.Log("Session disconnected");
-};
-
-AppKit.Instance.SignClient.SessionRequestSentUnity += (sender, sessionRequest) => {
-    Debug.Log($"Session request sent: {sessionRequest.Id}");
-};
-```
-
 ## Event Arguments
 
 ### InitializeEventArgs
@@ -92,9 +67,7 @@ Empty event arguments indicating account disconnection.
 - `Chain PreviousChain` - The previously active chain (can be null)
 - `Chain NewChain` - The newly active chain
 
-## Best Practices
-
-### Event Subscription and Cleanup
+## Event Subscription and Cleanup
 
 Always unsubscribe from events to prevent memory leaks:
 
@@ -136,46 +109,6 @@ public class WalletManager : MonoBehaviour
     }
 }
 ```
-
-### Error Handling
-
-Always wrap event handlers in try-catch blocks to prevent exceptions from breaking the event chain:
-
-```csharp
-AppKit.AccountConnected += (sender, eventArgs) => {
-    try
-    {
-        // Your event handling code
-        UpdateAccountUI(eventArgs.Account);
-    }
-    catch (Exception ex)
-    {
-        Debug.LogError($"Error handling AccountConnected event: {ex.Message}");
-    }
-};
-```
-
-### Thread Safety
-
-All AppKit events are automatically dispatched on Unity's main thread, making them safe for:
-- UI updates
-- GameObject manipulation
-- Component access
-
-No additional thread synchronization is required.
-
-## Platform Considerations
-
-### WebGL vs Native
-
-- **Native platforms** (iOS, Android, Desktop): Full event support with persistent storage
-- **WebGL**: All events work the same way, but storage is handled differently using PlayerPrefs
-
-### SignClient Storage
-
-The SignClient automatically handles storage differences between platforms:
-- **Native**: Uses file system storage at `Application.persistentDataPath/Reown/storage.json`
-- **WebGL**: Uses PlayerPrefs with Unity's synchronization context
 
 ## Common Use Cases
 
