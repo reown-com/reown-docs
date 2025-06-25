@@ -163,9 +163,7 @@ export const wagmiAdapter = new WagmiAdapter({
 })
 
 // 2. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-  registerWalletStandard: true // Enable automatic registration of WalletConnect relay connector as a Wallet Standard wallet
-})
+const solanaWeb3JsAdapter = new SolanaAdapter()
 
 // 3. Set up the metadata - Optional
 const metadata = {
@@ -251,9 +249,7 @@ const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepoli
 export const ethersAdapter = new EthersAdapter()
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-  registerWalletStandard: true // Enable automatic registration of WalletConnect relay connector as a Wallet Standard wallet
-})
+const solanaWeb3JsAdapter = new SolanaAdapter()
 
 // 2. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -293,9 +289,7 @@ import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 export const ethersAdapter = new EthersAdapter()
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-  registerWalletStandard: true // Enable automatic registration of WalletConnect relay connector as a Wallet Standard wallet
-})
+const solanaWeb3JsAdapter = new SolanaAdapter()
 
 // 2. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -361,15 +355,11 @@ The `SolanaAdapter` accepts configuration options to customize its behavior.
 
 ### registerWalletStandard
 
-Controls whether WalletConnect appears as an available wallet option in Solana wallet selection interfaces that follow the Wallet Standard protocol. When enabled (default), users will see "WalletConnect" as a wallet choice alongside other Solana wallets like Phantom, Solflare, etc.
-
-**Use Cases:**
-- **Enable (default)**: Allow users to connect any wallet through WalletConnect's universal protocol
-- **Disable**: Only show native Solana wallets, useful when you want to limit connection methods or avoid duplicate wallet options
+Controls whether WalletConnect is registered as an available WalletStandard wallet following the Solana Wallet Standard protocol. When enabled, users will see "WalletConnect" as a wallet choice alongside other Solana wallets like Phantom, Solflare, etc. when integrating wallet standard libraries
 
 ```ts
 const solanaWeb3JsAdapter = new SolanaAdapter({
-  registerWalletStandard: false, // Hide WalletConnect from wallet selection
+  registerWalletStandard: false,
   wallets: [/* only show these specific wallets */]
 })
 ```

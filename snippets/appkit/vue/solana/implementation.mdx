@@ -18,9 +18,7 @@ In your `App.vue` file set up the following configuration.
   };
 
   // 3. Set up Solana Adapter
-  const solanaWeb3JsAdapter = new SolanaAdapter({
-    registerWalletStandard: true // Enable automatic registration of WalletConnect relay connector as a Wallet Standard wallet
-  });
+  const solanaWeb3JsAdapter = new SolanaAdapter();
 
   // 4. Create modal
   createAppKit({
