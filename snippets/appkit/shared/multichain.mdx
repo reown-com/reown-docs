@@ -361,12 +361,16 @@ The `SolanaAdapter` accepts configuration options to customize its behavior.
 
 ### registerWalletStandard
 
-Enable or disable automatic registration of WalletConnect relay connector as a Wallet Standard wallet. Default is `true`.
+Controls whether WalletConnect appears as an available wallet option in Solana wallet selection interfaces that follow the Wallet Standard protocol. When enabled (default), users will see "WalletConnect" as a wallet choice alongside other Solana wallets like Phantom, Solflare, etc.
+
+**Use Cases:**
+- **Enable (default)**: Allow users to connect any wallet through WalletConnect's universal protocol
+- **Disable**: Only show native Solana wallets, useful when you want to limit connection methods or avoid duplicate wallet options
 
 ```ts
 const solanaWeb3JsAdapter = new SolanaAdapter({
-  registerWalletStandard: false, // Disable automatic registration
-  wallets: [/* custom wallets */]
+  registerWalletStandard: false, // Hide WalletConnect from wallet selection
+  wallets: [/* only show these specific wallets */]
 })
 ```
 
