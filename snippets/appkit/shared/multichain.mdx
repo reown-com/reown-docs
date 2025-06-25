@@ -163,7 +163,9 @@ export const wagmiAdapter = new WagmiAdapter({
 })
 
 // 2. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter()
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true // Enable automatic registration of WalletConnect relay connector as a Wallet Standard wallet
+})
 
 // 3. Set up the metadata - Optional
 const metadata = {
@@ -249,7 +251,9 @@ const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepoli
 export const ethersAdapter = new EthersAdapter()
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter()
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true // Enable automatic registration of WalletConnect relay connector as a Wallet Standard wallet
+})
 
 // 2. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -289,7 +293,9 @@ import { mainnet, arbitrum, sepolia } from '@reown/appkit/networks'
 export const ethersAdapter = new EthersAdapter()
 
 // 1. Create Solana adapter
-const solanaWeb3JsAdapter = new SolanaAdapter()
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true // Enable automatic registration of WalletConnect relay connector as a Wallet Standard wallet
+})
 
 // 2. Get projectId from https://cloud.reown.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -348,3 +354,31 @@ const modal = createAppKit({
 </Tab>
 
 </Tabs>
+
+## Solana Adapter Configuration
+
+The `SolanaAdapter` accepts configuration options to customize its behavior.
+
+### registerWalletStandard
+
+Enable or disable automatic registration of WalletConnect relay connector as a Wallet Standard wallet. Default is `true`.
+
+```ts
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: false, // Disable automatic registration
+  wallets: [/* custom wallets */]
+})
+```
+
+### wallets
+
+Array of custom Solana wallet adapters to include alongside the default WalletConnect functionality.
+
+```ts
+import { HuobiWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true,
+  wallets: [new HuobiWalletAdapter()]
+})
+```

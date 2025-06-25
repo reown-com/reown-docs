@@ -8,7 +8,9 @@ import { SolanaAdapter } from "@reown/appkit-adapter-solana";
 import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
 
 // 0. Set up Solana Adapter
-const solanaWeb3JsAdapter = new SolanaAdapter();
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true // Enable automatic registration of WalletConnect relay connector as a Wallet Standard wallet
+});
 
 // 1. Get projectId from https://cloud.reown.com
 const projectId = "YOUR_PROJECT_ID";
