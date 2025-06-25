@@ -11,6 +11,11 @@ This PR adds documentation for new configuration options introduced in AppKit ve
 - Added documentation for `registerWalletStandard` configuration option in Solana adapter documentation
 - Updated all Solana implementation examples to show the SolanaAdapter constructor with configuration options
 - Corrected placement based on GitHub feedback that `registerWalletStandard` is a Solana adapter flag, not a general AppKit flag
+- Added dedicated "Solana Adapter Configuration" section with detailed documentation for Solana-specific options
+
+## GitHub Feedback Addressed
+
+✅ **tomiir's comment**: Moved `registerWalletStandard` from shared options to Solana adapter documentation as it's a Solana adapter flag, not a general AppKit flag
 
 ## Context
 
