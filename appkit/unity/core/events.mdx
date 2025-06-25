@@ -67,49 +67,6 @@ Empty event arguments indicating account disconnection.
 - `Chain PreviousChain` - The previously active chain (can be null)
 - `Chain NewChain` - The newly active chain
 
-## Event Subscription and Cleanup
-
-Always unsubscribe from events to prevent memory leaks:
-
-```csharp
-public class WalletManager : MonoBehaviour
-{
-    private void OnEnable()
-    {
-        // Subscribe to events
-        AppKit.AccountConnected += OnAccountConnected;
-        AppKit.AccountDisconnected += OnAccountDisconnected;
-        AppKit.ChainChanged += OnChainChanged;
-    }
-
-    private void OnDisable()
-    {
-        // Unsubscribe from events
-        AppKit.AccountConnected -= OnAccountConnected;
-        AppKit.AccountDisconnected -= OnAccountDisconnected;
-        AppKit.ChainChanged -= OnChainChanged;
-    }
-
-    private void OnAccountConnected(object sender, Connector.AccountConnectedEventArgs e)
-    {
-        // Handle account connection
-        UpdateUI(e.Account);
-    }
-
-    private void OnAccountDisconnected(object sender, Connector.AccountDisconnectedEventArgs e)
-    {
-        // Handle account disconnection
-        ClearUI();
-    }
-
-    private void OnChainChanged(object sender, NetworkController.ChainChangedEventArgs e)
-    {
-        // Handle chain change
-        UpdateChainUI(e.NewChain);
-    }
-}
-```
-
 ## Common Use Cases
 
 ### Updating UI on Account Changes
