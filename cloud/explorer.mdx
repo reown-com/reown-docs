@@ -1,11 +1,11 @@
 ---
-title: Explorer API
+title: WalletGuide API
 ---
 
-The Cloud Explorer API currently offers the following functionality:
+The Cloud WalletGuide API currently offers the following functionality:
 
 - [Listings](#listings) - Allows for fetching of wallets and dApps listed in the [WalletGuide](https://walletguide.walletconnect.network/).
-- [Logos](#logos) - Provides logo assets in different sizes for a given Cloud explorer entry.
+- [Logos](#logos) - Provides logo assets in different sizes for a given Cloud WalletGuide entry.
 
 ### Listings
 
@@ -26,7 +26,7 @@ By default listings endpoints return all data for provided type. You can use fol
 
 #### `GET /v3/wallets`
 
-Returns a JSON object containing all wallets listed in the cloud explorer.
+Returns a JSON object containing all wallets listed in the cloud WalletGuide.
 
 Examples:
 
@@ -35,7 +35,7 @@ Examples:
 
 #### `GET /v3/dapps`
 
-Returns a JSON object containing all dApps listed in the public cloud explorer.
+Returns a JSON object containing all dApps listed in the public cloud WalletGuide.
 
 Examples:
 
@@ -43,7 +43,7 @@ Examples:
 
 #### `GET /v3/hybrid`
 
-Returns a JSON object containing all hybrids listed in the public cloud explorer.
+Returns a JSON object containing all hybrids listed in the public cloud WalletGuide.
 
 Examples:
 
@@ -51,7 +51,7 @@ Examples:
 
 #### `GET /v3/all`
 
-Returns a JSON object containing all entries listed in the public cloud explorer.
+Returns a JSON object containing all entries listed in the public cloud WalletGuide.
 
 Examples:
 
@@ -96,7 +96,7 @@ Examples:
 | Param | Description                                                                              |
 | ----- | ---------------------------------------------------------------------------------------- |
 | size  | Determines resolution of returned image can be one of: `sm`, `md` or `lg`                |
-| id    | Corresponds to a Cloud Explorer entry's `image_id` field as returned by the Listings API |
+| id    | Corresponds to a Cloud WalletGuide entry's `image_id` field as returned by the Listings API |
 
 #### Query Parameters
 
