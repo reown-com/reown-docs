@@ -16,7 +16,7 @@ Sign a Sui transaction without executing it.
 #### Parameters
 
 1. `transaction` (object) - The transaction to sign:
-   - `transaction` (string) - The base64 encoded transaction block
+   - `transaction` (string) - The base64 encoded, BCS encoded, transaction data
    - `address` (string) - The sender's Sui address
 
 #### Returns
@@ -57,7 +57,7 @@ Sign and execute a Sui transaction.
 #### Parameters
 
 1. `transaction` (object) - The transaction to sign and execute:
-   - `transaction` (string) - The base64 encoded transaction block
+   - `transaction` (string) - The base64 encoded, BCS encoded, transaction data
    - `address` (string) - The sender's Sui address
 
 #### Returns
