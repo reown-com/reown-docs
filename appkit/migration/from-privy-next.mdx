@@ -1,0 +1,78 @@
+---
+title: Migrating from Privy to AppKit
+sidebarTitle: "From Privy"
+---
+
+<Note> 
+If you're migrating a React Privy dApp originally built with `create-react-app`, we recommend switching to **Vite** for improved performance and a better developer experience. 
+You can check out our [examples](https://github.com/reown-com/appkit-web-examples) for a complete implementation using **Vite + AppKit**.
+</Note>
+
+Follow the steps below to migrate from a default Privy project (using Next.js Pages) to an **AppKit** project with wagmi.
+
+### Step 1. Create a project in Reown Cloud
+
+- Go to [Reown Cloud](http://cloud.reown.com).
+- Create a new project and copy your Project ID — you'll need it later.
+
+### Step 2. Install & uninstall libraries
+
+Replace Privy dependencies with AppKit by running the following commands for your preferred package manager:
+<CodeGroup>
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem && npm uninstall @privy-io/react-auth @privy-io/server-auth
+</CodeGroup>
+
+### Step 3. Update `_app.tsx`
+
+To make AppKit Functional in a similar way, we need to replace the PrivyProvider with the combination of WagmiProvider and QueryClientProvider
+
+1. Update Your Imports
+```tsx {2-6}
+- import { PrivyProvider } from "@privy-io/react-auth";
++ import { createAppKit } from '@reown/appkit/react'
++ import { WagmiProvider } from 'wagmi'
++ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
++ import { mainnet } from '@reown/appkit/networks'
++ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+```
+
+2. Configure AppKit Outside the Component
+```tsx {1-11}
++ const projectId = "<YOUR_PROJECT_ID_FROM_STEP_1>"
++ const wagmiAdapter = new WagmiAdapter({ projectId, [mainnet] })
+
++ createAppKit({
++   adapters: [wagmiAdapter],
++  networks:  [mainnet],
++  projectId
++  features: {
++    analytics: true // Optional - defaults to your Cloud configuration
++  }
++ })
+```
+
+3. Wrap Your App With Providers
+
+Update your component tree to use WagmiProvider and QueryClientProvider, and render the global `appkit-button` element:
+
+```tsx {2-6}
+-  <PrivyProvider ... >
++   <WagmiProvider config={wagmiAdapter.wagmiConfig}>
++        <QueryClientProvider client={queryClient}>
++            <appkit-button />
++        </QueryClientProvider>
++   </WagmiProvider>
+-  </PrivyProvider appId="">
+```
+
+<Info>
+AppKit web components (like `<appkit-button>`) are **global HTML elements** — no imports are necessary. 
+</Info>
+
+
+### Final notes
+
+- Test your application thoroughly to ensure the migration has been successful and that all functionality is working as expected.
+- Check our [AppKit Web examples](https://github.com/reown-com/appkit-web-examples) to compare with your implementation if you encounter issues.
+- If you want to start from scratch, refer to the Installation docs [here](/appkit/next/core/installation).

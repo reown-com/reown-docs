@@ -309,6 +309,7 @@
                     "group": "Migration",
                     "pages": [
                       "appkit/migration/index",
+                      "appkit/migration/from-privy-next",
                       "appkit/migration/from-rainbowkit-next",
                       "appkit/migration/from-connectkit-next",
                       "appkit/migration/from-anza-adapter-react"
