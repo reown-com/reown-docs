@@ -6,6 +6,7 @@ import WagmiComposables from "/snippets/appkit/vue/wagmi/composables.mdx";
 import EthersComposables from "/snippets/appkit/vue/ethers/composables.mdx";
 import Ethers5Composables from "/snippets/appkit/vue/ethers5/composables.mdx";
 import SolanaComposables from "/snippets/appkit/vue/solana/composables.mdx";
+import BitcoinComposables from "/snippets/appkit/vue/bitcoin/composables.mdx";
 import OpenModal from "/snippets/appkit/vue/core/open.mdx";
 
 Composables are functions that will help you control the modal, subscribe to wallet events and interact with them and smart contracts.
@@ -243,6 +244,63 @@ export default Component(){
 }
 ```
 
+## useAppKitProvider
+
+Composable function that returns the `walletProvider` and the `WalletProviderType` for interacting with the connected wallet across different blockchain adapters.
+
+```ts
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+### Use Cases
+
+- Direct wallet interactions (signing messages, sending transactions)
+- Access to wallet-specific methods and properties
+- Integration with blockchain libraries (Ethers, Wagmi, Solana Web3.js)
+
+### Examples
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+</Tab>
+<Tab title="Solana">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit-adapter-solana/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("solana");
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
+
+const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
+```
+
+</Tab>
+</Tabs>
+
+### Returns
+
+- `walletProvider`: The wallet provider instance for the specified chain namespace
+- `walletProviderType`: The type of wallet provider currently connected
+
 ## Ethereum/Solana Library
 
 <Tabs>
@@ -264,6 +322,11 @@ export default Component(){
 <Tab title="Solana">
 
 <SolanaComposables />
+
+</Tab>
+<Tab title="Bitcoin">
+
+<BitcoinComposables />
 
 </Tab>
 </Tabs>
