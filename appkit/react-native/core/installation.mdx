@@ -120,7 +120,7 @@ Reown is committed to delivering the best developer experience.
 
 If you have any questions, feature requests, or bug reports, feel free to open an issue on [GitHub](https://github.com/reown-com/appkit-react-native)!
 
-## Enable Wallet Detection
+## Enable Wallet Detection (Optional)
 
 <Note>
 
@@ -128,7 +128,15 @@ Make sure your have `@walletconnect/react-native-compat@2.10.5` or higher.
 
 </Note>
 
-To enable AppKit to detect wallets installed on the device, you need to make specific changes to the native code of your project.
+<Info>
+**This is an optional feature** that enhances the user experience by:
+- Showing a green checkmark next to installed wallets
+- Prioritizing installed wallets at the top of the list
+
+**All 430+ wallets in the AppKit ecosystem work via WalletConnect protocol regardless of this configuration.** You only need to add the most popular wallets that your users commonly have installed.
+</Info>
+
+To enable AppKit to detect wallets installed on the device, you can make specific changes to the native code of your project.
 
 <Tabs >
   <Tab title="React Native CLI">
@@ -281,7 +289,11 @@ module.exports = createRunOncePlugin(
 
 </Tabs>
 
-## Enable Coinbase Wallet
+## Enable Coinbase Wallet (Optional)
+
+<Info>
+**Coinbase Wallet support is optional.** Unlike other wallets that use the WalletConnect protocol, Coinbase Wallet uses its own proprietary SDK. If you skip this setup, Coinbase Wallet simply won't appear in your wallet list, but all other wallets will work normally.
+</Info>
 
 <Tabs >
 <Tab title="React Native CLI">
