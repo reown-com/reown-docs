@@ -20,17 +20,7 @@ Follow the steps below to migrate from a default Privy project (using Next.js Pa
 Replace Privy dependencies with AppKit by running the following commands for your preferred package manager:
 <CodeGroup>
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-wagmi && npm uninstall @privy-io/react-auth @privy-io/server-auth
-```
-```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-wagmi&& yarn remove @privy-io/react-auth @privy-io/server-auth
-```
-```bash Bun
-bun add @reown/appkit @reown/appkit-adapter-wagmi && npm uninstall @privy-io/react-auth @privy-io/server-auth
-```
-```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-wagmi && pnpm remove @privy-io/react-auth @privy-io/server-auth
-```
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem && npm uninstall @privy-io/react-auth @privy-io/server-auth
 </CodeGroup>
 
 ### Step 3. Update `_app.tsx`
