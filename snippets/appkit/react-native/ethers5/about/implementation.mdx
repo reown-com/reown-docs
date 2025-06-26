@@ -7,6 +7,10 @@ Make sure you import `@walletconnect/react-native-compat` and `@ethersproject/sh
 
 </Note>
 
+<Warning>
+`createAppKit` must be called before rendering the `<AppKit />` component or any other AppKit UI components. Make sure to call `createAppKit` at the module level, outside of your React components.
+</Warning>
+
 ```tsx
 import "@walletconnect/react-native-compat";
 import "@ethersproject/shims";
