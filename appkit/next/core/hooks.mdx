@@ -6,6 +6,7 @@ import WagmiHooks from "/snippets/appkit/next/wagmi/hooks.mdx";
 import EthersHooks from "/snippets/appkit/next/ethers/hooks.mdx";
 import Ethers5Hooks from "/snippets/appkit/next/ethers5/hooks.mdx";
 import SolanaHooks from "/snippets/appkit/next/solana/hooks.mdx";
+import BitcoinHooks from "/snippets/appkit/next/bitcoin/hooks.mdx";
 import OpenModal from "/snippets/appkit/next/core/open.mdx";
 
 Hooks are React functions that provide access to wallet connection features, modal controls, blockchain interactions, and wallet event subscriptions. They enable you to manage wallet connections, handle user authentication, interact with smart contracts, and respond to wallet events in your application.
@@ -492,6 +493,63 @@ function WalletDisplay() {
 - Showing wallet icons or branding
 - Handling wallet-specific behaviors
 
+## useAppKitProvider
+
+Hook that returns the `walletProvider` and the `WalletProviderType` for interacting with the connected wallet across different blockchain adapters.
+
+```ts
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+### Use Cases
+
+- Direct wallet interactions (signing messages, sending transactions)
+- Access to wallet-specific methods and properties
+- Integration with blockchain libraries (Ethers, Wagmi, Solana Web3.js)
+
+### Examples
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+</Tab>
+<Tab title="Solana">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("solana");
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
+
+const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
+```
+
+</Tab>
+</Tabs>
+
+### Returns
+
+- `walletProvider`: The wallet provider instance for the specified chain namespace
+- `walletProviderType`: The type of wallet provider currently connected
+
 ## Ethereum/Solana Library
 
 <Tabs>
@@ -513,6 +571,11 @@ function WalletDisplay() {
 <Tab title="Solana">
 
 <SolanaHooks />
+
+</Tab>
+<Tab title="Bitcoin">
+
+<BitcoinHooks />
 
 </Tab>
 </Tabs>
