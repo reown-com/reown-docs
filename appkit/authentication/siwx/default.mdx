@@ -57,7 +57,7 @@ The defined interface must follow specific rules to make sure that AppKit can in
 If you are currently already using **SIWE** from `@reown/appkit-siwe`, after AppKit version 1.5.0, you will be migrated into **SIWX**. The migration process is automatic and your `siweConfig` from `createAppKit` function will be mapped internally.
 
 <Warning>
-It is important to note that if you cannot use `siweConfig` and `siwx` at the same time, `createAppKit` will throw an error in case this happens.
+It is important to note that you cannot use `siweConfig` and `siwx` at the same time, `createAppKit` will throw an error in case this happens.
 
 You may replace `siweConfig` with your own `siwx` configuration manually if you would like to do so.
 
