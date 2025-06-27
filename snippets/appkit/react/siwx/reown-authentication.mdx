@@ -1,0 +1,110 @@
+## Interacting with Reown Authentication
+
+AppKit provides a `useAppKitSIWX` hook that allows you to interact with Reown Authentication. This hook provides a set of methods to manage sessions, retrieve user information, and update session metadata.
+
+```tsx
+import type { ReownAuthentication } from '@reown/appkit-siwx'
+import { useAppKitSIWX } from '@reown/appkit-siwx/react'
+
+function Component() {
+  // ...
+  const siwx = useAppKitSIWX<ReownAuthentication>()
+  // ...
+}
+```
+
+### Interactions
+
+#### `getSessionAccount`
+
+You can retrieve the session account data using the `getSessionAccount` method:
+
+```tsx
+function Component() {
+  // ...
+
+  const siwx = useAppKitSIWX<ReownAuthentication>()
+  const [sessionAccount, setSessionAccount] = useState<ReownAuthentication.SessionAccount>()
+
+  useEffect(() => {
+    if (!siwx) return
+
+    siwx.getSessionAccount().then(setSessionAccount)
+  }, [siwx])
+
+  // ...
+}
+```
+
+#### `setSessionAccountMetadata`
+
+Reown Authentication provides a way for you to store arbitrary information about your users through the AppKit Account Metadata.
+
+Updating the session account metadata is done using the `setSessionAccountMetadata` method:
+
+```tsx
+function Component() {
+  // ...
+
+  const siwx = useAppKitSIWX<ReownAuthentication>()
+
+  const mutateMetadata = async (metadata: object) => {
+    if (!siwx) return
+
+    await siwx.setSessionAccountMetadata(metadata)
+  }
+}
+```
+
+You may use the session metadata through the `getSessionAccount` method:
+
+```tsx
+function Component() {
+  // ...
+
+  const siwx = useAppKitSIWX<ReownAuthentication>()
+
+  const queryMetadata = async () => {
+    if (!siwx) return
+
+    const account = await siwx.getSessionAccount()
+
+    return account.appKitAccount?.metadata
+  }
+
+  // ...
+}
+```
+
+#### `events`
+
+Reown Authentication provides events that you can listen to for session management and authentication state changes:
+
+```tsx
+import type { SIWXSession, ReownAuthentication } from '@reown/appkit-siwx'
+import { useAppKitSIWX } from '@reown/appkit-siwx/react'
+
+function Component() {
+  // ...
+
+  const siwx = useAppKitSIWX<ReownAuthentication>()
+
+  useEffect(() => {
+    if (!siwx) return
+
+    // Add event listeners
+    const unsubscribe = siwx.on('sessionChanged', (session: SIWXSession | undefined) => {
+      console.log('Session changed:', session)
+    })
+
+    // Cleanup listeners
+    return () => {
+      unsubscribe()
+      // or
+      siwx.removeAllListeners()
+    }
+  }, [siwx])
+
+  // ...
+}
+```
