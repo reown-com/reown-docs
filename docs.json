@@ -85,7 +85,8 @@
                   "appkit/recipes/smart-sessions",
                   "appkit/recipes/troubleshooting"
                 ]
-              }
+              },
+              "appkit/recipes/gtm-checklist"
             ]
           },
           {
@@ -588,7 +589,6 @@
             "dropdown": "JavaScript",
             "icon": "js",
             "description": "AppKit on JavaScript",
-            "group": "[JavaScript SDK]",
             "pages": [
               {
                 "group": "Fundamentals",
