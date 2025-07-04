@@ -252,38 +252,32 @@ pnpm add @reown/appkit-wallet-button
 
 </CodeGroup>
 
-2. Import the library in your project and create the AppKit Wallet Button:
+2. Import and use it in your Javascript dApp:
 
-```tsx
-import { createAppKitWalletButton } from '@reown/appkit-wallet-button'
+```javascript
+<script type="module">
+  import { createAppKitWalletButton } from '@reown/appkit-wallet-button';
+  const wb = createAppKitWalletButton();
 
-// Create AppKit Wallet Button
-const appKitWalletButton = createAppKitWalletButton()
-```
-
-3. Use this script for your Button called 'walletButton':
-
-```tsx
-document.getElementById('walletButton')?.addEventListener(
-  'click', async () => {
-    // check if it's ready
-    if (appKitWalletButton.isReady()) {
-      appKitWalletButton
-          .connect('walletConnect')
-          .then(data => {
-              console.log('connected', data)
-          })
-          .catch(err => {
-              console.log('error connecting', err)
-          })
-    } else {
-      console.log('appKitWalletButton is not ready')
+  function connectWallet(id) {
+    if (wb.isReady()) {
+      wb.connect(id);
     }
   }
-)
 
+  // Attach it to the global scope so it can be called from inline HTML
+  window.connectWallet = connectWallet;
+</script>
+
+<button onclick="connectWallet('walletConnect')">Open QR modal</button>
+<button onclick="connectWallet('metamask')">Connect to MetaMask</button>
+<button onclick="connectWallet('google')">Connect to Google</button>
  
 ```
+
+<Note>
+  Make sure to call `createAppKitWalletButton` after `createAppKit`.
+</Note>
 
 #### Options for wallet property. 
 Change the string parameter `name` from `appKitWalletButton.connect(name)` in order to open a different wallet.
