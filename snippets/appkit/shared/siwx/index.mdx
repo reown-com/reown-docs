@@ -15,26 +15,21 @@ The **Sign In With X** feature enables decentralized applications (Dapps) to aut
 **SIWX** works as a plugin system for AppKit and you are going to add the plugin in the AppKit configuration. There are some ways to implement the **SIWX** feature:
 
 - Use Reown Authentication to manage the sessions in the Cloud Dashboard
-- Use the `SIWXDefault` class provided by AppKit
+- Use the `DefaultSIWX` class provided by AppKit
 - Create a custom implementation to suit your specific requirements.
 
 To initialize the **SIWX** feature, you need to add the `siwx` parameter to the `createAppKit` function.
 
 ### Reown Authentication
 
-Reown Authentication is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions. With Reown Authentication, you will be able to see and control the sessions of your users using the [Reown Authentication Dashboard](/cloud/reown-authentication).
+Reown Authentication is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions. With Reown Authentication, you will be able to see and control the sessions of your users using the Reown [Dashboard](/cloud/reown-authentication).
 
 Read more about the [Reown Authentication Implementation](./reown-authentication).
 
-### SIWXDefault
-
-`SIWXDefault` is a scaffold implementation of the SIWX feature for quick integration. This option provides a set of pre-built components that allow you to have the feature up and running in no time.
-
-Read more about the [SIWXDefault Implementation](./siwx-default).
-
 ### Custom Implementation
 
-The `siwx` param expects to receive a defined interface from which you are able to create your own implementation. This is what allows you to customize the feature to suit your specific requirements.
+`DefaultSIWX` is a scaffold implementation of the SIWX feature for quick custom integration. It offers pre-built components to get the feature running quickly with some custom adjustments. 
+Additionally, the expected ` parameters can be configured to allow customization of the feature to suit your specific requirements.
 
 The defined interface must follow specific rules to make sure that AppKit can interact with it correctly. Read more about how to have your [Custom Implementation](./siwx-custom).
 
