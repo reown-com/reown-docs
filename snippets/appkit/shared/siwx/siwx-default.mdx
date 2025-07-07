@@ -2,7 +2,7 @@ The Sign In With X feature enables decentralized applications (Dapps) to authent
 
 ## Quick Start
 
-Here is a quick guide to get started with the **SIWX** feature using the `SIWXDefault` class.
+Here is a quick guide to get started with the **SIWX** feature using the `DefaultSIWX` class.
 
 ### Example
 
@@ -41,14 +41,14 @@ pnpm add @reown/appkit-siwx
 ```ts {2-3, 9-10}
 import { createAppKit } from '@reown/appkit'
 // Add the following code line
-import { SIWXDefault } from '@reown/appkit-siwx'
+import { DefaultSIWX } from '@reown/appkit-siwx'
 
 const appkit = createAppKit({
   projectId,
   networks,
   metadata,
   // Add the following code line
-  siwx: new SIWXDefault() // add this line to enable SIWX
+  siwx: new DefaultSIWX() // add this line to enable SIWX
 })
 ```
 
@@ -56,9 +56,9 @@ You should now have the **SIWX** feature up and running in your Dapp.
 
 The `ReownAuthentication` configuration will use the predefined components to handle the message generation, verification and storage of the sessions. You can customize the default implementation by providing your own components as in the following sections.
 
-## Customizing the SIWXDefault Class
+## Customizing the DefaultSIWX Class
 
-The `SIWXDefault` class is divided in three main components: `SIWXMessenger`, `SIWXVerifier` and `SIWXStorage`. The `@reown/appkit-siwx` package have defined options to fulfill the parts when initializing the `DefaultSIWX` configuration and you are also able to setup your own parts as required.
+The `DefaultSIWX` class is divided in three main components: `SIWXMessenger`, `SIWXVerifier` and `SIWXStorage`. The `@reown/appkit-siwx` package have defined options to fulfill the parts when initializing the `DefaultSIWX` configuration and you are also able to setup your own parts as required.
 
 ### Predefined Components
 
