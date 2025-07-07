@@ -1,10 +1,10 @@
-Cloud Auth SIWX is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions.
+Reown Authentication is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions.
 
-With Cloud Auth SIWX you will be able to see and control the sessions of your users using the [User Management Dashboard](#user-management).
+With Reown Authentication you will be able to see and control the sessions of your users using the [User Management Dashboard](#user-management).
 
 <Warning>
 
-For now, Cloud Auth SIWX will only work for `eip155` compatible networks.
+For now, Reown Authentication will only work for `eip155` compatible networks.
 
 </Warning>
 
@@ -34,22 +34,26 @@ pnpm add @reown/appkit-siwx
 ```ts {2-3, 9-10}
 import { createAppKit } from '@reown/appkit'
 // Add the following code line
-import { CloudAuthSIWX } from '@reown/appkit-siwx'
+import { ReownAuthentication } from '@reown/appkit-siwx'
 
 const appkit = createAppKit({
   projectId,
   networks,
   metadata,
   // Add the following code line
-  siwx: new CloudAuthSIWX()
+  siwx: new ReownAuthentication()
 })
 ```
 
 Now you are ready to use the **SIWX** feature in your Dapp.
 
+<Note>
+`ReownAuthentication` is the preferred class name as of AppKit v1.7.13. The previous `CloudAuthSIWX` class is still supported for backwards compatibility.
+</Note>
+
 ## User Management
 
-Easily view and manage all authenticated users through AppKit [Cloud Auth SIWX](/appkit/authentication/siwx/siwx-cloud-auth), a drop-in hosted SIWX server that provides key insights into your user base.
+Easily view and manage all authenticated users through AppKit [Reown Authentication](/appkit/authentication/siwx/siwx-cloud-auth), a drop-in hosted SIWX server that provides key insights into your user base.
 
 
 ### Dashboard
