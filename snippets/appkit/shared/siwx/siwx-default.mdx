@@ -41,14 +41,14 @@ pnpm add @reown/appkit-siwx
 ```ts {2-3, 9-10}
 import { createAppKit } from '@reown/appkit'
 // Add the following code line
-import { ReownAuthentication } from '@reown/appkit-siwx'
+import { SIWXDefault } from '@reown/appkit-siwx'
 
 const appkit = createAppKit({
   projectId,
   networks,
   metadata,
   // Add the following code line
-  siwx: new ReownAuthentication() // add this line to enable SIWX
+  siwx: new SIWXDefault() // add this line to enable SIWX
 })
 ```
 
