@@ -51,6 +51,40 @@ const walletKit = await WalletKit.init({
 });
 ```
 
+### Core Instance Sharing
+
+Starting from newer versions of WalletKit, Core instances are shared globally by default to optimize resource usage. This means that multiple Core instances with the same configuration will reuse the same underlying Core.
+
+**For parallel testing scenarios** where you need isolated Core instances, you have two options:
+
+#### Option 1: Use customStoragePrefix
+
+```javascript
+const core = new Core({
+  projectId: process.env.PROJECT_ID,
+  customStoragePrefix: `test-${Date.now()}`, // Unique prefix for each test
+});
+```
+
+<Warning>
+Don't use randomly generated `customStoragePrefix` in production - this will cause the client to create new storage each time it is initialized. The client will not be able to persist/read existing data and all existing sessions will be lost after each reload.
+</Warning>
+
+#### Option 2: Disable global Core sharing
+
+```javascript
+// Set environment variable before initializing Core
+process.env.DISABLE_GLOBAL_CORE = "true";
+
+const core = new Core({
+  projectId: process.env.PROJECT_ID,
+});
+```
+
+<Note>
+The global Core sharing behavior was introduced to prevent resource waste when multiple SDK instances are created. If you're running parallel tests and experiencing cross-test interference, use one of the solutions above to ensure proper test isolation.
+</Note>
+
 ## Session
 
 A session is a connection between a dapp and a wallet. It is established when a user approves a session proposal from a dapp. A session is active until the user disconnects from the dapp or the session expires.

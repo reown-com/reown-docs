@@ -117,6 +117,73 @@ if (browser) {
 export const appKitStore = writable(appKit);
 ```
 
+## Wallet Buttons
+
+<Frame>
+  <img src="/images/assets/walletButtons.jpg" />
+</Frame>
+
+Using the wallet button functions ([Demo in our Lab](https://appkit-lab.reown.com/library/wagmi-wallet-button/)), you can directly connect to the top 20 wallets, WalletConnect QR, and all the social logins.
+This allows to customize dApps, enabling users to connect their wallets effortlessly, all without the need to open the traditional modal.
+
+Follow these steps to use wallet buttons:
+
+1. Install the package:
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-wallet-button
+```
+
+```bash Yarn
+yarn add @reown/appkit-wallet-button
+```
+
+```bash Bun
+bun a @reown/appkit-wallet-button
+```
+
+```bash pnpm
+pnpm add @reown/appkit-wallet-button
+```
+
+</CodeGroup>
+
+2. Import and use in your Svelte project:
+
+```html
+<script type="module">
+  import { createAppKitWalletButton } from '@reown/appkit-wallet-button';
+  const wb = createAppKitWalletButton();
+
+  function connectWallet(id) {
+    if (wb.isReady()) {
+      wb.connect(id);
+    }
+  }
+
+  // Attach it to the global scope so it can be called from inline HTML
+  window.connectWallet = connectWallet;
+</script>
+
+<button onclick="connectWallet('walletConnect')">Open QR modal</button>
+<button onclick="connectWallet('metamask')">Connect to MetaMask</button>
+<button onclick="connectWallet('google')">Connect to Google</button>
+```
+
+<Note>
+  Make sure to call wallet button methods after `createAppKit` has been initialized.
+</Note>
+
+#### Options for wallet property
+
+| Type          | Options                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                               |
+| Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, `tokenpocket`, and more |
+| Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                                      |
+
 ## Ethereum Library
 
 <Tabs>

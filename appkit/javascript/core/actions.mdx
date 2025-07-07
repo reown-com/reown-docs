@@ -1,5 +1,5 @@
 ---
-title: Actions
+title: "Actions"
 ---
 
 import WagmiActions from "/snippets/appkit/javascript/wagmi/actions.mdx";
@@ -84,6 +84,80 @@ modal.subscribeWalletInfo(handler);
 
 const { name, icon } = modal.getWalletInfo();
 ```
+
+## Provider Access
+
+Access wallet providers for direct blockchain interactions across different namespaces.
+
+### subscribeProviders
+
+Subscribe to provider state changes and access wallet providers for different blockchain namespaces.
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  projectId,
+});
+
+const unsubscribe = modal.subscribeProviders((state) => {
+  const eip155Provider = state["eip155"];
+  const solanaProvider = state["solana"];
+  const bitcoinProvider = state["bip122"];
+  
+  console.log("Providers updated:", { eip155Provider, solanaProvider, bitcoinProvider });
+});
+
+const providers = modal.getProviders();
+const eip155Provider = providers["eip155"];
+```
+
+### Examples by Namespace
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```ts
+import { BrowserProvider, Contract, parseEther } from "ethers";
+
+const provider = await modal.subscribeProviders((state) => {
+  return state["eip155"];
+});
+
+if (!provider) throw Error("No EVM provider found");
+
+const ethersProvider = new BrowserProvider(provider);
+const signer = await ethersProvider.getSigner();
+```
+
+</Tab>
+<Tab title="Solana">
+
+```ts
+const provider = await modal.subscribeProviders((state) => {
+  return state["solana"];
+});
+
+if (!provider) throw Error("No Solana provider found");
+
+const signature = await provider.signMessage(new TextEncoder().encode("Hello"));
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```ts
+const provider = await modal.subscribeProviders((state) => {
+  return state["bip122"];
+});
+
+if (!provider) throw Error("No Bitcoin provider found");
+
+const signature = await provider.signMessage("Hello from AppKit");
+```
+
+</Tab>
+</Tabs>
 
 ## Ethereum Library
 
@@ -178,38 +252,32 @@ pnpm add @reown/appkit-wallet-button
 
 </CodeGroup>
 
-2. Import the library in your project and create the AppKit Wallet Button:
+2. Import and use it in your Javascript dApp:
 
-```tsx
-import { createAppKitWalletButton } from '@reown/appkit-wallet-button'
+```javascript
+<script type="module">
+  import { createAppKitWalletButton } from '@reown/appkit-wallet-button';
+  const wb = createAppKitWalletButton();
 
-// Create AppKit Wallet Button
-const appKitWalletButton = createAppKitWalletButton()
-```
-
-3. Use this script for your Button called 'walletButton':
-
-```tsx
-document.getElementById('walletButton')?.addEventListener(
-  'click', async () => {
-    // check if it's ready
-    if (appKitWalletButton.isReady()) {
-      appKitWalletButton
-          .connect('walletConnect')
-          .then(data => {
-              console.log('connected', data)
-          })
-          .catch(err => {
-              console.log('error connecting', err)
-          })
-    } else {
-      console.log('appKitWalletButton is not ready')
+  function connectWallet(id) {
+    if (wb.isReady()) {
+      wb.connect(id);
     }
   }
-)
 
+  // Attach it to the global scope so it can be called from inline HTML
+  window.connectWallet = connectWallet;
+</script>
+
+<button onclick="connectWallet('walletConnect')">Open QR modal</button>
+<button onclick="connectWallet('metamask')">Connect to MetaMask</button>
+<button onclick="connectWallet('google')">Connect to Google</button>
  
 ```
+
+<Note>
+  Make sure to call `createAppKitWalletButton` after `createAppKit`.
+</Note>
 
 #### Options for wallet property. 
 Change the string parameter `name` from `appKitWalletButton.connect(name)` in order to open a different wallet.

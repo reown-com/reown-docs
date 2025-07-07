@@ -6,6 +6,7 @@ import WagmiHooks from "/snippets/appkit/next/wagmi/hooks.mdx";
 import EthersHooks from "/snippets/appkit/next/ethers/hooks.mdx";
 import Ethers5Hooks from "/snippets/appkit/next/ethers5/hooks.mdx";
 import SolanaHooks from "/snippets/appkit/next/solana/hooks.mdx";
+import BitcoinHooks from "/snippets/appkit/next/bitcoin/hooks.mdx";
 import OpenModal from "/snippets/appkit/next/core/open.mdx";
 
 Hooks are React functions that provide access to wallet connection features, modal controls, blockchain interactions, and wallet event subscriptions. They enable you to manage wallet connections, handle user authentication, interact with smart contracts, and respond to wallet events in your application.
@@ -142,6 +143,29 @@ type UseAppKitAccountReturnType = {
   embeddedWalletInfo?: EmbeddedWalletInfo
 }
 ```
+
+### Getting Bitcoin Public Keys
+
+When working with Bitcoin accounts, you can extract public keys from the connected accounts:
+
+```tsx
+import { useAppKitAccount } from "@reown/appkit/react";
+
+function BitcoinComponent() {
+  const { allAccounts } = useAppKitAccount({ chainNamespace: 'bip122' });
+  const publicKeys = allAccounts.map(acc => acc.publicKey);
+  
+  return (
+    <div>
+      {publicKeys.map((key, index) => (
+        <div key={index}>Public Key: {key}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+This is particularly useful when you need to access Bitcoin public keys for transaction signing or address derivation.
 
 ## useAppKitWallet
 
@@ -331,7 +355,13 @@ The state management hook that provides real-time access to the modal's current 
 ```ts
 import { useAppKitState } from "@reown/appkit/react";
 
-const { open, selectedNetworkId } = useAppKitState();
+const { 
+  initialized, 
+  loading, 
+  open, 
+  selectedNetworkId, 
+  activeChain 
+} = useAppKitState();
 ```
 
 ### Use Cases
@@ -339,11 +369,42 @@ const { open, selectedNetworkId } = useAppKitState();
 - Tracking which network the user has selected
 - Creating custom UI elements that respond to modal state changes
 - Implementing custom loading states based on modal state
+- Checking if AppKit has been fully initialized before rendering components
+- Displaying chain-specific UI based on the active blockchain namespace
 
 ### Returns
 
+- `initialized`: Boolean that indicates if AppKit has been initialized. This sets to true when all controllers, adapters and internal state is ready
+- `loading`: Boolean that indicates if AppKit is loading
 - `open`: Boolean that indicates if the modal is open
-- `selectedNetworkId`: The current chain id selected by the user
+- `selectedNetworkId`: The current chain id selected by the user in CAIP-2 format
+- `activeChain`: The active chain namespace (e.g., 'eip155', 'solana', 'bip122')
+
+### Example Usage
+
+```tsx
+import { useAppKitState } from "@reown/appkit/react";
+
+function AppStatus() {
+  const { initialized, loading, open, selectedNetworkId, activeChain } = useAppKitState();
+
+  if (!initialized) {
+    return <div>Initializing AppKit...</div>;
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <p>Modal is {open ? 'open' : 'closed'}</p>
+      <p>Selected Network: {selectedNetworkId}</p>
+      <p>Active Chain: {activeChain}</p>
+    </div>
+  );
+}
+```
 
 ## useAppKitTheme
 
@@ -393,14 +454,25 @@ import { useDisconnect } from "@reown/appkit/react";
 
 const { disconnect } = useDisconnect();
 
+// Disconnect from all namespaces
 await disconnect();
+
+// Disconnect from specific namespace
+await disconnect({ namespace: 'eip155' }); // Disconnect from Ethereum
+await disconnect({ namespace: 'solana' }); // Disconnect from Solana  
+await disconnect({ namespace: 'bip122' }); // Disconnect from Bitcoin
 ```
+
+### Parameters
+
+- `namespace` (optional): The specific chain namespace to disconnect from. If not provided, disconnects from all connected namespaces.
 
 ### Use Cases
 - Implementing a "Disconnect Wallet" button
 - Handling logout flows in your application
 - Cleaning up resources when a user disconnects
 - Resetting application state after disconnection
+- Disconnecting from specific chains in multi-chain applications
 
 ## useWalletInfo
 
@@ -432,6 +504,63 @@ function WalletDisplay() {
 - Showing wallet icons or branding
 - Handling wallet-specific behaviors
 
+## useAppKitProvider
+
+Hook that returns the `walletProvider` and the `WalletProviderType` for interacting with the connected wallet across different blockchain adapters.
+
+```ts
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+### Use Cases
+
+- Direct wallet interactions (signing messages, sending transactions)
+- Access to wallet-specific methods and properties
+- Integration with blockchain libraries (Ethers, Wagmi, Solana Web3.js)
+
+### Examples
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+</Tab>
+<Tab title="Solana">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("solana");
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
+
+const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
+```
+
+</Tab>
+</Tabs>
+
+### Returns
+
+- `walletProvider`: The wallet provider instance for the specified chain namespace
+- `walletProviderType`: The type of wallet provider currently connected
+
 ## Ethereum/Solana Library
 
 <Tabs>
@@ -453,6 +582,11 @@ function WalletDisplay() {
 <Tab title="Solana">
 
 <SolanaHooks />
+
+</Tab>
+<Tab title="Bitcoin">
+
+<BitcoinHooks />
 
 </Tab>
 </Tabs>

@@ -43,6 +43,21 @@ This information will primarily be used in modals when signing a transaction or 
 
 For custom networks, refer to this [doc page](/appkit/react/core/custom-networks).
 
+<AccordionGroup>
+  <Accordion title="The icon can be an encoded image">
+``` typescript
+const icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+createAppKit({
+  // ...
+  metadata: {
+    // ...
+    icons: [icon]
+  }
+})
+```
+  </Accordion>
+</AccordionGroup>
+
 ## defaultNetwork
 
 Desired network for the initial connection as default:
@@ -210,6 +225,17 @@ Enable or disable WalletConnect QR feature. Default is `true`.
 enableWalletConnect: false;
 ```
 
+## enableWallets
+
+Enable or disable injected wallets and WalletConnect. Default is `true`.
+
+```ts
+createAppKit({
+  //...
+  enableWallets: false,
+});
+```
+
 ## enableNetworkSwitch
 
 Enables or disables the network switching functionality in the modal. The default is `true`.
@@ -218,6 +244,17 @@ Enables or disables the network switching functionality in the modal. The defaul
 createAppKit({
   //...
   enableNetworkSwitch: false,
+});
+```
+
+## enableReconnect
+
+Enable or disable automatic reconnection on initialization and page load. Default is `true`.
+
+```ts
+createAppKit({
+  //...
+  enableReconnect: false,
 });
 ```
 
@@ -231,7 +268,7 @@ debug: true;
 
 ## enableWalletGuide
 
-Enable or disable the wallet guide text, is useful for people that don't have a wallet yet. Default is `true`.
+Enable or disable the wallet guide text: `Haven't got a wallet? Get started`, is useful for people that don't have a wallet yet. Default is `true`.
 
 ```ts
 createAppKit({

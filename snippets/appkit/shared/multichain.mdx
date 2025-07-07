@@ -348,3 +348,31 @@ const modal = createAppKit({
 </Tab>
 
 </Tabs>
+
+## Solana Adapter Configuration
+
+The `SolanaAdapter` accepts configuration options to customize its behavior.
+
+### registerWalletStandard
+
+Controls whether WalletConnect is registered as an available WalletStandard wallet following the Solana Wallet Standard protocol. When enabled, users will see "WalletConnect" as a wallet choice alongside other Solana wallets like Phantom, Solflare, etc. when integrating wallet standard libraries
+
+```ts
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true,
+  wallets: [/* only show these specific wallets */]
+})
+```
+
+### wallets
+
+Array of custom Solana wallet adapters to include alongside the default WalletConnect functionality.
+
+```ts
+import { HuobiWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true,
+  wallets: [new HuobiWalletAdapter()]
+})
+```
