@@ -1,0 +1,107 @@
+For a quick integration, you can use the `createAppKit` function with a unified configuration. 
+This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana,
+ so you no longer need to manually configure each one individually. 
+ Simply pass the common parameters such as `projectId`, `chains`, `metadata` or check others config in the [Options section](options). 
+
+This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
+
+We recommend creating a config file to establish a singleton instance for the Provider and AppKit:
+
+```tsx
+import UniversalProvider from '@walletconnect/universal-provider'
+import { createAppKit } from '@reown/appkit/core'
+
+export const projectId = import.meta.env.VITE_PROJECT_ID || "b56e18d47c72ab683b10814fe9495694" // this is a public projectId only to use on localhost
+if (!projectId) {
+  throw new Error('Project ID is not defined')
+}
+
+// you can configure your own network
+const sui = {
+  id: 784,
+  chainNamespace: 'sui',
+  caipNetworkId: 'sui:mainnet',
+  name: 'Sui',
+  nativeCurrency: { name: 'SUI', symbol: 'SUI', decimals: 9 },
+  rpcUrls: { default: { http: ['https://fullnode.mainnet.sui.io:443'] } }
+}
+
+export const networks = [sui]
+
+export let provider
+export let appKit
+
+export async function initializeProvider() {
+  if (!provider) {
+    provider = await UniversalProvider.init({
+      projectId,
+      metadata: {
+        name: "WalletConnect x Sui",
+        description: "Sui integration with WalletConnect's Universal Provider",
+        url: "https://walletconnect.com/", // origin must match your domain & subdomain
+        icons: ["https://avatars.githubusercontent.com/u/37784886"],
+      }
+    })
+  }
+  return provider
+}
+
+export function initializeAppKit(universalProvider) {
+  if (!appKit && universalProvider) {
+    appKit = createAppKit({
+      projectId,
+      networks,
+      universalProvider,
+      manualWCControl: true,
+      features: {
+        analytics: true
+      }
+    })
+  }
+  return appKit
+} 
+```
+
+In de main.js file you can add :
+
+```tsx
+import { initializeProvider, initializeAppKit, provider, appKit } from './config/appKit.js'
+
+let session = null
+let address = null
+
+
+async function setup() {
+  const prov = await initializeProvider()
+  let appkit = initializeAppKit(prov)
+
+  // Listen for session events
+  prov.on('connect', (sess) => {
+    session = sess.session
+  })
+
+  prov.on('disconnect', () => {
+    session = null
+    address = null
+  })
+
+  prov.on('connect', async (sess) => {
+    session = sess.session
+    const modal = initializeAppKit(provider)
+    await modal?.close()
+  })
+
+  prov.on('display_uri', (uri) => {
+    appkit = initializeAppKit(prov)
+    appkit?.open({ uri, view: 'ConnectingWalletConnectBasic' })
+  })
+
+  document.getElementById('disconnect').addEventListener('click', async () => {
+    await prov.disconnect()
+    session = null
+    address = null
+  })
+}
+
+setup() 
+```
