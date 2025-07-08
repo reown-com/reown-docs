@@ -50,3 +50,42 @@ Simple STX transfer, request a transfer of STX tokens. Wallet signs and executes
 
 - `txid` - is used to identify the transaction on the explorer
 - `transaction` - hex-encoded raw transaction
+
+## stx_signMessage
+
+For signing a message with wallet users private key.
+
+### Request
+
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "stx_signMessage",
+  "params": {
+    "address": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
+    "message": "message"
+  }
+}
+```
+
+### Parameters
+
+| Parameter | Required? | Data Type | Description |
+|-----------|------|-----------|-------------|
+| `address` | Required | `string` | The stacks address of sender |
+| `message` | Required | `string` | Utf-8 string representing the message to be signed by the wallet |
+
+### Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "signature": "0x1234..."
+  }
+}
+```
+
+- `signature` - The signature of the message
