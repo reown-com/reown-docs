@@ -26,23 +26,14 @@ Simple STX transfer, request a transfer of STX tokens. Wallet signs and executes
 }
 ```
 
-**Parameters:**
+### Parameters
 
-- `sender` *required* - `string`
-  
-  The stacks address of sender.
-
-- `recipient` *required* - `string`
-  
-  The STX address of the recipient.
-
-- `amount` *required* - `number | string` BigInt constructor compatible
-  
-  Amount of STX tokens to transfer in microstacks.
-
-- `memo` *optional* - `string`
-  
-  Memo string to be included with the transfer transaction.
+| Parameter | Required? | Data Type | Description |
+|-----------|------|-----------|-------------|
+| `sender` | Required | `string` | The stacks address of sender |
+| `recipient` | Required | `string` | The STX address of the recipient |
+| `amount` | Required | `number \| string` | Amount of STX tokens to transfer in microstacks (BigInt constructor compatible) |
+| `memo` | Optional | `string` | Memo string to be included with the transfer transaction |
 
 ### Response
 
