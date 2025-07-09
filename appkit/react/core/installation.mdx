@@ -20,7 +20,12 @@ import SolanaPrograms from "/snippets/appkit/react/solana/about/programs.mdx";
 import BitcoinImplementation from "/snippets/appkit/react/bitcoin/about/implementation.mdx";
 import BitcoinModal from "/snippets/appkit/react/bitcoin/about/triggermodal.mdx";
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
+import CoreImplementation from "/snippets/appkit/react/core/about/implementation.mdx";
+import CoreModal from "/snippets/appkit/react/core/about/triggermodal.mdx";
+
+AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, 
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
+
 Choose one of these to get started.
 
 ## Installation
@@ -187,6 +192,29 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 </CodeGroup>
 
 </Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @walletconnect/universal-provider @reown/appkit-common ethers
+```
+
+```bash Yarn
+yarn add @reown/appkit @walletconnect/universal-provider @reown/appkit-common ethers
+```
+
+```bash Bun
+bun add @reown/appkit @walletconnect/universal-provider @reown/appkit-common ethers
+```
+
+```bash pnpm
+pnpm add @reown/appkit @walletconnect/universal-provider @reown/appkit-common ethers
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 ## Cloud Configuration
@@ -238,6 +266,14 @@ Check the React Bitcoin example
 <BitcoinImplementation />
 
 </Tab>
+<Tab title="Others networks (AppKit Core)">
+<Card title="AppKit Core Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-core-universal-provider-sui">
+Check the React AppKit Core example for Sui
+</Card>
+
+<CoreImplementation />
+
+</Tab>
 </Tabs>
 
 ## Trigger the modal
@@ -266,6 +302,11 @@ Check the React Bitcoin example
 <Tab title="Bitcoin">
 
 <BitcoinModal />
+
+</Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CoreModal />
 
 </Tab>
 </Tabs>
