@@ -195,13 +195,6 @@ This capability is expressed per chain and is crucial for determining how `walle
     - Execute calls in the exact order specified in the request
     - Do not wait for any calls to be finalized before completing the batch
     - If the user rejects the request, do not send any calls
-    - When using Wallet Service to get calls status from the bundler (see [wallet_getCallsStatus](#wallet_getcallsstatus)), the returned batchId must be a base64 encoded JSON object with `chain_id` and `user_op_hash` fields, example:
-      ```json
-      {
-        "chain_id": "0x01",
-        "user_op_hash": "0xffff"
-      }
-      ```
 
     #### Atomic Execution Behavior
     When `atomicRequired` is `true`:
@@ -213,6 +206,21 @@ This capability is expressed per chain and is crucial for determining how `walle
     - You may execute calls sequentially without atomicity guarantees
     - You may execute atomically if your wallet supports it
     - You may upgrade to `supported` atomicity and execute atomically
+
+    #### Response Enrichment
+    To enhance the user experience and eliminate the need for app switching, wallets can enrich the wallet_sendCalls response with caip2 id and transactionHash to let the Universal Provider resolve the transaction hash.
+
+    ```json
+    {
+      "id": "...",
+      "capabilities": {
+        "caip345": {
+          "caip2": "eip155:1",
+          "transactionHash": "...",
+        }
+      }
+    }
+    ```
   </Accordion>
 
   <Accordion title="wallet_getCallsStatus">
@@ -221,17 +229,19 @@ This capability is expressed per chain and is crucial for determining how `walle
 
     When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
 
-    To implement this functionality, use `WalletKit.buildWalletService(bundlerUrl, methods)` util method that specifies the wallet service URL and bundler URL for the supported methods:
+    To implement this functionality, the response for wallet_sendCalls should be enriched with capabilities:
 
-    ```kotlin
-    val scopedProperties = mapOf("eip155" to WalletKit.buildWalletService("${bundler_url}", listOf("wallet_getCallsStatus")))
-    val scopedProperties = mapOf("eip155" to "$walletServiceUtils")
-    WalletKit.approveSession(..., scopedProperties)
+    ```json
+    {
+      "id": "...",
+      "capabilities": {
+        "caip345": {
+          "caip2": "eip155:1",
+          "transactionHash": "...",
+        }
+      }
+    }
     ```
-
-    <Note>
-      `WalletKit.buildWalletService` is not currently available in WalletKit SDK. This method will be available shortly. Please refer to the docs for the latest updates.
-    </Note>
 
     ### Response Format
     The response format for `wallet_getCallsStatus` varies based on the execution method:
