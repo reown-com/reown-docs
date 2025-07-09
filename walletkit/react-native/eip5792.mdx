@@ -225,9 +225,7 @@ This capability is expressed per chain and is crucial for determining how `walle
 
   <Accordion title="wallet_getCallsStatus">
     ### Example
-    To enhance the user experience and eliminate the need for app switching, wallets can delegate the Wallet Service to query call status from a bundler. This delegation is configured during session approval by specifying the Wallet Service URL in the scoped properties.
-
-    When configured, the dApp will automatically route all subsequent `wallet_getCallsStatus` requests through the delegated wallet service to the designated bundler.
+    To enhance the user experience and eliminate the need for app switching, wallets can enrich the wallet_sendCalls response with caip2 id and transactionHash to let the Universal Provider resolve the transaction hash.
 
     To implement this functionality, the response for wallet_sendCalls should be enriched with capabilities:
 
