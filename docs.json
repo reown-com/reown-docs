@@ -675,7 +675,7 @@
           },
           {
             "dropdown": "Svelte",
-            "icon": "code",
+            "icon": "S",
             "description": "AppKit on Svelte",
             "pages": [
               {
@@ -710,7 +710,7 @@
           },
           {
             "dropdown": "Nuxt",
-            "icon": "code",
+            "icon": "mountains",
             "description": "AppKit on Nuxt",
             "pages": [
               {
