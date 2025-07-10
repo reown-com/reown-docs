@@ -9,6 +9,41 @@ These are the methods that wallets should implement to handle Sui transactions a
 **Please note:** The SUI RPC standard is still under review and specifications may change. Implementation details and method signatures are subject to updates.
 </Note>
 
+## sui_getAccounts
+
+This method returns an Array of public keys and addresses available to sign from the wallet.
+
+### Parameters
+
+    none
+
+### Returns
+
+`Array` - Array of accounts:
+
+- `Object` :
+  - `pubkey` : `String` - public key for keypair
+  - `address` : `String` - the Sui address
+
+### Example
+
+```typescript
+// Request
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "sui_getAccounts",
+  "params": {}
+}
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [{ "pubkey": "AC68P56WCCTF0nUEX31/V5b1wqiD1pvfc8Fql8dPIPDA",  "address":"0x3cd077f41680eebca0176baad3915b2ea26dbbdfd10161865234732bb1f2ac50" }]
+}
+```
+
 ### sui_signTransaction
 
 Sign a Sui transaction without executing it.
