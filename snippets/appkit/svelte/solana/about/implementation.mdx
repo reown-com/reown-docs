@@ -1,14 +1,5 @@
 For this example, we'll be using **Solana**.
 
-<Note>
-  AppKit uses @solana/web3.js, which relies on Node.js APIs. SvelteKit v4 doesn't polyfill Node modules by default, so you may see build errors.
-
-  If you're using SvelteKit v4 and encounter this, please consider one of the following options:
-
-  - Consider upgrading to SvelteKit v5 (**recommended**)
-  - Add the required Node.js polyfills manually using [vite-plugin-node-polyfills](https://www.npmjs.com/package/vite-plugin-node-polyfills)
-</Note>
-
 Start by importing `createAppKit` from `@reown/appkit` and the necessary chains and SolanaAdapter from `@reown/appkit-adapter-solana`.
 
 ```ts
