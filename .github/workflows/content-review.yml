@@ -55,8 +55,7 @@ jobs:
                 '## 📝 Content Review Request',
                 '',
                 `**Files to review:** ${mdxFiles.length}`,
-                mdxFiles.map(file => `- \`${file}\``).join('\n')
-
+                mdxFiles.map(file => `- \`${file}\``).join('\n'),
                 '',
                 '**Review focus:**',
                 '- Tone alignment with [Reown\'s brand guidelines](https://walletconnect.notion.site/Reown-Tone-of-Voice-Messaging-Framework-1ba3a661771e8026b3e5f0006be26000)',
