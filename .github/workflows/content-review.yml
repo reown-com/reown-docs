@@ -11,6 +11,11 @@ on:
       - '!**/triggermodal.mdx'
       - '!**/about/**'
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   content-review:
     runs-on: ubuntu-latest
