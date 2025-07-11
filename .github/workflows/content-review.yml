@@ -35,26 +35,7 @@ jobs:
             **/triggermodal.mdx
             **/about/**
             
-      - name: Trigger Devin Content Review
-        if: steps.changed-files.outputs.any_changed == 'true'
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.DEVIN_WEBHOOK_TOKEN }}
-          repository: ${{ github.repository }}
-          event-type: devin-content-review
-          client-payload: |
-            {
-              "pr_number": "${{ github.event.pull_request.number }}",
-              "pr_title": "${{ github.event.pull_request.title }}",
-              "pr_url": "${{ github.event.pull_request.html_url }}",
-              "changed_files": "${{ steps.changed-files.outputs.all_changed_files }}",
-              "repository": "${{ github.repository }}",
-              "sender": "${{ github.event.sender.login }}",
-              "action": "content_review_requested",
-              "tone_guidelines_url": "https://walletconnect.notion.site/Reown-Tone-of-Voice-Messaging-Framework-1ba3a661771e8026b3e5f0006be26000"
-            }
-            
-      - name: Add review pending comment
+      - name: Request Devin Content Review
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: actions/github-script@v7
         with:
@@ -67,21 +48,26 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `## 🤖 Content Review Requested
-                
-**Devin AI has been notified to review the tone of voice for this PR.**
+                body: `@devin-ai-integration[bot] Please review the tone of voice for the content changes in this PR against Reown's brand guidelines.
 
-📝 **Files to be reviewed:** ${mdxFiles.length}
+## 📝 Content Review Request
+
+**Files to review:** ${mdxFiles.length}
 ${mdxFiles.map(file => `- \`${file}\``).join('\n')}
 
-⏳ **Status:** Review in progress...
-
-The review will focus on:
-- Tone alignment with Reown's brand guidelines
+**Review focus:**
+- Tone alignment with [Reown's brand guidelines](https://walletconnect.notion.site/Reown-Tone-of-Voice-Messaging-Framework-1ba3a661771e8026b3e5f0006be26000)
 - Clear and accessible language for developers
 - Professional yet approachable communication
 - Consistent terminology usage
 
-*Devin will post detailed feedback shortly. This comment will be updated when the review is complete.*`
+**Guidelines summary:**
+- **Clear & Accessible**: Translate complex ideas into approachable language
+- **Professional yet Friendly**: Maintain authority while being welcoming  
+- **Developer-Focused**: Understand technical audience but remain inclusive
+- **Avoid**: Overly casual language, fear-based messaging, buzzwords, jargon without explanation
+- **Embrace**: Clear explanations, confident tone, transparency, respectful communication
+
+Please analyze the content changes and provide constructive feedback on tone and voice alignment.`
               });
             }</mdxFiles.length>

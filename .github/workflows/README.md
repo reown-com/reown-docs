@@ -4,10 +4,7 @@ This workflow automatically reviews documentation changes for tone of voice comp
 
 ## Setup Requirements
 
-1. **Devin Webhook Token**: Add `DEVIN_WEBHOOK_TOKEN` as a repository secret
-   - Go to Repository Settings > Secrets and variables > Actions
-   - Add new repository secret with name `DEVIN_WEBHOOK_TOKEN`
-   - Value should be provided by your Devin administrator
+No additional setup required! The workflow uses GitHub's built-in commenting system to request Devin reviews.
 
 ## How it Works
 
@@ -20,10 +17,10 @@ The workflow triggers on pull requests that modify MDX files and:
    - Modal trigger examples (`**/triggermodal.mdx`)
    - About sections (`**/about/**`)
 
-2. **Notifies Devin**: Sends a repository dispatch event to trigger Devin content review with:
-   - PR details and changed files
+2. **Requests Devin Review**: Posts a comment mentioning @devin-ai-integration[bot] with:
+   - List of changed MDX files to review
    - Link to Reown's Tone of Voice guidelines
-   - Context about the review request
+   - Summary of key brand principles and review criteria
 
 3. **Provides feedback**: Devin analyzes content against tone of voice guidelines and posts constructive suggestions as PR review comments
 
@@ -54,15 +51,14 @@ The workflow enforces these key principles from the [Reown Tone of Voice documen
 ## Workflow Process
 
 1. **PR Created/Updated** → Workflow triggers if MDX files changed
-2. **File Filtering** → Only relevant documentation files are identified
-3. **Devin Notification** → Repository dispatch event sent to Devin
-4. **Pending Comment** → Workflow posts initial comment indicating review in progress
-5. **Devin Review** → Devin analyzes content against tone guidelines
-6. **Feedback Posted** → Devin posts detailed review comments with suggestions
+2. **File Filtering** → Only relevant documentation files are identified  
+3. **Review Request** → Workflow posts comment mentioning Devin with review criteria
+4. **Devin Review** → Devin analyzes content against tone guidelines
+5. **Feedback Posted** → Devin posts detailed review comments with suggestions
 
 ## Troubleshooting
 
-- **No review comments**: Check that `DEVIN_WEBHOOK_TOKEN` is configured correctly
+- **No review comments**: Verify Devin bot has access to the repository and can respond to mentions
 - **Workflow not triggering**: Ensure changes include `.mdx` files in reviewed directories
-- **Devin not responding**: Verify webhook token is valid and Devin service is available
-- **Review incomplete**: Check that the Tone of Voice guidelines URL is accessible
+- **Devin not responding**: Check that @devin-ai-integration[bot] is properly mentioned in the comment
+- **Review incomplete**: Verify the Tone of Voice guidelines URL is accessible
