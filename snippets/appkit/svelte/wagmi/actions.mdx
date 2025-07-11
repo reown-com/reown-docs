@@ -1,0 +1,17 @@
+You can use [Wagmi actions](https://wagmi.sh/core/api/actions/readContract) to interact with wallets and smart contracts:
+
+```ts
+import { readContract } from '@wagmi/core'
+import { USDTAbi } from '../abi/USDTAbi'
+
+const USDTAddress = '0x...'
+
+const data = readContract(wagmiConfig, {
+  address: USDTAddress,
+  abi: USDTAbi,
+  functionName: 'totalSupply',
+  args: []
+})
+```
+
+Read more about Wagmi actions for smart contract interaction [here](https://wagmi.sh/core/actions/readContract).

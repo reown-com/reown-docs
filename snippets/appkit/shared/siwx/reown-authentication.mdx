@@ -1,0 +1,81 @@
+**Reown Authentication is our flagship SIWX (Sign In With X) solution** - the recommended way to handle user authentication for modern web3 applications. Built specifically for multi-chain environments, it abstracts away the complexity of validating wallets across **EVM, Solana, and Bitcoin networks**.
+
+With Reown Authentication you will be able to see and control the sessions of your users, get insights and much more. Read more about [Reown Authentication](/cloud/reown-authentication) features in the dedicated documentation.
+
+<Warning>
+  `ReownAuthentication` was previously named `CloudAuthSIWX`, it has been renamed since version `1.7.13`. If you were using
+  the previous class, you will not need to update your code, both class names work identically.
+</Warning>
+
+### Installation
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-siwx
+```
+
+```bash Yarn
+yarn add @reown/appkit-siwx
+```
+
+```bash Bun
+bun a @reown/appkit-siwx
+```
+
+```bash pnpm
+pnpm add @reown/appkit-siwx
+```
+
+</CodeGroup>
+
+### Usage
+
+```typescript {3,10}
+import { createAppKit } from '@reown/appkit'
+// Add the following code line
+import { ReownAuthentication } from '@reown/appkit-siwx'
+
+const appkit = createAppKit({
+  projectId,
+  networks,
+  metadata,
+  // Add the following code line
+  siwx: new ReownAuthentication()
+})
+```
+
+Now your Dapp is ready to use the **Reown Authentication** within your SIWX configuration.
+
+### Extra configuration
+
+With `ReownAuthentication` you don't need to do anything else, it will work out of the box, but you can configure some parameters to customize the experience.
+
+#### Available Parameters
+
+```typescript
+new ReownAuthentication({
+  localAuthStorageKey?: string    // Default: '@appkit/siwx-auth-token'
+  localNonceStorageKey?: string   // Default: '@appkit/siwx-nonce-token'
+  required?: boolean              // Default: true
+})
+```
+
+#### Examples
+
+**Custom storage keys:**
+
+```typescript
+new ReownAuthentication({
+  localAuthStorageKey: 'my-app-auth',
+  localNonceStorageKey: 'my-app-nonce'
+})
+```
+
+**Optional authentication (wallet stays connected if user denies signing):**
+
+```typescript
+new ReownAuthentication({
+  required: false
+})
+```

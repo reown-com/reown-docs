@@ -1,0 +1,28 @@
+[Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
+
+```ts
+import { BrowserProvider, Contract, parseEther } from 'ethers'
+
+const provider = await appKit.subscribeProviders((state) => {
+  return state['eip155']
+})
+
+const addressFrom = await appKit.subscribeAccount((state) => {
+  return state
+})
+
+if (!provider) throw Error('No provider found')
+if (!addressFrom) throw Error('No address found')
+
+function sendTransaction() {
+  const tx = {
+    from: addressFrom,
+    to: '0x...', // any address
+    value: parseEther('0.0001')
+  }
+  const ethersProvider = new BrowserProvider(provider)
+  const signer = await ethersProvider.getSigner()
+  const tx = await signer.sendTransaction(tx)
+  console.log('transaction:', tx)
+}
+```

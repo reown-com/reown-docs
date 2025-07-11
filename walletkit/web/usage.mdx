@@ -4,7 +4,46 @@ title: Usage
 
 import CloudBanner from "/snippets/cloud-banner.mdx";
 
-This section provides instructions on how to initialize the WalletKit client, approve sessions with supported namespaces, and respond to session requests, enabling easy integration of Web3 wallets with dapps through a simple and intuitive interface.
+## Overview
+
+WalletConnect makes distributing your Web wallet (such as Safe, Abstract Global Wallet, and many more) much faster. By integrating the WalletKit SDK, your web wallet will be able to connect to any dApp that supports WalletConnect and will be available in the list of wallets on both WalletConnect, Reown AppKit, and others.
+
+<Frame caption="Web Wallet in Reown AppKit & WalletButtons">
+<img height="400" width="300" src="/images/web-wallet-safe.png" alt="Web Wallet in Reown AppKit" />
+
+<img height="600" width="300" src="/images/web-wallet-button.png" alt="Web Wallet in WalletConnect" />
+</Frame>
+Additionally, you don't need to build SDKs in native languages such as Swift, Kotlin, Flutter, Unity, or React Native. This means your wallet can be available not just for web dApps, but also for native dApps, all from a single codebase.
+
+This section provides instructions on how to initialize the WalletKit client, approve sessions with supported namespaces, and respond to session requests, enabling easy integration of Web3 wallets with dApps through a simple and intuitive interface.
+
+## User Experience
+
+### Default Integration
+
+This integration automatically opens a new web wallet tab when a user clicks "Connect" in a dApp. The wallet handles the WalletConnect URI automatically, meaning users don't need to manually copy and paste the URI. This provides a seamless, one-click connection experience.
+
+<Frame caption="Abstract Global Wallet to Wolfswap">
+<video
+  controls
+  autoPlay
+  className="w-full aspect-video"
+  src="/images/web-wallet-demo.mp4"
+></video>
+</Frame>
+
+### QR Code Integration
+
+This integration only handles the session proposal and approval via the WalletConnect QR code. The user will need to manually copy and paste the WalletConnect URI into the wallet.
+
+<Frame caption="Safe Wallet Connecting to AppKit Lab">
+<video
+  controls
+  autoPlay
+  className="w-full aspect-video"
+  src="/images/web-wallet-qr-demo.mp4"
+></video>
+</Frame>
 
 ## Cloud Configuration
 
@@ -39,9 +78,115 @@ const walletKit = await WalletKit.init({
 });
 ```
 
+### Core Instance Sharing
+
+Starting from newer versions of WalletKit, Core instances are shared globally by default to optimize resource usage. This means that multiple Core instances with the same configuration will reuse the same underlying Core.
+
+**For parallel testing scenarios** where you need isolated Core instances, you have two options:
+
+#### Option 1: Use customStoragePrefix
+
+```javascript
+const core = new Core({
+  projectId: process.env.PROJECT_ID,
+  customStoragePrefix: `test-${Date.now()}`, // Unique prefix for each test
+});
+```
+
+<Warning>
+Don't use randomly generated `customStoragePrefix` in production - this will cause the client to create new storage each time it is initialized. The client will not be able to persist/read existing data and all existing sessions will be lost after each reload.
+</Warning>
+
+#### Option 2: Disable global Core sharing
+
+```javascript
+// Set environment variable before initializing Core
+process.env.DISABLE_GLOBAL_CORE = "true";
+
+const core = new Core({
+  projectId: process.env.PROJECT_ID,
+});
+```
+
+<Note>
+The global Core sharing behavior was introduced to prevent resource waste when multiple SDK instances are created. If you're running parallel tests and experiencing cross-test interference, use one of the solutions above to ensure proper test isolation.
+</Note>
+
 ## Session
 
 A session is a connection between a dapp and a wallet. It is established when a user approves a session proposal from a dapp. A session is active until the user disconnects from the dapp or the session expires.
+
+### Handling Session Proposals
+
+You can connect your web wallet to a dApp in three ways:
+
+1. Retrieve the WC URI from the dApp via query parameters
+2. Implement a scanner to read the WC URI from a WalletConnect QR code
+3. Allow users to manually enter the WC URI in an input field
+
+When opening the wallet directly from the dApp, the `WC_URI` will be in the following format in the query parameters:
+
+```
+{YOUR_WALLET_URL}/wc?uri={WC_URI}
+```
+
+We recommend closing the web wallet tab after the user approves the request and redirecting back to the dApp. For web requests, redirect to the original browser tab, and for mobile requests, redirect to the native mobile dApp.
+
+<Note>
+To test your web wallet connection flow, use our [Appkit Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL. 
+</Note>
+
+### Handling Session Requests
+
+When a dApp sends a session request to your wallet, the request will be available in the following format in the query parameters:
+
+```
+{YOUR_WALLET_URL}/wc?requestId={requestId}&sessionTopic={session.Topic}
+```
+
+This format allows your wallet to identify both the specific request and the session it belongs to.
+
+<Note>
+To test your web wallet connection flow, use our [Appkit Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL. 
+</Note>
+
+### Handling Redirects
+
+When handling redirects after session approval or request completion, you should:
+
+1. For web dApps:
+   - Redirect back to the original browser tab using `window.opener.location.href`
+   - Close the current wallet tab using `window.close()`
+
+2. For native dApps:
+   - Check the peer metadata for a `redirect` URL in the session proposal
+   - If available, use deep linking to redirect to the native app
+   - If no redirect URL is found, display a "Return to App" message to the user
+
+Example implementation:
+
+```javascript
+function handleRedirect(session) {
+  // Check if this is a native app
+  const isNativeApp = session.peer.metadata.redirect !== undefined;
+  
+  if (isNativeApp) {
+    // Redirect to native app if URL is available
+    if (session.peer.metadata.redirect) {
+      window.location.href = session.peer.metadata.redirect;
+    } else {
+      // Show "Return to App" message
+      showReturnToAppMessage();
+    }
+  } else {
+    // For web dApps, redirect back to original tab
+    if (window.opener) {
+      window.opener.location.href = session.peer.metadata.url;
+      window.close();
+    }
+  }
+}
+```
 
 ### Namespace Builder
 

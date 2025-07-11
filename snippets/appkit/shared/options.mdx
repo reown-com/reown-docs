@@ -39,7 +39,24 @@ createAppKit({
 });
 ```
 
+This information will primarily be used in modals when signing a transaction or message using [Embedded wallets (Smart Accounts)](/appkit/features/smart-accounts), or when verifying ownership with [SIWE/SIWX](/appkit/authentication/siwx/default) using any wallet.
+
 For custom networks, refer to this [doc page](/appkit/react/core/custom-networks).
+
+<AccordionGroup>
+  <Accordion title="The icon can be an encoded image">
+``` typescript
+const icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+createAppKit({
+  // ...
+  metadata: {
+    // ...
+    icons: [icon]
+  }
+})
+```
+  </Accordion>
+</AccordionGroup>
 
 ## defaultNetwork
 
@@ -147,13 +164,19 @@ createAppKit({
 <Tabs>
 <Tab title="Wagmi">
 
-Set or override the images of any [connector](https://wagmi.sh/core/connectors/injected). The key of each property must match the id of the connector.
+Set or override the images of any [connector](https://wagmi.sh/core/connectors/injected). AppKit supports two types of connector identification:
+- **EIP6963 wallets** (announced wallets): Use RDNS format like `'io.metamask'`, `'io.coinbase'`, `'app.phantom'`
+- **Other wallets**: Use normal connector IDs like `walletConnect`, `injected`, `appKitAuth`
 
 ```ts
 createAppKit({
   connectorImages: {
-    coinbaseWallet: "https://images.mydapp.com/coinbase.png",
-    metaMask: "https://images.mydapp.com/metamask.png",
+    // EIP6963 wallets (announced wallets use RDNS)
+    'io.coinbase': "https://images.mydapp.com/coinbase.png",
+    'io.metamask': "https://images.mydapp.com/metamask.png",
+    // Other wallets (use normal connector IDs)
+    walletConnect: "https://images.mydapp.com/walletconnect.png",
+    injected: "https://images.mydapp.com/browser-wallet.png",
   },
 });
 ```
@@ -166,7 +189,9 @@ Set or override the images of any connector.
 ```ts
 createAppKit({
   connectorImages: {
-    coinbaseWallet: "https://images.mydapp.com/coinbase.png",
+    // EIP6963 wallets (announced wallets use RDNS)
+    'io.coinbase': "https://images.mydapp.com/coinbase.png",
+    // Other wallets (use normal connector IDs)
     walletConnect: "https://images.mydapp.com/walletconnect.png",
   },
 });
@@ -180,8 +205,10 @@ Set or override the images of any connector.
 ```ts
 createAppKit({
   connectorImages: {
-    coinbaseWallet: "https://images.mydapp.com/coinbase.png",
-    phantom: "https://images.mydapp.com/phantom.png",
+    // EIP6963 wallets (announced wallets use RDNS)
+    'io.coinbase': "https://images.mydapp.com/coinbase.png",
+    'app.phantom': "https://images.mydapp.com/phantom.png",
+    // Other wallets (use normal connector IDs)
     walletConnect: "https://images.mydapp.com/walletconnect.png",
   },
 });
@@ -198,6 +225,17 @@ Enable or disable WalletConnect QR feature. Default is `true`.
 enableWalletConnect: false;
 ```
 
+## enableWallets
+
+Enable or disable injected wallets and WalletConnect. Default is `true`.
+
+```ts
+createAppKit({
+  //...
+  enableWallets: false,
+});
+```
+
 ## enableNetworkSwitch
 
 Enables or disables the network switching functionality in the modal. The default is `true`.
@@ -206,6 +244,17 @@ Enables or disables the network switching functionality in the modal. The defaul
 createAppKit({
   //...
   enableNetworkSwitch: false,
+});
+```
+
+## enableReconnect
+
+Enable or disable automatic reconnection on initialization and page load. Default is `true`.
+
+```ts
+createAppKit({
+  //...
+  enableReconnect: false,
 });
 ```
 
@@ -219,7 +268,7 @@ debug: true;
 
 ## enableWalletGuide
 
-Enable or disable the wallet guide text, is useful for people that don't have a wallet yet. Default is `true`.
+Enable or disable the wallet guide text: `Haven't got a wallet? Get started`, is useful for people that don't have a wallet yet. Default is `true`.
 
 ```ts
 createAppKit({
@@ -420,12 +469,6 @@ createAppKit({
 
 The Coinbase connector now includes a new flag to customize the Smart Wallet behavior.
 
-<Note>
-  To enable the Coinbase Smart Wallet feature, ensure that AppKit is updated to
-  version 4.2.3 or higher. Additionally, if you are using Wagmi, verify that it
-  is on the latest version.
-</Note>
-
 The `preference` (or `coinbasePreference`) flag accepts one of the following string values:
 
 - `eoaOnly`: Uses EOA Browser Extension or Mobile Coinbase Wallet.
@@ -581,3 +624,14 @@ You can override any of the following properties:
 - `events`: Events to subscribe to for each namespace
 - `rpcMap`: Custom RPC URLs for specific chains
 - `defaultChain`: The default chain to connect to
+
+## allowUnsupportedChain
+
+Allow users to switch to an unsupported chain. This parameter prevents the switch network dialog when a user connects to a network not listed under the `networks` attribute.
+
+```ts
+createAppKit({
+  //...
+  allowUnsupportedChain: true,
+});
+```

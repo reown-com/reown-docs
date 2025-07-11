@@ -20,8 +20,11 @@ import SolanaPrograms from "/snippets/appkit/next/solana/about/programs.mdx";
 import BitcoinImplementation from "/snippets/appkit/next/bitcoin/about/implementation.mdx";
 import BitcoinModal from "/snippets/appkit/next/bitcoin/about/triggermodal.mdx";
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
-Choose one of these to get started.
+import CoreImplementation from "/snippets/appkit/react/core/about/implementation.mdx";
+import CoreModal from "/snippets/appkit/react/core/about/triggermodal.mdx";
+
+AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, 
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
 
 <Note>
   These steps are specific to [Next.js](https://nextjs.org/) app router. For
@@ -186,6 +189,29 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 </CodeGroup>
 
 </Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @walletconnect/universal-provider
+```
+
+```bash Yarn
+yarn add @reown/appkit @walletconnect/universal-provider
+```
+
+```bash Bun
+bun add @reown/appkit @walletconnect/universal-provider
+```
+
+```bash pnpm
+pnpm add @reown/appkit @walletconnect/universal-provider
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 ## Cloud Configuration
@@ -233,6 +259,11 @@ Check the Next Bitcoin example
 <BitcoinImplementation />
 
 </Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CoreImplementation />
+
+</Tab>
 </Tabs>
 
 ## Trigger the modal
@@ -261,6 +292,11 @@ Check the Next Bitcoin example
 <Tab title="Bitcoin">
 
 <BitcoinModal />
+
+</Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CoreModal />
 
 </Tab>
 </Tabs>
@@ -356,13 +392,22 @@ const nextConfig = {
 
 ## Video Tutorial
 
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/lxTGqXh7LiA?si=rxEaMIEYK7vdW_vt"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
-></iframe>
+<div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0 }}>
+  <iframe 
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      maxWidth: '560px',
+      margin: '0 auto'
+    }}
+    src="https://www.youtube.com/embed/lxTGqXh7LiA?si=rxEaMIEYK7vdW_vt"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  />
+</div>

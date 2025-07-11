@@ -1,0 +1,214 @@
+You can use actions to control the modal, subscribe to wallet events and interact with them and smart contracts.
+
+## useAppKit
+
+Hook for controlling the modal.
+
+```javascript
+<script setup lang="ts">
+import { useAppKit } from '@reown/appkit/vue'
+
+const { open, close } = useAppKit()
+</script>
+
+<template>
+  <client-only>
+    <button @click="open">Open Modal</button>
+    <button @click="close">Close Modal</button>
+  </client-only>
+</template>
+```
+
+You can also select the modal's view when calling the `open` function.
+
+```javascript
+<script setup lang="ts">
+import { useAppKit } from '@reown/appkit/vue'
+
+const { open } = useAppKit()
+
+function openConnectModal() {
+  open({ view: 'Connect' })
+}
+
+function openAccountModal() {
+  open({ view: 'Account' })
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="openConnectModal">Open Connect Modal</button>
+    <button @click="openAccountModal">Open Account Modal</button>
+  </client-only>
+</template>
+```
+
+## useAppKitAccount
+
+Hook for accessing account data.
+
+```javascript
+<script setup lang="ts">
+import { useAppKitAccount } from '@reown/appkit/vue'
+
+const { address, caipAddress, isConnected, status } = useAppKitAccount()
+</script>
+
+<template>
+  <client-only>
+    <div v-if="isConnected">
+      <p>Address: {{ address }}</p>
+      <p>CAIP Address: {{ caipAddress }}</p>
+      <p>Status: {{ status }}</p>
+    </div>
+    <div v-else>
+      <p>Not connected</p>
+    </div>
+  </client-only>
+</template>
+```
+
+## useAppKitNetwork
+
+Hook for accessing network data.
+
+```javascript
+<script setup lang="ts">
+import { useAppKitNetwork } from '@reown/appkit/vue'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+
+const { caipNetwork, caipNetworkId, chainId, switchNetwork } = useAppKitNetwork()
+
+function handleSwitchNetwork() {
+  switchNetwork(arbitrum)
+}
+</script>
+
+<template>
+  <client-only>
+    <div>
+      <p>Network: {{ caipNetwork?.name }}</p>
+      <p>Chain ID: {{ chainId }}</p>
+      <button @click="handleSwitchNetwork">Switch to Arbitrum</button>
+    </div>
+  </client-only>
+</template>
+```
+
+## useAppKitState
+
+Hook for accessing the modal's state.
+
+```javascript
+<script setup lang="ts">
+import { useAppKitState } from '@reown/appkit/vue'
+
+const { open, selectedNetworkId } = useAppKitState()
+</script>
+
+<template>
+  <client-only>
+    <div>
+      <p>Modal Open: {{ open }}</p>
+      <p>Selected Network ID: {{ selectedNetworkId }}</p>
+    </div>
+  </client-only>
+</template>
+```
+
+## useAppKitTheme
+
+Hook for controlling the modal's theme.
+
+```javascript
+<script setup lang="ts">
+import { useAppKitTheme } from '@reown/appkit/vue'
+
+const { themeMode, themeVariables, setThemeMode, setThemeVariables } = useAppKitTheme()
+
+function toggleTheme() {
+  setThemeMode(themeMode.value === 'dark' ? 'light' : 'dark')
+}
+
+function setCustomTheme() {
+  setThemeVariables({
+    '--w3m-color-mix': '#00BB7F',
+    '--w3m-color-mix-strength': 40
+  })
+}
+</script>
+
+<template>
+  <client-only>
+    <div>
+      <p>Current Theme: {{ themeMode }}</p>
+      <button @click="toggleTheme">Toggle Theme</button>
+      <button @click="setCustomTheme">Set Custom Theme</button>
+    </div>
+  </client-only>
+</template>
+```
+
+## useDisconnect
+
+Hook for disconnecting the wallet.
+
+```javascript
+<script setup lang="ts">
+import { useDisconnect } from '@reown/appkit/vue'
+
+const { disconnect } = useDisconnect()
+
+async function handleDisconnect() {
+  await disconnect()
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="handleDisconnect">Disconnect</button>
+  </client-only>
+</template>
+```
+
+## Wagmi Actions
+
+You can also use Wagmi actions to interact with the blockchain:
+
+```javascript
+<script setup lang="ts">
+import { readContract, writeContract } from '@wagmi/core'
+import { useAppKitAccount } from '@reown/appkit/vue'
+import { wagmiConfig } from '~/config/appkit'
+
+const { address } = useAppKitAccount()
+
+async function readContractData() {
+  const result = await readContract(wagmiConfig, {
+    address: '0x...',
+    abi: [...],
+    functionName: 'balanceOf',
+    args: [address.value]
+  })
+  console.log(result)
+}
+
+async function writeContractData() {
+  const result = await writeContract(wagmiConfig, {
+    address: '0x...',
+    abi: [...],
+    functionName: 'transfer',
+    args: ['0x...', BigInt(1000)]
+  })
+  console.log(result)
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="readContractData">Read Contract</button>
+    <button @click="writeContractData">Write Contract</button>
+  </client-only>
+</template>
+```

@@ -436,15 +436,17 @@ export const appKit = createAppKit({
 });
 ```
 
-## Enable Wallet Detection
+## Enable Wallet Detection (Optional)
 
-<Note>
+<Info>
+**This is an optional feature** that enhances the user experience by:
+- Showing a green checkmark next to installed wallets
+- Prioritizing installed wallets at the top of the list
 
-Make sure your have `@walletconnect/react-native-compat` installed.
+**All 430+ wallets in the AppKit ecosystem work via WalletConnect protocol regardless of this configuration.** You only need to add the wallets your users most commonly have installed.
+</Info>
 
-</Note>
-
-To enable AppKit to detect wallets installed on the device, you need to make specific changes to the native code of your project.
+To enable AppKit to detect wallets installed on the device, you can make specific changes to the native code of your project.
 
 <Tabs groupId="rn-environment">
   <Tab title="Expo">
@@ -596,7 +598,7 @@ Example:
 
 </Tabs>
 
-## Enable Phantom Wallet
+## Enable Phantom Wallet (Optional)
 
 Phantom Wallet is a popular wallet on the Solana blockchain. Because it uses a custom connection protocol, it requires a specific connector to be added to your AppKit configuration.
 

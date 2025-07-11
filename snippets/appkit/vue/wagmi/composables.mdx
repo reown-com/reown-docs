@@ -22,4 +22,23 @@ const signature = await signMessage({
 });
 ```
 
+### useAppKitProvider
+
+Hook that returns the `walletProvider` and the `WalletProviderType`.
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit/vue";
+
+function Components() {
+  const { walletProvider } = useAppKitProvider<Provider>("eip155");
+
+  async function onSignMessage() {
+    console.log(walletProvider);
+  }
+
+  return <button onClick={() => onSignMessage()}>Sign Message</button>;
+}
+```
+
 <Card title="Learn More" href="https://wagmi.sh/core/actions/readContract" />
