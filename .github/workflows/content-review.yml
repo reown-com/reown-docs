@@ -1,0 +1,203 @@
+name: Content Review - Tone of Voice Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**/*.mdx'
+      - '!snippets/**'
+      - '!**/installation.mdx'
+      - '!**/implementation.mdx'
+      - '!**/triggermodal.mdx'
+      - '!**/about/**'
+
+jobs:
+  content-review:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Get changed MDX files
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+            **/*.mdx
+          files_ignore: |
+            snippets/**
+            **/installation.mdx
+            **/implementation.mdx
+            **/triggermodal.mdx
+            **/about/**
+            
+      - name: Setup Node.js
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          npm install openai @octokit/rest
+          
+      - name: Review content for tone of voice
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > content-reviewer.js << 'EOF'
+          const fs = require('fs');
+          const { OpenAI } = require('openai');
+          const { Octokit } = require('@octokit/rest');
+          
+          const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY
+          });
+          
+          const octokit = new Octokit({
+            auth: process.env.GITHUB_TOKEN
+          });
+          
+          const TONE_OF_VOICE_GUIDELINES = `
+          # Reown Tone of Voice Guidelines
+          
+          ## Core Principles:
+          1. **Clear & Accessible**: Translate complex ideas into clear, approachable language for developers and product managers
+          2. **Professional yet Friendly**: Maintain authority while being welcoming and approachable
+          3. **Developer-Focused**: Understand the technical audience but remain inclusive
+          4. **Consistent Terminology**: Use standard terms throughout documentation
+          
+          ## Voice Characteristics:
+          - **Informative, professional, straightforward, helpful and respectful of developers' time**
+          - Professional and trustworthy, but with a conversational edge
+          - You're not dry or boring, but you avoid humor and playfulness
+          - You want to be taken seriously because trust is core to your tone
+          - You value trust and professionalism, and you keep communication respectful
+          
+          ## What to AVOID:
+          - Too corporate or bureaucratic language
+          - Too technical or exclusive jargon without explanation
+          - Too vague or buzzword-heavy content
+          - Fear-based messaging that makes Web3 sound unsafe
+          - Overly casual expressions
+          - Sarcastic or cheeky remarks
+          - Gimmicky or overly flashy language
+          
+          ## What to EMBRACE:
+          - Clear explanations of technical concepts
+          - Step-by-step guidance that respects developers' expertise
+          - Confident but not arrogant tone
+          - Transparency about capabilities and limitations
+          - Building trust through clear, understandable transactions
+          `;
+          
+          async function analyzeContent(content, filename) {
+            const codeBlockRegex = /```[\s\S]*?```/g;
+            const contentWithoutCode = content.replace(codeBlockRegex, '[CODE_BLOCK]');
+            
+            if (contentWithoutCode.trim().length < 100) {
+              return null;
+            }
+            
+            const prompt = `
+            You are reviewing documentation content for Reown (Web3 infrastructure platform) against their tone of voice guidelines.
+            
+            ${TONE_OF_VOICE_GUIDELINES}
+            
+            Please review this content from file "${filename}":
+            
+            ${contentWithoutCode}
+            
+            Provide specific, actionable feedback focusing on:
+            1. Tone and voice alignment with guidelines
+            2. Clarity and accessibility for developers
+            3. Consistent terminology usage
+            4. Professional yet approachable language
+            
+            If the content aligns well with the guidelines, say "APPROVED" and briefly explain why.
+            If improvements are needed, provide specific suggestions with examples.
+            
+            Keep feedback concise and constructive. Focus only on tone/voice issues, not technical accuracy.
+            `;
+            
+            try {
+              const response = await openai.chat.completions.create({
+                model: 'gpt-4',
+                messages: [{ role: 'user', content: prompt }],
+                max_tokens: 500,
+                temperature: 0.3
+              });
+              
+              return response.choices[0].message.content;
+            } catch (error) {
+              console.error('OpenAI API error:', error);
+              return null;
+            }
+          }
+          
+          async function main() {
+            const changedFiles = process.env.CHANGED_FILES?.split(' ') || [];
+            const prNumber = process.env.GITHUB_REF?.match(/refs\/pull\/(\d+)\/merge/)?.[1] || 
+                           process.env.GITHUB_EVENT_PATH ? 
+                           JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')).number : null;
+            
+            if (!prNumber) {
+              console.log('Could not determine PR number');
+              return;
+            }
+            
+            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+            let comments = [];
+            
+            for (const file of changedFiles) {
+              if (!file.endsWith('.mdx')) continue;
+              
+              try {
+                const content = fs.readFileSync(file, 'utf8');
+                const feedback = await analyzeContent(content, file);
+                
+                if (feedback && !feedback.includes('APPROVED')) {
+                  comments.push({
+                    path: file,
+                    body: `## 📝 Tone of Voice Review\n\n${feedback}\n\n---\n*This review focuses on tone, voice, and clarity. Technical accuracy is not evaluated.*`
+                  });
+                }
+              } catch (error) {
+                console.error(`Error processing ${file}:`, error);
+              }
+            }
+            
+            if (comments.length > 0) {
+              const reviewBody = `## 🎯 Content Review Summary\n\nI've reviewed the documentation changes against Reown's tone of voice guidelines. Please see the specific feedback below.\n\n**Files reviewed:** ${changedFiles.length}\n**Suggestions provided:** ${comments.length}`;
+              
+              try {
+                await octokit.rest.pulls.createReview({
+                  owner,
+                  repo,
+                  pull_number: prNumber,
+                  body: reviewBody,
+                  event: 'COMMENT',
+                  comments: comments
+                });
+                
+                console.log(`Posted review with ${comments.length} suggestions`);
+              } catch (error) {
+                console.error('Error posting review:', error);
+              }
+            } else {
+              console.log('No tone of voice issues found in the reviewed content');
+            }
+          }
+          
+          main().catch(console.error);
+          EOF
+          
+          export CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
+          node content-reviewer.js
