@@ -98,31 +98,30 @@ This step is critical for avoiding runtime errors related to missing polyfills.
 
 The way you initialize AppKit has changed significantly to support the new adapter-based architecture.
 
-### Old Method (Example from docs.reown.com using Wagmi)
+### Old Implementation
 
-Previously, for an EVM setup with Wagmi, you might have done something like this (based on the `docs.reown.com` structure):
+Previously, for an EVM setup with Wagmi, you might have done something like this
 
 ```typescript
-// Old approach (example)
-// import { createAppKit, defaultWagmiConfig } from "@reown/appkit-wagmi-react-native"; // Path might vary
-// import { mainnet, polygon } from "@wagmi/core/chains"; // Path might vary
+// Old implementation
+import { createAppKit, defaultWagmiConfig } from "@reown/appkit-wagmi-react-native";
+import { mainnet, polygon } from "@wagmi/chains";
 
-// const projectId = "YOUR_PROJECT_ID";
-// const metadata = { /* ... */ };
-// const chains = [mainnet, polygon];
+const projectId = "YOUR_PROJECT_ID";
+const metadata = { /* ... */ };
+const chains = [mainnet, polygon];
 
-// const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
-// const appKitInstance = createAppKit({ // createAppKit might have been named differently or part of the adapter pkg
-//   wagmiConfig,
-//   projectId,
-//   metadata,
-//   chains, // This 'chains' prop might have been for AppKit's own chain display logic
-//   // ... other options
-// });
+const appKitInstance = createAppKit({
+  wagmiConfig,
+  projectId,
+  metadata,
+  // ... other options
+});
 ```
 
-### New Multichain Method
+### New Multichain Implementation
 
 With the new version, you initialize adapters first and then pass them to `createAppKit` from the core `@reown/appkit-react-native` package.
 

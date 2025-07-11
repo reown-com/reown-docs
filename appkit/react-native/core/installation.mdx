@@ -3,6 +3,7 @@ title: Installation
 ---
 
 import CloudBanner from "/snippets/cloud-banner.mdx";
+import ExpoBabel from "/snippets/appkit/react-native/expo/babel-config-expo53.mdx"
 
 AppKit for React Native enables seamless integration with multiple blockchain ecosystems, including EVM chains (like Ethereum, Polygon, etc.), Solana, and Bitcoin. It provides a unified API to manage wallet connections, interact with different chains, and build rich multi-chain applications.
 
@@ -24,6 +25,8 @@ Installation is a two-step process:
 ```bash
 npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg react-native-modal @react-native-community/netinfo @walletconnect/react-native-compat expo-application
 ```
+
+<ExpoBabel />
 
 </Tab>
 <Tab title="React Native CLI">
@@ -606,7 +609,7 @@ To enable Phantom Wallet, you'll need to import the `PhantomConnector` from `@re
 
 Here's how to update your `AppKitConfig.ts` file, using the example from the [Implementation](#1-initialize-appkit) section as a base:
 
-```typescript {5,30-32}
+```typescript {5,30-40}
 // src/AppKitConfig.ts (or wherever you prefer to configure it)
 import "@walletconnect/react-native-compat";
 import { createAppKit, bitcoin, solana, type AppKitNetwork } from '@reown/appkit-react-native';
@@ -639,6 +642,14 @@ export const appKit = createAppKit({
   extraConnectors: [
     new PhantomConnector({ cluster: 'mainnet-beta' }) // Or 'devnet', 'testnet'
   ],
+  customWallets: [
+    {
+      id: 'phantom-wallet',
+      name: 'Phantom',
+      image_url: 'https://avatars.githubusercontent.com/u/124594793?s=200&v=4',
+      mobile_link: 'phantom://',
+    }
+  ]
   // Other AppKit options (e.g., metadata for your dApp)
 });
 ```
