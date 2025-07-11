@@ -101,4 +101,4 @@ If you have any questions or need help with your contribution, please:
 1. Check the existing documentation
 2. Reach out to the team on [Discord](https://discord.gg/reown)
 
-Thank you for contributing to Reown's documentation! 
+Thank you for contributing to Reown's documentation! # Force workflow re-run after syntax fix
