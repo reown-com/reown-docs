@@ -70,4 +70,4 @@ ${mdxFiles.map(file => `- \`${file}\``).join('\n')}
 
 Please analyze the content changes and provide constructive feedback on tone and voice alignment.`
               });
-            }</mdxFiles.length>
+            }
