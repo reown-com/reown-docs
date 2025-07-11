@@ -1,13 +1,13 @@
 # Content Review Workflow
 
-This workflow automatically reviews documentation changes for tone of voice compliance using Reown's brand guidelines.
+This workflow automatically reviews documentation changes for tone of voice compliance using Reown's brand guidelines via Devin AI.
 
 ## Setup Requirements
 
-1. **OpenAI API Key**: Add `OPENAI_API_KEY` as a repository secret
+1. **Devin Webhook Token**: Add `DEVIN_WEBHOOK_TOKEN` as a repository secret
    - Go to Repository Settings > Secrets and variables > Actions
-   - Add new repository secret with name `OPENAI_API_KEY`
-   - Value should be your OpenAI API key with GPT-4 access
+   - Add new repository secret with name `DEVIN_WEBHOOK_TOKEN`
+   - Value should be provided by your Devin administrator
 
 ## How it Works
 
@@ -20,17 +20,16 @@ The workflow triggers on pull requests that modify MDX files and:
    - Modal trigger examples (`**/triggermodal.mdx`)
    - About sections (`**/about/**`)
 
-2. **Analyzes content**: Uses AI to review content against Reown's tone of voice guidelines:
-   - Clear and accessible language
-   - Professional yet friendly tone
-   - Developer-focused but approachable
-   - Consistent terminology
+2. **Notifies Devin**: Sends a repository dispatch event to trigger Devin content review with:
+   - PR details and changed files
+   - Link to Reown's Tone of Voice guidelines
+   - Context about the review request
 
-3. **Provides feedback**: Posts constructive suggestions as PR review comments when improvements are needed
+3. **Provides feedback**: Devin analyzes content against tone of voice guidelines and posts constructive suggestions as PR review comments
 
 ## Tone of Voice Guidelines
 
-The workflow enforces these key principles:
+The workflow enforces these key principles from the [Reown Tone of Voice document](https://walletconnect.notion.site/Reown-Tone-of-Voice-Messaging-Framework-1ba3a661771e8026b3e5f0006be26000):
 
 - **Clear & Accessible**: Translate complex ideas into approachable language
 - **Professional yet Friendly**: Maintain authority while being welcoming
@@ -52,8 +51,18 @@ The workflow enforces these key principles:
 - API reference tables
 - Configuration files
 
+## Workflow Process
+
+1. **PR Created/Updated** → Workflow triggers if MDX files changed
+2. **File Filtering** → Only relevant documentation files are identified
+3. **Devin Notification** → Repository dispatch event sent to Devin
+4. **Pending Comment** → Workflow posts initial comment indicating review in progress
+5. **Devin Review** → Devin analyzes content against tone guidelines
+6. **Feedback Posted** → Devin posts detailed review comments with suggestions
+
 ## Troubleshooting
 
-- **No comments posted**: Check that `OPENAI_API_KEY` is configured correctly
+- **No review comments**: Check that `DEVIN_WEBHOOK_TOKEN` is configured correctly
 - **Workflow not triggering**: Ensure changes include `.mdx` files in reviewed directories
-- **API errors**: Verify OpenAI API key has sufficient credits and GPT-4 access
+- **Devin not responding**: Verify webhook token is valid and Devin service is available
+- **Review incomplete**: Check that the Tone of Voice guidelines URL is accessible
