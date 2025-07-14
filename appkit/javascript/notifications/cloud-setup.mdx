@@ -12,9 +12,9 @@ For a quick start to experiment with, you can try the [web3inbox template](https
 
 ## Domain to use
 
-It is important to understand what domain you are using for your project as you are required to host a static file (the `did.json` file) on this domain before being able to use Notify API. The [Reown Cloud Dashboard](https://dashboard.reown.com) and clients receiving and managing your notifications use this file to authenticate that your domain is associated with the source of the notifications.
+It is important to understand what domain you are using for your project as you are required to host a static file (the `did.json` file) on this domain before being able to use Notify API. The [Reown Dashboard](https://dashboard.reown.com) and clients receiving and managing your notifications use this file to authenticate that your domain is associated with the source of the notifications.
 
-You can pick 1 domain and this is configured in the Dapp URL field of the Notify API section of the [Reown Cloud Dashboard](https://dashboard.reown.com). You may change your domain at any time, as long as you properly host the new `did.json` file there. Note that only one project may use a given domain at the same time.
+You can pick 1 domain and this is configured in the Dapp URL field of the Notify API section of the [Reown Dashboard](https://dashboard.reown.com). You may change your domain at any time, as long as you properly host the new `did.json` file there. Note that only one project may use a given domain at the same time.
 
 During development it is optional to use your production domain for testing. Instead, you can use a staging domain, or even a entirely separate domain e.g. Vercel test site. However, once you move to production you will need to update your domain to your production domain and host a new file there.
 
@@ -47,7 +47,7 @@ Notification types are configured with a name, description, and icon which allow
 
 ### Navigating to Notify API section
 
-In [Reown Cloud Dashboard](https://dashboard.reown.com), navigate to the APIs tab of your project.
+In [Reown Dashboard](https://dashboard.reown.com), navigate to the APIs tab of your project.
 
 <Frame>
   <img src="/images/w3i/1.png" />
@@ -99,7 +99,7 @@ Next, you will need to host `did.json` file on this page at the `/.well-known/` 
 
 Welcome Notifications are notifications that are sent to users when they subscribe to your app. This is a great way to welcome users to your app and explain what types of notifications they will receive.
 
-To enable Welcome Notifications, switch on the toggle in the Welcome Notifications section of your Reown Cloud project after adding relevant Notification Type, Title, Body & Link.
+To enable Welcome Notifications, switch on the toggle in the Welcome Notifications section of your Reown Dashboard project after adding relevant Notification Type, Title, Body & Link.
 
 <Frame>
   <img src="/images/w3i/welcome.png" />
@@ -107,7 +107,7 @@ To enable Welcome Notifications, switch on the toggle in the Welcome Notificatio
 
 ### Enabling Notify API
 
-Once all changes have been saved and the `did.json` file has been deployed successfully, switch on the toggle switch in the Notify API section of your Reown Cloud project. If everything is configured correctly, you should see a success toast: "Notify configuration successfully verified"
+Once all changes have been saved and the `did.json` file has been deployed successfully, switch on the toggle switch in the Notify API section of your Reown Dashboard project. If everything is configured correctly, you should see a success toast: "Notify configuration successfully verified"
 
 <Frame>
   <img src="/images/w3i/5.png" />
@@ -123,9 +123,9 @@ Once you have completed the setup steps, you can now send notifications to users
 
 ## Next steps
 
-1. Now you are ready for accounts to subscribe to your app and send notifications to them using your Notify API Secret or with Reown Cloud.
+1. Now you are ready for accounts to subscribe to your app and send notifications to them using your Notify API Secret or with Reown Dashboard.
 
-   - Read more on [sending notifications with Reown Cloud](./cloud-sending)
+   - Read more on [sending notifications with Reown Dashboard](./cloud-sending)
    - Read more on [frontend integration](./frontend-integration/usage)
    - Read more on [backend integration](./backend-integration)
 
