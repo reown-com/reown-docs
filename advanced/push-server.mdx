@@ -6,15 +6,15 @@ The Push Server sends WalletConnect protocol activity using FCM or APNs to users
 
 Several options exist for setting up the Push Server:
 
-1. Using [Reown Cloud](#setup-in-walletconnect-cloud) (recommended)
+1. Using [Reown Dashboard](#setup-in-walletconnect-cloud) (recommended)
 2. Self-host the [Push Server](https://github.com/WalletConnect/push-server)
 3. Write your own implementation using the [spec](https://specs.walletconnect.com/2.0/specs/servers/push/spec)
 
-It is recommended that you use Reown Cloud for simplicity and ease of integration. Typically you only need to self-host if you have concerns about our hosted platform having access to your FCM or APNs server credentials, such as for regulatory reasons. If you want to self-host or implement against the spec, please reach out to devrel@walletconnect.com for assistance.
+It is recommended that you use Reown Dashboard for simplicity and ease of integration. Typically you only need to self-host if you have concerns about our hosted platform having access to your FCM or APNs server credentials, such as for regulatory reasons. If you want to self-host or implement against the spec, please reach out to devrel@walletconnect.com for assistance.
 
-## Setup in Reown Cloud
+## Setup in Reown Dashboard
 
-1. Create a Project in the Cloud App. Go to [Reown Cloud](https://dashboard.reown.com/) and sign up for an account.
+1. Create a Project in the Cloud App. Go to [Reown Dashboard](https://dashboard.reown.com/) and sign up for an account.
 
 2. To get your project's Push URL, from the Cloud App, go into the settings tab and click on `Create Push URL`.
 <Frame>
@@ -37,7 +37,7 @@ If you already have FCM Legacy enabled and then enable FCM v1, push notification
     <Frame>
     ![Create service account button](/images/assets/push-fcmv1-create-sa-button.png)
     </Frame>
-  - Provide an arbitrary name and ID. E.g. `Reown Cloud Push Server` and click _Create and Continue_
+  - Provide an arbitrary name and ID. E.g. `Reown Dashboard Push Server` and click _Create and Continue_
     <Frame>
     ![Provide a name](/images/assets/push-fcmv1-create-sa.png)
     </Frame>
@@ -67,7 +67,7 @@ FCM Legacy is deprecated and [will be removed June 20, 2024](https://firebase.go
 <Frame>
 ![FCM legacy deprecated](/images/assets/push-fcm-legacy-deprecated.png)
 </Frame>
-When FCM v1 is enabled in Reown Cloud, it will replace the use of the legacy FCM API. No migration of devices/apps is necessary.
+When FCM v1 is enabled in Reown Dashboard, it will replace the use of the legacy FCM API. No migration of devices/apps is necessary.
 </Warning>
 
 Google's FCM allows you to use send notifications to both Android and Apple devices. At this time, we only support apps using the FCM client API.
