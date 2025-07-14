@@ -1,0 +1,91 @@
+---
+title: "Stacks"
+description: Stacks JSON-RPC Methods
+---
+
+These are the methods that wallets should implement to handle Stacks transfers and messages via WalletConnect.
+
+
+## stx_transferStx
+
+Simple STX transfer, request a transfer of STX tokens. Wallet signs and executes the transaction.
+
+### Request
+
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "stx_transferStx",
+  "params": {
+    "sender": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
+    "recipient": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
+    "amount": "100000000000",
+    "memo": ""
+  }
+}
+```
+
+### Parameters
+
+| Parameter | Required? | Data Type | Description |
+|-----------|------|-----------|-------------|
+| `sender` | Required | `string` | The stacks address of sender |
+| `recipient` | Required | `string` | The STX address of the recipient |
+| `amount` | Required | `number \| string` | Amount of STX tokens to transfer in microstacks (BigInt constructor compatible) |
+| `memo` | Optional | `string` | Memo string to be included with the transfer transaction |
+
+### Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "txid": "stack_tx_id",
+    "transaction": "raw_tx_hex"
+  }
+}
+```
+
+- `txid` - is used to identify the transaction on the explorer
+- `transaction` - hex-encoded raw transaction
+
+## stx_signMessage
+
+For signing a message with wallet users private key.
+
+### Request
+
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "stx_signMessage",
+  "params": {
+    "address": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
+    "message": "message"
+  }
+}
+```
+
+### Parameters
+
+| Parameter | Required? | Data Type | Description |
+|-----------|------|-----------|-------------|
+| `address` | Required | `string` | The stacks address of sender |
+| `message` | Required | `string` | Utf-8 string representing the message to be signed by the wallet |
+
+### Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "signature": "0x1234..."
+  }
+}
+```
+
+- `signature` - The signature of the message
