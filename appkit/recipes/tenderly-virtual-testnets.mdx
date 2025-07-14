@@ -41,7 +41,7 @@ npm install @reown/appkit @reown/appkit-wagmi-adapter wagmi @tanstack/react-quer
 
 ### Create a new project on Reown Cloud
 
-Now, we need to get a project Id from Reown Cloud that we will use to set up AppKit with Wagmi config. Navigate to [cloud.reown.com](https://cloud.reown.com) and sign in. If you have not created an account yet, please do so before we proceed.
+Now, we need to get a project Id from Reown Cloud Dashboard that we will use to set up AppKit with Wagmi config. Navigate to [dashboard.reown.com](https://dashboard.reown.com) and sign in. If you have not created an account yet, please do so before we proceed.
 
 After you have logged in, please navigate to the “**Projects**” section of the Cloud and click on “**Create Project**”.
 <Frame>
@@ -156,7 +156,7 @@ import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 import { mainnet, arbitrum } from "@reown/appkit/networks";
 import { vTestnet } from "@/app/tenderly.config";
 
-// Get projectId from https://cloud.reown.com
+// Get projectId from https://dashboard.reown.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
 if (!projectId) {
