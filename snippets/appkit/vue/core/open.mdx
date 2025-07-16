@@ -24,6 +24,9 @@ open({
     toToken: 'ETH'
   }
 })
+
+// to open send tokens view
+open({ view: "WalletSend" });
 ```
 
 List of views you can select
@@ -64,6 +67,10 @@ List of views you can select
     {
       variable: { code: "Swap" },
       description: "Swap main view",
+    },
+    {
+      variable: { code: "WalletSend" },
+      description: "Send tokens and transactions view",
     },
   ]}
 />
