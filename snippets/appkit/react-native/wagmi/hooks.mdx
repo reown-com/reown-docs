@@ -6,7 +6,7 @@ Hook that returns the client's information.
 import { useAccount } from "wagmi";
 
 function Components() {
-  const { address, isConnected } = useAccount();
+  const { address, status } = useAccount();
 
   //...
 }
