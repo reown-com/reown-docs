@@ -218,6 +218,12 @@
                 "pages": ["appkit/overview"]
               },
               {
+                "group": "Paid Plans",
+                "pages": [
+                  "appkit/paid-plans/enterprise"
+                ]
+              },
+              {
                 "group": "Features",
                     "pages": [
                       "appkit/features/index",
