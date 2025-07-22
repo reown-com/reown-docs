@@ -1,3 +1,31 @@
+AppKit provides pre-built UI components that you can use to trigger the modal or display wallet information.
+
+## React Components
+
+For React and Next.js applications, you can use React components instead of HTML elements:
+
+```tsx
+import { 
+  AppKitButton, 
+  AppKitConnectButton, 
+  AppKitAccountButton, 
+  AppKitNetworkButton 
+} from "@reown/appkit/react";
+
+export default function MyApp() {
+  return (
+    <div>
+      <AppKitButton />
+      <AppKitConnectButton />
+      <AppKitAccountButton />
+      <AppKitNetworkButton />
+    </div>
+  );
+}
+```
+
+## HTML Elements
+
 AppKit's [web components](https://www.webcomponents.org/) are custom and reusable HTML tags. They will work across modern browsers, and can be used with any JavaScript library or framework that works with HTML.
 
 <Note>
