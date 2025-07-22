@@ -1,11 +1,46 @@
 ---
-title: Web Components
-sidebarTitle: Components
+title: Components
 ---
 
-import Components from "/snippets/appkit/shared/components.mdx";
+AppKit provides pre-built React components that you can use to trigger the modal or display wallet information in your Next.js application.
 
-<Components />
+## React Components
+
+```tsx
+import { 
+  AppKitButton, 
+  AppKitConnectButton, 
+  AppKitAccountButton, 
+  AppKitNetworkButton 
+} from "@reown/appkit/react";
+
+export default function MyApp() {
+  return (
+    <div>
+      {/* Default button that handles the modal state */}
+      <AppKitButton />
+      
+      {/* Button for connecting a wallet */}
+      <AppKitConnectButton />
+      
+      {/* Button for account view */}
+      <AppKitAccountButton />
+      
+      {/* Button for network selection */}
+      <AppKitNetworkButton />
+    </div>
+  );
+}
+```
+
+### Component Properties
+
+All React components support the same properties as their HTML element counterparts:
+
+- **AppKitButton**: `size`, `label`, `loadingLabel`, `disabled`, `balance`, `namespace`
+- **AppKitConnectButton**: `size`, `label`, `loadingLabel`
+- **AppKitAccountButton**: `disabled`, `balance`
+- **AppKitNetworkButton**: `disabled`
 
 ### `<appkit-wallet-button  />`
 
@@ -49,7 +84,11 @@ import "@reown/appkit-wallet-button/react";
 3. use the component in your project:
 
 ```tsx
-<appkit-wallet-button wallet="metamask" />
+import { AppKitWalletButton } from "@reown/appkit-wallet-button/react";
+
+export default function MyApp() {
+  return <AppKitWalletButton wallet="metamask" />;
+}
 ```
 
 #### Options for wallet property
