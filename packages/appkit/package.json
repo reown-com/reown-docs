@@ -1,0 +1,23 @@
+{
+  "name": "@reown/appkit",
+  "version": "1.0.0",
+  "description": "AppKit with React wrapper components",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./react": "./exports/react.js"
+  },
+  "dependencies": {
+    "@lit/react": "^1.0.0",
+    "lit": "^3.0.0",
+    "react": "^18.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}
