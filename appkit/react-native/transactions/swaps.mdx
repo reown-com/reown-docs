@@ -8,9 +8,7 @@ Enable users to swap cryptocurrencies directly within your React Native app usin
 
 The Swaps feature is enabled by default in AppKit. Here's how to configure it in your app:
 
-```typescript
-import { createAppKit } from '@reown/appkit...'; // Ensure this import path is correct for your project
-
+```typescript {4-6}
 createAppKit({
   projectId: 'YOUR_PROJECT_ID',
   // ... other config options
@@ -28,9 +26,7 @@ If you want to disable the Swaps feature, you can set `swaps: false` in the feat
 
 You can programmatically open the Swaps view using the `useAppKit` hook:
 
-```typescript
-import { useAppKit } from '@reown/appkit-...'; // Ensure this import path is correct for your project
-
+```typescript {2, 5}
 function SwapButton() {
   const { open } = useAppKit();
 
