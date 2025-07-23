@@ -1,0 +1,174 @@
+You can use actions to control the modal, subscribe to wallet events and interact with them and smart contracts.
+
+## useAppKit
+
+Hook for controlling the modal.
+
+```javascript
+<script setup lang="ts">
+import { useAppKit } from '@reown/appkit/vue'
+
+const { open, close } = useAppKit()
+</script>
+
+<template>
+  <client-only>
+    <button @click="open">Open Modal</button>
+    <button @click="close">Close Modal</button>
+  </client-only>
+</template>
+```
+
+## useAppKitAccount
+
+Hook for accessing account data.
+
+```javascript
+<script setup lang="ts">
+import { useAppKitAccount } from '@reown/appkit/vue'
+
+const { address, caipAddress, isConnected, status } = useAppKitAccount()
+</script>
+
+<template>
+  <client-only>
+    <div v-if="isConnected">
+      <p>Address: {{ address }}</p>
+      <p>CAIP Address: {{ caipAddress }}</p>
+      <p>Status: {{ status }}</p>
+    </div>
+    <div v-else>
+      <p>Not connected</p>
+    </div>
+  </client-only>
+</template>
+```
+
+## useAppKitConnection
+
+Hook for accessing Solana connection.
+
+```javascript
+<script setup lang="ts">
+import { useAppKitConnection, useAppKitAccount } from '@reown/appkit/vue'
+import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
+
+const { connection } = useAppKitConnection()
+const { address } = useAppKitAccount()
+
+async function getBalance() {
+  if (!connection || !address.value) return
+  
+  const publicKey = new PublicKey(address.value)
+  const balance = await connection.getBalance(publicKey)
+  console.log('Balance:', balance / LAMPORTS_PER_SOL, 'SOL')
+}
+
+async function sendTransaction() {
+  if (!connection || !address.value) return
+  
+  const fromPubkey = new PublicKey(address.value)
+  const toPubkey = new PublicKey('11111111111111111111111111111112')
+  
+  const transaction = new Transaction().add(
+    SystemProgram.transfer({
+      fromPubkey,
+      toPubkey,
+      lamports: LAMPORTS_PER_SOL * 0.001
+    })
+  )
+  
+  // Sign and send transaction
+  console.log('Transaction created:', transaction)
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="getBalance">Get Balance</button>
+    <button @click="sendTransaction">Send Transaction</button>
+  </client-only>
+</template>
+```
+
+## useAppKitProvider
+
+Hook for accessing the Solana provider.
+
+```javascript
+<script setup lang="ts">
+import { useAppKitProvider, useAppKitAccount } from '@reown/appkit/vue'
+import { Transaction, SystemProgram, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js'
+
+const { walletProvider } = useAppKitProvider('solana')
+const { address } = useAppKitAccount()
+
+async function signMessage() {
+  if (!walletProvider || !address.value) return
+  
+  const message = new TextEncoder().encode('Hello World!')
+  const signature = await walletProvider.signMessage(message)
+  console.log('Signature:', signature)
+}
+
+async function signTransaction() {
+  if (!walletProvider || !address.value) return
+  
+  const fromPubkey = new PublicKey(address.value)
+  const toPubkey = new PublicKey('11111111111111111111111111111112')
+  
+  const transaction = new Transaction().add(
+    SystemProgram.transfer({
+      fromPubkey,
+      toPubkey,
+      lamports: LAMPORTS_PER_SOL * 0.001
+    })
+  )
+  
+  const signedTransaction = await walletProvider.signTransaction(transaction)
+  console.log('Signed transaction:', signedTransaction)
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="signMessage">Sign Message</button>
+    <button @click="signTransaction">Sign Transaction</button>
+  </client-only>
+</template>
+```
+
+## Program Interaction
+
+```javascript
+<script setup lang="ts">
+import { useAppKitConnection, useAppKitProvider } from '@reown/appkit/vue'
+import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js'
+
+const { connection } = useAppKitConnection()
+const { walletProvider } = useAppKitProvider('solana')
+
+async function callProgram() {
+  if (!connection || !walletProvider) return
+  
+  const programId = new PublicKey('YourProgramIdHere')
+  const instruction = new TransactionInstruction({
+    keys: [],
+    programId,
+    data: Buffer.from([])
+  })
+  
+  const transaction = new Transaction().add(instruction)
+  const signedTransaction = await walletProvider.signTransaction(transaction)
+  
+  const txid = await connection.sendRawTransaction(signedTransaction.serialize())
+  console.log('Transaction ID:', txid)
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="callProgram">Call Program</button>
+  </client-only>
+</template>
+```

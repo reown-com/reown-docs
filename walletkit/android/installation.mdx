@@ -20,6 +20,31 @@ implementation("com.reown:android-core:release_version")
 implementation("com.reown:walletkit:release_version")
 ```
 
+## ProGuard rules
+
+If you encounter issues with minification, add the below rules to your application:
+
+```
+-keepattributes *Annotation*
+
+-keep class com.sun.jna.** { *; }
+-keepclassmembers class com.sun.jna.** {
+    native <methods>;
+    *;
+}
+
+-keep class uniffi.** { *; }
+
+# Preserve all public and protected fields and methods
+-keepclassmembers class ** {
+    public *;
+    protected *;
+}
+
+-dontwarn uniffi.**
+-dontwarn com.sun.jna.**
+```
+
 ## Next Steps
 
 Now that you've installed WalletKit, you're ready to start integrating it. The next section will walk you through the process of setting up your project to use the SDK.

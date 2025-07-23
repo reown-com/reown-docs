@@ -12,7 +12,7 @@ The Relay API can be accessed through the Core Client
 >
 <Tab title="iOS">
 
-Before using Sign or Auth SDK, it is necessary to configure a shared Networking Client instance. Set a project ID generated when starting a project on Reown Cloud and SocketFactory instance.
+Before using Sign or Auth SDK, it is necessary to configure a shared Networking Client instance. Set a project ID generated when starting a project on Reown Dashboard and SocketFactory instance.
 
 WalletConnect Swift SDK does not depend on any websocket library. SocketFactory parameter allows you to pass your own implementation of websocket connection.
 
@@ -30,7 +30,7 @@ struct SocketFactory: WebSocketFactory {
 }
 ```
 
-Please note that if you have made changes to the list of **Allowed Domains** in the **Reown Cloud Dashboard**, then you may encounter an error with the connection if you use **Starscream** or any other socket client. For example, the native implementation of **Starscream** will use the `relay.walletconnect.com` as an `Origin` parameter if not provided, which will be missing from the list of **Allowed Domains**. The solution to this could be the inclusion of the `relay.walletconnect.com` in the **Allowed Domains**, corresponding changes in the socket client implementation, or following changes in the `WebSocketFactory`.
+Please note that if you have made changes to the list of **Allowed Domains** in the **Reown Dashboard**, then you may encounter an error with the connection if you use **Starscream** or any other socket client. For example, the native implementation of **Starscream** will use the `relay.walletconnect.com` as an `Origin` parameter if not provided, which will be missing from the list of **Allowed Domains**. The solution to this could be the inclusion of the `relay.walletconnect.com` in the **Allowed Domains**, corresponding changes in the socket client implementation, or following changes in the `WebSocketFactory`.
 
 Create and register App Group Identifier in [Apple Developer Center](https://developer.apple.com/account/resources/identifiers/list/applicationGroup) if needed and provide it during Networking client configuration.
 

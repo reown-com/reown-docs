@@ -1,0 +1,62 @@
+For this example, we'll be using **Wagmi** and **Viem**.
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains and WagmiAdapter from `@reown/appkit-adapter-wagmi`.
+
+```ts
+// lib/appkit.ts
+import { browser } from '$app/environment'
+import { createAppKit } from '@reown/appkit'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { arbitrum, mainnet } from '@reown/appkit/networks'
+
+// Only initialize in browser environment
+let appKit: ReturnType<typeof createAppKit> | undefined = undefined
+
+if (browser) {
+  const projectId = import.meta.env.VITE_PROJECT_ID
+  if (!projectId) {
+    throw new Error('VITE_PROJECT_ID is not set')
+  }
+
+  const networks = [arbitrum, mainnet]
+
+  // Create adapter
+  const wagmiAdapter = new WagmiAdapter({
+    networks,
+    projectId
+  })
+
+  // Initialize AppKit
+  appKit = createAppKit({
+    adapters: [wagmiAdapter],
+    networks: [arbitrum, mainnet],
+    defaultNetwork: arbitrum,
+    projectId,
+    metadata: {
+      name: 'SvelteKit Example',
+      description: 'SvelteKit Example using Wagmi adapter',
+      url: 'https://reown.com/appkit',
+      icons: ['https://avatars.githubusercontent.com/u/179229932?s=200&v=4']
+    }
+  })
+}
+
+export { appKit }
+```
+
+<Note>
+  Make sure to set your `VITE_PROJECT_ID` environment variable which you can get from [Reown Dashboard](https://dashboard.reown.com).
+</Note>
+
+<Note>
+  The `browser` check ensures AppKit is only initialized in the browser environment, which is important for SvelteKit's SSR compatibility.
+</Note>
+
+Then import this configuration in your app layout to ensure AppKit is initialized:
+
+``` javascript
+<!-- src/routes/+layout.svelte -->
+<script>
+  import '$lib/appkit';
+</script>
+```

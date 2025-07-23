@@ -23,7 +23,7 @@ Let's dive in!
 
 - A fundamental understanding of JavaScript and React.
 - A minimal installation of AppKit in React.
-- Obtain a new project Id on Reown Cloud at https://cloud.reown.com
+- Obtain a new project Id on Reown Dashboard at https://dashboard.reown.com
 
 ## Final project
 <Card title="Appkit Example for Interacting with the Solana Blockchain" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-solana">
@@ -117,7 +117,7 @@ import type { Provider } from "@reown/appkit-adapter-solana/react";
 
 ```js
 // Get the wallet provider with the AppKit hook
-const { walletProvider } = useAppKitProvider < Provider > "solana";
+const { walletProvider } = useAppKitProvider<Provider>("solana");
 
 // AppKit hook to get the address and check if the user is connected
 const { address, isConnected } = useAppKitAccount();
@@ -169,7 +169,7 @@ import type { Provider } from "@reown/appkit-adapter-solana/react";
 ```js
 const { isConnected, address } = useAppKitAccount();
 const { connection } = useAppKitConnection();
-const { walletProvider } = useAppKitProvider < Provider > "solana";
+const { walletProvider } = useAppKitProvider<Provider>("solana");
 ```
 
 3. Create the function to raise the modal to send the transaction

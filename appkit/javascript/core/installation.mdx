@@ -19,9 +19,13 @@ import SolanaPrograms from "/snippets/appkit/javascript/solana/about/programs.md
 import BitcoinImplementation from "/snippets/appkit/javascript/bitcoin/about/implementation.mdx";
 import BitcoinModal from "/snippets/appkit/javascript/bitcoin/about/triggermodal.mdx";
 
+import CoreImplementation from "/snippets/appkit/javascript/core/about/implementation.mdx";
+import CoreModal from "/snippets/appkit/javascript/core/about/triggermodal.mdx";
+
 # JavaScript
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
+AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, 
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
 Choose one of these to get started.
 
 <Note>
@@ -148,11 +152,34 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 </CodeGroup>
 
 </Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @walletconnect/universal-provider ethers
+```
+
+```bash Yarn
+yarn add @reown/appkit @walletconnect/universal-provider ethers
+```
+
+```bash Bun
+bun add @reown/appkit @walletconnect/universal-provider ethers
+```
+
+```bash pnpm
+pnpm add @reown/appkit @walletconnect/universal-provider ethers
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 ## Cloud Configuration
 
-Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new project ID.
+Create a new project on Reown Dashboard at https://dashboard.reown.com and obtain a new project ID.
 
 <CloudBanner />
 
@@ -196,6 +223,14 @@ Check the JavaScript Bitcoin example
 <BitcoinImplementation />
 
 </Tab>
+<Tab title="Others networks (AppKit Core)">
+<Card title="AppKit Core Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-core-universal-provider-sui">
+Check the JavaScript AppKit Core example for Sui
+</Card>
+
+<CoreImplementation />
+
+</Tab>
 </Tabs>
 
 ## Trigger the modal
@@ -224,6 +259,11 @@ Check the JavaScript Bitcoin example
 <Tab title="Bitcoin">
 
 <BitcoinModal />
+
+</Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CoreModal />
 
 </Tab>
 </Tabs>

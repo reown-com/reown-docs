@@ -70,14 +70,14 @@ implementation("com.walletconnect:android-core:release_version")
 
 #### Project set up
 
-To use initialize RelayClient properly you will need a projectId. Go to https://cloud.reown.com/app, register your project and get projectId.
+To use initialize RelayClient properly you will need a projectId. Go to https://dashboard.reown.com/app, register your project and get projectId.
 
 #### CoreClient initialization
 
-Before using any of the WalletConnect Kotlin SDKs, it is necessary to initialize the CoreClient. The initialization of CoreClient must always happen in the Android Application class. Provide the projectId generated in the Reown Cloud, the WebSocket URL, choose the connection type, and pass the application class. You can also pass your own Relay instance using the `RelayConnectionInterface`.
+Before using any of the WalletConnect Kotlin SDKs, it is necessary to initialize the CoreClient. The initialization of CoreClient must always happen in the Android Application class. Provide the projectId generated in the Reown Dashboard, the WebSocket URL, choose the connection type, and pass the application class. You can also pass your own Relay instance using the `RelayConnectionInterface`.
 
 ```kotlin
-val projectId = "" //Get Project ID at https://cloud.reown.com/
+val projectId = "" //Get Project ID at https://dashboard.reown.com/
 val connectionType = ConnectionType.AUTOMATIC or ConnectionType.MANUAL
 val application = //Android Application level class
 [Optional] val optionalRelay: RelayConnectionInterface? = /*implement interface*/
@@ -211,7 +211,7 @@ https://github.com/VolodymyrBS/WebGLThreadingPatcher.git
 #### Initialization
 
 1. Fill in the Project ID and Metadata fields in the `Assets/WalletConnectUnity/Resources/WalletConnectProjectConfig` asset.
-   - If you don’t have a Project ID, you can create one at [Reown Cloud](https://cloud.reown.com).
+   - If you don't have a Project ID, you can create one at [Reown Dashboard](https://dashboard.reown.com).).
    - The `Redirect` fields are optional. They are used to redirect the user back to your app after they approve or reject the session.
 2. Initialize `WalletConnect` and get reference to the instance of `Core`:
 

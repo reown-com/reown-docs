@@ -6,6 +6,7 @@ import WagmiComposables from "/snippets/appkit/vue/wagmi/composables.mdx";
 import EthersComposables from "/snippets/appkit/vue/ethers/composables.mdx";
 import Ethers5Composables from "/snippets/appkit/vue/ethers5/composables.mdx";
 import SolanaComposables from "/snippets/appkit/vue/solana/composables.mdx";
+import BitcoinComposables from "/snippets/appkit/vue/bitcoin/composables.mdx";
 import OpenModal from "/snippets/appkit/vue/core/open.mdx";
 
 Composables are functions that will help you control the modal, subscribe to wallet events and interact with them and smart contracts.
@@ -58,6 +59,30 @@ const bip122Account = useAppKitAccount({ namespace: "bip122" }); // for bitcoin
 - `accountData.value.isConnected`: Boolean that indicates if the user is connected
 - `accountData.value.status`: The current connection status
 
+### Getting Bitcoin Public Keys
+
+When working with Bitcoin accounts, you can extract public keys from the connected accounts:
+
+```vue
+<template>
+  <div>
+    <div v-for="(key, index) in publicKeys" :key="index">
+      Public Key: {{ key }}
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { useAppKitAccount } from "@reown/appkit/vue";
+import { computed } from 'vue';
+
+const { allAccounts } = useAppKitAccount({ chainNamespace: 'bip122' });
+const publicKeys = computed(() => allAccounts.value.map(acc => acc.publicKey));
+</script>
+```
+
+This is particularly useful when you need to access Bitcoin public keys for transaction signing or address derivation.
+
 ## useAppKitNetwork
 
 Composable function for accessing network data and methods.
@@ -104,8 +129,33 @@ const stateData = useAppKitState();
 
 ### Returns
 
+- `stateData.initialized`: Boolean that indicates if AppKit has been initialized. This sets to true when all controllers, adapters and internal state is ready
+- `stateData.loading`: Boolean that indicates if AppKit is loading
 - `stateData.open`: Boolean that indicates if the modal is open
-- `stateData.selectedNetworkId`: The current chain id selected by the user
+- `stateData.selectedNetworkId`: The current chain id selected by the user in CAIP-2 format
+- `stateData.activeChain`: The active chain namespace (e.g., 'eip155', 'solana', 'bip122')
+
+### Example Usage
+
+```vue
+<template>
+  <div>
+    <div v-if="!stateData.initialized">Initializing AppKit...</div>
+    <div v-else-if="stateData.loading">Loading...</div>
+    <div v-else>
+      <p>Modal is {{ stateData.open ? 'open' : 'closed' }}</p>
+      <p>Selected Network: {{ stateData.selectedNetworkId }}</p>
+      <p>Active Chain: {{ stateData.activeChain }}</p>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { useAppKitState } from "@reown/appkit/vue";
+
+const stateData = useAppKitState();
+</script>
+```
 
 ## useAppKitTheme
 
@@ -161,8 +211,25 @@ import { useDisconnect } from "@reown/appkit/vue";
 
 const { disconnect } = useDisconnect();
 
+// Disconnect from all namespaces
 await disconnect();
+
+// Disconnect from specific namespace
+await disconnect({ namespace: 'eip155' }); // Disconnect from Ethereum
+await disconnect({ namespace: 'solana' }); // Disconnect from Solana
+await disconnect({ namespace: 'bip122' }); // Disconnect from Bitcoin
 ```
+
+### Parameters
+
+- `namespace` (optional): The specific chain namespace to disconnect from. If not provided, disconnects from all connected namespaces.
+
+### Use Cases
+- Implementing a "Disconnect Wallet" button
+- Handling logout flows in your application
+- Cleaning up resources when a user disconnects
+- Resetting application state after disconnection
+- Disconnecting from specific chains in multi-chain applications
 
 ## useWalletInfo
 
@@ -176,6 +243,63 @@ export default Component(){
   const { walletInfo } = useWalletInfo()
 }
 ```
+
+## useAppKitProvider
+
+Composable function that returns the `walletProvider` and the `WalletProviderType` for interacting with the connected wallet across different blockchain adapters.
+
+```ts
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+### Use Cases
+
+- Direct wallet interactions (signing messages, sending transactions)
+- Access to wallet-specific methods and properties
+- Integration with blockchain libraries (Ethers, Wagmi, Solana Web3.js)
+
+### Examples
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+</Tab>
+<Tab title="Solana">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { Provider } from "@reown/appkit-adapter-solana/vue";
+
+const { walletProvider } = useAppKitProvider<Provider>("solana");
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/vue";
+import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
+
+const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
+```
+
+</Tab>
+</Tabs>
+
+### Returns
+
+- `walletProvider`: The wallet provider instance for the specified chain namespace
+- `walletProviderType`: The type of wallet provider currently connected
 
 ## Ethereum/Solana Library
 
@@ -198,6 +322,11 @@ export default Component(){
 <Tab title="Solana">
 
 <SolanaComposables />
+
+</Tab>
+<Tab title="Bitcoin">
+
+<BitcoinComposables />
 
 </Tab>
 </Tabs>

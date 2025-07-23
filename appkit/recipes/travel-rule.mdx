@@ -36,7 +36,7 @@ Here's a practical example:
 Before implementing SIWX for Travel Rule compliance, ensure you have:
 
 - AppKit installed and configured in your project following the [AppKit Next installation guide](https://docs.reown.com/appkit/next/core/installation)
-- A project ID from [Reown Cloud](https://cloud.reown.com)
+- A project ID from [Reown Dashboard](https://dashboard.reown.com)
 
 ## Example Implementation
 
@@ -76,13 +76,14 @@ Once you have AppKit set up in your dApp, you can easily enable SIWX by adding t
 
 ```ts {2, 8}
 import { createAppKit } from '@reown/appkit'
-import { DefaultSIWX } from '@reown/appkit-siwx'
+import { ReownAuthentication } from '@reown/appkit-siwx'
 
 const appkit = createAppKit({
   projectId,
   networks,
   metadata,
-  siwx: new DefaultSIWX() // add this line to enable SIWX
+  siwx: new ReownAuthentication() // add this line to enable SIWX
+  
 })
 ```
 
@@ -97,4 +98,4 @@ By implementing SIWX for Travel Rule compliance, you have:
 
 This implementation helps meet Travel Rule requirements while providing a seamless experience for your users. The SIWX verification acts as a critical safeguard, ensuring that only verified wallet owners can send funds.
 
-For more advanced customization options, refer to our [SIWX documentation](/appkit/authentication/siwx/default) 
+For more advanced customization options, refer to our [SIWX documentation](/appkit/authentication/siwx/default)  

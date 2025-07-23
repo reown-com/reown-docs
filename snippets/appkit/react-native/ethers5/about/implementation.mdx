@@ -7,6 +7,10 @@ Make sure you import `@walletconnect/react-native-compat` and `@ethersproject/sh
 
 </Note>
 
+<Note>
+`createAppKit` must be called before rendering the `<AppKit />` component or any other AppKit UI components. Make sure to call `createAppKit` at the module level, outside of your React components.
+</Note>
+
 ```tsx
 import "@walletconnect/react-native-compat";
 import "@ethersproject/shims";
@@ -17,7 +21,7 @@ import {
   AppKit,
 } from "@reown/appkit-ethers5-react-native";
 
-// 1. Get projectId from https://cloud.reown.com
+// 1. Get projectId from https://dashboard.reown.com
 const projectId = "YOUR_PROJECT_ID";
 
 // 2. Create config

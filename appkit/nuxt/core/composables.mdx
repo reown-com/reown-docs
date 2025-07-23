@@ -1,0 +1,224 @@
+---
+title: Composables
+---
+
+import WagmiComposables from "/snippets/appkit/vue/wagmi/composables.mdx";
+import EthersComposables from "/snippets/appkit/vue/ethers/composables.mdx";
+import Ethers5Composables from "/snippets/appkit/vue/ethers5/composables.mdx";
+import SolanaComposables from "/snippets/appkit/vue/solana/composables.mdx";
+import OpenModal from "/snippets/appkit/vue/core/open.mdx";
+
+Composables are functions that will help you control the modal, subscribe to wallet events and interact with them and smart contracts.
+
+<Note>
+  When using AppKit composables in Nuxt, make sure to use them within `<client-only>` components for SSR compatibility.
+</Note>
+
+## useAppKit
+
+Composable function for controlling the modal.
+
+```ts
+import { useAppKit } from "@reown/appkit/vue";
+
+export default function Component() {
+  const { open, close } = useAppKit();
+}
+```
+
+### Returns
+
+- `open`: Function to open the modal
+- `close`: Function to close the modal
+
+### Parameters
+
+<OpenModal />
+
+## useAppKitAccount
+
+Composable function for accessing account data and connection status.
+
+```ts
+import { useAppKitAccount } from "@reown/appkit/vue";
+
+const accountData = useAppKitAccount();
+```
+
+Composable function for accessing account data and connection status for each namespace when working in a multi-chain environment.
+
+```ts
+import { useAppKitAccount } from "@reown/appkit/vue";
+
+const eip155Account = useAppKitAccount({ namespace: "eip155" }); // for EVM chains
+const solanaAccount = useAppKitAccount({ namespace: "solana" });
+const bip122Account = useAppKitAccount({ namespace: "bip122" }); // for bitcoin
+```
+
+### Returns
+
+- `accountData.value.address`: The current account address
+- `accountData.value.caipAddress`: The current account address in CAIP format
+- `accountData.value.isConnected`: Boolean that indicates if the user is connected
+- `accountData.value.status`: The current connection status
+
+## useAppKitNetwork
+
+Composable function for accessing network data and methods.
+
+```ts
+import { useAppKitNetwork } from "@reown/appkit/vue";
+
+export default Component(){
+  const networkData = useAppKitNetwork()
+}
+```
+
+### Returns
+
+- `networkData.caipNetwork`: The current network object
+- `networkData.caipNetworkId`: The current network id in CAIP format
+- `networkData.chainId`: The current chain id
+- `networkData.switchNetwork`: Function to switch the network. Accepts a `caipNetwork` object as argument.
+
+### switchNetwork Usage
+
+```ts
+import { polygon } from '@reown/appkit/networks'
+
+...
+
+networkData.switchNetwork(polygon)
+```
+
+<Note>
+  See how to import or create a networks
+  [here](/appkit/nuxt/core/custom-networks).
+</Note>
+
+## useAppKitState
+
+Composable function for getting the current value of the modal's state.
+
+```ts
+import { useAppKitState } from "@reown/appkit/vue";
+
+const stateData = useAppKitState();
+```
+
+### Returns
+
+- `stateData.open`: Boolean that indicates if the modal is open
+- `stateData.selectedNetworkId`: The current chain id selected by the user
+
+## useAppKitTheme
+
+Composable function for controlling the modal's theme.
+
+```ts
+import { useAppKitTheme } from "@reown/appkit/vue";
+const themeAction = useAppKitTheme();
+// or
+// const { setThemeMode, setThemeVariables } = useAppKitTheme()
+```
+
+### Returns
+
+- `themeAction.themeMode`: Get theme Mode.
+- `themeAction.themeVariables`: Get theme variables.
+- `themeAction.setThemeMode`: Set theme Mode. Accepts a string as parameter ('dark' | 'light')
+- `themeAction.setThemeVariables`: Set theme variables. Check the example usage.
+
+### Example Usage
+
+```ts
+setThemeMode("dark");
+
+setThemeVariables({
+  "--w3m-color-mix": "#00BB7F",
+  "--w3m-color-mix-strength": 40,
+});
+```
+
+## useAppKitEvents
+
+Composable function for subscribing to modal events.
+
+```ts
+import { useAppKitEvents } from "@reown/appkit/vue";
+
+const events = useAppKitEvents();
+```
+
+### Returns
+
+- `events.timestamp`: Get the timestamp of the event
+- `events.data.event`: Get string of the event.
+- `events.data.properties`: get more information from the event.
+
+## useDisconnect
+
+Composable function for disconnecting the session.
+
+```ts
+import { useDisconnect } from "@reown/appkit/vue";
+
+const { disconnect } = useDisconnect();
+
+// Disconnect from all namespaces
+await disconnect();
+
+// Disconnect from specific namespace
+await disconnect({ namespace: 'eip155' }); // Disconnect from Ethereum
+await disconnect({ namespace: 'solana' }); // Disconnect from Solana
+await disconnect({ namespace: 'bip122' }); // Disconnect from Bitcoin
+```
+
+### Parameters
+
+- `namespace` (optional): The specific chain namespace to disconnect from. If not provided, disconnects from all connected namespaces.
+
+### Use Cases
+- Implementing a "Disconnect Wallet" button
+- Handling logout flows in your application
+- Cleaning up resources when a user disconnects
+- Resetting application state after disconnection
+- Disconnecting from specific chains in multi-chain applications
+
+## useWalletInfo
+
+Composable function for accessing wallet information.
+
+```ts
+import { useWalletInfo } from '@reown/appkit/vue'
+
+
+export default Component(){
+  const { walletInfo } = useWalletInfo()
+}
+```
+
+## Ethereum/Solana Library
+
+<Tabs>
+<Tab title="Wagmi">
+
+<WagmiComposables />
+
+</Tab>
+<Tab title="Ethers">
+
+<EthersComposables />
+
+</Tab>
+<Tab title="Ethers v5">
+
+<Ethers5Composables />
+
+</Tab>
+<Tab title="Solana">
+
+<SolanaComposables />
+
+</Tab>
+</Tabs>
