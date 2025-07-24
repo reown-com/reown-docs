@@ -388,20 +388,6 @@ useEffect(() => {
 
 </Tabs>
 
-<Note>
-**React Native New Architecture:** If your project has React Native's new architecture enabled, you need to provide a custom storage implementation to the coinbase connector:
-
-```tsx
-import { MMKV } from 'react-native-mmkv';
-
-const coinbase = coinbaseConnector({
-  redirect: 'https://your-app-universal-link.com' || 'YOUR_APP_SCHEME://',
-  storage: new MMKV()
-});
-```
-
-You can detect if new architecture is enabled by checking: `(global as any)?.nativeFabricUIManager != null`
-</Note>
 
 Check <a href="https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install">Coinbase docs</a> for more detailed information.
 
