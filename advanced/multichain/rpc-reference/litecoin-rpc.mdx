@@ -3,7 +3,11 @@ title: "Litecoin"
 description: Litecoin JSON-RPC Methods
 ---
 
-We define an account as the group of addresses derived using the same account value in their [derivation paths](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#user-content-Path_levels). We use the first address of the [external chain](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#examples) ("first external address"), as the identifier for an account. An account's total balance is defined as the sum of all unspent transaction outputs (UTXOs) belonging to its entire group of addresses.
+<Note type="warning">
+**Please note:** The Litecoin RPC standard is still under review and specifications may change. Implementation details and method signatures are subject to updates.
+</Note>
+
+We define an account as the group of addresses derived using the same account value in their [derivation paths](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#user-content-Path_levels).We use the first address of the [external chain](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#examples) ("first external address"), as the identifier for an account. An account's total balance is defined as the sum of all unspent transaction outputs (UTXOs) belonging to its entire group of addresses.
 
 1. Dapps **must** only display the first external address as a connected account.
 2. Wallets **must** only offer to connect the first external address(es).

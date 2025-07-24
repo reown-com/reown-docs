@@ -2,10 +2,12 @@
 
 ```tsx
 import { CoinbaseProvider } from '@reown/appkit-coinbase-ethers-react-native'
+import { MMKV } from 'react-native-mmkv'
 
 const coinbaseProvider = new CoinbaseProvider({
-  redirect: 'https://your-app-universal-link.com' || 'YOUR_APP_SCHEME://'
-  rpcUrl: mainnet.rpcUrl
+  redirect: 'https://your-app-universal-link.com' || 'YOUR_APP_SCHEME://',
+  rpcUrl: mainnet.rpcUrl,
+  storage: new MMKV() // needed if using react native new architecture
 })
 
 const config = defaultConfig({

@@ -3,6 +3,10 @@ title: "XRPL"
 description: XRPL JSON-RPC Methods
 ---
 
+<Note type="warning">
+**Please note:** The XRPL RPC standard is still under review and specifications may change. Implementation details and method signatures are subject to updates.
+</Note>
+
 ## xrpl_signTransaction
 
 This method is used to sign and submit a transaction to the XRP Ledger (XRPL). Every transaction has the same set of [common fields][XRPL Transaction Common Fields], plus additional fields based on the [transaction type][XRPL Transaction Types]. It is expected that the dapp provides all transaction fields defined as `required`, but not necessarily the `auto-fillable`.

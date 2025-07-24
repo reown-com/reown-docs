@@ -289,10 +289,11 @@ module.exports = createRunOncePlugin(
 **Coinbase Wallet support is optional.** Unlike other wallets that use the WalletConnect protocol, Coinbase Wallet uses its own proprietary SDK. If you skip this setup, Coinbase Wallet simply won't appear in your wallet list, but all other wallets will work normally.
 </Info>
 
-<Tabs >
-<Tab title="React Native CLI">
-
 Follow these steps to install Coinbase SDK in your project along with our Coinbase package. Check <a href="https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install">here</a> for more detailed information.
+
+<Note>
+**Expo Compatibility:** Coinbase SDK works with [Expo Prebuild](https://docs.expo.dev/workflow/prebuild/) but not with Expo Go. You'll need to use `expo prebuild` to generate native code before building your app.
+</Note>
 
 1. Enable Expo Modules in your project running:
 
@@ -387,15 +388,8 @@ useEffect(() => {
 
 </Tabs>
 
+
 Check <a href="https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install">Coinbase docs</a> for more detailed information.
-
-</Tab>
-
-<Tab title="Expo">
-  Coinbase SDK doesn't support Expo Projects. More info <a href="https://github.com/MobileWalletProtocol/wallet-mobile-sdk/issues/206#issuecomment-1468836345">here</a>
-</Tab>
-
-</Tabs>
 
 ## Examples
 

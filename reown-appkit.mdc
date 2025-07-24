@@ -6,7 +6,7 @@ alwaysApply: false
 MDC
 # :jigsaw: Reown AppKit: Overview
 
-**Reown AppKit** is a free, open-source toolkit to integrate wallet connections and Web3 features in any app. It supports:
+**Reown AppKit** is an open-source toolkit with a generous free-tier, to integrate wallet connections and Web3 features in any app. It supports:
 
 - One-click wallet auth
 - Social logins
