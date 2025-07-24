@@ -4,7 +4,7 @@
 import { CoinbaseProvider } from '@reown/appkit-coinbase-ethers-react-native'
 
 const coinbaseProvider = new CoinbaseProvider({
-  redirect: 'https://your-app-universal-link.com' || 'YOUR_APP_SCHEME://'
+  redirect: 'https://your-app-universal-link.com' || 'YOUR_APP_SCHEME://',
   rpcUrl: mainnet.rpcUrl
 })
 
@@ -15,3 +15,4 @@ const config = defaultConfig({
 ```
 
 * Prefer universal links over custom schemes to avoid an app verification warning on Coinbase Wallet
+* For React Native new architecture, add `storage: new MMKV()` parameter if you need custom storage management
