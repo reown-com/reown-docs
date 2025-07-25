@@ -1,0 +1,123 @@
+**AppKit Pay with Exchange** unlocks a powerful new flow: users can pay in crypto directly from their Centralized Exchange (CEXs) accounts like Binance or Coinbase, with no new wallets, no app switching, and no lost conversions.
+
+## Quickstart 
+
+Here you can find a simplified process to integrate AppKit Pay:
+
+<Warning>
+    Projects first need to install and set up Reown AppKit before integrating AppKit Pay. If you haven't done so, please refer to the [Reown AppKit docs](/appkit/overview#quickstart).
+</Warning>
+
+## Code Example
+
+
+<Card title="/appkit Pay Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi-appkit-pay">
+Check the React example
+</Card>
+
+
+### Install the library
+
+<Note>
+Projects currently using Reown AppKit, or planning to use it to build custom payment flows with self-custodial wallets, should use AppKit Pay for a streamlined integration and significantly improved user experience out of the box. AppKit Pay can be found in `@reown/appkit-pay` npm package.
+</Note>
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-pay
+```
+
+```bash Yarn
+yarn add @reown/appkit-pay
+```
+
+```bash Bun
+bun a @reown/appkit-pay
+```
+
+```bash pnpm
+pnpm add @reown/appkit-pay
+```
+</CodeGroup>
+
+### Usage
+```ts
+
+import { baseSepoliaETH, pay} from '@reown/appkit-pay'
+```
+
+In order to run the payment, use the function `pay`. This function receives two parameters.
+
+```ts
+// pay function returns a PaymentResult object
+const result = await pay({ 
+    recipient: addressRecipient,
+    amount: 0.0001,
+    paymentAsset: baseSepoliaETH
+});
+
+if (result.success) {
+    console.log("Payment successful: "+ result.result);
+} else {
+    console.error("Payment error: "+ result.error);
+}
+```
+
+## Supported Networks and Assets
+
+For a complete list of supported networks and assets across different exchanges (Coinbase, Binance), please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Exchange documentation.
+
+## Assets Configuration
+
+For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
+
+```ts
+import { baseETH, baseSepoliaETH, baseUSDC } from '@reown/appkit-pay' 
+```
+
+For custom assets, you can create a paymentAsset object with all the information:
+
+```ts
+// Configure the paymentAsset
+const paymentAssetDetails = {
+    network: 'eip155:8453', // Base Mainnet
+    asset: 'native', // Or USDC in Base: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
+    metadata: {
+        name: 'Ethereum', // Or 'USD Coin'
+        symbol: 'ETH',    // Or 'USDC'
+        decimals: 18      // Or 6 for USDC
+    }
+};
+```
+
+## Hooks
+
+### useAvailableExchanges
+Fetches and manages the state for available exchanges.
+
+`useAvailableExchanges(options?: { isFetchOnInit?: boolean } & GetExchangesParams): UseAvailableExchangesReturn`
+    - `options`: Control initial fetch behavior.
+    - `returns`: `{ data, isLoading, error, fetch }`
+
+`type GetExchangesParams= {
+  page?: number
+  asset?: string
+  amount?: number | string
+  network?: CaipNetworkId
+}` 
+
+### usePayUrlActions
+Provides functions (getUrl, openUrl) to interact with specific exchange URLs, returning the sessionId needed for status tracking.
+
+`usePayUrlActions(): { getUrl, openUrl }`
+    - `getUrl(exchangeId, params): Promise<PayUrlResponse>`
+    - `openUrl(exchangeId, params, openInNewTab?): Promise<PayUrlResponse>` (Returns `{ url, sessionId }`)
+
+### useExchangeBuyStatus
+Fetches and polls for the status of a headless payment transaction using exchangeId and sessionId.
+
+`useExchangeBuyStatus(params: UseExchangeBuyStatusParameters): UseExchangeBuyStatusReturn`
+    - `params`: `{ exchangeId, sessionId, pollingInterval?, isEnabled?, onSuccess?, onError? }`
+    - `returns`: `{ data, isLoading, error, refetch }`
+
