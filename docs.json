@@ -770,6 +770,13 @@
                 ]
               },
               {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/react-native/transactions/swaps",
+                  "appkit/react-native/transactions/onramp"
+                ]
+              },
+              {
                 "group": "Authentication",
                 "pages": [
                   "appkit/react-native/core/email",
