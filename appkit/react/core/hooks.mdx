@@ -209,6 +209,7 @@ And finally, you can use the hook in your project:
 
 ```tsx
 const { isReady, isPending, connect } = useAppKitWallet({
+    namespace: 'eip155', // Optional: specify chain namespace
     onSuccess(parsedCaipAddress) {
       // Access the parsed CAIP address object
       // See: https://github.com/reown-com/appkit/blob/main/packages/common/src/utils/ParseUtil.ts#L3-L7
@@ -260,6 +261,45 @@ AppKit supports the [top 32 wallets](https://github.com/reown-com/appkit/blob/ma
    - Loading states and error handling
    - Custom notifications
    - Responsive connection states
+
+6. **Multichain Support**
+   - Connect to specific blockchain namespaces
+   - Target wallets for specific chains (EVM, Solana, Bitcoin)
+
+#### Multichain Examples
+
+```tsx
+// Connect to Ethereum/EVM chains
+const { connect: connectEVM } = useAppKitWallet({
+  namespace: 'eip155',
+  onSuccess: (address) => console.log('Connected to EVM:', address)
+})
+
+// Connect to Solana
+const { connect: connectSolana } = useAppKitWallet({
+  namespace: 'solana',
+  onSuccess: (address) => console.log('Connected to Solana:', address)
+})
+
+// Connect to Bitcoin
+const { connect: connectBitcoin } = useAppKitWallet({
+  namespace: 'bip122',
+  onSuccess: (address) => console.log('Connected to Bitcoin:', address)
+})
+
+// Usage
+<Button onClick={() => connectEVM("metamask")}>Connect MetaMask (EVM)</Button>
+<Button onClick={() => connectSolana("phantom")}>Connect Phantom (Solana)</Button>
+<Button onClick={() => connectBitcoin("leather")}>Connect Leather (Bitcoin)</Button>
+```
+
+#### Parameters
+
+- `namespace` (optional): The blockchain namespace to target. Supported values:
+  - `'eip155'` - Ethereum and EVM-compatible chains
+  - `'solana'` - Solana blockchain
+  - `'bip122'` - Bitcoin blockchain
+  - If not specified, uses the default namespace from your AppKit configuration
 
 ## useAppKitNetwork
 
