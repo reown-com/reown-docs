@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm run spell && mintlify dev",
-    "start": "pnpm run spell && mintlify dev",
-    "spell": "cspell '**/*.md' '**/*.mdx' "
+    "dev": "pnpm run spell && cd docs && ../node_modules/.bin/mint dev",
+    "start": "pnpm run spell && cd docs && ../node_modules/.bin/mint dev",
+    "spell": "cspell '**/*.md' '**/*.mdx' ",
+    "links": "cd docs && ../node_modules/.bin/mint broken-links"
   },
   "devDependencies": {
     "cspell": "^8.16.1",
-    "mintlify": "latest"
+    "mint": "latest"
   }
 }
