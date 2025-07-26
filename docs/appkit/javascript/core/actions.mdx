@@ -279,6 +279,53 @@ pnpm add @reown/appkit-wallet-button
  
 ```
 
+#### Multichain Support
+
+You can specify a blockchain namespace to target specific chains:
+
+```javascript
+<script type="module">
+  import { createAppKitWalletButton } from '@reown/appkit-wallet-button';
+  
+  // Create wallet buttons for different namespaces
+  const evmWalletButton = createAppKitWalletButton({ namespace: 'eip155' });
+  const solanaWalletButton = createAppKitWalletButton({ namespace: 'solana' });
+  const bitcoinWalletButton = createAppKitWalletButton({ namespace: 'bip122' });
+
+  function connectEVMWallet(id) {
+    if (evmWalletButton.isReady()) {
+      evmWalletButton.connect(id);
+    }
+  }
+
+  function connectSolanaWallet(id) {
+    if (solanaWalletButton.isReady()) {
+      solanaWalletButton.connect(id);
+    }
+  }
+
+  function connectBitcoinWallet(id) {
+    if (bitcoinWalletButton.isReady()) {
+      bitcoinWalletButton.connect(id);
+    }
+  }
+
+  // Attach to global scope
+  window.connectEVMWallet = connectEVMWallet;
+  window.connectSolanaWallet = connectSolanaWallet;
+  window.connectBitcoinWallet = connectBitcoinWallet;
+</script>
+
+<!-- Connect to Ethereum/EVM chains -->
+<button onclick="connectEVMWallet('metamask')">Connect MetaMask (EVM)</button>
+
+<!-- Connect to Solana -->
+<button onclick="connectSolanaWallet('phantom')">Connect Phantom (Solana)</button>
+
+<!-- Connect to Bitcoin -->
+<button onclick="connectBitcoinWallet('leather')">Connect Leather (Bitcoin)</button>
+```
+
 <Note>
   Make sure to call `createAppKitWalletButton` after `createAppKit`.
 </Note>
@@ -291,6 +338,14 @@ Change the string parameter `name` from `appKitWalletButton.connect(name)` in or
 | QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                               |
 | Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `coinbase`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, and `tokenpocket` |
 | Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                                      |
+
+#### Options for namespace property
+
+| Value     | Description                           |
+| --------- | ------------------------------------- |
+| `eip155`  | Ethereum and EVM-compatible chains    |
+| `solana`  | Solana blockchain                     |
+| `bip122`  | Bitcoin blockchain                    |
 
 
 ## themeVariables

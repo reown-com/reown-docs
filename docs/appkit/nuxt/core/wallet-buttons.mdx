@@ -62,6 +62,50 @@ onMounted(() => {
 </script>
 ```
 
+#### Multichain Support
+
+You can specify a blockchain namespace to target specific chains:
+
+```javascript
+<template>
+  <div>
+    <!-- Connect to Ethereum/EVM chains -->
+    <button @click="() => evmWalletButton.connect('metamask')" :disabled="!isEvmReady">
+      Connect MetaMask (EVM)
+    </button>
+    
+    <!-- Connect to Solana -->
+    <button @click="() => solanaWalletButton.connect('phantom')" :disabled="!isSolanaReady">
+      Connect Phantom (Solana)
+    </button>
+    
+    <!-- Connect to Bitcoin -->
+    <button @click="() => bitcoinWalletButton.connect('leather')" :disabled="!isBitcoinReady">
+      Connect Leather (Bitcoin)
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { createAppKitWalletButton } from '@reown/appkit-wallet-button'
+
+const evmWalletButton = createAppKitWalletButton({ namespace: 'eip155' })
+const solanaWalletButton = createAppKitWalletButton({ namespace: 'solana' })
+const bitcoinWalletButton = createAppKitWalletButton({ namespace: 'bip122' })
+
+const isEvmReady = ref(false)
+const isSolanaReady = ref(false)
+const isBitcoinReady = ref(false)
+
+onMounted(() => {
+  isEvmReady.value = evmWalletButton.isReady()
+  isSolanaReady.value = solanaWalletButton.isReady()
+  isBitcoinReady.value = bitcoinWalletButton.isReady()
+})
+</script>
+```
+
 <Note>
   Make sure to call wallet button methods after `createAppKit` has been initialized.
 </Note>
