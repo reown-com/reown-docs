@@ -5,10 +5,31 @@ title: Options
 AppKit’s `createAppKit` function supports powerful configuration options to help you customize your wallet’s behavior, look, and connectivity—right out of the box.
 
 ```ts
-createAppKit({ projectId, chains, ...options });
+createAppKit({ projectId, metadata, chains, ...options });
 ```
 
 Use the sections below to fine-tune everything from supported wallets to chain defaults and features like onramp, swaps, email login, and more.
+
+## metadata
+
+Metadata for your AppKit. The `name`, `description`, `icons`, and `url` are used at certain places like the wallet connection, sign message, etc.
+
+```ts
+createAppKit({
+  // ...
+  metadata: {
+    name: "AppKit App",
+    description: "AppKit for React Native",
+    url: "https://reown.com",
+    icons: ["https://avatars.githubusercontent.com/u/179229932"],
+    redirect: {
+      native: "YOUR_APP_SCHEME://",
+      universal: "https://example.com/example_dapp",
+      linkMode: true,
+    }
+  }
+});
+```
 
 ## defaultChain
 
@@ -21,8 +42,8 @@ You can set a desired chain for the initial connection:
 import { mainnet } from '@wagmi/core/chains'
 
 createAppKit({
-//...
-defaultChain: mainnet
+  //...
+  defaultChain: mainnet
 })
 
 ````
@@ -57,8 +78,8 @@ const mainnet = {
 };
 
 createAppKit({
-//...
-defaultChain: mainnet
+  //...
+  defaultChain: mainnet
 })
 
 ````
