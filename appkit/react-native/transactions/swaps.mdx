@@ -2,11 +2,11 @@
 title: Swaps
 ---
 
-Enable users to swap cryptocurrencies directly within your React Native app using AppKit's Swaps feature. This integration allows users to securely trade between a wide variety of tokens across multiple chains.
+Enable users to swap cryptocurrencies directly within your React Native app using AppKit's Swaps feature. This integration provides secure trading between a wide variety of tokens across multiple blockchain networks.
 
 ## Configuration
 
-The Swaps feature is enabled by default in AppKit. Here's how to configure it in your app:
+The Swaps feature is enabled by default in AppKit. Configure it in your application as follows:
 
 ```typescript {4-6}
 createAppKit({
@@ -18,13 +18,13 @@ createAppKit({
 });
 ```
 
-If you want to disable the Swaps feature, you can set `swaps: false` in the features configuration.
+To disable the Swaps feature, set `swaps: false` in the features configuration.
 
 ## Usage
 
 ### Opening the Swaps View
 
-You can programmatically open the Swaps view using the `useAppKit` hook:
+Programmatically open the Swaps view using the `useAppKit` hook:
 
 ```typescript {2, 5}
 function SwapButton() {
@@ -45,18 +45,18 @@ function SwapButton() {
 
 ### User Flow
 
-1. When users tap the "Swap Tokens" button or select it from the account view, they'll be presented with the Swaps interface.
+1. When users tap the "Swap Tokens" button or select it from the account view, the Swaps interface opens.
 
 2. In the Swaps interface, users can:
-   - Select the token they want to swap from
-   - Select the token they want to swap to
-   - Enter the amount they want to swap
-   - Review the transaction details including:
-     - Price impact
-     - Network cost
-     - Slippage tolerance
-     - Provider fee
+   - Select the source token to swap from
+   - Select the destination token to swap to
+   - Enter the swap amount
+   - Review transaction details including:
+     - Price impact (how the trade affects the token price)
+     - Network cost (blockchain transaction fees)
+     - Slippage tolerance (acceptable price variation during execution)
+     - Provider fee (service fee charged by the swap provider)
 
 3. After reviewing the transaction details, users can confirm the swap.
 
-4. Once confirmed, the transaction will be processed and the tokens will be swapped in their wallet.
+4. Once confirmed, the transaction will be processed and the tokens will be exchanged in their wallet.
