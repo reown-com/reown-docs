@@ -43,25 +43,25 @@ pnpm add @reown/appkit-pay
 
 ### Usage
 ```ts
-import { usePay } from '@reown/appkit-pay/react';
-import { baseSepoliaETH } from '@reown/appkit-pay' 
+
+import { baseSepoliaETH, pay} from '@reown/appkit-pay'
 ```
 
-In order to run the payment, use the hook `usePay`. This hook receives two parameter to manage the success or the error in the process.
+In order to run the payment, use the function `pay`. This function receives two parameters.
 
 ```ts
-// usePay handles subscriptions internally for robust state updates
-const { open, isPending, isSuccess, data, error } = usePay({
-  onSuccess: handleSuccess, 
-  onError: handleError,
-});
-
-// open resolves when the modal closes, but onSuccess/onError handle the actual payment result
-await open({ 
+// pay function returns a PaymentResult object
+const result = await pay({ 
     recipient: addressRecipient,
     amount: 0.0001,
     paymentAsset: baseSepoliaETH
 });
+
+if (result.success) {
+    console.log("Payment successful: "+ result.result);
+} else {
+    console.error("Payment error: "+ result.error);
+}
 ```
 
 ## Supported Networks and Assets
@@ -70,10 +70,13 @@ For a complete list of supported networks and assets across different exchanges 
 
 ## Assets Configuration
 
-For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
+For the moment, AppKit Pay has pre-configured these assets: 
+- baseETH, baseSepoliaETH, and baseUSDC
+- ethereumUSDC, optimismUSDC, arbitrumUSDC, polygonUSDC and solanaUSDC
+- ethereumUSDT, optimismUSDT, arbitrumUSDT, polygonUSDT and solanaUSDT
 
 ```ts
-import { baseETH, baseSepoliaETH, baseUSDC } from '@reown/appkit-pay' 
+import { baseETH } from '@reown/appkit-pay' 
 ```
 
 For custom assets, you can create a paymentAsset object with all the information:
@@ -91,16 +94,23 @@ const paymentAssetDetails = {
 };
 ```
 
+## Test the complete exchange flow
+
+To test the entire exchange process, we've implemented a dedicated test scenario that activates when using the token `baseSepoliaETH`.
+
+<img src="/images/test-exchange.png" alt="Test Exchange"  />
+
+Upon selecting this test exchange, you will be redirected to a result modal where you can choose between two paths:
+
+- **Complete Successfully** – Simulates a successful exchange outcome.
+
+- **Trigger an Error** – Simulates a failed exchange with an error response.
+
+<img src="/images/test-exchange2.png" alt="Test Exchange Result"  />
+
+This setup allows you to safely verify both positive and negative exchange flows in a controlled environment.
+
 ## Hooks
-
-### usePay
-Simplifies the modal-based payment flow. 
-It internally handles subscriptions to provide reactive state variables (isPending, isSuccess, isError, data, error) 
-and an open function. Callbacks (onSuccess, onError) are triggered reliably.
-
-`usePay(parameters?: UsePayParameters): UsePayReturn`
-  - `parameters`: Optional `onSuccess` and `onError` callbacks.
-  - `returns`: `{ open, isPending, isSuccess, isError, error, data }`
 
 ### useAvailableExchanges
 Fetches and manages the state for available exchanges.
