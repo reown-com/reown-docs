@@ -142,16 +142,16 @@ This FAQ section covers common questions and solutions for using AppKit. The que
 
     | Code | Message | Action |
     |------|---------|---------|
-    | APKT001 | The specified network is not recognized. | Ensure the network is included in the `networks` array of your `createAppKit` configuration. |
-    | APKT002 | The origin is not in your allow list. | Update your allowed domains at https://dashboard.reown.com. |
-    | APKT003 | Failed to load the embedded wallet. | Check your network connection and try again. Contact support if the issue persists. |
-    | APKT004 | The request to the embedded wallet timed out. | Check your network connection and try again. Contact support if the issue persists. |
-    | APKT005 | Embedded wallet load failed. | Verify your domain in https://dashboard.reown.com. |
-    | APKT006 | Your session is invalid or expired. | Check your system's date and time settings, then reconnect. |
-    | APKT007 | The specified project ID is invalid. | Visit https://dashboard.reown.com to obtain a valid project ID. |
-    | APKT008 | No project ID is configured. | Create and configure a project ID at https://dashboard.reown.com. |
-    | APKT009 | Unable to fetch App Configuration. | Check your network connection and try again. Contact support if the issue persists. |
-    | APKT010 | You have been rate limited while retrieving App Configuration. | Wait a few minutes and try again. Contact support if the issue persists. |
+    | APKT001 | Network Not Found | We couldn't recognize the specified network. Make sure it's included in the `networks` array of your `createAppKit` config. |
+    | APKT002 | Invalid App Configuration | The origin isn't in your allowlist. Update your allowed domains at https://dashboard.reown.com. |
+    | APKT003 | Wallet Load Failed | We couldn't load the embedded wallet. This might be a network or server issue. Check your connection and try again, or contact support if it persists. |
+    | APKT004 | Wallet Request Timeout | The wallet didn't respond in time. Check your network and try again. If the issue continues, contact support. |
+    | APKT005 | Unverified Domain | The embedded wallet didn't load. Please verify your domain at https://dashboard.reown.com. |
+    | APKT006 | Session Expired | Your session has expired or is invalid. Please check your device's date and time, then reconnect. |
+    | APKT007 | Invalid Project ID | The project ID is invalid. You can find or create a valid one at https://dashboard.reown.com. |
+    | APKT008 | Project ID Missing | No project ID was found. Set one up in your config at https://dashboard.reown.com. |
+    | APKT009 | Server Error | We couldn't load your App Configuration. Check your network and try again. Contact support if it keeps happening. |
+    | APKT010 | Rate Limited | Too many requests for App Configuration. Please wait a few minutes and try again. Reach out to support if needed. |
   </Accordion>
 </AccordionGroup>
 
