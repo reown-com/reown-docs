@@ -7,6 +7,10 @@ Make sure you import `@walletconnect/react-native-compat` before using our packa
 
 </Note>
 
+<Note>
+`createAppKit` must be called before rendering the `<AppKit />` component or any other AppKit UI components. Make sure to call `createAppKit` at the module level, outside of your React components.
+</Note>
+
 ```tsx
 import "@walletconnect/react-native-compat";
 
@@ -16,7 +20,7 @@ import {
   AppKit,
 } from "@reown/appkit-ethers-react-native";
 
-// 1. Get projectId from https://cloud.reown.com
+// 1. Get projectId from https://dashboard.reown.com
 const projectId = "YOUR_PROJECT_ID";
 
 // 2. Create config
@@ -54,6 +58,7 @@ const chains = [mainnet, polygon];
 // 4. Create modal
 createAppKit({
   projectId,
+  metadata,
   chains,
   config,
   enableAnalytics: true, // Optional - defaults to your Cloud configuration

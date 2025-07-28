@@ -1,3 +1,17 @@
+### useAccount
+
+Hook that returns the client's information.
+
+```tsx
+import { useAccount } from "wagmi";
+
+function Components() {
+  const { address, status } = useAccount();
+
+  //...
+}
+```
+
 #### useSignMessage
 
 Hook for signing messages with connected account.

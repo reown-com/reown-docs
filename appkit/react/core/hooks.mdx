@@ -15,7 +15,7 @@ Hooks are React functions that provide access to wallet connection features, mod
 
 AppKit provides a comprehensive set of React hooks that work together to provide a complete wallet connection and blockchain interaction experience. These hooks can be categorized into several functional groups:
 
-- **Connection Hooks**: Manage wallet connections and user authentication (`useAppKit`, `useAppKitAccount`, `useDisconnect`)
+- **Connection Hooks**: Manage wallet connections and user authentication (`useAppKit`, `useAppKitAccount`, `useAppKitProvider`, `useDisconnect`)
 - **Network Hooks**: Handle blockchain network selection and information (`useAppKitNetwork`)
 - **UI Control Hooks**: Control the modal and UI elements (`useAppKitState`, `useAppKitTheme`)
 - **Data Access Hooks**: Access wallet and blockchain data (`useAppKitBalance`, `useWalletInfo`)
@@ -33,6 +33,7 @@ graph TD
   
   ConnHooks --> useAppKit
   ConnHooks --> useAppKitAccount
+  ConnHooks --> useAppKitProvider
   ConnHooks --> useDisconnect
   ConnHooks --> useAppKitWallet
   
@@ -144,6 +145,29 @@ type UseAppKitAccountReturnType = {
 }
 ```
 
+### Getting Bitcoin Public Keys
+
+When working with Bitcoin accounts, you can extract public keys from the connected accounts:
+
+```tsx
+import { useAppKitAccount } from "@reown/appkit/react";
+
+function BitcoinComponent() {
+  const { allAccounts } = useAppKitAccount({ chainNamespace: 'bip122' });
+  const publicKeys = allAccounts.map(acc => acc.publicKey);
+  
+  return (
+    <div>
+      {publicKeys.map((key, index) => (
+        <div key={index}>Public Key: {key}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+This is particularly useful when you need to access Bitcoin public keys for transaction signing or address derivation.
+
 ## useAppKitWallet
 
 <Frame>
@@ -185,6 +209,7 @@ And finally, you can use the hook in your project:
 
 ```tsx
 const { isReady, isPending, connect } = useAppKitWallet({
+    namespace: 'eip155', // Optional: specify chain namespace
     onSuccess(parsedCaipAddress) {
       // Access the parsed CAIP address object
       // See: https://github.com/reown-com/appkit/blob/main/packages/common/src/utils/ParseUtil.ts#L3-L7
@@ -236,6 +261,45 @@ AppKit supports the [top 32 wallets](https://github.com/reown-com/appkit/blob/ma
    - Loading states and error handling
    - Custom notifications
    - Responsive connection states
+
+6. **Multichain Support**
+   - Connect to specific blockchain namespaces
+   - Target wallets for specific chains (EVM, Solana, Bitcoin)
+
+#### Multichain Examples
+
+```tsx
+// Connect to Ethereum/EVM chains
+const { connect: connectEVM } = useAppKitWallet({
+  namespace: 'eip155',
+  onSuccess: (address) => console.log('Connected to EVM:', address)
+})
+
+// Connect to Solana
+const { connect: connectSolana } = useAppKitWallet({
+  namespace: 'solana',
+  onSuccess: (address) => console.log('Connected to Solana:', address)
+})
+
+// Connect to Bitcoin
+const { connect: connectBitcoin } = useAppKitWallet({
+  namespace: 'bip122',
+  onSuccess: (address) => console.log('Connected to Bitcoin:', address)
+})
+
+// Usage
+<Button onClick={() => connectEVM("metamask")}>Connect MetaMask (EVM)</Button>
+<Button onClick={() => connectSolana("phantom")}>Connect Phantom (Solana)</Button>
+<Button onClick={() => connectBitcoin("leather")}>Connect Leather (Bitcoin)</Button>
+```
+
+#### Parameters
+
+- `namespace` (optional): The blockchain namespace to target. Supported values:
+  - `'eip155'` - Ethereum and EVM-compatible chains
+  - `'solana'` - Solana blockchain
+  - `'bip122'` - Bitcoin blockchain
+  - If not specified, uses the default namespace from your AppKit configuration
 
 ## useAppKitNetwork
 
@@ -331,7 +395,13 @@ The state management hook that provides real-time access to the modal's current 
 ```ts
 import { useAppKitState } from "@reown/appkit/react";
 
-const { open, selectedNetworkId } = useAppKitState();
+const { 
+  initialized, 
+  loading, 
+  open, 
+  selectedNetworkId, 
+  activeChain 
+} = useAppKitState();
 ```
 
 ### Use Cases
@@ -339,11 +409,42 @@ const { open, selectedNetworkId } = useAppKitState();
 - Tracking which network the user has selected
 - Creating custom UI elements that respond to modal state changes
 - Implementing custom loading states based on modal state
+- Checking if AppKit has been fully initialized before rendering components
+- Displaying chain-specific UI based on the active blockchain namespace
 
 ### Returns
 
+- `initialized`: Boolean that indicates if AppKit has been initialized. This sets to true when all controllers, adapters and internal state is ready
+- `loading`: Boolean that indicates if AppKit is loading
 - `open`: Boolean that indicates if the modal is open
-- `selectedNetworkId`: The current chain id selected by the user
+- `selectedNetworkId`: The current chain id selected by the user in CAIP-2 format
+- `activeChain`: The active chain namespace (e.g., 'eip155', 'solana', 'bip122')
+
+### Example Usage
+
+```tsx
+import { useAppKitState } from "@reown/appkit/react";
+
+function AppStatus() {
+  const { initialized, loading, open, selectedNetworkId, activeChain } = useAppKitState();
+
+  if (!initialized) {
+    return <div>Initializing AppKit...</div>;
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <p>Modal is {open ? 'open' : 'closed'}</p>
+      <p>Selected Network: {selectedNetworkId}</p>
+      <p>Active Chain: {activeChain}</p>
+    </div>
+  );
+}
+```
 
 ## useAppKitTheme
 
@@ -393,14 +494,25 @@ import { useDisconnect } from "@reown/appkit/react";
 
 const { disconnect } = useDisconnect();
 
+// Disconnect from all namespaces
 await disconnect();
+
+// Disconnect from specific namespace
+await disconnect({ namespace: 'eip155' }); // Disconnect from Ethereum
+await disconnect({ namespace: 'solana' }); // Disconnect from Solana  
+await disconnect({ namespace: 'bip122' }); // Disconnect from Bitcoin
 ```
+
+### Parameters
+
+- `namespace` (optional): The specific chain namespace to disconnect from. If not provided, disconnects from all connected namespaces.
 
 ### Use Cases
 - Implementing a "Disconnect Wallet" button
 - Handling logout flows in your application
 - Cleaning up resources when a user disconnects
 - Resetting application state after disconnection
+- Disconnecting from specific chains in multi-chain applications
 
 ## useWalletInfo
 
@@ -430,6 +542,62 @@ function WalletDisplay() {
 - Implementing wallet-specific features
 - Showing wallet icons or branding
 - Handling wallet-specific behaviors
+
+## useAppKitProvider
+
+Hook that returns the `walletProvider` and the `WalletProviderType` for interacting with the connected wallet across different blockchain adapters.
+
+```ts
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+### Use Cases
+- Accessing the wallet provider for direct blockchain interactions
+- Signing transactions and messages with the connected wallet
+- Integrating with blockchain-specific libraries (ethers, solana web3, etc.)
+- Building custom wallet interactions across different chains
+
+### Adapter Examples
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("eip155");
+```
+
+</Tab>
+<Tab title="Solana">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
+
+const { walletProvider } = useAppKitProvider<Provider>("solana");
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
+
+const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
+```
+
+</Tab>
+</Tabs>
+
+<Note>
+  Related hooks: [useAppKitAccount](#useappkitaccount), [useAppKitNetwork](#useappkitnetwork)
+</Note>
 
 ## Ethereum/Solana Library
 

@@ -120,15 +120,17 @@ Reown is committed to delivering the best developer experience.
 
 If you have any questions, feature requests, or bug reports, feel free to open an issue on [GitHub](https://github.com/reown-com/appkit-react-native)!
 
-## Enable Wallet Detection
+## Enable Wallet Detection (Optional)
 
-<Note>
+<Info>
+**This is an optional feature** that enhances the user experience by:
+- Showing a green checkmark next to installed wallets
+- Prioritizing installed wallets at the top of the list
 
-Make sure your have `@walletconnect/react-native-compat@2.10.5` or higher.
+**All 430+ wallets in the AppKit ecosystem work via WalletConnect protocol regardless of this configuration.** You only need to add the wallets your users most commonly have installed.
+</Info>
 
-</Note>
-
-To enable AppKit to detect wallets installed on the device, you need to make specific changes to the native code of your project.
+To enable AppKit to detect wallets installed on the device, you can make specific changes to the native code of your project.
 
 <Tabs >
   <Tab title="React Native CLI">
@@ -281,14 +283,17 @@ module.exports = createRunOncePlugin(
 
 </Tabs>
 
-## Enable Coinbase Wallet
+## Enable Coinbase Wallet (Optional)
 
-<Tabs >
-<Tab title="React Native CLI">
+<Info>
+**Coinbase Wallet support is optional.** Unlike other wallets that use the WalletConnect protocol, Coinbase Wallet uses its own proprietary SDK. If you skip this setup, Coinbase Wallet simply won't appear in your wallet list, but all other wallets will work normally.
+</Info>
 
 Follow these steps to install Coinbase SDK in your project along with our Coinbase package. Check <a href="https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install">here</a> for more detailed information.
 
-- Note: Coinbase SDK is [not compatible with Expo Go](https://github.com/MobileWalletProtocol/wallet-mobile-sdk/issues/206)
+<Note>
+**Expo Compatibility:** Coinbase SDK works with [Expo Prebuild](https://docs.expo.dev/workflow/prebuild/) but not with Expo Go. You'll need to use `expo prebuild` to generate native code before building your app.
+</Note>
 
 1. Enable Expo Modules in your project running:
 
@@ -383,18 +388,8 @@ useEffect(() => {
 
 </Tabs>
 
+
 Check <a href="https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install">Coinbase docs</a> for more detailed information.
-
-</Tab>
-
-<Tab title="Expo">
-  Coinbase SDK doesn't support Expo Projects. More info
-  <a href="https://github.com/MobileWalletProtocol/wallet-mobile-sdk/issues/206#issuecomment-1468836345">
-    here
-  </a>
-</Tab>
-
-</Tabs>
 
 ## Examples
 
@@ -441,13 +436,22 @@ Want to see AppKit in action? Download our sample AppKit apps below and explore 
 
 ## Tutorial
 
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/R0edIW72fHo?si=KRMqX2AZZPDH7Xig"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
-></iframe>
+<div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0 }}>
+  <iframe 
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      maxWidth: '560px',
+      margin: '0 auto'
+    }}
+    src="https://www.youtube.com/embed/R0edIW72fHo?si=KRMqX2AZZPDH7Xig"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  />
+</div>

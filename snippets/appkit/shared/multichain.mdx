@@ -152,7 +152,7 @@ import type { AppKitNetwork } from "@reown/appkit/types";
 
 const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, solana, solanaTestnet, solanaDevnet]
 
-// 0. Get projectId from https://cloud.reown.com
+// 0. Get projectId from https://dashboard.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 1. Create the Wagmi adapter
@@ -196,7 +196,7 @@ import { mainnet, arbitrum, sepolia, bitcoin } from '@reown/appkit/networks'
 
 const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, bitcoin]
 
-// 0. Get projectId from https://cloud.reown.com
+// 0. Get projectId from https://dashboard.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 1. Create the Wagmi adapter
@@ -251,7 +251,7 @@ export const ethersAdapter = new EthersAdapter()
 // 1. Create Solana adapter
 const solanaWeb3JsAdapter = new SolanaAdapter()
 
-// 2. Get projectId from https://cloud.reown.com
+// 2. Get projectId from https://dashboard.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 3. Set up the metadata - Optional
@@ -291,7 +291,7 @@ export const ethersAdapter = new EthersAdapter()
 // 1. Create Solana adapter
 const solanaWeb3JsAdapter = new SolanaAdapter()
 
-// 2. Get projectId from https://cloud.reown.com
+// 2. Get projectId from https://dashboard.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 3. Set up the metadata - Optional
@@ -323,7 +323,7 @@ import { createAppKit } from "@reown/appkit";
 import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
 import { mainnet, arbitrum, sepolia } from "@reown/appkit/networks";
 
-// 1. Get projectId from https://cloud.reown.com
+// 1. Get projectId from https://dashboard.reown.com
 const projectId = "YOUR_PROJECT_ID";
 
 // 2. Set up the metadata - Optional
@@ -348,3 +348,31 @@ const modal = createAppKit({
 </Tab>
 
 </Tabs>
+
+## Solana Adapter Configuration
+
+The `SolanaAdapter` accepts configuration options to customize its behavior.
+
+### registerWalletStandard
+
+Controls whether WalletConnect is registered as an available WalletStandard wallet following the Solana Wallet Standard protocol. When enabled, users will see "WalletConnect" as a wallet choice alongside other Solana wallets like Phantom, Solflare, etc. when integrating wallet standard libraries
+
+```ts
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true,
+  wallets: [/* only show these specific wallets */]
+})
+```
+
+### wallets
+
+Array of custom Solana wallet adapters to include alongside the default WalletConnect functionality.
+
+```ts
+import { HuobiWalletAdapter } from '@solana/wallet-adapter-wallets'
+
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  registerWalletStandard: true,
+  wallets: [new HuobiWalletAdapter()]
+})
+```

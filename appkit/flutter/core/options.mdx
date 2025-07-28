@@ -27,7 +27,6 @@ final _appKitModal = ReownAppKitModal(
   //   showMainWallets: true, // OPTIONAL - true by default
   // ),
   // getBalanceFallback: () async { }, // OPTIONAL - null by default
-  // requiredNamespaces: {}, // OPTIONAL - null by default
   // optionalNamespaces: {}, // OPTIONAL - null by default
   // featuredWalletIds: {}, // OPTIONAL - null by default
   // includedWalletIds: {}, // OPTIONAL - null by default
@@ -44,7 +43,7 @@ final _appKitModal = ReownAppKitModal(
 
 ### enableAnalytics:
 
-Enable analytics to get more insights on your users activity within your [Reown Cloud's dashboard](https://cloud.reown.com)
+Enable analytics to get more insights on your users activity within your [Reown Dashboard](https://dashboard.reown.com)
 
 ### siweConfig:
 
@@ -60,13 +59,13 @@ Used to configure extra features such [Email and Social Login](../core/email).
 
 This callback method will be triggered if getting the balance from our blockchain API fails due to unsupported network. You may replace this with your own `getBalance()` method if desired.
 
-### requiredNamespaces: and optionalNamespaces:
+### optionalNamespaces:
 
 These are the set of namespaces that will be requested to the wallet you are connecting to.
 
-These values are optional and, in most cases, not required, as AppKit already defines all required and optional namespaces internally based on the configured networks (EVM and Solana by default).
+These values are optional and, in most cases, not required, as AppKit already defines all namespaces internally based on the [default configured networks](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/lib/modal/utils/public/appkit_modal_default_networks.dart) (EVM and Solana).
 
-However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) these are the object you should modify. See [Custom Networks](../core/custom-chains). section.
+However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) then this is the object you should modify. See [Custom Networks](../core/custom-chains) section.
 
 ### featuredWalletIds:
 

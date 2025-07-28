@@ -1,11 +1,15 @@
 ---
 title: Sign In With Ethereum
-sidebarTitle: One-Click Auth / SIWE
+sidebarTitle: One-Click Auth (SIWE)
 ---
-
 
 AppKit provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a new form of authentication that enables users to control their digital identity with their Ethereum account.
 SIWE is a standard also known as [EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361).
+
+<Warning>
+**SIWE is being migrated to SIWX.** We recommend using [SIWX (Sign In With X)](/appkit/authentication/siwx/default) for new implementations as it provides multichain authentication support. For existing SIWE implementations, see the [migration guide](/appkit/authentication/siwx/default#migrating-from-siwe-to-siwx).
+</Warning>
+
 
 ## One-Click Auth
 
@@ -411,7 +415,7 @@ const nextAuthSecret = process.env.NEXTAUTH_SECRET;
 if (!nextAuthSecret) {
   throw new Error("NEXTAUTH_SECRET is not set");
 }
-// Get your projectId on https://cloud.reown.com
+// Get your projectId on https://dashboard.reown.com
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 if (!projectId) {
   throw new Error("NEXT_PUBLIC_PROJECT_ID is not set");

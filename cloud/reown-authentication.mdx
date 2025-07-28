@@ -1,0 +1,68 @@
+---
+title: Reown Authentication
+---
+
+**Reown Authentication is our flagship SIWX (Sign In With X) solution** - the recommended way to handle user authentication for modern web3 applications. Built specifically for multi-chain environments, it abstracts away the complexity of validating wallets across **EVM, Solana, and Bitcoin networks**.
+
+## Getting Started
+
+Transform your web3 application's authentication experience today. Our [AppKit integration guide](/appkit/authentication/siwx/reown-authentication) will have you up and running in minutes.
+
+**Questions?** Reach out to our team - we're here to help you build the best authentication experience for your users.
+
+## Why Choose Reown Authentication?
+
+### **Production-Ready from Day One**
+
+Skip the complexity of building and maintaining your own authentication infrastructure. Our hosted solution is battle-tested, globally distributed via Cloudflare Workers, and includes built-in rate limiting.
+
+### **Multi-Chain Native**
+
+Reown Authentication supports all the networks supported by AppKit, with Reown Authentication you can seamlessly integrate with:
+
+- **EVM Networks**
+- **Solana Networks**
+- **Bitcoin Networks**
+
+### User Management Dashboard
+
+Monitor and understand your authenticated users through our comprehensive dashboard:
+
+- **Complete user registry** with chain addresses and connection history
+- **Geographic insights** showing where your users connect from
+- **Authentication method tracking** (wallet vs social login)
+- **Real-time connection analytics**
+
+<Frame caption="User Management">
+  ![User Management Dashboard](/images/assets/user-management.png)
+</Frame>
+
+<br />
+
+<Frame caption="User Insights">![Analytics Dashboard](/images/assets/insights.png)</Frame>
+
+## How it works
+
+Our SIWX API implements the [Sign In With X (SIWX)](https://chainagnostic.org/CAIPs/caip-122) standard - a chain-agnostic evolution of [Sign In With Ethereum (SIWE)](https://eips.ethereum.org/EIPS/eip-4361).
+
+1. Users sign a cryptographic message with their wallet
+2. Message signature is securely forwarded to our verification servers
+3. Upon successful validation, a JWT token is issued for your application
+4. Seamless integration with your existing authentication flows
+
+## Roadmap
+
+Reown Authentication is rapidly evolving with exciting features on the horizon:
+
+### Available Now
+
+- **User Management Dashboard** - Comprehensive analytics and user management
+- **Multi-chain wallet validation** - EVM, Solana, Bitcoin support
+- **Global infrastructure** - Cloudflare Workers distribution
+- **Custom User Metadata Storage** - Store additional user data
+
+### Coming Soon
+
+- **Email Collection** - Collect user emails during authentication
+- **Webhooks** - Real-time notifications for signup, login, and user events
+- **User Profiles** - Enhanced user identity management

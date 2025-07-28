@@ -24,6 +24,9 @@ open({
     toToken: 'ETH'
   }
 })
+
+// to open wallet send interface
+open({ view: 'WalletSend' })
 ```
 
 List of views you can select
@@ -60,6 +63,10 @@ List of views you can select
     {
       variable: { code: "OnRampProviders" },
       description: "On-Ramp main view",
+    },
+    {
+      variable: { code: "WalletSend" },
+      description: "Token sending interface that allows users to send tokens to another address",
     },
     {
       variable: { code: "Swap" },

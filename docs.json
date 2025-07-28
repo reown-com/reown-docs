@@ -48,6 +48,10 @@
     {
       "source": "/advanced/rpc-reference/:path*",
       "destination": "/advanced/multichain/rpc-reference/:path*"
+    },
+    {
+      "source": "/appkit/features/telegram-mini-apps",
+      "destination": "/appkit/integrations/telegram-mini-apps"
     }
   ],
   "contextual": {
@@ -81,28 +85,29 @@
                   "appkit/recipes/smart-sessions",
                   "appkit/recipes/troubleshooting"
                 ]
-              }
+              },
+              "appkit/recipes/gtm-checklist"
             ]
           },
           {
             "group": "Cloud",
             "pages": [
               {
-                "group": "Explorer",
+                "group": "WalletGuide",
                 "pages": [
-                  "cloud/explorer",
                   "cloud/explorer-submission",
                   {
-                    "group": "Explorer Chains",
+                    "group": "WalletGuide Chains",
                     "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
                   },
                   {
-                    "group": "Explorer Wallets",
+                    "group": "WalletGuide Wallets",
                     "pages": ["cloud/wallets/wallet-list"]
-                  }
+                  },
+                  "cloud/explorer"
                 ]
               },
-              "cloud/user-management",
+              "cloud/reown-authentication",
               "cloud/verify",
               "cloud/relay",
               "cloud/blockchain-api",
@@ -122,6 +127,9 @@
                       "advanced/multichain/rpc-reference/cosmos-rpc",
                       "advanced/multichain/rpc-reference/ethereum-rpc",
                       "advanced/multichain/rpc-reference/solana-rpc",
+                      "advanced/multichain/rpc-reference/sui-rpc",
+                      "advanced/multichain/rpc-reference/stacks-rpc",
+                      "advanced/multichain/rpc-reference/tron-rpc",
                       "advanced/multichain/rpc-reference/near-rpc",
                       "advanced/multichain/rpc-reference/starknet-rpc",
                       "advanced/multichain/rpc-reference/stellar-rpc",
@@ -182,7 +190,10 @@
               },
               {
                 "group": "Security",
-                "pages": ["advanced/security/content-security-policy"]
+                "pages": [
+                  "advanced/security/security-information",
+                  "advanced/security/content-security-policy"
+                ]
               },
               "advanced/push-server",
               "advanced/walletconnect-deprecations"
@@ -207,6 +218,12 @@
                 "pages": ["appkit/overview"]
               },
               {
+                "group": "Paid Plans",
+                "pages": [
+                  "appkit/paid-plans/enterprise"
+                ]
+              },
+              {
                 "group": "Features",
                     "pages": [
                       "appkit/features/index",
@@ -214,8 +231,8 @@
                       "appkit/features/onramp",
                       "appkit/features/multichain",
                       "appkit/features/smart-accounts",
+                      "appkit/features/smart-accounts-interaction",
                       "appkit/features/notifications",
-                      "appkit/features/telegram-mini-apps",
                       "appkit/features/sponsored-transactions",
                       "appkit/features/smart-sessions",
                       "appkit/features/chain-abstraction"
@@ -227,6 +244,13 @@
                       "appkit/authentication/socials",
                       "appkit/authentication/one-click-auth",
                       "appkit/authentication/siwx/default"
+                    ]
+                  },
+                  {
+                    "group": "Integrations",
+                    "pages": [
+                      "appkit/integrations/telegram-mini-apps",
+                      "appkit/integrations/farcaster-mini-apps"
                     ]
                   },
                   {
@@ -293,10 +317,15 @@
                     "group": "Migration",
                     "pages": [
                       "appkit/migration/index",
+                      "appkit/migration/from-privy-next",
                       "appkit/migration/from-rainbowkit-next",
                       "appkit/migration/from-connectkit-next",
                       "appkit/migration/from-anza-adapter-react"
                     ]
+                  },
+                  {
+                    "group": "Technical Reference",
+                    "pages": ["appkit/faq"]
                   }
                 ]
               },
@@ -312,15 +341,21 @@
                   "appkit/react/core/hooks",
                   "appkit/react/core/options",
                   "appkit/react/core/components",
-                  "appkit/react/core/socials",
                   "appkit/react/core/smart-accounts",
+                  "appkit/react/core/smart-accounts-interaction",
                   "appkit/react/core/custom-connectors",
                   "appkit/react/core/custom-networks",
-                  "appkit/react/core/siwe",
-                  "appkit/react/core/siwx",
                   "appkit/react/core/multichain",
                   "appkit/react/core/theming",
                   "appkit/react/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/react/core/socials",
+                  "appkit/react/core/siwe",
+                  "appkit/react/core/siwx"
                 ]
               },
               {
@@ -394,15 +429,21 @@
                   "appkit/next/core/hooks",
                   "appkit/next/core/options",
                   "appkit/next/core/components",
-                  "appkit/next/core/socials",
                   "appkit/next/core/smart-accounts",
+                  "appkit/next/core/smart-accounts-interaction",
                   "appkit/next/core/custom-connectors",
                   "appkit/next/core/custom-networks",
-                  "appkit/next/core/siwe",
-                  "appkit/next/core/siwx",
                   "appkit/next/core/multichain",
                   "appkit/next/core/theming",
                   "appkit/next/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/next/core/socials",
+                  "appkit/next/core/siwe",
+                  "appkit/next/core/siwx"
                 ]
               },
               {
@@ -476,15 +517,22 @@
                   "appkit/vue/core/composables",
                   "appkit/vue/core/options",
                   "appkit/vue/core/components",
-                  "appkit/vue/core/socials",
+                  "appkit/vue/core/wallet-buttons",
                   "appkit/vue/core/smart-accounts",
+                  "appkit/vue/core/smart-accounts-interaction",
                   "appkit/vue/core/custom-connectors",
                   "appkit/vue/core/custom-networks",
-                  "appkit/vue/core/siwe",
-                  "appkit/vue/core/siwx",
                   "appkit/vue/core/multichain",
                   "appkit/vue/core/theming",
                   "appkit/vue/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/vue/core/socials",
+                  "appkit/vue/core/siwe",
+                  "appkit/vue/core/siwx"
                 ]
               },
               {
@@ -557,15 +605,21 @@
                   "appkit/javascript/core/actions",
                   "appkit/javascript/core/options",
                   "appkit/javascript/core/components",
-                  "appkit/javascript/core/socials",
                   "appkit/javascript/core/smart-accounts",
+                  "appkit/javascript/core/smart-accounts-interaction",
                   "appkit/javascript/core/custom-connectors",
                   "appkit/javascript/core/custom-networks",
-                  "appkit/javascript/core/siwe",
-                  "appkit/javascript/core/siwx",
                   "appkit/javascript/core/multichain",
                   "appkit/javascript/core/theming",
                   "appkit/javascript/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/javascript/core/socials",
+                  "appkit/javascript/core/siwe",
+                  "appkit/javascript/core/siwx"
                 ]
               },
               {
@@ -627,6 +681,77 @@
             ]
           },
           {
+            "dropdown": "Svelte",
+            "icon": "S",
+            "description": "AppKit on Svelte",
+            "pages": [
+              {
+                "group": "Fundamentals",
+                "pages": [
+                  "appkit/svelte/core/installation",
+                  "appkit/svelte/core/actions",
+                  "appkit/svelte/core/options",
+                  "appkit/svelte/core/components",
+                  "appkit/svelte/core/smart-accounts",
+                  "appkit/svelte/core/custom-connectors",
+                  "appkit/svelte/core/custom-networks",
+                  "appkit/svelte/core/multichain",
+                  "appkit/svelte/core/theming",
+                  "appkit/svelte/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/svelte/core/socials"
+                ]
+              },
+              {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/svelte/transactions/onramp",
+                  "appkit/svelte/transactions/swaps"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "Nuxt",
+            "icon": "mountains",
+            "description": "AppKit on Nuxt",
+            "pages": [
+              {
+                "group": "Fundamentals",
+                "pages": [
+                  "appkit/nuxt/core/installation",
+                  "appkit/nuxt/core/options",
+                  "appkit/nuxt/core/components",
+                  "appkit/nuxt/core/composables",
+                  "appkit/nuxt/core/wallet-buttons",
+                  "appkit/nuxt/core/smart-accounts",
+                  "appkit/nuxt/core/custom-connectors",
+                  "appkit/nuxt/core/custom-networks",
+                  "appkit/nuxt/core/multichain",
+                  "appkit/nuxt/core/theming",
+                  "appkit/nuxt/core/resources"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/nuxt/core/socials"
+                ]
+              },
+              {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/nuxt/transactions/onramp",
+                  "appkit/nuxt/transactions/swaps"
+                ]
+              }
+            ]
+          },
+          {
             "dropdown": "React Native",
             "icon": "mobile-screen-button",
             "description": "AppKit on React Native",
@@ -638,12 +763,24 @@
                   "appkit/react-native/core/options",
                   "appkit/react-native/core/hooks",
                   "appkit/react-native/core/components",
-                  "appkit/react-native/core/email",
                   "appkit/react-native/core/smart-accounts",
-                  "appkit/react-native/core/siwe",
                   "appkit/react-native/core/link-mode",
                   "appkit/react-native/core/theming",
                   "appkit/react-native/core/resources"
+                ]
+              },
+              {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/react-native/transactions/swaps",
+                  "appkit/react-native/transactions/onramp"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/react-native/core/email",
+                  "appkit/react-native/core/siwe"
                 ]
               },
               {
@@ -695,13 +832,18 @@
                   "appkit/flutter/core/installation",
                   "appkit/flutter/core/usage",
                   "appkit/flutter/core/options",
-                  "appkit/flutter/core/email",
-                  "appkit/flutter/core/siwe",
                   "appkit/flutter/core/link-mode",
                   "appkit/flutter/core/actions",
                   "appkit/flutter/core/events",
                   "appkit/flutter/core/theming",
                   "appkit/flutter/core/custom-chains"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/flutter/core/email",
+                  "appkit/flutter/core/siwe"
                 ]
               },
               {
@@ -727,9 +869,14 @@
                   "appkit/android/core/usage",
                   "appkit/android/core/options",
                   "appkit/android/core/actions",
-                  "appkit/android/core/one-click-auth",
                   "appkit/android/core/components",
                   "appkit/android/core/theming"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/android/core/one-click-auth"
                 ]
               },
               {
@@ -755,8 +902,13 @@
                   "appkit/ios/core/usage",
                   "appkit/ios/core/options",
                   "appkit/ios/core/actions",
-                  "appkit/ios/core/one-click-auth",
                   "appkit/ios/core/custom-chains"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/ios/core/one-click-auth"
                 ]
               },
               {
@@ -783,10 +935,15 @@
                   "appkit/unity/core/options",
                   "appkit/unity/core/actions",
                   "appkit/unity/core/events",
-                  "appkit/unity/core/siwe",
                   "appkit/unity/core/customization",
-                  "appkit/unity/core/socials",
                   "appkit/unity/core/smart-accounts"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/unity/core/socials",
+                  "appkit/unity/core/siwe"
                 ]
               },
               {
@@ -831,6 +988,7 @@
                   {
                     "group": "Upgrade",
                     "pages": [
+                      "walletkit/upgrade/staying-up-to-date",
                       {
                         "group": "Web3Wallet to Reown WalletKit",
                         "pages": [
@@ -1084,8 +1242,8 @@
   "navbar": {
     "links": [
       {
-        "label": "Cloud Dashboard",
-        "href": "https://cloud.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks&_gl=1*9m24on*_ga*ODM2NjA0NjY2LjE3NDI0MzkzNzM.*_ga_X117BZWK4X*MTc0MjQzOTM3My4xLjEuMTc0MjQzOTkzNi4wLjAuMA.."
+        "label": "Reown Dashboard",
+        "href": "https://dashboard.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks&_gl=1*9m24on*_ga*ODM2NjA0NjY2LjE3NDI0MzkzNzM.*_ga_X117BZWK4X*MTc0MjQzOTM3My4xLjEuMTc0MjQzOTkzNi4wLjAuMA.."
       }
     ],
     "primary": {

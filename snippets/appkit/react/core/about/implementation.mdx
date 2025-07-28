@@ -1,0 +1,122 @@
+For a quick integration, you can use the `createAppKit` function with a unified configuration. 
+This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana,
+ so you no longer need to manually configure each one individually. 
+ Simply pass the common parameters such as `projectId`, `chains`, `metadata` or check others config in the [Options section](options). 
+
+This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
+
+We recommend creating a config file to establish a singleton instance for the Provider and AppKit:
+
+```tsx
+import type { AppKitNetwork } from '@reown/appkit/networks'
+import type { InferredCaipNetwork } from '@reown/appkit-common'
+import UniversalProvider from '@walletconnect/universal-provider'
+import { AppKit, createAppKit } from '@reown/appkit/core'
+
+// Get projectId from https://dashboard.reown.com
+export const projectId = import.meta.env.VITE_PROJECT_ID || "b56e18d47c72ab683b10814fe9495694" // this is a public projectId only to use on localhost
+
+if (!projectId) {
+  throw new Error('Project ID is not defined')
+}
+
+// you can configure your own network
+const sui: InferredCaipNetwork = {
+  id: 784,
+  chainNamespace: 'sui' as const,
+  caipNetworkId: 'sui:mainnet',
+  name: 'Sui',
+  nativeCurrency: { name: 'SUI', symbol: 'SUI', decimals: 9 },
+  rpcUrls: { default: { http: ['https://fullnode.mainnet.sui.io:443'] } }
+}
+
+export const networks = [sui] as [AppKitNetwork, ...AppKitNetwork[]]
+
+let provider: UniversalProvider | undefined
+let modal: AppKit | undefined
+
+export async function initializeProvider() {
+  if (!provider) {
+    provider = await UniversalProvider.init(
+      { 
+        projectId, 
+        metadata: {
+          name: "WalletConnect x Sui",
+          description: "Sui integration with WalletConnect's Universal Provider",
+          url: "https://yourdomain.com/",
+          icons: ["https://avatars.githubusercontent.com/u/37784886"],
+        }
+      })
+  }
+  return provider
+}
+
+export function initializeModal(universalProvider?: UniversalProvider) {
+  if (!modal && universalProvider) {
+    modal = createAppKit({
+      projectId,
+      networks,
+      universalProvider: universalProvider as any, // Type cast to fix version mismatch
+      manualWCControl: true,
+      features: {
+        analytics: true // Optional - defaults to your Cloud configuration
+      }
+    })
+  }
+  return modal
+}
+```
+
+In de App.tsx file you can add :
+
+```tsx
+import { useState, useEffect } from 'react'
+import { initializeProvider, initializeModal } from './config' // previous config file
+import UniversalProvider from '@walletconnect/universal-provider'
+
+export function App() {
+  const [provider, setProvider] = useState<UniversalProvider>();
+  const [session, setSession] = useState<any>();
+
+  
+  // Initialize the Provider and AppKit on component mount, and check for existing session
+  useEffect(() => {
+    const init = async () => {
+      const dataProvider = await initializeProvider();
+      setProvider(dataProvider);
+      initializeModal(dataProvider);
+
+      if (dataProvider.session) { // check if there is a session
+        setSession(dataProvider.session);
+      }
+    }
+    init()
+  }, [])
+
+
+  useEffect(() => {
+    // Handler for when WalletConnect generates a connection URI
+    // Opens the AppKit modal with the URI and shows the connecting view
+    const handleDisplayUri = (uri: string) => {
+      const modal = initializeModal(provider)
+      modal?.open({ uri, view: 'ConnectingWalletConnectBasic' })
+    }
+
+    // Handler for when a wallet successfully connects
+    // Updates the session state and closes the modal
+    const handleConnect = async (session: any) => {
+      setSession(session.session);
+      const modal = initializeModal(provider)
+      await modal?.close()
+    }
+
+    // Subscribe to WalletConnect events
+    provider?.on('display_uri', handleDisplayUri) // Listen for connection URI
+    provider?.on('connect', handleConnect) // Listen for successful connections
+
+    return () => {
+      provider?.removeListener('connect', handleConnect)
+      provider?.removeListener('display_uri', handleDisplayUri)
+    }
+  }, [provider])
+```

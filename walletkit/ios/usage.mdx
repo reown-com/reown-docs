@@ -10,7 +10,7 @@ This section provides instructions on how to initialize the WalletKit client, ap
 
 Links to sections on this page. Some sections are platform specific and are only visible when the platform is selected. To view a summary of useful platform specific topics, check out **Extra (Platform Specific)** under this section.
 
-**[Initialization](#initialization)**: Creating a new WalletKit instance and initializing it with a projectId from [Cloud](https://cloud.reown.com).
+**[Initialization](#initialization)**: Creating a new WalletKit instance and initializing it with a projectId from [Dashboard](https://dashboard.reown.com).
 
 **Session**: Connection between a dapp and a wallet.
 
@@ -273,7 +273,7 @@ Session proposal is a handshake sent by a dapp and it's purpose is to define a s
 
 `VerifyContext` provides a domain verification information about `Session.Proposal` and `Request`. It consists of origin of a Dapp from where the request has been sent, validation enum that says whether origin is **unknown**, **valid** or **invalid** and verify URL server.
 
-To enable or disable verification find the **Verify SDK** toggle in your project [cloud](https://cloud.reown.com).
+To enable or disable verification find the **Verify SDK** toggle in your project [dashboard](https://dashboard.reown.com).
 
 ```swift
 public struct VerifyContext: Equatable, Hashable {

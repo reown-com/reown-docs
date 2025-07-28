@@ -20,7 +20,12 @@ import SolanaPrograms from "/snippets/appkit/react/solana/about/programs.mdx";
 import BitcoinImplementation from "/snippets/appkit/react/bitcoin/about/implementation.mdx";
 import BitcoinModal from "/snippets/appkit/react/bitcoin/about/triggermodal.mdx";
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
+import CoreImplementation from "/snippets/appkit/react/core/about/implementation.mdx";
+import CoreModal from "/snippets/appkit/react/core/about/triggermodal.mdx";
+
+AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, 
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
+
 Choose one of these to get started.
 
 ## Installation
@@ -57,7 +62,7 @@ After running the command, you will be prompted to confirm the installation of t
 
 After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
 
-To fully configure your project, please obtain a `projectId` from the Reown Cloud Dashboard and update your project accordingly.
+To fully configure your project, please obtain a `projectId` from the Reown Dashboard and update your project accordingly.
 
 **Refer to [this section](#cloud-configuration) for more information.**
 
@@ -187,11 +192,34 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 </CodeGroup>
 
 </Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @walletconnect/universal-provider @reown/appkit-common ethers
+```
+
+```bash Yarn
+yarn add @reown/appkit @walletconnect/universal-provider @reown/appkit-common ethers
+```
+
+```bash Bun
+bun add @reown/appkit @walletconnect/universal-provider @reown/appkit-common ethers
+```
+
+```bash pnpm
+pnpm add @reown/appkit @walletconnect/universal-provider @reown/appkit-common ethers
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 ## Cloud Configuration
 
-Create a new project on reown Cloud at https://cloud.reown.com and obtain a new project ID.
+Create a new project on Reown Dashboard at https://dashboard.reown.com and obtain a new project ID.
 
 <CloudBanner />
 
@@ -238,6 +266,14 @@ Check the React Bitcoin example
 <BitcoinImplementation />
 
 </Tab>
+<Tab title="Others networks (AppKit Core)">
+<Card title="AppKit Core Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-core-universal-provider-sui">
+Check the React AppKit Core example for Sui
+</Card>
+
+<CoreImplementation />
+
+</Tab>
 </Tabs>
 
 ## Trigger the modal
@@ -266,6 +302,11 @@ Check the React Bitcoin example
 <Tab title="Bitcoin">
 
 <BitcoinModal />
+
+</Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CoreModal />
 
 </Tab>
 </Tabs>
@@ -344,13 +385,22 @@ function Components() {
 
 ## Video Tutorial
 
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/lxTGqXh7LiA?si=1MQMbtqQtM6KSfE0"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
-></iframe>
+<div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0 }}>
+  <iframe 
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      maxWidth: '560px',
+      margin: '0 auto'
+    }}
+    src="https://www.youtube.com/embed/lxTGqXh7LiA?si=1MQMbtqQtM6KSfE0"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  />
+</div>
