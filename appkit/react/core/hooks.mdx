@@ -237,6 +237,49 @@ AppKit supports the [top 32 wallets](https://github.com/reown-com/appkit/blob/ma
 | Social logins | google, github, apple, facebook, x, discord and farcaster                                                                                                                                                                                                                                                  |
 | Email         | email                                                                                                                                                                                                                                                                                                      |
 
+#### Enhanced Multichain Examples
+
+The `useAppKitWallet` hook now supports enhanced multichain functionality with the namespace prop:
+
+```tsx
+import { useAppKitWallet } from '@reown/appkit-wallet-button/react'
+
+// Multiple wallet connections for different chains
+export function MultichainWalletConnector() {
+  // Ethereum/EVM connection
+  const { connect: connectEVM } = useAppKitWallet({
+    namespace: 'eip155',
+    onSuccess: (address) => console.log('Connected to EVM:', address)
+  })
+
+  // Solana connection
+  const { connect: connectSolana } = useAppKitWallet({
+    namespace: 'solana',
+    onSuccess: (address) => console.log('Connected to Solana:', address)
+  })
+
+  // Bitcoin connection
+  const { connect: connectBitcoin } = useAppKitWallet({
+    namespace: 'bip122',
+    onSuccess: (address) => console.log('Connected to Bitcoin:', address)
+  })
+
+  return (
+    <div>
+      <button onClick={() => connectEVM('metamask')}>
+        Connect MetaMask (EVM)
+      </button>
+      <button onClick={() => connectSolana('phantom')}>
+        Connect Phantom (Solana)
+      </button>
+      <button onClick={() => connectBitcoin('leather')}>
+        Connect Leather (Bitcoin)
+      </button>
+    </div>
+  )
+}
+```
+
 #### Use Cases
 
 `useAppKitWallet` enables:
@@ -268,24 +311,38 @@ AppKit supports the [top 32 wallets](https://github.com/reown-com/appkit/blob/ma
 
 #### Multichain Examples
 
+#### Integration with React Components
+
+The `useAppKitWallet` hook works seamlessly with the new React components:
+
 ```tsx
-// Connect to Ethereum/EVM chains
-const { connect: connectEVM } = useAppKitWallet({
-  namespace: 'eip155',
-  onSuccess: (address) => console.log('Connected to EVM:', address)
-})
+import { useAppKitWallet } from '@reown/appkit-wallet-button/react'
+import { AppKitButton, AppKitNetworkButton } from '@reown/appkit/react'
 
-// Connect to Solana
-const { connect: connectSolana } = useAppKitWallet({
-  namespace: 'solana',
-  onSuccess: (address) => console.log('Connected to Solana:', address)
-})
+export function WalletInterface() {
+  const { isReady, isPending, connect } = useAppKitWallet({
+    namespace: 'eip155',
+    onSuccess: (data) => {
+      console.log('Wallet connected:', data)
+    }
+  })
 
-// Connect to Bitcoin
-const { connect: connectBitcoin } = useAppKitWallet({
-  namespace: 'bip122',
-  onSuccess: (address) => console.log('Connected to Bitcoin:', address)
-})
+  return (
+    <div>
+      {/* React components for UI */}
+      <AppKitButton />
+      <AppKitNetworkButton />
+      
+      {/* Programmatic wallet connections */}
+      <button 
+        onClick={() => connect('metamask')}
+        disabled={!isReady || isPending}
+      >
+        {isPending ? 'Connecting...' : 'Connect MetaMask'}
+      </button>
+    </div>
+  )
+}
 
 // Usage
 <Button onClick={() => connectEVM("metamask")}>Connect MetaMask (EVM)</Button>
