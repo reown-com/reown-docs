@@ -70,10 +70,13 @@ For a complete list of supported networks and assets across different exchanges 
 
 ## Assets Configuration
 
-For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
+For the moment, AppKit Pay has pre-configured these assets: 
+- baseETH, baseSepoliaETH, and baseUSDC
+- ethereumUSDC, optimismUSDC, arbitrumUSDC, polygonUSDC and solanaUSDC
+- ethereumUSDT, optimismUSDT, arbitrumUSDT, polygonUSDT and solanaUSDT
 
 ```ts
-import { baseETH, baseSepoliaETH, baseUSDC } from '@reown/appkit-pay' 
+import { baseETH } from '@reown/appkit-pay' 
 ```
 
 For custom assets, you can create a paymentAsset object with all the information:
@@ -90,6 +93,22 @@ const paymentAssetDetails = {
     }
 };
 ```
+
+## Test the complete exchange flow
+
+To test the entire exchange process, we've implemented a dedicated test scenario that activates when using the token `baseSepoliaETH`.
+
+<img src="/images/test-exchange.png" alt="Test Exchange"  />
+
+Upon selecting this test exchange, you will be redirected to a result modal where you can choose between two paths:
+
+- **Complete Successfully** – Simulates a successful exchange outcome.
+
+- **Trigger an Error** – Simulates a failed exchange with an error response.
+
+<img src="/images/test-exchange2.png" alt="Test Exchange Result"  />
+
+This setup allows you to safely verify both positive and negative exchange flows in a controlled environment.
 
 ## Hooks
 
