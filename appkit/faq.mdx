@@ -136,6 +136,23 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     It cannot be lazily initialized and then torn down for re-initialization. 
     This means you must pass in all the networks you plan to support during the initial setup.
   </Accordion>
+
+  <Accordion title="Error Codes">
+    Below is a list of error codes you may encounter when using AppKit, along with their descriptions and recommended actions:
+
+    | Code | Message | Action |
+    |------|---------|---------|
+    | APKT001 | The specified network is not recognized. | Ensure the network is included in the `networks` array of your `createAppKit` configuration. |
+    | APKT002 | The origin is not in your allow list. | Update your allowed domains at https://dashboard.reown.com. |
+    | APKT003 | Failed to load the embedded wallet. | Check your network connection and try again. Contact support if the issue persists. |
+    | APKT004 | The request to the embedded wallet timed out. | Check your network connection and try again. Contact support if the issue persists. |
+    | APKT005 | Embedded wallet load failed. | Verify your domain in https://dashboard.reown.com. |
+    | APKT006 | Your session is invalid or expired. | Check your system's date and time settings, then reconnect. |
+    | APKT007 | The specified project ID is invalid. | Visit https://dashboard.reown.com to obtain a valid project ID. |
+    | APKT008 | No project ID is configured. | Create and configure a project ID at https://dashboard.reown.com. |
+    | APKT009 | Unable to fetch App Configuration. | Check your network connection and try again. Contact support if the issue persists. |
+    | APKT010 | You have been rate limited while retrieving App Configuration. | Wait a few minutes and try again. Contact support if the issue persists. |
+  </Accordion>
 </AccordionGroup>
 
 ## Support
