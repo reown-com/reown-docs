@@ -2,11 +2,11 @@
 title: On-Ramp
 ---
 
-Enable users to purchase cryptocurrency with traditional currency (fiat) directly within your React Native app using AppKit's On-Ramp feature. This integration provides secure access to over 100 cryptocurrencies, allowing users to purchase tokens to support in-app activities and transactions across multiple blockchain networks.
+AppKit’s On-Ramp feature lets your users easily buy crypto with fiat—right inside your React Native app. With support for 100+ cryptocurrencies and global payment options, it helps users start transacting quickly and securely across multiple chains.
 
 ## Configuration
 
-The On-Ramp feature is enabled by default in AppKit. Configure it in your application as follows:
+The On-Ramp feature is enabled by default. To customize or disable it:
 
 ```typescript {4-6}
 createAppKit({
@@ -18,13 +18,13 @@ createAppKit({
 });
 ```
 
-To disable the On-Ramp feature, set `onramp: false` in the features configuration.
+Set `onramp: false` to disable the feature.
 
 ## Usage
 
-### Opening the On-Ramp View
+### Open the On-Ramp View
 
-Programmatically open the On-Ramp view using the `useAppKit` hook:
+Use the `useAppKit` hook to trigger the On-Ramp view programmatically:
 
 ```typescript {2, 5}
 function OnRampButton() {
@@ -43,17 +43,14 @@ function OnRampButton() {
 }
 ```
 
-### User Flow
+### What Users Can Expect
 
-1. When users tap the "Buy Crypto" button or select it from the account view, the On-Ramp interface opens.
-
-2. In the On-Ramp interface, users can:
-   - Select their preferred fiat currency (traditional currency like USD, EUR)
-   - Choose the cryptocurrency to purchase
-   - Enter the purchase amount
+1. When users tap “Buy Crypto”, they’re guided to a clean, intuitive interface.
+2. They can:
+   - Choose their local fiat currency
+   - Pick the token they want to buy
+   - Enter the desired amount
    - Select a payment method (credit card, bank transfer, etc.)
-   - Review transaction details including fees and exchange rates
-
-3. After reviewing the transaction details, users are redirected to the payment provider's platform to complete the purchase.
-
-4. Once the transaction is confirmed, it will be processed and the cryptocurrency will be added to their wallet.
+   - Review all fees and exchange rates transparently
+3. After confirming, they’re securely redirected to the provider to complete the purchase.
+4. Once done, the crypto lands in their wallet—automatically.
