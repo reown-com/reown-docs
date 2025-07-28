@@ -56,7 +56,8 @@ Below are the detailed configuration options you can pass to `createAppKit`:
         *   `universal`: (String) Your app's universal link URL (e.g., `'https://yourdapp.com/connect'`).
 
 ```typescript
-{
+createAppKit({
+  //...
   metadata: {
     name: 'My Awesome dApp',
     description: 'Connecting you to the decentralized web!',
@@ -67,7 +68,7 @@ Below are the detailed configuration options you can pass to `createAppKit`:
       universal: 'https://myapp.com/walletconnect' // Or your specific universal link path
     }
   }
-}
+})
 ```
 
 ### `networks`
@@ -126,9 +127,10 @@ Below are the detailed configuration options you can pass to `createAppKit`:
 **Final Configuration Example:**
 
 ```typescript
-{
+createAppKit({
+  //...
   networks: configuredNetworks // Use one of the methods above to define this array
-}
+})
 ```
 
 ### `adapters`
@@ -143,13 +145,14 @@ import { SolanaAdapter } from '@reown/appkit-solana-react-native';
 
 const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defined
 
-{
+createAppKit({
+  //...
   adapters: [
     new EthersAdapter({ projectId }),
     new SolanaAdapter({ projectId }),
     // new BitcoinAdapter({ projectId /* ... other bitcoin adapter config ... */ })
   ]
-}
+})
 ```
 
 ### `defaultNetwork`
@@ -157,10 +160,11 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** The network that AppKit should attempt to connect to by default, or highlight initially if no prior session exists. This object must be one of the networks defined in your `networks` array.
 
 ```typescript
-{
+createAppKit({
+  //...
   // Assuming ethereumMainnet is a valid AppKitNetwork object defined in your 'networks' array
   defaultNetwork: ethereumMainnet
-}
+})
 ```
 
 ## Modal & Wallet Display Customization
@@ -170,7 +174,8 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** Allows you to add custom wallet entries to the connection modal. Each object in the array defines a wallet not available through WalletConnect's default registry. Refer to `WalletEntry` type for exact properties.
 
 ```typescript
-{
+createAppKit({
+  // ...
   customWallets: [
     {
       id: "myCustomWallet",
@@ -184,7 +189,7 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
       play_store: "play_store", // Optional
     },
   ]
-}
+})
 ```
 
 ### `featuredWalletIds`
@@ -192,13 +197,13 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** Select wallets that are going to be shown on the modal's main view. Array of wallet IDs defined will be prioritized (order is respected). These wallets will also show up first in `All Wallets` view. You can find the wallets ids in [WalletGuide](https://walletguide.walletconnect.network/).
 
 ```ts 
-// Within createAppKit call
-{
+createAppKit({
+  //...
   featuredWalletIds: [
     "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369", // Rainbow
     "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
   ]
-}
+})
 ```
 
 ### `includeWalletIds`
@@ -206,12 +211,13 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** If provided, only wallets whose IDs are in this array will be shown in the modal. This effectively creates an allowlist, overriding the default WalletConnect registry listings.
 
 ```typescript
-{
+createAppKit({
+  //...
   includeWalletIds: [
     "c57ca95b47569778a828d19178114f2db125b25b778adf5cba72bd778e231769", // Example: MetaMask
     // ... only include these wallets
   ]
-}
+})
 ```
 
 ### `excludeWalletIds`
@@ -219,11 +225,12 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** An array of wallet IDs to be hidden from the modal. This allows you to remove specific wallets from the default WalletConnect registry listings.
 
 ```typescript
-{
+createAppKit({
+  //...
   excludeWalletIds: [
     "fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa", // Example: Coinbase Wallet (if you wish to exclude it)
   ]
-}
+})
 ```
 
 ## Theming & UI Customization
@@ -233,9 +240,10 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** Sets the initial theme for the AppKit modal. Defaults to the system theme or 'light' if system theme is unavailable.
 
 ```typescript
-{
+createAppKit({
+  //...
   themeMode: 'dark'
-}
+})
 ```
 
 ### `themeVariables`
@@ -243,11 +251,12 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** Allows you to customize the accent color of the AppKit modal. Refer to the Theming documentation for details.
 
 ```typescript
-{
+createAppKit({
+  //...
   themeVariables: {
     'accent': '#4E88F7'
   }
-}
+})
 ```
 
 ### `networkImages` (Formerly `chainImages`)
@@ -255,12 +264,13 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** An object to provide custom image URLs for network icons in the modal. Keys should be network IDs (e.g., 'eip155:1', 'solana:mainnet').
 
 ```typescript
-{
+createAppKit({
+  //...
   networkImages: {
     'eip155:1': 'https://example.com/images/ethereum.png',
     'solana:mainnet': 'https://example.com/images/solana.png'
   }
-}
+})
 ```
 
 ## Token Balance Configuration
@@ -270,7 +280,8 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 *   **Description:** An object to configure specific tokens for which AppKit should display balances. The keys are CAIP-2 network IDs (e.g., 'eip155:1' for Ethereum Mainnet for a specific Solana network instance if required by ID structure). The value for each network ID is an object containing the token's contract `address` on that network.
 
 ```typescript
-{
+createAppKit({
+  //...
   tokens: {
     'eip155:1': { // Ethereum Mainnet
       address: '0xdAC17F958D2ee523a2206206994597C13D831ec7' // USDT on Ethereum
@@ -280,7 +291,7 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
     }
     // Add other tokens for other configured networks as needed
   }
-}
+})
 ```
 
 ## Utility & Advanced Options
@@ -294,15 +305,15 @@ const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defi
 ```typescript
 import * as Clipboard from 'expo-clipboard'; // or from '@react-native-clipboard/clipboard'
 
-{
+createAppKit({
+  //...
   clipboardClient: {
     setString: async (value: string) => {
       await Clipboard.setStringAsync(value);
-      // Optionally, add user feedback e.g., a toast message
       // console.log('Copied to clipboard!');
     }
   }
-}
+})
 ```
 
 ### `enableAnalytics`
@@ -311,9 +322,10 @@ import * as Clipboard from 'expo-clipboard'; // or from '@react-native-clipboard
 *   **Description:** Set to `true` to enable analytics and gather insights on user activity within your [Reown Cloud dashboard](https://cloud.reown.com).
 
 ```typescript
-{
+createAppKit({
+  //...
   enableAnalytics: true
-}
+})
 ```
 
 ### `debug`
@@ -322,34 +334,33 @@ import * as Clipboard from 'expo-clipboard'; // or from '@react-native-clipboard
 *   **Description:** Set to `true` to enable debug mode. This may show additional UI alerts or console logs helpful for development and troubleshooting.
 
 ```typescript
-{
+createAppKit({
+  //...
   debug: true
-}
+})
 ```
 
 ## Feature Flags
-<Warning>
-  Features not available yet
-</Warning>
 
 ### `features`
 *   **Type:** `Object` (Optional)
 *   **Description:** An object to toggle additional AppKit features on or off.
 
-    *   `swaps`: (Boolean, Optional) Enable/disable the token swap feature. Default: `true` (Verify default).
-    *   `email`: (Boolean, Optional) Enable/disable email-based login/wallet functionality. Default: `true` (Verify default).
-    *   `socials`: (Array of Strings or Boolean, Optional) Configure social login options. Provide an array like `["x", "discord", "apple"]` to enable specific platforms. Set to `false` or an empty array `[]` to disable all social logins. Default: All available socials enabled (Verify default).
-    *   `emailShowWallets`: (Boolean, Optional) If `email` login is enabled, this controls whether wallet options are shown on the initial connect screen alongside email. If `false` and socials are also enabled, a button might direct to a separate screen for wallet options. Default: `true` (Verify default).
+    *   `swaps`: (Boolean, Optional) Enable/disable the token swap feature. Default: `true`.
+    *   `onramp`: (Boolean, Optional) Enable/disable the onramp feature. Default: `true`.
+    *   `socials`: (Array of Strings or Boolean, Optional) Configure email and social login options. Provide an array like `["google", "x", "discord", "apple"]` to enable specific platforms. Set to `false` or an empty array `[]` to disable all social logins. Default: All available socials enabled.
+    *   `showWallets`: (Boolean, Optional) If social login is enabled, this controls whether wallet options are shown on the initial connect screen alongside social options. If `false`, a button will redirect to a separate screen for wallet options. Default: `true`.
 
 ```typescript
-{
+createAppKit({
+  //...
   features: {
-    swaps: false, // Disable swaps
-    email: true,
-    socials: ["x", "discord"], // Only enable X and Discord
-    emailShowWallets: true
+    swaps: true,
+    onramp: true,
+    socials: ['email', 'google', 'x', 'discord', 'apple', 'facebook', 'github', 'farcaster'],
+    showWallets: true
   }
-}
+})
 ```
 
 *This list may not be exhaustive. Always refer to the arguments of the `createAppKit` function and associated type definitions in the source code for the most up-to-date and complete list of options and their structures.*

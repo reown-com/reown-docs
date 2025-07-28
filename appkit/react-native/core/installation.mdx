@@ -609,7 +609,7 @@ To enable Phantom Wallet, you'll need to import the `PhantomConnector` from `@re
 
 Here's how to update your `AppKitConfig.ts` file, using the example from the [Implementation](#1-initialize-appkit) section as a base:
 
-```typescript {5,30-40}
+```typescript {5,17-19,30-33}
 // src/AppKitConfig.ts (or wherever you prefer to configure it)
 import "@walletconnect/react-native-compat";
 import { createAppKit, bitcoin, solana, type AppKitNetwork } from '@reown/appkit-react-native';
@@ -636,21 +636,14 @@ const bitcoinAdapter = new BitcoinAdapter({
 
 export const appKit = createAppKit({
   projectId,
+  metadata,
   networks: [mainnet, polygon, solana, bitcoin],
   defaultNetwork: mainnet, // Optional: set a default network
   adapters: [ethersAdapter, solanaAdapter, bitcoinAdapter],
   extraConnectors: [
     new PhantomConnector({ cluster: 'mainnet-beta' }) // Or 'devnet', 'testnet'
   ],
-  customWallets: [
-    {
-      id: 'phantom-wallet',
-      name: 'Phantom',
-      image_url: 'https://avatars.githubusercontent.com/u/124594793?s=200&v=4',
-      mobile_link: 'phantom://',
-    }
-  ]
-  // Other AppKit options (e.g., metadata for your dApp)
+  //...
 });
 ```
 
