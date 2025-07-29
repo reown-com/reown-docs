@@ -89,8 +89,9 @@ Install the adapters for the chains you intend to support:
 
         ```typescript
         // src/AppKitConfig.ts (or wherever you configure AppKit)
-        import "@walletconnect/react-native-compat";
-        import { createAppKit } from '@reown/appkit-react-native'; // Assuming other AppKit imports are present
+        import "@walletconnect/react-native-compat"; // add this import before using appkit
+
+        import { createAppKit } from '@reown/appkit-react-native';
         import { WagmiAdapter } from '@reown/appkit-wagmi-react-native';
         import { http, createConfig as createWagmiCoreConfig } from 'wagmi';
         import { mainnet, sepolia } from 'wagmi/chains'; // Or other chains you need
@@ -150,10 +151,13 @@ Install the adapters for the chains you intend to support:
   <Tab title="Solana">
     <p>For Solana, install the Solana adapter:</p>
     ```bash
-    npx expo install @reown/appkit-solana-react-native@alpha
+    npx expo install @reown/appkit-solana-react-native@alpha text-encoding
     ```
     <p>To initialize the Solana adapter:</p>
     ```typescript
+    import 'text-encoding'; // needed for @solana/web3.js to work
+    import '@walletconnect/react-native-compat';
+    
     import { SolanaAdapter } from '@reown/appkit-solana-react-native';
 
     const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
