@@ -841,8 +841,7 @@
                       "walletkit/features/verify",
                       "walletkit/features/link-mode",
                       "walletkit/features/one-click-auth",
-                      "walletkit/features/chain-abstraction",
-                      "walletkit/features/notifications"
+                      "walletkit/features/chain-abstraction"
                     ]
                   },
                   {
