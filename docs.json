@@ -999,21 +999,6 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  {
-                    "group": "Notify",
-                    "pages": [
-                      "walletkit/react-native/notifications/notify/overview",
-                      "walletkit/react-native/notifications/notify/installation",
-                      "walletkit/react-native/notifications/notify/usage",
-                      "walletkit/react-native/notifications/notify/spam-protection"
-                    ]
-                  },
-                  "walletkit/react-native/notifications/push"
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "walletkit/react-native/cloud/explorer-submission",
