@@ -379,33 +379,6 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/react/notifications/overview",
-                  "appkit/react/notifications/cloud-setup",
-                  "appkit/react/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/react/notifications/frontend-integration/usage",
-                      "appkit/react/notifications/frontend-integration/api",
-                      "appkit/react/notifications/frontend-integration/examples",
-                      "appkit/react/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/react/notifications/backend-integration",
-                  "appkit/react/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/react/notifications/authorization-signatures/overview",
-                      "appkit/react/notifications/authorization-signatures/this-app",
-                      "appkit/react/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "appkit/react/cloud/verify",
