@@ -501,33 +501,6 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/vue/notifications/overview",
-                  "appkit/vue/notifications/cloud-setup",
-                  "appkit/vue/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/vue/notifications/frontend-integration/usage",
-                      "appkit/vue/notifications/frontend-integration/api",
-                      "appkit/vue/notifications/frontend-integration/examples",
-                      "appkit/vue/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/vue/notifications/backend-integration",
-                  "appkit/vue/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/vue/notifications/authorization-signatures/overview",
-                      "appkit/vue/notifications/authorization-signatures/this-app",
-                      "appkit/vue/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "appkit/vue/cloud/verify",
