@@ -232,7 +232,6 @@
                       "appkit/features/multichain",
                       "appkit/features/smart-accounts",
                       "appkit/features/smart-accounts-interaction",
-                      "appkit/features/notifications",
                       "appkit/features/sponsored-transactions",
                       "appkit/features/smart-sessions",
                       "appkit/features/chain-abstraction"
