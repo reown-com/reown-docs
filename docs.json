@@ -561,33 +561,6 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/javascript/notifications/overview",
-                  "appkit/javascript/notifications/cloud-setup",
-                  "appkit/javascript/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/javascript/notifications/frontend-integration/usage",
-                      "appkit/javascript/notifications/frontend-integration/api",
-                      "appkit/javascript/notifications/frontend-integration/examples",
-                      "appkit/javascript/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/javascript/notifications/backend-integration",
-                  "appkit/javascript/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/javascript/notifications/authorization-signatures/overview",
-                      "appkit/javascript/notifications/authorization-signatures/this-app",
-                      "appkit/javascript/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "appkit/javascript/cloud/verify",
