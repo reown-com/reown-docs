@@ -944,22 +944,6 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  {
-                    "group": "Notify",
-                    "pages": [
-                      "walletkit/ios/notifications/notify/overview",
-                      "walletkit/ios/notifications/notify/installation",
-                      "walletkit/ios/notifications/notify/usage",
-                      "walletkit/ios/notifications/notify/spam-protection",
-                      "walletkit/ios/notifications/notify/resources"
-                    ]
-                  },
-                  "walletkit/ios/notifications/push"
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "walletkit/ios/cloud/explorer-submission",
