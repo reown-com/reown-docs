@@ -913,22 +913,6 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  {
-                    "group": "Notify",
-                    "pages": [
-                      "walletkit/android/notifications/notify/overview",
-                      "walletkit/android/notifications/notify/installation",
-                      "walletkit/android/notifications/notify/usage",
-                      "walletkit/android/notifications/notify/spam-protection",
-                      "walletkit/android/notifications/notify/resources"
-                    ]
-                  },
-                  "walletkit/android/notifications/push"
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "walletkit/android/cloud/explorer-submission",
