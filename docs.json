@@ -675,33 +675,6 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/react-native/notifications/overview",
-                  "appkit/react-native/notifications/cloud-setup",
-                  "appkit/react-native/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/react-native/notifications/frontend-integration/usage",
-                      "appkit/react-native/notifications/frontend-integration/api",
-                      "appkit/react-native/notifications/frontend-integration/examples",
-                      "appkit/react-native/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/react-native/notifications/backend-integration",
-                  "appkit/react-native/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/react-native/notifications/authorization-signatures/overview",
-                      "appkit/react-native/notifications/authorization-signatures/this-app",
-                      "appkit/react-native/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "appkit/react-native/cloud/verify",
