@@ -174,10 +174,6 @@
                     "pages": ["advanced/api/core/pairing", "advanced/api/core/relay", "advanced/api/core/shared-core"]
                   },
                   {
-                    "group": "Notify",
-                    "pages": ["advanced/api/notify/about"]
-                  },
-                  {
                     "group": "Sign",
                     "pages": [
                       "advanced/api/sign/overview",
