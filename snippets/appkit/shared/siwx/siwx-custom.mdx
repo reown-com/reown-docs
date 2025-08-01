@@ -232,6 +232,38 @@ interface SIWXConfig {
 }
 ```
 
+### SIWXConfig Parameters
+
+#### createMessage `(input: SIWXMessage.Input) => Promise<SIWXMessage>`
+
+This method will be called to create a new message to be signed by the user. The message must be unique and contain all the necessary information to verify the user's identity.
+
+#### addSession `(session: SIWXSession) => Promise<void>`
+
+This method will be called to store a new single session. It must verify if the session is valid and store it in the storage successfully.
+
+#### revokeSession `(chainId: CaipNetworkId, address: string) => Promise<void>`
+
+This method will be called to revoke all the sessions stored for a specific chain and address. It must delete all the sessions stored for the specific chain and address successfully.
+
+#### setSessions `(sessions: SIWXSession[]) => Promise<void>`
+
+This method will be called to replace all the sessions in the storage with the new ones. It must verify all the sessions before storing them and replace all sessions successfully.
+
+#### getSessions `(chainId: CaipNetworkId, address: string) => Promise<SIWXSession[]>`
+
+This method will be called to get all the sessions stored for a specific chain and address. It must return only sessions that are verified and valid, and must not return expired sessions.
+
+#### getRequired `() => boolean` (Optional)
+
+This method determines whether the wallet stays connected when the user denies the signature request.
+
+#### signOutOnDisconnect `boolean` (Optional)
+
+- defaults to `true`
+
+Whether or not to clear sessions when the user disconnects their wallet.
+
 All the typings used are exposed by `@reown/appkit-core` package. You may check the source code [here](https://github.com/reown-com/appkit/blob/main/packages/core/src/utils/SIWXUtil.ts).
 
 <Accordion title="Full Detailed Interfaces">
