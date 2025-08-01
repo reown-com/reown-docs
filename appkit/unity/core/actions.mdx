@@ -72,6 +72,18 @@ await AppKit.ConnectAsync(new Wallet
 });
 ```
 
+### Direct Social Login Connection
+
+Connect directly to a social login provider (e.g. Google, Apple, X) without requiring the user to pick a provider in the modal UI.
+
+```csharp
+// Connect directly to Google and await the connection
+await SocialLogin.Google.ConnectAsync();
+
+// Or simply open the provider without awaiting the connection
+SocialLogin.Google.Open();
+```
+
 ### Disconnect
 
 ```csharp
