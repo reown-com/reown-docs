@@ -6,8 +6,8 @@ AppKit for React Native is configured by calling the `createAppKit` function and
 
 ```typescript
 import { createAppKit } from '@reown/appkit-react-native';
-import { EthersAdapter } from '@reown/appkit-ethers-react-native'; // Example adapter
-import { SolanaAdapter } from '@reown/appkit-solana-react-native'; // Example adapter
+import { EthersAdapter } from '@reown/appkit-ethers-react-native';
+import { SolanaAdapter } from '@reown/appkit-solana-react-native';
 // Import other adapters as needed (e.g., BitcoinAdapter)
 
 // Define your network configurations (see 'networks' option below for details)
@@ -15,12 +15,12 @@ const ethMainnet = { id: '1', name: 'Ethereum', chainNamespace: 'eip155', caipNe
 const solanaMainnet = { id: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp', name: 'Solana', chainNamespace: 'solana',  /* ... */ };
 
 export const appKit = createAppKit({
-  projectId: 'YOUR_WALLETCONNECT_PROJECT_ID',
+  projectId: 'YOUR_PROJECT_ID',
   metadata: { /* ... dApp metadata ... */ },
   networks: [ethMainnet, solanaMainnet], // Define all supported networks
   adapters: [ // Provide an array of initialized adapters
-    new EthersAdapter({ /* ... ethers adapter config, e.g., for EVM networks ... */ }),
-    new SolanaAdapter({ /* ... solana adapter config ... */ })
+    new EthersAdapter(),
+    new SolanaAdapter()
   ],
   // ... other options detailed below
 });
@@ -35,11 +35,11 @@ Below are the detailed configuration options you can pass to `createAppKit`:
 ### `projectId`
 *   **Type:** `String`
 *   **Required:** Yes
-*   **Description:** Your project ID from [WalletConnect Cloud](https://cloud.walletconnect.com/). This is essential for enabling WalletConnect functionality, which AppKit uses for connecting with a wide range of wallets.
+*   **Description:** Your project ID from [Reown Dashboard](https://dashboard.reown.com/). This is essential for enabling WalletConnect functionality, which AppKit uses for connecting with a wide range of wallets.
 
 ```typescript
 {
-  projectId: 'YOUR_WALLETCONNECT_PROJECT_ID'
+  projectId: 'YOUR_PROJECT_ID'
 }
 ```
 
@@ -143,14 +143,77 @@ import { EthersAdapter } from '@reown/appkit-ethers-react-native';
 import { SolanaAdapter } from '@reown/appkit-solana-react-native';
 // import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
 
-const projectId = 'YOUR_WALLETCONNECT_PROJECT_ID'; // Assuming projectId is defined
+const projectId = 'YOUR_PROJECT_ID'; // Assuming projectId is defined
 
 createAppKit({
   //...
   adapters: [
-    new EthersAdapter({ projectId }),
-    new SolanaAdapter({ projectId }),
-    // new BitcoinAdapter({ projectId /* ... other bitcoin adapter config ... */ })
+    new EthersAdapter(),
+    new SolanaAdapter(),
+    // new BitcoinAdapter()
+  ]
+})
+```
+
+### `storage`
+*   **Type:** `Storage`
+*   **Required:** Yes
+*   **Description:** A storage implementation that handles data persistence. AppKit provides a flexible storage interface that works with any storage solution you prefer.
+
+```typescript
+import { MMKV } from 'react-native-mmkv';
+import { safeJsonParse, safeJsonStringify } from '@walletconnect/safe-json';
+import type { Storage } from '@reown/appkit-react-native';
+
+const mmkv = new MMKV();
+
+const storage: Storage = {
+  getKeys: async () => {
+      return mmkv.getAllKeys();
+    },
+    getEntries: async <T = any>(): Promise<[string, T][]> => {
+      function parseEntry(key: string): [string, any] {
+        const value = mmkv.getString(key);
+        return [key, safeJsonParse(value ?? '')];
+      }
+
+      const keys = mmkv.getAllKeys();
+      return keys.map(parseEntry);
+    },
+    setItem: async <T = any>(key: string, value: T) => {
+      return mmkv.set(key, safeJsonStringify(value));
+    },
+    getItem: async <T = any>(key: string): Promise<T | undefined> => {
+      const item = mmkv.getString(key);
+      if (typeof item === 'undefined' || item === null) {
+        return undefined;
+      }
+
+      return safeJsonParse(item) as T;
+    },
+    removeItem: async (key: string) => {
+      return mmkv.delete(key);
+    },
+};
+
+createAppKit({
+  //...
+  storage
+})
+```
+
+### `extraConnectors`
+*   **Type:** `Array<Connector>`
+*   **Required:** No
+*   **Description:** Additional wallet connectors that extend AppKit's connection capabilities beyond the standard WalletConnect protocol. This is useful for wallets that require custom connection methods, like Phantom Wallet and Coinbase.
+
+```typescript
+import { PhantomConnector } from '@reown/appkit-solana-react-native';
+
+createAppKit({
+  //...
+  extraConnectors: [
+    new PhantomConnector({ cluster: 'mainnet-beta' }) // Or 'devnet', 'testnet'
   ]
 })
 ```
@@ -339,6 +402,28 @@ createAppKit({
   debug: true
 })
 ```
+
+### universalProviderConfigOverride
+
+Lets you customize specific aspects of the provider's behavior.
+
+```typescript
+createAppKit({
+  //...
+  universalProviderConfigOverride: {
+    methods: { eip155: ['eth_sendTransaction', 'personal_sign'] },
+    chains: { eip155: ['1', '137'] },
+    events: { eip155: ['chainChanged', 'accountsChanged'] },
+    rpcMap: { eip155:1: 'https://ethereum.publicnode.com' },
+  },
+});
+```
+
+You can override any of the following properties:
+- `methods`: Custom RPC methods for each namespace
+- `chains`: Supported chains for each namespace
+- `events`: Events to subscribe to for each namespace
+- `rpcMap`: Custom RPC URLs for specific chains
 
 ## Feature Flags
 

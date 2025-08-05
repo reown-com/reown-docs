@@ -23,7 +23,7 @@ Installation is a two-step process:
 ### Core Library
 
 ```bash
-npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg react-native-modal @react-native-community/netinfo @walletconnect/react-native-compat expo-application
+npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat expo-application
 ```
 
 <ExpoBabel />
@@ -36,7 +36,7 @@ npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/as
 Install our core library and it's dependencies
 
 ```bash
-npm install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg react-native-modal @react-native-community/netinfo @walletconnect/react-native-compat
+npm install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
 ```
 
 On iOS, use CocoaPods to add the native modules to your project:
@@ -67,8 +67,7 @@ Install the adapters for the chains you intend to support:
         ```typescript
         import { EthersAdapter } from '@reown/appkit-ethers-react-native';
 
-        const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
-        const ethersAdapter = new EthersAdapter({ projectId });
+        const ethersAdapter = new EthersAdapter();
         ```
       </Tab>
       <Tab title="Wagmi">
@@ -97,7 +96,7 @@ Install the adapters for the chains you intend to support:
         import { mainnet, sepolia } from 'wagmi/chains'; // Or other chains you need
         // ... other adapter imports if any
 
-        const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
+        const projectId = 'YOUR_PROJECT_ID'; // Obtain from https://dashboard.reown.com/
 
         export const wagmiAdapter = new WagmiAdapter({
           projectId,
@@ -160,8 +159,7 @@ Install the adapters for the chains you intend to support:
     
     import { SolanaAdapter } from '@reown/appkit-solana-react-native';
 
-    const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
-    const solanaAdapter = new SolanaAdapter({ projectId });
+    const solanaAdapter = new SolanaAdapter();
     ```
   </Tab>
   <Tab title="Bitcoin">
@@ -173,8 +171,7 @@ Install the adapters for the chains you intend to support:
     ```typescript
     import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
 
-    const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
-    const bitcoinAdapter = new BitcoinAdapter({ projectId });
+    const bitcoinAdapter = new BitcoinAdapter();
     ```
   </Tab>
 </Tabs>
@@ -200,19 +197,11 @@ import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
 // You can use 'viem/chains' or define your own chains using `AppKitNetwork` type. Check Options/networks for more detailed info
 import { mainnet, polygon } from 'viem/chains';
 
-const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
+const projectId = 'YOUR_PROJECT_ID'; // Obtain from https://dashboard.reown.com/
 
-const ethersAdapter = new EthersAdapter({
-  projectId
-});
-
-const solanaAdapter = new SolanaAdapter({
-  projectId
-});
-
-const bitcoinAdapter = new BitcoinAdapter({
-  projectId
-});
+const ethersAdapter = new EthersAdapter();
+const solanaAdapter = new SolanaAdapter();
+const bitcoinAdapter = new BitcoinAdapter();
 
 export const appKit = createAppKit({
   projectId,
@@ -238,7 +227,7 @@ export const appKit = createAppKit({
 
 Wrap your application with the `AppKitProvider` to make the `AppKit` instance available throughout your component tree via context.
 
-```tsx {3,9}
+```tsx {3,9,11}
 // App.tsx
 import React from 'react';
 import { AppKitProvider } from '@reown/appkit-react-native';
@@ -264,17 +253,13 @@ To display the AppKit modal and other potential UI elements, you need to include
 // YourAppRootComponent.tsx (or App.tsx if it contains your main layout)
 import React from 'react';
 import { AppKit } from '@reown/appkit-react-native';
-// ... other imports for your app components like ConnectButton, etc.
-import ConnectButton from './components/ConnectButton'; // Example import
+// ... other imports for your app components.
 
 function YourAppRootComponent() {
   return (
     <>
       {/* Your application's content */}
-      <ConnectButton />
-      {/* ... other components ... */}
-
-      {/* Add the AppKit component here to render its UI (e.g., the modal) */}
+      {/* Add the AppKit component here to render its UI */}
       <AppKit />
     </>
   );
@@ -283,11 +268,26 @@ function YourAppRootComponent() {
 export default YourAppRootComponent;
 ```
 
+<Note>
+**Expo Android Modal Issue**: If you're using Expo Router and the modal doesn't open on Android, you may need to wrap the `<AppKit />` component in a View with absolute positioning. Here's the workaround:
+
+```tsx
+import { View } from 'react-native';
+
+// Replace the simple <AppKit /> with:
+<View style={{ position: "absolute", height: "100%", width: "100%" }}>
+  <AppKit />
+</View>
+```
+
+This is a known issue with Expo Router on Android and this workaround resolves the modal rendering problem.
+</Note>
+
 ### 4. Using AppKit in Components
 
 You can now access AppKit functionalities (like connecting, getting account state, etc.) using hooks provided by the library.
 
-```tsx
+```tsx {2,5,6}
 // components/ConnectButton.tsx
 import { useAppKit, useAccount } from '@reown/appkit-react-native';
 
@@ -351,46 +351,7 @@ export interface Storage {
 }
 ```
 
-**Example with AsyncStorage**
-
-You can implement this interface using a library like `@react-native-async-storage/async-storage`. Create a new file, for example `src/StorageUtil.ts`, with the following content:
-
-```typescript
-// src/StorageUtil.ts
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { safeJsonParse, safeJsonStringify } from '@walletconnect/safe-json';
-import type { Storage } from '@reown/appkit-react-native';
-
-export const storage: Storage = {
-  getKeys: async () => {
-    return AsyncStorage.getAllKeys() as Promise<string[]>;
-  },
-  getEntries: async <T = any>(): Promise<[string, T][]> => {
-    function parseEntry(entry: [string, string | null]): [string, any] {
-      return [entry[0], safeJsonParse(entry[1] ?? '')];
-    }
-
-    const keys = await AsyncStorage.getAllKeys();
-    const entries = await AsyncStorage.multiGet(keys);
-
-    return entries.map(parseEntry);
-  },
-  setItem: async (key: string, value: any) => {
-    return await AsyncStorage.setItem(key, safeJsonStringify(value));
-  },
-  getItem: async <T = any>(key: string): Promise<T | undefined> => {
-    const item = await AsyncStorage.getItem(key);
-    if (typeof item === 'undefined' || item === null) {
-      return undefined;
-    }
-
-    return safeJsonParse(item) as T;
-  },
-  removeItem: async (key: string) => {
-    return await AsyncStorage.removeItem(key);
-  }
-};
-```
+For a complete storage implementation example, see the [Storage Options](./options#storage) documentation.
 
 **Update AppKit Configuration**
 
@@ -408,19 +369,11 @@ import { storage } from './StorageUtil'; // 1. Import your custom storage
 // You can use 'viem/chains' or define your own chains using `AppKitNetwork` type. Check Options/networks for more detailed info
 import { mainnet, polygon } from 'viem/chains';
 
-const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
+const projectId = 'YOUR_PROJECT_ID'; // Obtain from https://dashboard.reown.com/
 
-const ethersAdapter = new EthersAdapter({
-  projectId
-});
-
-const solanaAdapter = new SolanaAdapter({
-  projectId
-});
-
-const bitcoinAdapter = new BitcoinAdapter({
-  projectId
-});
+const ethersAdapter = new EthersAdapter();
+const solanaAdapter = new SolanaAdapter();
+const bitcoinAdapter = new BitcoinAdapter();
 
 export const appKit = createAppKit({
   projectId,
@@ -624,19 +577,11 @@ import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
 // You can use 'viem/chains' or define your own chains using `AppKitNetwork` type. Check Options/networks for more detailed info
 import { mainnet, polygon } from 'viem/chains';
 
-const projectId = 'YOUR_PROJECT_ID'; // Obtain from Cloud
+const projectId = 'YOUR_PROJECT_ID'; // Obtain from https://dashboard.reown.com/
 
-const ethersAdapter = new EthersAdapter({
-  projectId
-});
-
-const solanaAdapter = new SolanaAdapter({
-  projectId
-});
-
-const bitcoinAdapter = new BitcoinAdapter({
-  projectId
-});
+const ethersAdapter = new EthersAdapter();
+const solanaAdapter = new SolanaAdapter();
+const bitcoinAdapter = new BitcoinAdapter();
 
 export const appKit = createAppKit({
   projectId,

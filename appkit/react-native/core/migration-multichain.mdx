@@ -139,7 +139,7 @@ import { WagmiAdapter } from "@reown/appkit-wagmi-react-native";
 import { mainnet as viemMainnet, polygon as viemPolygon } from "viem/chains"; // For EVM
 import { solana, bitcoin } from "@reown/appkit-react-native"; // Pre-defined AppKitNetwork objects
 
-const projectId = "YOUR_PROJECT_ID"; // Obtain from Reown Cloud
+const projectId = "YOUR_PROJECT_ID"; // Obtain from https://dashboard.reown.com/
 
 const metadata = {
   name: "My Awesome Multi-Chain dApp",
@@ -166,7 +166,7 @@ const appNetworks: AppKitNetwork[] = [
 // For EVM chains, choose ONE of the following adapters (EthersAdapter or WagmiAdapter):
 
 // Option A: EthersAdapter for general EVM support
-const ethersAdapter = new EthersAdapter({ projectId });
+const ethersAdapter = new EthersAdapter();
 
 // Option B: WagmiAdapter if you are using Wagmi for EVM state management
 const wagmiEvmNetworks = [viemMainnet, viemPolygon]; // Subset of appNetworks or specific Wagmi chains
@@ -176,8 +176,8 @@ const wagmiAdapter = new WagmiAdapter({
 });
 
 // Initialize adapters for other chains as needed
-const solanaAdapter = new SolanaAdapter({ projectId });
-const bitcoinAdapter = new BitcoinAdapter({ projectId });
+const solanaAdapter = new SolanaAdapter();
+const bitcoinAdapter = new BitcoinAdapter();
 
 // 3. Create the AppKit instance
 // In this example, we'll use EthersAdapter for EVM chains.
@@ -200,7 +200,7 @@ export const appKit = createAppKit({
 
 **Key differences in initialization:**
 -   `createAppKit` is imported from `@reown/appkit-react-native`.
--   You explicitly create instances of the adapters you need (e.g., `new EthersAdapter(...)`, `new WagmiAdapter(...)`).
+-   You explicitly create instances of the adapters you need (e.g., `new EthersAdapter()`, `new WagmiAdapter(...)`).
 -   The `adapters` array in `createAppKit` takes these initialized adapter instances.
 -   The `networks` array in `createAppKit` takes `AppKitNetwork` objects, which define all supported networks for AppKit's UI and context. `viem/chains` objects can be directly used for EVM networks.
 -   For the `WagmiAdapter`, the `networks` property in its constructor defines which EVM chains *it* will specifically manage using Wagmi.
