@@ -32,6 +32,14 @@ If the wallet user changes to account 1 we get path `m/84'/0'/1'/0/0` with ident
 - `m/84'/0'/1'/change/address_index`
 - `m/86'/0'/1'/change/address_index`
 
+
+## Connection
+### Session Properties
+
+In a connection request, all wallets **should** serialize the connected accounts in `session.sessionProperties.bip122_getAccountAddresses`. This allows dapps to consume an active session without requiring a context switch to re-request all addresses and associated public keys and paths from the wallet.
+
+## RPC Methods
+
 ## sendTransfer
 
 This method is used to sign and submit a transfer of any `amount` of Bitcoin to a single `recipientAddress`, optionally including a `changeAddress` for the change amount and `memo` set as an OP_RETURN output by supporting wallets. The transaction will be signed and broadcast upon user approval.

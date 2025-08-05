@@ -3,11 +3,20 @@ title: "Sui"
 description: Sui JSON-RPC Methods
 ---
 
-These are the methods that wallets should implement to handle Sui transactions and messages via WalletConnect.
 
 <Note type="warning">
 **Please note:** The SUI RPC standard is still under review and specifications may change. Implementation details and method signatures are subject to updates.
 </Note>
+
+## Conection
+
+### Session Properties
+
+In a connection request, all wallets **should** serialize the connected accounts in `session.sessionProperties.sui_getAccounts`. This allows dapps to consume an active session without requiring a context switch to re-request all addresses and associated public keys from the wallet.
+
+## RPC Methods
+
+These are the methods that wallets should implement to handle Sui transactions and messages via WalletConnect.
 
 ## sui_getAccounts
 

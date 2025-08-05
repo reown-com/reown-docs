@@ -3,8 +3,16 @@ title: "Stacks"
 description: Stacks JSON-RPC Methods
 ---
 
-These are the methods that wallets should implement to handle Stacks transfers and messages via WalletConnect.
 
+## Conection
+
+### Session Properties
+
+In a connection request, all wallets **should** serialize the connected accounts in `session.sessionProperties.stacks_getAddresses`. This allows dapps to consume an active session without requiring a context switch to re-request all addresses and associated public keys from the wallet.
+
+## RPC Methods
+
+These are the methods that wallets should implement to handle Stacks transfers and messages via WalletConnect.
 
 ## stx_transferStx
 
