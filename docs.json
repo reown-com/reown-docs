@@ -437,7 +437,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/next/cloud/verify",
                   "appkit/next/cloud/relay",
                   "appkit/next/cloud/blockchain-api",
                   "appkit/next/cloud/analytics"
