@@ -954,7 +954,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/flutter/cloud/explorer-submission",
-                  "walletkit/flutter/cloud/verify",
                   "walletkit/flutter/cloud/relay",
                   "walletkit/flutter/cloud/analytics"
                 ]
