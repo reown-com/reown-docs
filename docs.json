@@ -800,7 +800,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/unity/cloud/verify",
                   "appkit/unity/cloud/relay", 
                   "appkit/unity/cloud/blockchain-api",
                   "appkit/unity/cloud/analytics"
