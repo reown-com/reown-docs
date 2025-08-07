@@ -668,7 +668,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/react-native/cloud/verify",
                   "appkit/react-native/cloud/relay",
                   "appkit/react-native/cloud/blockchain-api",
                   "appkit/react-native/cloud/analytics"
@@ -704,7 +703,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/flutter/cloud/verify",
                   "appkit/flutter/cloud/relay",
                   "appkit/flutter/cloud/blockchain-api",
                   "appkit/flutter/cloud/analytics"
