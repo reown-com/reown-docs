@@ -766,7 +766,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/ios/cloud/verify",
                   "appkit/ios/cloud/relay",
                   "appkit/ios/cloud/blockchain-api",
                   "appkit/ios/cloud/analytics"
