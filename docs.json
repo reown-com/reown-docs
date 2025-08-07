@@ -108,7 +108,6 @@
                 ]
               },
               "cloud/reown-authentication",
-              "cloud/verify",
               "cloud/relay",
               "cloud/blockchain-api",
               "cloud/analytics",
@@ -377,7 +376,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/react/cloud/verify",
                   "appkit/react/cloud/relay",
                   "appkit/react/cloud/blockchain-api",
                   "appkit/react/cloud/analytics"
@@ -438,7 +436,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/next/cloud/verify",
                   "appkit/next/cloud/relay",
                   "appkit/next/cloud/blockchain-api",
                   "appkit/next/cloud/analytics"
@@ -499,7 +496,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/vue/cloud/verify",
                   "appkit/vue/cloud/relay",
                   "appkit/vue/cloud/blockchain-api",
                   "appkit/vue/cloud/analytics"
@@ -559,7 +555,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/javascript/cloud/verify",
                   "appkit/javascript/cloud/relay",
                   "appkit/javascript/cloud/blockchain-api",
                   "appkit/javascript/cloud/analytics"
@@ -673,7 +668,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/react-native/cloud/verify",
                   "appkit/react-native/cloud/relay",
                   "appkit/react-native/cloud/blockchain-api",
                   "appkit/react-native/cloud/analytics"
@@ -709,7 +703,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/flutter/cloud/verify",
                   "appkit/flutter/cloud/relay",
                   "appkit/flutter/cloud/blockchain-api",
                   "appkit/flutter/cloud/analytics"
@@ -742,7 +735,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/android/cloud/verify",
                   "appkit/android/cloud/relay",
                   "appkit/android/cloud/blockchain-api",
                   "appkit/android/cloud/analytics"
@@ -774,7 +766,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/ios/cloud/verify",
                   "appkit/ios/cloud/relay",
                   "appkit/ios/cloud/blockchain-api",
                   "appkit/ios/cloud/analytics"
@@ -809,7 +800,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/unity/cloud/verify",
                   "appkit/unity/cloud/relay", 
                   "appkit/unity/cloud/blockchain-api",
                   "appkit/unity/cloud/analytics"
@@ -881,7 +871,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/web/cloud/explorer-submission",
-                  "walletkit/web/cloud/verify",
                   "walletkit/web/cloud/relay",
                   "walletkit/web/cloud/analytics"
                 ]
@@ -912,7 +901,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/android/cloud/explorer-submission",
-                  "walletkit/android/cloud/verify",
                   "walletkit/android/cloud/relay",
                   "walletkit/android/cloud/analytics"
                 ]
@@ -943,7 +931,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/ios/cloud/explorer-submission",
-                  "walletkit/ios/cloud/verify",
                   "walletkit/ios/cloud/relay",
                   "walletkit/ios/cloud/analytics"
                 ]
@@ -967,7 +954,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/flutter/cloud/explorer-submission",
-                  "walletkit/flutter/cloud/verify",
                   "walletkit/flutter/cloud/relay",
                   "walletkit/flutter/cloud/analytics"
                 ]
@@ -998,7 +984,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/react-native/cloud/explorer-submission",
-                  "walletkit/react-native/cloud/verify",
                   "walletkit/react-native/cloud/relay",
                   "walletkit/react-native/cloud/analytics"
                 ]
@@ -1017,7 +1002,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/c-sharp/cloud/explorer-submission",
-                  "walletkit/c-sharp/cloud/verify",
                   "walletkit/c-sharp/cloud/relay",
                   "walletkit/c-sharp/cloud/analytics"
                 ]
