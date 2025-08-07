@@ -555,7 +555,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/javascript/cloud/verify",
                   "appkit/javascript/cloud/relay",
                   "appkit/javascript/cloud/blockchain-api",
                   "appkit/javascript/cloud/analytics"
