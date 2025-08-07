@@ -1002,7 +1002,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/c-sharp/cloud/explorer-submission",
-                  "walletkit/c-sharp/cloud/verify",
                   "walletkit/c-sharp/cloud/relay",
                   "walletkit/c-sharp/cloud/analytics"
                 ]
