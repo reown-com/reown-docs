@@ -871,7 +871,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/web/cloud/explorer-submission",
-                  "walletkit/web/cloud/verify",
                   "walletkit/web/cloud/relay",
                   "walletkit/web/cloud/analytics"
                 ]
