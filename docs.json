@@ -984,7 +984,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/react-native/cloud/explorer-submission",
-                  "walletkit/react-native/cloud/verify",
                   "walletkit/react-native/cloud/relay",
                   "walletkit/react-native/cloud/analytics"
                 ]
