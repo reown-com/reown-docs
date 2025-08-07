@@ -931,7 +931,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/ios/cloud/explorer-submission",
-                  "walletkit/ios/cloud/verify",
                   "walletkit/ios/cloud/relay",
                   "walletkit/ios/cloud/analytics"
                 ]
