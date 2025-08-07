@@ -108,7 +108,6 @@
                 ]
               },
               "cloud/reown-authentication",
-              "cloud/verify",
               "cloud/relay",
               "cloud/blockchain-api",
               "cloud/analytics",
