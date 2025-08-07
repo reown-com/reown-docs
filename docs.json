@@ -377,7 +377,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/react/cloud/verify",
                   "appkit/react/cloud/relay",
                   "appkit/react/cloud/blockchain-api",
                   "appkit/react/cloud/analytics"
