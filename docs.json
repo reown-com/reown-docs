@@ -901,7 +901,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/android/cloud/explorer-submission",
-                  "walletkit/android/cloud/verify",
                   "walletkit/android/cloud/relay",
                   "walletkit/android/cloud/analytics"
                 ]
