@@ -735,7 +735,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/android/cloud/verify",
                   "appkit/android/cloud/relay",
                   "appkit/android/cloud/blockchain-api",
                   "appkit/android/cloud/analytics"
