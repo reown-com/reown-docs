@@ -29,12 +29,12 @@ Install the main AppKit library along with essential peer dependencies for React
 
 ```bash
 # For Expo projects
-npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg react-native-modal @react-native-community/netinfo @walletconnect/react-native-compat expo-application
+npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat expo-application
 
 # For React Native CLI projects
-npm install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg react-native-modal @react-native-community/netinfo @walletconnect/react-native-compat
+npm install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
 # or
-yarn add @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg react-native-modal @react-native-community/netinfo @walletconnect/react-native-compat
+yarn add @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
 ```
 Then, for iOS in React Native CLI projects:
 ```bash
@@ -305,7 +305,6 @@ All AppKit hooks are now imported directly from `@reown/appkit-react-native`.
 -   **`useProvider()` (New Hook)**:
     -   Import from `@reown/appkit-react-native`.
     -   Use this to get the underlying chain-specific provider/client (e.g., Ethers provider, Wagmi client, Solana connection).
-    -   Can be called with a namespace (e.g., `'eip155'`, `'solana'`) to get a provider for a specific chain type if multiple are connected or configured.
 -   **`useAppKitEventSubscription()` (New Hook)**:
     -   Import from `@reown/appkit-react-native`.
     -   Allows subscription to various AppKit lifecycle events.

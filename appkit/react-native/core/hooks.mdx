@@ -79,7 +79,7 @@ export default function MyComponent() {
 
 This hook provides access to the underlying chain-specific provider for the currently active connection. This is useful for performing direct interactions with the blockchain that go beyond the standard AppKit actions.
 
-By default, `useProvider()` returns the provider for the currently active network. You can also get a provider for a specific namespace by passing an argument, e.g., `useProvider('eip155')`, `useProvider('solana')`, or `useProvider('bitcoin')`.
+By default, `useProvider()` returns the provider for the currently active network.
 
 ```typescript
 import { useProvider, useAccount } from '@reown/appkit-react-native';
