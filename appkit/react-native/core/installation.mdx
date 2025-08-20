@@ -396,14 +396,14 @@ export const appKit = createAppKit({
 });
 ```
 
-## Enable Wallet Detection (Optional)
+## Enable Wallet Detection
 
 <Info>
 **This is an optional feature** that enhances the user experience by:
 - Showing a green checkmark next to installed wallets
 - Prioritizing installed wallets at the top of the list
 
-**All 430+ wallets in the AppKit ecosystem work via WalletConnect protocol regardless of this configuration.** You only need to add the wallets your users most commonly have installed.
+**All 600+ wallets in the AppKit ecosystem work via WalletConnect protocol regardless of this configuration.** You only need to add the wallets your users most commonly have installed.
 </Info>
 
 To enable AppKit to detect wallets installed on the device, you can make specific changes to the native code of your project.
@@ -558,7 +558,101 @@ Example:
 
 </Tabs>
 
-## Enable Phantom Wallet (Optional)
+## Connectors
+
+AppKit supports various custom connectors for specific wallets that use their own connection protocols. These connectors allow you to integrate popular wallets like Coinbase and Phantom directly into your AppKit configuration. All connectors are optional and only needed if you want to support these specific wallets.
+
+### Coinbase Wallet
+
+Coinbase Wallet is a popular wallet that uses a custom connection protocol. To enable it in your AppKit configuration, you'll need to install the Coinbase SDK and add a specific connector.
+
+<Note>
+**Expo Compatibility:** Coinbase SDK works with [Expo Prebuild](https://docs.expo.dev/workflow/prebuild/) but not with Expo Go. You'll need to use `expo prebuild` to generate native code before building your app.
+</Note>
+
+To enable Coinbase Wallet, follow these steps:
+
+1. Enable Expo Modules in your project:
+
+```
+npx install-expo-modules@latest
+```
+
+2. Install the Coinbase SDK and our custom connector:
+
+```
+yarn add @coinbase/wallet-mobile-sdk @reown/appkit-coinbase-react-native react-native-mmkv
+```
+
+3. Run pod-install:
+
+```
+npx pod-install
+```
+
+4. Set up deeplink handling in your project following the [React Native docs](https://reactnative.dev/docs/linking?syntax=ios#enabling-deep-links)
+
+5. Add Coinbase package configuration to your native files:
+
+```xml
+// AndroidManifest.xml
+
+<queries>
+  <!-- other queries -->
+  <package android:name="org.toshi" />
+</queries>
+```
+
+```xml
+// Info.plist
+
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <!-- other schemes -->
+  <string>cbwallet</string>
+</array>
+```
+
+6. Add the custom connector to your `extraConnectors`:
+
+```typescript {4-5,9-11}
+// src/AppKitConfig.ts (or wherever you prefer to configure it)
+import "@walletconnect/react-native-compat";
+import { createAppKit } from '@reown/appkit-react-native';
+import { MMKV } from 'react-native-mmkv';
+import { CoinbaseConnector } from '@reown/appkit-coinbase-react-native';
+
+export const appKit = createAppKit({
+  // ...
+  extraConnectors: [
+    new CoinbaseConnector({ storage: new MMKV() })
+  ],
+  // ...
+});
+```
+
+7. Add the Coinbase response handler to process wallet responses:
+
+```tsx
+import { handleResponse } from "@coinbase/wallet-mobile-sdk";
+
+// Add this to your app's deeplink handling code
+useEffect(() => {
+  const sub = Linking.addEventListener("url", ({ url }) => {
+    const handledBySdk = handleResponse(new URL(url));
+    if (!handledBySdk) {
+      // Handle other deeplinks
+    }
+  });
+
+  return () => sub.remove();
+}, []);
+```
+
+For more detailed information, check the [Coinbase docs](https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install).
+
+
+### Phantom Wallet
 
 Phantom Wallet is a popular wallet on the Solana blockchain. Because it uses a custom connection protocol, it requires a specific connector to be added to your AppKit configuration.
 
@@ -566,33 +660,18 @@ To enable Phantom Wallet, you'll need to import the `PhantomConnector` from `@re
 
 Here's how to update your `AppKitConfig.ts` file, using the example from the [Implementation](#1-initialize-appkit) section as a base:
 
-```typescript {5,17-19,30-33}
+```typescript {4,8-10}
 // src/AppKitConfig.ts (or wherever you prefer to configure it)
 import "@walletconnect/react-native-compat";
-import { createAppKit, bitcoin, solana, type AppKitNetwork } from '@reown/appkit-react-native';
-import { EthersAdapter } from '@reown/appkit-ethers-react-native';
+import { createAppKit } from '@reown/appkit-react-native';
 import { SolanaAdapter, PhantomConnector } from '@reown/appkit-solana-react-native';
-import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
-
-// You can use 'viem/chains' or define your own chains using `AppKitNetwork` type. Check Options/networks for more detailed info
-import { mainnet, polygon } from 'viem/chains';
-
-const projectId = 'YOUR_PROJECT_ID'; // Obtain from https://dashboard.reown.com/
-
-const ethersAdapter = new EthersAdapter();
-const solanaAdapter = new SolanaAdapter();
-const bitcoinAdapter = new BitcoinAdapter();
 
 export const appKit = createAppKit({
-  projectId,
-  metadata,
-  networks: [mainnet, polygon, solana, bitcoin],
-  defaultNetwork: mainnet, // Optional: set a default network
-  adapters: [ethersAdapter, solanaAdapter, bitcoinAdapter],
+  // ...
   extraConnectors: [
     new PhantomConnector({ cluster: 'mainnet-beta' }) // Or 'devnet', 'testnet'
   ],
-  //...
+  // ...
 });
 ```
 
