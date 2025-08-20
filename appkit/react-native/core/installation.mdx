@@ -560,9 +560,9 @@ Example:
 
 ## Connectors
 
-AppKit supports various custom connectors for specific wallets that use their own connection protocols. These connectors allow you to integrate popular wallets like Coinbase and Phantom directly into your AppKit configuration. All connectors are optional and only needed if you want to support these specific wallets.
+AppKit supports various custom connectors for specific wallets that use their own connection protocols. These connectors allow you to integrate popular wallets like Coinbase and Phantom directly into your AppKit configuration. **All connectors are optional and only needed if you want to support these specific wallets.**
 
-### Coinbase Wallet
+### Coinbase
 
 Coinbase Wallet is a popular wallet that uses a custom connection protocol. To enable it in your AppKit configuration, you'll need to install the Coinbase SDK and add a specific connector.
 
@@ -652,31 +652,32 @@ useEffect(() => {
 For more detailed information, check the [Coinbase docs](https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install).
 
 
-### Phantom Wallet
+### Phantom & Solflare
 
-Phantom Wallet is a popular wallet on the Solana blockchain. Because it uses a custom connection protocol, it requires a specific connector to be added to your AppKit configuration.
+Phantom and Solflare are popular wallets on the Solana blockchain. Because they use a custom connection protocol, it requires a specific connector to be added to your AppKit configuration.
 
-To enable Phantom Wallet, you'll need to import the `PhantomConnector` from `@reown/appkit-solana-react-native` and add it to the `extraConnectors` array in your `createAppKit` configuration.
+To enable Phantom Wallet, you'll need to import the `PhantomConnector` or `SolflareConnector` from `@reown/appkit-solana-react-native` and add it to the `extraConnectors` array in your `createAppKit` configuration.
 
 Here's how to update your `AppKitConfig.ts` file, using the example from the [Implementation](#1-initialize-appkit) section as a base:
 
-```typescript {4,8-10}
+```typescript {4,8-11}
 // src/AppKitConfig.ts (or wherever you prefer to configure it)
 import "@walletconnect/react-native-compat";
 import { createAppKit } from '@reown/appkit-react-native';
-import { SolanaAdapter, PhantomConnector } from '@reown/appkit-solana-react-native';
+import { SolanaAdapter, PhantomConnector, Solflare } from '@reown/appkit-solana-react-native';
 
 export const appKit = createAppKit({
   // ...
   extraConnectors: [
-    new PhantomConnector({ cluster: 'mainnet-beta' }) // Or 'devnet', 'testnet'
+    new PhantomConnector({ cluster: 'mainnet-beta' }), // Or 'devnet', 'testnet'
+    new SolflareConnector({ cluster: 'mainnet-beta' }) // Or 'devnet', 'testnet'
   ],
   // ...
 });
 ```
 
 <Note>
-The `cluster` option in `PhantomConnector` can be set to `'mainnet-beta'`, `'devnet'`, or `'testnet'` depending on which Solana cluster you want to connect to.
+The `cluster` option can be set to `'mainnet-beta'`, `'devnet'`, or `'testnet'` depending on which Solana cluster you want to connect to.
 </Note>
 
 
