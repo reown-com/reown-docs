@@ -13,7 +13,7 @@ Let's get started with the installation and configuration!
 If you are just starting a new project, you can use our [CLI tool](https://pub.dev/packages/reown_cli) to get started quickly.
 </Note>
 
-1.  - Add `reown_appkit` as dependency in your `pubspec.yaml` and run `flutter pub get` (check out the [latest version](https://pub.dev/packages/reown_appkit/install))
+1.  - Add `reown_appkit` as a dependency in your `pubspec.yaml` and run `flutter pub get` (check out the [latest version](https://pub.dev/packages/reown_appkit/install))
     - Or simply run `flutter pub add reown_appkit`
 2.  - Locate your `/ios/Podfile` file and add the following as the first line:
 
@@ -21,7 +21,7 @@ If you are just starting a new project, you can use our [CLI tool](https://pub.d
 platform :ios, '13.0'
 ```
 
-3.  - Run `$ pod install` inside `/ios` folder.
+3.  - Run `$ pod install` inside the `/ios` folder.
 4.  - You should now be able to run your app with `flutter run --dart-define=PROJECT_ID={your_project_id}`
 
 ### Enable Installed Wallet Detection
@@ -140,7 +140,7 @@ override func application(_ application: UIApplication, continue userActivity: N
 }
 ```
 
-Checkout out the [AppDelegate.swift](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/modal/ios/Runner/AppDelegate.swift) file from our sample dapp for reference.
+Check out the [AppDelegate.swift](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/modal/ios/Runner/AppDelegate.swift) file from our sample dapp for reference.
 
 </Tab>
 <Tab title="Android">
@@ -170,7 +170,7 @@ Example:
 
 #### Disable Coinbase Wallet
 
-Coinbase Wallet is enabled by default even if, in order to function properly, a few steps has to be done as described in the previous section. However, if you don't want to include/support Coinbase Wallet on your app you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Coinbase Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Coinbase Wallet in your app you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to [excludedWalletIds](./options#excludedwalletids) options Array.
 
 <hr />
 
@@ -186,12 +186,12 @@ This means that pairing topic, session topic, session events and other session-r
 
 Furthermore, Phantom Wallet's deep/universal linking mechanism supports interaction exclusively with the Solana network. This means that if you have EVM networks configured in your AppKit instance, they will not be available for use after connecting with Phantom.
 
-In order to support Phantom Wallet interactions a few extra steps has to be performed (only if you haven't implemented [Link Mode](./link-mode) already).
+In order to support Phantom Wallet interactions, a few extra steps have to be performed (only if you haven't implemented [Link Mode](./link-mode) already).
 
-1. First, be sure you already have your redirection back property configure in your dApp's metadata. See [Redirect to your dApp](./usage#redirect-to-your-dapp)
-2. Then you will have to implement your own Deep Link mechanism on Flutter (and native) side so when a link is received through it, you would just call `await _appKitModal.dispatchEnvelope(link);`
+1. First, be sure you already have your redirection back property configured in your dApp's metadata. See [Redirect to your dApp](./usage#redirect-to-your-dapp)
+2. Then you will have to implement your own Deep Link mechanism on the Flutter (and native) side so that when a link is received through it, you can just call `await _appKitModal.dispatchEnvelope(link);`
 
-As a guidance, here you can see how it's done in our sample dApp:
+As guidance, here you can see how it's done in our sample dApp:
 
 #### First, enable Phantom Wallet detection
 
@@ -418,7 +418,7 @@ _Constructing a Solana transaction would depend on the library/package of your c
 
 #### Disable Phantom Wallet
 
-Phantom Wallet is enabled by default even if, in order to function properly, a few steps has to be done as described in the previous section. However, if you don't want to include/support Phantom Wallet on your app you just need to pass Phantom Wallet id `a797aa35c0fadbfc1a53e7f675162ed5226968b44a19ee3d24385c64d1d3c393` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Phantom Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Phantom Wallet in your app you just need to pass Phantom Wallet id `a797aa35c0fadbfc1a53e7f675162ed5226968b44a19ee3d24385c64d1d3c393` to [excludedWalletIds](./options#excludedwalletids) options Array.
 
 <hr />
 
@@ -434,12 +434,12 @@ This means that pairing topic, session topic, session events and other session-r
 
 Furthermore, Solflare Wallet's deep/universal linking mechanism supports interaction exclusively with the Solana network. This means that if you have EVM networks configured in your AppKit instance, they will not be available for use after connecting with Solflare.
 
-In order to support Solflare Wallet interactions a few extra steps has to be performed (only if you haven't implemented [Link Mode](./link-mode) already).
+In order to support Solflare Wallet interactions, a few extra steps have to be performed (only if you haven't implemented [Link Mode](./link-mode) already).
 
-1. First, be sure you already have your redirection back property configure in your dApp's metadata. See [Redirect to your dApp](./usage#redirect-to-your-dapp)
-2. Then you will have to implement your own Deep Link mechanism on Flutter (and native) side so when a link is received through it, you would just call `await _appKitModal.dispatchEnvelope(link);`
+1. First, be sure you already have your redirection back property configured in your dApp's metadata. See [Redirect to your dApp](./usage#redirect-to-your-dapp)
+2. Then you will have to implement your own Deep Link mechanism on the Flutter (and native) side so that when a link is received through it, you can just call `await _appKitModal.dispatchEnvelope(link);`
 
-As a guidance, here you can see how it's done in our sample dApp:
+As guidance, here you can see how it's done in our sample dApp:
 
 #### First, enable Solflare Wallet detection
 
@@ -486,11 +486,11 @@ Example:
 </Tab>
 </Tabs>
 
-The rest of the configuration is identical to Phantom's
+The rest of the configuration is identical to Phantom's configuration.
 
 #### Disable Solflare Wallet
 
-Solflare Wallet is enabled by default even if, in order to function properly, a few steps has to be done as described in the previous section. However, if you don't want to include/support Solflare Wallet on your app you just need to pass Solflare Wallet id `1ca0bdd4747578705b1939af023d120677c64fe6ca76add81fda36e350605e79` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Solflare Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Solflare Wallet in your app you just need to pass Solflare Wallet id `1ca0bdd4747578705b1939af023d120677c64fe6ca76add81fda36e350605e79` to [excludedWalletIds](./options#excludedwalletids) options Array.
 
 ## Example
 
