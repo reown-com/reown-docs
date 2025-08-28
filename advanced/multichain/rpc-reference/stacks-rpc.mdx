@@ -5,12 +5,51 @@ description: Stacks JSON-RPC Methods
 
 These are the methods that wallets should implement to handle Stacks transfers and messages via WalletConnect.
 
+## Core Methods (common)
 
-## stx_transferStx
+### getAddresses
 
-Simple STX transfer, request a transfer of STX tokens. Wallet signs and executes the transaction.
+Retrieve active account addresses; primarily Stacks-focused.
 
-### Request
+#### Request
+
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "getAddresses",
+  "params": {}
+}
+```
+
+#### Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "addresses": [
+      {
+        "symbol": "STX",
+        "address": "SP…"
+      }
+    ]
+  }
+}
+```
+
+**Notes:**
+- Use this first to select the wallet's active address.
+- Filter on `symbol: "STX"`.
+
+## Stacks Methods
+
+### stx_transferStx
+
+Transfer STX.
+
+#### Request
 
 ```json
 {
@@ -18,44 +57,84 @@ Simple STX transfer, request a transfer of STX tokens. Wallet signs and executes
   "jsonrpc": "2.0",
   "method": "stx_transferStx",
   "params": {
-    "sender": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
     "recipient": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
     "amount": "100000000000",
-    "memo": ""
+    "memo": "",
+    "network": "mainnet"
   }
 }
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter | Required? | Data Type | Description |
 |-----------|------|-----------|-------------|
-| `sender` | Required | `string` | The stacks address of sender |
-| `recipient` | Required | `string` | The STX address of the recipient |
-| `amount` | Required | `number \| string` | Amount of STX tokens to transfer in microstacks (BigInt constructor compatible) |
+| `recipient` | Required | `string` | Stacks address |
+| `amount` | Required | `string` | micro-STX (uSTX) |
 | `memo` | Optional | `string` | Memo string to be included with the transfer transaction |
+| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" |
 
-### Response
+#### Response
 
 ```json
 {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
-    "txid": "stack_tx_id",
-    "transaction": "raw_tx_hex"
+    "txid": "0x…",
+    "transaction": "0x…"
   }
 }
 ```
 
-- `txid` - is used to identify the transaction on the explorer
-- `transaction` - hex-encoded raw transaction
+### stx_signTransaction
 
-## stx_signMessage
+Sign a Stacks transaction. Optional broadcast.
 
-For signing a message with wallet users private key.
+#### Request
 
-### Request
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "stx_signTransaction",
+  "params": {
+    "transaction": "0x…",
+    "broadcast": false,
+    "network": "mainnet"
+  }
+}
+```
+
+#### Parameters
+
+| Parameter | Required? | Data Type | Description |
+|-----------|------|-----------|-------------|
+| `transaction` | Required | `string` | hex transaction |
+| `broadcast` | Optional | `boolean` | default false |
+| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" |
+
+#### Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "signature": "0x…",
+    "transaction": "0x…",
+    "txid": "0x…"
+  }
+}
+```
+
+**Note:** `txid` is present if broadcast=true
+
+### stx_signMessage
+
+Sign arbitrary message; supports structured (SIP-018).
+
+#### Request
 
 ```json
 {
@@ -63,29 +142,120 @@ For signing a message with wallet users private key.
   "jsonrpc": "2.0",
   "method": "stx_signMessage",
   "params": {
-    "address": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
-    "message": "message"
+    "message": "message",
+    "messageType": "utf8",
+    "network": "mainnet"
   }
 }
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter | Required? | Data Type | Description |
 |-----------|------|-----------|-------------|
-| `address` | Required | `string` | The stacks address of sender |
-| `message` | Required | `string` | Utf-8 string representing the message to be signed by the wallet |
+| `message` | Required | `string` | message to be signed |
+| `messageType` | Optional | `string` | "utf8" \| "structured" (default utf8) |
+| `domain` | Optional | `any` | required if structured |
+| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" |
 
-### Response
+#### Response
 
 ```json
 {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
-    "signature": "0x1234..."
+    "signature": "0x…"
   }
 }
 ```
 
-- `signature` - The signature of the message
+### stx_signStructuredMessage
+
+Domain-bound structured signing (SIP-018).
+
+#### Request
+
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "stx_signStructuredMessage",
+  "params": {
+    "message": "message",
+    "domain": "domain"
+  }
+}
+```
+
+#### Parameters
+
+| Parameter | Required? | Data Type | Description |
+|-----------|------|-----------|-------------|
+| `message` | Required | `string \| object` | message to be signed |
+| `domain` | Required | `string \| object` | domain for structured signing |
+
+#### Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "signature": "0x…",
+    "publicKey": "0x04…"
+  }
+}
+```
+
+**Note:** `publicKey` is optional
+
+### stx_callContract
+
+Build, sign, and optionally broadcast a contract call.
+
+#### Request
+
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "stx_callContract",
+  "params": {
+    "contract": "SP000000000000000000002Q6VF78.pox",
+    "functionName": "stack-stx",
+    "functionArgs": ["u1000000", "0x…"],
+    "network": "mainnet",
+    "fee": "1000",
+    "nonce": "1",
+    "anchorMode": "any",
+    "broadcast": true
+  }
+}
+```
+
+#### Parameters
+
+| Parameter | Required? | Data Type | Description |
+|-----------|------|-----------|-------------|
+| `contract` | Required | `string` | contract identifier |
+| `functionName` | Required | `string` | function name to call |
+| `functionArgs` | Required | `string[]` | function arguments |
+| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" |
+| `fee` | Optional | `string` | transaction fee |
+| `nonce` | Optional | `string` | transaction nonce |
+| `anchorMode` | Optional | `string` | "any" \| "onChainOnly" \| "offChainOnly" |
+| `broadcast` | Optional | `boolean` | whether to broadcast the transaction |
+
+#### Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "txid": "0x…",
+    "transaction": "0x…"
+  }
+}
+```
