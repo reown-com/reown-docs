@@ -64,7 +64,10 @@ For signing a message with wallet users private key.
   "method": "stx_signMessage",
   "params": {
     "address": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
-    "message": "message"
+    "message": "message",
+    "messageType": "utf8",
+    "network": "testnet",
+    "domain": "example.com"
   }
 }
 ```
@@ -75,6 +78,9 @@ For signing a message with wallet users private key.
 |-----------|------|-----------|-------------|
 | `address` | Required | `string` | The stacks address of sender |
 | `message` | Required | `string` | Utf-8 string representing the message to be signed by the wallet |
+| `messageType` | Optional | `string` | Type of message for signing: `utf8` for basic string or `structured` for structured data |
+| `network` | Optional | `string` | Network for signing: `mainnet`, `testnet`, `signet`, `devnet` or `devnet` (defaults to current network) |
+| `domain` | Optional | `string` | Domain tuple per SIP-018 (for structured messages only) |
 
 ### Response
 
@@ -89,3 +95,46 @@ For signing a message with wallet users private key.
 ```
 
 - `signature` - The signature of the message
+
+## stx_callContract
+
+Wrapper method for `stx_signTransaction` that calls a Stacks contract.
+
+### Request
+
+```json
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "method": "stx_callContract",
+  "params": {
+    "contract": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ.my-contract",
+    "functionName": "get-balance",
+    "functionArgs": []
+  }
+}
+```
+
+### Parameters
+
+| Parameter | Required? | Data Type | Description |
+|-----------|------|-----------|-------------|
+| `contract` | Required | `string` | Fully qualified contract identifier, including Stacks address and contract name |
+| `functionName` | Required | `string` | Name of the function to call |
+| `functionArgs` | Required | `string[]` | Arguments to pass to the contract function, encoded as strings |
+
+### Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "txid": "stack_tx_id",
+    "transaction": "raw_tx_hex"
+  }
+}
+```
+
+- `txid` - is used to identify the transaction on the explorer
+- `transaction` - hex-encoded raw transaction
