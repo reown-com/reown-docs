@@ -3,6 +3,7 @@ title: "Stacks"
 description: Stacks JSON-RPC Methods
 ---
 
+
 These are the methods that wallets should implement to handle Stacks transfers and messages via WalletConnect.
 
 ## Core Methods (common)
@@ -257,3 +258,7 @@ Wrapper method for `stx_signTransaction` that calls a Stacks contract.
 
 - `txid` - is used to identify the transaction on the explorer
 - `transaction` - hex-encoded raw transaction
+
+## Session Properties
+
+In a connection request, it is recommended to serialize the response to `stx_getAddresses` in `session.sessionProperties.stacks_getAddresses`. This allows dapps to consume an active session without requiring a context switch to re-request all addresses and associated public keys from the wallet.
