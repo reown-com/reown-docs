@@ -57,6 +57,7 @@ Transfer STX.
   "jsonrpc": "2.0",
   "method": "stx_transferStx",
   "params": {
+    "sender": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
     "recipient": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
     "amount": "100000000000",
     "memo": "",
@@ -69,10 +70,11 @@ Transfer STX.
 
 | Parameter | Required? | Data Type | Description |
 |-----------|------|-----------|-------------|
+| `sender` | Required | `string` | The stacks address of sender (required for multi-account scenarios) |
 | `recipient` | Required | `string` | Stacks address |
 | `amount` | Required | `string` | micro-STX (uSTX) |
 | `memo` | Optional | `string` | Memo string to be included with the transfer transaction |
-| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" |
+| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" (note: redundant since chainId is provided) |
 
 #### Response
 
@@ -142,9 +144,11 @@ Sign arbitrary message; supports structured (SIP-018).
   "jsonrpc": "2.0",
   "method": "stx_signMessage",
   "params": {
+    "address": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ",
     "message": "message",
     "messageType": "utf8",
-    "network": "mainnet"
+    "network": "mainnet",
+    "domain": "example.com"
   }
 }
 ```
@@ -153,10 +157,11 @@ Sign arbitrary message; supports structured (SIP-018).
 
 | Parameter | Required? | Data Type | Description |
 |-----------|------|-----------|-------------|
-| `message` | Required | `string` | message to be signed |
-| `messageType` | Optional | `string` | "utf8" \| "structured" (default utf8) |
-| `domain` | Optional | `any` | required if structured |
-| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" |
+| `address` | Required | `string` | The stacks address of sender |
+| `message` | Required | `string` | Utf-8 string representing the message to be signed by the wallet |
+| `messageType` | Optional | `string` | Type of message for signing: `utf8` for basic string or `structured` for structured data |
+| `network` | Optional | `string` | Network for signing: `mainnet`, `testnet`, `signet`, `devnet` (note: redundant since chainId is provided) |
+| `domain` | Optional | `string` | Domain tuple per SIP-018 (for structured messages only) |
 
 #### Response
 
@@ -212,7 +217,7 @@ Domain-bound structured signing (SIP-018).
 
 ### stx_callContract
 
-Build, sign, and optionally broadcast a contract call.
+Wrapper method for `stx_signTransaction` that calls a Stacks contract.
 
 #### Request
 
@@ -222,14 +227,9 @@ Build, sign, and optionally broadcast a contract call.
   "jsonrpc": "2.0",
   "method": "stx_callContract",
   "params": {
-    "contract": "SP000000000000000000002Q6VF78.pox",
-    "functionName": "stack-stx",
-    "functionArgs": ["u1000000", "0x…"],
-    "network": "mainnet",
-    "fee": "1000",
-    "nonce": "1",
-    "anchorMode": "any",
-    "broadcast": true
+    "contract": "SP3F7GQ48JY59521DZEE6KABHBF4Q33PEYJ823ZXQ.my-contract",
+    "functionName": "get-balance",
+    "functionArgs": []
   }
 }
 ```
@@ -238,14 +238,9 @@ Build, sign, and optionally broadcast a contract call.
 
 | Parameter | Required? | Data Type | Description |
 |-----------|------|-----------|-------------|
-| `contract` | Required | `string` | contract identifier |
-| `functionName` | Required | `string` | function name to call |
-| `functionArgs` | Required | `string[]` | function arguments |
-| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" |
-| `fee` | Optional | `string` | transaction fee |
-| `nonce` | Optional | `string` | transaction nonce |
-| `anchorMode` | Optional | `string` | "any" \| "onChainOnly" \| "offChainOnly" |
-| `broadcast` | Optional | `boolean` | whether to broadcast the transaction |
+| `contract` | Required | `string` | Fully qualified contract identifier, including Stacks address and contract name |
+| `functionName` | Required | `string` | Name of the function to call |
+| `functionArgs` | Required | `string[]` | Arguments to pass to the contract function, encoded as strings |
 
 #### Response
 
@@ -254,8 +249,11 @@ Build, sign, and optionally broadcast a contract call.
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
-    "txid": "0x…",
-    "transaction": "0x…"
+    "txid": "stack_tx_id",
+    "transaction": "raw_tx_hex"
   }
 }
 ```
+
+- `txid` - is used to identify the transaction on the explorer
+- `transaction` - hex-encoded raw transaction
