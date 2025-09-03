@@ -44,7 +44,12 @@ This method returns an Array of public keys and addresses available to sign from
 }
 ```
 
-### sui_signTransaction
+### Session Properties
+In a connection request, it is recommended to serialize the response to `getAccounts` in `session.sessionProperties.sui_getAccounts`. This allows dapps to consume an active session without requiring a context switch to re-request all addresses and associated public keys from the wallet.
+
+
+
+## sui_signTransaction
 
 Sign a Sui transaction without executing it.
 

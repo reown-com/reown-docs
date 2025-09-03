@@ -32,6 +32,7 @@ If the wallet user changes to account 1 we get path `m/84'/0'/1'/0/0` with ident
 - `m/84'/0'/1'/change/address_index`
 - `m/86'/0'/1'/change/address_index`
 
+
 ## sendTransfer
 
 This method is used to sign and submit a transfer of any `amount` of Bitcoin to a single `recipientAddress`, optionally including a `changeAddress` for the change amount and `memo` set as an OP_RETURN output by supporting wallets. The transaction will be signed and broadcast upon user approval.
@@ -110,6 +111,10 @@ We recognize that there are two broad classes of wallets in use today:
     - `publicKey` : `String` - _(Optional)_ Public key for the derivation path in hex, without 0x prefix.
     - `path` : `String` - _(Optional)_ Derivation path of the address e.g. "m/84'/0'/0'/0/0".
     - `intention` : `String` - _(Optional)_ Intention of the address, e.g. "payment" or "ordinal".
+
+### Session Properties
+In a connection request, it is recommended to serialize the response to `getAccountAddresses` in `session.sessionProperties.bip122_getAccountAddresses`. This allows dapps to consume an active session without requiring a context switch to re-request all addresses and associated public keys from the wallet.
+
 
 ### Example: Dynamic Wallet
 
