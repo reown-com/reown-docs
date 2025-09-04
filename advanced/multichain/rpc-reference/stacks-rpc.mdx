@@ -42,7 +42,7 @@ Retrieve active account addresses; primarily Stacks-focused.
 
 **Notes:**
 - Use this first to select the wallet's active address.
-- Filter on `symbol: "STX"`.
+- Filter on `symbol: "STX"` or by address prefix (SP for mainnet, ST for testnet).
 
 ## Stacks Methods
 
@@ -75,7 +75,7 @@ Transfer STX.
 | `recipient` | Required | `string` | Stacks address |
 | `amount` | Required | `string` | micro-STX (uSTX) |
 | `memo` | Optional | `string` | Memo string to be included with the transfer transaction |
-| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" (note: redundant since chainId is provided) |
+| `network` | Optional | `string` | "mainnet" \| "testnet" \| "devnet" |
 
 #### Response
 
@@ -84,7 +84,7 @@ Transfer STX.
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
-    "txid": "0x…",
+    "txid": "1234567890abcdef1234567890abcdef12345678",
     "transaction": "0x…"
   }
 }
@@ -126,7 +126,7 @@ Sign a Stacks transaction. Optional broadcast.
   "result": {
     "signature": "0x…",
     "transaction": "0x…",
-    "txid": "0x…"
+    "txid": "1234567890abcdef1234567890abcdef12345678"
   }
 }
 ```
