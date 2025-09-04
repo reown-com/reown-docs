@@ -20,6 +20,10 @@ AppKit provides a comprehensive set of React hooks that work together to provide
 - **UI Control Hooks**: Control the modal and UI elements (`useAppKitState`, `useAppKitTheme`)
 - **Data Access Hooks**: Access wallet and blockchain data (`useAppKitBalance`, `useWalletInfo`)
 - **Event Hooks**: Subscribe to wallet and connection events (`useAppKitEvents`)
+- **Payment Hooks**: Handle crypto payments and exchange integrations (`usePay`, `useAvailableExchanges`, `usePayUrlActions`, `useExchangeBuyStatus`)
+- **Multi-Wallet Hooks**: Manage multiple wallet connections (`useAppKitConnections`, `useAppKitConnection`)
+- **Authentication Hooks**: Handle authentication and user management (`useAppKitUpdateEmail`, `useAppKitSIWX`)
+- **Solana-Specific Hooks**: Solana blockchain interactions (`useAppKitConnection` from Solana adapter)
 
 The diagram below illustrates how these hooks relate to each other and to the core AppKit functionality:
 
@@ -30,6 +34,10 @@ graph TD
   AppKit --> UIHooks[UI Control Hooks]
   AppKit --> DataHooks[Data Access Hooks]
   AppKit --> EventHooks[Event Hooks]
+  AppKit --> PaymentHooks[Payment Hooks]
+  AppKit --> MultiWalletHooks[Multi-Wallet Hooks]
+  AppKit --> AuthHooks[Authentication Hooks]
+  AppKit --> SolanaHooks[Solana-Specific Hooks]
   
   ConnHooks --> useAppKit
   ConnHooks --> useAppKitAccount
@@ -47,10 +55,25 @@ graph TD
   
   EventHooks --> useAppKitEvents
   
+  PaymentHooks --> usePay
+  PaymentHooks --> useAvailableExchanges
+  PaymentHooks --> usePayUrlActions
+  PaymentHooks --> useExchangeBuyStatus
+  
+  MultiWalletHooks --> useAppKitConnections
+  MultiWalletHooks --> useAppKitConnection
+  
+  AuthHooks --> useAppKitUpdateEmail
+  AuthHooks --> useAppKitSIWX
+  
+  SolanaHooks --> useAppKitConnectionSolana[useAppKitConnection]
+  
   useAppKit -.-> useAppKitAccount
   useAppKitAccount -.-> useAppKitBalance
   useAppKitNetwork -.-> useAppKitBalance
   useAppKitWallet -.-> useAppKitAccount
+  usePay -.-> useAvailableExchanges
+  usePayUrlActions -.-> useExchangeBuyStatus
 ```
 
 These hooks provide a modular way to integrate wallet functionality into your application, allowing you to use only the features you need.
@@ -597,6 +620,305 @@ const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
 
 <Note>
   Related hooks: [useAppKitAccount](#useappkitaccount), [useAppKitNetwork](#useappkitnetwork)
+</Note>
+
+## useAppKitConnections
+
+Hook that manages multiple wallet connections and provides access to all connected wallets. Use this hook when building applications that support multiple simultaneous wallet connections.
+
+```ts
+import { useAppKitConnections } from "@reown/appkit/react";
+
+const { connections, disconnect } = useAppKitConnections();
+```
+
+### Use Cases
+- Managing multiple wallet connections simultaneously
+- Building multi-wallet dashboards or portfolio views
+- Implementing wallet comparison features
+- Creating advanced wallet management interfaces
+
+### Returns
+
+- `connections`: Array of all connected wallet connections
+- `disconnect`: Function to disconnect a specific wallet connection
+
+<Note>
+  Related hooks: [useAppKitConnection](#useappkitconnection), [useAppKitAccount](#useappkitaccount)
+</Note>
+
+## useAppKitConnection
+
+Hook that manages the active wallet connection and provides connection switching capabilities. Use this hook when you need to work with the currently active connection or switch between multiple connections.
+
+```ts
+import { useAppKitConnection } from "@reown/appkit/react";
+
+const { connection, switchConnection } = useAppKitConnection();
+```
+
+### Use Cases
+- Switching between multiple connected wallets
+- Accessing the currently active wallet connection
+- Building connection management interfaces
+- Implementing wallet-specific features based on the active connection
+
+### Returns
+
+- `connection`: The currently active wallet connection
+- `switchConnection`: Function to switch to a different connected wallet
+
+<Note>
+  Related hooks: [useAppKitConnections](#useappkitconnections), [useAppKitAccount](#useappkitaccount)
+</Note>
+
+## usePay
+
+Hook that manages payment modal interactions and handles crypto payment flows. Use this hook when implementing payment features with exchange integrations.
+
+```ts
+import { usePay } from "@reown/appkit-pay/react";
+
+const { pay, isLoading, error } = usePay({
+  onSuccess: (result) => console.log('Payment successful:', result),
+  onError: (error) => console.error('Payment failed:', error)
+});
+```
+
+### Use Cases
+- Implementing crypto payment flows in your application
+- Handling payment success and error states
+- Integrating with centralized exchanges for payments
+- Building custom payment interfaces
+
+### Parameters
+
+- `onSuccess`: Optional callback function called when payment succeeds
+- `onError`: Optional callback function called when payment fails
+
+### Returns
+
+- `pay`: Function to initiate a payment with specified parameters
+- `isLoading`: Boolean indicating if a payment is in progress
+- `error`: Error object if payment fails
+
+<Note>
+  Related hooks: [useAvailableExchanges](#useavailableexchanges), [usePayUrlActions](#usepayurlactions)
+</Note>
+
+## useAvailableExchanges
+
+Hook that fetches and manages the state for available exchanges. Use this hook when you need to display available payment options or filter exchanges based on criteria.
+
+```ts
+import { useAvailableExchanges } from "@reown/appkit-pay/react";
+
+const { data, isLoading, error, fetch } = useAvailableExchanges({
+  isFetchOnInit: true,
+  asset: 'ETH',
+  amount: 100,
+  network: 'eip155:1'
+});
+```
+
+### Use Cases
+- Displaying available exchanges to users
+- Filtering exchanges based on asset or network
+- Building custom exchange selection interfaces
+- Implementing exchange comparison features
+
+### Parameters
+
+- `isFetchOnInit`: Whether to fetch exchanges on hook initialization
+- `asset`: Filter exchanges by specific asset
+- `amount`: Filter exchanges by minimum amount
+- `network`: Filter exchanges by network support
+
+### Returns
+
+- `data`: Array of available exchanges
+- `isLoading`: Boolean indicating if exchanges are being fetched
+- `error`: Error object if fetching fails
+- `fetch`: Function to manually refetch exchanges
+
+<Note>
+  Related hooks: [usePay](#usepay), [usePayUrlActions](#usepayurlactions)
+</Note>
+
+## usePayUrlActions
+
+Hook that provides functions to interact with specific exchange URLs, returning the sessionId needed for status tracking. Use this hook when implementing custom exchange flows.
+
+```ts
+import { usePayUrlActions } from "@reown/appkit-pay/react";
+
+const { getUrl, openUrl } = usePayUrlActions();
+
+// Get exchange URL
+const { url, sessionId } = await getUrl('binance', {
+  asset: 'ETH',
+  amount: 0.1,
+  recipient: '0x...'
+});
+
+// Open exchange URL in new tab
+const { url, sessionId } = await openUrl('coinbase', {
+  asset: 'USDC',
+  amount: 100,
+  recipient: '0x...'
+}, true);
+```
+
+### Use Cases
+- Building custom exchange integration flows
+- Implementing exchange URL generation
+- Creating custom payment interfaces
+- Tracking exchange sessions for status monitoring
+
+### Returns
+
+- `getUrl`: Function that returns exchange URL and session ID
+- `openUrl`: Function that opens exchange URL and returns session data
+
+<Note>
+  Related hooks: [useExchangeBuyStatus](#useexchangebuystatus), [useAvailableExchanges](#useavailableexchanges)
+</Note>
+
+## useExchangeBuyStatus
+
+Hook that fetches and polls for the status of a headless payment transaction using exchangeId and sessionId. Use this hook to track payment progress and handle completion.
+
+```ts
+import { useExchangeBuyStatus } from "@reown/appkit-pay/react";
+
+const { data, isLoading, error, refetch } = useExchangeBuyStatus({
+  exchangeId: 'binance',
+  sessionId: 'session-123',
+  pollingInterval: 5000,
+  isEnabled: true,
+  onSuccess: (status) => console.log('Payment completed:', status),
+  onError: (error) => console.error('Payment failed:', error)
+});
+```
+
+### Use Cases
+- Tracking payment transaction status
+- Implementing payment progress indicators
+- Handling payment completion and failure states
+- Building real-time payment monitoring
+
+### Parameters
+
+- `exchangeId`: The exchange identifier
+- `sessionId`: The session ID from payment URL actions
+- `pollingInterval`: How often to check status (in milliseconds)
+- `isEnabled`: Whether to enable status polling
+- `onSuccess`: Callback for successful payment completion
+- `onError`: Callback for payment errors
+
+### Returns
+
+- `data`: Current payment status data
+- `isLoading`: Boolean indicating if status is being fetched
+- `error`: Error object if status fetching fails
+- `refetch`: Function to manually refetch status
+
+<Note>
+  Related hooks: [usePayUrlActions](#usepayurlactions), [usePay](#usepay)
+</Note>
+
+## useAppKitUpdateEmail
+
+Hook that updates user email address with success and error handling. Use this hook when implementing email update functionality for user accounts.
+
+```ts
+import { useAppKitUpdateEmail } from "@reown/appkit/react";
+
+const { data, error, isPending, isError, isSuccess, updateEmail } = useAppKitUpdateEmail({
+  onSuccess: (data) => console.log('Email updated:', data.email),
+  onError: (error) => console.error('Update failed:', error)
+});
+```
+
+### Use Cases
+- Implementing email update functionality
+- Building user profile management interfaces
+- Handling email verification flows
+- Creating account settings pages
+
+### Parameters
+
+- `onSuccess`: Optional callback function called when email update succeeds
+- `onError`: Optional callback function called when email update fails
+
+### Returns
+
+- `data`: Updated email data object
+- `error`: Error object if update fails
+- `isPending`: Boolean indicating if update is in progress
+- `isError`: Boolean indicating if there was an error
+- `isSuccess`: Boolean indicating if update was successful
+- `updateEmail`: Function to trigger email update
+
+<Note>
+  Related hooks: [useAppKitAccount](#useappkitaccount), [useAppKitWallet](#useappkitwallet)
+</Note>
+
+## useAppKitSIWX
+
+Hook that provides access to Sign In With X (SIWX) configuration and state. Use this hook when implementing custom authentication flows with various blockchain protocols.
+
+```ts
+import { useAppKitSIWX } from "@reown/appkit/react";
+
+const siwxConfig = useAppKitSIWX();
+
+if (siwxConfig) {
+  console.log('SIWX enabled with config:', siwxConfig);
+}
+```
+
+### Use Cases
+- Implementing custom Sign In With X flows
+- Accessing SIWX configuration for custom authentication
+- Building protocol-specific authentication interfaces
+- Handling multi-protocol sign-in scenarios
+
+### Returns
+
+- `siwxConfig`: The current SIWX configuration object, or undefined if not configured
+
+<Note>
+  Related hooks: [useAppKitAccount](#useappkitaccount), [useAppKitUpdateEmail](#useappkitupdateemail)
+</Note>
+
+## useAppKitConnection (Solana)
+
+Solana-specific hook that provides access to the Solana connection instance for blockchain interactions. Use this hook when building Solana-specific features.
+
+```ts
+import { useAppKitConnection } from "@reown/appkit-adapter-solana/react";
+
+const { connection } = useAppKitConnection();
+
+if (connection) {
+  // Use connection for Solana blockchain interactions
+  const balance = await connection.getBalance(publicKey);
+}
+```
+
+### Use Cases
+- Accessing Solana connection for blockchain interactions
+- Building Solana-specific transaction flows
+- Implementing Solana program interactions
+- Creating Solana wallet features
+
+### Returns
+
+- `connection`: The Solana connection instance, or undefined if not connected
+
+<Note>
+  This is the Solana-specific version of useAppKitConnection. For general connection management, see [useAppKitConnection](#useappkitconnection).
 </Note>
 
 ## Ethereum/Solana Library
