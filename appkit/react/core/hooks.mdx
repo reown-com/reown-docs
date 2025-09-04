@@ -16,7 +16,7 @@ Hooks are React functions that provide access to wallet connection features, mod
 AppKit provides a comprehensive set of React hooks that work together to provide a complete wallet connection and blockchain interaction experience. These hooks can be categorized into several functional groups:
 
 - **Connection Hooks**: Manage wallet connections and user authentication (`useAppKit`, `useAppKitAccount`, `useAppKitProvider`, `useDisconnect`)
-- **Network Hooks**: Handle blockchain network selection and information (`useAppKitNetwork`, `useAppKitNetworkCore`)
+- **Network Hooks**: Handle blockchain network selection and information (`useAppKitNetwork`)
 - **UI Control Hooks**: Control the modal and UI elements (`useAppKitState`, `useAppKitTheme`)
 - **Data Access Hooks**: Access wallet and blockchain data (`useAppKitBalance`, `useWalletInfo`)
 - **Event Hooks**: Subscribe to wallet and connection events (`useAppKitEvents`)
@@ -46,7 +46,6 @@ graph TD
   ConnHooks --> useAppKitWallet
   
   NetworkHooks --> useAppKitNetwork
-  NetworkHooks --> useAppKitNetworkCore
   
   UIHooks --> useAppKitState
   UIHooks --> useAppKitTheme
@@ -621,32 +620,6 @@ const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
 
 <Note>
   Related hooks: [useAppKitAccount](#useappkitaccount), [useAppKitNetwork](#useappkitnetwork)
-</Note>
-
-## useAppKitNetworkCore
-
-Hook that provides access to core network information and chain details. Use this hook when you need low-level network data or when building custom network-related functionality.
-
-```ts
-import { useAppKitNetworkCore } from "@reown/appkit/react";
-
-const { caipNetwork, caipNetworkId, chainId } = useAppKitNetworkCore();
-```
-
-### Use Cases
-- Accessing detailed network information for custom implementations
-- Building network-specific features that require chain metadata
-- Integrating with blockchain libraries that need specific chain data
-- Creating custom network switching logic
-
-### Returns
-
-- `caipNetwork`: The current CAIP network object with full metadata
-- `caipNetworkId`: The CAIP network identifier string
-- `chainId`: The numeric chain ID for the current network
-
-<Note>
-  Related hooks: [useAppKitNetwork](#useappkitnetwork), [useAppKitAccount](#useappkitaccount)
 </Note>
 
 ## useAppKitConnections
