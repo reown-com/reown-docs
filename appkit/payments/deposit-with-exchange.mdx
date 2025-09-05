@@ -1,0 +1,109 @@
+---
+title: Deposit with Exchange
+description: Let users seamlessly fund their connected wallets directly from their exchange accounts or another wallet.
+---
+
+**Deposit with Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like **Coinbase** and **Binance** (with more exchanges coming soon).
+Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
+
+## Why Deposit with Exchange?
+
+- **Instant access to existing funds:** No need for fiat payments, KYC, or new providers. Users move crypto they already own.
+- **Frictionless experience:** Just a few clicks to deposit directly from an exchange into their wallet.
+- **Perpetually available:** Reown establishes direct agreements with partner exchanges to ensure perpetual availability.
+- **Security-first:** All activity flows directly through the exchange - no third-party access at any point.
+- **Full customization:** Deposit with Exchange is provided through a headless SDK to ensure flexibility for you and your users.
+- **Boost activation and retention:** A smoother onboarding and funding flow leads to better conversion, more repeat usage, less drop-offs.
+
+<Note>
+**Onramp.money, Rootstock Collective, Bitgpt.xyz**, and a dozen other teams use the Pay/Deposit with Exchange feature already.
+</Note>
+
+
+## How does it work?
+
+1. User connects a wallet through Reown AppKit.
+2. After user realizes that their wallet is short on funds, the user selects "Transfer or Deposit with Exchange" as the funding method.
+3. User chooses an exchange account and token.
+4. User completes the deposit/transfer flow via the CEX's authorization.
+5. The funds appear in the connected wallet and the user can proceed with their intended action.
+
+<video
+  autoPlay
+  loop
+  controls
+  src="/images/deposit-with-exchange.mp4"
+></video>
+
+
+## Supported tokens, networks, and platforms
+
+Currently, AppKit Deposit with Exchange supports the following assets on the following networks:
+
+**Asset -> Network**
+
+**Coinbase**
+- USDC → Ethereum, Optimism, Arbitrum, Base, Polygon, Solana
+- USDT → Ethereum
+
+**Binance**
+- USDC → Ethereum, Optimism, Arbitrum, Base, Polygon, Solana
+- USDT → Ethereum, Optimism, Arbitrum, Polygon, Solana
+- Native Solana
+
+**Coming soon** 
+- Robinhood, Kraken, Bybit, Bitget, OKX, plus native gas & stablecoins.
+
+---
+**Both EVM and Solana networks and their assets can be added, subject to exchange compatibility.**
+
+For access to additional networks or assets, please contact sales@reown.com.
+
+**Platforms & SDKs**
+- **Web**: React, Next.js, Vue, JavaScript SDK
+- **Mobile and Native Apps**: Supported via deep link + QR
+
+## Use cases
+
+### Dapps (DeFi, Staking, Restaking)
+
+- Enable users to fund → stake in one smooth flow (early-access).
+- Avoid drop-off caused by slow fiat onramps or KYC barriers.
+
+**Examples**: Lido, dYdX, Synthetix, Aave.
+
+### Non-Custodial Wallets
+
+- In-app top-ups from supported exchanges.
+- No fiat, bridging, or browser extension hurdles.
+- Faster first transaction, better onboarding, reduced support overhead.
+
+**Examples**: Trust Wallet, Frame, Core, Rainbow.
+
+## Get Started
+
+<CardGroup cols={2}>
+  <Card title="React" icon="react" href="/appkit/react/payments/deposit-with-exchange">
+    Get started with AppKit Deposit with Exchange and self-custodial wallets in React.
+  </Card>
+
+  <Card
+    title="Next.js"
+    icon="square-n"
+    href="/appkit/next/payments/deposit-with-exchange"
+  >
+    Get started with AppKit Deposit with Exchange and self-custodial wallets in Next.js.
+  </Card>
+
+  <Card
+    title="Vue"
+    icon="vuejs"
+    href="/appkit/vue/payments/deposit-with-exchange"
+  >
+    Get started with AppKit Deposit with Exchange and self-custodial wallets in Vue.
+  </Card>
+
+  <Card title="JavaScript" icon="js" href="/appkit/javascript/payments/deposit-with-exchange">
+    Get started with AppKit Deposit with Exchange and self-custodial wallets in JavaScript.
+  </Card>
+</CardGroup>

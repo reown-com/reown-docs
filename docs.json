@@ -252,6 +252,7 @@
                     "pages": [
                       "appkit/payments/overview",
                       "appkit/payments/pay-with-exchange",
+                      "appkit/payments/deposit-with-exchange",
                       "appkit/payments/one-click-checkout",
                       "appkit/payments/subscriptions"
                     ]
@@ -362,7 +363,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/react/payments/pay-with-exchange"
+                  "appkit/react/payments/pay-with-exchange",
+                  "appkit/react/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -422,7 +424,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/next/payments/pay-with-exchange"
+                  "appkit/next/payments/pay-with-exchange",
+                  "appkit/next/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -482,7 +485,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/vue/payments/pay-with-exchange"
+                  "appkit/vue/payments/pay-with-exchange",
+                  "appkit/vue/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -541,7 +545,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/javascript/payments/pay-with-exchange"
+                  "appkit/javascript/payments/pay-with-exchange",
+                  "appkit/javascript/payments/deposit-with-exchange"
                 ]
               },
               {
