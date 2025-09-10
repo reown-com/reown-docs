@@ -23,7 +23,7 @@ Installation is a two-step process:
 ### Core Library
 
 ```bash
-npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat expo-application
+npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat react-native-safe-area-context expo-application
 ```
 
 <ExpoBabel />
@@ -36,7 +36,7 @@ npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/as
 Install our core library and it's dependencies
 
 ```bash
-npm install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+npm install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat react-native-safe-area-context
 ```
 
 On iOS, use CocoaPods to add the native modules to your project:
@@ -178,9 +178,23 @@ Install the adapters for the chains you intend to support:
 
 ## Implementation
 
+### Prerequisites
+
+Before setting up AppKit, you need to wrap your app with `SafeAreaProvider` from `react-native-safe-area-context`. This is required for proper modal rendering and safe area handling.
+
+```tsx
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+function App() {
+  return <SafeAreaProvider>{/* Your app content */}</SafeAreaProvider>;
+}
+```
+
+For more detailed information about `SafeAreaProvider`, check the [official documentation](https://appandflow.github.io/react-native-safe-area-context/api/safe-area-provider).
+
 ### 1. Initialize AppKit
 
-First, create an instance of `AppKit`. This is where you'll configure your project ID (if using WalletConnect features) and define the chains your application will support, along with their respective adapters.
+Create an instance of `AppKit`. This is where you'll configure your project ID (if using WalletConnect features) and define the chains your application will support, along with their respective adapters.
 
 <Note>
 To ensure proper functioning with React Native, make sure `import "@walletconnect/react-native-compat";` is the very first line in your configuration file (e.g., `AppKitConfig.ts`), even before other imports. This import handles necessary polyfills.
@@ -227,18 +241,21 @@ export const appKit = createAppKit({
 
 Wrap your application with the `AppKitProvider` to make the `AppKit` instance available throughout your component tree via context.
 
-```tsx {3,9,11}
+```tsx {4,11,13}
 // App.tsx
 import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppKitProvider } from '@reown/appkit-react-native';
 import { appKit } from './AppKitConfig'; // Your configured AppKit instance
 import YourAppRootComponent from './YourAppRootComponent';
 
 function App() {
   return (
-    <AppKitProvider instance={appKit}>
-      <YourAppRootComponent />
-    </AppKitProvider>
+    <SafeAreaProvider>
+      <AppKitProvider instance={appKit}>
+        <YourAppRootComponent />
+      </AppKitProvider>
+    </SafeAreaProvider>
   );
 }
 
