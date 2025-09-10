@@ -8,7 +8,7 @@ All hooks are imported from `@reown/appkit-react-native`.
 
 ## `useAppKit()`
 
-This is the primary hook to get AppKit state and control the modal.
+The primary hook for controlling the modal's visibility and behavior. Use this hook when you need to programmatically open or close the modal, or when you want to show specific views like the connection screen or account details.
 
 ```typescript
 import { useAppKit } from '@reown/appkit-react-native';
@@ -16,18 +16,32 @@ import { useAppKit } from '@reown/appkit-react-native';
 export default function MyComponent() {
   const {
     // Modal Control
-    open, // Function to open the modal, optionally with a specific view (e.g., open({ view: 'Networks' }))
+    open, // Function to open the modal, optionally with a specific view
     close, // Function to close the modal
     isOpen, // Boolean indicating if the modal is currently open
 
     // Actions
     disconnect, // Function to disconnect the current session
-    switchNetwork, // Function to attempt to switch to a different chain/network (e.g., switchNetwork(network: AppKitNetwork))
+    switchNetwork, // Function to attempt to switch to a different chain/network
   } = useAppKit();
 }
 ```
 
-Opening the Modal with a Specific View
+### Use Cases
+- Opening the modal when a user clicks a "Connect Wallet" button
+- Closing the modal after a successful connection
+- Opening specific views of the modal (e.g., account view, connect view)
+- Disconnecting users from their wallets
+- Switching between different blockchain networks
+
+### Returns
+- `open`: Function to open the modal
+- `close`: Function to close the modal
+- `isOpen`: Boolean indicating if the modal is currently open
+- `disconnect`: Function to disconnect the current session
+- `switchNetwork`: Function to switch to a different chain/network
+
+### Parameters
 
 You can direct the modal to open to a specific view using the `open` function:
 
@@ -42,16 +56,15 @@ Here is a list of possible views you can select:
 | Variable         | Description                                                                                      |
 | ---------------- | ------------------------------------------------------------------------------------------------ |
 | `Connect`        | Principal view of the modal - default view when disconnected.                                    |
+| `WalletConnect`  | View with a QR code to scan with wallets and connect via WalletConnect                           |
 | `Account`        | User profile - default view when connected.                                                      |
 | `Networks`       | List of available networks - you can select and target a specific network before connecting.       |
 | `WhatIsANetwork` | "What is a network" onboarding view.                                                               |
 | `WhatIsAWallet`  | "What is a wallet" onboarding view.                                                                |
-{/* Add any other views if available, and verify these from the modal\'s implementation */}
 
 ## `useAccount()`
 
-This is the primary hook to access the details of the connected account.
-The exact properties returned by this hook should be verified against the source code.
+The essential hook for accessing wallet connection state and user information. Use this hook whenever you need to know if a user is connected, get their wallet address, or access their account details.
 
 ```typescript
 import { useAccount } from '@reown/appkit-react-native';
@@ -61,12 +74,16 @@ export default function MyComponent() {
     address, // String, the connected account address (e.g., '0x...', 'Sol...', 'bc1...')
     chainId, // Number or String, the chain ID of the currently active connection
     isConnected, // Boolean, true if a wallet is connected on the current chain/namespace
+    namespace, // String, the active namespace (e.g., 'eip155', 'solana', 'bip122')
+    chain, // AppKitNetwork object with active chain information
   } = useAccount();
 
   if (isConnected) {
     return (
       <div>
         <p>Connected to chain: {chainId}</p>
+        <p>Namespace: {namespace}</p>
+        <p>Chain: {chain?.name}</p>
         <p>Address: {address}</p>
       </div>
     );
@@ -75,27 +92,34 @@ export default function MyComponent() {
 }
 ```
 
+### Use Cases
+- Displaying the connected wallet address in your UI
+- Checking if a user is connected before showing certain features
+- Getting user information for authentication flows
+- Handling multi-chain scenarios where you need account info for specific chains
+- Implementing conditional rendering based on connection status
+- Accessing the active blockchain namespace for chain-specific logic
+- Getting detailed chain information for network-specific features
+
+### Returns
+- `address`: The connected account address (string)
+- `chainId`: The chain ID of the currently active connection (number or string)
+- `isConnected`: Boolean indicating if a wallet is connected on the current chain/namespace
+- `namespace`: The active namespace (string, e.g., 'eip155', 'solana', 'bip122')
+- `chain`: The active chain object with detailed chain information (AppKitNetwork type)
+
 ## `useProvider()`
 
-This hook provides access to the underlying chain-specific provider for the currently active connection. This is useful for performing direct interactions with the blockchain that go beyond the standard AppKit actions.
+The provider access hook that provides access to the underlying chain-specific provider for the currently active connection. Use this hook when you need to perform direct interactions with the blockchain that go beyond the standard AppKit actions.
 
 By default, `useProvider()` returns the provider for the currently active network.
 
 ```typescript
 import { useProvider, useAccount } from '@reown/appkit-react-native';
 
-// Example for EVM chains (using ethers.js)
-// import { BrowserProvider, JsonRpcSigner } from 'ethers';
-
-// Example for Solana
-// import { Connection } from '@solana/web3.js';
-
 export default function ChainSpecificActions() {
   // Get provider for the current active network
   const { provider, providerType } = useProvider(); 
-  // Or, to get a specific provider:
-  // const { provider: evmProvider, providerType: evmType } = useProvider('eip155');
-  // const { provider: solanaProvider, providerType: solanaType } = useProvider('solana');
 
   const { chainId, address, isConnected } = useAccount();
 
@@ -105,22 +129,13 @@ export default function ChainSpecificActions() {
 
   const handleSignMessageEVM = async () => {
     if (providerType === 'eip155' && address) {
-      // const ethersProvider = new BrowserProvider(provider); // Or however the provider is typed
-      // const signer = await ethersProvider.getSigner();
-      // const signature = await signer.signMessage('Hello from AppKit!');
-      // console.log('EVM Signature:', signature);
-      alert('EVM sign message functionality to be implemented using the provider.');
+      console.log('EVM sign message functionality to be implemented using the provider.');
     }
   };
 
   const handleSignMessageSolana = async () => {
     if (providerType === 'solana' && address) {
-      // const solanaConnection = provider as Connection; // Cast to Solana Connection
-      // const message = `Hello from AppKit! Address: ${address}`;
-      // const encodedMessage = new TextEncoder().encode(message);
-      // const signature = await provider.signMessage(encodedMessage, 'utf8'); // Assuming provider has signMessage
-      // console.log('Solana Signature:', signature);
-      alert('Solana sign message functionality to be implemented using the provider.');
+      console.log('Solana sign message functionality to be implemented using the provider.');
     }
   };
   
@@ -138,6 +153,17 @@ export default function ChainSpecificActions() {
 }
 ```
 
+### Use Cases
+- Accessing the wallet provider for direct blockchain interactions
+- Signing transactions and messages with the connected wallet
+- Integrating with blockchain-specific libraries (ethers, solana web3, etc.)
+- Building custom wallet interactions across different chains
+- Performing advanced blockchain operations not covered by AppKit's standard actions
+
+### Returns
+- `provider`: The underlying chain-specific provider for the currently active connection
+- `providerType`: The type of provider (e.g., 'eip155', 'solana', 'bip122')
+
 Refer to the example usage in:
 *   [EVM + Ethers](https://github.com/reown-com/appkit-react-native/blob/feat/multichain/apps/native/src/views/EthersActionsView.tsx)
 *   [EVM + Wagmi](https://github.com/reown-com/appkit-react-native/blob/feat/multichain/apps/native/src/views/WagmiActionsView.tsx) (Note: Wagmi has its own provider/signer abstractions, so `useProvider` might be used differently or in conjunction with Wagmi's hooks)
@@ -146,13 +172,13 @@ Refer to the example usage in:
 
 ## `useWalletInfo()`
 
-This hook provides metadata about the connected wallet. The exact structure of `walletInfo` can be found in the `WalletInfo` type definition in [packages/common/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/common/src/utils/TypeUtil.ts#L365).
+The wallet information hook that provides details about the connected wallet. Use this hook when you need to display wallet-specific information, show wallet branding, or implement wallet-specific features.
 
 ```typescript
 import { useWalletInfo } from '@reown/appkit-react-native';
 
 export default function WalletDetails() {
-  const { walletInfo } = useWalletInfo(); // Verify exact return structure from source
+  const { walletInfo } = useWalletInfo();
 
   if (!walletInfo) {
     return <p>No wallet connected or info unavailable.</p>;
@@ -169,10 +195,23 @@ export default function WalletDetails() {
 }
 ```
 
+### Use Cases
+- Displaying wallet-specific information in your UI
+- Implementing wallet-specific features
+- Showing wallet icons or branding
+- Handling wallet-specific behaviors
+- Creating custom wallet selection interfaces
+
+### Returns
+- `walletInfo`: Object containing metadata about the connected wallet (name, icon, rdns, id, etc.)
+
+<Note>
+The exact structure of `walletInfo` can be found in the `WalletInfo` type definition in [packages/common/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/common/src/utils/TypeUtil.ts#L365).
+</Note>
+
 ## `useAppKitEventSubscription()`
 
-AppKit emits events for various state changes and actions. You can subscribe to these events to react accordingly in your application. The full list of event types and their payloads can be found in `AppKitEvents` within [packages/core/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/core/src/utils/TypeUtil.ts#L369).
-This hook provides a way to subscribe to a specific modal event and receives a callback function that is executed when the event is triggered.
+The event subscription hook that allows you to listen to modal and wallet events. Use this hook when you need to track user interactions, implement analytics, or respond to specific wallet events in your application.
 
 ```typescript
 import { useAppKitEventSubscription } from '@reown/appkit-react-native'; 
@@ -185,6 +224,21 @@ export default function EventLogger() {
   return null; 
 }
 ```
+
+### Use Cases
+- Tracking user interactions with the modal
+- Implementing analytics for wallet connections
+- Creating custom notifications for connection events
+- Handling specific wallet events in your application
+- Monitoring connection state changes
+
+### Parameters
+- `eventType`: The specific event type to subscribe to (e.g., 'MODAL_OPEN', 'CONNECT_SUCCESS')
+- `callback`: Function that is executed when the event is triggered
+
+<Note>
+The full list of event types and their payloads can be found in `AppKitEvents` within [packages/core/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/core/src/utils/TypeUtil.ts#L369).
+</Note>
 
 ## Deprecated Hooks
 
