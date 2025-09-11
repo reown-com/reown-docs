@@ -22,7 +22,8 @@ platform :ios, '13.0'
 ```
 
 3.  - Run `$ pod install` inside the `/ios` folder.
-4.  - You should now be able to run your app with `flutter run --dart-define=PROJECT_ID={your_project_id}`
+4.  - Depending on the Flutter version you are running, you may be required to update your app's NDK version to `27.0.12077973` instead of the default `flutter.ndkVersion`
+5.  - You should now be able to run your app with `flutter run --dart-define=PROJECT_ID={your_project_id}`
 
 ### Enable Installed Wallet Detection
 
@@ -31,10 +32,10 @@ To enable AppKit to detect installed wallets on the device, you need to make spe
 <Tabs>
 <Tab title="iOS">
 
-1. Open your `Info.plist` file.
+1. Open your `Info.plist` file (typically under `ios/Runner/Info.plist`).
 2. Locate the `<key>LSApplicationQueriesSchemes</key>` section.
 3. Add the desired wallet schemes as string entries within the `<array>`. These schemes represent the wallets you want to detect.
-4. Refer to our [Info.plist example file](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/modal/ios/Runner/Info.plist) for a detailed illustration.
+4. Refer to our [Info.plist example file](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/modal/ios/Runner/Info.plist) for a detailed illustration.
 
 Example:
 
@@ -52,7 +53,7 @@ Example:
 </Tab>
 <Tab title="Android">
 
-1. Open your `AndroidManifest.xml` file.
+1. Open your `AndroidManifest.xml` file (typically under `android/app/src/main/AndroidManifest.xml`).
 2. Add your `<queries>...</queries>` schemes outside of `<application />` scope.
 3. Refer to [Android Specs](https://developer.android.com/guide/topics/manifest/queries-element) for more information.
 
@@ -140,7 +141,7 @@ override func application(_ application: UIApplication, continue userActivity: N
 }
 ```
 
-Check out the [AppDelegate.swift](https://github.com/reown-com/reown_flutter/blob/master/packages/reown_appkit/example/modal/ios/Runner/AppDelegate.swift) file from our sample dapp for reference.
+Check out the [AppDelegate.swift](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/modal/ios/Runner/AppDelegate.swift) file from our sample dapp for reference.
 
 </Tab>
 <Tab title="Android">
@@ -492,13 +493,20 @@ The rest of the configuration is identical to Phantom's configuration.
 
 Solflare Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Solflare Wallet in your app you just need to pass Solflare Wallet id `1ca0bdd4747578705b1939af023d120677c64fe6ca76add81fda36e350605e79` to [excludedWalletIds](./options#excludedwalletids) options Array.
 
-## Example
+## Examples
 
 <Card
-  title="AppKit with Flutter example"
+  title="Basic example"
   icon="github"
-  href="https://github.com/reown-com/reown_flutter/tree/master/packages/reown_appkit/example/base/lib">
-Check the Flutter example
+  href="https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/example.md">
+A starting point to use AppKit with Flutter
+</Card>
+
+<Card
+  title="Full example"
+  icon="github"
+  href="https://github.com/reown-com/reown_flutter/tree/develop/packages/reown_appkit/example/base/lib">
+Full Flutter example using AppKit, which is also our demo dApp
 </Card>
 
 ## Test Apps
