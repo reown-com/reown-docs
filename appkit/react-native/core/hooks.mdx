@@ -18,7 +18,6 @@ export default function MyComponent() {
     // Modal Control
     open, // Function to open the modal, optionally with a specific view
     close, // Function to close the modal
-    isOpen, // Boolean indicating if the modal is currently open
 
     // Actions
     disconnect, // Function to disconnect the current session
@@ -37,7 +36,6 @@ export default function MyComponent() {
 ### Returns
 - `open`: Function to open the modal
 - `close`: Function to close the modal
-- `isOpen`: Boolean indicating if the modal is currently open
 - `disconnect`: Function to disconnect the current session
 - `switchNetwork`: Function to switch to a different chain/network
 
@@ -240,10 +238,49 @@ export default function EventLogger() {
 The full list of event types and their payloads can be found in `AppKitEvents` within [packages/core/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/core/src/utils/TypeUtil.ts#L369).
 </Note>
 
-## Deprecated Hooks
+## `useAppKitState()`
 
-### `useAppKitState()`
-The functionality of `useAppKitState` (which previously exposed `open` (modal state) and `selectedNetworkId`) is now incorporated into `useAppKit()` (for modal control like `isOpen`) and `useAccount()` (for `chainId`).
+The state management hook that provides real-time access to the modal's current state and connection status. Use this hook when you need to react to modal state changes or synchronize your UI with the modal's status.
+
+```typescript
+import { useAppKitState } from '@reown/appkit-react-native';
+
+export default function AppStatus() {
+  const { 
+    isOpen, // Boolean indicating if the modal is currently open
+    isLoading, // Boolean indicating if the modal is loading
+    isConnected, // Boolean indicating if a user is connected
+    chain, // The connected chain object
+  } = useAppKitState();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <p>Modal is {isOpen ? 'open' : 'closed'}</p>
+      <p>User is {isConnected ? 'connected' : 'not connected'}</p>
+      {chain && <p>Connected to: {chain.name}</p>}
+    </div>
+  );
+}
+```
+
+### Use Cases
+- Syncing your UI with the modal's open/closed state
+- Creating custom UI elements that respond to modal state changes
+- Implementing custom loading states based on modal state
+- Checking connection status without accessing account details
+- Displaying chain-specific UI based on the connected blockchain
+
+### Returns
+- `isOpen`: Boolean indicating if the modal is currently open
+- `isLoading`: Boolean indicating if the modal is loading
+- `isConnected`: Boolean indicating if a user is connected
+- `chain`: The connected chain object
+
+## Deprecated Hooks
 
 ### `useDisconnect()`
 The functionality of `useDisconnect` (which previously exposed a `disconnect` function) is now available directly from the `useAppKit()` hook.
