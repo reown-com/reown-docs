@@ -9,215 +9,444 @@ These are the methods that wallets should implement to handle Tron transactions 
 **Please note:** The TRON RPC standard is still under review and specifications may change. Implementation details and method signatures are subject to updates.
 </Note>
 
-### tron_signTransaction
+## WalletConnect Tron Data Structure
 
-Sign a Tron transaction without executing it.
+### Background
 
-#### Parameters
+Tron WalletConnect currently defines request and response formats during the connection and transaction signing phases. However, the transaction payloads include a nested two-layer transaction structure, which is unintuitive and introduces unnecessary complexity for both DApps and wallets.
 
-1. `transaction` (object) - The transaction to sign:
-   - `address` (string) - The sender's Tron address
-   - `transaction` (object) - The transaction object to sign
+To simplify the data model while preserving backward compatibility, we propose introducing a new session property to distinguish between the legacy and improved structures.
 
-#### Returns
+### Problem Statement
 
-`object` - The signed transaction:
-- `txID` (string) - The transaction ID (deterministically derived from raw transaction)
-- `signature` (array) - Array of signature strings
-- `raw_data` (object) - The raw transaction data
-- `raw_data_hex` (string) - The hex-encoded raw transaction data
-- `visible` (boolean) - Whether addresses are in visible format
+#### Current State
 
-#### Example
+- Transaction requests and responses contain a nested `transaction.transaction` structure.
+- DApps and wallets must implement additional parsing logic, reducing readability and maintainability.
 
-```javascript
-// Request
+#### Issues
+
+- The double-wrapped format is not reasonable and adds friction.
+- Legacy clients depend on the existing structure, preventing an immediate removal.
+
+### Proposal
+
+During the initial handshake connection, introduce a new property in sessionProperties:
+
+```json
+"tron_method_version": "v1"
+```
+
+### Behavior Rules
+
+1. **If tron_method_version is not set**
+   - Default to the legacy two-layer transaction structure.
+
+2. **If tron_method_version is set to "v1"**
+   - Use the simplified single-layer transaction structure.
+
+### Compatibility
+
+#### Backward Compatibility
+
+- Older wallets and DApps that do not recognize `tron_method_version` will continue to operate with the legacy two-layer structure.
+
+#### Forward Compatibility
+
+- New wallets and DApps that detect `tron_method_version = "v1"` can switch to the simplified format without ambiguity.
+
+#### Migration Strategy
+
+- DApps are encouraged to include `"tron_method_version": "v1"` in session properties and migrate once wallet support becomes available.
+
+### Examples
+
+#### Legacy Format (no tron_method_version)
+
+```json
 {
-  "jsonrpc": "2.0",
-  "id": 1,
   "method": "tron_signTransaction",
   "params": {
-    "address": "TLyqzVGLV1srkB7dToTAEqgDSfPtXRJZYH",
     "transaction": {
-      "raw_data": {
-        "contract": [
-          {
-            "parameter": {
-              "value": {
-                "data": "095ea7b30000000000000000000000001cb0b7348eded93b8d0816bbeb819fc1d7a51f310000000000000000000000000000000000000000000000000000000000000000",
-                "owner_address": "411cb0b7348eded93b8d0816bbeb819fc1d7a51f31",
-                "contract_address": "41a614f803b6fd780986a42c78ec9c7f77e6ded13c"
-              },
-              "type_url": "type.googleapis.com/protocol.TriggerSmartContract"
-            },
-            "type": "TriggerSmartContract"
-          }
-        ],
-        "ref_block_bytes": "885b",
-        "ref_block_hash": "baa1c278fd0a309f",
-        "expiration": 1745849082000,
-        "fee_limit": 200000000,
-        "timestamp": 1745849022978
+      "transaction": {
+        "raw_data": { "..." },
+        "signature": [ "..." ]
       }
     }
   }
 }
+```
 
-// Response
+#### Simplified Format (tron_method_version = "v1")
+
+```json
 {
-  "jsonrpc": "2.0",
+  "method": "tron_signTransaction",
+  "params": {
+    "transaction": {
+      "raw_data": { "..." },
+      "signature": [ "..." ]
+    }
+  }
+}
+```
+
+## Examples of the specific interaction data structures in the old and new versions
+
+### 1. Legacy Version (Current Live Version)
+
+When the DApp first connects to the wallet, during the handshake phase, the wallet returns the following data structure to the DApp:
+
+```json
+{
+  "topic": "2fb9707cb8a96090086a01e8588f6d945e758de194b7c420ddedfe73ba5edc50",
+  "relay": {
+    "protocol": "irn"
+  },
+  "expiry": 1756801150,
+  "namespaces": {
+    "tron": {
+      "chains": [
+        "tron:0xcd8690dc"
+      ],
+      "methods": [
+        "tron_signTransaction",
+        "tron_signMessage"
+      ],
+      "events": [],
+      "accounts": [
+        "tron:0xcd8690dc:TKZRPqoV7WLFvjhT4cEyBLv27Rvv1RNWGj",
+        "tron:0xcd8690dc:TKjUieAbWUmLT4yb49KScm1QpvdtLNThJA"
+      ]
+    }
+  },
+  "acknowledged": true,
+  "pairingTopic": "07652034c42386047475769f152bbd5a555ebcacbbefdd3472019b535aa5dc67",
+  "requiredNamespaces": {},
+  "optionalNamespaces": {
+    "tron": {
+      "chains": [
+        "tron:0xcd8690dc"
+      ],
+      "methods": [
+        "tron_signTransaction",
+        "tron_signMessage"
+      ],
+      "events": []
+    }
+  },
+  "controller": "be038db73fa8200a84db34aa42d03c3f297475194792479b5e062cb3f0299211",
+  "self": {
+    "publicKey": "0ef4aead6735bdde898d82e7bd4b6782c368c6bb66e1e91c227b98544c269224",
+    "metadata": {
+      "description": "App to test WalletConnect network",
+      "url": "http://localhost:3000",
+      "icons": [
+        "https://avatars.githubusercontent.com/u/37784886"
+      ],
+      "name": "React App"
+    }
+  },
+  "peer": {
+    "publicKey": "be038db73fa8200a84db34aa42d03c3f297475194792479b5e062cb3f0299211",
+    "metadata": {
+      "description": "React Wallet for WalletConnect",
+      "url": "http://localhost:3001",
+      "icons": [
+        "https://avatars.githubusercontent.com/u/37784886"
+      ],
+      "name": "React Wallet Example"
+    }
+  },
+  "sessionProperties": {
+    "capabilities": "{}"
+  },
+  "transportType": "relay"
+}
+```
+
+#### DApp Sign Transaction (tron_signTransaction) request:
+
+The original transaction contained a nested transaction structure with two layers of architecture. The new version plans to remove this nested structure.
+
+```json
+{
+  "request": {
+    "method": "tron_signTransaction",
+    "params": {
+      "address": "TRdBacSikr7sdNgXYdnyNEuws3teBuSQkc",
+      "transaction": {
+        "result": {
+          "result": true
+        },
+        "transaction": {
+          "visible": false,
+          "txID": "48f387378bea992bf9e4bca775418fb9bb8c51a9d652276b67d3f979f4b0634f",
+          "raw_data": {
+            "contract": [
+              {
+                "parameter": {
+                  "value": {
+                    "data": "095ea7b3000000000000000000000000abb881b6c26041d37366e4385e54e442e627da6900000000000000000000000000000000000000000000000000000000000000",
+                    "owner_address": "41abb881b6c26041d37366e4385e54e442e627da69",
+                    "contract_address": "41eca9bc828a3005b9a3b909f2cc5c2a54794de05f"
+                  },
+                  "type_url": "type.googleapis.com/protocol.TriggerSmartContract"
+                },
+                "type": "TriggerSmartContract"
+              }
+            ],
+            "ref_block_bytes": "629a",
+            "ref_block_hash": "0cba95b63360afa5",
+            "expiration": 1756185075000,
+            "fee_limit": 200000000,
+            "timestamp": 1756185015950
+          },
+          "raw_data_hex": "0a02629a22080cba95b63360afa540b8baa6a68e335aae01081f12a9010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412740a1541abb881b6c26041d37366e4385e54e442e627da69121541eca9bc828a3005b9a3b909f2cc5c2a54794de05f2244095ea7b3000000000000000000000000abb881b6c26041d37366e4385e54e442e627da69000000000000000000000000000000000000000000000000000000000000000708eeda2a68e3390018084af5f"
+        }
+      }
+    },
+    "expiryTimestamp": 1756185315
+  },
+  "chainId": "tron:0xcd8690dc"
+}
+```
+
+#### Wallet Response:
+
+```json
+{
   "result": {
-    "txID": "66e79c6993f29b02725da54ab146ffb0453ee6a43b4083568ad9585da305374a",
-    "signature": [
-      "7e760cef94bc82a7533bc1e8d4ab88508c6e13224cd50cc8da62d3f4d4e19b99514f..."
-    ],
+    "visible": false,
+    "txID": "e074fcc8f5c823094a2a7445ed7635752d826073675bac51a71170c0695a1674",
     "raw_data": {
-      "expiration": 1745849082000,
       "contract": [
         {
           "parameter": {
-            "type_url": "type.googleapis.com/protocol.TriggerSmartContract",
             "value": {
-              "data": "095ea7b30000000000000000000000001cb0b7348eded93b8d0816bbeb819fc1d7a51f310000000000000000000000000000000000000000000000000000000000000000",
-              "contract_address": "41a614f803b6fd780986a42c78ec9c7f77e6ded13c",
-              "owner_address": "411cb0b7348eded93b8d0816bbeb819fc1d7a51f31"
-            }
+              "data": "095ea7b300000000000000000000000069319ea845b1c35a1f7b0e1429f4f303e8f791330000000000000000000000000000000000000000000000000000000000000000",
+              "owner_address": "4169319ea845b1c35a1f7b0e1429f4f303e8f79133",
+              "contract_address": "41eca9bc828a3005b9a3b909f2cc5c2a54794de05f"
+            },
+            "type_url": "type.googleapis.com/protocol.TriggerSmartContract"
           },
           "type": "TriggerSmartContract"
         }
       ],
-      "ref_block_hash": "baa1c278fd0a309f",
+      "ref_block_bytes": "76d0",
+      "ref_block_hash": "607b815d85381e48",
+      "expiration": 1756200645000,
       "fee_limit": 200000000,
-      "timestamp": 1745849022978,
-      "ref_block_bytes": "885b"
+      "timestamp": 1756200587861
     },
-    "visible": false,
-    "raw_data_hex": "0a02885b2208baa1c278fd0a309f4090c1dbe5e7325aae01081f12a9010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412740a15411cb0b7348eded93b8d0816bbeb819fc1d7a51f31121541a614f803b6fd780986a42c78ec9c7f77e6ded13c2244095ea7b30000000000000000000000001cb0b7348eded93b8d0816bbeb819fc1d7a51f3100000000000000000000000000000000000000000000000000000000000000007082f4d7e5e73290018084af5f"
-  },
-  "id": 1
-}
-```
-
-### tron_signMessage
-
-Sign a personal message.
-
-#### Parameters
-
-1. `message` (object) - The message to sign:
-   - `message` (string) - The message to sign (plain text)
-   - `address` (string) - The account address to sign with
-
-#### Returns
-
-`object` - The signed message:
-- `signature` (string) - The signature string
-
-#### Example
-
-```javascript
-// Request
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "tron_signMessage",
-  "params": {
-    "message": "This is a message to be signed for TRON",
-    "address": "TLyqzVGLV1srkB7dToTAEqgDSfPtXRJZYH"
+    "raw_data_hex": "0a0276d02208607b815d85381e484088e3dcad8e335aae01081f12a9010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412740a154169319ea845b1c35a1f7b0e1429f4f303e8f79133121541eca9bc828a3005b9a3b909f2cc5c2a54794de05f2244095ea7b300000000000000000000000069319ea845b1c35a1f7b0e1429f4f303e8f79133000000000000000000000000000000000000000000000000000000000000000070d5a4d9ad8e3390018084af5f",
+    "signature": [
+      "70887c577c630db1fd7cc14af727fb6cc20ead2ad44e8851380d29aa618c0f750299ea6e4640cb556061f98ae4879897d41ea6c2226766e0287d4bf4faa729001"
+    ]
   }
 }
+```
 
-// Response
+#### DApp Sign Message (tron_signMessage) request:
+
+```json
 {
-  "jsonrpc": "2.0",
-  "result": {
-    "signature": "7e760cef94bc82a7533bc1e8d4ab88508c6e13224cd50cc8da62d3f4d4e19b99514f..."
+  "request": {
+    "method": "tron_signMessage",
+    "params": {
+      "address": "TRdBacSikr7sdNgXYdnyNEuws3teBuSQkc",
+      "message": "This is a message to be signed for Tron"
+    },
+    "expiryTimestamp": 1756185526
   },
-  "id": 1
+  "chainId": "tron:0xcd8690dc"
 }
 ```
 
-### tron_sendTransaction
+#### Wallet Response:
 
-Broadcast a signed transaction to the Tron network.
-
-#### Parameters
-
-1. `signedTransaction` (object) - The signed transaction object:
-   - `txID` (string) - The transaction ID
-   - `signature` (array) - Array of signature strings
-   - `raw_data` (object) - The raw transaction data
-   - `raw_data_hex` (string) - The hex-encoded raw transaction data
-
-#### Returns
-
-`object` - The transaction result:
-- `result` (boolean) - Whether the transaction was successfully broadcast
-- `txid` (string) - The transaction ID that can be used to look up the transaction
-
-#### Example
-
-```javascript
-// Request
+```json
 {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "tron_sendTransaction",
-  "params": {
-    "signedTransaction": {
-      "txID": "66e79c6993f29b02725da54ab146ffb0453ee6a43b4083568ad9585da305374a",
-      "signature": [
-        "7e760cef94bc82a7533bc1e8d4ab88508c6e13224cd50cc8da62d3f4d4e19b99514f..."
+  "signature": "0xbf2800a3017b770fb34fce36786d2f12bd160fdabf7d6ba1f78600421ef62d5e3327428961296af40667578efbbe343b85f0e4293db5d44afb150e087bc1e9b01b"
+}
+```
+
+### 2. New Version
+
+#### Connect Wallet:
+
+In the new wallet connection, the wallet needs add a `tron_method_version` in the `sessionProperties` in the response, which is as follows:
+
+```json
+"sessionProperties": {
+  "tron_method_version": "v1"
+}
+```
+
+Example:
+
+```json
+{
+  "topic": "c34d0da7eb5ed1f4f5a5f5907021a47c377a58fffc27b5ef4ed23a4d1268e562",
+  "relay": {
+    "protocol": "irn"
+  },
+  "expiry": 1756793071,
+  "namespaces": {
+    "tron": {
+      "chains": [
+        "tron:0xcd8690dc"
       ],
-      "raw_data_hex": "0a02885b2208baa1c278fd0a309f4090c1dbe5e7325aae01081f12a9010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412740a15411cb0b7348eded93b8d0816bbeb819fc1d7a51f31121541a614f803b6fd780986a42c78ec9c7f77e6ded13c2244095ea7b30000000000000000000000001cb0b7348eded93b8d0816bbeb819fc1d7a51f3100000000000000000000000000000000000000000000000000000000000000007082f4d7e5e73290018084af5f"
+      "methods": [
+        "tron_signTransaction",
+        "tron_signMessage"
+      ],
+      "events": [],
+      "accounts": [
+        "tron:0xcd8690dc:TRdBacSikr7sdNgXYdnyNEuws3teBuSQkc",
+        "tron:0xcd8690dc:TKjUieAbWUmLT4yb49KScm1QpvdtLNThJA"
+      ]
     }
-  }
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "result": true,
-    "txid": "66e79c6993f29b02725da54ab146ffb0453ee6a43b4083568ad9585da305374a"
   },
-  "id": 1
+  "acknowledged": true,
+  "pairingTopic": "cc2af56910432e1f5081b663ef16a0a97c8f43981427e946adebd71a295c1411",
+  "requiredNamespaces": {},
+  "optionalNamespaces": {
+    "tron": {
+      "chains": [
+        "tron:0xcd8690dc"
+      ],
+      "methods": [
+        "tron_signTransaction",
+        "tron_signMessage"
+      ],
+      "events": []
+    }
+  },
+  "controller": "a229864b55820667c4c9f68d7389b6fa3bde77b21d3a87fc12e06cbec22e2f23",
+  "self": {
+    "publicKey": "f950a2fef42a6c116a81e1ee3d4a07e3fc1c4e3e3a777a1b8fb393575396fa5e",
+    "metadata": {
+      "description": "App to test WalletConnect network",
+      "url": "http://localhost:3000",
+      "icons": [
+        "https://avatars.githubusercontent.com/u/37784886"
+      ],
+      "name": "React App"
+    }
+  },
+  "peer": {
+    "publicKey": "a229864b55820667c4c9f68d7389b6fa3bde77b21d3a87fc12e06cbec22e2f23",
+    "metadata": {
+      "description": "React Wallet for WalletConnect",
+      "url": "http://localhost:3001",
+      "icons": [
+        "https://avatars.githubusercontent.com/u/37784886"
+      ],
+      "name": "React Wallet Example"
+    }
+  },
+  "sessionProperties": {
+    "capabilities": "{}",
+    "tron_method_version": "v1"
+  },
+  "transportType": "relay"
 }
 ```
 
-### tron_getBalance
+#### DApp Sign Transaction (tron_signTransaction) request:
 
-Get the TRX balance of a Tron address.
-
-#### Parameters
-
-1. `address` (string) - The Tron address to query
-
-#### Returns
-
-`number` - The balance in SUN (1 TRX = 1,000,000 SUN)
-
-#### Example
-
-```javascript
-// Request
+```json
 {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "tron_getBalance",
-  "params": {
-    "address": "TLyqzVGLV1srkB7dToTAEqgDSfPtXRJZYH"
-  }
-}
-
-// Response
-{
-  "jsonrpc": "2.0",
-  "result": 1000000000,
-  "id": 1
+  "request": {
+    "method": "tron_signTransaction",
+    "params": {
+      "address": "TKZRPqoV7WLFvjhT4cEyBLv27Rvv1RNWGj",
+      "transaction": {
+        "visible": false,
+        "txID": "539f218871fdd87e94eb03a0dd617107ba722005f37a5ddb82cb65aa4f3b73b0",
+        "raw_data": {
+          "contract": [
+            {
+              "parameter": {
+                "value": {
+                  "data": "095ea7b300000000000000000000000069319ea845b1c35a1f7b0e1429f4f303e8f791330000000000000000000000000000000000000000000000000000000000000000",
+                  "owner_address": "4169319ea845b1c35a1f7b0e1429f4f303e8f79133",
+                  "contract_address": "41eca9bc828a3005b9a3b909f2cc5c2a54794de05f"
+                },
+                "type_url": "type.googleapis.com/protocol.TriggerSmartContract"
+              },
+              "type": "TriggerSmartContract"
+            }
+          ],
+          "ref_block_bytes": "7803",
+          "ref_block_hash": "16138f9255a1db91",
+          "expiration": 1756201572000,
+          "fee_limit": 200000000,
+          "timestamp": 1756201512720
+        },
+        "raw_data_hex": "0a027803220816138f9255a1db9140a0ad95ae8e335aae01081f12a9010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412740a154169319ea845b1c35a1f7b0e1429f4f303e8f79133121541eca9bc828a3005b9a3b909f2cc5c2a54794de05f2244095ea7b300000000000000000000000069319ea845b1c35a1f7b0e1429f4f303e8f79133000000000000000000000000000000000000000000000000000000000000000007090de91ae8e3390018084af5f"
+      }
+    },
+    "expiryTimestamp": 1756201811
+  },
+  "chainId": "tron:0xcd8690dc"
 }
 ```
 
-## Additional Resources
+#### Wallet Response:
 
-For more information about Tron RPC methods and implementation details, please refer to the [official Tron documentation](https://developers.tron.network/).
+```json
+{
+  "visible": false,
+  "txID": "539f218871fdd87e94eb03a0dd617107ba722005f37a5ddb82cb65aa4f3b73b0",
+  "raw_data": {
+    "contract": [
+      {
+        "parameter": {
+          "value": {
+            "data": "095ea7b300000000000000000000000069319ea845b1c35a1f7b0e1429f4f303e8f791330000000000000000000000000000000000000000000000000000000000000000",
+            "owner_address": "4169319ea845b1c35a1f7b0e1429f4f303e8f79133",
+            "contract_address": "41eca9bc828a3005b9a3b909f2cc5c2a54794de05f"
+          },
+          "type_url": "type.googleapis.com/protocol.TriggerSmartContract"
+        },
+        "type": "TriggerSmartContract"
+      }
+    ],
+    "ref_block_bytes": "7803",
+    "ref_block_hash": "16138f9255a1db91",
+    "expiration": 1756201572000,
+    "fee_limit": 200000000,
+    "timestamp": 1756201512720
+  },
+  "raw_data_hex": "0a027803220816138f9255a1db9140a0ad95ae8e335aae01081f12a9010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412740a154169319ea845b1c35a1f7b0e1429f4f303e8f79133121541eca9bc828a3005b9a3b909f2cc5c2a54794de05f2244095ea7b300000000000000000000000069319ea845b1c35a1f7b0e1429f4f303e8f79133000000000000000000000000000000000000000000000000000000000000000007090de91ae8e3390018084af5f",
+  "signature": [
+    "1c2dd921c15fd83ca1dec4fd999b801f08c8bb073702f4bfafa4132a6e129421ed6267ec81c7dd2e4ef04ce077b101186ec2cda86d69f9f44255c216398cc9c601"
+  ]
+}
+```
+
+#### DApp Sign Message (tron_signMessage) request:
+
+```json
+{
+  "request": {
+    "method": "tron_signMessage",
+    "params": {
+      "address": "TRdBacSikr7sdNgXYdnyNEuws3teBuSQkc",
+      "message": "This is a message to be signed for Tron"
+    },
+    "expiryTimestamp": 1756185526
+  },
+  "chainId": "tron:0xcd8690dc"
+}
+```
+
+#### Wallet Response:
+
+```json
+{
+  "signature": "0xbf2800a3017b770fb34fce36786d2f12bd160fdabf7d6ba1f78600421ef62d5e3327428961296af40667578efbbe343b85f0e4293db5d44afb150e087bc1e9b01b"
+}
+```
