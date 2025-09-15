@@ -5,10 +5,6 @@ description: Tron JSON-RPC Methods
 
 These are the methods that wallets should implement to handle Tron transactions and messages via WalletConnect.
 
-<Note type="warning">
-**Please note:** The TRON RPC standard is still under review and specifications may change. Implementation details and method signatures are subject to updates.
-</Note>
-
 ## Session Properties
 
 To enable the new simplified transaction structure, wallets should include `tron_method_version: "v1"` in their `sessionProperties` during the connection handshake:
@@ -29,23 +25,25 @@ Sign a Tron transaction without executing it.
 
 #### Parameters
 
-1. `transaction` (object) - The transaction to sign:
+- The transaction to sign:
    - `address` (string) - The sender's Tron address
    - `transaction` (object) - The transaction object to sign
 
 #### Returns
 
-`object` - The signed transaction:
-- `txID` (string) - The transaction ID (deterministically derived from raw transaction)
-- `signature` (array) - Array of signature strings
-- `raw_data` (object) - The raw transaction data
-- `raw_data_hex` (string) - The hex-encoded raw transaction data
-- `visible` (boolean) - Whether addresses are in visible format
+- The signed transaction:
+  - `txID` (string) - The transaction ID (deterministically derived from raw transaction)
+  - `signature` (array) - Array of signature strings
+  - `raw_data` (object) - The raw transaction data
+  - `raw_data_hex` (string) - The hex-encoded raw transaction data
+  - `visible` (boolean) - Whether addresses are in visible format
 
+<AccordionGroup>
+  <Accordion title="Legacy Format">
 #### Example (Legacy Format)
 
+- Request with the nested `transaction.transaction` format
 ```javascript
-// Request
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -78,8 +76,10 @@ Sign a Tron transaction without executing it.
     }
   }
 }
+```
 
-// Response
+- Response:
+```javascript
 {
   "jsonrpc": "2.0",
   "result": {
@@ -113,11 +113,13 @@ Sign a Tron transaction without executing it.
   "id": 1
 }
 ```
+</Accordion>
+</AccordionGroup>
 
 #### Example (New Format with tron_method_version: "v1")
 
+Request with the simplified format:
 ```javascript
-// Request
 {
   "request": {
     "method": "tron_signTransaction",
@@ -153,8 +155,10 @@ Sign a Tron transaction without executing it.
   },
   "chainId": "tron:0xcd8690dc"
 }
+```
 
-// Response
+- Response:
+```javascript
 {
   "visible": false,
   "txID": "539f218871fdd87e94eb03a0dd617107ba722005f37a5ddb82cb65aa4f3b73b0",
@@ -191,19 +195,21 @@ Sign a personal message.
 
 #### Parameters
 
-1. `message` (object) - The message to sign:
+The message to sign:
    - `message` (string) - The message to sign (plain text)
    - `address` (string) - The account address to sign with
 
 #### Returns
 
-`object` - The signed message:
+The signed message:
 - `signature` (string) - The signature string
 
+<AccordionGroup>
+  <Accordion title="Legacy Format">
 #### Example (Legacy Format)
 
+- Request:
 ```javascript
-// Request
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -213,8 +219,12 @@ Sign a personal message.
     "address": "TLyqzVGLV1srkB7dToTAEqgDSfPtXRJZYH"
   }
 }
+```
 
-// Response
+- Response:
+```javascript
+
+```javascript
 {
   "jsonrpc": "2.0",
   "result": {
@@ -223,11 +233,13 @@ Sign a personal message.
   "id": 1
 }
 ```
+</Accordion>
+</AccordionGroup>
 
 #### Example (New Format with tron_method_version: "v1")
 
+- Request:
 ```javascript
-// Request
 {
   "request": {
     "method": "tron_signMessage",
@@ -239,8 +251,10 @@ Sign a personal message.
   },
   "chainId": "tron:0xcd8690dc"
 }
+```
 
-// Response
+- Response:
+```javascript
 {
   "signature": "0xbf2800a3017b770fb34fce36786d2f12bd160fdabf7d6ba1f78600421ef62d5e3327428961296af40667578efbbe343b85f0e4293db5d44afb150e087bc1e9b01b"
 }
@@ -252,7 +266,7 @@ Broadcast a signed transaction to the Tron network.
 
 #### Parameters
 
-1. `signedTransaction` (object) - The signed transaction object:
+The signed transaction object:
    - `txID` (string) - The transaction ID
    - `signature` (array) - Array of signature strings
    - `raw_data` (object) - The raw transaction data
@@ -260,14 +274,15 @@ Broadcast a signed transaction to the Tron network.
 
 #### Returns
 
-`object` - The transaction result:
+The transaction result:
 - `result` (boolean) - Whether the transaction was successfully broadcast
 - `txid` (string) - The transaction ID that can be used to look up the transaction
 
 #### Example
 
+- Request:
 ```javascript
-// Request
+
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -282,8 +297,10 @@ Broadcast a signed transaction to the Tron network.
     }
   }
 }
+```
 
-// Response
+- Response:
+```javascript
 {
   "jsonrpc": "2.0",
   "result": {
@@ -309,7 +326,7 @@ Get the TRX balance of a Tron address.
 #### Example
 
 ```javascript
-// Request
+- Request:
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -318,8 +335,10 @@ Get the TRX balance of a Tron address.
     "address": "TLyqzVGLV1srkB7dToTAEqgDSfPtXRJZYH"
   }
 }
+```
 
-// Response
+- Response:
+```javascript
 {
   "jsonrpc": "2.0",
   "result": 1000000000,
