@@ -86,6 +86,38 @@ var gasAmount = await AppKit.Evm.EstimateGasAsync(contractAddress, abi, "transfe
 // Send transaction
 var result = await AppKit.Evm.WriteContractAsync(contractAddress, abi, "transfer", gasAmount, arguments);
 ```
+
+### Usage with Solidity Structs
+
+To use Solidity structs when interacting with smart contracts on native platforms, you need to define them as C# classes and mark them with the function encoding attributes from Nethereum.
+This is not required on WebGL platforms.
+
+```csharp
+using Nethereum.ABI.FunctionEncoding.Attributes;
+
+[Serializable]
+public class ClaimCondition
+{
+    [Parameter("uint256", "startTimestamp", 1)]
+    public BigInteger StartTimestamp { get; set; }
+
+    [Parameter("uint256", "quantityLimitPerWallet", 4)]
+    public BigInteger QuantityLimitPerWallet { get; set; }
+
+    [Parameter("bytes32", "merkleRoot", 5)]
+    public string MerkleRoot { get; set; }
+
+    [Parameter("uint256", "pricePerToken", 6)]
+    public BigInteger PricePerToken { get; set; }
+
+    [Parameter("address", "currency", 7)]
+    public string Currency { get; set; }
+
+    [Parameter("string", "metadata", 8)]
+    public string Metadata { get; set; }
+}
+```
+
 ## Nethereum Integration
 
 AppKit offers deep integration with [Nethereum](https://nethereum.com/) on native platforms, with limited support on WebGL.

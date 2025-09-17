@@ -47,6 +47,7 @@ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 // 3. Create modal
 createAppKit({
   projectId,
+  metadata,
   wagmiConfig,
   defaultChain: mainnet, // Optional
   enableAnalytics: true, // Optional - defaults to your Cloud configuration

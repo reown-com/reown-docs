@@ -45,12 +45,6 @@ const customNetwork = defineChain({
     name: 'Ether',
     symbol: 'ETH',
   },
-  rpcUrls: {
-    default: {
-      http: ['RPC_URL'],
-      webSocket: ['WS_RPC_URL'],
-    },
-  },
   blockExplorers: {
     default: { name: 'Explorer', url: 'BLOCK_EXPLORER_URL' },
   },
@@ -68,3 +62,13 @@ createAppKit({
     }
 })
 ```
+You can use your own RPC by setting the `customRpcUrls` option in the [AppKit configuration](/appkit/javascript/core/options#customrpcurls). This lets you define custom RPC URLs for specific chains. Each entry must follow the format:
+
+```javascript
+customRpcUrls: {
+  [eip155:1]: 'https://your.custom.rpc.url',
+  [eip155:137]: 'https://your.polygon.rpc.url'
+}
+```
+
+AppKit will prioritize these URLs over the default ones.

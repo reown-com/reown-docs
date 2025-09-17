@@ -11,13 +11,9 @@ title: "Dapp Usage"
 <Tab title="Web">
 This library is compatible with Node.js, browsers and React Native applications (Node.js modules require polyfills for React Native).
 
-Dapps will also need to install WalletConnectModal for the UI.
-
-<CodeGroup>
-  ```bash npm npm install @walletconnect/modal ``` ```bash Yarn yarn add
-  @walletconnect/modal ``` ```bash Bun bun add @walletconnect/modal ``` ```bash
-  pnpm pnpm add @walletconnect/modal ```
-</CodeGroup>
+<Note>
+  `@walletconnect/modal` is now deprecated. Please use `@reown/appkit` instead. For migration guidance, see the [WalletConnect Modal to Reown AppKit Core migration guide](/appkit/upgrade/wcm).
+</Note>
 
 <Note>
   For an example implementation, please refer to our `react-dapp-v2`
@@ -26,12 +22,42 @@ Dapps will also need to install WalletConnectModal for the UI.
 
 #### Install Packages
 
-Dapps will also need to install `WalletConnectModal` for the UI.
+<CodeGroup>
+```bash npm
+npm install @walletconnect/sign-client
+```
+
+```bash Yarn
+yarn add @walletconnect/sign-client
+```
+
+```bash Bun
+bun add @walletconnect/sign-client
+```
+
+```bash pnpm
+pnpm add @walletconnect/sign-client
+```
+</CodeGroup>
+
+Dapps will also need to install Reown AppKit for the UI.
 
 <CodeGroup>
-  ```bash npm npm install @walletconnect/modal ``` ```bash Yarn yarn add
-  @walletconnect/modal ``` ```bash Bun bun add @walletconnect/modal ``` ```bash
-  pnpm pnpm add @walletconnect/modal ```
+```bash npm
+npm install @reown/appkit
+```
+
+```bash Yarn
+yarn add @reown/appkit
+```
+
+```bash Bun
+bun add @reown/appkit
+```
+
+```bash pnpm
+pnpm add @reown/appkit
+```
 </CodeGroup>
 
 #### Create a Session
@@ -81,15 +107,16 @@ signClient.on("session_delete", () => {
 });
 ```
 
-**3. Create a new WalletConnectModal instance.**
+**3. Create a new AppKit instance.**
 
 ```javascript
-import { WalletConnectModal } from "@walletconnect/modal";
+import { createAppKit } from "@reown/appkit/core";
+import { mainnet } from "@reown/appkit/networks";
 
-const walletConnectModal = new WalletConnectModal({
+const modal = createAppKit({
   projectId: "<YOUR_PROJECT_ID>",
-  // `standaloneChains` can also be specified when calling `walletConnectModal.openModal(...)` later on.
-  standaloneChains: ["eip155:1"],
+  networks: [mainnet],
+  manualWCControl: true
 });
 ```
 
@@ -118,14 +145,14 @@ try {
 
   // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
   if (uri) {
-    walletConnectModal.openModal({ uri });
+    modal.open({ uri });
     // Await session approval from the wallet.
     const session = await approval();
     // Handle the returned session (e.g. update UI to "connected" state).
     // * You will need to create this function *
     onSessionConnect(session);
     // Close the QRCode modal in case it was open.
-    walletConnectModal.closeModal();
+    modal.close();
   }
 } catch (e) {
   console.error(e);
@@ -182,7 +209,7 @@ const result = await signClient.request({
 });
 ```
 
-> For more information on available JSON-RPC requests, see the [JSON-RPC reference](../../advanced/multichain/rpc-reference/ethereum-rpc.md).
+> For more information on available JSON-RPC requests, see the [JSON-RPC reference](/advanced/multichain/rpc-reference/ethereum-rpc).
 
 ### Restoring a Session
 

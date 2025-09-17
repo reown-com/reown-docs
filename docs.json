@@ -93,22 +93,21 @@
             "group": "Cloud",
             "pages": [
               {
-                "group": "Explorer",
+                "group": "WalletGuide",
                 "pages": [
-                  "cloud/explorer",
                   "cloud/explorer-submission",
                   {
-                    "group": "Explorer Chains",
+                    "group": "WalletGuide Chains",
                     "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
                   },
                   {
-                    "group": "Explorer Wallets",
+                    "group": "WalletGuide Wallets",
                     "pages": ["cloud/wallets/wallet-list"]
-                  }
+                  },
+                  "cloud/explorer"
                 ]
               },
               "cloud/reown-authentication",
-              "cloud/verify",
               "cloud/relay",
               "cloud/blockchain-api",
               "cloud/analytics",
@@ -174,10 +173,6 @@
                     "pages": ["advanced/api/core/pairing", "advanced/api/core/relay", "advanced/api/core/shared-core"]
                   },
                   {
-                    "group": "Notify",
-                    "pages": ["advanced/api/notify/about"]
-                  },
-                  {
                     "group": "Sign",
                     "pages": [
                       "advanced/api/sign/overview",
@@ -218,6 +213,12 @@
                 "pages": ["appkit/overview"]
               },
               {
+                "group": "Paid Plans",
+                "pages": [
+                  "appkit/paid-plans/enterprise"
+                ]
+              },
+              {
                 "group": "Features",
                     "pages": [
                       "appkit/features/index",
@@ -226,7 +227,6 @@
                       "appkit/features/multichain",
                       "appkit/features/smart-accounts",
                       "appkit/features/smart-accounts-interaction",
-                      "appkit/features/notifications",
                       "appkit/features/sponsored-transactions",
                       "appkit/features/smart-sessions",
                       "appkit/features/chain-abstraction"
@@ -252,6 +252,7 @@
                     "pages": [
                       "appkit/payments/overview",
                       "appkit/payments/pay-with-exchange",
+                      "appkit/payments/deposit-with-exchange",
                       "appkit/payments/one-click-checkout",
                       "appkit/payments/subscriptions"
                     ]
@@ -362,7 +363,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/react/payments/pay-with-exchange"
+                  "appkit/react/payments/pay-with-exchange",
+                  "appkit/react/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -374,36 +376,8 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/react/notifications/overview",
-                  "appkit/react/notifications/cloud-setup",
-                  "appkit/react/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/react/notifications/frontend-integration/usage",
-                      "appkit/react/notifications/frontend-integration/api",
-                      "appkit/react/notifications/frontend-integration/examples",
-                      "appkit/react/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/react/notifications/backend-integration",
-                  "appkit/react/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/react/notifications/authorization-signatures/overview",
-                      "appkit/react/notifications/authorization-signatures/this-app",
-                      "appkit/react/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/react/cloud/verify",
                   "appkit/react/cloud/relay",
                   "appkit/react/cloud/blockchain-api",
                   "appkit/react/cloud/analytics"
@@ -450,7 +424,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/next/payments/pay-with-exchange"
+                  "appkit/next/payments/pay-with-exchange",
+                  "appkit/next/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -462,36 +437,8 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/next/notifications/overview",
-                  "appkit/next/notifications/cloud-setup",
-                  "appkit/next/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/next/notifications/frontend-integration/usage",
-                      "appkit/next/notifications/frontend-integration/api",
-                      "appkit/next/notifications/frontend-integration/examples",
-                      "appkit/next/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/next/notifications/backend-integration",
-                  "appkit/next/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/next/notifications/authorization-signatures/overview",
-                      "appkit/next/notifications/authorization-signatures/this-app",
-                      "appkit/next/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/next/cloud/verify",
                   "appkit/next/cloud/relay",
                   "appkit/next/cloud/blockchain-api",
                   "appkit/next/cloud/analytics"
@@ -538,7 +485,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/vue/payments/pay-with-exchange"
+                  "appkit/vue/payments/pay-with-exchange",
+                  "appkit/vue/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -550,36 +498,8 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/vue/notifications/overview",
-                  "appkit/vue/notifications/cloud-setup",
-                  "appkit/vue/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/vue/notifications/frontend-integration/usage",
-                      "appkit/vue/notifications/frontend-integration/api",
-                      "appkit/vue/notifications/frontend-integration/examples",
-                      "appkit/vue/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/vue/notifications/backend-integration",
-                  "appkit/vue/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/vue/notifications/authorization-signatures/overview",
-                      "appkit/vue/notifications/authorization-signatures/this-app",
-                      "appkit/vue/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/vue/cloud/verify",
                   "appkit/vue/cloud/relay",
                   "appkit/vue/cloud/blockchain-api",
                   "appkit/vue/cloud/analytics"
@@ -625,7 +545,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/javascript/payments/pay-with-exchange"
+                  "appkit/javascript/payments/pay-with-exchange",
+                  "appkit/javascript/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -637,36 +558,8 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/javascript/notifications/overview",
-                  "appkit/javascript/notifications/cloud-setup",
-                  "appkit/javascript/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/javascript/notifications/frontend-integration/usage",
-                      "appkit/javascript/notifications/frontend-integration/api",
-                      "appkit/javascript/notifications/frontend-integration/examples",
-                      "appkit/javascript/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/javascript/notifications/backend-integration",
-                  "appkit/javascript/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/javascript/notifications/authorization-signatures/overview",
-                      "appkit/javascript/notifications/authorization-signatures/this-app",
-                      "appkit/javascript/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/javascript/cloud/verify",
                   "appkit/javascript/cloud/relay",
                   "appkit/javascript/cloud/blockchain-api",
                   "appkit/javascript/cloud/analytics"
@@ -764,6 +657,13 @@
                 ]
               },
               {
+                "group": "Transactions",
+                "pages": [
+                  "appkit/react-native/transactions/swaps",
+                  "appkit/react-native/transactions/onramp"
+                ]
+              },
+              {
                 "group": "Authentication",
                 "pages": [
                   "appkit/react-native/core/email",
@@ -771,36 +671,8 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  "appkit/react-native/notifications/overview",
-                  "appkit/react-native/notifications/cloud-setup",
-                  "appkit/react-native/notifications/cloud-sending",
-                  {
-                    "group": "Frontend Integration",
-                    "pages": [
-                      "appkit/react-native/notifications/frontend-integration/usage",
-                      "appkit/react-native/notifications/frontend-integration/api",
-                      "appkit/react-native/notifications/frontend-integration/examples",
-                      "appkit/react-native/notifications/frontend-integration/migration-guide"
-                    ]
-                  },
-                  "appkit/react-native/notifications/backend-integration",
-                  "appkit/react-native/notifications/demo",
-                  {
-                    "group": "Authorization Signatures",
-                    "pages": [
-                      "appkit/react-native/notifications/authorization-signatures/overview",
-                      "appkit/react-native/notifications/authorization-signatures/this-app",
-                      "appkit/react-native/notifications/authorization-signatures/all-apps"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/react-native/cloud/verify",
                   "appkit/react-native/cloud/relay",
                   "appkit/react-native/cloud/blockchain-api",
                   "appkit/react-native/cloud/analytics"
@@ -836,7 +708,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/flutter/cloud/verify",
                   "appkit/flutter/cloud/relay",
                   "appkit/flutter/cloud/blockchain-api",
                   "appkit/flutter/cloud/analytics"
@@ -869,7 +740,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/android/cloud/verify",
                   "appkit/android/cloud/relay",
                   "appkit/android/cloud/blockchain-api",
                   "appkit/android/cloud/analytics"
@@ -901,7 +771,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/ios/cloud/verify",
                   "appkit/ios/cloud/relay",
                   "appkit/ios/cloud/blockchain-api",
                   "appkit/ios/cloud/analytics"
@@ -936,7 +805,6 @@
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/unity/cloud/verify",
                   "appkit/unity/cloud/relay", 
                   "appkit/unity/cloud/blockchain-api",
                   "appkit/unity/cloud/analytics"
@@ -964,8 +832,7 @@
                       "walletkit/features/verify",
                       "walletkit/features/link-mode",
                       "walletkit/features/one-click-auth",
-                      "walletkit/features/chain-abstraction",
-                      "walletkit/features/notifications"
+                      "walletkit/features/chain-abstraction"
                     ]
                   },
                   {
@@ -1009,7 +876,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/web/cloud/explorer-submission",
-                  "walletkit/web/cloud/verify",
                   "walletkit/web/cloud/relay",
                   "walletkit/web/cloud/analytics"
                 ]
@@ -1037,26 +903,9 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  {
-                    "group": "Notify",
-                    "pages": [
-                      "walletkit/android/notifications/notify/overview",
-                      "walletkit/android/notifications/notify/installation",
-                      "walletkit/android/notifications/notify/usage",
-                      "walletkit/android/notifications/notify/spam-protection",
-                      "walletkit/android/notifications/notify/resources"
-                    ]
-                  },
-                  "walletkit/android/notifications/push"
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "walletkit/android/cloud/explorer-submission",
-                  "walletkit/android/cloud/verify",
                   "walletkit/android/cloud/relay",
                   "walletkit/android/cloud/analytics"
                 ]
@@ -1084,26 +933,9 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  {
-                    "group": "Notify",
-                    "pages": [
-                      "walletkit/ios/notifications/notify/overview",
-                      "walletkit/ios/notifications/notify/installation",
-                      "walletkit/ios/notifications/notify/usage",
-                      "walletkit/ios/notifications/notify/spam-protection",
-                      "walletkit/ios/notifications/notify/resources"
-                    ]
-                  },
-                  "walletkit/ios/notifications/push"
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "walletkit/ios/cloud/explorer-submission",
-                  "walletkit/ios/cloud/verify",
                   "walletkit/ios/cloud/relay",
                   "walletkit/ios/cloud/analytics"
                 ]
@@ -1127,7 +959,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/flutter/cloud/explorer-submission",
-                  "walletkit/flutter/cloud/verify",
                   "walletkit/flutter/cloud/relay",
                   "walletkit/flutter/cloud/analytics"
                 ]
@@ -1155,25 +986,9 @@
                 ]
               },
               {
-                "group": "Notifications",
-                "pages": [
-                  {
-                    "group": "Notify",
-                    "pages": [
-                      "walletkit/react-native/notifications/notify/overview",
-                      "walletkit/react-native/notifications/notify/installation",
-                      "walletkit/react-native/notifications/notify/usage",
-                      "walletkit/react-native/notifications/notify/spam-protection"
-                    ]
-                  },
-                  "walletkit/react-native/notifications/push"
-                ]
-              },
-              {
                 "group": "Cloud",
                 "pages": [
                   "walletkit/react-native/cloud/explorer-submission",
-                  "walletkit/react-native/cloud/verify",
                   "walletkit/react-native/cloud/relay",
                   "walletkit/react-native/cloud/analytics"
                 ]
@@ -1192,7 +1007,6 @@
                 "group": "Cloud",
                 "pages": [
                   "walletkit/c-sharp/cloud/explorer-submission",
-                  "walletkit/c-sharp/cloud/verify",
                   "walletkit/c-sharp/cloud/relay",
                   "walletkit/c-sharp/cloud/analytics"
                 ]

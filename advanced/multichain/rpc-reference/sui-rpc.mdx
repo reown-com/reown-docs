@@ -44,7 +44,12 @@ This method returns an Array of public keys and addresses available to sign from
 }
 ```
 
-### sui_signTransaction
+### Session Properties
+In a connection request, it is recommended to serialize the response to `getAccounts` in `session.sessionProperties.sui_getAccounts`. This allows dapps to consume an active session without requiring a context switch to re-request all addresses and associated public keys from the wallet.
+
+
+
+## sui_signTransaction
 
 Sign a Sui transaction without executing it.
 
@@ -79,7 +84,7 @@ Sign a Sui transaction without executing it.
   "jsonrpc": "2.0",
   "result": {
     "signature": "ACRvdr3yI2mdpeOK+NsJIimdNGcE9R//jjT3HALZ17fFyu818op4jZi/64lPBjpKMDX6ZtxnCFZExTOFdpi3MwEZXLv/ORduxMYX0fw8dbHlnWC8WG0ymrlAmARpEibbhw==",
-    "transactionBytes": "ACRvdr3yI2mdpeOK+NsJIimdNGcE9R//jjT3HALZ17fFyu818op4jZi/64lPBjpKMDX6ZtxnCFZExTOFdpi3MwEZXLv/ORduxMYX0fw8dbHlnWC8WG0ymrlAmARpEibbhw=="
+    "transactionBytes": "AAACAAhkAAAAAAAAAAAg1fZH7bd9T9ox0DBFBkR/s8kuVar3e8XtS3fDMt1GBfoCAgABAQAAAQEDAAAAAAEBANX2R+23fU/aMdAwRQZEf7PJLlWq93vF7Ut3wzLdRgX6At/pRJzj2VpZgqXpSvEtd3GzPvt99hR8e/yOCGz/8nbRmA7QFAAAAAAgBy5vStJizn76LmJTBlDiONdR/2rSuzzS4L+Tp/Zs4hZ8cBxYkcSlxBD6QXvgS11E6d+DNek8LiA/beba6iH3l5gO0BQAAAAAIMpdmZjiqJ5GG9di1MAgD4S3uRr2gaMC7S1WsaeBwNIx1fZH7bd9T9ox0DBFBkR/s8kuVar3e8XtS3fDMt1GBfroAwAAAAAAAECrPAAAAAAAAA=="
   },
   "id": 1
 }

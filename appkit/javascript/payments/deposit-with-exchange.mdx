@@ -1,0 +1,98 @@
+**Deposit with Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like Coinbase and Binance (with more exchanges coming soon). Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
+
+## Quickstart 
+
+This feature will start working as soon as your team is on the allowed-list. Please contact sales@reown.com to get started.
+
+<Warning>
+    Projects first need to install and set up Reown AppKit before integrating AppKit Pay. If you haven't done so, please refer to the [Reown AppKit docs](/appkit/overview#quickstart).
+</Warning>
+
+Clicking on Fund your wallet will show the modal below:
+<img src="/images/fundDepositWithExchange.jpg" alt="Funding your wallet with Deposit with Exchange" />
+
+## Start Deposit with Exchange from a button
+
+### Install the library
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-pay
+```
+
+```bash Yarn
+yarn add @reown/appkit-pay
+```
+
+```bash Bun
+bun a @reown/appkit-pay
+```
+
+```bash pnpm
+pnpm add @reown/appkit-pay
+```
+</CodeGroup>
+
+### Usage
+Import the `baseUSDC` asset, the `pay` function and the `useAppKitAccount` hook to get the address of the connected wallet.
+```ts
+
+import { baseUSDC, pay } from '@reown/appkit-pay';
+```
+
+Get the address of the connected wallet using the `subscribeAccount` function.
+```ts
+let address = null;
+const appKit = createAppKit({...}); // please check our docs or examples to understand how to create the AppKit instance
+appKit.subscribeAccount(state => {
+    address = state['accountState']?.address;
+})
+```
+
+In order to run the deposit, use the function `pay`. This function receives three parameters.
+
+```ts
+// pay function returns a PaymentResult object
+const result = await pay({ 
+    recipient: address,
+    amount: 0.0001,
+    paymentAsset: baseUSDC
+});
+
+if (result.success) {
+    console.log("Payment successful: "+ result.result);
+} else {
+    console.error("Payment error: "+ result.error);
+}
+```
+
+## Supported Networks and Assets
+
+For a complete list of supported networks and assets across different exchanges (Coinbase, Binance), please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Exchange documentation.
+
+## Assets Configuration
+
+For the moment, AppKit Pay has pre-configured these assets: 
+- baseETH, baseSepoliaETH, and baseUSDC
+- ethereumUSDC, optimismUSDC, arbitrumUSDC, polygonUSDC and solanaUSDC
+- ethereumUSDT, optimismUSDT, arbitrumUSDT, polygonUSDT and solanaUSDT
+
+```ts
+import { baseETH } from '@reown/appkit-pay' 
+```
+
+For custom assets, you can create a paymentAsset object with all the information:
+
+```ts
+// Configure the paymentAsset
+const paymentAssetDetails = {
+    network: 'eip155:8453', // Base Mainnet
+    asset: 'native', // Or USDC in Base: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
+    metadata: {
+        name: 'Ethereum', // Or 'USD Coin'
+        symbol: 'ETH',    // Or 'USDC'
+        decimals: 18      // Or 6 for USDC
+    }
+};
+```

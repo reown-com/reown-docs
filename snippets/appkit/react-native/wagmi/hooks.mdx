@@ -1,12 +1,12 @@
-### useAppKitAccount
+### useAccount
 
 Hook that returns the client's information.
 
 ```tsx
-import { useAppKitAccount } from "@reown/appkit/react";
+import { useAccount } from "wagmi";
 
 function Components() {
-  const { address, caipAddress, isConnected } = useAppKitAccount();
+  const { address, status } = useAccount();
 
   //...
 }
