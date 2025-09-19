@@ -131,6 +131,17 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     No, dApps do not need approval in order to use your projectId.
   </Accordion>
 
+  <Accordion title="Why are signatures longer in some cases?">
+    Signatures can appear longer when using non-deployed smart accounts. These accounts include extra data in the signature to handle deployment and verification. Once the account is deployed, the signatures return to their normal size.
+    This happens when you connect with a social login but haven’t made a transaction yet. Before the first transaction, the smart account isn’t deployed, so the signature includes extra data for deployment and verification. After the first transaction, the account is deployed and signatures go back to normal size.
+
+    You can always use [viem's verifyMessage](https://viem.sh/docs/actions/public/verifyMessage) to verify the signature in different formats.
+  </Accordion>
+
+  <Accordion title="How can I add my web wallet to the wallet list in WalletConnect?">
+    Add your web wallet to WalletConnect by following the steps in this link: https://docs.reown.com/cloud/explorer-submission.
+  </Accordion>
+
   <Accordion title="Can I reinitialize AppKit with different network configurations?">
     Currently, `createAppKit` can only be called once during the application's lifecycle. 
     It cannot be lazily initialized and then torn down for re-initialization. 
