@@ -133,7 +133,7 @@ This FAQ section covers common questions and solutions for using AppKit. The que
 
   <Accordion title="Why are signatures longer in some cases?">
     Signatures can appear longer when using non-deployed smart accounts. These accounts include extra data in the signature to handle deployment and verification. Once the account is deployed, the signatures return to their normal size.
-    This happens when you connect with a social logins but haven’t made a transaction yet. Before the first transaction, the smart account isn’t deployed, so the signature includes extra data for deployment and verification. After the first transaction, the account is deployed and signatures go back to normal size.
+    This happens when you connect with a social login but haven’t made a transaction yet. Before the first transaction, the smart account isn’t deployed, so the signature includes extra data for deployment and verification. After the first transaction, the account is deployed and signatures go back to normal size.
 
     You can always use [viem's verifyMessage](https://viem.sh/docs/actions/public/verifyMessage) to verify the signature in different formats.
   </Accordion>
