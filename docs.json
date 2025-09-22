@@ -55,7 +55,16 @@
     }
   ],
   "contextual": {
-    "options": ["chatgpt", "claude", "copy", "view"]
+    "options": [
+     "chatgpt",
+     "claude",
+     "copy",
+     "view",
+     "perplexity",
+     "mcp",
+     "cursor",
+     "vscode"
+   ]
   },
   "navigation": {
     "tabs": [
