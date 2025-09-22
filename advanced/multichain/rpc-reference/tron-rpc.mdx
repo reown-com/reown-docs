@@ -204,39 +204,7 @@ The message to sign:
 The signed message:
 - `signature` (string) - The signature string
 
-<AccordionGroup>
-  <Accordion title="Legacy Format">
-#### Example (Legacy Format)
-
-- Request:
-```javascript
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "tron_signMessage",
-  "params": {
-    "message": "This is a message to be signed for TRON",
-    "address": "TLyqzVGLV1srkB7dToTAEqgDSfPtXRJZYH"
-  }
-}
-```
-
-- Response:
-```javascript
-
-```javascript
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "signature": "7e760cef94bc82a7533bc1e8d4ab88508c6e13224cd50cc8da62d3f4d4e19b99514f..."
-  },
-  "id": 1
-}
-```
-</Accordion>
-</AccordionGroup>
-
-#### Example (New Format with tron_method_version: "v1")
+#### Example
 
 - Request:
 ```javascript
@@ -244,23 +212,25 @@ The signed message:
   "request": {
     "method": "tron_signMessage",
     "params": {
-      "address": "TRdBacSikr7sdNgXYdnyNEuws3teBuSQkc",
+      "address": "TXUEmLr...",
       "message": "This is a message to be signed for Tron"
     },
-    "expiryTimestamp": 1756185526
+    "expiryTimestamp": 1758269816
   },
   "chainId": "tron:0xcd8690dc"
 }
 ```
 
-- Response:
+- dApp result (what client.request(...) resolves to):
 ```javascript
-{
-  "signature": "0xbf2800a3017b770fb34fce36786d2f12bd160fdabf7d6ba1f78600421ef62d5e3327428961296af40667578efbbe343b85f0e4293db5d44afb150e087bc1e9b01b"
-}
+{ "signature": "0x1ec623ee6e4716f5a116d0a2755b158ac05dfbc3e9118cca..." }
 ```
+<Note>
+The methods below are not part of the required wallet surface in the Reown official Tron Wallet example. 
+dApps may perform these directly against a Tron node or gateway. Wallets may implement them for convenience, but they’re not required.
+</Note>
 
-### tron_sendTransaction
+### tron_sendTransaction (optional)
 
 Broadcast a signed transaction to the Tron network.
 
@@ -311,7 +281,7 @@ The transaction result:
 }
 ```
 
-### tron_getBalance
+### tron_getBalance (optional)
 
 Get the TRX balance of a Tron address.
 
