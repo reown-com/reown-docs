@@ -302,6 +302,9 @@ All AppKit hooks are now imported directly from `@reown/appkit-react-native`.
 -   **`useAccount()`**:
     -   Import from `@reown/appkit-react-native`.
     -   Provides `address`, `chainId`, `isConnected`, and potentially other multichain-aware details. Functionality is largely the same; primary change is the import path and potentially more multichain-aware return values.
+-   **`useAppKitState()`**:
+    -   Import from `@reown/appkit-react-native`.
+    -   Provides real-time access to the modal's current state and connection status
 -   **`useProvider()` (New Hook)**:
     -   Import from `@reown/appkit-react-native`.
     -   Use this to get the underlying chain-specific provider/client (e.g., Ethers provider, Wagmi client, Solana connection).
@@ -309,7 +312,6 @@ All AppKit hooks are now imported directly from `@reown/appkit-react-native`.
     -   Import from `@reown/appkit-react-native`.
     -   Allows subscription to various AppKit lifecycle events.
 -   **Deprecated Hooks:**
-    -   `useAppKitState`: Its functionality is largely covered by `useAccount`, `useAppKit`, and other more specific hooks. Review your usage and map to the new hooks.
     -   `useDisconnect`: The `disconnect` function is now available from `useAppKit().disconnect()`.
 
 Review the [Hooks](./hooks) documentation for detailed API information.
