@@ -92,6 +92,7 @@
                   "appkit/recipes/sponsoring-first-transaction",
                   "appkit/recipes/travel-rule",
                   "appkit/recipes/smart-sessions",
+                  "appkit/recipes/update-appkit",
                   "appkit/recipes/troubleshooting"
                 ]
               },
