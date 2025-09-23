@@ -69,7 +69,7 @@ The Ethereum Provider's `init` method takes the following parameters:
 
 | Value             | Description                                                                                                                                               | Type                          | Required |
 |------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|----------|
-| **projectId**    | Your project ID obtained from Reown Cloud: [https://cloud.reown.com/](https://cloud.reown.com/)                                                           | `string`                     | true     |
+| **projectId**    | Your project ID obtained from Reown Dashboard: [https://dashboard.reown.com/](https://dashboard.reown.com/)                                                           | `string`                     | true     |
 | **optionalChains** | An array of the chain IDs you want to support. It is highly recommended to use "optionalChains" over "chains" for multi-chain dapps, ensuring compatibility with Smart Contract Wallets. | `number[]`                   | false    |
 | **optionalMethods** | The Ethereum methods you want to support and send in the session proposal under the "optionalNamespaces" scope. If undefined, it defaults to all EIP-1193 compatible methods. | `string[]`                   | false    |
 | **optionalEvents**  | The Ethereum events you want to support and send in the session proposal under the "optionalNamespaces" scope. If undefined, it defaults to all EIP-1193 compatible events. | `string[]`                   | false    |
@@ -110,7 +110,7 @@ Upon integrating the below code, you will be able to see the QRModal on your Web
 import { createAppKit } from "@reown/appkit";
 import { mainnet, arbitrum, sepolia } from "@reown/appkit/networks";
 
-// 1. Get projectId from https://cloud.reown.com
+// 1. Get projectId from https://dashboard.reown.com
 const projectId = "YOUR_PROJECT_ID";
 
 // 2. Create the AppKit instance

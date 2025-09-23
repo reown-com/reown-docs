@@ -11,9 +11,9 @@ Assuming that your Web3 app is set up similarly to ConnectKit's example app [her
 
 To migrate from ConnectKit to Reown AppKit, please follow the steps below.
 
-## Step 1. Create a project in Reown Cloud
+## Step 1. Create a project in Reown Dashboard
 
-- Create a new project on [Reown Cloud](https://cloud.reown.com) and obtain a new project ID.
+- Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtain a new project ID.
 
 ## Step 2. Install & uninstall libraries
 
@@ -61,7 +61,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 - );
 
 // If you were already using WalletConnect with ConnectKit, you can use the same projectId.
-// If not, then get projectId from https://cloud.reown.com
+// If not, then get projectId from https://dashboard.reown.com
 + export const projectId = "YOUR_PROJECT_ID";
 
 //Set up the Wagmi Adapter (Config)

@@ -3,6 +3,10 @@ title: "Stellar"
 description: Stellar JSON-RPC Methods
 ---
 
+<Note type="warning">
+**Please note:** The Stellar RPC standard is still under review and specifications may change. Implementation details and method signatures are subject to updates.
+</Note>
+
 ## stellar_signAndSubmitXDR
 
 This method sends the Stellar transaction encoded as [XDR](https://developers.stellar.org/api/introduction/xdr/) to the wallet. The wallet is expected to sign the transaction and submit it to the Stellar network. For accounts protected with [multisig](https://developers.stellar.org/docs/glossary/multisig/), the wallet should also handle the collection of signatures and submission of the transaction at a later time.

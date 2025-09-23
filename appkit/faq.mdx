@@ -17,7 +17,7 @@ This FAQ section covers common questions and solutions for using AppKit. The que
 
     This error typically occurs when the `projectId` is not configured correctly. To resolve this:
 
-    1. Create a valid project ID at [https://cloud.reown.com/](https://cloud.reown.com/)
+    1. Create a valid project ID at [https://dashboard.reown.com/](https://dashboard.reown.com/)
     2. Add it to your AppKit configuration:
 
     ```javascript
@@ -131,10 +131,38 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     No, dApps do not need approval in order to use your projectId.
   </Accordion>
 
+  <Accordion title="Why are signatures longer in some cases?">
+    Signatures can appear longer when using non-deployed smart accounts. These accounts include extra data in the signature to handle deployment and verification. Once the account is deployed, the signatures return to their normal size.
+    This happens when you connect with a social login but haven’t made a transaction yet. Before the first transaction, the smart account isn’t deployed, so the signature includes extra data for deployment and verification. After the first transaction, the account is deployed and signatures go back to normal size.
+
+    You can always use [viem's verifyMessage](https://viem.sh/docs/actions/public/verifyMessage) to verify the signature in different formats.
+  </Accordion>
+
+  <Accordion title="How can I add my web wallet to the wallet list in WalletConnect?">
+    Add your web wallet to WalletConnect by following the steps in this link: https://docs.reown.com/cloud/explorer-submission.
+  </Accordion>
+
   <Accordion title="Can I reinitialize AppKit with different network configurations?">
     Currently, `createAppKit` can only be called once during the application's lifecycle. 
     It cannot be lazily initialized and then torn down for re-initialization. 
     This means you must pass in all the networks you plan to support during the initial setup.
+  </Accordion>
+
+  <Accordion title="Error Codes">
+    Below is a list of error codes you may encounter when using AppKit, along with their descriptions and recommended actions:
+
+    | Code | Message | Action |
+    |------|---------|---------|
+    | APKT001 | Network Not Found | We couldn't recognize the specified network. Make sure it's included in the `networks` array of your `createAppKit` config. |
+    | APKT002 | Invalid App Configuration | The origin isn't in your allowlist. Update your allowed domains at https://dashboard.reown.com. |
+    | APKT003 | Wallet Load Failed | We couldn't load the embedded wallet. This might be a network or server issue. Check your connection and try again, or contact support if it persists. |
+    | APKT004 | Wallet Request Timeout | The wallet didn't respond in time. Check your network and try again. If the issue continues, contact support. |
+    | APKT005 | Unverified Domain | The embedded wallet didn't load. Please verify your domain at https://dashboard.reown.com. |
+    | APKT006 | Session Expired | Your session has expired or is invalid. Please check your device's date and time, then reconnect. |
+    | APKT007 | Invalid Project ID | The project ID is invalid. You can find or create a valid one at https://dashboard.reown.com. |
+    | APKT008 | Project ID Missing | No project ID was found. Set one up in your config at https://dashboard.reown.com. |
+    | APKT009 | Server Error | We couldn't load your App Configuration. Check your network and try again. Contact support if it keeps happening. |
+    | APKT010 | Rate Limited | Too many requests for App Configuration. Please wait a few minutes and try again. Reach out to support if needed. |
   </Accordion>
 </AccordionGroup>
 

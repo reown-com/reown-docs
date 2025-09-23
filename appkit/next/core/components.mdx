@@ -13,7 +13,7 @@ import Components from "/snippets/appkit/shared/components.mdx";
   <img src="/images/assets/walletButtons.jpg" />
 </Frame>
 
-Using the wallet button components ([Demo in our Lab](https://appkit-lab.reown.com/library/wagmi-wallet-button/)), you can directly connect to the top 20 wallets, WalletConnect QR and also all the social logins.
+Using the wallet button components ([Demo in our Lab](https://appkit-lab.reown.com/appkit/?name=wagmi)), you can directly connect to the top 20 wallets, WalletConnect QR and also all the social logins.
 This component allows to customize dApps, enabling users to connect their wallets effortlessly, all without the need for the traditional modal.
 
 Follow these steps to use the component:
@@ -52,6 +52,21 @@ import "@reown/appkit-wallet-button/react";
 <appkit-wallet-button wallet="metamask" />
 ```
 
+#### Multichain Support
+
+You can specify a blockchain namespace to target specific chains:
+
+```tsx
+<!-- Connect to Ethereum/EVM chains -->
+<appkit-wallet-button wallet="metamask" namespace="eip155" />
+
+<!-- Connect to Solana -->
+<appkit-wallet-button wallet="phantom" namespace="solana" />
+
+<!-- Connect to Bitcoin -->
+<appkit-wallet-button wallet="leather" namespace="bip122" />
+```
+
 #### Options for wallet property
 
 | Type          | Options                                                                                                                                                                                                                                                                                                                                                                       |
@@ -59,3 +74,11 @@ import "@reown/appkit-wallet-button/react";
 | QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                               |
 | Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `coinbase`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, and `tokenpocket` |
 | Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                                      |
+
+#### Options for namespace property
+
+| Value     | Description                           |
+| --------- | ------------------------------------- |
+| `eip155`  | Ethereum and EVM-compatible chains    |
+| `solana`  | Solana blockchain                     |
+| `bip122`  | Bitcoin blockchain                    |

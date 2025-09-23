@@ -67,7 +67,7 @@ After running the command, you will be prompted to confirm the installation of t
 
 After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
 
-To fully configure your project, please obtain a `projectId` from the Reown Cloud Dashboard and update your project accordingly.
+To fully configure your project, please obtain a `projectId` from the Reown Dashboard and update your project accordingly.
 
 **Refer to [this section](#cloud-configuration) for more information.**
 
@@ -194,19 +194,19 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @walletconnect/universal-provider
+npm install @reown/appkit @reown/appkit-universal-connector @reown/appkit-common ethers
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @walletconnect/universal-provider
+yarn add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common ethers
 ```
 
 ```bash Bun
-bun add @reown/appkit @walletconnect/universal-provider
+bun add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common ethers
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @walletconnect/universal-provider
+pnpm add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common ethers
 ```
 
 </CodeGroup>
@@ -216,7 +216,7 @@ pnpm add @reown/appkit @walletconnect/universal-provider
 
 ## Cloud Configuration
 
-Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new project ID.
+Create a new project on Reown Dashboard at https://dashboard.reown.com and obtain a new project ID.
 
 <CloudBanner />
 
