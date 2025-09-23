@@ -25,7 +25,22 @@ Email and social wallets currently support EVM chains only. Support for addition
 * Changes might take some minutes to impact
 
 
-## Options
+### Enable Email & Social Authentication
+
+To enable email and social authentication in your AppKit configuration, add the `features` option to your `createAppKit` call:
+
+
+```tsx {4-6}
+export const appKit = createAppKit({
+  // other config...
+  features: {
+    email: true,
+    socials: ['email', 'google', 'x', 'discord', 'apple', 'facebook', 'github', 'farcaster'],
+    showWallets: true
+  }
+});
+```
+
 
 - **_email [boolean]_** : This boolean defines whether you want to enable email login. Default `true`
 - **_socials [array]_** : This array contains the list of social platforms that you want to enable for user authentication. The platforms supported are Google, X, GitHub, Discord, Apple, Facebook and Farcaster. The default value of `undefined` displays everything. Set it to `false` to disable this feature. You can also pass an empty array to disable it.
