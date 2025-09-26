@@ -1,0 +1,38 @@
+name: Broken Links Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**/*.mdx'
+      - '**/*.md'
+      - 'docs.json'
+  push:
+    branches: [main]
+    paths:
+      - '**/*.mdx'
+      - '**/*.md'
+      - 'docs.json'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  broken-links:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install Mintlify CLI
+        run: npm install -g mintlify
+        
+      - name: Check for broken links
+        run: mintlify broken-links
