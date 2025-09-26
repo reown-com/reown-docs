@@ -1,0 +1,65 @@
+**Reown Authentication is our flagship SIWX (Sign In With X) solution** - the recommended way to handle user authentication for modern web3 applications. Built specifically for multi-chain environments, it abstracts away the complexity of validating wallets across **EVM, Solana, and Bitcoin networks**.
+
+With Reown Authentication you will be able to see and control the sessions of your users, get insights and much more. Read more about [Reown Authentication](/cloud/reown-authentication) features in the dedicated documentation.
+
+### Installation
+
+### Usage
+
+```typescript {1,8}
+import { createAppKit, ReownAuthentication } from '@reown/appkit-react-native'
+
+const appkit = createAppKit({
+  projectId,
+  networks,
+  metadata,
+  // Add the following code line
+  siwx: new ReownAuthentication()
+})
+```
+
+Your app is now ready to use **Reown Authentication** within your SIWX configuration.
+
+### Extra configuration
+
+ReownAuthentication works out of the box with no additional configuration required, but you can customize the experience with these parameters:
+
+#### Available Parameters
+
+```typescript
+new ReownAuthentication({
+  localAuthStorageKey?: string    // Default: '@appkit/siwx-auth-token'
+  localNonceStorageKey?: string   // Default: '@appkit/siwx-nonce-token'
+  required?: boolean              // Default: true
+  signOutOnDisconnect?: boolean   // Default: true
+})
+```
+
+#### Examples
+
+**Custom storage keys:**
+
+```typescript
+new ReownAuthentication({
+  localAuthStorageKey: 'my-app-auth',
+  localNonceStorageKey: 'my-app-nonce'
+})
+```
+
+**Optional authentication (users can skip signing and keep their wallet connected):**
+
+```typescript
+new ReownAuthentication({
+  required: false
+})
+```
+
+**signOutOnDisconnect:**
+
+Controls whether the authentication session is automatically cleared when the wallet is disconnected. When set to `true` (default), users will need to re-authenticate after disconnecting their wallet. When set to `false`, the authentication session persists even after wallet disconnection.
+
+```typescript
+new ReownAuthentication({
+  signOutOnDisconnect: false
+})
+```
