@@ -280,6 +280,67 @@ export default function AppStatus() {
 - `isConnected`: Boolean indicating if a user is connected
 - `chain`: The connected chain object
 
+## `useAppKitLogs()`
+
+The logging hook that provides access to AppKit's internal logging system. Use this hook when you need to debug your application, monitor AppKit's behavior, or export logs for troubleshooting purposes.
+
+```typescript
+import { useAppKitLogs } from '@reown/appkit-react-native';
+
+export default function DebugPanel() {
+  const { 
+    logs, // All logs from AppKit
+    errorLogs, // Error-level logs only
+    warningLogs, // Warning-level logs only
+    infoLogs, // Info-level logs only
+    debugLogs, // Debug-level logs only
+    getLogsByLevel, // Get logs filtered by level
+    getRecentLogs, // Get recent logs (default: 100)
+    exportLogs, // Export all logs as JSON string
+    getLogsStats, // Get logging statistics by level
+    clearLogs, // Clear all logs
+  } = useAppKitLogs();
+
+  const handleExportLogs = () => {
+    const logData = exportLogs();
+    console.log('Exported logs:', logData);
+  };
+
+  return (
+    <div>
+      <p>Total logs: {logs.length}</p>
+      <p>Error logs: {errorLogs.length}</p>
+      <p>Warning logs: {warningLogs.length}</p>
+      <button onClick={handleExportLogs}>Export Logs</button>
+      <button onClick={clearLogs}>Clear Logs</button>
+    </div>
+  );
+}
+```
+
+### Use Cases
+- Debugging AppKit behavior and troubleshooting issues
+- Monitoring application performance and error tracking
+- Exporting logs for support or analysis purposes
+- Building custom debugging interfaces for development
+- Filtering logs by severity level or time range
+
+### Returns
+- `logs`: All logs from AppKit (array of LogEntry objects)
+- `errorLogs`: Error-level logs only (array of LogEntry objects)
+- `warningLogs`: Warning-level logs only (array of LogEntry objects)
+- `infoLogs`: Info-level logs only (array of LogEntry objects)
+- `debugLogs`: Debug-level logs only (array of LogEntry objects)
+- `getLogsByLevel`: Function to get logs filtered by level (error, warn, info, debug)
+- `getRecentLogs`: Function to get recent logs (default: 100, accepts count parameter)
+- `exportLogs`: Function to export all logs as JSON string
+- `getLogsStats`: Function to get logging statistics by level
+- `clearLogs`: Function to clear all logs
+
+<Note>
+This hook requires the `debug` option to be set to `true` in your AppKit configuration to capture logs. See the [Options](/appkit/react-native/core/options#debug) documentation for more details.
+</Note>
+
 ## Deprecated Hooks
 
 ### `useDisconnect()`
