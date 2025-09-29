@@ -83,6 +83,26 @@ Install the adapters for the chains you intend to support:
         npx expo install wagmi viem@2.x @tanstack/react-query
         ```
 
+        <Note>
+        **Version Conflicts:** Wagmi internally installs multiple versions of viem and valtio which can cause conflicts. If you encounter errors, try overriding these versions in your `package.json` and re-install the dependencies:
+
+        **NPM users:**
+        ```json
+        "overrides": {
+          "viem": "2.x.x", // use latest version
+          "valtio": "2.1.8"
+        }
+        ```
+
+        **Yarn users:**
+        ```json
+        "resolutions": {
+          "viem": "2.x.x", // use latest version
+          "valtio": "2.1.8"
+        }
+        ```
+        </Note>
+
         <p><strong>2. Configure Wagmi and Initialize Adapter:</strong></p>
         <p>The `WagmiAdapter` requires a Wagmi configuration object. You'll create this using `createConfig` from `wagmi` (we recommend aliasing it, e.g., to `createWagmiConfig`, if you also use `createConfig` from AppKit). This config, defining your chains and transports, is then passed to the `WagmiAdapter` during its initialization within your AppKit setup file (e.g., `src/AppKitConfig.ts`).</p>
 
