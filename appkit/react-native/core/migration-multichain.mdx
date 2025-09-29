@@ -7,8 +7,6 @@ import { Card, CardGroup } from '@mintlify/components';
 
 This guide will walk you through the necessary steps to update your existing Reown AppKit React Native integration to the latest multichain version. The new version introduces a more flexible and powerful architecture, centered around a core AppKit library and distinct chain-specific adapters.
 
-For a deeper understanding of the new architecture, please review the [Architecture](./architecture) page.
-
 ## Key Changes at a Glance
 
 Before diving into the specific steps, here's a high-level overview of the most significant changes:
@@ -136,29 +134,20 @@ import { BitcoinAdapter } from "@reown/appkit-bitcoin-react-native";
 import { WagmiAdapter } from "@reown/appkit-wagmi-react-native";
 
 // Import chain definitions (examples)
-import { mainnet as viemMainnet, polygon as viemPolygon } from "viem/chains"; // For EVM
+import { mainnet, polygon } from "viem/chains"; // For EVM
 import { solana, bitcoin } from "@reown/appkit-react-native"; // Pre-defined AppKitNetwork objects
 
 const projectId = "YOUR_PROJECT_ID"; // Obtain from https://dashboard.reown.com/
 
-const metadata = {
-  name: "My Awesome Multi-Chain dApp",
-  description: "My dApp supporting multiple blockchains!",
-  url: "https://myapp.com",
-  icons: ["https://myapp.com/icon.png"],
-  redirect: {
-    native: "YOUR_APP_SCHEME://", // e.g., "myapp://"
-    universal: "YOUR_APP_UNIVERSAL_LINK.com", // e.g., "https://myapp.com/connect"
-  },
-};
+const metadata = { /* ... */ };
 
 // 1. Define your AppKitNetworks (for AppKit's UI and network management)
 // These can come from viem/chains (for EVM) or be custom AppKitNetwork objects.
 const appNetworks: AppKitNetwork[] = [
-  viemMainnet, // viem chains are automatically compatible as AppKitNetwork for 'eip155'
-  viemPolygon,
-  solana,      // Pre-defined AppKit solana network
-  bitcoin,     // Pre-defined AppKit bitcoin network
+  mainnet, // viem chains are automatically compatible as AppKitNetwork for 'eip155'
+  polygon,
+  solana,
+  bitcoin,
   // You can also define custom AppKitNetwork objects here
 ];
 
@@ -172,7 +161,7 @@ const ethersAdapter = new EthersAdapter();
 const wagmiEvmNetworks = [viemMainnet, viemPolygon]; // Subset of appNetworks or specific Wagmi chains
 const wagmiAdapter = new WagmiAdapter({
   projectId,
-  networks: wagmiEvmNetworks, // These are Wagmi/viem chain objects
+  networks: [mainnet, polygon], // These are Wagmi/viem chain objects
 });
 
 // Initialize adapters for other chains as needed
@@ -192,8 +181,6 @@ export const appKit = createAppKit({
     solanaAdapter,  // Handles Solana chains
     bitcoinAdapter, // Handles Bitcoin chains
   ],
-  // Optional: specify a default network from your 'networks' list
-  // defaultNetwork: viemMainnet,
   // ... other AppKit options (see Options page)
 });
 ```
