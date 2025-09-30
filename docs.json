@@ -11,6 +11,10 @@
   "integrations": {
     "gtm": {
       "tagId": "GTM-56G35T8X"
+    },
+    "posthog": {
+      "apiKey": "phc_8DvuGoAsaF1d8p51zQsrA6PY7KFtbBxfMfl9sgOeS63",
+      "apiHost": "https://pineapple.reown.com"
     }
   },
 
