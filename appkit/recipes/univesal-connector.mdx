@@ -23,8 +23,8 @@ Let’s dive in!
 - Obtain a new project Id on Reown Dashboard at https://dashboard.reown.com
 
 ## Final project
-<Card title="WalletConnet SDK with QR Code" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-core-universal-connector">
-Download the full project to try it directly on your computer the use of Univesal Connector.
+<Card title="WalletConnect SDK with QR Code" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-core-universal-connector">
+Download the full project to try it directly on your computer using Universal Connector.
 </Card>
 
 ## Try the demo
@@ -33,7 +33,7 @@ Download the full project to try it directly on your computer the use of Univesa
 
 ## Installation
 
-In order to setup the project, you need to install the following packages:
+In order to set up the project, you need to install the following packages:
 
 <CodeGroup>
 
@@ -57,7 +57,7 @@ pnpm add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common
 
 ## Start building with Universal Connector
 
-You can configure with the networks you want to support. For more information, please visit please visit [RPC Reference](https://docs.reown.com/advanced/multichain/rpc-reference/cosmos-rpc) section from our docs.
+You can configure with the networks you want to support. For more information, please visit [RPC Reference](https://docs.reown.com/advanced/multichain/rpc-reference/cosmos-rpc) section from our docs.
 We recommend creating a **config file** to establish a singleton instance for the `Universal Connector`:
 
 ```tsx
@@ -108,7 +108,7 @@ As you can see, we are importing the `UniversalConnector` class from the `@reown
 the projectId that you can get from the [Reown Dashboard](https://dashboard.reown.com/). After that you can configure the networks you want to support.
 The method `init` receives the projectId, the metadata and the networks you want to support.
 
-In de App.tsx file you can add :
+In the App.tsx file you can add :
 
 ```tsx
 import { useState, useEffect } from 'react'
