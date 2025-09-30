@@ -27,7 +27,6 @@ const suiMainnet: CustomCaipNetwork<'sui'> = {
   rpcUrls: { default: { http: ['https://fullnode.mainnet.sui.io:443'] } }
 }
 
-export const networks = [suiMainnet] as [AppKitNetwork, ...AppKitNetwork[]]
 
 export async function getUniversalConnector() {
   const universalConnector = await UniversalConnector.init({
