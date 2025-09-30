@@ -161,6 +161,8 @@ createAppKit({
 *   **Description:** A storage implementation that handles data persistence. AppKit provides a flexible storage interface that works with any storage solution you prefer.
 
 ```typescript
+// This is an example using 'react-native-mmkv', but you can use your preferred storage library
+
 import { MMKV } from 'react-native-mmkv';
 import { safeJsonParse, safeJsonStringify } from '@walletconnect/safe-json';
 import type { Storage } from '@reown/appkit-react-native';
@@ -170,30 +172,30 @@ const mmkv = new MMKV();
 const storage: Storage = {
   getKeys: async () => {
       return mmkv.getAllKeys();
-    },
-    getEntries: async <T = any>(): Promise<[string, T][]> => {
-      function parseEntry(key: string): [string, any] {
-        const value = mmkv.getString(key);
-        return [key, safeJsonParse(value ?? '')];
-      }
+  },
+  getEntries: async <T = any>(): Promise<[string, T][]> => {
+    function parseEntry(key: string): [string, any] {
+      const value = mmkv.getString(key);
+      return [key, safeJsonParse(value ?? '')];
+    }
 
-      const keys = mmkv.getAllKeys();
-      return keys.map(parseEntry);
-    },
-    setItem: async <T = any>(key: string, value: T) => {
-      return mmkv.set(key, safeJsonStringify(value));
-    },
-    getItem: async <T = any>(key: string): Promise<T | undefined> => {
-      const item = mmkv.getString(key);
-      if (typeof item === 'undefined' || item === null) {
-        return undefined;
-      }
+    const keys = mmkv.getAllKeys();
+    return keys.map(parseEntry);
+  },
+  setItem: async <T = any>(key: string, value: T) => {
+    return mmkv.set(key, safeJsonStringify(value));
+  },
+  getItem: async <T = any>(key: string): Promise<T | undefined> => {
+    const item = mmkv.getString(key);
+    if (typeof item === 'undefined' || item === null) {
+      return undefined;
+    }
 
-      return safeJsonParse(item) as T;
-    },
-    removeItem: async (key: string) => {
-      return mmkv.delete(key);
-    },
+    return safeJsonParse(item) as T;
+  },
+  removeItem: async (key: string) => {
+    return mmkv.delete(key);
+  },
 };
 
 createAppKit({
