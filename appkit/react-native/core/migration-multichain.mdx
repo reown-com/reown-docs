@@ -11,7 +11,7 @@ This guide will walk you through the necessary steps to update your existing Reo
 
 Before diving into the specific steps, here's a high-level overview of the most significant changes:
 
--   **Core Library & Adapters:** Instead of using monolithic, EVM-specific packages like `@reown/appkit-wagmi-react-native` or `@reown/appkit-ethers-react-native` as your primary entry point, you will now use a core package `@reown/appkit-react-native`. Chain-specific logic for EVM (Ethers, Wagmi), Solana, Bitcoin, and potentially other chains is handled by separate, installable adapter packages (e.g., `@reown/appkit-ethers-react-native`, `@reown/appkit-solana-react-native`).
+-   **Core Library & Adapters:** Instead of using monolithic, EVM-specific packages like `@reown/appkit-wagmi-react-native` or `@reown/appkit-ethers-react-native` as your primary entry point, you will now use a core package `@reown/appkit-react-native`. Chain-specific logic for **EVM (Ethers, Wagmi), Solana, Bitcoin**, and potentially other chains is handled by separate, installable adapter packages (e.g., `@reown/appkit-ethers-react-native`, `@reown/appkit-solana-react-native`).
 -   **Centralized Logic:** The new `appkit` instance (initialized via `createAppKit`) becomes the central hub for managing connections, adapters, and events across multiple chains.
 -   **Unified Hooks & Components:** Hooks and UI components are now consistently imported from the core `@reown/appkit-react-native` package.
 
