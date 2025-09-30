@@ -1,5 +1,5 @@
 ---
-title: "Use Universal Connector for WalletConnect QR Code"
+title: "Universal Connector to use WalletConnect QR Code"
 sidebarTitle: "WalletConnect QR Code"
 ---
 
@@ -15,7 +15,7 @@ This guide takes approximately 20 minutes to complete.
 
 Let’s dive in!
 
-<img src="/images/assets/walletconnectQR.jpg" />
+<img src="/images/walletconnectQR.jpg" alt="WalletConnect QR Code" height="400"/>
 
 ## Prerequisites
 
@@ -140,7 +140,7 @@ With this setup, you’re now ready to build wallet connections in a chain-agnos
 ## Connect a Wallet
 
 The following function initializes the connection and stores the session:
-
+```tsx
     const handleConnect = async () => {
       if (!universalConnector) {
         return
@@ -149,6 +149,7 @@ The following function initializes the connection and stores the session:
       const { session: providerSession } = await universalConnector.connect()
       setSession(providerSession)
     };
+```
 
 Once the wallet is connected, the session information (such as accounts and namespaces) will be available in your app.
 You can then use this session to perform actions like signing messages or sending transactions.
