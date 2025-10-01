@@ -730,9 +730,9 @@
             ]
           },
           {
-            "dropdown": "Android",
+            "dropdown": "Kotlin",
             "icon": "android",
-            "description": "AppKit on Android",
+            "description": "AppKit on Kotlin (Android)",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -762,9 +762,9 @@
             ]
           },
           {
-            "dropdown": "iOS",
+            "dropdown": "Swift",
             "icon": "apple",
-            "description": "AppKit on iOS",
+            "description": "AppKit on Swift (iOS)",
             "pages": [
               {
                 "group": "Fundamentals",
