@@ -29,6 +29,33 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     3. Ensure that you have added your domain to the allowed domains in your project settings. If you have not done so, you can do so by navigating to **"Project Domains"** on the Dashboard, clicking on **"Configure Domains"** and adding your domain.
   </Accordion>
 
+  <Accordion title="Why are the 'Connect wallet' and 'Network' buttons greyed out?">
+    This can happen if your device is unable to reach the [WalletConnect relay service](https://relay.walletconnect.org).
+
+    If you see an error like:
+
+    ```bash
+    SocketException: Failed host lookup: 'relay.walletconnect.org' (OS Error: No address associated with hostname, errno = 7)
+    ```
+    It usually means your connection is blocked by your VPN or network.
+
+    ### Common causes and steps to resolve:
+
+    1. **VPN or Firewall settings**
+      - Some VPNs may block access to the relay service.
+      - If you are using a VPN (e.g., Windscribe), try:
+        - Switching the VPN protocol to **WStunnel**.
+        - Turning **off the Firewall toggle** in your VPN settings.
+
+    2. **Network restrictions**
+      - If you’re on a restricted network (e.g., public Wi-Fi, corporate network, or in a restricted country), the relay service may be blocked.
+      - Try switching to a different ISP or network.
+
+    3. **Connectivity issues**
+      - Confirm that you can reach `relay.walletconnect.org`.  
+      - A 100% packet loss when pinging may indicate the service is blocked on your network.
+</Accordion>
+
   <Accordion title="Why can't I see any wallets in the modal and only see the 'Connect Wallet' title?">
     **Problem**: Users only see the "Connect Wallet" title in the modal after clicking the connect button.
 
