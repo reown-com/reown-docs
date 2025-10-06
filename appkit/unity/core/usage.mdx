@@ -192,7 +192,7 @@ Debug.Log($"Signature: {sig}");
 
 // Validate the signature
 var isValid = await AppKit.Solana.VerifyMessageSignatureAsync(message, sig);
-Debug.Log($"Is signature valid: {isValid}")
+Debug.Log($"Is signature valid: {isValid}");
 
 // AppKit.Solana includes some methods that don't require signing action in the wallet
 BigInteger balance = await AppKit.Solana.GetBalanceAsync();
