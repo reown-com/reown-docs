@@ -4,7 +4,7 @@ title: Link Mode
 
 AppKit Link Mode is a low latency mechanism for transporting One-Click Auth requests and session requests over Universal Links, reducing the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with network connections, especially when the user has an unstable internet connection.
 
-By enabling it, the wallet and dapp will communicate through declared Universal Links on iOS and/or App Links on Android **even without an internet connection.**
+By enabling it, the wallet and dapp will communicate through declared Universal Links (on iOS) and/or App Links (on Android) **even without an internet connection.**
 
 <Frame>
 <video
@@ -16,18 +16,23 @@ By enabling it, the wallet and dapp will communicate through declared Universal 
 </Frame>
 
 <Warning>
-For Link Mode to work fully, you also need to enable the [One-Click Auth + Sign In With Ethereum](./siwe) feature.
+For Link Mode to fully work, you also need to enable the [One-Click Auth + Sign In With Ethereum](./siwe) feature.
 
-This feature is compatible only with EVM blockchains, so if you decide to included non-EVM blockchains Link Mode mechanism is going to be disabled internally.
+This feature is compatible only with EVM blockchains, so if you decide to include non-EVM blockchains Link Mode mechanism is going to be disabled internally.
 
 Check out [SIWE basic example](./siwe#basic-usage-example) to try it out.
 </Warning>
 
 ### How to enable it:
 
-1. Add a Universal Link for your wallet in the **Explorer** tab of your [**Cloud project configuration**](https://dashboard.reown.com/sign-in), under the **Mobile Linking** section
+1. Be sure to have this properly configured on your server (`.well-known/apple-app-site-association` and `.well-known/assetlinks.json`) and native app side.
 
-2. Configure your `PairingMetadata`'s `redirect:` object with that Universal Link
+    - If your domain is `https://example.com/` you should have your configuration files under
+      - https://example.com/.well-known/apple-app-site-association
+      - https://example.com/.well-known/assetlinks.json
+    - See more about this on [Platform Specific](#platform-specifics) section
+
+2. On your Flutter side, configure your `PairingMetadata`'s `redirect:` object with that Universal Link
 
 3. Set the `linkMode` property to `true`:
 
@@ -71,7 +76,7 @@ void _onLinkCaptured(String link) async {
 ></video>
 </Frame>
 
-### Platform specifics:
+### Platform specifics
 
 <Tabs>
 <Tab title="iOS">

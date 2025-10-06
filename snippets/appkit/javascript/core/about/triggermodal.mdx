@@ -3,17 +3,25 @@ For more information, please visit [RPC Reference](https://docs.reown.com/advanc
 
 ```tsx
 <script>
+    let address = null
+    let addressStacks = null
+    let session = null
+
     async function handleConnect() {
-      // prov is the provider instance
-      await prov.connect({
-        optionalNamespaces: {
-          sui: {
-            methods: ['sui_signPersonalMessage'],
-            chains: ['sui:mainnet'],
-            events: []
-          }
-        }
-      });
+      // universalConnector is the universal connector instance from the implementation section
+      if (!universalConnector) {
+        return
+      }
+
+      const { session: providerSession } = await universalConnector.connect()
+      // get the address from the session
+      if (providerSession?.namespaces?.sui?.accounts?.[0]?.split(':')[2]) {
+        address = providerSession?.namespaces?.sui?.accounts?.[0]?.split(':')[2]
+      } else if (providerSession?.namespaces?.stacks?.accounts?.[0]?.split(':')[2]) {
+        addressStacks = providerSession?.namespaces?.stacks?.accounts?.[0]?.split(':')[2]
+      }
+      // update the session
+      session = providerSession;
     }
 
     document.getElementById('open-connect-modal').addEventListener('click', handleConnect);
