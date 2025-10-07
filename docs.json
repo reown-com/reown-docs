@@ -125,8 +125,7 @@
               "cloud/reown-authentication",
               "cloud/relay",
               "cloud/blockchain-api",
-              "cloud/analytics",
-              "cloud/paymaster"
+              "cloud/analytics"
             ]
           },
           {
