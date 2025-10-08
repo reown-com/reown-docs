@@ -89,6 +89,21 @@ modal.subscribeWalletInfo(handler);
 const { name, icon } = modal.getWalletInfo();
 ```
 
+## Get Disabled Networks
+
+Returns an array of CAIP networks that are disabled in the current configuration. This is useful for understanding which networks are not available for user selection.
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  projectId,
+});
+
+const disabledNetworks = modal.getDisabledCaipNetworks();
+console.log('Disabled networks:', disabledNetworks);
+```
+
 ## Provider Access
 
 Access wallet providers for direct blockchain interactions across different namespaces.
