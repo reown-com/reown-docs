@@ -3,44 +3,140 @@ title: Upgrade from Web3Modal to Reown AppKit for React Native
 sidebarTitle: Reown AppKit - React Native
 ---
 
-This document outlines the steps to migrate from the old `@web3modal` packages to the new `@reown/appkit` packages in your React Native project.
+This document outlines the steps to migrate from the old `@web3modal` packages to the new multichain `@reown/appkit` packages in your React Native project.
+
+## Overview of Changes
+
+The new AppKit architecture introduces a core library with pluggable chain adapters, providing better support for multiple blockchains (EVM, Solana, Bitcoin) in a single integration.
+
+**Key Changes:**
+- **Core Library**: Use `@reown/appkit-react-native` as the main package
+- **Chain Adapters**: Install specific adapters for each blockchain you want to support
+- **Unified API**: All hooks and components are imported from the core package
+- **Multichain Support**: Native support for EVM, Solana, and Bitcoin chains
 
 <Tabs>
 
   <Tab title="Wagmi">
-  **Step 1. Replace the dependencies in your code and `package.json`**
+  **Step 1. Replace the dependencies using package manager commands**
 
-```json {9-13}
-{
-  "dependencies": {
-    // Remove the following code lines
-    "@web3modal/wagmi-react-native": "2.0.4",
-    "@web3modal/email-wagmi-react-native": "2.0.4",
-    "@web3modal/coinbase-wagmi-react-native": "2.0.4",
-    "@web3modal/siwe-react-native": "2.0.4",
+**For Yarn users:**
 
-    // Add the following code lines
-    "@reown/appkit-wagmi-react-native": "1.0.0",
-    "@reown/appkit-auth-wagmi-react-native": "1.0.0",
-    "@reown/appkit-coinbase-wagmi-react-native": "1.0.0",
-    "@reown/appkit-siwe-react-native": "1.0.0"
-  }
+Remove the old Web3Modal packages:
+
+```bash
+yarn remove @web3modal/wagmi-react-native @web3modal/email-wagmi-react-native @web3modal/coinbase-wagmi-react-native @web3modal/siwe-react-native
+```
+
+Add the new Reown AppKit packages:
+
+```bash
+# Core AppKit library and dependencies
+yarn add @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+
+# Wagmi adapter and its dependencies
+yarn add @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
+
+# Optional: Additional adapters for other chains
+yarn add @reown/appkit-solana-react-native @reown/appkit-bitcoin-react-native
+```
+
+**Step 2. Update your AppKit configuration**
+
+Create a new `AppKitConfig.ts` file with the multichain setup:
+
+```tsx
+// src/AppKitConfig.ts
+import "@walletconnect/react-native-compat"; // MUST BE THE FIRST IMPORT
+
+import { createAppKit } from "@reown/appkit-react-native";
+import { WagmiAdapter } from "@reown/appkit-wagmi-react-native";
+import { mainnet, sepolia } from "wagmi/chains";
+
+const projectId = "YOUR_PROJECT_ID"; // Obtain from https://dashboard.reown.com/
+
+const metadata = {
+  name: "My Awesome dApp",
+  description: "My dApp description",
+  url: "https://myapp.com",
+  icons: ["https://myapp.com/icon.png"],
+  redirect: {
+    native: "YOUR_APP_SCHEME://",
+    universal: "YOUR_APP_UNIVERSAL_LINK.com",
+  },
+};
+
+// Initialize Wagmi adapter
+const wagmiAdapter = new WagmiAdapter({
+  projectId,
+  networks: [mainnet, sepolia], // Add all chains you want to support
+});
+
+export const appKit = createAppKit({
+  projectId,
+  metadata,
+  networks: [mainnet, sepolia], // Must match the networks in wagmiAdapter
+  adapters: [wagmiAdapter],
+  // ... other AppKit options
+});
+
+// Export the wagmi config for provider setup
+export const wagmiConfig = wagmiAdapter.wagmiConfig;
+```
+
+**Step 3. Update your App.tsx with providers**
+
+```tsx
+// App.tsx
+import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AppKitProvider } from '@reown/appkit-react-native';
+import { WagmiProvider } from 'wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { appKit, wagmiConfig } from './AppKitConfig';
+import YourAppRootComponent from './YourAppRootComponent';
+
+const queryClient = new QueryClient();
+
+function App() {
+  return (
+    <SafeAreaProvider>
+      <AppKitProvider instance={appKit}>
+        <WagmiProvider config={wagmiConfig}>
+          <QueryClientProvider client={queryClient}>
+            <YourAppRootComponent />
+          </QueryClientProvider>
+        </WagmiProvider>
+      </AppKitProvider>
+    </SafeAreaProvider>
+  );
 }
+
+export default App;
 ```
 
-- Run `yarn install` after replacing the packages
+**Step 4. Update your component with AppKit UI**
 
-**Step 2. Update your AppKit config**
+```tsx
+// YourAppRootComponent.tsx
+import React from 'react';
+import { AppKit } from '@reown/appkit-react-native';
+// ... other imports
 
-```tsx {4-5}
-// Remove the following code lines
-import { createWeb3Modal } from "@web3modal/wagmi-react-native";
+function YourAppRootComponent() {
+  return (
+    <>
+      {/* Your application's content */}
+      <AppKit /> {/* This renders the modal and other AppKit UI */}
+    </>
+  );
+}
 
-// Add the following code lines
-import { createAppKit } from "@reown/appkit-wagmi-react-native";
+export default YourAppRootComponent;
 ```
 
-**Step 3. Update your Hooks usage**
+**Step 5. Update your Hooks usage**
+
 Update your hook imports as follows:
 
 ```tsx {9-15}
@@ -56,12 +152,13 @@ import {
 import {
   useAppKit,
   useAppKitState,
-  useAppKitEvents,
+  useAppKitEventSubscription,
   useWalletInfo,
-} from "@reown/appkit-wagmi-react-native";
+} from "@reown/appkit-react-native";
 ```
 
-**Step 4. Update your Components usage**
+**Step 6. Update your Components usage**
+
 Update your component imports as follows:
 
 ```tsx {10-17}
@@ -81,69 +178,149 @@ import {
   ConnectButton,
   NetworkButton,
   AppKit,
-} from "@reown/appkit-wagmi-react-native";
+} from "@reown/appkit-react-native";
 ```
 
-**Step 5. Update your config for Universal Wallets**
-Update email wallet specific imports as follows:
+**Step 7. Update your config for Universal Wallets**
+
+Remove email wallet specific imports as follows:
 
 ```tsx {4-5}
 // Remove the following code lines
 import { emailConnector } from "@web3modal/email-wagmi-react-native";
-
-// Add the following code lines
-import { authConnector } from "@reown/appkit-auth-wagmi-react-native";
 ```
 
-**Step 6. Update your import to support Coinbase Wallet**
+**Step 8. Update your import to support Coinbase Wallet**
+
 Update coinbase connector import as follows:
 
-```tsx {4-5}
+```tsx {5-6,10-12}
 // Remove the following code lines
 import { coinbaseConnector } from "@web3modal/coinbase-wagmi-react-native";
 
 // Add the following code lines
-import { coinbaseConnector } from "@reown/appkit-coinbase-wagmi-react-native";
+import { MMKV } from 'react-native-mmkv';
+import { CoinbaseConnector } from '@reown/appkit-coinbase-react-native';
+
+export const appKit = createAppKit({
+  // ...
+  extraConnectors: [
+    new CoinbaseConnector({ storage: new MMKV() })
+  ],
+  // ...
+});
+
 ```
 
   </Tab>
   <Tab title="Ethers">
   * If you are using ethers v5, follow the same steps but replacing `ethers` with `ethers5`
 
-**Step 1. Replace the dependencies in your code and `package.json`**
+**Step 1. Replace the dependencies using package manager commands**
 
-```json {9-14}
-{
-  "dependencies": {
-    // Remove the following code lines
-    "@web3modal/ethers-react-native": "2.0.4",
-    "@web3modal/ethers5-react-native": "2.0.4",
-    "@web3modal/email-ethers-react-native": "2.0.4",
-    "@web3modal/coinbase-ethers-react-native": "2.0.4",
-    "@web3modal/siwe-react-native": "2.0.4",
+**For Yarn users:**
 
-    // Add the following code lines
-    "@reown/appkit-ethers-react-native": "1.0.0",
-    "@reown/appkit-auth-ethers-react-native": "1.0.0",
-    "@reown/appkit-coinbase-ethers-react-native": "1.0.0",
-    "@reown/appkit-siwe-react-native": "1.0.0"
-  }
+Remove the old Web3Modal packages:
+
+```bash
+yarn remove @web3modal/ethers-react-native @web3modal/ethers5-react-native @web3modal/email-ethers-react-native @web3modal/coinbase-ethers-react-native @web3modal/siwe-react-native
+```
+
+Add the new Reown AppKit packages:
+
+```bash
+# Core AppKit library and dependencies
+yarn add @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+
+# Ethers adapter
+yarn add @reown/appkit-ethers-react-native
+
+# Optional: Additional adapters for other chains
+yarn add @reown/appkit-solana-react-native @reown/appkit-bitcoin-react-native
+```
+
+**Step 2. Update your AppKit configuration**
+
+Create a new `AppKitConfig.ts` file with the multichain setup:
+
+```tsx
+// src/AppKitConfig.ts
+import "@walletconnect/react-native-compat"; // MUST BE THE FIRST IMPORT
+
+import { createAppKit } from "@reown/appkit-react-native";
+import { EthersAdapter } from "@reown/appkit-ethers-react-native";
+import { mainnet, polygon } from "viem/chains";
+
+const projectId = "YOUR_PROJECT_ID"; // Obtain from https://dashboard.reown.com/
+
+const metadata = {
+  name: "My Awesome dApp",
+  description: "My dApp description",
+  url: "https://myapp.com",
+  icons: ["https://myapp.com/icon.png"],
+  redirect: {
+    native: "YOUR_APP_SCHEME://",
+    universal: "YOUR_APP_UNIVERSAL_LINK.com",
+  },
+};
+
+// Initialize Ethers adapter
+const ethersAdapter = new EthersAdapter();
+
+export const appKit = createAppKit({
+  projectId,
+  metadata,
+  networks: [mainnet, polygon], // Add all chains you want to support
+  adapters: [ethersAdapter],
+  // ... other AppKit options
+});
+```
+
+**Step 3. Update your App.tsx with providers**
+
+```tsx
+// App.tsx
+import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AppKitProvider } from '@reown/appkit-react-native';
+import { appKit } from './AppKitConfig';
+import YourAppRootComponent from './YourAppRootComponent';
+
+function App() {
+  return (
+    <SafeAreaProvider>
+      <AppKitProvider instance={appKit}>
+        <YourAppRootComponent />
+      </AppKitProvider>
+    </SafeAreaProvider>
+  );
 }
+
+export default App;
 ```
 
-- Run `yarn install` after replacing the packages
+**Step 4. Update your component with AppKit UI**
 
-**Step 2. Update your AppKit config**
+```tsx
+// YourAppRootComponent.tsx
+import React from 'react';
+import { AppKit } from '@reown/appkit-react-native';
+// ... other imports
 
-```tsx {4-5}
-// Remove the following code lines
-import { createWeb3Modal } from "@web3modal/ethers-react-native";
+function YourAppRootComponent() {
+  return (
+    <>
+      {/* Your application's content */}
+      <AppKit /> {/* This renders the modal and other AppKit UI */}
+    </>
+  );
+}
 
-// Add the following code lines
-import { createAppKit } from "@reown/appkit-ethers-react-native";
+export default YourAppRootComponent;
 ```
 
-**Step 3. Update your Hooks usage**
+**Step 5. Update your Hooks usage**
+
 Update your hook imports as follows:
 
 ```tsx {12-21}
@@ -162,15 +339,15 @@ import {
 import {
   useAppKit,
   useAppKitState,
-  useAppKitEvents,
-  useAppKitAccount,
-  useAppKitProvider,
-  useAppKitError,
+  useAppKitEventSubscription,
+  useAccount,
+  useProvider,
   useWalletInfo,
-} from "@reown/appkit-ethers-react-native";
+} from "@reown/appkit-react-native";
 ```
 
-**Step 4. Update your Components usage**
+**Step 6. Update your Components usage**
+
 Update your component imports as follows:
 
 ```tsx {11-17}
@@ -190,35 +367,88 @@ import {
   ConnectButton,
   NetworkButton,
   AppKit,
-} from "@reown/appkit-ethers-react-native";
+} from "@reown/appkit-react-native";
 ```
 
-**Step 5. Update email wallet specific imports as follows:**
+**Step 7. Remove email wallet specific imports as follows:**
 
-```tsx {4-5}
+```tsx
 // Remove the following code lines
 import { EmailProvider } from "@web3modal/email-ethers-react-native";
-
-// Add the following code lines
-import { AuthProvider } from "@reown/appkit-auth-ethers-react-native";
 ```
 
-**Step 6. Update your import to support Coinbase Wallet**
+**Step 8. Update your import to support Coinbase Wallet**
+
 Update coinbase connector import as follows:
 
-```tsx {4-5}
+```tsx {5-6,10-12}
 // Remove the following code lines
 import { CoinbaseProvider } from "@web3modal/coinbase-ethers-react-native";
 
 // Add the following code lines
-import { CoinbaseProvider } from "@reown/appkit-coinbase-ethers-react-native";
+import { MMKV } from 'react-native-mmkv';
+import { CoinbaseConnector } from '@reown/appkit-coinbase-react-native';
+
+export const appKit = createAppKit({
+  // ...
+  extraConnectors: [
+    new CoinbaseConnector({ storage: new MMKV() })
+  ],
+  // ...
 ```
 
   </Tab>
 </Tabs>
 
+## Key Migration Notes
+
+### New Hook Structure
+- `useWeb3Modal` → `useAppKit` (includes `open`, `close`, `disconnect`, `switchNetwork`)
+- `useWeb3ModalState` → `useAppKitState`
+- `useWeb3ModalEvents` → `useAppKitEventSubscription`
+- `useWeb3ModalAccount` → `useAccount`
+- `useWeb3ModalProvider` → `useProvider`
+- `useDisconnect` → `useAppKit`
+
+### New Component Structure
+- `Web3Modal` → `AppKit`
+- `W3mButton` → `AppKitButton`
+- `W3mConnectButton` → `ConnectButton`
+- `W3mAccountButton` → `AccountButton`
+- `W3mNetworkButton` → `NetworkButton`
+
+### Multichain Support
+The new AppKit supports multiple blockchains natively. You can add support for Solana and Bitcoin by installing their respective adapters:
+
+```bash
+# For Solana support
+yarn add @reown/appkit-solana-react-native
+
+# For Bitcoin support
+yarn add @reown/appkit-bitcoin-react-native
+```
+
+Then add them to your `AppKitConfig.ts`:
+
+```tsx
+import { SolanaAdapter } from "@reown/appkit-solana-react-native";
+import { BitcoinAdapter } from "@reown/appkit-bitcoin-react-native";
+import { solana, bitcoin } from "@reown/appkit-react-native";
+
+const solanaAdapter = new SolanaAdapter();
+const bitcoinAdapter = new BitcoinAdapter();
+
+export const appKit = createAppKit({
+  // ...
+  networks: [mainnet, polygon, solana, bitcoin],
+  adapters: [ethersAdapter, solanaAdapter, bitcoinAdapter],
+  // ...
+});
+```
+
 ### Final notes
 
-- Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from Web3Modal to AppKit.
+- Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from Web3Modal to the new multichain AppKit.
 - Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
-- Check our [AppKit example for React Native](https://github.com/WalletConnect/react-native-examples/tree/main/dapps/W3MWagmi) to compare with your implementation in case you are having issues
+- Check our [AppKit examples for React Native](https://github.com/reown-com/react-native-examples/tree/multichain) to compare with your implementation in case you are having issues
+- For detailed information about the new architecture, see the [Migration to Multichain guide](../react-native/core/migration-multichain)

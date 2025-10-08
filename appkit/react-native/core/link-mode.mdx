@@ -21,7 +21,7 @@ This feature is compatible only with EVM blockchains, so if you decide to includ
 
 ### How to enable it:
 
-To support link mode, configure your Metadata with a valid universal link and set the `linkMode` property to `true`:
+To support link mode, configure your Metadata with a **valid universal link** and set the `linkMode` property to `true`:
 
 ```ts {8,9}
 const metadata = {
@@ -35,8 +35,6 @@ const metadata = {
     linkMode: true,
   },
 };
-
-const config = defaultConfig({ metadata });
 ```
 
 ### How does it look without Link Mode?

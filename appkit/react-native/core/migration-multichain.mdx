@@ -1,0 +1,333 @@
+---
+title: Migrate to Multichain
+description: A guide to help you migrate your existing Reown AppKit React Native integration to the new multichain version.
+---
+
+import { Card, CardGroup } from '@mintlify/components';
+
+This guide will walk you through the necessary steps to update your existing Reown AppKit React Native integration to the latest multichain version. The new version introduces a more flexible and powerful architecture, centered around a core AppKit library and distinct chain-specific adapters.
+
+## Key Changes at a Glance
+
+Before diving into the specific steps, here's a high-level overview of the most significant changes:
+
+-   **Core Library & Adapters:** Instead of using monolithic, EVM-specific packages like `@reown/appkit-wagmi-react-native` or `@reown/appkit-ethers-react-native` as your primary entry point, you will now use a core package `@reown/appkit-react-native`. Chain-specific logic for **EVM (Ethers, Wagmi), Solana, Bitcoin**, and potentially other chains is handled by separate, installable adapter packages (e.g., `@reown/appkit-ethers-react-native`, `@reown/appkit-solana-react-native`).
+-   **Centralized Logic:** The new `appkit` instance (initialized via `createAppKit`) becomes the central hub for managing connections, adapters, and events across multiple chains.
+-   **Unified Hooks & Components:** Hooks and UI components are now consistently imported from the core `@reown/appkit-react-native` package.
+
+## 1. Dependency Updates
+
+Your first step is to update your project's dependencies.
+
+### a. Remove Old Packages (If Applicable)
+If you were previously using older, specific AppKit packages like `@web3modal/*` or potentially differently named predecessors to `@reown/appkit-*-react-native`, you should remove them. The primary packages to focus on now are `@reown/appkit-react-native` and the new chain adapters.
+
+### b. Install Core Package & Polyfills/Helpers
+Install the main AppKit library along with essential peer dependencies for React Native:
+
+```bash
+# For Expo projects
+npx expo install @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat expo-application
+
+# For React Native CLI projects
+npm install @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+# or
+yarn add @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+```
+Then, for iOS in React Native CLI projects:
+```bash
+npx pod-install
+```
+
+### c. Install Chain Adapter Packages
+Based on the blockchains your dApp needs to support, install the corresponding adapter packages. Here are the primary ones:
+
+-   **EVM (Ethers):**
+    ```bash
+    # For Expo
+    npx expo install @reown/appkit-ethers-react-native
+    # For RN CLI
+    # npm install @reown/appkit-ethers-react-native
+    # yarn add @reown/appkit-ethers-react-native
+    ```
+-   **EVM (Wagmi):**
+    ```bash
+    # For Expo
+    npx expo install @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
+    # For RN CLI
+    # npm install @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
+    # yarn add @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
+    ```
+-   **Solana:**
+    ```bash
+    # For Expo
+    npx expo install @reown/appkit-solana-react-native
+    # For RN CLI
+    # npm install @reown/appkit-solana-react-native
+    # yarn add @reown/appkit-solana-react-native
+    ```
+-   **Bitcoin:**
+    ```bash
+    # For Expo
+    npx expo install @reown/appkit-bitcoin-react-native
+    # For RN CLI
+    # npm install @reown/appkit-bitcoin-react-native
+    # yarn add @reown/appkit-bitcoin-react-native
+    ```
+
+<Note>
+The package names for adapters like `@reown/appkit-ethers-react-native` and `@reown/appkit-wagmi-react-native` are the same as some older, more monolithic packages. The key difference is how they are used (as pluggable adapters into the core `@reown/appkit-react-native`).
+</Note>
+
+## 2. Crucial Polyfill Import
+
+To ensure proper functioning, especially for WalletConnect features within React Native, the `@walletconnect/react-native-compat` package must be imported at the very beginning of your application's entry point or your AppKit configuration file.
+
+```typescript
+// App.tsx or your AppKitConfig.ts
+import "@walletconnect/react-native-compat"; // MUST BE THE VERY FIRST IMPORT
+
+// ... other imports like React, createAppKit, adapters, etc.
+```
+
+This step is critical for avoiding runtime errors related to missing polyfills.
+
+## 3. AppKit Initialization (`createAppKit`)
+
+The way you initialize AppKit has changed significantly to support the new adapter-based architecture.
+
+### Old Implementation
+
+Previously, for an EVM setup with Wagmi, you might have done something like this
+
+```typescript
+// Old implementation
+import { createAppKit, defaultWagmiConfig } from "@reown/appkit-wagmi-react-native";
+import { mainnet, polygon } from "@wagmi/chains";
+
+const projectId = "YOUR_PROJECT_ID";
+const metadata = { /* ... */ };
+const chains = [mainnet, polygon];
+
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
+
+const appKitInstance = createAppKit({
+  wagmiConfig,
+  projectId,
+  metadata,
+  // ... other options
+});
+```
+
+### New Multichain Implementation
+
+With the new version, you initialize adapters first and then pass them to `createAppKit` from the core `@reown/appkit-react-native` package.
+
+```typescript
+// New approach: src/AppKitConfig.ts (or your preferred file)
+import "@walletconnect/react-native-compat"; // Ensure this is the first import
+
+import { createAppKit, type AppKitNetwork } from "@reown/appkit-react-native";
+import { EthersAdapter } from "@reown/appkit-ethers-react-native";
+import { SolanaAdapter } from "@reown/appkit-solana-react-native";
+import { BitcoinAdapter } from "@reown/appkit-bitcoin-react-native";
+import { WagmiAdapter } from "@reown/appkit-wagmi-react-native";
+
+// Import chain definitions (examples)
+import { mainnet, polygon } from "viem/chains"; // For EVM
+import { solana, bitcoin } from "@reown/appkit-react-native"; // Pre-defined AppKitNetwork objects
+
+const projectId = "YOUR_PROJECT_ID"; // Obtain from https://dashboard.reown.com/
+
+const metadata = { /* ... */ };
+
+// 1. Define your AppKitNetworks (for AppKit's UI and network management)
+// These can come from viem/chains (for EVM) or be custom AppKitNetwork objects.
+const appNetworks: AppKitNetwork[] = [
+  mainnet, // viem chains are automatically compatible as AppKitNetwork for 'eip155'
+  polygon,
+  solana,
+  bitcoin,
+  // You can also define custom AppKitNetwork objects here
+];
+
+// 2. Initialize Adapters for the chains you want to support
+// For EVM chains, choose ONE of the following adapters (EthersAdapter or WagmiAdapter):
+
+// Option A: EthersAdapter for general EVM support
+const ethersAdapter = new EthersAdapter();
+
+// Option B: WagmiAdapter if you are using Wagmi for EVM state management
+const wagmiEvmNetworks = [viemMainnet, viemPolygon]; // Subset of appNetworks or specific Wagmi chains
+const wagmiAdapter = new WagmiAdapter({
+  projectId,
+  networks: [mainnet, polygon], // These are Wagmi/viem chain objects
+});
+
+// Initialize adapters for other chains as needed
+const solanaAdapter = new SolanaAdapter();
+const bitcoinAdapter = new BitcoinAdapter();
+
+// 3. Create the AppKit instance
+// In this example, we'll use EthersAdapter for EVM chains.
+// If you chose WagmiAdapter, replace ethersAdapter with wagmiAdapter below.
+export const appKit = createAppKit({
+  projectId,
+  metadata,
+  networks: appNetworks, // Master list of networks for AppKit UI and context
+  adapters: [
+    ethersAdapter,  // Handles EVM chains defined in 'networks'
+    // wagmiAdapter, // Or use this if you chose Wagmi for EVM
+    solanaAdapter,  // Handles Solana chains
+    bitcoinAdapter, // Handles Bitcoin chains
+  ],
+  // ... other AppKit options (see Options page)
+});
+```
+
+**Key differences in initialization:**
+-   `createAppKit` is imported from `@reown/appkit-react-native`.
+-   You explicitly create instances of the adapters you need (e.g., `new EthersAdapter()`, `new WagmiAdapter(...)`).
+-   The `adapters` array in `createAppKit` takes these initialized adapter instances.
+-   The `networks` array in `createAppKit` takes `AppKitNetwork` objects, which define all supported networks for AppKit's UI and context. `viem/chains` objects can be directly used for EVM networks.
+-   For the `WagmiAdapter`, the `networks` property in its constructor defines which EVM chains *it* will specifically manage using Wagmi.
+
+## 4. Provider Setup
+
+The way you set up providers in your `App.tsx` (or equivalent root file) has minor adjustments, especially if you are using Wagmi.
+
+### a. `AppKitProvider`
+You will now need to wrap your application (or the relevant part) with `AppKitProvider` from `@reown/appkit-react-native`. This provider makes the AppKit instance, created in the previous step, available to all child components and hooks.
+
+```tsx
+// App.tsx
+import "@walletconnect/react-native-compat";
+
+import React from 'react';
+import { AppKitProvider } from '@reown/appkit-react-native';
+import { appKit } from './AppKitConfig'; // Your configured AppKit instance
+import YourAppRootComponent from './YourAppRootComponent'; // Or your main app layout
+
+function App() {
+  return (
+    <AppKitProvider instance={appKit}>
+      <YourAppRootComponent />
+    </AppKitProvider>
+  );
+}
+export default App;
+```
+
+### b. Wagmi Specific Providers (`WagmiProvider`, `QueryClientProvider`)
+If you're using the `WagmiAdapter`, you still need to set up `WagmiProvider` (from `wagmi`) and `QueryClientProvider` (from `@tanstack/react-query`) as you did before. The primary change is that the `config` prop for `WagmiProvider` now comes directly from your initialized `WagmiAdapter` instance's `wagmiConfig` property.
+
+```tsx
+// App.tsx (if using WagmiAdapter)
+import "@walletconnect/react-native-compat";
+
+import React from 'react';
+import { AppKitProvider } from '@reown/appkit-react-native';
+import { appKit, wagmiAdapter } from './AppKitConfig'; 
+import YourAppRootComponent from './YourAppRootComponent';
+
+import { WagmiProvider } from 'wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
+
+function App() {
+  return (
+    <AppKitProvider instance={appKit}>
+      <WagmiProvider config={wagmiAdapter.wagmiConfig} reconnectOnMount={false}>
+        <QueryClientProvider client={queryClient}>
+          <YourAppRootComponent />
+        </QueryClientProvider>
+      </WagmiProvider>
+    </AppKitProvider>
+  );
+}
+export default App;
+```
+
+### c. Rendering AppKit UI
+Ensure the `<AppKit />` component (imported from `@reown/appkit-react-native`) is included in your app's component tree, typically in your root component, to render the modal UI. This was likely already in place.
+
+```tsx
+// YourAppRootComponent.tsx (Simplified)
+import React from 'react';
+import { AppKit } from '@reown/appkit-react-native';
+// ... your other components ...
+
+function YourAppRootComponent() {
+  return (
+    <>
+      {/* Your app's content */}
+      {/* ... e.g., ConnectButton, etc. ... */}
+      
+      <AppKit /> {/* This renders the modal and other AppKit UI */}
+    </>
+  );
+}
+export default YourAppRootComponent;
+```
+
+## 5. Configuration Options (`createAppKit` parameters)
+
+Many configuration options previously passed to `createAppKit` (or `defaultConfig`/`defaultWagmiConfig`) are still available but are now part of the single `createAppKit` call from `@reown/appkit-react-native`.
+-   **`networks`**: As described above, an array of `AppKitNetwork` objects.
+-   **`adapters`**: As described, an array of initialized adapter instances.
+-   **`defaultNetwork`**:  (Formerly `defaultChain`).
+-   **`networkImages`**: (Formerly `chainImages`).
+-   **`tokens`**: New property (`Record<string, { address: string }>`) for displaying token balances.
+
+Refer to the [Options](./options) documentation for the complete and up-to-date list of configuration parameters.
+
+## 6. Hooks Migration
+
+All AppKit hooks are now imported directly from `@reown/appkit-react-native`.
+
+-   **`useAppKit()`**:
+    -   Import from `@reown/appkit-react-native`.
+    -   Still the primary hook for modal control (`open`, `close`, `isOpen`).
+    -   Now also includes actions like `disconnect` and `switchNetwork`.
+-   **`useAccount()`**:
+    -   Import from `@reown/appkit-react-native`.
+    -   Provides `address`, `chainId`, `isConnected`, and potentially other multichain-aware details. Functionality is largely the same; primary change is the import path and potentially more multichain-aware return values.
+-   **`useAppKitState()`**:
+    -   Import from `@reown/appkit-react-native`.
+    -   Provides real-time access to the modal's current state and connection status
+-   **`useProvider()` (New Hook)**:
+    -   Import from `@reown/appkit-react-native`.
+    -   Use this to get the underlying chain-specific provider/client (e.g., Ethers provider, Wagmi client, Solana connection).
+-   **`useAppKitEventSubscription()` (New Hook)**:
+    -   Import from `@reown/appkit-react-native`.
+    -   Allows subscription to various AppKit lifecycle events.
+-   **Deprecated Hooks:**
+    -   `useDisconnect`: The `disconnect` function is now available from `useAppKit().disconnect()`.
+
+Review the [Hooks](./hooks) documentation for detailed API information.
+
+## 7. Components Migration
+
+Update all UI component imports to use `@reown/appkit-react-native`. Key components include:
+
+-   `<AppKit />`
+-   `<AppKitButton />`
+-   `<ConnectButton />`
+-   `<AccountButton />`
+-   `<NetworkButton />`
+
+Their core functionality and props remain largely the same as before, but ensure you're importing them from the new unified package. Refer to the [Components](./components) documentation for details on props if needed.
+
+## Summary of Key Actions
+
+1.  **Update Dependencies:** Switch to `@reown/appkit-react-native` and add new adapter packages.
+2.  **Ensure Polyfill:** Add `import "@walletconnect/react-native-compat";` as the very first import.
+3.  **Revamp Initialization:** Use the new `createAppKit` signature with `networks` and `adapters` arrays.
+4.  **Adjust Provider Setup:** Set up `AppKitProvider`. For Wagmi, use `wagmiAdapter.wagmiConfig` for `WagmiProvider`.
+5.  **Update Hook Imports:** Change all hook imports to `@reown/appkit-react-native` and adapt to API changes (e.g., `useDisconnect` -> `useAppKit().disconnect`, new hooks like `useProvider`).
+6.  **Update Component Imports:** Change all component imports to `@reown/appkit-react-native`.
+7.  **Add `<AppKit />`:** Ensure this component is rendered for the modal UI.
+8.  **Review Options:** Check your `createAppKit` options against the new [Options](./options) documentation.
+
+This migration involves some significant structural changes, but the result is a more robust and flexible system for building multichain React Native applications. If you encounter issues, refer to the main documentation pages or seek support.
