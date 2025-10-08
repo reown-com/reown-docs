@@ -27,12 +27,12 @@ Install the main AppKit library along with essential peer dependencies for React
 
 ```bash
 # For Expo projects
-npx expo install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat expo-application
+npx expo install @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat expo-application
 
 # For React Native CLI projects
-npm install @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+npm install @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
 # or
-yarn add @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+yarn add @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
 ```
 Then, for iOS in React Native CLI projects:
 ```bash
@@ -45,34 +45,34 @@ Based on the blockchains your dApp needs to support, install the corresponding a
 -   **EVM (Ethers):**
     ```bash
     # For Expo
-    npx expo install @reown/appkit-ethers-react-native@alpha
+    npx expo install @reown/appkit-ethers-react-native
     # For RN CLI
-    # npm install @reown/appkit-ethers-react-native@alpha
-    # yarn add @reown/appkit-ethers-react-native@alpha
+    # npm install @reown/appkit-ethers-react-native
+    # yarn add @reown/appkit-ethers-react-native
     ```
 -   **EVM (Wagmi):**
     ```bash
     # For Expo
-    npx expo install @reown/appkit-wagmi-react-native@alpha wagmi viem@2.x @tanstack/react-query
+    npx expo install @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
     # For RN CLI
-    # npm install @reown/appkit-wagmi-react-native@alpha wagmi viem@2.x @tanstack/react-query
-    # yarn add @reown/appkit-wagmi-react-native@alpha wagmi viem@2.x @tanstack/react-query
+    # npm install @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
+    # yarn add @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
     ```
 -   **Solana:**
     ```bash
     # For Expo
-    npx expo install @reown/appkit-solana-react-native@alpha
+    npx expo install @reown/appkit-solana-react-native
     # For RN CLI
-    # npm install @reown/appkit-solana-react-native@alpha
-    # yarn add @reown/appkit-solana-react-native@alpha
+    # npm install @reown/appkit-solana-react-native
+    # yarn add @reown/appkit-solana-react-native
     ```
 -   **Bitcoin:**
     ```bash
     # For Expo
-    npx expo install @reown/appkit-bitcoin-react-native@alpha
+    npx expo install @reown/appkit-bitcoin-react-native
     # For RN CLI
-    # npm install @reown/appkit-bitcoin-react-native@alpha
-    # yarn add @reown/appkit-bitcoin-react-native@alpha
+    # npm install @reown/appkit-bitcoin-react-native
+    # yarn add @reown/appkit-bitcoin-react-native
     ```
 
 <Note>
@@ -201,6 +201,8 @@ You will now need to wrap your application (or the relevant part) with `AppKitPr
 
 ```tsx
 // App.tsx
+import "@walletconnect/react-native-compat";
+
 import React from 'react';
 import { AppKitProvider } from '@reown/appkit-react-native';
 import { appKit } from './AppKitConfig'; // Your configured AppKit instance
@@ -221,6 +223,8 @@ If you're using the `WagmiAdapter`, you still need to set up `WagmiProvider` (fr
 
 ```tsx
 // App.tsx (if using WagmiAdapter)
+import "@walletconnect/react-native-compat";
+
 import React from 'react';
 import { AppKitProvider } from '@reown/appkit-react-native';
 import { appKit, wagmiAdapter } from './AppKitConfig'; 

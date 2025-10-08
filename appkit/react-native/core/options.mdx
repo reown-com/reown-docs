@@ -74,62 +74,96 @@ createAppKit({
 ### `networks`
 *   **Type:** `Array<AppKitNetwork>`
 *   **Required:** Yes
-*   **Description:** An array of network objects that your dApp supports. Each object must conform to the `AppKitNetwork` type, which can be imported: `import type { AppKitNetwork } from '@reown/appkit-common-react-native';`. The full definition can be found in [`packages/common/src/utils/TypeUtil.ts`](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/common/src/utils/TypeUtil.ts#L30).
-    AppKit uses the `id` (numeric or string form of chain ID), `chainNamespace` (e.g., 'eip155', 'solana', 'bitcoin'), and `caipNetworkId` (e.g., 'eip155:1', 'solana:mainnet') from these network objects to associate them with the correct adapter.
+*   **Description:** An array of network objects that your dApp supports. Each object must conform to the `AppKitNetwork` type, which can be imported from `@reown/appkit-react-native`.
 
     <Note>
-    If `chainNamespace` is not provided for a network, it will default to `'eip155'`. If `caipNetworkId` is not provided, it will be constructed as `chainNamespace:id`.
-    Ensure these fields are correctly set for proper adapter mapping, especially for non-EVM chains.
+      If `chainNamespace` (e.g., 'eip155', 'solana', 'bitcoin') is not provided for a network, it will default to `'eip155'`. If `caipNetworkId` is not provided, it will be constructed as `chainNamespace:id` (e.g., 'eip155:1', 'solana:mainnet').
+      Ensure these fields are correctly set for proper adapter mapping, especially for non-EVM chains.
     </Note>
 
 **Example Sources for Network Configurations:**
 
-1.  **Pre-exported by AppKit:** For convenience, AppKit exports configurations for some common networks.
+<Accordion title="Pre-exported by AppKit">
+For convenience, AppKit exports configurations for Solana and Bitcoin networks.
 
-    ```typescript
-    import { solana, bitcoin } from '@reown/appkit-react-native';
+```typescript
+import { solana, bitcoin } from '@reown/appkit-react-native';
 
-    const configuredNetworks = [solana, bitcoin];
-    ```
-    *Example of pre-exported Solana network: [packages/appkit/src/networks/solana.ts](https://github.com/reown-com/appkit-react-native/blob/feat/multichain/packages/appkit/src/networks/solana.ts)*
+const configuredNetworks = [solana, bitcoin];
+```
 
-2.  **Using `viem/chains` or `wagmi/chains` for EVM Networks:** You can often use standard chain definitions from libraries like `viem` or `wagmi` directly, as they typically conform to a compatible structure. AppKit will default `chainNamespace` to `'eip155'` for these if not specified.
+*Example of pre-exported Solana network: [packages/appkit/src/networks/solana.ts](https://github.com/reown-com/appkit-react-native/blob/develop/packages/appkit/src/networks/solana.ts)*
+</Accordion>
 
-    ```typescript
-    import { mainnet as viemMainnet, polygon as viemPolygon } from 'viem/chains';
+<Accordion title="Using viem/chains for EVM Networks">
+You can often use standard chain definitions from libraries like `viem` or `wagmi` directly, as they typically conform to a compatible structure.
 
-    const configuredNetworks = [viemMainnet, viemPolygon];
-    ```
+```typescript
+import { mainnet as viemMainnet, polygon as viemPolygon } from 'viem/chains';
 
-3.  **Custom Network Definitions:** You can always define network objects manually. This is necessary for non-EVM chains if not pre-exported, or for custom EVM chains.
+const configuredNetworks = [viemMainnet, viemPolygon];
+```
+</Accordion>
 
-    ```typescript
-    import type { AppKitNetwork } from '@reown/appkit-common-react-native';
+<Accordion title="Custom Network Definitions">
+You can always define network objects manually. This is necessary for non-EVM chains if not pre-exported, or for custom EVM chains.
 
-    const myCustomSolanaDevnet: AppKitNetwork = {
-      id: 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1',
-      name: 'Solana Devnet',
-      chainNamespace: 'solana',
-      caipNetworkId: 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1',
-      nativeCurrency: { name: 'Solana', symbol: 'SOL', decimals: 9 },
-      rpcUrls: {
-        default: { http: ['https://rpc.walletconnect.org/v1'] }
-      },
-      blockExplorers: { 
-        default: { name: 'Solscan', url: 'https://solscan.io' } 
-      },
-      testnet: true
-    };
+```typescript
+import type { AppKitNetwork } from '@reown/appkit-react-native';
 
-    const configuredNetworks = [myCustomSolanaDevnet];
-    ```
+export const mainnet: AppKitNetwork = {
+  id: 1,
+  name: 'Ethereum',
+  nativeCurrency: {name: 'Ether', symbol: 'ETH', decimals: 18},
+  rpcUrls: {
+    default: {http: ['https://eth.llamarpc.com']},
+  },
+  blockExplorers: {
+    default: {name: 'Etherscan', url: 'https://etherscan.io'},
+  },
+  chainNamespace: 'eip155',
+  caipNetworkId: 'eip155:1',
+};
+
+export const polygon: AppKitNetwork = {
+  id: 137,
+  name: 'Polygon',
+  nativeCurrency: {name: 'POL', symbol: 'POL', decimals: 18},
+  rpcUrls: {
+    default: {http: ['https://polygon-rpc.com']},
+  },
+  blockExplorers: {
+    default: {name: 'PolygonScan', url: 'https://polygonscan.com'},
+  },
+  chainNamespace: 'eip155',
+  caipNetworkId: 'eip155:137',
+};
+
+export const solanaDevnet: AppKitNetwork = {
+  id: 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1',
+  name: 'Solana Devnet',
+  chainNamespace: 'solana',
+  caipNetworkId: 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1',
+  nativeCurrency: {name: 'Solana', symbol: 'SOL', decimals: 9},
+  rpcUrls: {
+    default: {http: ['https://rpc.walletconnect.org/v1']},
+  },
+  blockExplorers: {
+    default: {name: 'Solscan', url: 'https://solscan.io'},
+  },
+  testnet: true,
+};
+
+const configuredNetworks = [mainnet, polygon, solanaDevnet];
+```
+</Accordion>
 
 **Final Configuration Example:**
 
 ```typescript
 createAppKit({
   //...
-  networks: configuredNetworks // Use one of the methods above to define this array
+  networks: configuredNetworks
 })
 ```
 
@@ -160,49 +194,128 @@ createAppKit({
 *   **Required:** Yes
 *   **Description:** A storage implementation that handles data persistence. AppKit provides a flexible storage interface that works with any storage solution you prefer.
 
+The `Storage` interface, which can be imported from `@reown/appkit-react-native`, is defined as follows:
+
 ```typescript
-// This is an example using 'react-native-mmkv', but you can use your preferred storage library
+export interface Storage {
+  /**
+   * Returns all keys in storage.
+   */
+  getKeys(): Promise<string[]>;
 
-import { MMKV } from 'react-native-mmkv';
-import { safeJsonParse, safeJsonStringify } from '@walletconnect/safe-json';
-import type { Storage } from '@reown/appkit-react-native';
+  /**
+   * Returns all key-value entries in storage.
+   */
+  getEntries<T = any>(): Promise<[string, T][]>;
 
-const mmkv = new MMKV();
+  /**
+   * Get an item from storage for a given key.
+   * @param key The key to retrieve.
+   */
+  getItem<T = any>(key: string): Promise<T | undefined>;
 
-const storage: Storage = {
-  getKeys: async () => {
-      return mmkv.getAllKeys();
-  },
-  getEntries: async <T = any>(): Promise<[string, T][]> => {
-    function parseEntry(key: string): [string, any] {
-      const value = mmkv.getString(key);
-      return [key, safeJsonParse(value ?? '')];
-    }
+  /**
+   * Set an item in storage for a given key.
+   * @param key The key to set.
+   * @param value The value to set.
+   */
+  setItem<T = any>(key: string, value: T): Promise<void>;
 
-    const keys = mmkv.getAllKeys();
-    return keys.map(parseEntry);
-  },
-  setItem: async <T = any>(key: string, value: T) => {
-    return mmkv.set(key, safeJsonStringify(value));
-  },
-  getItem: async <T = any>(key: string): Promise<T | undefined> => {
-    const item = mmkv.getString(key);
-    if (typeof item === 'undefined' || item === null) {
-      return undefined;
-    }
-
-    return safeJsonParse(item) as T;
-  },
-  removeItem: async (key: string) => {
-    return mmkv.delete(key);
-  },
-};
-
-createAppKit({
-  //...
-  storage
-})
+  /**
+   * Remove an item from storage for a given key.
+   * @param key The key to remove.
+   */
+  removeItem(key: string): Promise<void>;
+}
 ```
+
+<AccordionGroup>
+  <Accordion title="Example with react-native-mmkv">
+    ```typescript
+      import { MMKV } from 'react-native-mmkv';
+      import { safeJsonParse, safeJsonStringify } from '@walletconnect/safe-json';
+      import type { Storage } from '@reown/appkit-react-native';
+
+      const mmkv = new MMKV();
+
+      const storage: Storage = {
+        getKeys: async () => {
+            return mmkv.getAllKeys();
+        },
+        getEntries: async <T = any>(): Promise<[string, T][]> => {
+          function parseEntry(key: string): [string, any] {
+            const value = mmkv.getString(key);
+            return [key, safeJsonParse(value ?? '')];
+          }
+
+          const keys = mmkv.getAllKeys();
+          return keys.map(parseEntry);
+        },
+        setItem: async <T = any>(key: string, value: T) => {
+          return mmkv.set(key, safeJsonStringify(value));
+        },
+        getItem: async <T = any>(key: string): Promise<T | undefined> => {
+          const item = mmkv.getString(key);
+          if (typeof item === 'undefined' || item === null) {
+            return undefined;
+          }
+
+          return safeJsonParse(item) as T;
+        },
+        removeItem: async (key: string) => {
+          return mmkv.delete(key);
+        },
+      };
+
+      createAppKit({
+        //...
+        storage
+      })
+    ```
+  </Accordion>
+  
+  <Accordion title="Example with react-native-async-storage">
+    ```typescript
+    import AsyncStorage from '@react-native-async-storage/async-storage';
+
+    import { type Storage } from '@reown/appkit-react-native';
+    import { safeJsonParse, safeJsonStringify } from '@walletconnect/safe-json';
+
+    const storage: Storage = {
+      getKeys: async () => {
+        return await AsyncStorage.getAllKeys() as string[];
+      },
+      getEntries: async <T = any>(): Promise<[string, T][]> => {
+        const keys = await AsyncStorage.getAllKeys();
+        return await Promise.all(keys.map(async key => [
+          key,
+          safeJsonParse(await AsyncStorage.getItem(key) ?? '') as T,
+        ]));
+      },
+      setItem: async <T = any>(key: string, value: T) => {
+        await AsyncStorage.setItem(key, safeJsonStringify(value));
+      },
+      getItem: async <T = any>(key: string): Promise<T | undefined> => {
+        const item = await AsyncStorage.getItem(key);
+        if (typeof item === 'undefined' || item === null) {
+          return undefined;
+        }
+
+        return safeJsonParse(item) as T;
+      },
+      removeItem: async (key: string) => {
+        await AsyncStorage.removeItem(key);
+      },
+    };
+
+    createAppKit({
+      //...
+      storage
+    })
+    ```
+  </Accordion>
+</AccordionGroup>
+
 
 ### `extraConnectors`
 *   **Type:** `Array<Connector>`
@@ -229,17 +342,6 @@ createAppKit({
   //...
   // Assuming ethereumMainnet is a valid AppKitNetwork object defined in your 'networks' array
   defaultNetwork: ethereumMainnet
-})
-```
-
-## `debug`
-
-Enables debug logging for AppKit. When set to true, you'll see detailed logs in your console that help with troubleshooting and development. Default is `false`.
-
-```ts
-createAppKit({
-  //...
-  debug: true
 })
 ```
 

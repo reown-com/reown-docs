@@ -163,10 +163,10 @@ export default function ChainSpecificActions() {
 - `providerType`: The type of provider (e.g., 'eip155', 'solana', 'bip122')
 
 Refer to the example usage in:
-*   [EVM + Ethers](https://github.com/reown-com/appkit-react-native/blob/feat/multichain/apps/native/src/views/EthersActionsView.tsx)
-*   [EVM + Wagmi](https://github.com/reown-com/appkit-react-native/blob/feat/multichain/apps/native/src/views/WagmiActionsView.tsx) (Note: Wagmi has its own provider/signer abstractions, so `useProvider` might be used differently or in conjunction with Wagmi's hooks)
-*   [Solana](https://github.com/reown-com/appkit-react-native/blob/feat/multichain/apps/native/src/views/SolanaActionsView.tsx)
-*   [Bitcoin](https://github.com/reown-com/appkit-react-native/blob/feat/multichain/apps/native/src/views/BitcoinActionsView.tsx)
+*   [EVM + Ethers](https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/src/views/EthersActionsView.tsx)
+*   [EVM + Wagmi](https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/src/views/WagmiActionsView.tsx)
+*   [Solana](https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/src/views/SolanaActionsView.tsx)
+*   [Bitcoin](https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/src/views/BitcoinActionsView.tsx)
 
 ## `useWalletInfo()`
 
@@ -204,7 +204,7 @@ export default function WalletDetails() {
 - `walletInfo`: Object containing metadata about the connected wallet (name, icon, rdns, id, etc.)
 
 <Note>
-The exact structure of `walletInfo` can be found in the `WalletInfo` type definition in [packages/common/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/common/src/utils/TypeUtil.ts#L365).
+The exact structure of `walletInfo` can be found in the `WalletInfo` type definition in [packages/common/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/develop/packages/common/src/utils/TypeUtil.ts#L365).
 </Note>
 
 ## `useAppKitEventSubscription()`
@@ -235,7 +235,7 @@ export default function EventLogger() {
 - `callback`: Function that is executed when the event is triggered
 
 <Note>
-The full list of event types and their payloads can be found in `AppKitEvents` within [packages/core/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/f70c343eb954419ceb43c0cd922a5929d8462a56/packages/core/src/utils/TypeUtil.ts#L369).
+The full list of event types and their payloads can be found in `AppKitEvents` within [packages/core/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/develop/packages/core/src/utils/TypeUtil.ts#L369).
 </Note>
 
 ## `useAppKitState()`

@@ -32,13 +32,13 @@ Add the new Reown AppKit packages:
 
 ```bash
 # Core AppKit library and dependencies
-yarn add @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+yarn add @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
 
 # Wagmi adapter and its dependencies
-yarn add @reown/appkit-wagmi-react-native@alpha wagmi viem@2.x @tanstack/react-query
+yarn add @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
 
 # Optional: Additional adapters for other chains
-yarn add @reown/appkit-solana-react-native@alpha @reown/appkit-bitcoin-react-native@alpha
+yarn add @reown/appkit-solana-react-native @reown/appkit-bitcoin-react-native
 ```
 
 **Step 2. Update your AppKit configuration**
@@ -230,13 +230,13 @@ Add the new Reown AppKit packages:
 
 ```bash
 # Core AppKit library and dependencies
-yarn add @reown/appkit-react-native@alpha @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
+yarn add @reown/appkit-react-native @react-native-async-storage/async-storage react-native-get-random-values react-native-svg @react-native-community/netinfo @walletconnect/react-native-compat
 
 # Ethers adapter
-yarn add @reown/appkit-ethers-react-native@alpha
+yarn add @reown/appkit-ethers-react-native
 
 # Optional: Additional adapters for other chains
-yarn add @reown/appkit-solana-react-native@alpha @reown/appkit-bitcoin-react-native@alpha
+yarn add @reown/appkit-solana-react-native @reown/appkit-bitcoin-react-native
 ```
 
 **Step 2. Update your AppKit configuration**
@@ -408,7 +408,7 @@ export const appKit = createAppKit({
 - `useWeb3ModalEvents` → `useAppKitEventSubscription`
 - `useWeb3ModalAccount` → `useAccount`
 - `useWeb3ModalProvider` → `useProvider`
-- `useDisconnect` → `useAppKit().disconnect`
+- `useDisconnect` → `useAppKit`
 
 ### New Component Structure
 - `Web3Modal` → `AppKit`
@@ -422,10 +422,10 @@ The new AppKit supports multiple blockchains natively. You can add support for S
 
 ```bash
 # For Solana support
-yarn add @reown/appkit-solana-react-native@alpha
+yarn add @reown/appkit-solana-react-native
 
 # For Bitcoin support
-yarn add @reown/appkit-bitcoin-react-native@alpha
+yarn add @reown/appkit-bitcoin-react-native
 ```
 
 Then add them to your `AppKitConfig.ts`:
