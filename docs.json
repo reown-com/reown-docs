@@ -11,6 +11,10 @@
   "integrations": {
     "gtm": {
       "tagId": "GTM-56G35T8X"
+    },
+    "posthog": {
+      "apiKey": "phc_8DvuGoAsaF1d8p51zQsrA6PY7KFtbBxfMfl9sgOeS63",
+      "apiHost": "https://pineapple.reown.com"
     }
   },
 
@@ -93,6 +97,7 @@
                   "appkit/recipes/travel-rule",
                   "appkit/recipes/smart-sessions",
                   "appkit/recipes/update-appkit",
+                  "appkit/recipes/universal-connector",
                   "appkit/recipes/troubleshooting"
                 ]
               },
@@ -120,8 +125,7 @@
               "cloud/reown-authentication",
               "cloud/relay",
               "cloud/blockchain-api",
-              "cloud/analytics",
-              "cloud/paymaster"
+              "cloud/analytics"
             ]
           },
           {
@@ -728,9 +732,9 @@
             ]
           },
           {
-            "dropdown": "Android",
+            "dropdown": "Kotlin",
             "icon": "android",
-            "description": "AppKit on Android",
+            "description": "AppKit on Kotlin (Android)",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -760,9 +764,9 @@
             ]
           },
           {
-            "dropdown": "iOS",
+            "dropdown": "Swift",
             "icon": "apple",
-            "description": "AppKit on iOS",
+            "description": "AppKit on Swift (iOS)",
             "pages": [
               {
                 "group": "Fundamentals",
