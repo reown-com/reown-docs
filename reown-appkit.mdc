@@ -96,7 +96,7 @@ export const config = wagmiAdapter.wagmiConfig
 All supported **Viem networks** are available via `@reown/appkit/networks`:
 
 ```ts
-import { mainnet, arbitrum, base, scroll, polygon } from '@reown/appkit/networks'
+import { mainnet, arbitrum, base, scroll, polygon, hedera } from '@reown/appkit/networks'
 ```
 
 ---
