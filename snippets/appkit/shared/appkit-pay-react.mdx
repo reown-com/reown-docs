@@ -110,6 +110,31 @@ Upon selecting this test exchange, you will be redirected to a result modal wher
 
 This setup allows you to safely verify both positive and negative exchange flows in a controlled environment.
 
+### Testing Locally
+
+To test the complete exchange flow in a local development environment:
+
+1. Clone the example repository:
+   ```bash
+   git clone https://github.com/reown-com/appkit-web-examples.git
+   cd appkit-web-examples/react/react-wagmi-appkit-pay
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Run the development server:
+   ```bash
+   pnpm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+This allows you to test the complete Pay with Exchange flow using `baseSepoliaETH` in a fully functional application environment.
+
+
 ## Hooks
 
 ### useAvailableExchanges
