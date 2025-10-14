@@ -94,6 +94,17 @@ const paymentAssetDetails = {
 };
 ```
 
+## Test locally
+
+In order to test locally use localhost and port 3000. This is the only port available for local testing.
+
+Add the following to your package.json file:
+```json
+"scripts": {
+    "dev": "vite --port 3000",
+},
+```
+
 ## Test the complete exchange flow
 
 To test the entire exchange process, we've implemented a dedicated test scenario that activates when using the token `baseSepoliaETH`.
