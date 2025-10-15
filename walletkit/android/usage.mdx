@@ -313,7 +313,7 @@ val event: Wallet.Model.SessiomEvent = SessionEvent(name = "accountsChanged", da
 
 val sessionEmit = Wallet.Params.SessionEmit(topic = sessionTopic, chainId = "eip155:1", event = event)
 
-WalletKit.emitSessionEvent(sessionEmit) { error -> /*callback for error while emiting an event*/ }
+WalletKit.emitSessionEvent(sessionEmit) { error -> /*callback for error while emitting an event*/ }
 ```
 
 ### Session Disconnect
