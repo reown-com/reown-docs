@@ -2,6 +2,21 @@
 title: Options
 ---
 
+### Featured wallets
+
+Select wallets that are going to be shown on the modal's main view. Array of wallet IDs defined will be prioritized (order is respected). These wallets will also show up first in `All Wallets` view. You can find the wallet IDs in [WalletGuide](https://walletguide.walletconnect.network/).
+
+```csharp
+await AppKit.InitializeAsync(new AppKitConfig
+{
+    featuredWalletIds = new []
+    {
+        "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369", // Rainbow
+        "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
+    }
+});
+```
+
 ### Explorer included wallets
 
 Allows to set included wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define a list of wallets ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
