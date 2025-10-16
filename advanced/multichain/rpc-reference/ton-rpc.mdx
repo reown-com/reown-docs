@@ -3,308 +3,181 @@ title: "TON"
 description: TON JSON-RPC Methods
 ---
 
-## ton_getAccounts
+## Network / Chain Information
 
-This method returns an array of TON wallet accounts available to sign from the wallet.
+| CAIP-2 / CAIP-25 Chain ID | Chain ID | Name | RPC Endpoint | Namespace |
+|---------------------------|----------|------|--------------|-----------|
+| `ton:-239` | `-239` | TON Mainnet | `https://toncenter.com/api/v2/jsonRPC` | `ton` |
+| `ton:-3` | `-3` | TON Testnet | `https://testnet.toncenter.com/api/v2/jsonRPC` | `ton` |
 
-### Parameters
+Additionally, the WalletConnect RPC proxy may be used:
 
-    none
+```
+https://rpc.walletconnect.org/v1?chainId=ton:<chainId>&projectId=<PROJECT_ID>
+```
 
-### Returns
+## RPC Methods
 
-`Array` - Array of accounts:
+Wallets must support the following JSON-RPC methods over WalletConnect sessions. No events are required.
 
-- `Object`:
-  - `address` : `String` - TON wallet address in user-friendly format
-  - `chain` : `String` - TON chain identifier (e.g., "-239" for mainnet, "-3" for testnet)
-  - `publicKey` : `String` - (optional) public key for the account
-  - `walletStateInit` : `String` - (optional) state init for the wallet contract
+## ton_sendMessage
 
-### Example
+Submit one or more transaction messages to the TON network.
+
+### Request
 
 ```typescript
-// Request
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "method": "ton_getAccounts",
-  "params": {}
+interface TonSendMessageRequest {
+  method: 'ton_sendMessage';
+  params: TonSendTransactionParams[];
 }
 
-// Result
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "result": [
-    {
-      "address": "UQAQnxLqlX2B6w4jQzzzPWA8eyWZVZBz6Y0D_8noARLOaEAK",
-      "chain": "-239",
-      "publicKey": "82a0b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1",
-      "walletStateInit": "te6cckEBBAEAOgACATQCAQAAART/APSkE/S88sgLAwBI0wHQ0wMBcbCRW+D6QDBwgBDIywVYzxYh+gLLagHPFsmAQPsAlxCarA=="
-    }
-  ]
+interface TonSendTransactionParams {
+  valid_until?: number;        // optional UNIX timestamp
+  from?: string;               // optional sender address (TEP-123 format)
+  messages: TonTransactionMessage[];
+}
+
+interface TonTransactionMessage {
+  address: string;             // recipient in TEP-123 format
+  amount: number | string;     // value in nanotons
+  payload?: string;            // optional base64 BoC
+  stateInit?: string;          // optional base64 BoC
 }
 ```
 
-## ton_requestAccounts
+### Example Request
 
-This method requests access to TON wallet accounts and returns an array of accounts after user approval.
-
-### Parameters
-
-    none
-
-### Returns
-
-`Array` - Array of accounts:
-
-- `Object`:
-  - `address` : `String` - TON wallet address in user-friendly format
-  - `chain` : `String` - TON chain identifier (e.g., "-239" for mainnet, "-3" for testnet)
-  - `publicKey` : `String` - (optional) public key for the account
-  - `walletStateInit` : `String` - (optional) state init for the wallet contract
-
-### Example
-
-```typescript
-// Request
+```json
 {
-  "id": 1,
+  "id": 123,
   "jsonrpc": "2.0",
-  "method": "ton_requestAccounts",
-  "params": {}
-}
-
-// Result
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "result": [
-    {
-      "address": "UQAQnxLqlX2B6w4jQzzzPWA8eyWZVZBz6Y0D_8noARLOaEAK",
-      "chain": "-239",
-      "publicKey": "82a0b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1",
-      "walletStateInit": "te6cckEBBAEAOgACATQCAQAAART/APSkE/S88sgLAwBI0wHQ0wMBcbCRW+D6QDBwgBDIywVYzxYh+gLLagHPFsmAQPsAlxCarA=="
+  "params": {
+    "chainId": "ton:-239",
+    "request": {
+      "method": "ton_sendMessage",
+      "params": [
+        {
+          "valid_until": 1658253458,
+          "from": "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn",
+          "messages": [
+            {
+              "address": "EQBBJBB3HagsujBqVfqeDUPJ0kXjgTPLWPFFffuNXNiJL0aA",
+              "amount": "20000000",
+              "stateInit": "base64boc..."
+            },
+            {
+              "address": "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn",
+              "amount": "60000000",
+              "payload": "base64boc..."
+            }
+          ]
+        }
+      ]
     }
-  ]
+  }
 }
 ```
 
-## ton_sendTransaction
+### Success Response
 
-This method requests the wallet to sign and send a transaction to the TON blockchain.
-
-### Parameters
-
-`Array` - Array of transaction messages:
-
-- `Object` - Transaction message:
-  - `address` : `String` - destination address in user-friendly format
-  - `amount` : `String` - amount in nanotons (1 TON = 1,000,000,000 nanotons)
-  - `payload` : `String` - (optional) base64 encoded BOC (Bag of Cells) with transaction payload
-  - `stateInit` : `String` - (optional) base64 encoded BOC with state init for contract deployment
-
-### Returns
-
-`Object`:
-
-- `boc` : `String` - base64 encoded BOC with signed transaction
-
-### Example
-
-```typescript
-// Request
+```json
 {
-  "id": 1,
   "jsonrpc": "2.0",
-  "method": "ton_sendTransaction",
-  "params": [
-    {
-      "address": "UQAQnxLqlX2B6w4jQzzzPWA8eyWZVZBz6Y0D_8noARLOaEAK",
-      "amount": "1000000000",
-      "payload": "te6ccsEBAQEABgAACCiAmCM="
-    }
-  ]
+  "id": 123,
+  "result": "base64bocEncodedTransaction"
 }
+```
 
-// Result
+### Error Response
+
+```json
 {
-  "id": 1,
   "jsonrpc": "2.0",
-  "result": {
-    "boc": "te6cckECBQEAARUAAkWIAQL1WxMgqhQFGJJpMIZ8cUBUWFQGRSBGWxMgqhQFGJJpMIEq4bF/CQEBoLM6cOivjL7YYs3LIVhHGYKsJNbGJHsJZLLw6VJNJwKkf6Aj9AAAk5gYCMkbkGaGABW4LqRmOL2q6oCQdBIJd5/1n0EB0AANFFF2czo8AGAALAAAAAAAAAAAAAAAAAAAAAAQEBQAUAAAAAAAAAAAAAAAAAAAAAAAA="
+  "id": 123,
+  "error": {
+    "code": <number>,
+    "message": "<error message>"
   }
 }
 ```
 
 ## ton_signData
 
-This method signs arbitrary data with the wallet's private key. This is useful for authentication and message signing.
+Sign an off-chain payload (text, binary, or cell) for authentication or verification by dApps.
 
-### Parameters
-
-`Object` - Signing parameters:
-
-- `data` : `String` - data to sign (UTF-8 string or base64 encoded binary data)
-- `format` : `String` - (optional) data format, either "text" (default) or "base64"
-
-### Returns
-
-`Object`:
-
-- `signature` : `String` - base64 encoded signature
-- `timestamp` : `Number` - timestamp of when the signature was created
-
-### Example
+### Request
 
 ```typescript
-// Request
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "method": "ton_signData",
-  "params": {
-    "data": "Sign in to MyApp",
-    "format": "text"
-  }
+interface TonSignDataRequest {
+  method: 'ton_signData';
+  params: TonSignDataParams[];
 }
 
-// Result
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "result": {
-    "signature": "tDJlc2F0dXJlIjoiMHhkZDRhOWM2MzY2MWUwMGU2ZmY5ODAwOGNkYTY3NzZlZjJmMjBjNjk5NGQ4MTMxMjJjMGRlNGQ5MmJhNzgyMGViIn0=",
-    "timestamp": 1699564800
-  }
-}
+type TonSignDataParams =
+  | { type: 'text'; text: string; from?: string }
+  | { type: 'binary'; bytes: string; from?: string }
+  | { type: 'cell'; schema: string; cell: string; from?: string };
 ```
 
-## ton_rawSign
+### Example Request
 
-This method requests a raw signature over a hash. This is a low-level signing method for advanced use cases.
-
-### Parameters
-
-`Object` - Signing parameters:
-
-- `data` : `String` - base64 encoded data to sign (typically a hash)
-
-### Returns
-
-`Object`:
-
-- `signature` : `String` - base64 encoded signature
-
-### Example
-
-```typescript
-// Request
+```json
 {
-  "id": 1,
+  "id": 123,
   "jsonrpc": "2.0",
-  "method": "ton_rawSign",
   "params": {
-    "data": "aGVsbG8gd29ybGQ="
-  }
-}
-
-// Result
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "result": {
-    "signature": "tDJlc2F0dXJlIjoiMHhkZDRhOWM2MzY2MWUwMGU2ZmY5ODAwOGNkYTY3NzZlZjJmMjBjNjk5NGQ4MTMxMjJjMGRlNGQ5MmJhNzgyMGViIn0="
-  }
-}
-```
-
-## ton_getBalance
-
-This method returns the balance of a TON account.
-
-### Parameters
-
-`Object` - Balance query parameters:
-
-- `address` : `String` - TON wallet address in user-friendly format
-
-### Returns
-
-`Object`:
-
-- `balance` : `String` - balance in nanotons
-
-### Example
-
-```typescript
-// Request
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "method": "ton_getBalance",
-  "params": {
-    "address": "UQAQnxLqlX2B6w4jQzzzPWA8eyWZVZBz6Y0D_8noARLOaEAK"
-  }
-}
-
-// Result
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "result": {
-    "balance": "1234567890"
-  }
-}
-```
-
-## Events
-
-### ton_accountsChanged
-
-This event is emitted when the user switches accounts in their wallet or disconnects.
-
-#### Event Data
-
-`Array` - Array of currently connected accounts (empty array if disconnected)
-
-#### Example
-
-```typescript
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "method": "ton_accountsChanged",
-  "params": [
-    {
-      "address": "UQAQnxLqlX2B6w4jQzzzPWA8eyWZVZBz6Y0D_8noARLOaEAK",
-      "chain": "-239",
-      "publicKey": "82a0b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1"
+    "chainId": "ton:-239",
+    "request": {
+      "method": "ton_signData",
+      "params": [
+        {
+          "type": "text",
+          "text": "Confirm new 2FA number:\\n+1 234 567 8901",
+          "from": "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn"
+        }
+      ]
     }
-  ]
-}
-```
-
-### ton_chainChanged
-
-This event is emitted when the user switches between TON networks (mainnet, testnet).
-
-#### Event Data
-
-`Object` - Chain information:
-
-- `chain` : `String` - TON chain identifier
-
-#### Example
-
-```typescript
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "method": "ton_chainChanged",
-  "params": {
-    "chain": "-239"
   }
 }
 ```
+
+### Success Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "result": {
+    "signature": "base64_signature",
+    "address": "raw_wallet_address",
+    "timestamp": 1658253458,
+    "domain": "yourapp.com",
+    "payload": {
+      "type": "text",
+      "text": "Confirm new 2FA number:\\n+1 234 567 8901"
+    }
+  }
+}
+```
+
+### Error Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "error": {
+    "code": <number>,
+    "message": "<error message>"
+  }
+}
+```
+
+## Notes & Considerations
+
+- If `from` is omitted, the wallet should prompt the user to select an address.
+- All requests and responses must comply with JSON-RPC structure (`id`, `jsonrpc`, etc.).
+- Signature verification can be done using `ed25519.verify` on the original bytes.
+- `stateInit` support is needed when your wallet supports contract deployment flows.
+- The `domain` field in responses indicates the originating application (dApp) domain.
