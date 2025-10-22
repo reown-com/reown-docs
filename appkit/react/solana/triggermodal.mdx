@@ -1,19 +1,17 @@
-To open AppKit you can use our [**web component**](../core/components) or build your own button with AppKit [**hooks**](../core/hooks.mdx#useAppKit).
+To open AppKit you can use our [**React components**](../core/components) or build your own button with AppKit [**hooks**](../core/hooks.mdx#useAppKit).
 
 <Tabs>
-<Tab title="Web Component">
+<Tab title="React Component">
 
 ```tsx
+import { AppKitButton } from "@reown/appkit/react";
+
 export default function ConnectButton() {
-  return <appkit-button />;
+  return <AppKitButton />;
 }
 ```
 
-Learn more about the AppKit web components [here](../core/components)
-
-<Info>
-  Web components are global html elements that don't require importing.
-</Info>
+Learn more about the AppKit React components [here](../core/components)
 
 </Tab>
 <Tab title="Hooks">
