@@ -83,6 +83,32 @@ interface TonTransactionMessage {
 }
 ```
 
+<Note>
+The `base64bocEncodedTransaction` in the result is a base64 encoded BOC (Bag of Cells) of an external message.
+</Note>
+
+#### Example: Building an External-In Message
+
+```typescript
+// Build external-in message for the result
+const message: Message = {
+  info: {
+    type: 'external-in',
+    src: null,
+    dest: Address.parse("<the sender address>"),
+    importFee: BigInt(0)
+  },
+  init: null,
+  body: transfer
+}
+
+const externalMessageCell = beginCell()
+  .store(storeMessage(message, { forceRef: true }))
+  .endCell()
+
+return externalMessageCell.toBoc().toString('base64')
+```
+
 ### Error Response
 
 ```json
