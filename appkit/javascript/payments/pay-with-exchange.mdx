@@ -39,19 +39,66 @@ pnpm add @reown/appkit-pay
 
 ### Usage
 ```ts
-import { pay, baseSepoliaETH } from '@reown/appkit-pay' 
+import { pay, openPay, baseSepoliaETH } from '@reown/appkit-pay' 
 ```
 
-In order to run the payment, we are using the function `openPay`. 
+There are two main functions for handling payments:
+
+#### `pay` - Full Payment Flow
+This function handles the complete payment flow — it opens the payment UI *and* waits for the result (success, failure, cancel, timeout). This function receives three parameters: `recipient`, `amount`, and `paymentAsset`.
 
 ```ts
-// --- Open Modal ---
-
+// pay function returns a PaymentResult object
 const result = await pay({
     recipient: addressRecipient,
     amount: amount,
     paymentAsset: baseSepoliaETH
-})
+});
+
+if (result.success) {
+    console.log("Payment successful: " + result.result);
+} else {
+    console.error("Payment error: " + result.error);
+}
+```
+
+#### `openPay` - Open Payment UI Only
+This function opens or triggers the payment UI modal but doesn't return the result of the payment. Use this when you want to handle the payment result through other means (like subscriptions or polling).
+
+```ts
+// openPay just opens the modal without waiting for the result
+openPay({
+    recipient: addressRecipient,
+    amount: amount,
+    paymentAsset: baseSepoliaETH
+});
+
+// Handle the result separately using getPayResult() or subscriptions
+```
+
+## Prerequisites
+
+### Enable Payments Feature in Dashboard
+
+<Warning>
+The "Payments" feature **must be enabled** in the [Reown Dashboard](https://cloud.reown.com) before you can use AppKit Pay, even for local testing. 
+
+1. Go to your project in the Reown Dashboard
+2. Navigate to the Payments section
+3. Enable the Payments feature for your project
+
+Without enabling this feature in the dashboard, payment functionality will not work even if your integration is correctly implemented.
+</Warning>
+
+### Local Testing Requirements
+
+In order to test locally, you must use **localhost:3000**. This is the only port available for local testing.
+
+Add the following to your package.json file:
+```json
+"scripts": {
+    "dev": "vite --port 3000",
+},
 ```
 
 ## Supported Networks and Assets

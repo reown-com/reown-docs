@@ -47,7 +47,7 @@ pnpm add @reown/appkit-pay
 import { baseSepoliaETH, pay} from '@reown/appkit-pay'
 ```
 
-In order to run the payment, use the function `pay`. This function receives two parameters.
+In order to run the payment, use the function `pay`. This function receives three parameters: `recipient`, `amount`, and `paymentAsset`.
 
 ```ts
 // pay function returns a PaymentResult object
@@ -93,6 +93,20 @@ const paymentAssetDetails = {
     }
 };
 ```
+
+## Prerequisites
+
+### Enable Payments Feature in Dashboard
+
+<Warning>
+The "Payments" feature **must be enabled** in the [Reown Dashboard](https://cloud.reown.com) before you can use AppKit Pay, even for local testing. 
+
+1. Go to your project in the Reown Dashboard
+2. Navigate to the Payments section
+3. Enable the Payments feature for your project
+
+Without enabling this feature in the dashboard, payment functionality will not work even if your integration is correctly implemented.
+</Warning>
 
 ## Test locally
 
