@@ -90,6 +90,7 @@ Example:
     <queries>
         <package android:name="io.metamask"/>
         <package android:name="com.wallet.crypto.trustapp"/>
+        <package android:name="com.skymavis.genesis"/>
         <package android:name="io.gnosis.safe"/>
         <package android:name="me.rainbow"/>
         <!-- Add other wallet schemes names here -->
@@ -102,6 +103,7 @@ Example:
 ```
 
 More wallet package names can be found in [our sample AndroidManifest.xml](https://github.com/WalletConnect/WalletConnectUnity/blob/project/modal-sample/Assets/Plugins/Android/AndroidManifest.xml).
+
 </Tab>
 <Tab title="iOS">
 Wallet detection may produce inaccurate results on iOS Simulator. It is recommended to test on a real device.
@@ -125,6 +127,7 @@ Example:
             <string>metamask</string>
             <string>trust</string>
             <string>safe</string>
+            <string>roninwallet</string>
             <string>rainbow</string>
             <string>uniswap</string>
             <string>zerion</string>
@@ -140,6 +143,7 @@ Example:
     </dict>
 </plist>
 ```
+
 </Tab>
 </Tabs>
 
@@ -154,7 +158,7 @@ By requesting fullscreen on the container, the modal will always be rendered on 
 
 ```javascript
 // Use this instead of unityInstance.SetFullscreen(1) to enable full screen
-document.querySelector("#canvas-container").requestFullscreen();
+document.querySelector('#canvas-container').requestFullscreen()
 ```
 
 ### Redirect from Wallet to App
