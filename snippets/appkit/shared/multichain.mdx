@@ -192,9 +192,9 @@ import { createAppKit } from '@reown/appkit'
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
-import { mainnet, arbitrum, sepolia, bitcoin } from '@reown/appkit/networks'
+import { mainnet, arbitrum, sepolia, bitcoin, bitcoinTestnet, bitcoinSignet } from '@reown/appkit/networks'
 
-const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, bitcoin]
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, sepolia, bitcoin, bitcoinTestnet, bitcoinSignet]
 
 // 0. Get projectId from https://dashboard.reown.com
 const projectId = 'YOUR_PROJECT_ID'
