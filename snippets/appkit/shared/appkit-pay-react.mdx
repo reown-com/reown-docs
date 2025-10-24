@@ -41,13 +41,18 @@ pnpm add @reown/appkit-pay
 ```
 </CodeGroup>
 
-### Usage
-```ts
 
+There are two main ways to handle payments:
+
+### `pay` - Full Payment Flow
+
+This function handles the complete payment flow — it opens the payment UI *and* waits for the result (success, failure, cancel, timeout).
+
+```ts
 import { baseSepoliaETH, pay} from '@reown/appkit-pay'
 ```
 
-In order to run the payment, use the function `pay`. This function receives two parameters.
+In order to run the payment, use the function `pay`. This function receives three values: `recipient`, `amount`, and `paymentAsset`.
 
 ```ts
 // pay function returns a PaymentResult object
@@ -62,6 +67,62 @@ if (result.success) {
 } else {
     console.error("Payment error: "+ result.error);
 }
+```
+
+
+### `openPay` - Open Payment UI Only
+
+This function opens or triggers the payment UI modal but doesn't return the result of the payment. Use the hook to handle the payment result.
+
+```ts
+import { baseSepoliaETH, openPay} from '@reown/appkit-pay'
+```
+
+Call the hook to open the payment modal.
+```tsx
+    const { open: openPay, isPending, isSuccess, data, error } = usePay({
+      onSuccess: handleSuccess, 
+      onError: handleError,
+    });
+```
+
+Open the payment modal, but onSuccess/onError handles the actual payment result:
+```tsx
+      await openPay({ 
+        paymentAsset: baseSepoliaETH,
+        recipient: address,
+        amount: 1000000000000000000 // 1 ETH
+      });
+```
+
+Handle the payment result in the onSuccess/onError callbacks:
+```tsx
+    const handleSuccess = (data: PaymentResult) => {
+      console.log("Payment successful:", data);
+    };
+
+    const handleError = (error: AppKitPayErrorMessage) => {
+      console.error("Payment error:", error);
+    };
+```
+
+Or handle the payment result in the UI by displaying the payment status:
+
+```tsx
+    {isSuccess || isPending || error && (
+          <section>
+            <h2>Payment Status</h2>
+          {isSuccess && (
+            <p>Payment successful: {data}</p>
+          )}
+          {isPending && (
+            <p>Payment pending: {data}</p>
+          )}
+          {error && (
+            <p>Payment error: {error}</p>
+          )}
+          </section>
+    )}
 ```
 
 ## Supported Networks and Assets
@@ -94,11 +155,22 @@ const paymentAssetDetails = {
 };
 ```
 
+## Prerequisites
+
+### Enable Payments Feature in Dashboard
+
+The "Payments" feature **must be enabled** in the [Reown Dashboard](https://dashboard.reown.com) before you can use AppKit Pay, even for local testing. 
+
+1. Go to your project in the Reown Dashboard
+2. Navigate to the Payments section
+3. Enable the Payments feature for your projectId
+
+
 ## Test locally
 
 In order to test locally use localhost and port 3000. This is the only port available for local testing.
 
-Add the following to your package.json file:
+Add the following to your package.json file in order to run the development server on port 3000:
 ```json
 "scripts": {
     "dev": "vite --port 3000",
