@@ -442,6 +442,7 @@ const {
 - `open`: Boolean that indicates if the modal is open
 - `selectedNetworkId`: The current chain id selected by the user in CAIP-2 format
 - `activeChain`: The active chain namespace (e.g., 'eip155', 'solana', 'bip122')
+- `multiWallet`: Boolean that indicates if multi-wallet functionality is enabled (requires Pro or Enterprise plan)
 
 ### Example Usage
 
@@ -449,7 +450,14 @@ const {
 import { useAppKitState } from "@reown/appkit/react";
 
 function AppStatus() {
-  const { initialized, loading, open, selectedNetworkId, activeChain } = useAppKitState();
+  const { 
+    initialized, 
+    loading, 
+    open, 
+    selectedNetworkId, 
+    activeChain,
+    multiWallet 
+  } = useAppKitState();
 
   if (!initialized) {
     return <div>Initializing AppKit...</div>;
@@ -464,6 +472,7 @@ function AppStatus() {
       <p>Modal is {open ? 'open' : 'closed'}</p>
       <p>Selected Network: {selectedNetworkId}</p>
       <p>Active Chain: {activeChain}</p>
+      {multiWallet && <p>Multi-wallet mode is enabled</p>}
     </div>
   );
 }
@@ -624,12 +633,40 @@ const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
 
 ## useAppKitConnections
 
-Hook that manages multiple wallet connections and provides access to all connected wallets. Use this hook when building applications that support multiple simultaneous wallet connections.
+Hook that manages multiple wallet connections and provides access to all connected wallets. This hook enables multi-wallet functionality, allowing users to connect and manage multiple wallets simultaneously within your application.
+
+<Note>
+  Multi-wallet functionality must be enabled in your AppKit configuration. This feature requires a Pro or Enterprise plan and must be activated in your Reown Cloud dashboard.
+</Note>
 
 ```ts
 import { useAppKitConnections } from "@reown/appkit/react";
 
-const { connections, disconnect } = useAppKitConnections();
+function WalletManager() {
+  const { connections, recentConnections } = useAppKitConnections();
+  
+  return (
+    <div>
+      <h3>Active Connections ({connections.length})</h3>
+      {connections.map((connection) => (
+        <div key={connection.connectorId}>
+          <img src={connection.icon} alt={connection.name} />
+          <span>{connection.name}</span>
+          {connection.accounts.map((account) => (
+            <div key={account.address}>{account.address}</div>
+          ))}
+        </div>
+      ))}
+      
+      <h3>Recent Connections</h3>
+      {recentConnections.map((connection) => (
+        <div key={connection.connectorId}>
+          <span>{connection.name}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
 ```
 
 ### Use Cases
@@ -637,24 +674,127 @@ const { connections, disconnect } = useAppKitConnections();
 - Building multi-wallet dashboards or portfolio views
 - Implementing wallet comparison features
 - Creating advanced wallet management interfaces
+- Displaying wallet connection history
+
+### Parameters
+
+- `namespace` (optional): The blockchain namespace to filter connections. Supported values:
+  - `'eip155'` - Ethereum and EVM-compatible chains
+  - `'solana'` - Solana blockchain
+  - `'bip122'` - Bitcoin blockchain
+  - If not specified, uses the currently active namespace
 
 ### Returns
 
-- `connections`: Array of all connected wallet connections
-- `disconnect`: Function to disconnect a specific wallet connection
+- `connections`: Array of currently connected wallet connections with the following structure:
+  ```typescript
+  type Connection = {
+    name?: string;                    // Wallet name (e.g., "MetaMask")
+    icon?: string;                    // Wallet icon URL
+    networkIcon?: string;             // Network icon URL
+    connectorId: string;              // Unique connector identifier
+    accounts: Array<{                 // Connected accounts
+      address: string;                // Account address
+      type?: string;                  // Account type (e.g., "eoa", "smartAccount")
+      publicKey?: string;             // Public key (for Bitcoin)
+    }>;
+    caipNetwork?: CaipNetwork;        // Network information
+    auth?: {                          // Authentication info (for social logins)
+      name: string | undefined;
+      username: string | undefined;
+    };
+  }
+  ```
+
+- `recentConnections`: Array of recently disconnected wallet connections (same structure as `connections`)
+
+### Example: Multi-Chain Wallet Manager
+
+```tsx
+import { useAppKitConnections } from "@reown/appkit/react";
+
+function MultiChainWalletManager() {
+  // Get connections for different chains
+  const evmConnections = useAppKitConnections('eip155');
+  const solanaConnections = useAppKitConnections('solana');
+  const bitcoinConnections = useAppKitConnections('bip122');
+  
+  return (
+    <div>
+      <section>
+        <h3>EVM Wallets ({evmConnections.connections.length})</h3>
+        {evmConnections.connections.map((conn) => (
+          <WalletCard key={conn.connectorId} connection={conn} />
+        ))}
+      </section>
+      
+      <section>
+        <h3>Solana Wallets ({solanaConnections.connections.length})</h3>
+        {solanaConnections.connections.map((conn) => (
+          <WalletCard key={conn.connectorId} connection={conn} />
+        ))}
+      </section>
+      
+      <section>
+        <h3>Bitcoin Wallets ({bitcoinConnections.connections.length})</h3>
+        {bitcoinConnections.connections.map((conn) => (
+          <WalletCard key={conn.connectorId} connection={conn} />
+        ))}
+      </section>
+    </div>
+  );
+}
+```
 
 <Note>
-  Related hooks: [useAppKitConnection](#useappkitconnection), [useAppKitAccount](#useappkitaccount)
+  Related hooks: [useAppKitConnection](#useappkitconnection), [useAppKitAccount](#useappkitaccount), [useAppKitState](#useappkitstate)
 </Note>
 
 ## useAppKitConnection
 
-Hook that manages the active wallet connection and provides connection switching capabilities. Use this hook when you need to work with the currently active connection or switch between multiple connections.
+Hook that manages the active wallet connection and provides connection switching capabilities. This hook enables you to work with the currently active connection, switch between multiple connected wallets, and delete wallet connections from the recent list.
+
+<Note>
+  Multi-wallet functionality must be enabled in your AppKit configuration. This feature requires a Pro or Enterprise plan and must be activated in your Reown Cloud dashboard.
+</Note>
 
 ```ts
 import { useAppKitConnection } from "@reown/appkit/react";
 
-const { connection, switchConnection } = useAppKitConnection();
+function ConnectionManager() {
+  const { 
+    connection, 
+    isPending, 
+    switchConnection, 
+    deleteConnection 
+  } = useAppKitConnection({
+    namespace: 'eip155',
+    onSuccess({ address, namespace, hasSwitchedAccount, hasSwitchedWallet, hasDeletedWallet }) {
+      if (hasDeletedWallet) {
+        console.log('Wallet deleted');
+      } else if (hasSwitchedWallet) {
+        console.log('Switched to wallet:', address);
+      } else if (hasSwitchedAccount) {
+        console.log('Switched to account:', address);
+      }
+    },
+    onError(error) {
+      console.error('Connection error:', error);
+    }
+  });
+  
+  return (
+    <div>
+      {connection && (
+        <div>
+          <h3>Active Connection</h3>
+          <p>Wallet: {connection.name}</p>
+          <p>Address: {connection.accounts[0]?.address}</p>
+        </div>
+      )}
+    </div>
+  );
+}
 ```
 
 ### Use Cases
@@ -662,14 +802,216 @@ const { connection, switchConnection } = useAppKitConnection();
 - Accessing the currently active wallet connection
 - Building connection management interfaces
 - Implementing wallet-specific features based on the active connection
+- Managing wallet connection history
+- Handling connection state changes with callbacks
+
+### Parameters
+
+The hook accepts an optional configuration object with the following properties:
+
+- `namespace` (optional): The blockchain namespace to target. Supported values:
+  - `'eip155'` - Ethereum and EVM-compatible chains
+  - `'solana'` - Solana blockchain
+  - `'bip122'` - Bitcoin blockchain
+  - If not specified, uses the currently active namespace
+
+- `onSuccess` (optional): Callback function called when a connection operation succeeds
+  ```typescript
+  onSuccess?: (params: {
+    address: string;              // The address that was switched to or deleted
+    namespace: ChainNamespace;    // The blockchain namespace
+    hasSwitchedAccount: boolean;  // True if switched to different account in same wallet
+    hasSwitchedWallet: boolean;   // True if switched to different wallet
+    hasDeletedWallet: boolean;    // True if a wallet connection was deleted
+  }) => void;
+  ```
+
+- `onError` (optional): Callback function called when a connection operation fails
+  ```typescript
+  onError?: (error: Error) => void;
+  ```
 
 ### Returns
 
-- `connection`: The currently active wallet connection
-- `switchConnection`: Function to switch to a different connected wallet
+- `connection`: The currently active wallet connection (same structure as in [useAppKitConnections](#useappkitconnections))
+  ```typescript
+  type Connection = {
+    name?: string;
+    icon?: string;
+    networkIcon?: string;
+    connectorId: string;
+    accounts: Array<{
+      address: string;
+      type?: string;
+      publicKey?: string;
+    }>;
+    caipNetwork?: CaipNetwork;
+    auth?: {
+      name: string | undefined;
+      username: string | undefined;
+    };
+  }
+  ```
+
+- `isPending`: Boolean indicating if a connection operation is in progress
+
+- `switchConnection`: Function to switch to a different connected wallet or account
+  ```typescript
+  switchConnection: (params: {
+    connection: Connection;  // The connection to switch to
+    address?: string;        // Optional: specific account address to switch to
+  }) => Promise<void>;
+  ```
+
+- `deleteConnection`: Function to remove a wallet connection from the recent connections list
+  ```typescript
+  deleteConnection: (params: {
+    address: string;      // Account address to delete
+    connectorId: string;  // Connector ID of the wallet to delete
+  }) => void;
+  ```
+
+### Example: Complete Connection Manager
+
+```tsx
+import { useAppKitConnection, useAppKitConnections } from "@reown/appkit/react";
+import { useDisconnect } from "@reown/appkit/react";
+
+function WalletSwitcher() {
+  const { connections, recentConnections } = useAppKitConnections();
+  const { 
+    connection: activeConnection, 
+    isPending, 
+    switchConnection, 
+    deleteConnection 
+  } = useAppKitConnection({
+    onSuccess({ hasSwitchedWallet, hasDeletedWallet }) {
+      if (hasDeletedWallet) {
+        console.log('Wallet removed from history');
+      } else if (hasSwitchedWallet) {
+        console.log('Successfully switched wallet');
+      }
+    },
+    onError(error) {
+      console.error('Error:', error.message);
+    }
+  });
+  const { disconnect } = useDisconnect();
+  
+  const handleSwitch = (connection, address) => {
+    switchConnection({ connection, address });
+  };
+  
+  const handleDelete = (address, connectorId) => {
+    deleteConnection({ address, connectorId });
+  };
+  
+  const handleDisconnect = (connectorId) => {
+    disconnect({ id: connectorId });
+  };
+  
+  return (
+    <div>
+      <h3>Active Wallet</h3>
+      {activeConnection && (
+        <div className={isPending ? 'loading' : ''}>
+          <img src={activeConnection.icon} alt={activeConnection.name} />
+          <span>{activeConnection.name}</span>
+          {activeConnection.accounts.map((account) => (
+            <div key={account.address}>
+              <span>{account.address}</span>
+              {activeConnection.accounts.length > 1 && (
+                <button onClick={() => handleSwitch(activeConnection, account.address)}>
+                  Switch to this account
+                </button>
+              )}
+            </div>
+          ))}
+          <button onClick={() => handleDisconnect(activeConnection.connectorId)}>
+            Disconnect
+          </button>
+        </div>
+      )}
+      
+      <h3>Other Connected Wallets</h3>
+      {connections
+        .filter(conn => conn.connectorId !== activeConnection?.connectorId)
+        .map((connection) => (
+          <div key={connection.connectorId}>
+            <img src={connection.icon} alt={connection.name} />
+            <span>{connection.name}</span>
+            <button 
+              onClick={() => handleSwitch(connection, connection.accounts[0]?.address)}
+              disabled={isPending}
+            >
+              Switch to this wallet
+            </button>
+            <button onClick={() => handleDisconnect(connection.connectorId)}>
+              Disconnect
+            </button>
+          </div>
+        ))}
+      
+      <h3>Recent Wallets</h3>
+      {recentConnections.map((connection) => (
+        <div key={connection.connectorId}>
+          <span>{connection.name}</span>
+          {connection.accounts.map((account) => (
+            <div key={account.address}>
+              <span>{account.address}</span>
+              <button 
+                onClick={() => handleDelete(account.address, connection.connectorId)}
+              >
+                Remove from history
+              </button>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+### Multi-Account Switching
+
+When a wallet has multiple accounts, you can switch between them:
+
+```tsx
+import { useAppKitConnection } from "@reown/appkit/react";
+
+function AccountSwitcher() {
+  const { connection, switchConnection } = useAppKitConnection({
+    onSuccess({ hasSwitchedAccount, address }) {
+      if (hasSwitchedAccount) {
+        console.log('Switched to account:', address);
+      }
+    }
+  });
+  
+  if (!connection) return null;
+  
+  return (
+    <div>
+      <h3>Accounts in {connection.name}</h3>
+      {connection.accounts.map((account) => (
+        <button
+          key={account.address}
+          onClick={() => switchConnection({ 
+            connection, 
+            address: account.address 
+          })}
+        >
+          {account.address}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
 
 <Note>
-  Related hooks: [useAppKitConnections](#useappkitconnections), [useAppKitAccount](#useappkitaccount)
+  Related hooks: [useAppKitConnections](#useappkitconnections), [useAppKitAccount](#useappkitaccount), [useDisconnect](#usedisconnect)
 </Note>
 
 ## usePay
