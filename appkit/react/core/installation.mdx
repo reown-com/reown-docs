@@ -193,6 +193,29 @@ Create a new project on Reown Dashboard at https://dashboard.reown.com and obtai
 
 ## Implementation
 
+### AppKitProvider Component
+
+AppKit now provides an `AppKitProvider` React component for easy integration in React applications. This component wraps your app and provides the AppKit context to all child components.
+
+```tsx
+import { AppKitProvider } from '@reown/appkit/react'
+
+function App() {
+  return (
+    <AppKitProvider
+      projectId="YOUR_PROJECT_ID"
+      networks={[
+        /* Your Networks */
+      ]}
+    >
+      {/* Your App */}
+    </AppKitProvider>
+  )
+}
+```
+
+### Framework-Specific Implementation
+
 <Tabs>
 <Tab title="Wagmi">
 <Card title="wagmi Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi">
