@@ -887,13 +887,13 @@ function WalletSwitcher() {
   } = useAppKitConnection({
     onSuccess({ hasSwitchedWallet, hasDeletedWallet }) {
       if (hasDeletedWallet) {
-        alert('Wallet removed from history');
+        console.log('Wallet removed from history');
       } else if (hasSwitchedWallet) {
-        alert('Successfully switched wallet');
+        console.log('Successfully switched wallet');
       }
     },
     onError(error) {
-      alert(`Error: ${error.message}`);
+      console.error('Error:', error.message);
     }
   });
   const { disconnect } = useDisconnect();
