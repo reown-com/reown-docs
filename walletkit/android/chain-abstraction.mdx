@@ -82,7 +82,7 @@ If the operation is unsuccessful, send the JsonRpcError to the dapp and display 
             //Call the execute
             WalletKit.ChainAbstraction.execute(prepareSuccess, eip155Signatures, signedInitialTx
                 onSuccess = {
-                    //The execution of the Chain Abstraction is successfull
+                    //The execution of the Chain Abstraction is successful
                     //Send the response to the Dapp or show to the user
                 },
                 onError = {
@@ -108,7 +108,7 @@ For example, check out implementation of chain abstraction in [sample wallet](ht
 
 ## Testing 
 
-To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending any supported [tokens](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction supported wallet. 
+To test Chain Abstraction, you can use the [AppKit laboratory](https://appkit-lab.reown.com/appkit/?name=wagmi) and try sending any supported [tokens](/walletkit/features/chain-abstraction#what-are-the-supported-tokens-and-networks%3F) with any chain abstraction supported wallet. 
 You can also use this [sample wallet](https://appdistribution.firebase.dev/i/076a3bc9669d3bee) for testing. 
 
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>

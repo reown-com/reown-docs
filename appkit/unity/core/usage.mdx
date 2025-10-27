@@ -5,12 +5,14 @@ title: Usage
 After you have installed and configured AppKit,
 you can start using it to interact with the wallet provider and blockchain.
 
+## EVM
+
 AppKit comes with the [Nethereum](https://nethereum.com/) and [Wagmi](https://wagmi.sh/) integration out of the box.
 
 To interact with EVM chains use `AppKit.Evm` (see [Actions](/appkit/unity/core/actions#evm-actions) for more details). Internally, AppKit will use Wagmi on WebGL or Nethereum on other platforms.
 Nethereum is already preconfigured with RPC URL and interceptor that will route the requests between the wallet provider and RPC node.
 
-## Sending Ether
+### Sending Ether
 
 To send ether, you can use the `SendTransactionAsync` method of the `Web3.Eth` class.
 
@@ -24,7 +26,7 @@ Debug.Log("Transaction hash: " + result);
 
 This type of transaction uses the default amount of Gas 21000. Gas price is determined by the wallet provider.
 
-## Reading Blockchain State
+### Reading Blockchain State
 
 #### Get Ether Balance
 
@@ -35,12 +37,12 @@ BigInteger balance = await AppKit.Evm.GetBalanceAsync(account.Address);
 Debug.Log($"Balance: {Web3.Convert.FromWei(balance.Value)} ETH");
 ```
 
-## Smart Contract Interaction
+### Smart Contract Interaction
 
 Use `ReadContractAsync` and `WriteContractAsync` methods of `AppKit.Evm` to interact with smart contracts.
 To read or write a smart contract function, you need to provide the contract address, ABI, method name, and arguments.
 
-### Get ERC20 Token Balance
+#### Get ERC20 Token Balance
 
 To get the balance of an ERC20 token, you need to know the contract address, ERC20 standard contract ABI, and the owner address.
 This operation doesn't involve state change on the blockchain, so it's a read-only action that doesn't require a transaction.
@@ -60,7 +62,7 @@ var decimals = await evm.ReadContractAsync<BigInteger>(contractAddress, abi, "de
 var finalBalance = tokenBalance / BigInteger.Pow(10, tokenDecimal);
 ```
 
-### Send ERC20 Token
+#### Send ERC20 Token
 
 To send an ERC20 token, you need to know the contract address, ERC20 standard contract ABI, recipient address, and the amount of tokens to send.
 This operation requires a transaction and gas fees because it changes the state of the blockchain. User will need to confirm the transaction in the wallet.
@@ -86,7 +88,39 @@ var gasAmount = await AppKit.Evm.EstimateGasAsync(contractAddress, abi, "transfe
 // Send transaction
 var result = await AppKit.Evm.WriteContractAsync(contractAddress, abi, "transfer", gasAmount, arguments);
 ```
-## Nethereum Integration
+
+#### Usage with Solidity Structs
+
+To use Solidity structs when interacting with smart contracts on native platforms, you need to define them as C# classes and mark them with the function encoding attributes from Nethereum.
+This is not required on WebGL platforms.
+
+```csharp
+using Nethereum.ABI.FunctionEncoding.Attributes;
+
+[Serializable]
+public class ClaimCondition
+{
+    [Parameter("uint256", "startTimestamp", 1)]
+    public BigInteger StartTimestamp { get; set; }
+
+    [Parameter("uint256", "quantityLimitPerWallet", 4)]
+    public BigInteger QuantityLimitPerWallet { get; set; }
+
+    [Parameter("bytes32", "merkleRoot", 5)]
+    public string MerkleRoot { get; set; }
+
+    [Parameter("uint256", "pricePerToken", 6)]
+    public BigInteger PricePerToken { get; set; }
+
+    [Parameter("address", "currency", 7)]
+    public string Currency { get; set; }
+
+    [Parameter("string", "metadata", 8)]
+    public string Metadata { get; set; }
+}
+```
+
+### Nethereum Integration
 
 AppKit offers deep integration with [Nethereum](https://nethereum.com/) on native platforms, with limited support on WebGL.
 
@@ -100,3 +134,205 @@ var web3 = nethereumService.Web3;
 This `Web3` instance is preconfigured with Reown's Blockchain API for the active chain and includes a request interceptor that routes requests between RPC node and the connected wallet (if needs signing).
 
 Avoid caching this `Web3` instance, as it may be updated when the active chain is switched.
+
+## Solana
+
+AppKit supports Solana self-custodial wallets on iOS, Android, Windows, and macOS via WalletConnect protocol.
+Support for WebGL and other login methods, including social login, is planned.
+
+Out of the box, AppKit handles Solana-enabled wallet connection, Solana RPC, and message signing — no third-party packages required.
+
+AppKit can also forward transactions to wallets for signing. If you need to build the transaction object, you'll want to use third-party client- or server-side tool. This part isn't included by default.
+
+If you're using the [Solana Unity SDK](https://solana.unity-sdk.gg) from Magic Blocks, you can use our adapter package. It lets you keep using the same Solana Unity APIs,
+with just a few extra lines of code to support AppKit-powered wallet connections.
+
+Depending on your goals and project stage, you can choose the integration flow that fits best. Below is a brief description of each approach.
+
+### Built-in Solana Actions
+
+After completing [AppKit installation](/appkit/unity/core/installation), add Solana chain to your AppKit configuration and use `AppKit.Solana`.
+
+For the full list of Solana-specific methods, see the [Solana Actions documentation](/appkit/unity/core/actions#solana-actions)
+
+```csharp
+// Create AppKit config object
+var config = new AppKitConfig
+{
+    // Your project ID from https://dashboard.reown.com
+    projectId = "YOUR PROJECT ID",
+    metadata = new Metadata(
+        "Solana Basic",
+        "Basic Solana example",
+        "https://reown.com",
+        "https://raw.githubusercontent.com/reown-com/reown-dotnet/refs/heads/develop/sample/Reown.AppKit.Unity/Assets/Textures/appkit-icon-unity.png"
+    ),
+    supportedChains = new[]
+    {
+        ChainConstants.Chains.Solana,
+        ChainConstants.Chains.SolanaDevNet,
+    }
+};
+// Initialize AppKit with config
+await AppKit.InitializeAsync(config);
+
+// Try to resume wallet session
+var resumed = await AppKit.ConnectorController.TryResumeSessionAsync();
+
+if (!resumed)
+{
+    // Use `AppKit.OpenModal()` and wait for `AppKit.AccountConnected` event
+    // For the sake of example, the code below assumes that there's a wallet connected
+}
+
+// Sign a mesage with connected wallet
+const string message = "Hello, Solana!";
+var sig = await AppKit.Solana.SignMessageAsync(message);
+Debug.Log($"Signature: {sig}");
+
+// Validate the signature
+var isValid = await AppKit.Solana.VerifyMessageSignatureAsync(message, sig);
+Debug.Log($"Is signature valid: {isValid}");
+
+// AppKit.Solana includes some methods that don't require signing action in the wallet
+BigInteger balance = await AppKit.Solana.GetBalanceAsync();
+
+// You can also make any RPC calls with our Solana RPC, e.g.:
+long slot = await AppKit.Solana.RpcRequestAsync<long>("getSlot");
+```
+
+You can refer to [Reown.SolanaCore.Unity](https://github.com/reown-com/reown-dotnet/tree/develop/playground/Reown.SolanaCore.Unity) playground project for complete example.
+
+### AppKit with Solana Unity SDK
+
+Reown provides an optional `Reown.AppKit.Solana.Unity` adapter package that connects Reown AppKit to the Solana Unity SDK.
+It provides an AppKit-backed `WalletBase` so you can keep using `Web3` instance from `Solana.Unity.SDK` while all signing and session management go through AppKit.
+
+#### What this adapter does
+
+- Installs an AppKit-powered wallet (`AppKitWalletBase`) and wires it into `Web3` via `web3.WalletBase`.
+- Hooks AppKit events (`AccountConnected`, `AccountChanged`) to keep `Web3.Account` in sync.
+- Proxies signing to AppKit:
+  - Transactions: `AppKit.Solana.SignTransactionAsync`, `SignAllTransactionsAsync`
+  - Messages: `AppKit.Solana.SignMessageAsync`
+
+#### Requirements
+
+- `Solana.Unity-SDK` in your Unity project (`https://github.com/magicblock-labs/Solana.Unity-SDK`).
+- Reown AppKit for Unity set up in your scene (follow the [Installation](/appkit/unity/core/installation)).
+
+#### Installation
+
+<Tabs>
+<Tab title="OpenUPM CLI">
+
+To install AppKit adapter for Solana Unity SDK via OpenUPM, you need to have [Node.js](https://nodejs.org/en/) and [openupm-cli](https://openupm.com/docs/getting-started.html#installing-openupm-cli) installed. Once you have them installed, you can run the following commands:
+
+```bash
+openupm add com.reown.appkit.solana.unity
+```
+
+</Tab>
+<Tab title="Package Manager with OpenUPM">
+
+1. Open `Advanced Project Settings` from the gear ⚙ menu located at the top right of the Package Manager’s toolbar
+2. Add a new scoped registry with the following details:
+   - Name: `OpenUPM`
+   - URL: `https://package.openupm.com`
+   - Scope(s): `com.reown`
+3. Press plus ➕ and then `Save` buttons
+4. In the Package Manager windows open the add ➕ menu from the toolbar
+5. Select `Add package by name...`
+6. Enter the package name:
+   - `com.reown.appkit.solana.unity`
+7. Press `Add` button
+
+</Tab>
+</Tabs>
+
+#### Quick start
+
+Initialize AppKit once on startup, then use the extension methods on `Web3`.
+
+```csharp
+using Reown.AppKit.Unity;
+using Reown.Sign.Unity;
+using Solana.Unity.SDK;
+using UnityEngine;
+
+public class Bootstrap : MonoBehaviour
+{
+    [SerializeField] private Web3 web3;
+
+    private async void Start()
+    {
+        var config = new AppKitConfig
+        {
+            projectId = "YOUR_PROJECT_ID",
+            metadata = new Metadata(
+                name: "My Solana Game",
+                description: "Solana + AppKit",
+                url: "https://example.com",
+                iconUrl: "https://example.com/icon.png",
+                new RedirectData { Native = "mygame://" }
+            ),
+            supportedChains = new[]
+            {
+                ChainConstants.Chains.Solana,
+                ChainConstants.Chains.SolanaDevNet,
+            }
+        };
+
+        await AppKit.InitializeAsync(config);
+    }
+}
+```
+
+For full setup (prefab, logging, Android/iOS/WebGL notes), see the [AppKit docs](/appkit/unity/core/installation).
+
+#### Using the extension methods
+
+The adapter adds extension methods to `Web3`.
+
+##### Try to resume an AppKit session
+
+```csharp
+var (resumed, account) = await web3.TryResumeAppKitSession();
+Debug.Log($"Resumed: {resumed}, Address: {account?.PublicKey}");
+```
+
+##### Login with AppKit (default AppKit modal UI)
+
+```csharp
+var account = await web3.LoginAppKit();
+Debug.Log($"Connected: {account.PublicKey}");
+```
+
+##### Login with a specific wallet
+
+```csharp
+// Connect directly to a specific wallet:
+// Pass a wallet id from walletguide.walletconnect.network
+var account = await web3.LoginAppKit(walletId: "0ef262ca2a56b88d179c93a21383fee4e135bd7bc6680e5c2356ff8e38301037");
+```
+
+#### After login: keep using Solana.Unity SDK
+
+Once you call `LoginAppKit` (or a session resume succeeds), the adapter sets `web3.WalletBase = AppKitWalletBase`. From that point:
+
+- Existing `Web3` calls keep working.
+- Any required signatures are requested through AppKit.
+- You can also use all existing AppKit APIs, e.g. methods from `AppKit.Solana`
+
+Example:
+
+```csharp
+// Sign a message with Web3
+var bytes = System.Text.Encoding.UTF8.GetBytes("Hello Reown AppKit!");
+var signature = await Web3.Wallet.SignMessage(bytes);
+```
+
+#### Notes
+
+- If `Web3.customRpc` is not set, the adapter will use the RPC provider provided by Reown.
+- We provide a modified Solana Unity SDK sample project that demonstrates AppKit integration. See it [here](https://github.com/reown-com/reown-dotnet/tree/develop/playground/Reown.SolanaSdk.Unity). Note: the upstream sample has a few known issues, unrelated to AppKit, that we left as‑is.

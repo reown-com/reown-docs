@@ -29,6 +29,33 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     3. Ensure that you have added your domain to the allowed domains in your project settings. If you have not done so, you can do so by navigating to **"Project Domains"** on the Dashboard, clicking on **"Configure Domains"** and adding your domain.
   </Accordion>
 
+  <Accordion title="Why are the 'Connect wallet' and 'Network' buttons greyed out?">
+    This can happen if your device is unable to reach the [WalletConnect relay service](https://relay.walletconnect.org).
+
+    If you see an error like:
+
+    ```bash
+    SocketException: Failed host lookup: 'relay.walletconnect.org' (OS Error: No address associated with hostname, errno = 7)
+    ```
+    It usually means your connection is blocked by your VPN or network.
+
+    ### Common causes and steps to resolve:
+
+    1. **VPN or Firewall settings**
+      - Some VPNs may block access to the relay service.
+      - If you are using a VPN (e.g., Windscribe), try:
+        - Switching the VPN protocol to **WStunnel**.
+        - Turning **off the Firewall toggle** in your VPN settings.
+
+    2. **Network restrictions**
+      - If you’re on a restricted network (e.g., public Wi-Fi, corporate network, or in a restricted country), the relay service may be blocked.
+      - Try switching to a different ISP or network.
+
+    3. **Connectivity issues**
+      - Confirm that you can reach `relay.walletconnect.org`.  
+      - A 100% packet loss when pinging may indicate the service is blocked on your network.
+</Accordion>
+
   <Accordion title="Why can't I see any wallets in the modal and only see the 'Connect Wallet' title?">
     **Problem**: Users only see the "Connect Wallet" title in the modal after clicking the connect button.
 
@@ -131,10 +158,38 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     No, dApps do not need approval in order to use your projectId.
   </Accordion>
 
+  <Accordion title="Why are signatures longer in some cases?">
+    Signatures can appear longer when using non-deployed smart accounts. These accounts include extra data in the signature to handle deployment and verification. Once the account is deployed, the signatures return to their normal size.
+    This happens when you connect with a social login but haven’t made a transaction yet. Before the first transaction, the smart account isn’t deployed, so the signature includes extra data for deployment and verification. After the first transaction, the account is deployed and signatures go back to normal size.
+
+    You can always use [viem's verifyMessage](https://viem.sh/docs/actions/public/verifyMessage) to verify the signature in different formats.
+  </Accordion>
+
+  <Accordion title="How can I add my web wallet to the wallet list in WalletConnect?">
+    Add your web wallet to WalletConnect by following the steps in this link: https://docs.reown.com/cloud/explorer-submission.
+  </Accordion>
+
   <Accordion title="Can I reinitialize AppKit with different network configurations?">
     Currently, `createAppKit` can only be called once during the application's lifecycle. 
     It cannot be lazily initialized and then torn down for re-initialization. 
     This means you must pass in all the networks you plan to support during the initial setup.
+  </Accordion>
+
+  <Accordion title="Error Codes">
+    Below is a list of error codes you may encounter when using AppKit, along with their descriptions and recommended actions:
+
+    | Code | Message | Action |
+    |------|---------|---------|
+    | APKT001 | Network Not Found | We couldn't recognize the specified network. Make sure it's included in the `networks` array of your `createAppKit` config. |
+    | APKT002 | Invalid App Configuration | The origin isn't in your allowlist. Update your allowed domains at https://dashboard.reown.com. |
+    | APKT003 | Wallet Load Failed | We couldn't load the embedded wallet. This might be a network or server issue. Check your connection and try again, or contact support if it persists. |
+    | APKT004 | Wallet Request Timeout | The wallet didn't respond in time. Check your network and try again. If the issue continues, contact support. |
+    | APKT005 | Unverified Domain | The embedded wallet didn't load. Please verify your domain at https://dashboard.reown.com. |
+    | APKT006 | Session Expired | Your session has expired or is invalid. Please check your device's date and time, then reconnect. |
+    | APKT007 | Invalid Project ID | The project ID is invalid. You can find or create a valid one at https://dashboard.reown.com. |
+    | APKT008 | Project ID Missing | No project ID was found. Set one up in your config at https://dashboard.reown.com. |
+    | APKT009 | Server Error | We couldn't load your App Configuration. Check your network and try again. Contact support if it keeps happening. |
+    | APKT010 | Rate Limited | Too many requests for App Configuration. Please wait a few minutes and try again. Reach out to support if needed. |
   </Accordion>
 </AccordionGroup>
 

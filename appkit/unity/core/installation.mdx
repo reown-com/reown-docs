@@ -3,13 +3,13 @@ title: Unity
 sidebarTitle: Installation
 ---
 
-import CloudBanner from "/snippets/cloud-banner.mdx";
+import CloudBanner from "/snippets/cloud-banner.mdx"
 
-With AppKit, you can easily let people interact with multiple EVM compatible wallets and blockchains.
+With AppKit, you can easily let people interact with multiple EVM and Solana compatible wallets and blockchains directly from your Unity game.
 
 ## Install
 
-Let's get started by installing the package!
+Let's get started by installing the AppKit package!
 
 ### Prerequisites
 
@@ -19,7 +19,7 @@ Let's get started by installing the package!
 - Gamma color space
   - If you need Linear color space, please [open a GitHub issue](https://github.com/reown-com/reown-dotnet/issues)
 
-### Package
+### AppKit Package
 
 <Tabs>
 <Tab title="OpenUPM CLI">
@@ -29,6 +29,7 @@ To install AppKit package via OpenUPM, you need to have [Node.js](https://nodejs
 ```bash
 openupm add com.reown.appkit.unity
 ```
+
 </Tab>
 <Tab title="Package Manager with OpenUPM">
 
@@ -54,6 +55,7 @@ openupm add com.reown.appkit.unity
    - `com.reown.appkit.unity`
    - `com.reown.unity.dependencies`
 7. Press `Add` button
+
 </Tab>
 </Tabs>
 
@@ -118,6 +120,8 @@ public async Task ResumeSession()
     }
 }
 ```
+
+> Optional: Using Solana Unity SDK? You can keep using `Solana.Unity.SDK`'s `Web3` and route all signing through AppKit with our adapter. See the adapter section in [Usage](/appkit/unity/core/usage#appkit-with-solana-unity-sdk).
 
 ## Examples and Test dApps
 
