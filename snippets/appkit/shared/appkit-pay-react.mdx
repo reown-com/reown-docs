@@ -41,27 +41,88 @@ pnpm add @reown/appkit-pay
 ```
 </CodeGroup>
 
-### Usage
+
+There are two main ways to handle payments:
+
+### `pay` - Full Payment Flow
+
+This function handles the complete payment flow — it opens the payment UI *and* waits for the result (success, failure, cancel, timeout).
+
 ```ts
-import { usePay } from '@reown/appkit-pay/react';
-import { baseSepoliaETH } from '@reown/appkit-pay' 
+import { baseSepoliaETH, pay} from '@reown/appkit-pay'
 ```
 
-In order to run the payment, use the hook `usePay`. This hook receives two parameter to manage the success or the error in the process.
+In order to run the payment, use the function `pay`. This function receives three values: `recipient`, `amount`, and `paymentAsset`.
 
 ```ts
-// usePay handles subscriptions internally for robust state updates
-const { open, isPending, isSuccess, data, error } = usePay({
-  onSuccess: handleSuccess, 
-  onError: handleError,
-});
-
-// open resolves when the modal closes, but onSuccess/onError handle the actual payment result
-await open({ 
+// pay function returns a PaymentResult object
+const result = await pay({ 
     recipient: addressRecipient,
     amount: 0.0001,
     paymentAsset: baseSepoliaETH
 });
+
+if (result.success) {
+    console.log("Payment successful: "+ result.result);
+} else {
+    console.error("Payment error: "+ result.error);
+}
+```
+
+
+### `openPay` - Open Payment UI Only
+
+This function opens or triggers the payment UI modal but doesn't return the result of the payment. Use the hook to handle the payment result.
+
+```ts
+import { baseSepoliaETH, openPay} from '@reown/appkit-pay'
+```
+
+Call the hook to open the payment modal.
+```tsx
+    const { open: openPay, isPending, isSuccess, data, error } = usePay({
+      onSuccess: handleSuccess, 
+      onError: handleError,
+    });
+```
+
+Open the payment modal, but onSuccess/onError handles the actual payment result:
+```tsx
+      await openPay({ 
+        paymentAsset: baseSepoliaETH,
+        recipient: address,
+        amount: 1000000000000000000 // 1 ETH
+      });
+```
+
+Handle the payment result in the onSuccess/onError callbacks:
+```tsx
+    const handleSuccess = (data: PaymentResult) => {
+      console.log("Payment successful:", data);
+    };
+
+    const handleError = (error: AppKitPayErrorMessage) => {
+      console.error("Payment error:", error);
+    };
+```
+
+Or handle the payment result in the UI by displaying the payment status:
+
+```tsx
+    {isSuccess || isPending || error && (
+          <section>
+            <h2>Payment Status</h2>
+          {isSuccess && (
+            <p>Payment successful: {data}</p>
+          )}
+          {isPending && (
+            <p>Payment pending: {data}</p>
+          )}
+          {error && (
+            <p>Payment error: {error}</p>
+          )}
+          </section>
+    )}
 ```
 
 ## Supported Networks and Assets
@@ -70,10 +131,13 @@ For a complete list of supported networks and assets across different exchanges 
 
 ## Assets Configuration
 
-For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
+For the moment, AppKit Pay has pre-configured these assets: 
+- baseETH, baseSepoliaETH, and baseUSDC
+- ethereumUSDC, optimismUSDC, arbitrumUSDC, polygonUSDC and solanaUSDC
+- ethereumUSDT, optimismUSDT, arbitrumUSDT, polygonUSDT and solanaUSDT
 
 ```ts
-import { baseETH, baseSepoliaETH, baseUSDC } from '@reown/appkit-pay' 
+import { baseETH } from '@reown/appkit-pay' 
 ```
 
 For custom assets, you can create a paymentAsset object with all the information:
@@ -91,16 +155,45 @@ const paymentAssetDetails = {
 };
 ```
 
+## Prerequisites
+
+### Enable Payments Feature in Dashboard
+
+The "Payments" feature **must be enabled** in the [Reown Dashboard](https://dashboard.reown.com) before you can use AppKit Pay, even for local testing. 
+
+1. Go to your project in the Reown Dashboard
+2. Navigate to the Payments section
+3. Enable the Payments feature for your projectId
+
+
+## Test locally
+
+In order to test locally use localhost and port 3000. This is the only port available for local testing.
+
+Add the following to your package.json file in order to run the development server on port 3000:
+```json
+"scripts": {
+    "dev": "vite --port 3000",
+},
+```
+
+## Test the complete exchange flow
+
+To test the entire exchange process, we've implemented a dedicated test scenario that activates when using the token `baseSepoliaETH`.
+
+<img src="/images/test-exchange.png" alt="Test Exchange"  />
+
+Upon selecting this test exchange, you will be redirected to a result modal where you can choose between two paths:
+
+- **Complete Successfully** – Simulates a successful exchange outcome.
+
+- **Trigger an Error** – Simulates a failed exchange with an error response.
+
+<img src="/images/test-exchange2.png" alt="Test Exchange Result"  />
+
+This setup allows you to safely verify both positive and negative exchange flows in a controlled environment.
+
 ## Hooks
-
-### usePay
-Simplifies the modal-based payment flow. 
-It internally handles subscriptions to provide reactive state variables (isPending, isSuccess, isError, data, error) 
-and an open function. Callbacks (onSuccess, onError) are triggered reliably.
-
-`usePay(parameters?: UsePayParameters): UsePayReturn`
-  - `parameters`: Optional `onSuccess` and `onError` callbacks.
-  - `returns`: `{ open, isPending, isSuccess, isError, error, data }`
 
 ### useAvailableExchanges
 Fetches and manages the state for available exchanges.

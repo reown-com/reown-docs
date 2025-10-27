@@ -23,8 +23,7 @@ In order to initialize `ReownAppKitModal()` instance you must provide a _project
 ```javascript
 // AppKit Modal instance
 final _appKitModal = ReownAppKitModal(
-  logLevel: LogLevel.error,
-  context: context,
+  context: context, // required BuildContext
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
     name: 'Example App',
@@ -77,7 +76,7 @@ final appKit = ReownAppKit.createInstance(
 
 // AppKit Modal instance
 final _appKitModal = ReownAppKitModal(
-  context: context,
+  context: context, // required BuildContext
   appKit: appKit,
 );
 

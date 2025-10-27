@@ -23,9 +23,17 @@ Currently, the following extension wallets are supported:
 - **Leather**
 - **Phantom**.
 
+Here is the list of supported Bitcoin JSON-RPC methods:
+1. `sendTransfer`
+2. `getAccountAddresses`
+3. `signPSBT`
+4. `signMessage`
+
+You can find more information about the supported Bitcoin RPC methods [here](/advanced/multichain/rpc-reference/bitcoin-rpc).
+
 While we provide a standardized interface for Bitcoin connector methods, not all wallets support every method. As a result, you may encounter a `MethodNotSupportedError` when attempting to use methods that are not supported by a specific wallet.
 If your wallet supports a mentioned standard but you cannot connect, please reach out to our development team for assistance via [Github issues](https://github.com/reown-com/appkit/issues/new/choose).
-<Card title="Try Demo" href="https://appkit-lab.reown.com/library/bitcoin/" horizontal />
+<Card title="Try Demo" href="https://appkit-lab.reown.com/appkit/?name=bitcoin" horizontal />
 
 
 ## Get Started

@@ -1,24 +1,23 @@
-To open AppKit you need to call the `connect` function from the Provider, sending the namespace, methods, the full chain Namespace and the events available.
-For more information, please visit [RPC Reference](https://docs.reown.com/advanced/multichain/rpc-reference/cosmos-rpc) section from our docs.
+To open AppKit Core you need to call the `connect` function from the Universal Connector.
 
 ```tsx
+    // get the session from the universal connector
     const handleConnect = async () => {
-      try {
-        if (!provider) {
-          throw new Error("Provider is not initialized");
-        }
-        await provider.connect({
-          optionalNamespaces: {
-            sui: {
-              methods: ['sui_signPersonalMessage'],
-              chains: ["sui:mainnet"],
-              events: []
-            }
-          }
-        })
-      } catch (error) {
-        console.error("Failed to connect:", error);
+      if (!universalConnector) {
+        return
       }
+  
+      const { session: providerSession } = await universalConnector.connect()
+      setSession(providerSession)
+    };
+
+    // disconnect the universal connector
+    const handleDisconnect = async () => {
+      if (!universalConnector) {
+        return
+      }
+      await universalConnector.disconnect()
+      setSession(null)
     };
 
     ...
@@ -27,6 +26,7 @@ For more information, please visit [RPC Reference](https://docs.reown.com/advanc
     (
     <div>      
         <button onClick={handleConnect}>Open AppKit Core</button>
+        <button onClick={handleDisconnect}>Disconnect</button>
     </div>
     )
 ```
