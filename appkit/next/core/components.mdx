@@ -67,6 +67,32 @@ You can specify a blockchain namespace to target specific chains:
 <appkit-wallet-button wallet="leather" namespace="bip122" />
 ```
 
+#### Enhanced Multichain Examples
+
+The wallet button now supports enhanced multichain functionality with improved namespace targeting:
+
+```tsx
+const wallets = [
+  { wallet: 'metamask', namespace: 'eip155', label: 'MetaMask EVM' },
+  { wallet: 'metamask', namespace: 'solana', label: 'MetaMask Solana' },
+  { wallet: 'phantom', namespace: 'bip122', label: 'Phantom Bitcoin' }
+]
+
+export function WalletButtons() {
+  return (
+    <>
+      {wallets.map(({ wallet, namespace, label }) => (
+        <appkit-wallet-button
+          key={`${wallet}-${namespace}`}
+          wallet={wallet}
+          namespace={namespace}
+        />
+      ))}
+    </>
+  )
+}
+```
+
 #### Options for wallet property
 
 | Type          | Options                                                                                                                                                                                                                                                                                                                                                                       |
