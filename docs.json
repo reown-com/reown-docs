@@ -267,8 +267,7 @@
                       "appkit/payments/overview",
                       "appkit/payments/pay-with-exchange",
                       "appkit/payments/deposit-with-exchange",
-                      "appkit/payments/one-click-checkout",
-                      "appkit/payments/subscriptions"
+                      "appkit/payments/one-click-checkout"
                     ]
                   },
                   {
