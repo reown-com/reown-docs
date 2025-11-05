@@ -362,6 +362,41 @@ Change the string parameter `name` from `appKitWalletButton.connect(name)` in or
 | `solana`  | Solana blockchain                     |
 | `bip122`  | Bitcoin blockchain                    |
 
+#### Enhanced Multichain Examples
+
+The wallet button now supports enhanced multichain functionality with improved namespace targeting:
+
+```javascript
+<script type="module">
+  import { createAppKitWalletButton } from '@reown/appkit-wallet-button';
+  
+  const wallets = [
+    { wallet: 'metamask', namespace: 'eip155', label: 'MetaMask EVM' },
+    { wallet: 'metamask', namespace: 'solana', label: 'MetaMask Solana' },
+    { wallet: 'phantom', namespace: 'bip122', label: 'Phantom Bitcoin' }
+  ];
+
+  wallets.forEach(({ wallet, namespace, label }) => {
+    const walletButton = createAppKitWalletButton({ namespace });
+    
+    walletButton.subscribeIsReady(({ isReady }) => {
+      if (!isReady) return;
+
+      const button = document.querySelector(`[data-wallet="${wallet}-${namespace}"]`);
+      if (button) {
+        button.disabled = false;
+        button.textContent = `Connect ${label}`;
+        button.onclick = () => walletButton.connect(wallet);
+      }
+    });
+  });
+</script>
+
+<button data-wallet="metamask-eip155" disabled>Loading...</button>
+<button data-wallet="metamask-solana" disabled>Loading...</button>
+<button data-wallet="phantom-bip122" disabled>Loading...</button>
+```
+
 
 ## themeVariables
 

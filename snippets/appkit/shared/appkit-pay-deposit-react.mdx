@@ -1,5 +1,17 @@
 **Deposit with Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like Coinbase and Binance (with more exchanges coming soon). Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
 
+## Pre-Requisites
+
+**To enable this feature, you will need to provide your own Coinbase Developer Platform (CDP) API keys.**
+
+You can find instructions on how to do this [here](https://docs.cdp.coinbase.com/onramp-&-offramp/introduction/getting-started).
+
+Head over to [Reown Dashboard](https://dashboard.reown.com) and navigate to the "Fund from Exchange" section to configure your API keys.
+
+<Frame>
+  <img src="/images/dwe-coinbase.png" alt="Coinbase CDP Keys Setup" />
+</Frame>
+
 ## Quickstart 
 
 This feature will start working as soon as your team is on the allowed-list. Please, contact sales@reown.com to get started.
@@ -47,7 +59,7 @@ Get the address of the connected wallet using the `useAppKitAccount` hook. You c
 const { address, isConnected } = useAppKitAccount()
 ```
 
-In order to run the deposit, use the function `pay`. This function receives three parameters.
+In order to run the deposit, use the function `pay`. This function receives three values.
 
 ```ts
 // pay function returns a PaymentResult object

@@ -14,14 +14,14 @@ AppKit Link Mode is a low latency mechanism for transporting One-Click Auth requ
 </Frame>
 
 <Warning>
-For Link Mode to fully work, you also need to enable the [One-Click Auth (SIWE)](./siwe) feature.
+For Link Mode to fully work, you also need to enable the [One-Click Auth (SIWE)](./1ca) feature.
 
 This feature is compatible only with EVM blockchains, so if you decide to include non-EVM blockchains Link Mode mechanism is going to be disabled internally.
 </Warning>
 
 ### How to enable it:
 
-To support link mode, configure your Metadata with a valid universal link and set the `linkMode` property to `true`:
+To support link mode, configure your Metadata with a **valid universal link** and set the `linkMode` property to `true`:
 
 ```ts {8,9}
 const metadata = {
@@ -35,8 +35,6 @@ const metadata = {
     linkMode: true,
   },
 };
-
-const config = defaultConfig({ metadata });
 ```
 
 ### How does it look without Link Mode?
