@@ -37,21 +37,50 @@ pnpm add @reown/appkit-pay
 ```
 </CodeGroup>
 
-### Usage
+### `pay` - Full Payment Flow
+
+#### Usage
 ```ts
 import { pay, baseSepoliaETH } from '@reown/appkit-pay' 
 ```
 
-In order to run the payment, we are using the function `openPay`. 
+This function handles the complete payment flow — it opens the payment UI *and* waits for the result (success, failure, cancel, timeout). This function receives three values: `recipient`, `amount`, and `paymentAsset`.
 
 ```ts
-// --- Open Modal ---
-
+// pay function returns a PaymentResult object
 const result = await pay({
     recipient: addressRecipient,
     amount: amount,
     paymentAsset: baseSepoliaETH
-})
+});
+
+if (result.success) {
+    console.log("Payment successful: " + result.result);
+} else {
+    console.error("Payment error: " + result.error);
+}
+```
+
+## Prerequisites
+
+### Enable Payments Feature in Dashboard
+
+The "Payments" feature **must be enabled** in the [Reown Dashboard](https://dashboard.reown.com) before you can use AppKit Pay, even for local testing. 
+
+1. Go to your project in the Reown Dashboard
+2. Navigate to the Payments section
+3. Enable the Payments feature for your projectId
+
+
+## Test locally
+
+In order to test locally use localhost and port 3000. This is the only port available for local testing.
+
+Add the following to your package.json file in order to run the development server on port 3000:
+```json
+"scripts": {
+    "dev": "vite --port 3000",
+},
 ```
 
 ## Supported Networks and Assets

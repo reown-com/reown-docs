@@ -87,6 +87,7 @@
                 "pages":[
                   "appkit/recipes/telegram-mini-app",
                   "appkit/recipes/tenderly-virtual-testnets",
+                  "appkit/recipes/wallet-buttons-react",
                   "appkit/recipes/wagmi-send-transaction",
                   "appkit/recipes/ethers-send-transaction",
                   "appkit/recipes/EVM-smart-contract-interaction",
@@ -268,8 +269,7 @@
                       "appkit/payments/overview",
                       "appkit/payments/pay-with-exchange",
                       "appkit/payments/deposit-with-exchange",
-                      "appkit/payments/one-click-checkout",
-                      "appkit/payments/subscriptions"
+                      "appkit/payments/one-click-checkout"
                     ]
                   },
                   {

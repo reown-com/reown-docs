@@ -11,13 +11,13 @@ In your `App.vue` file set up the following configuration.
 
 import { createAppKit } from '@reown/appkit/react'
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
-import { bitcoin } from '@reown/appkit/networks'
+import { bitcoin, bitcoinTestnet, bitcoinSignet } from '@reown/appkit/networks'
 
 // 1. Get projectId from https://dashboard.reown.com
 const projectId = 'YOUR_PROJECT_ID'
 
 // 2. Set the networks
-const networks = [bitcoin]
+const networks = [bitcoin, bitcoinTestnet, bitcoinSignet]
 
 // 3. Set up Bitcoin Adapter
 const bitcoinAdapter = new BitcoinAdapter({
