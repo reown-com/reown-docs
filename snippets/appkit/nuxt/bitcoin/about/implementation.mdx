@@ -21,12 +21,12 @@ In your `app.vue` file set up the following configuration:
 <script setup lang="ts">
 import { createAppKit } from '@reown/appkit/vue'
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
-import { bitcoin } from '@reown/appkit/networks'
+import { bitcoin, bitcoinTestnet, bitcoinSignet } from '@reown/appkit/networks'
 
 const config = useRuntimeConfig()
 const projectId = config.public.projectId
 
-const networks = [bitcoin]
+const networks = [bitcoin, bitcoinTestnet, bitcoinSignet]
 
 const bitcoinAdapter = new BitcoinAdapter({
   projectId
