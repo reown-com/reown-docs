@@ -81,3 +81,45 @@ onMounted(() => {
 | `eip155`  | Ethereum and EVM-compatible chains    |
 | `solana`  | Solana blockchain                     |
 | `bip122`  | Bitcoin blockchain                    |
+
+#### Enhanced Multichain Examples
+
+The wallet button now supports enhanced multichain functionality with improved namespace targeting:
+
+```javascript
+<template>
+  <div>
+    <button 
+      v-for="wallet in wallets" 
+      :key="`${wallet.wallet}-${wallet.namespace}`"
+      @click="() => connectWallet(wallet.wallet, wallet.namespace)" 
+      :disabled="!isReady"
+    >
+      {{ wallet.label }}
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { createAppKitWalletButton } from '@reown/appkit-wallet-button'
+
+const wallets = [
+  { wallet: 'metamask', namespace: 'eip155', label: 'MetaMask EVM' },
+  { wallet: 'metamask', namespace: 'solana', label: 'MetaMask Solana' },
+  { wallet: 'phantom', namespace: 'bip122', label: 'Phantom Bitcoin' }
+]
+
+const appKitWalletButton = createAppKitWalletButton()
+const isReady = ref(false)
+
+const connectWallet = (wallet, namespace) => {
+  const walletButton = createAppKitWalletButton({ namespace })
+  walletButton.connect(wallet)
+}
+
+onMounted(() => {
+  isReady.value = appKitWalletButton.isReady()
+})
+</script>
+```
