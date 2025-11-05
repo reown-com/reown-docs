@@ -48,14 +48,20 @@ Chain activeChain = AppKit.NetworkController.ActiveChain;
 // Get active account in CAIP-10 format
 Account account = AppKit.Account;
 
-Debug.Log(account.Address); // e.g. '0x12345...'
-Debug.Log(account.ChainId); // e.g. 'eip155:1'
-Debug.Log(account.AccountId); // e.g. 'eip155:1:0x12345...'
+// e.g. '0x12345...' on EVM chains or 'H3Q...' on Solana
+Debug.Log(account.Address);
+
+// e.g. 'eip155:1' or 'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp'
+Debug.Log(account.ChainId);
+
+// e.g. 'eip155:1:0x12345...' or 'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp:H3Q...'
+Debug.Log(account.AccountId);
 ```
 
 ### Direct Wallet Connection
 
-Connect directly to a specific wallet, bypassing the modal UI on native platforms.
+Connect directly to a specific wallet on native platforms, bypassing the modal UI.
+To enable direct connections, the wallet must be configured with [default wallet detection](/appkit/unity/core/options#enable-installed-wallet-detection).
 
 ```csharp
 // Connect directly to MetaMask, bypassing the modal UI
@@ -398,3 +404,93 @@ var transaction = await AppKit.Evm.RpcRequestAsync<object>("eth_getTransactionBy
 var result = await AppKit.Evm.RpcRequestAsync<object>("custom_method", param1, param2);
 ```
 
+## Solana Actions
+
+### Get Balance
+
+Get the native token balance (in lamports) for a public key.
+
+```csharp
+// Get balance for specific public key
+BigInteger lamports = await AppKit.Solana.GetBalanceAsync("H3Q...");
+
+// Or omit to use the active account's public key
+BigInteger lamportsActive = await AppKit.Solana.GetBalanceAsync();
+```
+
+### Sign Message
+
+Sign a message with the active Solana account's private key. Returns the signature as a base58 string.
+
+```csharp
+// Sign a UTF-8 string
+string signatureBase58 = await AppKit.Solana.SignMessageAsync("Hello Solana");
+
+// Sign raw bytes
+byte[] rawMessage = System.Text.Encoding.UTF8.GetBytes("Hello Solana");
+string signatureBase58 = await AppKit.Solana.SignMessageAsync(rawMessage);
+
+// Sign with a specific public key (optional)
+string signatureBase58 = await AppKit.Solana.SignMessageAsync("Hello Solana", "H3Q...");
+```
+
+### Verify Message Signature
+
+Verify if a message was signed by a specific Solana public key.
+
+```csharp
+bool isValid = await AppKit.Solana.VerifyMessageSignatureAsync(
+    "Hello Solana", // original message
+    signatureBase58, // base58 signature
+    "H3Q...pubkey..." // public key (optional, defaults to active)
+);
+```
+
+### Sign Transaction
+
+Sign a serialized transaction. Input should be the transaction encoded as base64. Returns the signature and the optional (re)serialized transaction.
+
+```csharp
+// base64-encoded serialized transaction
+string txBase64 = "AQAB...==";
+
+SignTransactionResponse res = await AppKit.Solana.SignTransactionAsync(txBase64);
+
+// Use results
+UnityEngine.Debug.Log(res.Signature); // base58 signature
+UnityEngine.Debug.Log(res.TransactionBase64); // signed tx (base64)
+```
+
+### Sign All Transactions
+
+Sign multiple serialized transactions at once. Inputs should be base64-encoded serialized transactions.
+
+```csharp
+string[] txsBase64 = new[] { "AQAB...==", "BQAC...==" };
+SignAllTransactionsResponse res = await AppKit.Solana.SignAllTransactionsAsync(txsBase64);
+
+// Access signed transactions
+foreach (var signed in res.TransactionsBase58)
+{
+    UnityEngine.Debug.Log(signed); // signed transaction (base58)
+}
+```
+
+### RPC Request
+
+Make a direct Solana JSON-RPC request.
+
+```csharp
+// Get current slot
+long slot = await AppKit.Solana.RpcRequestAsync<long>("getSlot");
+
+// Get balance via RPC (raw response object)
+var balanceResponse = await AppKit.Solana.RpcRequestAsync<GetBalanceResponse>("getBalance", "H3Q...");
+
+// Call a method with multiple parameters
+var accountInfo = await AppKit.Solana.RpcRequestAsync<object>(
+    "getAccountInfo",
+    "H3Q...pubkey...",
+    new { encoding = "jsonParsed" }
+);
+```

@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "aspen",
   "name": "Reown Docs",
   "colors": {
     "primary": "#008847",
@@ -11,6 +11,10 @@
   "integrations": {
     "gtm": {
       "tagId": "GTM-56G35T8X"
+    },
+    "posthog": {
+      "apiKey": "phc_8DvuGoAsaF1d8p51zQsrA6PY7KFtbBxfMfl9sgOeS63",
+      "apiHost": "https://pineapple.reown.com"
     }
   },
 
@@ -55,7 +59,16 @@
     }
   ],
   "contextual": {
-    "options": ["chatgpt", "claude", "copy", "view"]
+    "options": [
+     "chatgpt",
+     "claude",
+     "copy",
+     "view",
+     "perplexity",
+     "mcp",
+     "cursor",
+     "vscode"
+   ]
   },
   "navigation": {
     "tabs": [
@@ -74,6 +87,7 @@
                 "pages":[
                   "appkit/recipes/telegram-mini-app",
                   "appkit/recipes/tenderly-virtual-testnets",
+                  "appkit/recipes/wallet-buttons-react",
                   "appkit/recipes/wagmi-send-transaction",
                   "appkit/recipes/ethers-send-transaction",
                   "appkit/recipes/EVM-smart-contract-interaction",
@@ -83,6 +97,8 @@
                   "appkit/recipes/sponsoring-first-transaction",
                   "appkit/recipes/travel-rule",
                   "appkit/recipes/smart-sessions",
+                  "appkit/recipes/update-appkit",
+                  "appkit/recipes/universal-connector",
                   "appkit/recipes/troubleshooting"
                 ]
               },
@@ -90,7 +106,7 @@
             ]
           },
           {
-            "group": "Cloud",
+            "group": "Dashboard",
             "pages": [
               {
                 "group": "WalletGuide",
@@ -110,8 +126,7 @@
               "cloud/reown-authentication",
               "cloud/relay",
               "cloud/blockchain-api",
-              "cloud/analytics",
-              "cloud/paymaster"
+              "cloud/analytics"
             ]
           },
           {
@@ -252,8 +267,8 @@
                     "pages": [
                       "appkit/payments/overview",
                       "appkit/payments/pay-with-exchange",
-                      "appkit/payments/one-click-checkout",
-                      "appkit/payments/subscriptions"
+                      "appkit/payments/deposit-with-exchange",
+                      "appkit/payments/one-click-checkout"
                     ]
                   },
                   {
@@ -362,7 +377,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/react/payments/pay-with-exchange"
+                  "appkit/react/payments/pay-with-exchange",
+                  "appkit/react/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -422,7 +438,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/next/payments/pay-with-exchange"
+                  "appkit/next/payments/pay-with-exchange",
+                  "appkit/next/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -482,7 +499,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/vue/payments/pay-with-exchange"
+                  "appkit/vue/payments/pay-with-exchange",
+                  "appkit/vue/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -541,7 +559,8 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/javascript/payments/pay-with-exchange"
+                  "appkit/javascript/payments/pay-with-exchange",
+                  "appkit/javascript/payments/deposit-with-exchange"
                 ]
               },
               {
@@ -648,7 +667,8 @@
                   "appkit/react-native/core/smart-accounts",
                   "appkit/react-native/core/link-mode",
                   "appkit/react-native/core/theming",
-                  "appkit/react-native/core/resources"
+                  "appkit/react-native/core/resources",
+                  "appkit/react-native/core/migration-multichain"
                 ]
               },
               {
@@ -662,7 +682,8 @@
                 "group": "Authentication",
                 "pages": [
                   "appkit/react-native/core/email",
-                  "appkit/react-native/core/siwe"
+                  "appkit/react-native/core/1ca",
+                  "appkit/react-native/core/siwx"
                 ]
               },
               {
@@ -711,9 +732,9 @@
             ]
           },
           {
-            "dropdown": "Android",
+            "dropdown": "Kotlin",
             "icon": "android",
-            "description": "AppKit on Android",
+            "description": "AppKit on Kotlin (Android)",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -743,9 +764,9 @@
             ]
           },
           {
-            "dropdown": "iOS",
+            "dropdown": "Swift",
             "icon": "apple",
-            "description": "AppKit on iOS",
+            "description": "AppKit on Swift (iOS)",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -803,207 +824,6 @@
                   "appkit/unity/cloud/relay", 
                   "appkit/unity/cloud/blockchain-api",
                   "appkit/unity/cloud/analytics"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "WalletKit",
-        "icon": "wallet",
-        "dropdowns": [
-          {
-            "dropdown": "WalletKit - Overview",
-            "icon": "wallet",
-            "pages": [
-              {
-                "group": "Getting Started",
-                "pages": ["walletkit/overview"]
-              },
-              {
-                "group": "Features",
-                    "pages": [
-                      "walletkit/features/verify",
-                      "walletkit/features/link-mode",
-                      "walletkit/features/one-click-auth",
-                      "walletkit/features/chain-abstraction"
-                    ]
-                  },
-                  {
-                    "group": "Production",
-                    "pages": ["walletkit/best-practices"]
-                  },
-                  {
-                    "group": "Upgrade",
-                    "pages": [
-                      "walletkit/upgrade/staying-up-to-date",
-                      {
-                        "group": "Web3Wallet to Reown WalletKit",
-                        "pages": [
-                          "walletkit/upgrade/from-web3wallet-to-reown",
-                          "walletkit/upgrade/from-web3wallet-web",
-                          "walletkit/upgrade/from-web3wallet-react-native",
-                          "walletkit/upgrade/from-web3wallet-flutter",
-                          "walletkit/upgrade/from-web3wallet-android",
-                          "walletkit/upgrade/from-web3wallet-ios",
-                          "walletkit/upgrade/from-web3wallet-unity"
-                      ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Web",
-            "icon": "js",
-            "description": "WalletKit on Web",
-            "pages": [
-              "walletkit/web/installation",
-              "walletkit/web/usage",
-              "walletkit/web/one-click-auth",
-              "walletkit/web/verify",
-              "walletkit/web/eip5792",
-              "walletkit/web/chain-abstraction",
-              "walletkit/web/best-practices",
-              "walletkit/web/resources",
-              {
-                "group": "Cloud",
-                "pages": [
-                  "walletkit/web/cloud/explorer-submission",
-                  "walletkit/web/cloud/relay",
-                  "walletkit/web/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Android",
-            "icon": "android",
-            "description": "WalletKit on Android",
-            "pages": [
-              {
-                "group": "Core",
-                "pages": [
-                  "walletkit/android/installation",
-                  "walletkit/android/usage",
-                  "walletkit/android/one-click-auth",
-                  "walletkit/android/mobile-linking",
-                  "walletkit/android/link-mode",
-                  "walletkit/android/verify",
-                  "walletkit/android/eip5792",
-                  "walletkit/android/chain-abstraction",
-                  "walletkit/android/best-practices",
-                  "walletkit/android/resources"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "walletkit/android/cloud/explorer-submission",
-                  "walletkit/android/cloud/relay",
-                  "walletkit/android/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "iOS",
-            "icon": "apple",
-            "description": "WalletKit on iOS",
-            "pages": [
-              {
-                "group": "Core",
-                "pages": [
-                  "walletkit/ios/installation",
-                  "walletkit/ios/usage",
-                  "walletkit/ios/one-click-auth",
-                  "walletkit/ios/mobile-linking",
-                  "walletkit/ios/link-mode",
-                  "walletkit/ios/verify",
-                  "walletkit/ios/eip5792",
-                  "walletkit/ios/chain-abstraction",
-                  "walletkit/ios/best-practices",
-                  "walletkit/ios/resources"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "walletkit/ios/cloud/explorer-submission",
-                  "walletkit/ios/cloud/relay",
-                  "walletkit/ios/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Flutter",
-            "icon": "flutter",
-            "description": "WalletKit on Flutter",
-            "pages": [
-              "walletkit/flutter/installation",
-              "walletkit/flutter/usage",
-              "walletkit/flutter/one-click-auth",
-              "walletkit/flutter/mobile-linking",
-              "walletkit/flutter/link-mode",
-              "walletkit/flutter/verify",
-              "walletkit/flutter/eip5792",
-              "walletkit/flutter/chain-abstraction",
-              {
-                "group": "Cloud",
-                "pages": [
-                  "walletkit/flutter/cloud/explorer-submission",
-                  "walletkit/flutter/cloud/relay",
-                  "walletkit/flutter/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "React Native",
-            "icon": "mobile-screen-button",
-            "description": "WalletKit on React Native",
-            "pages": [
-              {
-                "group": "Core",
-                "pages": [
-                  "walletkit/react-native/installation",
-                  "walletkit/react-native/usage",
-                  "walletkit/react-native/one-click-auth",
-                  "walletkit/react-native/mobile-linking",
-                  "walletkit/react-native/link-mode",
-                  "walletkit/react-native/verify",
-                  "walletkit/react-native/eip5792",
-                  "walletkit/react-native/chain-abstraction",
-                  "walletkit/react-native/best-practices",
-                  "walletkit/react-native/resources"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "walletkit/react-native/cloud/explorer-submission",
-                  "walletkit/react-native/cloud/relay",
-                  "walletkit/react-native/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": ".NET",
-            "icon": "code",
-            "description": "WalletKit on .NET",
-            "pages": [
-              "walletkit/c-sharp/installation",
-              "walletkit/c-sharp/usage",
-              "walletkit/c-sharp/verify",
-              {
-                "group": "Cloud",
-                "pages": [
-                  "walletkit/c-sharp/cloud/explorer-submission",
-                  "walletkit/c-sharp/cloud/relay",
-                  "walletkit/c-sharp/cloud/analytics"
                 ]
               }
             ]

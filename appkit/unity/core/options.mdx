@@ -2,6 +2,21 @@
 title: Options
 ---
 
+### Featured wallets
+
+Select wallets that are going to be shown on the modal's main view. Array of wallet IDs defined will be prioritized (order is respected). These wallets will also show up first in `All Wallets` view. You can find the wallet IDs in [WalletGuide](https://walletguide.walletconnect.network/).
+
+```csharp
+await AppKit.InitializeAsync(new AppKitConfig
+{
+    featuredWalletIds = new []
+    {
+        "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369", // Rainbow
+        "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0", // Trust
+    }
+});
+```
+
 ### Explorer included wallets
 
 Allows to set included wallets that are fetched from [WalletGuide](https://walletguide.walletconnect.network/). You can define a list of wallets ids you'd like to prioritize (order is respected). You can get these ids from the explorer link mentioned before by clicking on a copy icon of your desired wallet card.
@@ -75,6 +90,7 @@ Example:
     <queries>
         <package android:name="io.metamask"/>
         <package android:name="com.wallet.crypto.trustapp"/>
+        <package android:name="com.skymavis.genesis"/>
         <package android:name="io.gnosis.safe"/>
         <package android:name="me.rainbow"/>
         <!-- Add other wallet schemes names here -->
@@ -87,6 +103,7 @@ Example:
 ```
 
 More wallet package names can be found in [our sample AndroidManifest.xml](https://github.com/WalletConnect/WalletConnectUnity/blob/project/modal-sample/Assets/Plugins/Android/AndroidManifest.xml).
+
 </Tab>
 <Tab title="iOS">
 Wallet detection may produce inaccurate results on iOS Simulator. It is recommended to test on a real device.
@@ -110,6 +127,7 @@ Example:
             <string>metamask</string>
             <string>trust</string>
             <string>safe</string>
+            <string>roninwallet</string>
             <string>rainbow</string>
             <string>uniswap</string>
             <string>zerion</string>
@@ -125,6 +143,7 @@ Example:
     </dict>
 </plist>
 ```
+
 </Tab>
 </Tabs>
 
@@ -139,7 +158,7 @@ By requesting fullscreen on the container, the modal will always be rendered on 
 
 ```javascript
 // Use this instead of unityInstance.SetFullscreen(1) to enable full screen
-document.querySelector("#canvas-container").requestFullscreen();
+document.querySelector('#canvas-container').requestFullscreen();
 ```
 
 ### Redirect from Wallet to App

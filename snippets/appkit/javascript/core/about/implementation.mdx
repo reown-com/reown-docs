@@ -1,15 +1,12 @@
-Use the createAppKit function for quick integration with a unified configuration.
-This automatically applies the predefined configurations for different adapters like Wagmi, Ethers, or Solana,
- so you no longer need to manually configure each one individually. 
- Simply pass the common parameters such as `projectId`, `chains`, `metadata` or check others config in the [Options section](options). 
+For a quick integration of Appkit Core you can use the `UniversalConnector` class. Which simplifies the integration of Appkit Core by providing a single interface for all the blockchain protocols.
 
-This includes WalletConnect, Coinbase and Injected connectors, and the [Blockchain API](../../../../cloud/blockchain-api) as a [transport](https://wagmi.sh/core/api/createConfig#transports)
+You can configure the Universal Connector with the networks you want to support.
+For more information, please visit [RPC Reference](https://docs.reown.com/advanced/multichain/rpc-reference/cosmos-rpc) section from our docs.
 
-We recommend creating a config file to establish a singleton instance for the Provider and AppKit:
+We recommend creating a config file to establish a singleton instance for the Universal Connector:
 
 ```tsx
-import UniversalProvider from '@walletconnect/universal-provider'
-import { createAppKit } from '@reown/appkit/core'
+import { UniversalConnector } from '@reown/appkit-universal-connector'
 
 export const projectId = import.meta.env.VITE_PROJECT_ID || "b56e18d47c72ab683b10814fe9495694" // this is a public projectId only to use on localhost
 if (!projectId) {
@@ -17,7 +14,7 @@ if (!projectId) {
 }
 
 // you can configure your own network
-const sui = {
+const suiMainnet = {
   id: 784,
   chainNamespace: 'sui',
   caipNetworkId: 'sui:mainnet',
@@ -26,81 +23,62 @@ const sui = {
   rpcUrls: { default: { http: ['https://fullnode.mainnet.sui.io:443'] } }
 }
 
-export const networks = [sui]
-
-export let provider
-export let appKit
-
-export async function initializeProvider() {
-  if (!provider) {
-    provider = await UniversalProvider.init({
-      projectId,
-      metadata: {
-        name: "WalletConnect x Sui",
-        description: "Sui integration with WalletConnect's Universal Provider",
-        url: "https://walletconnect.com/", // origin must match your domain & subdomain
-        icons: ["https://avatars.githubusercontent.com/u/37784886"],
-      }
-    })
-  }
-  return provider
+const stacksMainnet = {
+  id: 1,
+  chainNamespace: 'stacks',
+  caipNetworkId: 'stacks:1',
+  name: 'Stacks',
+  nativeCurrency: { name: 'STX', symbol: 'STX', decimals: 6 },
+  rpcUrls: { default: { http: ['https://stacks-node-mainnet.stacks.co'] } }
 }
 
-export function initializeAppKit(universalProvider) {
-  if (!appKit && universalProvider) {
-    appKit = createAppKit({
+
+export const networks = [suiMainnet, stacksMainnet]
+
+export let universalConnector
+
+export async function getUniversalConnector() {
+  if (!universalConnector) {
+    universalConnector = await UniversalConnector.init({
       projectId,
-      networks,
-      universalProvider,
-      manualWCControl: true,
-      features: {
-        analytics: true
-      }
+      metadata: {
+        name: 'Universal Connector',
+        description: 'Universal Connector',
+        url: 'https://appkit.reown.com',
+        icons: ['https://appkit.reown.com/icon.png']
+      },
+      networks: [
+        {
+          methods: ['sui_signPersonalMessage'],
+          chains: [suiMainnet],
+          events: [],
+          namespace: 'sui'
+        },
+        {
+          methods: ['stx_signMessage'],
+          chains: [stacksMainnet],
+          events: ['stx_chainChanged'],
+          namespace: 'stacks'
+        }
+      ]
     })
   }
-  return appKit
-} 
+  return universalConnector
+}
 ```
 
 In de main.js file you can add :
 
 ```tsx
-import { initializeProvider, initializeAppKit, provider, appKit } from './config/appKit.js'
-
-let session = null
-let address = null
-
+import { getUniversalConnector } from './config/appKit.js'
 
 async function setup() {
-  const prov = await initializeProvider()
-  let appkit = initializeAppKit(prov)
+  const universalConnector = await getUniversalConnector()
 
-  // Listen for session events
-  prov.on('connect', (sess) => {
-    session = sess.session
-  })
-
-  prov.on('disconnect', () => {
-    session = null
-    address = null
-  })
-
-  prov.on('connect', async (sess) => {
-    session = sess.session
-    const modal = initializeAppKit(provider)
-    await modal?.close()
-  })
-
-  prov.on('display_uri', (uri) => {
-    appkit = initializeAppKit(prov)
-    appkit?.open({ uri, view: 'ConnectingWalletConnectBasic' })
-  })
-
-  document.getElementById('disconnect').addEventListener('click', async () => {
-    await prov.disconnect()
-    session = null
-    address = null
-  })
+  // check if session is already connected
+  if (universalConnector?.provider.session) {
+    session = universalConnector?.provider.session
+  }
 }
 
 setup() 

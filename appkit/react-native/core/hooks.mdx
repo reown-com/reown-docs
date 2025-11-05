@@ -2,415 +2,346 @@
 title: Hooks
 ---
 
-import WagmiHooks from "/snippets/appkit/react-native/wagmi/hooks.mdx";
-import EthersHooks from "/snippets/appkit/react-native/ethers/hooks.mdx";
-import Ethers5Hooks from "/snippets/appkit/react-native/ethers5/hooks.mdx";
+AppKit for React Native provides a set of hooks to interact with the wallet connection lifecycle, access connection state, and control the modal.
 
-## useAppKit
+All hooks are imported from `@reown/appkit-react-native`.
 
-The `useAppKit` hook provides functions to control the modal's visibility. You can use it to programmatically open or close the modal.
+## `useAppKit()`
 
-<Tabs>
+The primary hook for controlling the modal's visibility and behavior. Use this hook when you need to programmatically open or close the modal, or when you want to show specific views like the connection screen or account details.
 
-<Tab title="Wagmi">
-```ts
-import { useAppKit } from '@reown/appkit-wagmi-react-native'
-import { Button } from 'react-native';
+```typescript
+import { useAppKit } from '@reown/appkit-react-native';
 
-export default function Component() {
-  const { open, close } = useAppKit()
+export default function MyComponent() {
+  const {
+    // Modal Control
+    open, // Function to open the modal, optionally with a specific view
+    close, // Function to close the modal
 
-  return (
-    <>
-      <Button title="Open Modal" onPress={() => open()} />
-      <Button title="Open Account View" onPress={() => open({ view: 'Account' })} />
-      <Button title="Close Modal" onPress={() => close()} />
-    </>
-  );
-}
-
-```
-</Tab>
-
-<Tab title="Ethers">
-```ts
-import { useAppKit } from '@reown/appkit-ethers-react-native'
-import { Button } from 'react-native';
-
-export default function Component() {
-  const { open, close } = useAppKit()
-
-  return (
-    <>
-      <Button title="Open Modal" onPress={() => open()} />
-      <Button title="Open Account View" onPress={() => open({ view: 'Account' })} />
-      <Button title="Close Modal" onPress={() => close()} />
-    </>
-  );
-}
-
-```
-</Tab>
-
-<Tab title="Ethers v5">
-```ts
-import { useAppKit } from '@reown/appkit-ethers5-react-native'
-import { Button } from 'react-native';
-
-export default function Component() {
-  const { open, close } = useAppKit()
-
-  return (
-    <>
-      <Button title="Open Modal" onPress={() => open()} />
-      <Button title="Open Account View" onPress={() => open({ view: 'Account' })} />
-      <Button title="Close Modal" onPress={() => close()} />
-    </>
-  );
-}
-
-```
-</Tab>
-
-</Tabs>
-
-You can also select the modal's view when calling the `open` function
-
-```ts
-open({ view: 'Account' })
-````
-
-List of views you can select
-
-| Variable         | Description                                                                                                                                              |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Connect`        | Principal view of the modal - default view when disconnected.                                                                                            |
-| `Account`        | User profile - default view when connected.                                                                                                               |
-| `Networks`       | List of available networks - you can select and target a specific network before connecting.                                                              |
-| `WhatIsANetwork` | "What is a network" onboarding view.                                                                                                                     |
-| `WhatIsAWallet`  | "What is a wallet" onboarding view.                                                                                                                      |
-| `Swap`           | Swap tokens seamlessly - users can trade tokens directly in your app with transparent pricing.                                                           |
-| `OnRamp`         | Buy crypto with fiat - users can purchase crypto directly in your app using their preferred payment method.                                               |
-
-## useAppKitState
-
-Get the current value of the modal's state
-
-<Tabs>
-
-<Tab title="Wagmi">
-```ts
-import { useAppKitState } from '@reown/appkit-wagmi-react-native'
-import { Text, View } from 'react-native';
-
-export default function Component() {
-  const { open, selectedNetworkId } = useAppKitState();
-
-  return (
-    <View>
-      <Text>Modal Open: {String(open)}</Text>
-      <Text>Selected Network ID: {selectedNetworkId}</Text>
-    </View>
-  );
-}
-```
-</Tab>
-
-<Tab title="Ethers">
-```ts
-import { useAppKitState } from '@reown/appkit-ethers-react-native'
-import { Text, View } from 'react-native';
-
-export default function Component() {
-  const { open, selectedNetworkId } = useAppKitState();
-
-  return (
-    <View>
-      <Text>Modal Open: {String(open)}</Text>
-      <Text>Selected Network ID: {selectedNetworkId}</Text>
-    </View>
-  );
+    // Actions
+    disconnect, // Function to disconnect the current session
+    switchNetwork, // Function to attempt to switch to a different chain/network
+  } = useAppKit();
 }
 ```
 
-</Tab>
+### Use Cases
+- Opening the modal when a user clicks a "Connect Wallet" button
+- Closing the modal after a successful connection
+- Opening specific views of the modal (e.g., account view, connect view)
+- Disconnecting users from their wallets
+- Switching between different blockchain networks
 
-<Tab title="Ethers v5">
-```ts
-import { useAppKitState } from '@reown/appkit-ethers5-react-native'
-import { Text, View } from 'react-native';
+### Returns
+- `open`: Function to open the modal
+- `close`: Function to close the modal
+- `disconnect`: Function to disconnect the current session
+- `switchNetwork`: Function to switch to a different chain/network
 
-export default function Component() {
-  const { open, selectedNetworkId } = useAppKitState();
+### Parameters
 
-  return (
-    <View>
-      <Text>Modal Open: {String(open)}</Text>
-      <Text>Selected Network ID: {selectedNetworkId}</Text>
-    </View>
-  );
+You can direct the modal to open to a specific view using the `open` function:
+
+```typescript
+open({ view: 'Account' }); // Opens to the account view if connected
+open({ view: 'Connect' }); // Opens to the wallet selection view
+open({ view: 'Networks' }); // Opens to the network selection view
+```
+
+Here is a list of possible views you can select:
+
+| Variable         | Description                                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| `Connect`        | Principal view of the modal - default view when disconnected.                                    |
+| `WalletConnect`  | View with a QR code to scan with wallets and connect via WalletConnect                           |
+| `Account`        | User profile - default view when connected.                                                      |
+| `Networks`       | List of available networks - you can select and target a specific network before connecting.       |
+| `WhatIsANetwork` | "What is a network" onboarding view.                                                               |
+| `WhatIsAWallet`  | "What is a wallet" onboarding view.                                                                |
+
+## `useAccount()`
+
+The essential hook for accessing wallet connection state and user information. Use this hook whenever you need to know if a user is connected, get their wallet address, or access their account details.
+
+```typescript
+import { useAccount } from '@reown/appkit-react-native';
+
+export default function MyComponent() {
+  const {
+    address, // String, the connected account address (e.g., '0x...', 'Sol...', 'bc1...')
+    chainId, // Number or String, the chain ID of the currently active connection
+    isConnected, // Boolean, true if a wallet is connected on the current chain/namespace
+    namespace, // String, the active namespace (e.g., 'eip155', 'solana', 'bip122')
+    chain, // AppKitNetwork object with active chain information
+  } = useAccount();
+
+  if (isConnected) {
+    return (
+      <div>
+        <p>Connected to chain: {chainId}</p>
+        <p>Namespace: {namespace}</p>
+        <p>Chain: {chain?.name}</p>
+        <p>Address: {address}</p>
+      </div>
+    );
+  }
+  return <p>Not Connected</p>;
 }
 ```
-</Tab>
 
-</Tabs>
+### Use Cases
+- Displaying the connected wallet address in your UI
+- Checking if a user is connected before showing certain features
+- Getting user information for authentication flows
+- Handling multi-chain scenarios where you need account info for specific chains
+- Implementing conditional rendering based on connection status
+- Accessing the active blockchain namespace for chain-specific logic
+- Getting detailed chain information for network-specific features
 
-The modal state consists of two reactive values:
+### Returns
+- `address`: The connected account address (string)
+- `chainId`: The chain ID of the currently active connection (number or string)
+- `isConnected`: Boolean indicating if a wallet is connected on the current chain/namespace
+- `namespace`: The active namespace (string, e.g., 'eip155', 'solana', 'bip122')
+- `chain`: The active chain object with detailed chain information (AppKitNetwork type)
 
-| State              | Description                                                                 | Type      |
-|--------------------|-----------------------------------------------------------------------------|-----------|
-| `open`             | Open state will be true when the modal is open and false when closed.       | `boolean` |
-| `selectedNetworkId`| The current chain id selected by the user.                                 | `number`  |
+## `useProvider()`
 
-## useAppKitEvents
+The provider access hook that provides access to the underlying chain-specific provider for the currently active connection. Use this hook when you need to perform direct interactions with the blockchain that go beyond the standard AppKit actions.
 
-Get the last tracked modal event. The hook accepts an optional callback function that is executed when the event is triggered.
+By default, `useProvider()` returns the provider for the currently active network.
 
-<Tabs>
+```typescript
+import { useProvider, useAccount } from '@reown/appkit-react-native';
 
-<Tab title="Wagmi">
-```ts
-import { useAppKitEvents } from '@reown/appkit-wagmi-react-native'
-import { useEffect } from 'react';
+export default function ChainSpecificActions() {
+  // Get provider for the current active network
+  const { provider, providerType } = useProvider(); 
 
-export default function Component() {
-  const event = useAppKitEvents(newEvent => {
-    console.log('New AppKit Event:', newEvent);
-    // Example: Handle a specific event type
-    if (newEvent?.type === 'MODAL_CLOSED') {
-      // Do something when the modal is closed
+  const { chainId, address, isConnected } = useAccount();
+
+  if (!isConnected || !provider) {
+    return <p>Please connect your wallet.</p>;
+  }
+
+  const handleSignMessageEVM = async () => {
+    if (providerType === 'eip155' && address) {
+      console.log('EVM sign message functionality to be implemented using the provider.');
     }
-  });
+  };
 
-  useEffect(() => {
-    if (event) {
-      console.log('Last AppKit Event:', event);
+  const handleSignMessageSolana = async () => {
+    if (providerType === 'solana' && address) {
+      console.log('Solana sign message functionality to be implemented using the provider.');
     }
-  }, [event]);
-
-  return null; // Or your component JSX
-}
-```
-
-</Tab>
-
-<Tab title="Ethers">
-```ts
-import { useAppKitEvents } from '@reown/appkit-ethers-react-native'
-import { useEffect } from 'react';
-
-export default function Component() {
-  const event = useAppKitEvents(newEvent => {
-    console.log('New AppKit Event:', newEvent);
-    // Example: Handle a specific event type
-    if (newEvent?.type === 'MODAL_CLOSED') {
-      // Do something when the modal is closed
-    }
-  });
-
-  useEffect(() => {
-    if (event) {
-      console.log('Last AppKit Event:', event);
-    }
-  }, [event]);
-
-  return null; // Or your component JSX
-}
-```
-
-</Tab>
-
-<Tab title="Ethers v5">
-```ts
-import { useAppKitEvents } from '@reown/appkit-ethers5-react-native'
-import { useEffect } from 'react';
-
-export default function Component() {
-  const event = useAppKitEvents(newEvent => {
-    console.log('New AppKit Event:', newEvent);
-    // Example: Handle a specific event type
-    if (newEvent?.type === 'MODAL_CLOSED') {
-      // Do something when the modal is closed
-    }
-  });
-
-  useEffect(() => {
-    if (event) {
-      console.log('Last AppKit Event:', event);
-    }
-  }, [event]);
-
-  return null; // Or your component JSX
-}
-```
-
-</Tab>
-
-</Tabs>
-
-## useAppKitEventSubscription
-
-Subscribe to modal specific events
-
-<Tabs>
-
-<Tab title="Wagmi">
-```ts
-import { useAppKitEventSubscription } from '@reown/appkit-wagmi-react-native'
-import { useEffect } from 'react';
-
-export default function Component() {
-  useAppKitEventSubscription('MODAL_OPEN', newEvent => {
-    console.log('Modal Opened Event:', newEvent);
-    // Perform actions when the modal opens
-  });
-
-  useAppKitEventSubscription('MODAL_CLOSED', newEvent => {
-    console.log('Modal Closed Event:', newEvent);
-    // Perform actions when the modal closes
-  });
+  };
   
-  return null; // Or your component JSX
-}
-```
-
-</Tab>
-
-<Tab title="Ethers">
-```ts
-import { useAppKitEventSubscription } from '@reown/appkit-ethers-react-native'
-import { useEffect } from 'react';
-
-export default function Component() {
-  useAppKitEventSubscription('MODAL_OPEN', newEvent => {
-    console.log('Modal Opened Event:', newEvent);
-    // Perform actions when the modal opens
-  });
-
-  useAppKitEventSubscription('MODAL_CLOSED', newEvent => {
-    console.log('Modal Closed Event:', newEvent);
-    // Perform actions when the modal closes
-  });
-
-  return null; // Or your component JSX
-}
-```
-</Tab>
-
-<Tab title="Ethers v5">
-```ts
-import { useAppKitEventSubscription } from '@reown/appkit-ethers5-react-native'
-import { useEffect } from 'react';
-
-export default function Component() {
-  useAppKitEventSubscription('MODAL_OPEN', newEvent => {
-    console.log('Modal Opened Event:', newEvent);
-    // Perform actions when the modal opens
-  });
-
-  useAppKitEventSubscription('MODAL_CLOSED', newEvent => {
-    console.log('Modal Closed Event:', newEvent);
-    // Perform actions when the modal closes
-  });
-
-  return null; // Or your component JSX
-}
-```
-
-</Tab>
-
-</Tabs>
-
-## useWalletInfo
-
-Get the metadata information from the connected wallet
-
-<Tabs>
-
-<Tab title="Wagmi">
-```ts
-import { useWalletInfo } from '@reown/appkit-wagmi-react-native'
-import { Text, View } from 'react-native';
-
-export default function Component() {
-  const { walletInfo } = useWalletInfo();
-
-  if (!walletInfo) {
-    return <Text>No wallet connected or info unavailable.</Text>;
-  }
+  // Similar functions can be created for Bitcoin
 
   return (
-    <View>
-      <Text>Wallet Name: {walletInfo.name}</Text>
-      <Text>Wallet Icon: {walletInfo.icon}</Text> 
-    </View>
+    <div>
+      <p>Current Chain ID: {chainId}</p>
+      <p>Provider Type: {providerType || 'N/A'}</p>
+      {providerType === 'eip155' && <button onClick={handleSignMessageEVM}>Sign EVM Message</button>}
+      {providerType === 'solana' && <button onClick={handleSignMessageSolana}>Sign Solana Message</button>}
+      {/* Add buttons for other provider types as needed */}
+    </div>
   );
 }
 ```
 
-</Tab>
+### Use Cases
+- Accessing the wallet provider for direct blockchain interactions
+- Signing transactions and messages with the connected wallet
+- Integrating with blockchain-specific libraries (ethers, solana web3, etc.)
+- Building custom wallet interactions across different chains
+- Performing advanced blockchain operations not covered by AppKit's standard actions
 
-<Tab title="Ethers">
-```ts
-import { useWalletInfo } from '@reown/appkit-ethers-react-native'
-import { Text, View } from 'react-native';
+### Returns
+- `provider`: The underlying chain-specific provider for the currently active connection
+- `providerType`: The type of provider (e.g., 'eip155', 'solana', 'bip122')
 
-export default function Component() {
+Refer to the example usage in:
+*   [EVM + Ethers](https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/src/views/EthersActionsView.tsx)
+*   [EVM + Wagmi](https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/src/views/WagmiActionsView.tsx)
+*   [Solana](https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/src/views/SolanaActionsView.tsx)
+*   [Bitcoin](https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/src/views/BitcoinActionsView.tsx)
+
+## `useWalletInfo()`
+
+The wallet information hook that provides details about the connected wallet. Use this hook when you need to display wallet-specific information, show wallet branding, or implement wallet-specific features.
+
+```typescript
+import { useWalletInfo } from '@reown/appkit-react-native';
+
+export default function WalletDetails() {
   const { walletInfo } = useWalletInfo();
 
   if (!walletInfo) {
-    return <Text>No wallet connected or info unavailable.</Text>;
+    return <p>No wallet connected or info unavailable.</p>;
   }
 
   return (
-    <View>
-      <Text>Wallet Name: {walletInfo.name}</Text>
-      <Text>Wallet Icon: {walletInfo.icon}</Text>
-    </View>
-  );
-}
-```
-</Tab>
-
-<Tab title="Ethers v5">
-```ts
-import { useWalletInfo } from '@reown/appkit-ethers5-react-native'
-import { Text, View } from 'react-native';
-
-export default function Component() {
-  const { walletInfo } = useWalletInfo();
-
-  if (!walletInfo) {
-    return <Text>No wallet connected or info unavailable.</Text>;
-  }
-
-  return (
-    <View>
-      <Text>Wallet Name: {walletInfo.name}</Text>
-      <Text>Wallet Icon: {walletInfo.icon}</Text>
-    </View>
+    <div>
+      <h3>Connected Wallet:</h3>
+      <p>Name: {walletInfo.name}</p>
+      <p>Icon: {walletInfo.icon && <img src={walletInfo.icon} alt={walletInfo.name} width="24" />}</p>
+      {/* Refer to TypeUtil.ts for other walletInfo properties e.g., rdns, id etc. */}
+    </div>
   );
 }
 ```
 
-</Tab>
+### Use Cases
+- Displaying wallet-specific information in your UI
+- Implementing wallet-specific features
+- Showing wallet icons or branding
+- Handling wallet-specific behaviors
+- Creating custom wallet selection interfaces
 
-</Tabs>
+### Returns
+- `walletInfo`: Object containing metadata about the connected wallet (name, icon, rdns, id, etc.)
 
-## Ethereum Library
+<Note>
+The exact structure of `walletInfo` can be found in the `WalletInfo` type definition in [packages/common/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/develop/packages/common/src/utils/TypeUtil.ts#L365).
+</Note>
 
-<Tabs>
+## `useAppKitEventSubscription()`
 
-<Tab title="Wagmi">
-  <WagmiHooks />
-</Tab>
+The event subscription hook that allows you to listen to modal and wallet events. Use this hook when you need to track user interactions, implement analytics, or respond to specific wallet events in your application.
 
-<Tab title="Ethers">
-  <EthersHooks />
-</Tab>
+```typescript
+import { useAppKitEventSubscription } from '@reown/appkit-react-native'; 
 
-<Tab title="Ethers v5">
-  <Ethers5Hooks />
-</Tab>
+export default function EventLogger() {
+  useAppKitEventSubscription('MODAL_OPEN', event => { console.log('Modal opened!', event); });
 
-</Tabs>
+  useAppKitEventSubscription('CONNECT_SUCCESS', event => { console.log('Wallet connected!', event); });
+
+  return null; 
+}
+```
+
+### Use Cases
+- Tracking user interactions with the modal
+- Implementing analytics for wallet connections
+- Creating custom notifications for connection events
+- Handling specific wallet events in your application
+- Monitoring connection state changes
+
+### Parameters
+- `eventType`: The specific event type to subscribe to (e.g., 'MODAL_OPEN', 'CONNECT_SUCCESS')
+- `callback`: Function that is executed when the event is triggered
+
+<Note>
+The full list of event types and their payloads can be found in `AppKitEvents` within [packages/core/src/utils/TypeUtil.ts](https://github.com/reown-com/appkit-react-native/blob/develop/packages/core/src/utils/TypeUtil.ts#L369).
+</Note>
+
+## `useAppKitState()`
+
+The state management hook that provides real-time access to the modal's current state and connection status. Use this hook when you need to react to modal state changes or synchronize your UI with the modal's status.
+
+```typescript
+import { useAppKitState } from '@reown/appkit-react-native';
+
+export default function AppStatus() {
+  const { 
+    isOpen, // Boolean indicating if the modal is currently open
+    isLoading, // Boolean indicating if the modal is loading
+    isConnected, // Boolean indicating if a user is connected
+    chain, // The connected chain object
+  } = useAppKitState();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <p>Modal is {isOpen ? 'open' : 'closed'}</p>
+      <p>User is {isConnected ? 'connected' : 'not connected'}</p>
+      {chain && <p>Connected to: {chain.name}</p>}
+    </div>
+  );
+}
+```
+
+### Use Cases
+- Syncing your UI with the modal's open/closed state
+- Creating custom UI elements that respond to modal state changes
+- Implementing custom loading states based on modal state
+- Checking connection status without accessing account details
+- Displaying chain-specific UI based on the connected blockchain
+
+### Returns
+- `isOpen`: Boolean indicating if the modal is currently open
+- `isLoading`: Boolean indicating if the modal is loading
+- `isConnected`: Boolean indicating if a user is connected
+- `chain`: The connected chain object
+
+## `useAppKitLogs()`
+
+The logging hook that provides access to AppKit's internal logging system. Use this hook when you need to debug your application, monitor AppKit's behavior, or export logs for troubleshooting purposes.
+
+```typescript
+import { useAppKitLogs } from '@reown/appkit-react-native';
+
+export default function DebugPanel() {
+  const { 
+    logs, // All logs from AppKit
+    errorLogs, // Error-level logs only
+    warningLogs, // Warning-level logs only
+    infoLogs, // Info-level logs only
+    debugLogs, // Debug-level logs only
+    getLogsByLevel, // Get logs filtered by level
+    getRecentLogs, // Get recent logs (default: 100)
+    exportLogs, // Export all logs as JSON string
+    getLogsStats, // Get logging statistics by level
+    clearLogs, // Clear all logs
+  } = useAppKitLogs();
+
+  const handleExportLogs = () => {
+    const logData = exportLogs();
+    console.log('Exported logs:', logData);
+  };
+
+  return (
+    <div>
+      <p>Total logs: {logs.length}</p>
+      <p>Error logs: {errorLogs.length}</p>
+      <p>Warning logs: {warningLogs.length}</p>
+      <button onClick={handleExportLogs}>Export Logs</button>
+      <button onClick={clearLogs}>Clear Logs</button>
+    </div>
+  );
+}
+```
+
+### Use Cases
+- Debugging AppKit behavior and troubleshooting issues
+- Monitoring application performance and error tracking
+- Exporting logs for support or analysis purposes
+- Building custom debugging interfaces for development
+- Filtering logs by severity level or time range
+
+### Returns
+- `logs`: All logs from AppKit (array of LogEntry objects)
+- `errorLogs`: Error-level logs only (array of LogEntry objects)
+- `warningLogs`: Warning-level logs only (array of LogEntry objects)
+- `infoLogs`: Info-level logs only (array of LogEntry objects)
+- `debugLogs`: Debug-level logs only (array of LogEntry objects)
+- `getLogsByLevel`: Function to get logs filtered by level (error, warn, info, debug)
+- `getRecentLogs`: Function to get recent logs (default: 100, accepts count parameter)
+- `exportLogs`: Function to export all logs as JSON string
+- `getLogsStats`: Function to get logging statistics by level
+- `clearLogs`: Function to clear all logs
+
+<Note>
+This hook requires the `debug` option to be set to `true` in your AppKit configuration to capture logs. See the [Options](/appkit/react-native/core/options#debug) documentation for more details.
+</Note>
+
+## Deprecated Hooks
+
+### `useDisconnect()`
+The functionality of `useDisconnect` (which previously exposed a `disconnect` function) is now available directly from the `useAppKit()` hook.

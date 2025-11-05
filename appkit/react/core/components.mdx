@@ -9,13 +9,48 @@ import Components from "/snippets/appkit/shared/components.mdx";
 
 <Components />
 
+## React Components
+
+AppKit provides React-specific components that integrate seamlessly with your React application. These components automatically reflect the AppKit state and provide a more React-native experience.
+
+### `<AppKitButton />` and `<AppKitNetworkButton />`
+
+These React components provide the same functionality as the web components but with better React integration and TypeScript support.
+
+```jsx
+import { AppKitButton, AppKitNetworkButton } from '@reown/appkit/react'
+
+export function AppKitButtons() {
+  return (
+    <div>
+      {/* Default button */}
+      <AppKitButton />
+      
+      {/* Network selection button */}
+      <AppKitNetworkButton />
+      
+      {/* Button with specific namespace */}
+      <AppKitButton namespace="eip155" />
+    </div>
+  )
+}
+```
+
+#### Props
+
+Both components accept the following optional props:
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `namespace` | `string` | Specify the blockchain namespace (`eip155`, `solana`, `bip122`) |
+
 ### `<appkit-wallet-button  />`
 
 <Frame>
   <img src="/images/assets/walletButtons.jpg" />
 </Frame>
 
-Using the wallet button components ([Demo in our Lab](https://appkit-lab.reown.com/library/wagmi-wallet-button/)), you can directly connect to the top 20 wallets, WalletConnect QR, and all the social logins.
+Using the wallet button components ([Demo in our Lab](https://appkit-lab.reown.com/appkit/?name=wagmi)), you can directly connect to the top 20 wallets, WalletConnect QR, and all the social logins.
 This component allows to customize dApps, enabling users to connect their wallets effortlessly, all without the need to open the traditional modal.
 
 Follow these steps to use the component:
@@ -66,6 +101,34 @@ You can specify a blockchain namespace to target specific chains:
 
 <!-- Connect to Bitcoin -->
 <appkit-wallet-button wallet="leather" namespace="bip122" />
+```
+
+#### React Hook Integration
+
+You can also use the `useAppKitWallet` hook for programmatic wallet connections with multichain support:
+
+```tsx
+import { useAppKitWallet } from '@reown/appkit-wallet-button/react'
+
+export function WalletConnector() {
+  const { data, error, isPending, isSuccess, isError, connect } = useAppKitWallet({
+    namespace: 'eip155', // Use 'solana' or 'bip122' for other chains
+    onError: err => {
+      console.error('Connection error:', err)
+    },
+    onSuccess: data => {
+      console.log('Connected successfully:', data)
+    }
+  })
+
+  return (
+    <>
+      <button onClick={() => connect('walletConnect')}>Open QR modal</button>
+      <button onClick={() => connect('metamask')}>Connect to MetaMask</button>
+      <button onClick={() => connect('google')}>Connect to Google</button>
+    </>
+  )
+}
 ```
 
 #### Options for wallet property
