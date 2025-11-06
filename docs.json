@@ -372,7 +372,8 @@
                 "group": "Early Access",
                 "pages": [
                   "appkit/react/early-access/smart-session",
-                  "appkit/react/early-access/chain-abstraction"
+                  "appkit/react/early-access/chain-abstraction",
+                  "appkit/react/early-access/headless"
                 ]
               },
               {
