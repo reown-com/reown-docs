@@ -2,102 +2,102 @@
 title: AppKit Headless
 ---
 
-<Info>💡 AppKit Headless is in beta at the moment and available to limited users.</Info>
+<Frame>
+  <img src="/images/headless.png" alt="Descriptive alt text" />
+</Frame>
 
-AppKit Headless allows developers to build a fully customizable “Connect” experience powered by AppKit’s existing features without using AppKit modal. Headless exposes wallet discovery, rendering WalletConnect QR, and email flow via simple hooks and utility functions.
+<Info>💡 AppKit Headless is in early-access at the moment and available to limited users.</Info>
+
+AppKit Headless allows developers to build a fully customizable “Connect” experience powered by AppKit’s existing features without using AppKit modal. Headless exposes wallet discovery, rendering WalletConnect QR, and social providers flow via simple hooks and utility functions.
 
 ## Installation
 
-AppKit Headless hooks requires AppKit to be configured still to work with the namespace adapters. See Installation page first to make sure you've setup AppKit as expected.
+AppKit Headless requires AppKit to be configured with `enableHeadless` flag. See the [installation](../core/installation) docs before getting started and make sure you're enabling headless as expected.
 
-## Hooks
-
-To start building custom connection user interfaces, you can use the following hooks.
+```tsx
+createAppKit({
+  ...
+  enableHeadless: true
+})
+```
 
 ## useAppKitWallets
 
-The essential hook for accessing all type wallets and methods to make connections.
+The essential hook for accessing all type wallets and methods to build your custom connection user interface.
 
-### Use Cases
+<CodeGroup>
 
-- Get available injected wallets
-- Get, search, and paginate WalletConnect wallets
-- Connect to injected wallets
-- Get WalletConnect QR URI
+```tsx useAppKitWallets.tsx
+const { data, isFetchingWallets, isFetchingWcUri, wcUri, page, count, fetchWallets, connect } =
+  useAppKitWallets()
+```
+
+</CodeGroup>
 
 ### Returns
 
-| Return Value      | Type                                                        | Description                                                                                                                                      |
-| ----------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| data              | WalletItem[]                                                | List of all wallets (injected wallets and WalletConnect wallets combined).                                                                       |
-| isFetchingWallets | boolean                                                     | Boolean indicating if WalletConnect wallets are being fetched.                                                                                   |
-| isFetchingWcUri   | boolean                                                     | Boolean indicating if a WalletConnect URI is being fetched.                                                                                      |
-| wcUri             | string \| undefined                                         | The current WalletConnect URI for QR code display (set when connecting to a WalletConnect wallet).                                               |
-| page              | number                                                      | The current page number of WalletConnect wallet results.                                                                                         |
-| count             | number                                                      | The total number of available wallets (for pagination/counting).                                                                                 |
-| fetchWallets      | (options) => Promise                                        | Function to fetch WalletConnect wallets from the explorer API. Enables pagination/initial load.                                                  |
-| connect           | (wallet: WalletItem, namespace?: ChainNamespace) => Promise | Function to connect to a wallet. For WalletConnect wallets: starts connection & updates wcUri. For injected wallets: triggers direct connection. |
+<ResponseField name="data" type="WalletItem[]">
+  List of all wallets (injected wallets and WalletConnect wallets combined).
+</ResponseField>
 
-### Types
+<ResponseField name="isFetchingWallets" type="boolean">
+  Boolean indicating if WalletConnect wallets are being fetched.
+</ResponseField>
 
-```ts
-export type ChainNamespace =
-  | 'eip155'
-  | 'solana'
-  | 'polkadot'
-  | 'bip122'
-  | 'cosmos'
-  | 'sui'
-  | 'stacks'
-  | 'ton'
-export type CaipNetworkId = `${ChainNamespace}:${string}`
-export type WalletItem = {
-  id: string
-  name: string
-  imageUrl: string
-  connectors: {
-    id: string
-    rdns?: string
-    chain: ChainNamespace
-    chainImageUrl?: string
-  }[]
-  walletInfo: {
-    description?: string
-    supportedChains?: CaipNetworkId[]
-    supportedNamespaces?: ChainNamespace[]
-    website?: string
-    installationLinks?: {
-      appStore?: string
-      playStore?: string
-      chromeStore?: string
-      desktopLink?: string
-    }
-    deepLink?: string
-    isCertified?: boolean
-  }
-  isInjected: boolean
-  isRecent: boolean
-}
-```
+<ResponseField name="isFetchingWcUri" type="boolean">
+  Boolean indicating if a WalletConnect URI is being fetched.
+</ResponseField>
+
+<ResponseField name="wcUri" type="string | undefined">
+  The current WalletConnect URI for QR code display (set when connecting to a WalletConnect wallet).
+</ResponseField>
+
+<ResponseField name="page" type="number">
+  The current page number of WalletConnect wallet results.
+</ResponseField>
+
+<ResponseField name="count" type="number">
+  The total number of available wallets (for pagination/counting).
+</ResponseField>
+
+<ResponseField name="fetchWallets" type="(options) => Promise">
+  Function to fetch WalletConnect wallets from the explorer API. Enables pagination/initial load.
+</ResponseField>
+
+<ResponseField name="connect" type="(wallet: WalletItem, namespace?: ChainNamespace) => Promise">
+  Function to connect to a wallet. For WalletConnect wallets: starts connection & updates wcUri. For
+  injected wallets: triggers direct connection.
+</ResponseField>
 
 ## Example Use Cases
 
+<Frame>
+  <img src="/images/headless-injected.png" alt="Descriptive alt text" />
+</Frame>
+
 ### List and Connect to Injected Wallets
 
-You could render the available injected wallet detected in your browser.
-
-If you configure your AppKit as multi-chain, we suggest rendering a namespace selection component where users should select which namespace to connect. This could be achieved with the `connectors` array of the wallet item.
+You could list the available injected wallet detected in your browser and connect to them. If you configure your AppKit as multi-chain, we suggest rendering a namespace selection component where users should select which namespace to connect. This could be achieved with the `connectors` array of the `WalletItem`.
 
 <CodeGroup>
 
 ```tsx InjectedWallets.tsx
-const { data } = useAppKitWallets()
+import React from 'react'
+import { useAppKitWallets } from '@reown/appkit/react'
 
-const injectedWallets = data.filter(wallet => wallet.isInjected)
+function InjectedWalletsList() {
+  const { data } = useAppKitWallets()
 
-injectedWallets.map(wallet => {
-  return <WalletItem wallet={wallet} />
-})
+  const injectedWallets = data.filter(wallet => wallet.isInjected)
+
+  return (
+    <>
+      {injectedWallets.map(wallet => (
+        <WalletItem key={wallet.id || wallet.name} wallet={wallet} />
+      ))}
+    </>
+  )
+}
 ```
 
 ```tsx WalletItem.tsx
@@ -128,9 +128,13 @@ export function WalletItem({ wallet }: { wallet: WalletItem }) {
 
 </CodeGroup>
 
-### Render and Connect to WalletConnect Wallets
+<Frame>
+  <img src="/images/headless-wc.png" alt="Descriptive alt text" />
+</Frame>
 
-You can render all WalletConnect wallets and generate QR code to connect to them.
+### List and Connect to WalletConnect Wallets
+
+WalletConnect supports 500+ wallets. You can let users to search their own wallets to connect to your app. Listing and searching WalletConnect wallets highly suggested for apps to give users a best connecting experience.
 
 <CodeGroup>
 
@@ -185,4 +189,10 @@ if (wcUri) {
 
 ## Demo
 
-You could check our laboratory app to check the capabilities of AppKit Headless: [AppKit Lab Headless Example](https://lab.reown.com/appkit?name=headless)
+<Card title="AppKit Headless Playground" icon="cubes" href="https://appkit-headless.vercel.app">
+  You could check our demo app to play around with example AppKit Headless implementation
+</Card>
+
+<Card title="Source code" icon="github" href="https://github.com/reown-com/appkit" arrow="true">
+  See the source code of the example AppKit Headless implementation.
+</Card>
