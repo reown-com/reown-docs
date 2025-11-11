@@ -73,150 +73,6 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Docs",
-        "pages": [
-          {
-            "group": "Introduction",
-            "pages": ["overview"]
-          },
-          {
-            "group": "Guides",
-            "pages": [
-              {
-                "group": "AppKit Guides",
-                "pages":[
-                  "appkit/recipes/telegram-mini-app",
-                  "appkit/recipes/tenderly-virtual-testnets",
-                  "appkit/recipes/wallet-buttons-react",
-                  "appkit/recipes/wagmi-send-transaction",
-                  "appkit/recipes/ethers-send-transaction",
-                  "appkit/recipes/EVM-smart-contract-interaction",
-                  "appkit/recipes/solana-send-transaction",
-                  "appkit/recipes/bitcoin-send-transaction",
-                  "appkit/recipes/switching-to-send-calls",
-                  "appkit/recipes/sponsoring-first-transaction",
-                  "appkit/recipes/travel-rule",
-                  "appkit/recipes/smart-sessions",
-                  "appkit/recipes/update-appkit",
-                  "appkit/recipes/universal-connector",
-                  "appkit/recipes/troubleshooting"
-                ]
-              },
-              "appkit/recipes/gtm-checklist"
-            ]
-          },
-          {
-            "group": "Dashboard",
-            "pages": [
-              {
-                "group": "WalletGuide",
-                "pages": [
-                  "cloud/explorer-submission",
-                  {
-                    "group": "WalletGuide Chains",
-                    "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
-                  },
-                  {
-                    "group": "WalletGuide Wallets",
-                    "pages": ["cloud/wallets/wallet-list"]
-                  },
-                  "cloud/explorer"
-                ]
-              },
-              "cloud/reown-authentication",
-              "cloud/relay",
-              "cloud/blockchain-api",
-              "cloud/analytics"
-            ]
-          },
-          {
-            "group": "Advanced",
-            "pages": [
-              {
-                "group": "Multi-Chain",
-                "pages": [
-                  {
-                    "group": "RPC Reference",
-                    "pages": [
-                      "advanced/multichain/rpc-reference/cosmos-rpc",
-                      "advanced/multichain/rpc-reference/ethereum-rpc",
-                      "advanced/multichain/rpc-reference/solana-rpc",
-                      "advanced/multichain/rpc-reference/sui-rpc",
-                      "advanced/multichain/rpc-reference/stacks-rpc",
-                      "advanced/multichain/rpc-reference/tron-rpc",
-                      "advanced/multichain/rpc-reference/near-rpc",
-                      "advanced/multichain/rpc-reference/starknet-rpc",
-                      "advanced/multichain/rpc-reference/stellar-rpc",
-                      "advanced/multichain/rpc-reference/hedera-rpc",
-                      "advanced/multichain/rpc-reference/tezos-rpc",
-                      "advanced/multichain/rpc-reference/ton-rpc",
-                      "advanced/multichain/rpc-reference/xrpl-rpc",
-                      "advanced/multichain/rpc-reference/casper-rpc",
-                      "advanced/multichain/rpc-reference/everscale-rpc",
-                      "advanced/multichain/rpc-reference/bitcoin-rpc",
-                      "advanced/multichain/rpc-reference/litecoin-rpc",
-                      "advanced/multichain/rpc-reference/dogecoin-rpc"
-                    ]
-                  },
-                  {
-                    "group": "Examples",
-                    "pages": [
-                      {
-                        "group": "Polkadot",
-                        "pages": [
-                          "advanced/multichain/polkadot/dapp-integration-guide",
-                          "advanced/multichain/polkadot/namespaces-guide",
-                          "advanced/multichain/polkadot/wallet-integration-guide"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Providers & Adapters",
-                "pages": [
-                  "advanced/providers/ethereum",
-                  "advanced/providers/universal",
-                  "advanced/providers/solana-adapter"
-                ]
-              },
-              {
-                "group": "APIs",
-                "pages": [
-                  {
-                    "group": "Core",
-                    "pages": ["advanced/api/core/pairing", "advanced/api/core/relay", "advanced/api/core/shared-core"]
-                  },
-                  {
-                    "group": "Sign",
-                    "pages": [
-                      "advanced/api/sign/overview",
-                      "advanced/api/sign/dapp-usage",
-                      "advanced/api/sign/wallet-usage",
-                      "advanced/api/sign/smart-contract-wallet-usage"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Security",
-                "pages": [
-                  "advanced/security/security-information",
-                  "advanced/security/content-security-policy"
-                ]
-              },
-              "advanced/push-server",
-              "advanced/walletconnect-deprecations"
-            ]
-          },
-          {
-            "group": "Technical Reference",
-            "pages": ["link-spec", "external-link-01", "advanced/faq"]
-          }
-        ]
-      },
-      {
         "tab": "AppKit",
         "icon": "layer-group",
         "dropdowns": [  
@@ -283,18 +139,27 @@
                   {
                     "group": "Guides",
                     "pages": [
-                      "appkit/recipes/telegram-mini-app",
-                      "appkit/recipes/tenderly-virtual-testnets",
-                      "appkit/recipes/wagmi-send-transaction",
-                      "appkit/recipes/ethers-send-transaction",
-                      "appkit/recipes/EVM-smart-contract-interaction",
-                      "appkit/recipes/solana-send-transaction",
-                      "appkit/recipes/bitcoin-send-transaction",
-                      "appkit/recipes/switching-to-send-calls",
-                      "appkit/recipes/sponsoring-first-transaction",
-                      "appkit/recipes/travel-rule",
-                      "appkit/recipes/smart-sessions",
-                      "appkit/recipes/troubleshooting"
+                      {
+                        "group": "AppKit Guides",
+                        "pages":[
+                          "appkit/recipes/telegram-mini-app",
+                          "appkit/recipes/tenderly-virtual-testnets",
+                          "appkit/recipes/wallet-buttons-react",
+                          "appkit/recipes/wagmi-send-transaction",
+                          "appkit/recipes/ethers-send-transaction",
+                          "appkit/recipes/EVM-smart-contract-interaction",
+                          "appkit/recipes/solana-send-transaction",
+                          "appkit/recipes/bitcoin-send-transaction",
+                          "appkit/recipes/switching-to-send-calls",
+                          "appkit/recipes/sponsoring-first-transaction",
+                          "appkit/recipes/travel-rule",
+                          "appkit/recipes/smart-sessions",
+                          "appkit/recipes/update-appkit",
+                          "appkit/recipes/universal-connector",
+                          "appkit/recipes/troubleshooting"
+                        ]
+                      },
+                      "appkit/recipes/gtm-checklist"
                     ]
                   },
                   {
@@ -828,6 +693,121 @@
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "tab": "Dashboard & Advanced",
+        "icon": "cloud",
+        "pages": [
+          {
+            "group": "Dashboard",
+            "pages": [
+              {
+                "group": "WalletGuide",
+                "pages": [
+                  "cloud/explorer-submission",
+                  {
+                    "group": "WalletGuide Chains",
+                    "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
+                  },
+                  {
+                    "group": "WalletGuide Wallets",
+                    "pages": ["cloud/wallets/wallet-list"]
+                  },
+                  "cloud/explorer"
+                ]
+              },
+              "cloud/reown-authentication",
+              "cloud/relay",
+              "cloud/blockchain-api",
+              "cloud/analytics"
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              {
+                "group": "Multi-Chain",
+                "pages": [
+                  {
+                    "group": "RPC Reference",
+                    "pages": [
+                      "advanced/multichain/rpc-reference/cosmos-rpc",
+                      "advanced/multichain/rpc-reference/ethereum-rpc",
+                      "advanced/multichain/rpc-reference/solana-rpc",
+                      "advanced/multichain/rpc-reference/sui-rpc",
+                      "advanced/multichain/rpc-reference/stacks-rpc",
+                      "advanced/multichain/rpc-reference/tron-rpc",
+                      "advanced/multichain/rpc-reference/near-rpc",
+                      "advanced/multichain/rpc-reference/starknet-rpc",
+                      "advanced/multichain/rpc-reference/stellar-rpc",
+                      "advanced/multichain/rpc-reference/hedera-rpc",
+                      "advanced/multichain/rpc-reference/tezos-rpc",
+                      "advanced/multichain/rpc-reference/ton-rpc",
+                      "advanced/multichain/rpc-reference/xrpl-rpc",
+                      "advanced/multichain/rpc-reference/casper-rpc",
+                      "advanced/multichain/rpc-reference/everscale-rpc",
+                      "advanced/multichain/rpc-reference/bitcoin-rpc",
+                      "advanced/multichain/rpc-reference/litecoin-rpc",
+                      "advanced/multichain/rpc-reference/dogecoin-rpc"
+                    ]
+                  },
+                  {
+                    "group": "Examples",
+                    "pages": [
+                      {
+                        "group": "Polkadot",
+                        "pages": [
+                          "advanced/multichain/polkadot/dapp-integration-guide",
+                          "advanced/multichain/polkadot/namespaces-guide",
+                          "advanced/multichain/polkadot/wallet-integration-guide"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Providers & Adapters",
+                "pages": [
+                  "advanced/providers/ethereum",
+                  "advanced/providers/universal",
+                  "advanced/providers/solana-adapter"
+                ]
+              },
+              {
+                "group": "APIs",
+                "pages": [
+                  {
+                    "group": "Core",
+                    "pages": ["advanced/api/core/pairing", "advanced/api/core/relay", "advanced/api/core/shared-core"]
+                  },
+                  {
+                    "group": "Sign",
+                    "pages": [
+                      "advanced/api/sign/overview",
+                      "advanced/api/sign/dapp-usage",
+                      "advanced/api/sign/wallet-usage",
+                      "advanced/api/sign/smart-contract-wallet-usage"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Security",
+                "pages": [
+                  "advanced/security/security-information",
+                  "advanced/security/content-security-policy"
+                ]
+              },
+              "advanced/push-server",
+              "advanced/walletconnect-deprecations"
+            ]
+          },
+          {
+            "group": "Technical Reference",
+            "pages": ["link-spec", "external-link-01", "advanced/faq"]
           }
         ]
       }
