@@ -1,0 +1,320 @@
+---
+title: Wallet Buttons
+---
+
+<Frame>
+  <img src="/images/assets/walletButtons.jpg" />
+</Frame>
+
+AppKit provides a dedicated wallet button package that allows you to create custom wallet connection experiences in React applications. Using wallet buttons ([Demo in our Lab](https://appkit-lab.reown.com/appkit/?name=wagmi)), you can directly connect to the top 20 wallets, WalletConnect QR, and all the social logins without opening the traditional modal.
+
+## Installation
+
+Install the wallet button package:
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-wallet-button
+```
+
+```bash Yarn
+yarn add @reown/appkit-wallet-button
+```
+
+```bash Bun
+bun a @reown/appkit-wallet-button
+```
+
+```bash pnpm
+pnpm add @reown/appkit-wallet-button
+```
+
+</CodeGroup>
+
+## Two Approaches
+
+There are two ways to use wallet buttons with AppKit React:
+
+### 1. Using the React Component (Declarative)
+
+Import and use the `AppKitWalletButton` component for a declarative approach:
+
+```tsx
+import { AppKitWalletButton } from '@reown/appkit-wallet-button/react'
+
+export default function MyApp() {
+  return (
+    <div>
+      {/* MetaMask button */}
+      <AppKitWalletButton wallet="metamask" />
+      
+      {/* Email login button */}
+      <AppKitWalletButton wallet="email" />
+      
+      {/* Social login buttons */}
+      <AppKitWalletButton wallet="google" />
+      <AppKitWalletButton wallet="github" />
+      <AppKitWalletButton wallet="facebook" />
+      
+      {/* WalletConnect button */}
+      <AppKitWalletButton wallet="walletConnect" />
+      
+      {/* With specific namespace */}
+      <AppKitWalletButton wallet="metamask" namespace="eip155" />
+    </div>
+  )
+}
+```
+
+### 2. Using the Hook (Programmatic)
+
+For custom UI, use the `useAppKitWallet` hook for programmatic control:
+
+```tsx
+import { useAppKitWallet } from '@reown/appkit-wallet-button/react'
+import type { ChainNamespace, ParsedCaipAddress } from '@reown/appkit-common'
+
+function CustomWalletButtons() {
+  const { connect, isReady, isPending, isError, error, data } = useAppKitWallet({
+    namespace: 'eip155', // optional
+    onSuccess: (caipAddress: ParsedCaipAddress) => {
+      console.log('Connected!', caipAddress)
+    },
+    onError: (error: Error) => {
+      console.error('Connection failed:', error)
+    }
+  })
+
+  return (
+    <div>
+      <button 
+        onClick={() => connect('metamask')}
+        disabled={!isReady || isPending}
+      >
+        {isPending ? 'Connecting...' : 'Connect MetaMask'}
+      </button>
+      
+      <button onClick={() => connect('google')}>
+        Connect with Google
+      </button>
+      
+      <button onClick={() => connect('email')}>
+        Connect with Email
+      </button>
+      
+      {isError && <p>Error: {error?.message}</p>}
+    </div>
+  )
+}
+```
+
+#### Hook Return Values
+
+- `connect(wallet)` - Function to connect a wallet
+- `isReady` - Whether wallet buttons are ready (wallet metadata loaded)
+- `isPending` - Whether a connection is in progress
+- `isError` - Whether an error occurred
+- `isSuccess` - Whether connection succeeded
+- `error` - Error object if connection failed
+- `data` - CAIP address object on successful connection
+
+## Supported Wallets
+
+AppKit supports a wide range of wallets, social logins, and authentication methods:
+
+| Type          | Options                                                                                                                                                                                                                                                                                                    |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                              |
+| Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, `tokenpocket`, and more |
+| Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                  |
+| Email         | `email`                                                                                                                                                                                                                                                                                                      |
+
+<Note>
+  For the complete and up-to-date list of supported wallets, see the [ConstantsUtil](https://github.com/reown-com/appkit/blob/main/packages/wallet-button/src/utils/ConstantsUtil.ts) in the AppKit repository.
+</Note>
+
+## Multichain Support
+
+You can specify a blockchain namespace to target specific chains:
+
+### Component Approach
+
+```tsx
+{/* Connect to Ethereum/EVM chains */}
+<AppKitWalletButton wallet="metamask" namespace="eip155" />
+
+{/* Connect to Solana */}
+<AppKitWalletButton wallet="phantom" namespace="solana" />
+
+{/* Connect to Bitcoin */}
+<AppKitWalletButton wallet="leather" namespace="bip122" />
+```
+
+### Hook Approach
+
+```tsx
+import { useAppKitWallet } from '@reown/appkit-wallet-button/react'
+
+export function MultichainWalletConnector() {
+  // Ethereum/EVM connection
+  const { connect: connectEVM } = useAppKitWallet({
+    namespace: 'eip155',
+    onSuccess: (address) => console.log('Connected to EVM:', address)
+  })
+
+  // Solana connection
+  const { connect: connectSolana } = useAppKitWallet({
+    namespace: 'solana',
+    onSuccess: (address) => console.log('Connected to Solana:', address)
+  })
+
+  // Bitcoin connection
+  const { connect: connectBitcoin } = useAppKitWallet({
+    namespace: 'bip122',
+    onSuccess: (address) => console.log('Connected to Bitcoin:', address)
+  })
+
+  return (
+    <div>
+      <button onClick={() => connectEVM('metamask')}>
+        Connect MetaMask (EVM)
+      </button>
+      <button onClick={() => connectSolana('phantom')}>
+        Connect Phantom (Solana)
+      </button>
+      <button onClick={() => connectBitcoin('leather')}>
+        Connect Leather (Bitcoin)
+      </button>
+    </div>
+  )
+}
+```
+
+### Namespace Options
+
+| Value     | Description                           |
+| --------- | ------------------------------------- |
+| `eip155`  | Ethereum and EVM-compatible chains    |
+| `solana`  | Solana blockchain                     |
+| `bip122`  | Bitcoin blockchain                    |
+
+## Email Management
+
+For users connected via email, you can update their email address using the `useAppKitUpdateEmail` hook:
+
+```tsx
+import { useAppKitUpdateEmail } from '@reown/appkit-wallet-button/react'
+
+function UpdateEmailButton() {
+  const { updateEmail, isPending, isSuccess, error } = useAppKitUpdateEmail({
+    onSuccess: (data) => {
+      console.log('Email updated:', data.email)
+    },
+    onError: (error) => {
+      console.error('Update failed:', error)
+    }
+  })
+
+  return (
+    <button onClick={updateEmail} disabled={isPending}>
+      {isPending ? 'Updating...' : 'Update Email'}
+    </button>
+  )
+}
+```
+
+## Complete Example
+
+Here's a comprehensive example combining both approaches:
+
+```tsx
+import { AppKitWalletButton, useAppKitWallet } from '@reown/appkit-wallet-button/react'
+import { useAppKitAccount } from '@reown/appkit/react'
+
+function WalletConnection() {
+  const { caipAddress } = useAppKitAccount()
+  const { connect, isPending } = useAppKitWallet({
+    onSuccess: (data) => console.log('Connected:', data),
+    onError: (err) => console.error('Error:', err)
+  })
+
+  if (caipAddress) {
+    return <div>Already connected: {caipAddress}</div>
+  }
+
+  return (
+    <div>
+      {/* Using components */}
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <AppKitWalletButton wallet="metamask" />
+        <AppKitWalletButton wallet="coinbase" />
+        <AppKitWalletButton wallet="walletConnect" />
+      </div>
+      
+      {/* Using hooks for custom UI */}
+      <div style={{ marginTop: '16px' }}>
+        <button onClick={() => connect('google')} disabled={isPending}>
+          Sign in with Google
+        </button>
+        <button onClick={() => connect('github')} disabled={isPending}>
+          Sign in with GitHub
+        </button>
+      </div>
+    </div>
+  )
+}
+```
+
+## Key Features
+
+- **Automatic wallet detection** - Buttons detect if wallets are installed and show appropriate UI
+- **Loading states** - Built-in loading indicators during connection
+- **Error handling** - Automatic error state management
+- **Multi-chain support** - Specify namespace for chain-specific connections
+- **Social & Email login** - Seamless integration with embedded wallet features
+- **Modal integration** - Automatically opens AppKit modal when needed (e.g., for QR codes)
+
+<Note>
+  Wallet buttons automatically prefetch wallet metadata on mount. The `isReady` state indicates when wallet metadata has loaded. Buttons are automatically disabled when already connected.
+</Note>
+
+## Integration with AppKit Components
+
+Wallet buttons work seamlessly with other AppKit React components:
+
+```tsx
+import { useAppKitWallet } from '@reown/appkit-wallet-button/react'
+import { AppKitButton, AppKitNetworkButton } from '@reown/appkit/react'
+
+export function WalletInterface() {
+  const { isReady, isPending, connect } = useAppKitWallet({
+    namespace: 'eip155',
+    onSuccess: (data) => {
+      console.log('Wallet connected:', data)
+    }
+  })
+
+  return (
+    <div>
+      {/* AppKit UI components */}
+      <AppKitButton />
+      <AppKitNetworkButton />
+      
+      {/* Custom wallet connections */}
+      <button 
+        onClick={() => connect('metamask')}
+        disabled={!isReady || isPending}
+      >
+        {isPending ? 'Connecting...' : 'Connect MetaMask'}
+      </button>
+    </div>
+  )
+}
+```
+
+## See Also
+
+- [Hooks](/appkit/react/core/hooks#useappkitwallet) - Learn more about the `useAppKitWallet` hook
+- [Components](/appkit/react/core/components) - Explore other AppKit React components
+- [Authentication](/appkit/react/core/socials) - Configure social login options

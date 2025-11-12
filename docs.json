@@ -216,6 +216,7 @@
                   "appkit/react/core/hooks",
                   "appkit/react/core/options",
                   "appkit/react/core/components",
+                  "appkit/react/core/wallet-buttons",
                   "appkit/react/core/smart-accounts",
                   "appkit/react/core/smart-accounts-interaction",
                   "appkit/react/core/custom-connectors",
