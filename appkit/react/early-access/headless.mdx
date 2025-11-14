@@ -7,7 +7,10 @@ title: Headless
   <img src="/images/headless.png" alt="Descriptive alt text" />
 </Frame>
 
-<Info>💡 Headless is in early-access at the moment and available to limited users.</Info>
+<Info>
+  💡 Headless is in early-access at the moment and available to limited users. [Contact
+  us](mailto:sales@reown.com) to get access.
+</Info>
 
 AppKit Headless allows developers to build a fully customizable “Connect” experience powered by AppKit’s existing features without using AppKit modal. Headless exposes wallet discovery, rendering WalletConnect QR, and social providers flow via simple hooks and utility functions.
 
@@ -70,40 +73,26 @@ const { data, isFetchingWallets, isFetchingWcUri, wcUri, page, count, fetchWalle
   injected wallets: triggers direct connection.
 </ResponseField>
 
-## Example Use Cases
+# Examples
+
+## Build a Connect UI
 
 <Frame>
-  <img src="/images/headless-injected.png" alt="Descriptive alt text" />
+  <img src="/images/headless-connect.png" alt="Descriptive alt text" />
 </Frame>
 
-### List and Connect to Injected Wallets
+The `useAppKitWallets` hook returns list of injected and WalletConnect wallets let you render directly in the connect page.
 
-You could list the available injected wallet detected in your browser and connect to them. If you configure your AppKit as multi-chain, we suggest rendering a namespace selection component where users should select which namespace to connect. This could be achieved with the `connectors` array of the `WalletItem`.
+If you configure your AppKit as multi-chain, we suggest rendering a namespace selection component where users should select which namespace to connect when using injected wallets. This could be achieved with the `connectors` array of the `WalletItem`.
 
 <CodeGroup>
 
-```tsx InjectedWallets.tsx
+```tsx ConnectView.tsx
 import React from 'react'
 import { useAppKitWallets } from '@reown/appkit/react'
 
-function InjectedWalletsList() {
+function ConnectView() {
   const { data } = useAppKitWallets()
-
-  const injectedWallets = data.filter(wallet => wallet.isInjected)
-
-  return (
-    <>
-      {injectedWallets.map(wallet => (
-        <WalletItem key={wallet.id || wallet.name} wallet={wallet} />
-      ))}
-    </>
-  )
-}
-```
-
-```tsx WalletItem.tsx
-export function WalletItem({ wallet }: { wallet: WalletItem }) {
-  const { connect } = useAppKitWallets()
 
   async function handleConnect(wallet: WalletItem, namespace?: ChainNamespace) {
     await connect(wallet, namespace)
@@ -117,11 +106,201 @@ export function WalletItem({ wallet }: { wallet: WalletItem }) {
   }
 
   return (
-    <div>
+    <>
+      {data.map(wallet => (
+        <WalletListItem
+          key={wallet.id}
+          wallet={wallet}
+          onConnect={() => {
+            if (isMultiChain) {
+              onOpenNamespaceDialog(item)
+            } else {
+              onConnect(wallet, wallet.connectors[0].chain)
+            }
+          }}
+        />
+      ))}
+    </>
+  )
+}
+```
+
+```tsx WalletListItem.tsx
+export function WalletListItem({ wallet, onConnect }) {
+  return (
+    <button onClick={onConnect}>
+      <img url={wallet.imageUrl} />
       <span>{wallet.name}</span>
       {wallet.connectors.map(item => {
-        return <button onClick={() => handleConnect(wallet, item.chain)}>{item.chain}</button>
+        return <img {item.chainImageUrl} alt={item.chain} />
       })}
+    </button>
+  )
+}
+```
+
+```tsx NamespaceDialog.tsx
+import { ChevronRightIcon } from 'lucide-react'
+import Image from 'next/image'
+
+import type { WalletItem } from '@reown/appkit'
+import { ChainNamespace } from '@reown/appkit/networks'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from '@/components/ui/dialog'
+import { Item, ItemActions, ItemContent, ItemMedia, ItemTitle } from '@/components/ui/item'
+
+interface NamespaceSelectionDialogProps {
+  wallet: WalletItem | null
+  onSelect?: (item: WalletItem, namespace: ChainNamespace) => void
+}
+
+const CHAIN_NAME_MAP = {
+  eip155: 'EVM Networks',
+  solana: 'Solana',
+  polkadot: 'Polkadot',
+  bip122: 'Bitcoin',
+  cosmos: 'Cosmos',
+  sui: 'Sui',
+  stacks: 'Stacks',
+  ton: 'TON'
+}
+
+export function NamespaceSelectionDialog({ wallet, onSelect }: NamespaceSelectionDialogProps) {
+  return (
+    <Dialog>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Connect to {wallet.name}</DialogTitle>
+          <DialogDescription>
+            {wallet.name} supports multiple chains. Select a chain you want to connect to.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-2">
+          {wallet.connectors.map(connector => (
+            <Item onClick={() => onSelect(wallet, connector.chain)}>
+              {connector.chainImageUrl && (
+                <ItemMedia className="rounded-md overflow-hidden w-8 h-8">
+                  <Image
+                    src={connector.chainImageUrl}
+                    alt={connector.chain}
+                    width={32}
+                    height={32}
+                  />
+                </ItemMedia>
+              )}
+              <ItemContent>
+                <ItemTitle>{CHAIN_NAME_MAP[connector.chain]}</ItemTitle>
+              </ItemContent>
+              <ItemActions>
+                <ChevronRightIcon className="size-4" />
+              </ItemActions>
+            </Item>
+          ))}
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+```
+
+</CodeGroup>
+
+## Search and Connect to WalletConnect Wallets
+
+<Frame>
+  <img src="/images/headless-wc.png" alt="Descriptive alt text" />
+</Frame>
+
+WalletConnect supports 500+ wallets. You can let users to search their own wallets to connect to your app.
+
+<CodeGroup>
+
+```tsx AllWalletsView.tsx
+import React from 'react'
+import { useAppKitWallets } from '@reown/appkit/react'
+
+function AllWalletsView() {
+  const { data, isFetchingWcUri, isFetchingWallets, fetchWallets, connect } = useAppKitWallets()
+  const [inputValue, setInputValue] = useState('')
+  const searchQuery = useDebounceValue(inputValue, 500)
+
+  const wcWallets = data.filter(w => !w.isInjected)
+
+  useEffect(() => {
+    fetchWallets?.()
+  }, [])
+
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      fetchWallets?.({ query: searchQuery })
+    } else {
+      fetchWallets?.()
+    }
+  }, [searchQuery])
+
+  return wcWallets.map(wallet => {
+    return <WalletListItem wallet={wallet} onConnect={connect} />
+  })
+}
+```
+
+```tsx WalletListItem.tsx
+export function WalletListItem({ wallet, onConnect }) {
+  return (
+    <button onClick={onConnect}>
+      <img url={wallet.imageUrl} />
+      <span>{wallet.name}</span>
+      {wallet.connectors.map(item => {
+        return <img {item.chainImageUrl} alt={item.chain} />
+      })}
+    </button>
+  )
+}
+```
+
+</CodeGroup>
+
+If user select a WalletConnect wallet, you can show the QR code to the users and let them scan it with their preferred wallets. To handle the QR flows, you can use the `isFetchingWcUri` and `wcUri` props from the `useAppKitWallets` hook.
+
+<CodeGroup>
+
+```tsx QrCodeView.tsx
+import QRCode from 'react-qr-code'
+
+import { Loader2Icon } from 'lucide-react'
+
+import type { WalletItem } from '@reown/appkit'
+import { useAppKitWallets } from '@reown/appkit/react'
+
+interface QrCodeViewProps {
+  wallet: WalletItem
+}
+
+export function QrCodeView({ wallet }: QrCodeViewProps) {
+  const { wcUri, isFetchingWcUri } = useAppKitWallets()
+
+  return (
+    <div>
+      <img src={wallet.imageUrl} alt={wallet.name} width={40} height={40} />
+      <span className="font-medium">{wallet.name}</span>
+
+      <div>
+        {isFetchingWcUri ? (
+          <LoaderIcon className="animate-spin" />
+        ) : wcUri ? (
+          <QRCode
+            value={wcUri}
+            size={200}
+            style={{ height: 'auto', maxWidth: '100%', width: 'auto' }}
+          />
+        ) : null}
+      </div>
     </div>
   )
 }
@@ -129,71 +308,14 @@ export function WalletItem({ wallet }: { wallet: WalletItem }) {
 
 </CodeGroup>
 
-<Frame>
-  <img src="/images/headless-wc.png" alt="Descriptive alt text" />
-</Frame>
-
-### List and Connect to WalletConnect Wallets
-
-WalletConnect supports 500+ wallets. You can let users to search their own wallets to connect to your app. Listing and searching WalletConnect wallets highly suggested for apps to give users a best connecting experience.
-
-<CodeGroup>
-
-```tsx WalletConnectWallets.tsx
-const { data, isFetchingWcUri, isFetchingWallets, page, count, fetchWallets } = useAppKitWallets()
-const [inputValue, setInputValue] = useState('')
-const searchQuery = useDebounceValue(inputValue, 500)
-
-// Filter wallets as non injected ones.
-const wcWallets = data.filter(w => !w.isInjected)
-
-useEffect(() => {
-  fetchWallets?.()
-}, [])
-
-// Query WalletConnect wallets
-useEffect(() => {
-  if (searchQuery.length > 0) {
-    fetchWallets?.({ query: searchQuery })
-  } else {
-    fetchWallets?.()
-  }
-}, [searchQuery])
-
-return wcWallets.map(wallet => {
-  return (
-    <WalletItem
-      name={wallet.name}
-      onClick={() => {
-        handleWallet(wallet)
-      }}
-      imageSrc={wallet.imageSrc}
-      badge={wallet.type}
-    />
-  )
-})
-```
-
-```tsx QRCode.tsx
-const { wcUri, isFetchingWcUri } = useAppKitWallets()
-
-if (isFetchingWcUri) {
-  return <div>Getting the connection QR...</div>
-}
-
-if (wcUri) {
-  return <QR value={wcUri} />
-}
-```
-
-</CodeGroup>
-
 ## Demo
 
-<Card title="Headless Playground" icon="cubes" href="https://appkit-headless.vercel.app">
-  You could check our demo app to play around with example Headless implementation
-</Card>
+<Columns col={2}>
+  <Card title="Headless Playground" icon="cubes" href="https://appkit-headless.vercel.app">
+    You could check our demo app to play around with example Headless implementation
+  </Card>
 
-<Card title="Source code" icon="github" href="https://github.com/reown-com/appkit" arrow="true">
-  See the source code of the example Headless implementation.
-</Card>
+  <Card title="Source code" icon="github" href="https://github.com/reown-com/appkit" arrow="true">
+    See the source code of the example Headless implementation.
+  </Card>
+</Columns>
