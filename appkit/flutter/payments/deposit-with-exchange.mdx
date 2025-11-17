@@ -20,7 +20,7 @@ This feature will start working as soon as your team is on the allowed-list. Ple
     Projects first need to install and set up Reown AppKit before integrating AppKit Pay. If you haven't done so, please refer to the [Reown AppKit docs](/appkit/overview#quickstart).
 </Warning> */}
 
-After enabling it, __Deposit with Exchange__ is accessible through Account Screen by clicking on "Fund wallet" button and the modal below will be shown:
+After enabling it, __Deposit with Exchange__ is accessible through the Account Screen by clicking on the "Fund wallet" button, and the modal below will be shown:
 <img width="300" className="block dark:hidden" src="/images/flutter_dwe_light.png" alt="Funding your wallet with Deposit with Exchange" />
 <img width="300" className="hidden dark:block" src="/images/flutter_dwe_dark.png" alt="Funding your wallet with Deposit with Exchange" />
 
@@ -45,7 +45,7 @@ _appKitModal.configDeposit(
   showNetworkIcon: false,
 );
 ```
-___supportedAssets:___ (optional) previous selected supported assets<br />
+___supportedAssets:___ (optional) previously selected supported assets<br />
 ___preselectedRecipient:___ (optional) if provided, will be used as recipient address instead of the connected wallet (if any)<br />
 ___showNetworkIcon:___ (optional) hides or shows the chain icon on the screen<br />
 ___preselectedAsset:___ (optional) if provided, will fix the feature on the provided asset and disable the Asset Selector<br />
@@ -69,7 +69,7 @@ _appKitModal.openModalView(
 
 ### Instance creation
 
-Create a `ReownAppKit` instance and initiate (as for any other AppKit usage)
+Create a `ReownAppKit` instance and initialize it (as with any other AppKit usage).
 
 ```dart
 final appKit = ReownAppKit(
@@ -90,7 +90,7 @@ final appKit = ReownAppKit(
 
 ### Initialize the SDK
 
-After creating the instance, initialize it
+After creating the instance, initialize it.
 
 ```dart
 // unawaited
@@ -102,7 +102,7 @@ await appKit.init();
 
 ### Supported Assets
 
-Currently the feature works with a set of supported assets. You can use the following function to filter them out according or your needs….
+Currently the feature works with a set of supported assets. You can use the following function to filter them according to your needs.
 
 ```dart
 // Get supported assets on the given chainId (CAIP-2) 
@@ -112,7 +112,7 @@ final List<ExchangeAsset> assets = appKit.getPaymentAssetsForNetwork(
 );
 ```
 
-Or you can actually pick any of the preconfigured constants by looking at their definition…
+Or you can pick any of the preconfigured constants by looking at their definitions:
 
 ```dart
 const ethereumETH = ExchangeAsset(
@@ -233,7 +233,7 @@ const List<ExchangeAsset> allExchangeAssets = [
 
 ### Get Supported Exchanges
 
-Whether you previously selected a supported `asset` or not, next step is to get all the supported exchanges. If `asset` is provided, the response will include only the exchanges supporting that particular asset
+Whether you previously selected a supported `asset` or not, the next step is to get all the supported exchanges. If `asset` is provided, the response will include only the exchanges supporting that particular asset.
 
 ```dart
 final params = GetExchangesParams(page: 1, asset: asset);
@@ -242,7 +242,7 @@ final GetExchangesResult result = await appKit.getExchanges(params: params);
 // result.total;
 ```
 
-`GetExchangesParams` also accepts an `includeOnly` and exclude parameters to filter out the `getExchanges` response. Example:
+`GetExchangesParams` also accepts `includeOnly` and exclude parameters to filter the `getExchanges` response. Example:
 
 ```dart
 final params = GetExchangesParams(
@@ -251,11 +251,11 @@ final params = GetExchangesParams(
   includeOnly: ['binance'],
 );
 final GetExchangesResult result = await appKit.getExchanges(params: params);
-// result.exchanges will only contain Coinbase;
+// result.exchanges will only contain Binance;
 // result.total = 1;
 ```
 
-`GetExchangesResult` contains a `List<Exchange>` exchanges and the total amount of them.
+`GetExchangesResult` contains a list of exchanges (`List<Exchange>`) and the total number of them.
 
 ### Payment URL
 
@@ -282,13 +282,13 @@ final GetExchangeUrlResult result = await appKit.getExchangeUrl(
 
 The result will contain a `sessionId` (relevant later to check the status of the transaction/funding) and the payment URL.
 
-At this point your dApp will launch this URL in the user device’s and the Exchange App will be launched if installed, otherwise their default browser to log In into this exchange and fund.
+At this point, your dApp will launch this URL on the user's device, and the Exchange App will be launched if installed; otherwise, their default browser will open to log into the exchange and fund.
 
 ### Status Check
 
-Once the user completes the transaction on the Exchange side, it should return to your dApp and wait for the confirmation status.
+Once the user completes the transaction on the Exchange side, they should return to your dApp and wait for the confirmation status.
 
-> The recommended approach here is that, right after the user launches the payment URL your dApp starts to query the confirmation status in a loop with 5 seconds delay between each request, until either **CONFIRMED** or **FAILED** is received (or your own timeout logic is triggered)
+> The recommended approach here is that, right after the user launches the payment URL, your dApp starts to query the confirmation status in a loop with a 5-second delay between each request, until either **CONFIRMED** or **FAILED** is received (or your own timeout logic is triggered).
 
 ```dart
 final params = GetExchangeDepositStatusParams(
@@ -302,9 +302,9 @@ final GetExchangeDepositStatusResult result = await appKit.getExchangeDepositSta
 // result.txHash
 ```
 
-Possible values of `status` are: **UNKNOWN**, **IN_PROGRESS, CONFIRMED**, **FAILED**
+Possible values of `status` are: **UNKNOWN**, **IN_PROGRESS**, **CONFIRMED**, **FAILED**
 
-- **UNKNOWN:** Transaction still not submitted
+- **UNKNOWN:** Transaction has not been submitted yet
 - **IN_PROGRESS:** Transaction submitted, checking confirmation
 - **CONFIRMED:** Transaction confirmed, payment successful, `txHash` will be provided along with this status
 - **FAILED:** Transaction failed
