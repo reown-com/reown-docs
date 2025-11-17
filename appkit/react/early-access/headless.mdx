@@ -12,11 +12,11 @@ title: Headless
   us](mailto:sales@reown.com) to get access.
 </Info>
 
-AppKit Headless allows developers to build a fully customizable “Connect” experience powered by AppKit’s existing features without using AppKit modal. Headless exposes wallet discovery, rendering WalletConnect QR, and social providers flow via simple hooks and utility functions.
+AppKit Headless allows developers to build a fully customizable "Connect" experience powered by AppKit's existing features without using the AppKit modal. Headless exposes wallet discovery, rendering WalletConnect QR codes, and social provider flows via simple hooks and utility functions.
 
 ## Installation
 
-Headless requires AppKit to be configured with `enableHeadless` flag. See the [installation](../core/installation) docs before getting started and make sure you're enabling headless as expected.
+Headless requires AppKit to be configured with the `headless` flag. See the [installation](../core/installation) docs before getting started and make sure you're enabling headless as expected.
 
 ```tsx
 createAppKit({
@@ -29,7 +29,7 @@ createAppKit({
 
 ## useAppKitWallets
 
-The essential hook for accessing all type wallets and methods to build your custom connection user interface.
+The essential hook for accessing all types of wallets and methods to build your custom connection user interface.
 
 <CodeGroup>
 
@@ -43,8 +43,8 @@ const { data, isFetchingWallets, isFetchingWcUri, wcUri, page, count, fetchWalle
 ### Returns
 
 <ResponseField name="wallets" type="WalletItem[]">
-  List of wallets for the initial connect view including WalletConnect wallet and injected wallets
-  together. If user doesn't have any injected wallets, it'll fill the list with most ranked
+  List of wallets for the initial connect view including WalletConnect wallets and injected wallets
+  together. If the user doesn't have any injected wallets, it'll fill the list with the most ranked
   WalletConnect wallets.
 </ResponseField>
 
@@ -90,8 +90,8 @@ const { data, isFetchingWallets, isFetchingWcUri, wcUri, page, count, fetchWalle
   name="fetchWallets"
   type="(options?: { page?: number; query?: string; }) => Promise&lt;void&gt;"
 >
-  Function to fetch WalletConnect wallets from the explorer API. Allows to list, search and paginate
-  through the wallets.
+  Function to fetch WalletConnect wallets from the explorer API. Allows you to list, search, and
+  paginate through the wallets.
 </ResponseField>
 
 <ResponseField
@@ -103,8 +103,8 @@ const { data, isFetchingWallets, isFetchingWcUri, wcUri, page, count, fetchWalle
 </ResponseField>
 
 <ResponseField name="resetWcUri" type="() => void">
-  Function to reset the WC URI. Useful to keep `connectingWallet` state sync with the WC URI. Can be
-  called when the QR code is closed.
+  Function to reset the WC URI. Useful to keep the `connectingWallet` state in sync with the WC URI.
+  Can be called when the QR code is closed.
 </ResponseField>
 
 # Examples
@@ -115,11 +115,11 @@ const { data, isFetchingWallets, isFetchingWcUri, wcUri, page, count, fetchWalle
   <img src="/images/headless-connect.png" alt="Descriptive alt text" />
 </Frame>
 
-The `useAppKitWallets` hook returns list of injected and WalletConnect wallets let you render directly in the connect page.
+The `useAppKitWallets` hook returns a list of injected and WalletConnect wallets that let you render directly in the connect page.
 
 If you configure your AppKit as multi-chain, we suggest rendering a namespace selection component where users should select which namespace to connect when using browser extensions. This could be achieved with the `connectors` array of the `WalletItem`.
 
-If user select a WalletConnect wallet, you can show the QR code to the users and let them scan it with their preferred wallets. To handle the QR flows, you can use the `isFetchingWcUri`, `wcUri`, and `resetWcUri` props from the `useAppKitWallets` hook.
+If a user selects a WalletConnect wallet, you can show the QR code to the users and let them scan it with their preferred wallets. To handle the QR flows, you can use the `isFetchingWcUri`, `wcUri`, and `resetWcUri` props from the `useAppKitWallets` hook.
 
 <CodeGroup>
 
@@ -337,7 +337,7 @@ export function WalletConnectQRDialog() {
   <img src="/images/headless-wc.png" alt="Descriptive alt text" />
 </Frame>
 
-WalletConnect supports 500+ wallets. You can let users to search their own wallets to connect to your app.
+WalletConnect supports 500+ wallets. You can let users search for their own wallets to connect to your app.
 
 <CodeGroup>
 
@@ -397,7 +397,7 @@ function AllWalletsView() {
 
 <Columns col={2}>
   <Card title="Headless Playground" icon="cubes" href="https://appkit-headless.vercel.app">
-    You could check our demo app to play around with example Headless implementation
+    You can check our demo app to play around with an example Headless implementation
   </Card>
 
   <Card title="Source code" icon="github" href="https://github.com/reown-com/appkit/tree/main/examples/next-appkit-headless" arrow="true">
