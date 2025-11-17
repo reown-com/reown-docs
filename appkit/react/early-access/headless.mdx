@@ -21,7 +21,9 @@ Headless requires AppKit to be configured with `enableHeadless` flag. See the [i
 ```tsx
 createAppKit({
   ...
-  enableHeadless: true
+  features: {
+    headless: true
+  }
 })
 ```
 
@@ -398,7 +400,7 @@ function AllWalletsView() {
     You could check our demo app to play around with example Headless implementation
   </Card>
 
-  <Card title="Source code" icon="github" href="https://github.com/reown-com/appkit" arrow="true">
+  <Card title="Source code" icon="github" href="https://github.com/reown-com/appkit/tree/main/examples/next-appkit-headless" arrow="true">
     See the source code of the example Headless implementation.
   </Card>
 </Columns>
