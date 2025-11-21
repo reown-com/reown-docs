@@ -205,13 +205,13 @@ pnpm add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common et
 
 ## Cloud Configuration
 
-Create a new project on Reown Dashboard at https://dashboard.reown.com and obtain a new project ID.
+Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtain a new project ID.
 
 <CloudBanner />
 
 ## Implementation
 
-### AppKitProvider Component
+### `AppKitProvider` Component
 
 AppKit now provides an `AppKitProvider` React component for easy integration in React applications. This component wraps your app and provides the AppKit context to all child components.
 
@@ -234,7 +234,7 @@ function App() {
 }
 ```
 
-### Framework-Specific Implementation
+### Framework Specific Implementation
 
 <Tabs>
 <Tab title="Wagmi">
@@ -301,7 +301,7 @@ To open AppKit you can use our [**React components**](/appkit/react/core/compone
 
 <CodeGroup>
 
-```tsx AppKitButton.tsx
+```tsx ConnectButton.tsx
 import { AppKitButton } from '@reown/appkit/react'
 
 export default function ConnectButton() {
@@ -309,7 +309,7 @@ export default function ConnectButton() {
 }
 ```
 
-```tsx useAppKit.tsx
+```tsx ConnectButtonWithHooks.tsx
 import { useAppKit } from '@reown/appkit/react'
 
 export default function ConnectButton() {

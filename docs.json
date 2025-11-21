@@ -7,7 +7,7 @@
     "light": "#008847",
     "dark": "#008847"
   },
-  
+
   "integrations": {
     "gtm": {
       "tagId": "GTM-56G35T8X"
@@ -59,23 +59,14 @@
     }
   ],
   "contextual": {
-    "options": [
-     "chatgpt",
-     "claude",
-     "copy",
-     "view",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+    "options": ["chatgpt", "claude", "copy", "view", "perplexity", "mcp", "cursor", "vscode"]
   },
   "navigation": {
     "tabs": [
       {
         "tab": "AppKit",
         "icon": "layer-group",
-        "dropdowns": [  
+        "dropdowns": [
           {
             "dropdown": "AppKit - Overview",
             "icon": "layer-group",
@@ -86,124 +77,127 @@
               },
               {
                 "group": "Paid Plans",
-                "pages": [
-                  "appkit/paid-plans/enterprise"
-                ]
+                "pages": ["appkit/paid-plans/enterprise"]
               },
               {
                 "group": "Features",
-                    "pages": [
-                      "appkit/features/index",
-                      "appkit/features/swaps",
-                      "appkit/features/onramp",
-                      "appkit/features/multichain",
-                      "appkit/features/smart-accounts",
-                      "appkit/features/smart-accounts-interaction",
-                      "appkit/features/sponsored-transactions",
-                      "appkit/features/smart-sessions",
-                      "appkit/features/chain-abstraction"
-                    ]
-                  },
-                  {
-                    "group": "Authentication",
-                    "pages": [
-                      "appkit/authentication/socials",
-                      "appkit/authentication/one-click-auth",
-                      "appkit/authentication/siwx/default"
-                    ]
-                  },
-                  {
-                    "group": "Integrations",
-                    "pages": [
-                      "appkit/integrations/telegram-mini-apps",
-                      "appkit/integrations/farcaster-mini-apps"
-                    ]
-                  },
-                  {
-                    "group": "Payments",
-                    "pages": [
-                      "appkit/payments/overview",
-                      "appkit/payments/pay-with-exchange",
-                      "appkit/payments/deposit-with-exchange",
-                      "appkit/payments/one-click-checkout"
-                    ]
-                  },
-                  {
-                    "group": "Network",
-                    "pages": [
-                      "appkit/networks/evm",
-                      "appkit/networks/solana",
-                      "appkit/networks/bitcoin"
-                    ]
-                  },
-                  {
-                    "group": "Guides",
-                    "pages": [
-                      {
-                        "group": "AppKit Guides",
-                        "pages":[
-                          "appkit/recipes/telegram-mini-app",
-                          "appkit/recipes/tenderly-virtual-testnets",
-                          "appkit/recipes/wallet-buttons-react",
-                          "appkit/recipes/wagmi-send-transaction",
-                          "appkit/recipes/ethers-send-transaction",
-                          "appkit/recipes/EVM-smart-contract-interaction",
-                          "appkit/recipes/solana-send-transaction",
-                          "appkit/recipes/bitcoin-send-transaction",
-                          "appkit/recipes/switching-to-send-calls",
-                          "appkit/recipes/sponsoring-first-transaction",
-                          "appkit/recipes/travel-rule",
-                          "appkit/recipes/smart-sessions",
-                          "appkit/recipes/update-appkit",
-                          "appkit/recipes/universal-connector",
-                          "appkit/recipes/troubleshooting"
-                        ]
-                      },
-                      "appkit/recipes/gtm-checklist"
-                    ]
-                  },
-                  {
-                    "group": "Upgrade",
-                    "pages": [
-                      {
-                        "group": "AppKit",
-                        "pages": [
-                          {
-                            "group": "Web3Modal to Reown AppKit",
-                            "pages": [
-                              "appkit/upgrade/from-w3m-to-reown",
-                              {
-                                "group": "Reown AppKit - Web",
-                                "pages": ["appkit/upgrade/to-reown-appkit-web", "appkit/upgrade/to-reown-appkit-ethers-web", "appkit/upgrade/to-reown-appkit-ethers5-web", "appkit/upgrade/to-reown-appkit-solana-web"]
-                              },
-                              "appkit/upgrade/from-web3modal-react-native",
-                              "appkit/upgrade/from-web3modal-flutter",
-                              "appkit/upgrade/from-web3modal-android",
-                              "appkit/upgrade/from-web3modal-ios",
-                              "appkit/upgrade/from-web3modal-unity"
-                            ]
-                          }
-                        ]
-                      },
-                      "appkit/upgrade/wcm"
-                    ]
-                  },
-                  {
-                    "group": "Migration",
-                    "pages": [
-                      "appkit/migration/index",
-                      "appkit/migration/from-privy-next",
-                      "appkit/migration/from-rainbowkit-next",
-                      "appkit/migration/from-connectkit-next",
-                      "appkit/migration/from-anza-adapter-react"
-                    ]
-                  },
-                  {
-                    "group": "Technical Reference",
-                    "pages": ["appkit/faq"]
-                  }
+                "pages": [
+                  "appkit/features/index",
+                  "appkit/features/swaps",
+                  "appkit/features/onramp",
+                  "appkit/features/multichain",
+                  "appkit/features/smart-accounts",
+                  "appkit/features/smart-accounts-interaction",
+                  "appkit/features/sponsored-transactions",
+                  "appkit/features/smart-sessions",
+                  "appkit/features/chain-abstraction"
                 ]
               },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/authentication/socials",
+                  "appkit/authentication/one-click-auth",
+                  "appkit/authentication/siwx/default"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "appkit/integrations/telegram-mini-apps",
+                  "appkit/integrations/farcaster-mini-apps"
+                ]
+              },
+              {
+                "group": "Payments",
+                "pages": [
+                  "appkit/payments/overview",
+                  "appkit/payments/pay-with-exchange",
+                  "appkit/payments/deposit-with-exchange",
+                  "appkit/payments/one-click-checkout"
+                ]
+              },
+              {
+                "group": "Network",
+                "pages": [
+                  "appkit/networks/evm",
+                  "appkit/networks/solana",
+                  "appkit/networks/bitcoin"
+                ]
+              },
+              {
+                "group": "Guides",
+                "pages": [
+                  {
+                    "group": "AppKit Guides",
+                    "pages": [
+                      "appkit/recipes/telegram-mini-app",
+                      "appkit/recipes/tenderly-virtual-testnets",
+                      "appkit/recipes/wallet-buttons-react",
+                      "appkit/recipes/wagmi-send-transaction",
+                      "appkit/recipes/ethers-send-transaction",
+                      "appkit/recipes/EVM-smart-contract-interaction",
+                      "appkit/recipes/solana-send-transaction",
+                      "appkit/recipes/bitcoin-send-transaction",
+                      "appkit/recipes/switching-to-send-calls",
+                      "appkit/recipes/sponsoring-first-transaction",
+                      "appkit/recipes/travel-rule",
+                      "appkit/recipes/smart-sessions",
+                      "appkit/recipes/update-appkit",
+                      "appkit/recipes/universal-connector",
+                      "appkit/recipes/troubleshooting"
+                    ]
+                  },
+                  "appkit/recipes/gtm-checklist"
+                ]
+              },
+              {
+                "group": "Upgrade",
+                "pages": [
+                  {
+                    "group": "AppKit",
+                    "pages": [
+                      {
+                        "group": "Web3Modal to Reown AppKit",
+                        "pages": [
+                          "appkit/upgrade/from-w3m-to-reown",
+                          {
+                            "group": "Reown AppKit - Web",
+                            "pages": [
+                              "appkit/upgrade/to-reown-appkit-web",
+                              "appkit/upgrade/to-reown-appkit-ethers-web",
+                              "appkit/upgrade/to-reown-appkit-ethers5-web",
+                              "appkit/upgrade/to-reown-appkit-solana-web"
+                            ]
+                          },
+                          "appkit/upgrade/from-web3modal-react-native",
+                          "appkit/upgrade/from-web3modal-flutter",
+                          "appkit/upgrade/from-web3modal-android",
+                          "appkit/upgrade/from-web3modal-ios",
+                          "appkit/upgrade/from-web3modal-unity"
+                        ]
+                      }
+                    ]
+                  },
+                  "appkit/upgrade/wcm"
+                ]
+              },
+              {
+                "group": "Migration",
+                "pages": [
+                  "appkit/migration/index",
+                  "appkit/migration/from-privy-next",
+                  "appkit/migration/from-rainbowkit-next",
+                  "appkit/migration/from-connectkit-next",
+                  "appkit/migration/from-anza-adapter-react"
+                ]
+              },
+              {
+                "group": "Technical Reference",
+                "pages": ["appkit/faq"]
+              }
+            ]
+          },
           {
             "dropdown": "React",
             "icon": "react",
@@ -314,7 +308,7 @@
                 "pages": [
                   "appkit/next/transactions/onramp",
                   "appkit/next/transactions/swaps",
-                  "appkit/next/transactions/sponsored-transactions"                  
+                  "appkit/next/transactions/sponsored-transactions"
                 ]
               },
               {
@@ -351,17 +345,11 @@
               },
               {
                 "group": "Authentication",
-                "pages": [
-                  "appkit/vue/core/socials",
-                  "appkit/vue/core/siwe",
-                  "appkit/vue/core/siwx"
-                ]
+                "pages": ["appkit/vue/core/socials", "appkit/vue/core/siwe", "appkit/vue/core/siwx"]
               },
               {
                 "group": "Early Access",
-                "pages": [
-                  "appkit/vue/early-access/smart-session"
-                ]
+                "pages": ["appkit/vue/early-access/smart-session"]
               },
               {
                 "group": "Payments",
@@ -419,9 +407,7 @@
               },
               {
                 "group": "Early Access",
-                "pages": [
-                  "appkit/javascript/early-access/smart-session"
-                ]
+                "pages": ["appkit/javascript/early-access/smart-session"]
               },
               {
                 "group": "Payments",
@@ -450,7 +436,7 @@
           },
           {
             "dropdown": "Svelte",
-            "icon": "S",
+            "icon": "http://localhost:3000/images/icons/svelte.svg",
             "description": "AppKit on Svelte",
             "pages": [
               {
@@ -470,16 +456,11 @@
               },
               {
                 "group": "Authentication",
-                "pages": [
-                  "appkit/svelte/core/socials"
-                ]
+                "pages": ["appkit/svelte/core/socials"]
               },
               {
                 "group": "Transactions",
-                "pages": [
-                  "appkit/svelte/transactions/onramp",
-                  "appkit/svelte/transactions/swaps"
-                ]
+                "pages": ["appkit/svelte/transactions/onramp", "appkit/svelte/transactions/swaps"]
               }
             ]
           },
@@ -506,16 +487,11 @@
               },
               {
                 "group": "Authentication",
-                "pages": [
-                  "appkit/nuxt/core/socials"
-                ]
+                "pages": ["appkit/nuxt/core/socials"]
               },
               {
                 "group": "Transactions",
-                "pages": [
-                  "appkit/nuxt/transactions/onramp",
-                  "appkit/nuxt/transactions/swaps"
-                ]
+                "pages": ["appkit/nuxt/transactions/onramp", "appkit/nuxt/transactions/swaps"]
               }
             ]
           },
@@ -583,10 +559,7 @@
               },
               {
                 "group": "Authentication",
-                "pages": [
-                  "appkit/flutter/core/email",
-                  "appkit/flutter/core/siwe"
-                ]
+                "pages": ["appkit/flutter/core/email", "appkit/flutter/core/siwe"]
               },
               {
                 "group": "Cloud",
@@ -616,9 +589,7 @@
               },
               {
                 "group": "Authentication",
-                "pages": [
-                  "appkit/android/core/one-click-auth"
-                ]
+                "pages": ["appkit/android/core/one-click-auth"]
               },
               {
                 "group": "Cloud",
@@ -647,9 +618,7 @@
               },
               {
                 "group": "Authentication",
-                "pages": [
-                  "appkit/ios/core/one-click-auth"
-                ]
+                "pages": ["appkit/ios/core/one-click-auth"]
               },
               {
                 "group": "Cloud",
@@ -680,15 +649,12 @@
               },
               {
                 "group": "Authentication",
-                "pages": [
-                  "appkit/unity/core/socials",
-                  "appkit/unity/core/siwe"
-                ]
+                "pages": ["appkit/unity/core/socials", "appkit/unity/core/siwe"]
               },
               {
                 "group": "Cloud",
                 "pages": [
-                  "appkit/unity/cloud/relay", 
+                  "appkit/unity/cloud/relay",
                   "appkit/unity/cloud/blockchain-api",
                   "appkit/unity/cloud/analytics"
                 ]
@@ -782,7 +748,11 @@
                 "pages": [
                   {
                     "group": "Core",
-                    "pages": ["advanced/api/core/pairing", "advanced/api/core/relay", "advanced/api/core/shared-core"]
+                    "pages": [
+                      "advanced/api/core/pairing",
+                      "advanced/api/core/relay",
+                      "advanced/api/core/shared-core"
+                    ]
                   },
                   {
                     "group": "Sign",
