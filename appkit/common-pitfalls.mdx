@@ -1,0 +1,321 @@
+# Common Pitfalls and Solutions
+
+This guide covers common issues developers encounter when building with Reown AppKit and provides tested solutions.
+
+## TypeScript Module Resolution Issues
+
+### Problem: Chain Import Errors
+
+When importing chains from `viem/chains` or `wagmi/chains`, you may encounter:
+
+```
+Type error: Module '"viem/chains"' has no exported member 'optimism'
+```
+
+This occurs even though the exports clearly exist in `node_modules/viem/_types/chains/index.d.ts`.
+
+### Root Cause
+
+Next.js 16+ with TypeScript 5+ can have module resolution issues with certain package subpath exports, particularly when using the `exports` field in `package.json`.
+
+### Solution: Define Chains Inline
+
+Instead of importing chains, define them directly in your configuration:
+
+```typescript
+import type { Chain } from 'viem';
+
+const base: Chain = {
+  id: 8453,
+  name: 'Base',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://mainnet.base.org'] },
+  },
+  blockExplorers: {
+    default: { name: 'BaseScan', url: 'https://basescan.org' },
+  },
+};
+
+const optimism: Chain = {
+  id: 10,
+  name: 'OP Mainnet',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://mainnet.optimism.io'] },
+  },
+  blockExplorers: {
+    default: { name: 'Optimism Explorer', url: 'https://optimistic.etherscan.io' },
+  },
+};
+
+export const networks = [base, optimism] as const;
+```
+
+### Alternative: Check TypeScript Configuration
+
+Ensure your `tsconfig.json` has proper module resolution:
+
+```json
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "skipLibCheck": false
+  }
+}
+```
+
+---
+
+## Storage Type Casting
+
+### Problem: Storage Type Mismatch
+
+When configuring Wagmi adapter with cookie storage:
+
+```typescript
+storage: createStorage({
+  storage: cookieStorage as any,  // ❌ Still causes error
+})
+```
+
+Error:
+```
+Type '{ key: string; getItem: ...; }' is not assignable to type 'Storage'
+```
+
+### Root Cause
+
+Type incompatibility between Wagmi's `createStorage` return type and the expected `Storage` interface in `WagmiAdapter`.
+
+### Solution: Cast the Result
+
+Cast the entire `createStorage()` result instead of the parameter:
+
+```typescript
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
+import { cookieStorage, createStorage } from 'wagmi';
+
+export const wagmiAdapter = new WagmiAdapter({
+  storage: createStorage({
+    storage: cookieStorage,
+  }) as any,  // ✅ Cast here
+  ssr: true,
+  networks: [...networks],
+  projectId,
+});
+```
+
+---
+
+## Node.js Version Requirements
+
+### Problem: Build Fails with Node Version Error
+
+```
+You are using Node.js 18.20.4. For Next.js, Node.js version ">=20.9.0" is required.
+```
+
+### Solution: Use Node 20+
+
+**With nvm:**
+```bash
+# Install Node 20
+nvm install 20
+
+# Use Node 20
+nvm use 20
+
+# Set as default
+nvm alias default 20
+```
+
+**Verify version:**
+```bash
+node --version  # Should show v20.x.x
+```
+
+**For Vercel deployment:**
+- Go to Project Settings → General
+- Set Node.js Version to **20.x**
+
+---
+
+## Environment Variables
+
+### Problem: WalletConnect Not Connecting
+
+Common causes:
+- Missing `NEXT_PUBLIC_PROJECT_ID`
+- Incorrect environment variable prefix
+- Environment variable not loaded
+
+### Solution: Proper Configuration
+
+**1. Create `.env.local`:**
+```env
+NEXT_PUBLIC_PROJECT_ID=your_project_id_here
+```
+
+**2. Verify the prefix:**
+- ✅ `NEXT_PUBLIC_` - Available in browser
+- ❌ No prefix - Server-side only
+
+**3. Get Project ID:**
+- Visit [cloud.reown.com](https://cloud.reown.com)
+- Create a new project
+- Copy the Project ID
+
+**4. Restart dev server:**
+```bash
+# Stop server (Ctrl+C)
+npm run dev  # Restart
+```
+
+---
+
+## Content Security Policy (CSP)
+
+### Problem: 'unsafe-eval' Error in Development
+
+```
+Refused to evaluate a string as JavaScript because 'unsafe-eval' is not an allowed source
+```
+
+### Solution: Configure CSP for Development
+
+In `next.config.ts`:
+
+```typescript
+const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: process.env.NODE_ENV === 'development'
+              ? "default-src 'self' 'unsafe-eval' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline';"
+              : "default-src 'self'; script-src 'self';",
+          },
+        ],
+      },
+    ];
+  },
+};
+```
+
+**Note:** Only use `'unsafe-eval'` in development. Production should have stricter CSP.
+
+---
+
+## Network Switching Issues
+
+### Problem: Network Switch Causes Errors
+
+When switching networks, you may encounter:
+- Stale contract addresses
+- Wrong RPC endpoints
+- Cached data from previous network
+
+### Solution: Handle Network Changes
+
+```typescript
+import { useAccount, useNetwork } from 'wagmi';
+import { useEffect } from 'react';
+
+function MyComponent() {
+  const { chain } = useAccount();
+  
+  useEffect(() => {
+    // Reset state when network changes
+    console.log('Network changed to:', chain?.name);
+    // Clear cached data, reset forms, etc.
+  }, [chain?.id]);
+  
+  return (
+    // Your component
+  );
+}
+```
+
+---
+
+## Build Optimization
+
+### Problem: Large Bundle Size
+
+AppKit and dependencies can significantly increase bundle size.
+
+### Solution: Dynamic Imports
+
+```typescript
+// Instead of:
+import { createAppKit } from '@reown/appkit/react';
+
+// Use dynamic import:
+const createAppKit = dynamic(
+  () => import('@reown/appkit/react').then(mod => mod.createAppKit),
+  { ssr: false }
+);
+```
+
+---
+
+## Debugging Tips
+
+### Enable Debug Logs
+
+```typescript
+// In your config file
+export const wagmiAdapter = new WagmiAdapter({
+  // ... other config
+  debug: true,  // Enable debug logs
+});
+```
+
+### Check Browser Console
+
+Common issues show up in console:
+- Network errors
+- RPC failures
+- Type mismatches
+- Missing configuration
+
+### Verify Contract Addresses
+
+Always verify contract addresses match the network:
+```typescript
+const CONTRACT_ADDRESSES = {
+  [base.id]: '0x...',
+  [optimism.id]: '0x...',
+} as const;
+
+const contractAddress = CONTRACT_ADDRESSES[chain?.id ?? base.id];
+```
+
+---
+
+## Getting Help
+
+If you're still stuck:
+
+1. **Check Documentation:** [docs.reown.com](https://docs.reown.com)
+2. **Search Issues:** [github.com/reown-com/appkit/issues](https://github.com/reown-com/appkit/issues)
+3. **Join Discord:** [discord.walletconnect.com](https://discord.walletconnect.com)
+4. **Ask Questions:** Create a detailed issue with:
+   - Error message
+   - Code snippet
+   - Environment (Node version, Next.js version, etc.)
+   - Steps to reproduce
+
+---
+
+## Related Resources
+
+- [Reown AppKit Documentation](https://docs.reown.com/appkit/overview)
+- [Wagmi Documentation](https://wagmi.sh/)
+- [Viem Documentation](https://viem.sh/)
+- [Next.js Documentation](https://nextjs.org/docs)
