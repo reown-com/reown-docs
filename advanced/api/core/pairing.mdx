@@ -11,10 +11,7 @@ Its purpose is to provide a secure channel for proposing protocols or sending re
 
 ## Installation
 
-<Tabs
-	
-	
->
+<Tabs>
 <Tab title="Web">
 
 WalletConnect currently offers Sign and Auth SDKs.
@@ -159,7 +156,7 @@ openupm add com.walletconnect.core
 </Tab>
 <Tab title="Package Manager with OpenUPM">
 
-1. Open `Advanced Project Settings` from the gear ⚙ menu located at the top right of the Package Manager’s toolbar
+1. Open `Advanced Project Settings` from the gear ⚙ menu located at the top right of the Package Manager's toolbar
 2. Add a new scoped registry with the following details:
    - Name: `OpenUPM`
    - URL: `https://package.openupm.com`
@@ -174,7 +171,7 @@ openupm add com.walletconnect.core
 </Tab>
 <Tab title="Package Manager with Git URL">
 
-1. Open the add ➕ menu in the Package Manager’s toolbar
+1. Open the add ➕ menu in the Package Manager's toolbar
 2. Select `Add package from git URL...`
 3. Enter the package URL:
 
@@ -231,10 +228,7 @@ var core = WalletConnect.Instance.SignClient.Core;
 
 ## Usage
 
-<Tabs
-	
-	
->
+<Tabs>
 <Tab title="Web">
 
 The methods listed below are limited to only the public methods of the Pairing API that we recommend you interact with directly.
@@ -242,8 +236,10 @@ For an exhaustive list, please refer to the spec and/or implementation linked un
 
 The keyword `sdkClient` is used here as a placeholder for any WalletConnect SDK that implements the Pairing API (e.g. `signClient`, `authClient`, etc).
 
+### API Reference
+
 ```ts
- // Creates a new (inactive) pairing. Returns the URI for a peer to consume via `pair`, as well as the pairing topic.
+// Creates a new (inactive) pairing. Returns the URI for a peer to consume via `pair`, as well as the pairing topic.
 const {topic, uri} = await sdkClient.core.pairing.create()
 
 // Pair with a peer's proposed pairing, extracted from the provided `uri` parameter.
@@ -266,6 +262,199 @@ await sdkClient.core.pairing.ping({ topic: "1b3eda3f4..." })
 
 // Disconnects/Removes a pairing, by providing the pairing topic.
 await sdkClient.core.pairing.disconnect({ topic: "1b3eda3f4..." })
+```
+
+### Complete Implementation Examples
+
+#### Dapp Implementation
+
+```ts
+// Complete flow for dapp creating a pairing
+async function initiatePairingAsDapp() {
+  try {
+    // 1. Create pairing and get URI
+    const { topic, uri } = await signClient.core.pairing.create();
+    
+    // 2. Display URI as QR code for user to scan
+    displayQRCode(uri);
+    
+    // 3. Listen for when wallet pairs
+    signClient.core.pairing.events.on("pairing_ping", ({ topic: pairingTopic }) => {
+      if (pairingTopic === topic) {
+        console.log("Wallet successfully paired!");
+      }
+    });
+    
+    // 4. After wallet pairs, activate the pairing
+    await signClient.core.pairing.activate({ topic });
+    
+    return { topic, uri };
+  } catch (error) {
+    console.error("Failed to create pairing:", error);
+    throw error;
+  }
+}
+
+// Reusing existing pairings for new sessions
+async function connectWithExistingPairing(dappName: string) {
+  const pairings = signClient.core.pairing.getPairings();
+  const existingPairing = pairings.find(
+    p => p.peerMetadata?.name === dappName && p.active
+  );
+  
+  if (existingPairing) {
+    // Reuse existing pairing
+    console.log("Reusing pairing:", existingPairing.topic);
+    return existingPairing.topic;
+  } else {
+    // Create new pairing
+    const { topic } = await signClient.core.pairing.create();
+    return topic;
+  }
+}
+```
+
+#### Wallet Implementation
+
+```ts
+// Complete flow for wallet pairing with dapp
+async function pairWithDapp(scannedUri: string) {
+  try {
+    // 1. Pair using the scanned URI
+    await signClient.core.pairing.pair({ uri: scannedUri });
+    
+    console.log("Successfully paired with dapp!");
+    
+  } catch (error) {
+    if (error.message.includes("Expired")) {
+      throw new Error("QR code expired. Please request a new one.");
+    } else if (error.message.includes("Invalid")) {
+      throw new Error("Invalid QR code. Please try again.");
+    } else {
+      throw new Error("Connection failed. Please check your internet.");
+    }
+  }
+}
+
+// Handle incoming session proposals after pairing
+signClient.on("session_proposal", async (proposal) => {
+  console.log("Received session proposal:", proposal);
+  
+  // Show approval UI to user
+  const approved = await showUserApprovalUI(proposal);
+  
+  if (approved) {
+    await signClient.approve({
+      id: proposal.id,
+      namespaces: proposal.params.requiredNamespaces
+    });
+  } else {
+    await signClient.reject({
+      id: proposal.id,
+      reason: { code: 5000, message: "User rejected" }
+    });
+  }
+});
+```
+
+#### Error Handling Patterns
+
+```ts
+// Robust pairing with comprehensive error handling
+async function createPairingWithErrorHandling() {
+  try {
+    const { topic, uri } = await signClient.core.pairing.create();
+    
+    // Set timeout for pairing activation
+    const timeout = setTimeout(async () => {
+      console.warn("Pairing timeout, cleaning up...");
+      await signClient.core.pairing.disconnect({ topic });
+    }, 5 * 60 * 1000); // 5 minutes
+    
+    // Clear timeout when pairing activates
+    signClient.core.pairing.events.once("pairing_ping", () => {
+      clearTimeout(timeout);
+    });
+    
+    return { topic, uri };
+    
+  } catch (error) {
+    if (error.message.includes("No internet")) {
+      throw new Error("Network error. Please check your connection.");
+    } else if (error.message.includes("Rate limit")) {
+      throw new Error("Too many requests. Please wait a moment.");
+    } else {
+      throw new Error("Failed to create pairing. Please try again.");
+    }
+  }
+}
+
+// Safely disconnect with cleanup
+async function disconnectPairing(topic: string) {
+  try {
+    await signClient.core.pairing.disconnect({ topic });
+    
+    // Clean up local state
+    removeFromLocalStorage(topic);
+    updateUI();
+    
+  } catch (error) {
+    console.error("Disconnect failed:", error);
+    // Still clean up local state even if disconnect fails
+    removeFromLocalStorage(topic);
+  }
+}
+```
+
+#### Pairing Lifecycle Management
+
+```ts
+// Monitor and manage pairing lifecycle
+function setupPairingLifecycleListeners() {
+  // Handle pairing deletion
+  signClient.core.pairing.events.on("pairing_delete", ({ topic }) => {
+    console.log("Pairing deleted:", topic);
+    // Clean up local state
+    removeFromLocalStorage(topic);
+    notifyUser("Connection removed");
+  });
+  
+  // Handle pairing expiration
+  signClient.core.pairing.events.on("pairing_expire", ({ topic }) => {
+    console.log("Pairing expired:", topic);
+    // Prompt user to reconnect
+    showReconnectPrompt();
+  });
+  
+  // Handle ping events
+  signClient.core.pairing.events.on("pairing_ping", ({ id, topic }) => {
+    console.log("Received ping from peer:", topic);
+  });
+}
+
+// Extend expiry for long-term connections
+async function extendPairingExpiry(topic: string, days: number) {
+  const secondsFromNow = days * 24 * 60 * 60;
+  await signClient.core.pairing.updateExpiry({ 
+    topic, 
+    expiry: secondsFromNow 
+  });
+  console.log(`Pairing extended by ${days} days`);
+}
+
+// Clean up inactive pairings
+async function cleanupInactivePairings() {
+  const pairings = signClient.core.pairing.getPairings();
+  const now = Date.now() / 1000;
+  
+  for (const pairing of pairings) {
+    // Remove pairings expiring within 24 hours
+    if (pairing.expiry - now < 86400 && !pairing.active) {
+      await signClient.core.pairing.disconnect({ topic: pairing.topic });
+      console.log("Cleaned up inactive pairing:", pairing.topic);
+    }
+  }
+}
 ```
 
 #### Listeners for pairing-related events
@@ -308,7 +497,7 @@ Pair.configure(metadata: metadata)
 In pair wallet with dapp, the user needs to scan a QR code or open a deep link generated by dapp, then instantiate `WalletConnectURI` from the scanned QR code string and call the `pair()` function as follows.
 
 ```swift
-let uri WalletConnectURI(string: <String>)
+let uri = WalletConnectURI(string: <String>)
 try! await Pair.instance.pair(uri: uri)
 ```
 
@@ -324,6 +513,215 @@ let uri = try await Pair.instance.create()
 ```
 
 Now you can share the uri with the wallet.
+
+### Complete Implementation Examples
+
+#### Deep Link Configuration
+
+Configure your app to handle WalletConnect deep links:
+
+**1. Add URL Scheme to Info.plist:**
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>myapp</string>
+        </array>
+        <key>CFBundleURLName</key>
+        <string>com.mycompany.myapp</string>
+    </dict>
+</array>
+
+<!-- For Universal Links (optional) -->
+<key>com.apple.developer.associated-domains</key>
+<array>
+    <string>applinks:myapp.com</string>
+</array>
+```
+
+**2. Handle Deep Links in SceneDelegate:**
+
+```swift
+import UIKit
+import WalletConnectPairing
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        
+        // Handle WalletConnect URI
+        if let wcUri = WalletConnectURI(string: url.absoluteString) {
+            Task {
+                do {
+                    try await Pair.instance.pair(uri: wcUri)
+                    print("Successfully paired via deep link")
+                } catch {
+                    print("Pairing failed: \(error)")
+                    handlePairingError(error)
+                }
+            }
+        }
+    }
+    
+    // For Universal Links
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let url = userActivity.webpageURL,
+              let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+            return
+        }
+        
+        // Extract WC URI from query parameters
+        if let uri = components.queryItems?.first(where: { $0.name == "uri" })?.value,
+           let wcUri = WalletConnectURI(string: uri) {
+            Task {
+                try await Pair.instance.pair(uri: wcUri)
+            }
+        }
+    }
+}
+```
+
+#### Wallet Implementation with Error Handling
+
+```swift
+import WalletConnectPairing
+
+class WalletPairingManager {
+    
+    // Pair with dapp using scanned QR code
+    func pairWithDapp(uri: String) async throws {
+        guard let wcUri = WalletConnectURI(string: uri) else {
+            throw PairingError.invalidURI
+        }
+        
+        do {
+            try await Pair.instance.pair(uri: wcUri)
+            print("✅ Successfully paired with dapp")
+            
+            // Update UI
+            await MainActor.run {
+                showSuccessMessage("Connected to dapp")
+            }
+            
+        } catch {
+            print("❌ Pairing failed: \(error)")
+            
+            // Handle specific error cases
+            if error.localizedDescription.contains("Expired") {
+                throw PairingError.expired
+            } else if error.localizedDescription.contains("Invalid") {
+                throw PairingError.invalidURI
+            } else {
+                throw PairingError.connectionFailed
+            }
+        }
+    }
+    
+    // Get all active pairings
+    func getActivePairings() -> [Pairing] {
+        return Pair.instance.getPairings()
+            .filter { $0.active }
+    }
+    
+    // Disconnect from a specific dapp
+    func disconnect(topic: String) async throws {
+        try await Pair.instance.disconnect(topic: topic)
+        print("Disconnected from pairing: \(topic)")
+    }
+    
+    // Clean up expired pairings
+    func cleanupExpiredPairings() async {
+        let pairings = Pair.instance.getPairings()
+        
+        for pairing in pairings {
+            if pairing.expiryDate < Date() {
+                try? await Pair.instance.disconnect(topic: pairing.topic)
+            }
+        }
+    }
+}
+
+// Custom error types
+enum PairingError: LocalizedError {
+    case invalidURI
+    case expired
+    case connectionFailed
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidURI:
+            return "Invalid QR code. Please try again."
+        case .expired:
+            return "QR code expired. Please request a new one."
+        case .connectionFailed:
+            return "Connection failed. Please check your internet."
+        }
+    }
+}
+```
+
+#### Dapp Implementation
+
+```swift
+import WalletConnectPairing
+
+class DappPairingManager {
+    
+    // Create pairing and display QR code
+    func createPairing() async throws -> (topic: String, uri: String) {
+        do {
+            let pairingData = try await Pair.instance.create()
+            
+            print("Pairing URI: \(pairingData.uri)")
+            print("Pairing topic: \(pairingData.topic)")
+            
+            // Display QR code to user
+            await MainActor.run {
+                displayQRCode(uri: pairingData.uri)
+            }
+            
+            // Setup timeout for pairing
+            setupPairingTimeout(topic: pairingData.topic)
+            
+            return (pairingData.topic, pairingData.uri)
+            
+        } catch {
+            print("Failed to create pairing: \(error)")
+            throw error
+        }
+    }
+    
+    // Monitor pairing status
+    private func setupPairingTimeout(topic: String) {
+        // Set 5 minute timeout
+        Task {
+            try? await Task.sleep(nanoseconds: 5 * 60 * 1_000_000_000)
+            
+            // Check if pairing is still inactive
+            let pairings = Pair.instance.getPairings()
+            if let pairing = pairings.first(where: { $0.topic == topic }),
+               !pairing.active {
+                print("Pairing timeout, cleaning up...")
+                try? await Pair.instance.disconnect(topic: topic)
+            }
+        }
+    }
+    
+    // Share pairing URI via deep link
+    func sharePairingViaDeepLink(uri: String, walletScheme: String) {
+        let deepLink = "\(walletScheme)://wc?uri=\(uri.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        
+        if let url = URL(string: deepLink) {
+            UIApplication.shared.open(url)
+        }
+    }
+}
+```
 
 </Tab>
 <Tab title="Android">
@@ -362,10 +760,272 @@ To get a list of the most current active pairings, call `CoreClient.Pairing.getP
 #### **Disconnect a Pairing**
 
 ```kotlin
-CoreClient.Pairing.disconnect(topic = /*Pairing topic*/") { error -> }
+CoreClient.Pairing.disconnect(topic = /*Pairing topic*/) { error -> }
 ```
 
 To disconnect from a pairing, just pass the topic of the pairing to disconnect from (use `getPairings()` to get a list of all active pairings and their topics).
+
+### Complete Implementation Examples
+
+#### Deep Link Configuration
+
+Configure your app to handle WalletConnect deep links:
+
+**1. Add Deep Link Intent Filter to AndroidManifest.xml:**
+
+```xml
+<activity android:name=".MainActivity">
+    <!-- Existing intent filters -->
+    
+    <!-- WalletConnect Deep Link -->
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        
+        <!-- Replace 'myapp' with your app's scheme -->
+        <data android:scheme="myapp" />
+    </intent-filter>
+    
+    <!-- Universal Links (optional) -->
+    <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        
+        <data android:scheme="https" />
+        <data android:host="myapp.com" />
+    </intent-filter>
+</activity>
+```
+
+**2. Handle Deep Links in Activity:**
+
+```kotlin
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.walletconnect.android.Core
+import com.walletconnect.android.CoreClient
+
+class MainActivity : AppCompatActivity() {
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        // Handle initial deep link
+        handleDeepLink(intent)
+    }
+    
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        // Handle deep link when app is already running
+        intent?.let { handleDeepLink(it) }
+    }
+    
+    private fun handleDeepLink(intent: Intent) {
+        val data: Uri? = intent.data
+        
+        data?.let { uri ->
+            // Extract WC URI from deep link
+            val wcUri = uri.getQueryParameter("uri")
+            
+            wcUri?.let { pairingUri ->
+                pairWithDapp(pairingUri)
+            }
+        }
+    }
+    
+    private fun pairWithDapp(uri: String) {
+        val pairingParams = Core.Params.Pair(uri)
+        
+        CoreClient.Pairing.pair(pairingParams) { error ->
+            if (error != null) {
+                handlePairingError(error)
+            } else {
+                showSuccessMessage("Connected to dapp")
+            }
+        }
+    }
+    
+    private fun handlePairingError(error: Core.Model.Error) {
+        val message = when {
+            error.throwable.message?.contains("expired", ignoreCase = true) == true ->
+                "QR code expired. Please request a new one."
+            error.throwable.message?.contains("invalid", ignoreCase = true) == true ->
+                "Invalid QR code. Please try again."
+            else ->
+                "Connection failed. Please check your internet."
+        }
+        
+        showErrorMessage(message)
+    }
+}
+```
+
+#### Wallet Implementation with Error Handling
+
+```kotlin
+import com.walletconnect.android.Core
+import com.walletconnect.android.CoreClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+class WalletPairingManager {
+    
+    // Pair with dapp using scanned QR code
+    fun pairWithDapp(uri: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        val pairingParams = Core.Params.Pair(uri)
+        
+        CoreClient.Pairing.pair(pairingParams) { error ->
+            if (error != null) {
+                val errorMessage = when {
+                    error.throwable.message?.contains("Expired") == true ->
+                        "QR code expired. Please request a new one."
+                    error.throwable.message?.contains("Invalid") == true ->
+                        "Invalid QR code. Please try again."
+                    else ->
+                        "Connection failed. Please check your internet."
+                }
+                onError(errorMessage)
+            } else {
+                onSuccess()
+            }
+        }
+    }
+    
+    // Get all active pairings
+    fun getActivePairings(): List<Core.Model.Pairing> {
+        return CoreClient.Pairing.getPairings().filter { it.isActive }
+    }
+    
+    // Disconnect from a specific dapp
+    fun disconnect(topic: String, onComplete: (error: Core.Model.Error?) -> Unit) {
+        CoreClient.Pairing.disconnect(topic = topic) { error ->
+            if (error != null) {
+                println("Failed to disconnect: ${error.throwable.message}")
+            } else {
+                println("Successfully disconnected from pairing: $topic")
+            }
+            onComplete(error)
+        }
+    }
+    
+    // Clean up expired pairings
+    fun cleanupExpiredPairings() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val pairings = CoreClient.Pairing.getPairings()
+            val currentTime = System.currentTimeMillis() / 1000
+            
+            pairings.forEach { pairing ->
+                // Remove pairings expiring within 24 hours
+                if (pairing.expiry - currentTime < 86400 && !pairing.isActive) {
+                    CoreClient.Pairing.disconnect(topic = pairing.topic) { error ->
+                        if (error == null) {
+                            println("Cleaned up inactive pairing: ${pairing.topic}")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+#### Dapp Implementation
+
+```kotlin
+import com.walletconnect.android.Core
+import com.walletconnect.android.CoreClient
+import android.content.Intent
+import android.net.Uri
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+class DappPairingManager {
+    
+    // Create pairing and display QR code
+    fun createPairing(
+        onSuccess: (topic: String, uri: String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val pairing = CoreClient.Pairing.create { error ->
+            if (error != null) {
+                onError("Failed to create pairing: ${error.throwable.message}")
+            }
+        }
+        
+        pairing?.let {
+            println("Pairing URI: ${it.uri}")
+            println("Pairing topic: ${it.topic}")
+            
+            // Display QR code to user
+            displayQRCode(it.uri)
+            
+            // Setup timeout for pairing
+            setupPairingTimeout(it.topic)
+            
+            onSuccess(it.topic, it.uri)
+        } ?: onError("Failed to create pairing")
+    }
+    
+    // Monitor pairing status with timeout
+    private fun setupPairingTimeout(topic: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            // Wait 5 minutes
+            delay(5 * 60 * 1000)
+            
+            // Check if pairing is still inactive
+            val pairings = CoreClient.Pairing.getPairings()
+            val pairing = pairings.find { it.topic == topic }
+            
+            if (pairing != null && !pairing.isActive) {
+                println("Pairing timeout, cleaning up...")
+                CoreClient.Pairing.disconnect(topic = topic) { error ->
+                    if (error != null) {
+                        println("Cleanup failed: ${error.throwable.message}")
+                    }
+                }
+            }
+        }
+    }
+    
+    // Share pairing URI via deep link to specific wallet
+    fun sharePairingViaDeepLink(uri: String, walletPackage: String, context: android.content.Context) {
+        val encodedUri = Uri.encode(uri)
+        val deepLinkUri = Uri.parse("$walletPackage://wc?uri=$encodedUri")
+        
+        val intent = Intent(Intent.ACTION_VIEW, deepLinkUri).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        
+        try {
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            println("Failed to open wallet: ${e.message}")
+            // Fallback to Play Store
+            openPlayStore(walletPackage, context)
+        }
+    }
+    
+    private fun openPlayStore(packageName: String, context: android.content.Context) {
+        val playStoreUri = Uri.parse("market://details?id=$packageName")
+        val intent = Intent(Intent.ACTION_VIEW, playStoreUri).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        context.startActivity(intent)
+    }
+    
+    private fun displayQRCode(uri: String) {
+        // Implementation to show QR code in UI
+        // Use a QR code library like ZXing
+    }
+}
+```
 
 </Tab>
 <Tab title="React Native">
@@ -375,8 +1035,10 @@ For an exhaustive list, please refer to the spec and/or implementation linked un
 
 The keyword `sdkClient` is used here as a placeholder for any WalletConnect SDK that implements the Pairing API (e.g. `signClient`, `authClient`, etc).
 
+### API Reference
+
 ```ts
- // Creates a new (inactive) pairing. Returns the URI for a peer to consume via `pair`, as well as the pairing topic.
+// Creates a new (inactive) pairing. Returns the URI for a peer to consume via `pair`, as well as the pairing topic.
 const {topic, uri} = await sdkClient.core.pairing.create()
 
 // Pair with a peer's proposed pairing, extracted from the provided `uri` parameter.
@@ -401,6 +1063,257 @@ await sdkClient.core.pairing.ping({ topic: "1b3eda3f4..." })
 await sdkClient.core.pairing.disconnect({ topic: "1b3eda3f4..." })
 ```
 
+### Complete Implementation Examples
+
+#### Deep Link Configuration
+
+**iOS (Info.plist):**
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>myapp</string>
+        </array>
+    </dict>
+</array>
+```
+
+**Android (AndroidManifest.xml):**
+```xml
+<intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="myapp" />
+</intent-filter>
+```
+
+#### Wallet Implementation with Deep Link Handling
+
+```tsx
+import { useEffect } from 'react';
+import { Linking } from 'react-native';
+import { signClient } from './walletConnectClient';
+
+function WalletApp() {
+  useEffect(() => {
+    // Handle deep links when app opens
+    const handleDeepLink = async (event: { url: string }) => {
+      const url = event.url;
+      
+      // Extract WC URI from deep link
+      if (url.includes('wc?uri=')) {
+        const wcUri = decodeURIComponent(url.split('wc?uri=')[1]);
+        await pairWithDapp(wcUri);
+      }
+    };
+    
+    // Listen for deep link events
+    const subscription = Linking.addEventListener('url', handleDeepLink);
+    
+    // Check if app was opened via deep link
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        handleDeepLink({ url });
+      }
+    });
+    
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+  
+  const pairWithDapp = async (uri: string) => {
+    try {
+      await signClient.core.pairing.pair({ uri });
+      console.log('✅ Successfully paired with dapp');
+      showSuccessMessage('Connected to dapp');
+      
+    } catch (error: any) {
+      console.error('❌ Pairing failed:', error);
+      
+      // Handle specific errors
+      if (error.message.includes('Expired')) {
+        showErrorMessage('QR code expired. Please request a new one.');
+      } else if (error.message.includes('Invalid')) {
+        showErrorMessage('Invalid QR code. Please try again.');
+      } else {
+        showErrorMessage('Connection failed. Please check your internet.');
+      }
+    }
+  };
+  
+  const getActivePairings = () => {
+    const pairings = signClient.core.pairing.getPairings();
+    return pairings.filter(p => p.active);
+  };
+  
+  const disconnectPairing = async (topic: string) => {
+    try {
+      await signClient.core.pairing.disconnect({ topic });
+      console.log('Disconnected from pairing:', topic);
+      showSuccessMessage('Disconnected from dapp');
+    } catch (error) {
+      console.error('Disconnect failed:', error);
+    }
+  };
+  
+  return (
+    // Your wallet UI
+  );
+}
+```
+
+#### Dapp Implementation
+
+```tsx
+import { useEffect, useState } from 'react';
+import { Linking } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
+import { signClient } from './walletConnectClient';
+
+function DappApp() {
+  const [pairingUri, setPairingUri] = useState<string>('');
+  const [pairingTopic, setPairingTopic] = useState<string>('');
+  
+  const createPairing = async () => {
+    try {
+      const { topic, uri } = await signClient.core.pairing.create();
+      
+      setPairingUri(uri);
+      setPairingTopic(topic);
+      
+      console.log('Pairing created:', topic);
+      
+      // Setup timeout
+      setupPairingTimeout(topic);
+      
+    } catch (error) {
+      console.error('Failed to create pairing:', error);
+      showErrorMessage('Failed to create connection');
+    }
+  };
+  
+  const setupPairingTimeout = (topic: string) => {
+    setTimeout(async () => {
+      const pairings = signClient.core.pairing.getPairings();
+      const pairing = pairings.find(p => p.topic === topic);
+      
+      if (pairing && !pairing.active) {
+        console.log('Pairing timeout, cleaning up...');
+        await signClient.core.pairing.disconnect({ topic });
+      }
+    }, 5 * 60 * 1000); // 5 minutes
+  };
+  
+  const openWalletViaDeepLink = (walletScheme: string) => {
+    const encodedUri = encodeURIComponent(pairingUri);
+    const deepLink = `${walletScheme}://wc?uri=${encodedUri}`;
+    
+    Linking.canOpenURL(deepLink).then(supported => {
+      if (supported) {
+        Linking.openURL(deepLink);
+      } else {
+        console.log('Wallet app not installed');
+        showErrorMessage('Please install the wallet app');
+      }
+    });
+  };
+  
+  const reuseExistingPairing = async (dappName: string) => {
+    const pairings = signClient.core.pairing.getPairings();
+    const existingPairing = pairings.find(
+      p => p.peerMetadata?.name === dappName && p.active
+    );
+    
+    if (existingPairing) {
+      console.log('Reusing pairing:', existingPairing.topic);
+      return existingPairing.topic;
+    } else {
+      const { topic } = await signClient.core.pairing.create();
+      return topic;
+    }
+  };
+  
+  return (
+    <View>
+      <Button title="Connect Wallet" onPress={createPairing} />
+      
+      {pairingUri && (
+        <>
+          <QRCode value={pairingUri} size={250} />
+          <Button 
+            title="Open in Wallet" 
+            onPress={() => openWalletViaDeepLink('metamask')} 
+          />
+        </>
+      )}
+    </View>
+  );
+}
+```
+
+#### Pairing Lifecycle Management
+
+```tsx
+import { useEffect } from 'react';
+import { signClient } from './walletConnectClient';
+
+function usePairingLifecycle() {
+  useEffect(() => {
+    // Listen for pairing deletion
+    signClient.core.pairing.events.on('pairing_delete', ({ topic }) => {
+      console.log('Pairing deleted:', topic);
+      // Clean up local state
+      removeFromStorage(topic);
+      updateUI();
+    });
+    
+    // Listen for pairing expiration
+    signClient.core.pairing.events.on('pairing_expire', ({ topic }) => {
+      console.log('Pairing expired:', topic);
+      showReconnectPrompt();
+    });
+    
+    // Listen for ping events
+    signClient.core.pairing.events.on('pairing_ping', ({ topic }) => {
+      console.log('Received ping from peer:', topic);
+    });
+    
+    return () => {
+      signClient.core.pairing.events.removeAllListeners('pairing_delete');
+      signClient.core.pairing.events.removeAllListeners('pairing_expire');
+      signClient.core.pairing.events.removeAllListeners('pairing_ping');
+    };
+  }, []);
+  
+  const extendPairingExpiry = async (topic: string, days: number) => {
+    const secondsFromNow = days * 24 * 60 * 60;
+    await signClient.core.pairing.updateExpiry({ topic, expiry: secondsFromNow });
+    console.log(`Pairing extended by ${days} days`);
+  };
+  
+  const cleanupInactivePairings = async () => {
+    const pairings = signClient.core.pairing.getPairings();
+    const now = Date.now() / 1000;
+    
+    for (const pairing of pairings) {
+      if (pairing.expiry - now < 86400 && !pairing.active) {
+        await signClient.core.pairing.disconnect({ topic: pairing.topic });
+        console.log('Cleaned up inactive pairing:', pairing.topic);
+      }
+    }
+  };
+  
+  return {
+    extendPairingExpiry,
+    cleanupInactivePairings,
+  };
+}
+```
+
 #### Listeners for pairing-related events
 
 The Pairing API currently emits the following events:
@@ -422,7 +1335,7 @@ sdkClient.core.pairing.events.on("pairing_delete", ({ id, topic }) => {
 
 #### Pairing Wallet Usage
 
-When paring a wallet with a dapp, the user needs to scan a QR code or open a deep link generated by the dapp. Grab the string from the scanned QR code string or from the deep link and call the `Pair()` function as follows.
+When paring a wallet with a dapp, the user needs to scan a QR code or open a deep link generated by the dapp. Grab the string from the scanned QR code string or from the deep link and call the `Pair()` function as follows.
 
 ```csharp
 var uri = "...";
@@ -433,16 +1346,217 @@ Now the wallet and a dapp have a secure communication channel that will be used 
 
 #### Pairing Dapp Usage
 
-In order to pair dapp and a wallet, dapp needs to generate and share a uri with wallet. To generate a uri call `create()` function on Pair instance as follows.
+In order to pair dapp and a wallet, dapp needs to generate and share a uri with wallet. To generate a uri call `create()` function on Pair instance as follows.
 
 ```csharp
-
 var pairData = await core.Pairing.Create();
 string topic = pairData.Topic;
 string uri = pairData.Uri;
 ```
 
 Now you can share the uri with the wallet either through a QR Code or by using a deep link.
+
+### Complete Implementation Examples
+
+#### Wallet Implementation with Error Handling
+
+```csharp
+using WalletConnect.Core;
+using System;
+using System.Threading.Tasks;
+
+public class WalletPairingManager
+{
+    private readonly WalletConnectCore core;
+    
+    public WalletPairingManager(WalletConnectCore core)
+    {
+        this.core = core;
+    }
+    
+    // Pair with dapp using scanned QR code or deep link
+    public async Task<bool> PairWithDapp(string uri)
+    {
+        try
+        {
+            PairingStruct pairingData = await core.Pairing.Pair(uri);
+            
+            Console.WriteLine($"✅ Successfully paired with dapp");
+            Console.WriteLine($"Topic: {pairingData.Topic}");
+            
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Pairing failed: {ex.Message}");
+            
+            // Handle specific errors
+            if (ex.Message.Contains("Expired"))
+            {
+                throw new Exception("QR code expired. Please request a new one.");
+            }
+            else if (ex.Message.Contains("Invalid"))
+            {
+                throw new Exception("Invalid QR code. Please try again.");
+            }
+            else
+            {
+                throw new Exception("Connection failed. Please check your internet.");
+            }
+        }
+    }
+    
+    // Get all active pairings
+    public List<PairingStruct> GetActivePairings()
+    {
+        return core.Pairing.GetPairings()
+            .Where(p => p.Active)
+            .ToList();
+    }
+    
+    // Disconnect from a specific dapp
+    public async Task DisconnectPairing(string topic)
+    {
+        try
+        {
+            await core.Pairing.Disconnect(topic);
+            Console.WriteLine($"Disconnected from pairing: {topic}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Disconnect failed: {ex.Message}");
+        }
+    }
+    
+    // Clean up expired pairings
+    public async Task CleanupExpiredPairings()
+    {
+        var pairings = core.Pairing.GetPairings();
+        var currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        
+        foreach (var pairing in pairings)
+        {
+            // Remove pairings expiring within 24 hours
+            if (pairing.Expiry - currentTime < 86400 && !pairing.Active)
+            {
+                try
+                {
+                    await core.Pairing.Disconnect(pairing.Topic);
+                    Console.WriteLine($"Cleaned up inactive pairing: {pairing.Topic}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Cleanup failed: {ex.Message}");
+                }
+            }
+        }
+    }
+}
+```
+
+#### Dapp Implementation
+
+```csharp
+using WalletConnect.Core;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+public class DappPairingManager
+{
+    private readonly WalletConnectCore core;
+    
+    public DappPairingManager(WalletConnectCore core)
+    {
+        this.core = core;
+    }
+    
+    // Create pairing and display QR code
+    public async Task<(string topic, string uri)> CreatePairing()
+    {
+        try
+        {
+            var pairData = await core.Pairing.Create();
+            
+            Console.WriteLine($"Pairing URI: {pairData.Uri}");
+            Console.WriteLine($"Pairing topic: {pairData.Topic}");
+            
+            // Display QR code to user
+            DisplayQRCode(pairData.Uri);
+            
+            // Setup timeout for pairing
+            SetupPairingTimeout(pairData.Topic);
+            
+            return (pairData.Topic, pairData.Uri);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to create pairing: {ex.Message}");
+            throw;
+        }
+    }
+    
+    // Monitor pairing status with timeout
+    private void SetupPairingTimeout(string topic)
+    {
+        Task.Run(async () =>
+        {
+            // Wait 5 minutes
+            await Task.Delay(TimeSpan.FromMinutes(5));
+            
+            // Check if pairing is still inactive
+            var pairings = core.Pairing.GetPairings();
+            var pairing = pairings.FirstOrDefault(p => p.Topic == topic);
+            
+            if (pairing != null && !pairing.Active)
+            {
+                Console.WriteLine("Pairing timeout, cleaning up...");
+                try
+                {
+                    await core.Pairing.Disconnect(topic);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Cleanup failed: {ex.Message}");
+                }
+            }
+        });
+    }
+    
+    // Reuse existing pairing or create new one
+    public async Task<string> ReuseOrCreatePairing(string dappName)
+    {
+        var pairings = core.Pairing.GetPairings();
+        var existingPairing = pairings.FirstOrDefault(
+            p => p.PeerMetadata?.Name == dappName && p.Active
+        );
+        
+        if (existingPairing != null)
+        {
+            Console.WriteLine($"Reusing pairing: {existingPairing.Topic}");
+            return existingPairing.Topic;
+        }
+        else
+        {
+            var pairData = await core.Pairing.Create();
+            return pairData.Topic;
+        }
+    }
+    
+    // Generate deep link for mobile wallets
+    public string GenerateDeepLink(string uri, string walletScheme)
+    {
+        var encodedUri = Uri.EscapeDataString(uri);
+        return $"{walletScheme}://wc?uri={encodedUri}";
+    }
+    
+    private void DisplayQRCode(string uri)
+    {
+        // Implementation to show QR code in UI
+        // Use a QR code library
+    }
+}
+```
 
 #### Message Sending / Handling
 
@@ -454,21 +1568,21 @@ Requests can be received from the dapp by handling the message callback in the `
 core.MessageHandler.MessageEventHandler<MyRequest, MyResponse>()
     .FilterRequests(r => r.Topic == pairingData.Topic)
     .OnRequest +=
-		async delegate(RequestEventArgs<MyRequest, MyResponse> eventArgs)
-		{
-		    Console.WriteLine(eventArgs.Request);
-		    eventArgs.Response = new MyResponse()
-		    {
-		        // ...
-		    };
-		};
+        async delegate(RequestEventArgs<MyRequest, MyResponse> eventArgs)
+        {
+            Console.WriteLine(eventArgs.Request);
+            eventArgs.Response = new MyResponse()
+            {
+                // ...
+            };
+        };
 ```
 
 A response can be sent for any request by setting the `Response` field in the `eventArgs` parameter.
 
 Receiving responses is handled the same way, but instead of the `OnRequest` event you would use the `OnResponse` event.
 
-Request, Responses and Errors can be sent using the `SendRequest` , `SendResult` and `SendError` functions in the `MessageHandler` module.
+Request, Responses and Errors can be sent using the `SendRequest`, `SendResult` and `SendError` functions in the `MessageHandler` module.
 
 ```csharp
 long id = await core.MessageHandler.SendRequest<MyRequest, MyResponse>(pairingTopic, data);
@@ -476,3 +1590,93 @@ long id = await core.MessageHandler.SendRequest<MyRequest, MyResponse>(pairingTo
 
 </Tab>
 </Tabs>
+
+## Quick Reference
+
+### Common Methods
+
+| Method | Purpose | When to Use |
+|--------|---------|-------------|
+| `create()` | Generate pairing URI | Dapp wants to connect with wallet |
+| `pair(uri)` | Connect to peer | Wallet scans dapp's QR code |
+| `activate(topic)` | Activate pairing | After peer successfully pairs |
+| `disconnect(topic)` | Remove pairing | User disconnects or session ends |
+| `getPairings()` | List all pairings | Check existing connections |
+| `updateExpiry(topic, expiry)` | Extend pairing lifetime | Long-term connections |
+| `ping(topic)` | Test connection | Verify pairing is alive |
+
+### Common Patterns
+
+#### Pattern 1: Reusing Pairings
+
+Instead of creating a new pairing for each session, reuse existing ones:
+
+```typescript
+const pairings = signClient.core.pairing.getPairings();
+const activePairing = pairings.find(p => p.peerMetadata?.name === "MyDapp");
+
+if (activePairing) {
+  // Reuse existing pairing
+  await signClient.connect({ pairingTopic: activePairing.topic, ... });
+} else {
+  // Create new pairing
+  const { topic, uri } = await signClient.core.pairing.create();
+}
+```
+
+#### Pattern 2: Testing Pairing Health
+
+```typescript
+try {
+  await signClient.core.pairing.ping({ topic });
+  console.log("✅ Pairing is alive");
+} catch (error) {
+  console.log("❌ Pairing is dead");
+  // Clean up or reconnect
+}
+```
+
+#### Pattern 3: Automatic Cleanup
+
+```typescript
+// Clean up inactive pairings on app launch
+const pairings = signClient.core.pairing.getPairings();
+const now = Date.now() / 1000;
+
+for (const pairing of pairings) {
+  if (pairing.expiry < now || (!pairing.active && pairing.expiry - now < 86400)) {
+    await signClient.core.pairing.disconnect({ topic: pairing.topic });
+  }
+}
+```
+
+## Performance Tips
+
+:::tip Optimization
+- **Reuse pairings**: Don't create a new pairing for every session
+- **Set appropriate expiry**: Use `updateExpiry()` for long-term connections
+- **Clean up regularly**: Remove inactive pairings to avoid memory overhead
+- **Limit simultaneous pairings**: Keep only 1-2 active pairings per user
+- **Handle timeouts**: Always set timeouts for pairing activation
+:::
+
+## Testing Your Integration
+
+### Test Pairing Creation
+```typescript
+const { topic, uri } = await signClient.core.pairing.create();
+console.assert(topic, "Topic should be defined");
+console.assert(uri.startsWith("wc:"), "URI should start with 'wc:'");
+```
+
+### Test Pairing Connectivity
+```typescript
+await signClient.core.pairing.ping({ topic });
+console.log("✅ Pairing is active");
+```
+
+### Test Cleanup
+```typescript
+await signClient.core.pairing.disconnect({ topic });
+const pairings = signClient.core.pairing.getPairings();
+console.assert(!pairings.find(p => p.topic === topic), "Pairing should be removed");
