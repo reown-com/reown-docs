@@ -201,6 +201,10 @@
                   {
                     "group": "Technical Reference",
                     "pages": ["appkit/faq"]
+                  },
+                  {
+                    "group": "Troubleshooting",
+                    "pages": ["appkit/common-pitfalls"]
                   }
                 ]
               },
