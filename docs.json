@@ -581,6 +581,12 @@
                 ]
               },
               {
+                "group": "Payments",
+                "pages": [
+                  "appkit/flutter/payments/deposit-with-exchange"
+                ]
+              },
+              {
                 "group": "Authentication",
                 "pages": [
                   "appkit/flutter/core/email",
