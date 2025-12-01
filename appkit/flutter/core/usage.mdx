@@ -150,6 +150,16 @@ But in order for the redirect mechanism to work you would also need to add the f
 </intent-filter>
 ```
 
+<Note>
+If you encounter any issues with your deep linking navigation, specially after upgrading Flutter 3.27 or later, we kindly encourage you to disable Flutter built-in deep-linking feature as it's been set to true by default, introducing a breaking change: https://docs.flutter.dev/release/breaking-changes/deep-links-flag-change
+
+So below your `<intent-filter>` you would add this:
+
+```xml
+<meta-data android:name="flutter_deeplinking_enabled" android:value="false" />
+```
+</Note>
+
 </Tab>
 </Tabs>
 
