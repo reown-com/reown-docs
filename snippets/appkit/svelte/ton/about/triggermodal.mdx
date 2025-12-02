@@ -1,0 +1,20 @@
+To open AppKit you can use our [**web component**](/appkit/svelte/core/components) or build your own button with AppKit [**actions**](/appkit/svelte/core/actions#open-and-close-the-modal).
+In this example we are going to use the `<appkit-button>` component.
+
+Web components are global html elements that don't require importing.
+
+```svelte
+<script lang="ts">
+  // Import your AppKit configuration to ensure it's initialized
+  import '$lib/appkit';
+</script>
+
+<main>
+  <h1>Svelte + AppKit Integration</h1>
+  
+  <div class="card">
+    <appkit-button />
+  </div>
+</main>
+```
+

@@ -2,23 +2,26 @@
 title: Installation
 ---
 
-import CloudBanner from "/snippets/cloud-banner.mdx";
+import CloudBanner from '/snippets/cloud-banner.mdx'
 
-import SvelteWagmiImplementation from "/snippets/appkit/svelte/wagmi/about/implementation.mdx";
-import SvelteWagmiModal from "/snippets/appkit/svelte/wagmi/about/triggermodal.mdx";
+import SvelteWagmiImplementation from '/snippets/appkit/svelte/wagmi/about/implementation.mdx'
+import SvelteWagmiModal from '/snippets/appkit/svelte/wagmi/about/triggermodal.mdx'
 
-import SvelteEthersImplementation from "/snippets/appkit/svelte/ethers/about/implementation.mdx";
-import SvelteEthersModal from "/snippets/appkit/svelte/ethers/about/triggermodal.mdx";
+import SvelteEthersImplementation from '/snippets/appkit/svelte/ethers/about/implementation.mdx'
+import SvelteEthersModal from '/snippets/appkit/svelte/ethers/about/triggermodal.mdx'
 
-import SvelteSolanaImplementation from "/snippets/appkit/svelte/solana/about/implementation.mdx";
-import SvelteSolanaModal from "/snippets/appkit/svelte/solana/about/triggermodal.mdx";
+import SvelteSolanaImplementation from '/snippets/appkit/svelte/solana/about/implementation.mdx'
+import SvelteSolanaModal from '/snippets/appkit/svelte/solana/about/triggermodal.mdx'
 
-import SvelteBitcoinImplementation from "/snippets/appkit/svelte/bitcoin/about/implementation.mdx";
-import SvelteBitcoinModal from "/snippets/appkit/svelte/bitcoin/about/triggermodal.mdx";
+import SvelteBitcoinImplementation from '/snippets/appkit/svelte/bitcoin/about/implementation.mdx'
+import SvelteBitcoinModal from '/snippets/appkit/svelte/bitcoin/about/triggermodal.mdx'
+
+import SvelteTonImplementation from '/snippets/appkit/svelte/ton/about/implementation.mdx'
+import SvelteTonModal from '/snippets/appkit/svelte/ton/about/triggermodal.mdx'
 
 # Svelte
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
+AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin and TON.
 Choose one of these to get started.
 
 <Note>
@@ -120,11 +123,34 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 </CodeGroup>
 
 </Tab>
+<Tab title="TON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ton
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 ## Cloud Configuration
 
-Create a new project on Reown Dashboard at https://dashboard.reown.com and obtain a new project ID.
+Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtain a new project ID.
 
 <CloudBanner />
 
@@ -157,13 +183,18 @@ Check the Svelte Ethers example
 <SvelteBitcoinImplementation />
 
 </Tab>
+<Tab title="TON">
+
+<SvelteTonImplementation />
+
+</Tab>
 </Tabs>
 
 ## Trigger the modal
 
 The recommended way to trigger the modal in Svelte is to use the `<appkit-button />` web component. After setting up AppKit in your application, you can simply use the button component anywhere in your Svelte templates:
 
-``` javascript
+```javascript
 <script lang="ts">
   // Import your AppKit configuration to ensure it's initialized
   import '$lib/appkit';
@@ -171,7 +202,7 @@ The recommended way to trigger the modal in Svelte is to use the `<appkit-button
 
 <main>
   <h1>Svelte + AppKit Integration</h1>
-  
+
   <div class="card">
     <appkit-button />
   </div>
@@ -184,7 +215,7 @@ The `<appkit-button />` is a web component that's automatically registered when 
 
 You can also trigger the modal programmatically using the AppKit instance:
 
-``` javascript
+```javascript
 <script lang="ts">
   import { appKit } from '$lib/appkit';
 
@@ -208,7 +239,7 @@ You can also trigger the modal programmatically using the AppKit instance:
 
 Or use other AppKit web components:
 
-``` javascript
+```javascript
 <appkit-connect-button />
 <appkit-account-button />
 <appkit-network-button />
@@ -233,6 +264,11 @@ Or use other AppKit web components:
 <Tab title="Bitcoin">
 
 <SvelteBitcoinModal />
+
+</Tab>
+<Tab title="TON">
+
+<SvelteTonModal />
 
 </Tab>
 </Tabs>
@@ -261,6 +297,7 @@ bun a @wagmi/core
 ```bash pnpm
 pnpm add @wagmi/core
 ```
+
 </CodeGroup>
 
 [Wagmi actions](https://wagmi.sh/core/api/actions/readContract) can help us interact with wallets and smart contracts:
@@ -268,17 +305,17 @@ pnpm add @wagmi/core
 For this use case, we need to import the `wagmiConfig` from our AppKit WagmiAdapter configuration.
 
 ```ts
-import { readContract } from "@wagmi/core";
-import { USDTAbi } from "../abi/USDTAbi";
+import { readContract } from '@wagmi/core'
+import { USDTAbi } from '../abi/USDTAbi'
 
-const USDTAddress = "0x...";
+const USDTAddress = '0x...'
 
 const data = readContract(wagmiConfig, {
   address: USDTAddress,
   abi: USDTAbi,
-  functionName: "totalSupply",
-  args: [],
-});
+  functionName: 'totalSupply',
+  args: []
+})
 ```
 
 Read more about Wagmi actions for smart contract interaction [here](https://wagmi.sh/core/actions/readContract).
@@ -289,29 +326,29 @@ Read more about Wagmi actions for smart contract interaction [here](https://wagm
 [Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
 
 ```ts
-import { BrowserProvider, Contract, parseEther } from "ethers";
+import { BrowserProvider, Contract, parseEther } from 'ethers'
 
-const provider = await appKit.subscribeProviders((state) => {
-  return state["eip155"];
-});
+const provider = await appKit.subscribeProviders(state => {
+  return state['eip155']
+})
 
-const addressFrom = await appKit.subscribeAccount((state) => {
-  return state;
-});
+const addressFrom = await appKit.subscribeAccount(state => {
+  return state
+})
 
-if (!provider) throw Error("No provider found");
-if (!addressFrom) throw Error("No address found");
+if (!provider) throw Error('No provider found')
+if (!addressFrom) throw Error('No address found')
 
 function sendTransaction() {
   const tx = {
     from: addressFrom,
-    to: "0x...", // any address
-    value: parseEther("0.0001"),
-  };
-  const ethersProvider = new BrowserProvider(provider);
-  const signer = await ethersProvider.getSigner();
-  const tx = await signer.sendTransaction(tx);
-  console.log("transaction:", tx);
+    to: '0x...', // any address
+    value: parseEther('0.0001')
+  }
+  const ethersProvider = new BrowserProvider(provider)
+  const signer = await ethersProvider.getSigner()
+  const tx = await signer.sendTransaction(tx)
+  console.log('transaction:', tx)
 }
 ```
 
