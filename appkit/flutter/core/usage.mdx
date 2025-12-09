@@ -6,7 +6,7 @@ import CloudBanner from "/snippets/cloud-banner.mdx";
 
 ## Import the package:
 
-```javascript
+```dart
 import "package:reown_appkit/reown_appkit.dart";
 ```
 
@@ -20,7 +20,7 @@ Be sure to update the _project ID_ and _metadata_ with your own.
 
 In order to initialize `ReownAppKitModal()` instance you must provide a _projectId_ and a _metadata_.
 
-```javascript
+```dart
 // AppKit Modal instance
 final _appKitModal = ReownAppKitModal(
   context: context, // required BuildContext
@@ -57,7 +57,7 @@ await _appKitModal.init();
 
 Alternatively, `ReownAppKitModal()` allows you to create an instance by passing a `ReownAppKit()` object as follows:
 
-```javascript
+```dart
 // AppKit instance
 final appKit = ReownAppKit.createInstance(
   projectId: '{YOUR_PROJECT_ID}',
@@ -91,7 +91,7 @@ The `metadata` object should contain your dApp's name, description, url and icon
 
 AppKit's metadata object contains a `redirect` option that should be used by the wallet to redirected back to your dapp after connection.
 
-```javascript
+```dart
 redirect: Redirect(
   // your own custom scheme for deep linking
   native: 'exampleapp://',
@@ -102,6 +102,10 @@ redirect: Redirect(
   linkMode: true|false,
 ),
 ```
+
+<Note>
+`native:` value must be a valid URI scheme: https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes#syntax
+</Note>
 
 But in order for the redirect mechanism to work you would also need to add the following in the iOS and Android native sides:
 
@@ -167,31 +171,31 @@ So below your `<intent-filter>` you would add this:
 
 `AppKitModalConnectButton` to open modal and connect to a wallet or through social options
 
-```javascript
+```dart
 AppKitModalConnectButton(appKit: _appKitModal)
 ```
 
 `AppKitModalNetworkSelectButton` to select an available network
 
-```javascript
+```dart
 AppKitModalNetworkSelectButton(appKit: _appKitModal)
 ```
 
 `AppKitModalAccountButton` to open account screen once connected
 
-```javascript
+```dart
 AppKitModalAccountButton(appKitModal: _appKitModal)
 ```
 
 `AppKitModalAddressButton` shows the address on the current selected network
 
-```javascript
+```dart
 AppKitModalAddressButton(appKitModal: _appKitModal)
 ```
 
 `AppKitModalBalanceButton` shows wallet balance on the current selected network
 
-```javascript
+```dart
 AppKitModalBalanceButton(appKitModal: _appKitModal)
 ```
 
@@ -203,7 +207,7 @@ Once connected, `AppKitModalConnectButton` will serve as Disconnect button while
 
 Quick example:
 
-```javascript
+```dart
 Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
@@ -219,7 +223,7 @@ Column(
 
 `AppKitModalAccountButton` is composed by `AppKitModalBalanceButton` and `AppKitModalAddressButton` and you can use these separately from `AppKitModalAccountButton`
 
-```javascript
+```dart
 AppKitModalBalanceButton(appKitModal: _appKitModal, onTap: _appKitModal.openModalView);
 
 AppKitModalAddressButton(appKitModal: _appKitModal, onTap: _appKitModal.openModalView);
@@ -229,7 +233,7 @@ AppKitModalAddressButton(appKitModal: _appKitModal, onTap: _appKitModal.openModa
 
 If you like you can also override AppKit's buttons by using the `custom:` property as follows
 
-```javascript {3-8}
+```dart {3-8}
 AppKitModalConnectButton(
   appKit: _appKitModal,
   custom: MyCustomButton(
@@ -243,7 +247,7 @@ AppKitModalConnectButton(
 
 `openModalView()` method can accept a "startWidget" argument that you can leverage to open specifics screens of the modal:
 
-```javascript
+```dart
 // With no options will open default screen depending on the connection status
 _appKitModal.openModalView();
 

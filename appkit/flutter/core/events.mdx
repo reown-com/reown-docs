@@ -6,7 +6,7 @@ title: Events
 
 #### Modal specific events
 
-```javascript
+```dart
 _appKitModal.onModalConnect.subscribe((ModalConnect? event) {});
 
 _appKitModal.onModalUpdate.subscribe((ModalConnect? event) {});
@@ -26,7 +26,7 @@ The following events are available only through WalletConnect protocol, meaning 
 
 #### Session specific events
 
-```javascript
+```dart
 _appKitModal.onSessionExpireEvent.subscribe((SessionExpire? event) {});
 
 _appKitModal.onSessionUpdateEvent.subscribe((SessionUpdate? event) {});
@@ -36,7 +36,7 @@ _appKitModal.onSessionEventEvent.subscribe((SessionEvent? event) {});
 
 #### Relay specific events
 
-```javascript
+```dart
 _appKitModal.appKit!.core.relayClient.onRelayClientConnect.subscribe((EventArgs? event) {});
 
 _appKitModal.appKit!.core.relayClient.onRelayClientError.subscribe((EventArgs? event) {});

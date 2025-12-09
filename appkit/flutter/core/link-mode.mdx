@@ -36,7 +36,7 @@ Check out [SIWE basic example](./siwe#basic-usage-example) to try it out.
 
 3. Set the `linkMode` property to `true`:
 
-```javascript {11-12}
+```dart {11-12}
 final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
@@ -59,7 +59,7 @@ Once everything is properly configured, and the user interacts with a Link Mode-
 
 In Flutter, there are several plugins that can help you integrate Universal/App Links. However, regardless of which one you choose, it is crucial that, when capturing an incoming link, you pass it to AppKit so it can process the request.
 
-```javascript
+```dart
 void _onLinkCaptured(String link) async {
   await _appKitModal.dispatchEnvelope(link);
 }

@@ -29,7 +29,7 @@ Email and Social login are supported only on EVM networks and Solana.
 
 In order to support Email and Social Wallets creation just set `featuresConfig:` parameter in `ReownAppKitModal` initialization.
 
-```javascript {14-27}
+```dart {14-27}
 final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
@@ -70,7 +70,7 @@ In order for Farcaster to work properly, either `AppKitModalConnectButton()` or 
 
 If you already use them then nothing else has to be done, but in case you don't use them but still want to support Email & Social Wallets you would have to instantiate and hide them as follows:
 
-```javascript
+```dart
 AppKitModalConnectButton(
   appKit: _appKitModal,
   custom: SizedBox.shrink(), // Will make the button invisible

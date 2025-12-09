@@ -6,7 +6,7 @@ title: Actions
 
 You can subscribe to `_appKitModal.balanceNotifier` to be up to date with balance.
 
-```javascript
+```dart
 // Example usage:
 ValueListenableBuilder<String>(
   valueListenable: _appKitModal.balanceNotifier,
@@ -21,7 +21,7 @@ ValueListenableBuilder<String>(
 
 You can open the selected chain's block explorer easily:
 
-```javascript
+```dart
 _appKitModal.launchBlockExplorer();
 ```
 
@@ -29,7 +29,7 @@ _appKitModal.launchBlockExplorer();
 
 In most cases it shouldn't be needed as it is called internally but this method is useful to reconnect the relay when internet connection is back after inactivity.
 
-```javascript
+```dart
 await _appKitModal.reconnectRelay();
 ```
 
@@ -37,13 +37,13 @@ await _appKitModal.reconnectRelay();
 
 In most cases it shouldn't be needed as it is called internally but this method is useful to reload account data such as balance and identity. Particularly useful after a transaction.
 
-```javascript
+```dart
 await _appKitModal.loadAccountData();
 ```
 
 ### - Send an RPC request
 
-```javascript
+```dart
 final bytes = utf8.encode(message);
 final encodedMessage = hex.encode(bytes);
 
@@ -67,19 +67,19 @@ A list of all available methods can be found in [constants.dart](https://github.
 
 ### - List of approved chains by the connected wallet
 
-```javascript
+```dart
 _appKitModal.getApprovedChains();
 ```
 
 ### - List of approved methods by connected wallet
 
-```javascript
+```dart
 _appKitModal.getApprovedMethods();
 ```
 
 ### - List of approved events by the connected wallet
 
-```javascript
+```dart
 _appKitModal.getApprovedEvents();
 ```
 
@@ -88,7 +88,7 @@ _appKitModal.getApprovedEvents();
 If you add a new chain on an ongoing session you should call `requestSwitchToChain()` so the wallet can add it as well. Otherwise it will just be not usable.
 `requestAddChain()` is called automatically by `requestSwitchToChain()` in case of failing with the proper error from the wallet.
 
-```javascript
+```dart
 await _appKitModal.requestSwitchToChain(ReownAppKitModalNetworkInfo newChain);
 await _appKitModal.requestAddChain(ReownAppKitModalNetworkInfo newChain);
 ```
@@ -101,7 +101,7 @@ These Smart Contract interaction methods only works for EVM chains but you can a
 
 ### - Read function:
 
-```javascript
+```dart
 Future<List<dynamic>> requestReadContract({
   required String? topic,
   required String chainId,
@@ -116,7 +116,7 @@ Future<List<dynamic>> requestReadContract({
 
 1. Create a `DeployedContract` object
 
-```javascript
+```dart
 // Create DeployedContract object using contract's ABI and address
 final tetherContract = DeployedContract(
   ContractAbi.fromJson(
@@ -129,7 +129,7 @@ final tetherContract = DeployedContract(
 
 2. Read from it by calling a read function
 
-```javascript
+```dart
 final chainId = _appKitModal.selectedChain!.chainId;
 final namespace = ReownAppKitModalNetworks.getNamespaceForChainId(chainId);
 
@@ -163,7 +163,7 @@ final totalSupply = await _appKitModal.requestReadContract(
 
 ### - Write function:
 
-```javascript
+```dart
 Future<dynamic> requestWriteContract({
   required String? topic,
   required String chainId,
@@ -179,7 +179,7 @@ Future<dynamic> requestWriteContract({
 
 Write to it by calling a write function, for example, `transfer` function from USDC token contract:
 
-```javascript
+```dart
 final decimalUnits = (decimals.first as BigInt); // decimals value from `decimals` contract function
 final transferValue = _formatValue(0.23, decimals: decimalUnits); // your format value function
 
@@ -210,7 +210,7 @@ Future<void> transferToken() async {
 
 Call a `sayHello` function of a smart contract to write a message.
 
-```javascript
+```dart
 // Write a message data
 Future<void> writeMessage() async {
   final chainId = _appKitModal.selectedChain!.chainId;
