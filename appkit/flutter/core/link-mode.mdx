@@ -25,12 +25,12 @@ Check out [SIWE basic example](./siwe#basic-usage-example) to try it out.
 
 ### How to enable it:
 
-1. Be sure to have this properly configured on your server (`.well-known/apple-app-site-association` and `.well-known/assetlinks.json`) and native app side.
+1. Be sure you have this properly configured on your server (`.well-known/apple-app-site-association` and `.well-known/assetlinks.json`) and native app side.
 
     - If your domain is `https://example.com/` you should have your configuration files under
       - https://example.com/.well-known/apple-app-site-association
       - https://example.com/.well-known/assetlinks.json
-    - See more about this on [Platform Specific](#platform-specifics) section
+    - See more about this in the [Platform Specific](#platform-specifics) section
 
 2. On your Flutter side, configure your `PairingMetadata`'s `redirect:` object with that Universal Link
 
@@ -121,7 +121,7 @@ You can check our Flutter's AppKit sample [AppDelegate file](https://github.com/
 </intent-filter>
 ```
 
-3. Update/Create your domains's `.well-known/assetlinks.json` file accordingly
+3. Update/Create your domain's `.well-known/assetlinks.json` file accordingly
 
 For more information on how to configure app links for your app, refer to the [Android Documentation](https://developer.android.com/training/app-links/verify-android-applinks).<br />
 For enabling links to app content check [this](https://developer.android.com/training/app-links/deep-linking) documentation page.<br />

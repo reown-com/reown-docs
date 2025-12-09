@@ -4,7 +4,7 @@ title: Actions
 
 ### - Listen to balance change
 
-You can subscribe to `_appKitModal.balanceNotifier` to be up to date with balance.
+You can subscribe to `_appKitModal.balanceNotifier` to stay up to date with the balance.
 
 ```dart
 // Example usage:
@@ -85,7 +85,7 @@ _appKitModal.getApprovedEvents();
 
 ### - Request switch to or add chain
 
-If you add a new chain on an ongoing session you should call `requestSwitchToChain()` so the wallet can add it as well. Otherwise it will just be not usable.
+If you add a new chain on an ongoing session you should call `requestSwitchToChain()` so the wallet can add it as well. Otherwise it will not be usable.
 `requestAddChain()` is called automatically by `requestSwitchToChain()` in case of failing with the proper error from the wallet.
 
 ```dart
@@ -96,7 +96,7 @@ await _appKitModal.requestAddChain(ReownAppKitModalNetworkInfo newChain);
 ### - Interact with Smart Contracts
 
 <Info>
-These Smart Contract interaction methods only works for EVM chains but you can always structure your smart contract transaction and call the relevant chain method by using [request()](#--send-an-rpc-request) method.
+These Smart Contract interaction methods only work for EVM chains but you can always structure your smart contract transaction and call the relevant chain method by using the [request()](#--send-an-rpc-request) method.
 </Info>
 
 ### - Read function:

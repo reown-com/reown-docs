@@ -21,7 +21,7 @@ More info [here](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/i
 <Warning>
 This feature is compatible only with EVM blockchains. Therefore, including non-EVM blockchains will result in the internal disabling of the 1-CA + SIWE mechanism.
 
-If you are willing to give support just to EVM blockchains you should disable Solana support from AppKit by calling `ReownAppKitModalNetworks.removeSupportedNetworks('solana');` right before your `ReownAppKitModal()` definition.
+If you want to support only EVM blockchains, you should disable Solana support from AppKit by calling `ReownAppKitModalNetworks.removeSupportedNetworks('solana');` right before your `ReownAppKitModal()` definition.
 </Warning>
 
 ## Configure your SIWEConfig object

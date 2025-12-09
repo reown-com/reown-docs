@@ -43,7 +43,7 @@ final _appKitModal = ReownAppKitModal(
 
 ### enableAnalytics:
 
-Enable analytics to get more insights on your users activity within your [Reown Dashboard](https://dashboard.reown.com)
+Enable analytics to get more insights into your users' activity within your [Reown Dashboard](https://dashboard.reown.com)
 
 ### siweConfig:
 
@@ -53,7 +53,7 @@ Will be disabled automatically if you decide to support/include non-EVM blockcha
 
 ### featuresConfig:
 
-Used to configure extra features such [Email and Social Login](../core/email).
+Used to configure extra features such as [Email and Social Login](../core/email).
 
 ### getBalanceFallback:
 
@@ -69,7 +69,7 @@ However, if you would want to override that definition with your own or support 
 
 ### featuredWalletIds:
 
-Allows to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). 
+Allows you to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). 
 You can find the wallets IDs in our [Wallets List](/cloud/wallets/wallet-list).
 
 ```dart
@@ -82,7 +82,7 @@ final Set<String> featuredWalletIds = {
 
 ### includedWalletIds:
 
-Similar to `featuredWalletIds` this option allows you to determine exactly which wallets do you want to show. If `includedWalletIds` is set then only the wallets listed in this object are going to be displayed in the modal.
+Similar to `featuredWalletIds`, this option allows you to determine exactly which wallets you want to show. If `includedWalletIds` is set, then only the wallets listed in this object will be displayed in the modal.
 
 ```dart
 final Set<String> includedWalletIds = {
@@ -94,7 +94,7 @@ final Set<String> includedWalletIds = {
 
 ### excludedWalletIds:
 
-Similar to `includedWalletIds` this option allows you to exclude a list of wallets from the API response.
+Similar to `includedWalletIds`, this option allows you to exclude a list of wallets from the API response.
 
 ```dart
 final Set<String> excludedWalletIds = {
@@ -126,4 +126,4 @@ customWallets: [
 
 ### disconnectOnDispose:
 
-Whether if you want to disconnect the user when disposing the context that holds  your modal instance
+Whether you want to disconnect the user when disposing the context that holds your modal instance

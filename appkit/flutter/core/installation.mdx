@@ -51,7 +51,7 @@ Example:
 ```
 
 <Note>
-Apple only allows 50 entries top in this array, so every other entry beyond the 50th it won't be considered. See note here: https://developer.apple.com/documentation/uikit/uiapplication/canopenurl(_:)#Discussion
+Apple only allows a maximum of 50 entries in this array, so every other entry beyond the 50th will not be considered. See note here: https://developer.apple.com/documentation/uikit/uiapplication/canopenurl(_:)#Discussion
 </Note>
 
 </Tab>
@@ -99,7 +99,7 @@ If you still want to support it, on your iOS and Android native side make the fo
 
 1. Open your `Info.plist` file.
 2. Locate the `<key>LSApplicationQueriesSchemes</key>` section.
-3. Include `<string>cbwallet</string>` scheme as mentioned above in previous section
+3. Include the `<string>cbwallet</string>` scheme as mentioned above in the previous section
 
 Example:
 
@@ -151,7 +151,7 @@ Check out the [AppDelegate.swift](https://github.com/reown-com/reown_flutter/blo
 <Tab title="Android">
 
 1. Open your `AndroidManifest.xml` file.
-2. Add `<package android:name="org.toshi"/>` scheme inside `<queries>...</queries>` as mentioned above in previous section
+2. Add the `<package android:name="org.toshi"/>` scheme inside `<queries>...</queries>` as mentioned above in the previous section
 
 Example:
 
@@ -175,7 +175,7 @@ Example:
 
 #### Disable Coinbase Wallet
 
-Coinbase Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Coinbase Wallet in your app you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Coinbase Wallet is enabled by default. However, in order to function properly, a few steps have to be done as described in the previous section. If you don't want to include/support Coinbase Wallet in your app, you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to the [excludedWalletIds](./options#excludedwalletids) options array.
 
 <hr />
 
@@ -461,7 +461,7 @@ _Constructing a Solana transaction would depend on the library/package of your c
 
 #### Disable Phantom Wallet
 
-Phantom Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Phantom Wallet in your app you just need to pass Phantom Wallet id `a797aa35c0fadbfc1a53e7f675162ed5226968b44a19ee3d24385c64d1d3c393` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Phantom Wallet is enabled by default. However, in order to function properly, a few steps have to be done as described in the previous section. If you don't want to include/support Phantom Wallet in your app, you just need to pass Phantom Wallet id `a797aa35c0fadbfc1a53e7f675162ed5226968b44a19ee3d24385c64d1d3c393` to the [excludedWalletIds](./options#excludedwalletids) options array.
 
 <hr />
 
@@ -535,7 +535,7 @@ The rest of the configuration is identical to Phantom's configuration.
 
 #### Disable Solflare Wallet
 
-Solflare Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Solflare Wallet in your app you just need to pass Solflare Wallet id `1ca0bdd4747578705b1939af023d120677c64fe6ca76add81fda36e350605e79` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Solflare Wallet is enabled by default. However, in order to function properly, a few steps have to be done as described in the previous section. If you don't want to include/support Solflare Wallet in your app, you just need to pass Solflare Wallet id `1ca0bdd4747578705b1939af023d120677c64fe6ca76add81fda36e350605e79` to the [excludedWalletIds](./options#excludedwalletids) options array.
 
 ## Examples
 
