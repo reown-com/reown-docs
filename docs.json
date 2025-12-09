@@ -436,7 +436,7 @@
           },
           {
             "dropdown": "Svelte",
-            "icon": "http://localhost:3000/images/icons/svelte.svg",
+            "icon": "/images/icons/svelte.svg",
             "description": "AppKit on Svelte",
             "pages": [
               {
