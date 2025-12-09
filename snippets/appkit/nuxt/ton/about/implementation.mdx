@@ -1,0 +1,66 @@
+AppKit TON provides a set of Vue components and composables to easily connect TON wallets with your Nuxt application.
+
+First, configure your `nuxt.config.ts` for SSR compatibility:
+
+```javascript
+export default defineNuxtConfig({
+  ssr: false,
+  runtimeConfig: {
+    public: {
+      projectId: process.env.NUXT_PROJECT_ID
+    }
+  }
+})
+```
+
+In your `app.vue` file set up the following configuration:
+
+```javascript
+<script setup lang="ts">
+import { createAppKit } from '@reown/appkit/vue'
+import { TonAdapter } from '@reown/appkit-adapter-ton'
+import { ton, tonTestnet } from '@reown/appkit/networks'
+
+const config = useRuntimeConfig()
+const projectId = config.public.projectId
+
+const networks = [ton, tonTestnet]
+
+const tonAdapter = new TonAdapter({
+  projectId
+})
+
+const metadata = {
+  name: 'AppKit Nuxt',
+  description: 'AppKit Nuxt TON Example',
+  url: 'https://example.com',
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+createAppKit({
+  adapters: [tonAdapter],
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true,
+    email: false,
+    socials: []
+  }
+})
+</script>
+
+<template>
+  <client-only>
+    <div class="page-container">
+      <h1>Nuxt TON Example</h1>
+      <appkit-button />
+    </div>
+  </client-only>
+</template>
+```
+
+<Note>
+  The `ssr: false` configuration and `<client-only>` wrapper ensure AppKit works correctly with Nuxt's SSR environment.
+</Note>
+

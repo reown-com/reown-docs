@@ -2,10 +2,10 @@
 title: Installation
 ---
 
-import CloudBanner from "/snippets/cloud-banner.mdx";
-import ExpoBabel from "/snippets/appkit/react-native/expo/babel-config-expo53.mdx"
+import CloudBanner from '/snippets/cloud-banner.mdx'
+import ExpoBabel from '/snippets/appkit/react-native/expo/babel-config-expo53.mdx'
 
-AppKit for React Native enables seamless integration with multiple blockchain ecosystems, including **EVM chains (like Ethereum, Polygon, etc.), Solana, and Bitcoin**. It provides a unified API to manage wallet connections, interact with different chains, and build rich multi-chain applications.
+AppKit for React Native enables seamless integration with multiple blockchain ecosystems, including **EVM chains (like Ethereum, Polygon, etc.), Solana, Bitcoin, and TON**. It provides a unified API to manage wallet connections, interact with different chains, and build rich multi-chain applications.
 
 At the core of AppKit is a centralized `AppKit` instance that handles connection logic, manages various chain adapters, and provides data to your application via a React Context.
 
@@ -26,6 +26,7 @@ npx @reown/appkit-cli
 ### Add AppKit to your existing project
 
 Installation is a two-step process:
+
 1. Install the core AppKit library.
 2. Install the specific chain adapters you need for your application.
 
@@ -61,6 +62,7 @@ npx pod-install
 </Tabs>
 
 ### Chain Adapters
+
 <Note>For React Native CLI projects, use `npm install ...` or `yarn add ...`.</Note>
 
 Install the adapters for the chains you intend to support:
@@ -140,7 +142,7 @@ Install the adapters for the chains you intend to support:
         export const appKit = createAppKit({
           projectId,
           // Add your AppKitNetwork array for 'networks' matching the wagmiCoreConfig chains
-          // networks: [mainnet, sepolia, ...], 
+          // networks: [mainnet, sepolia, ...],
           adapters: [wagmiAdapter, /* other adapters for other chain types */],
           // ... other AppKit options
         });
@@ -182,6 +184,7 @@ Install the adapters for the chains you intend to support:
         <p>For a practical implementation example, you can refer to the <a href="https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/App.tsx" target="_blank\">Reown AppKit + Wagmi example on GitHub</a>.</p>
       </Tab>
     </Tabs>
+
   </Tab>
   <Tab title="Solana">
     <p>For Solana, install the Solana adapter:</p>
@@ -197,6 +200,7 @@ Install the adapters for the chains you intend to support:
 
     const solanaAdapter = new SolanaAdapter();
     ```
+
   </Tab>
   <Tab title="Bitcoin">
     <p>For Bitcoin, install the Bitcoin adapter:</p>
@@ -209,6 +213,20 @@ Install the adapters for the chains you intend to support:
 
     const bitcoinAdapter = new BitcoinAdapter();
     ```
+
+  </Tab>
+  <Tab title="TON">
+    <p>For TON, install the TON adapter:</p>
+    ```bash
+    npx expo install @reown/appkit-ton-react-native
+    ```
+    <p>To initialize the TON adapter:</p>
+    ```typescript
+    import { TonAdapter } from '@reown/appkit-ton-react-native';
+
+    const tonAdapter = new TonAdapter();
+    ```
+
   </Tab>
 </Tabs>
 
@@ -218,53 +236,53 @@ Install the adapters for the chains you intend to support:
 
 Before setting up AppKit, you need to wrap your app with `SafeAreaProvider` from `react-native-safe-area-context`. This is required for proper modal rendering and safe area handling.
 
-<Note>
-**Expo users**: You can skip this step as it's already handled internally by Expo.
-</Note>
+<Note>**Expo users**: You can skip this step as it's already handled internally by Expo.</Note>
 
 ```tsx
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 function App() {
-  return <SafeAreaProvider>{/* Your app content */}</SafeAreaProvider>;
+  return <SafeAreaProvider>{/* Your app content */}</SafeAreaProvider>
 }
 ```
 
 For more detailed information about `SafeAreaProvider`, check the [official documentation](https://appandflow.github.io/react-native-safe-area-context/api/safe-area-provider).
-
-
 
 ### 1. Initialize AppKit
 
 Create an instance of `AppKit`. This is where you'll configure your project ID (if using WalletConnect features) and define the chains your application will support, along with their respective adapters.
 
 <Note>
-To ensure proper functioning with React Native, make sure `import "@walletconnect/react-native-compat";` is the very first line in your configuration file (e.g., `AppKitConfig.ts`), even before other imports. This import handles necessary polyfills.
+  To ensure proper functioning with React Native, make sure `import
+  "@walletconnect/react-native-compat";` is the very first line in your configuration file (e.g.,
+  `AppKitConfig.ts`), even before other imports. This import handles necessary polyfills.
 </Note>
 
 ```typescript
 // src/AppKitConfig.ts (or wherever you prefer to configure it)
-import "@walletconnect/react-native-compat";
+import '@walletconnect/react-native-compat'
 
-import { createAppKit, bitcoin, solana, type AppKitNetwork } from '@reown/appkit-react-native';
-import { EthersAdapter } from '@reown/appkit-ethers-react-native';
-import { SolanaAdapter } from '@reown/appkit-solana-react-native';
-import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
+import { createAppKit, bitcoin, solana, type AppKitNetwork } from '@reown/appkit-react-native'
+import { EthersAdapter } from '@reown/appkit-ethers-react-native'
+import { SolanaAdapter } from '@reown/appkit-solana-react-native'
+import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native'
+import { TonAdapter } from '@reown/appkit-ton-react-native'
 
 // You can use 'viem/chains' or define your own chains using `AppKitNetwork` type. Check Options/networks for more detailed info
-import { mainnet, polygon } from 'viem/chains';
+import { mainnet, polygon } from 'viem/chains'
 
-const projectId = 'YOUR_PROJECT_ID'; // Obtain from https://dashboard.reown.com/
+const projectId = 'YOUR_PROJECT_ID' // Obtain from https://dashboard.reown.com/
 
-const ethersAdapter = new EthersAdapter();
-const solanaAdapter = new SolanaAdapter();
-const bitcoinAdapter = new BitcoinAdapter();
+const ethersAdapter = new EthersAdapter()
+const solanaAdapter = new SolanaAdapter()
+const bitcoinAdapter = new BitcoinAdapter()
+const tonAdapter = new TonAdapter()
 
 export const appKit = createAppKit({
   projectId,
   networks: [mainnet, polygon, solana, bitcoin],
   defaultNetwork: mainnet, // Optional: set a default network
-  adapters: [ethersAdapter, solanaAdapter, bitcoinAdapter],
+  adapters: [ethersAdapter, solanaAdapter, bitcoinAdapter, tonAdapter],
 
   // Other AppKit options (e.g., metadata for your dApp)
   metadata: {
@@ -273,15 +291,17 @@ export const appKit = createAppKit({
     url: 'https://myapp.com',
     icons: ['https://myapp.com/icon.png'],
     redirect: {
-      native: "YOUR_APP_SCHEME://",
-      universal: "YOUR_APP_UNIVERSAL_LINK.com",
-    },
+      native: 'YOUR_APP_SCHEME://',
+      universal: 'YOUR_APP_UNIVERSAL_LINK.com'
+    }
   }
-});
+})
 ```
 
 <Note>
-**Default Features:** AppKit comes with email and social login, swaps, and onramp features enabled by default. To disable any of these features, see the [Options](./options) documentation for configuration details.
+  **Default Features:** AppKit comes with email and social login, swaps, and onramp features enabled
+  by default. To disable any of these features, see the [Options](./options) documentation for
+  configuration details.
 </Note>
 
 ### 2. Configure Storage
@@ -295,31 +315,31 @@ export interface Storage {
   /**
    * Returns all keys in storage.
    */
-  getKeys(): Promise<string[]>;
+  getKeys(): Promise<string[]>
 
   /**
    * Returns all key-value entries in storage.
    */
-  getEntries<T = any>(): Promise<[string, T][]>;
+  getEntries<T = any>(): Promise<[string, T][]>
 
   /**
    * Get an item from storage for a given key.
    * @param key The key to retrieve.
    */
-  getItem<T = any>(key: string): Promise<T | undefined>;
+  getItem<T = any>(key: string): Promise<T | undefined>
 
   /**
    * Set an item in storage for a given key.
    * @param key The key to set.
    * @param value The value to set.
    */
-  setItem<T = any>(key: string, value: T): Promise<void>;
+  setItem<T = any>(key: string, value: T): Promise<void>
 
   /**
    * Remove an item from storage for a given key.
    * @param key The key to remove.
    */
-  removeItem(key: string): Promise<void>;
+  removeItem(key: string): Promise<void>
 }
 ```
 
@@ -331,28 +351,30 @@ Finally, import your custom storage and pass it to `createAppKit` in your `AppKi
 
 ```typescript {8,24}
 // src/AppKitConfig.ts (or wherever you prefer to configure it)
-import "@walletconnect/react-native-compat";
+import '@walletconnect/react-native-compat'
 
-import { createAppKit, bitcoin, solana, type AppKitNetwork } from '@reown/appkit-react-native';
-import { EthersAdapter } from '@reown/appkit-ethers-react-native';
-import { SolanaAdapter } from '@reown/appkit-solana-react-native';
-import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native';
-import { storage } from './StorageUtil'; // Import your custom storage
+import { createAppKit, bitcoin, solana, type AppKitNetwork } from '@reown/appkit-react-native'
+import { EthersAdapter } from '@reown/appkit-ethers-react-native'
+import { SolanaAdapter } from '@reown/appkit-solana-react-native'
+import { BitcoinAdapter } from '@reown/appkit-bitcoin-react-native'
+import { TonAdapter } from '@reown/appkit-ton-react-native'
+import { storage } from './StorageUtil' // Import your custom storage
 
 // You can use 'viem/chains' or define your own chains using `AppKitNetwork` type. Check Options/networks for more detailed info
-import { mainnet, polygon } from 'viem/chains';
+import { mainnet, polygon } from 'viem/chains'
 
-const projectId = 'YOUR_PROJECT_ID'; // Obtain from https://dashboard.reown.com/
+const projectId = 'YOUR_PROJECT_ID' // Obtain from https://dashboard.reown.com/
 
-const ethersAdapter = new EthersAdapter();
-const solanaAdapter = new SolanaAdapter();
-const bitcoinAdapter = new BitcoinAdapter();
+const ethersAdapter = new EthersAdapter()
+const solanaAdapter = new SolanaAdapter()
+const bitcoinAdapter = new BitcoinAdapter()
+const tonAdapter = new TonAdapter()
 
 export const appKit = createAppKit({
   projectId,
   networks: [mainnet, polygon, solana, bitcoin],
   defaultNetwork: mainnet,
-  adapters: [ethersAdapter, solanaAdapter, bitcoinAdapter],
+  adapters: [ethersAdapter, solanaAdapter, bitcoinAdapter, tonAdapter],
   storage,
 
   // Other AppKit options (e.g., metadata for your dApp)
@@ -362,11 +384,11 @@ export const appKit = createAppKit({
     url: 'https://myapp.com',
     icons: ['https://myapp.com/icon.png'],
     redirect: {
-      native: "YOUR_APP_SCHEME://",
-      universal: "YOUR_APP_UNIVERSAL_LINK.com",
-    },
+      native: 'YOUR_APP_SCHEME://',
+      universal: 'YOUR_APP_UNIVERSAL_LINK.com'
+    }
   }
-});
+})
 ```
 
 ### 3. Provide AppKit Instance
@@ -375,13 +397,13 @@ Wrap your application with the `AppKitProvider` to make the `AppKit` instance av
 
 ```tsx {6,13,15}
 // App.tsx
-import "@walletconnect/react-native-compat";
+import '@walletconnect/react-native-compat'
 
-import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AppKitProvider } from '@reown/appkit-react-native';
-import { appKit } from './AppKitConfig'; // Your configured AppKit instance
-import YourAppRootComponent from './YourAppRootComponent';
+import React from 'react'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { AppKitProvider } from '@reown/appkit-react-native'
+import { appKit } from './AppKitConfig' // Your configured AppKit instance
+import YourAppRootComponent from './YourAppRootComponent'
 
 function App() {
   return (
@@ -390,10 +412,10 @@ function App() {
         <YourAppRootComponent />
       </AppKitProvider>
     </SafeAreaProvider>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 ### 4. Render AppKit UI
@@ -402,8 +424,8 @@ To display the AppKit modal and other potential UI elements, you need to include
 
 ```tsx {3,11}
 // YourAppRootComponent.tsx (or App.tsx if it contains your main layout)
-import React from 'react';
-import { AppKit } from '@reown/appkit-react-native';
+import React from 'react'
+import { AppKit } from '@reown/appkit-react-native'
 // ... other imports for your app components.
 
 function YourAppRootComponent() {
@@ -413,25 +435,26 @@ function YourAppRootComponent() {
       {/* Add the AppKit component here to render its UI */}
       <AppKit />
     </>
-  );
+  )
 }
 
-export default YourAppRootComponent;
+export default YourAppRootComponent
 ```
 
 <Note>
 **Expo Android Modal Issue**: If you're using Expo Router and the modal doesn't open on Android, you may need to wrap the `<AppKit />` component in a View with absolute positioning. Here's the workaround:
 
 ```tsx
-import { View } from 'react-native';
+import { View } from 'react-native'
 
 // Replace the simple <AppKit /> with:
-<View style={{ position: "absolute", height: "100%", width: "100%" }}>
+;<View style={{ position: 'absolute', height: '100%', width: '100%' }}>
   <AppKit />
 </View>
 ```
 
 This is a known issue with Expo Router on Android and this workaround resolves the modal rendering problem.
+
 </Note>
 
 ### 5. Using AppKit in Components
@@ -440,11 +463,11 @@ You can now access AppKit functionalities (like connecting, getting account stat
 
 ```tsx {2,5,6}
 // components/ConnectButton.tsx
-import { useAppKit, useAccount } from '@reown/appkit-react-native';
+import { useAppKit, useAccount } from '@reown/appkit-react-native'
 
 function ConnectButton() {
-  const { open, disconnect } = useAppKit();
-  const { address, isConnected, chainId } = useAccount();
+  const { open, disconnect } = useAppKit()
+  const { address, isConnected, chainId } = useAccount()
 
   if (isConnected) {
     return (
@@ -453,14 +476,15 @@ function ConnectButton() {
         <p>Address: {address}</p>
         <button onClick={() => disconnect()}>Disconnect</button>
       </div>
-    );
+    )
   }
 
-  return <button onClick={() => open()}>Connect Wallet</button>;
+  return <button onClick={() => open()}>Connect Wallet</button>
 }
 
-export default ConnectButton;
+export default ConnectButton
 ```
+
 For detailed examples on specific actions like signing messages, sending transactions, or switching networks, please refer to the [Hooks](./hooks#useprovider) and [Examples](#examples) sections.
 
 **Pre-built Components**
@@ -480,6 +504,7 @@ For detailed information about all available components, hooks, and examples for
 - Prioritizing installed wallets at the top of the wallet selection list
 
 All 600+ wallets in the AppKit ecosystem work via WalletConnect protocol regardless of this configuration. You only need to add the wallets your users most commonly have installed.
+
 </Info>
 
 To enable AppKit to detect wallets installed on the device, you can make specific changes to the native code of your project.
@@ -487,8 +512,10 @@ To enable AppKit to detect wallets installed on the device, you can make specifi
 <Tabs groupId="rn-environment">
   <Tab title="Expo">
 
-<Tabs >
+<Tabs>
+
 <Tab title="iOS">
+
 To enable AppKit to detect wallets installed on the device in your Expo project for iOS, follow these steps:
 
 1. Open your `app.json` (or `app.config.js`) file.
@@ -539,48 +566,44 @@ To enable AppKit to detect wallets installed on the device in your Expo project 
 ```js
 // based on https://github.com/expo/config-plugins/issues/123#issuecomment-1746757954
 
-const {
-  AndroidConfig,
-  withAndroidManifest,
-  createRunOncePlugin,
-} = require("expo/config-plugins");
+const { AndroidConfig, withAndroidManifest, createRunOncePlugin } = require('expo/config-plugins')
 
 const queries = {
   package: [
-    { $: { "android:name": "com.wallet.crypto.trustapp" } },
-    { $: { "android:name": "io.metamask" } },
-    { $: { "android:name": "me.rainbow" } },
-    { $: { "android:name": "io.zerion.android" } },
-    { $: { "android:name": "io.gnosis.safe" } },
-    { $: { "android:name": "com.uniswap.mobile" } },
+    { $: { 'android:name': 'com.wallet.crypto.trustapp' } },
+    { $: { 'android:name': 'io.metamask' } },
+    { $: { 'android:name': 'me.rainbow' } },
+    { $: { 'android:name': 'io.zerion.android' } },
+    { $: { 'android:name': 'io.gnosis.safe' } },
+    { $: { 'android:name': 'com.uniswap.mobile' } }
     // Add other wallet package names here
-  ],
-};
+  ]
+}
 
 /**
  * @param {import('@expo/config-plugins').ExportedConfig} config
  */
-const withAndroidManifestService = (config) => {
-  return withAndroidManifest(config, (config) => {
+const withAndroidManifestService = config => {
+  return withAndroidManifest(config, config => {
     config.modResults.manifest = {
       ...config.modResults.manifest,
-      queries,
-    };
+      queries
+    }
 
-    return config;
-  });
-};
+    return config
+  })
+}
 
 module.exports = createRunOncePlugin(
   withAndroidManifestService,
-  "withAndroidManifestService",
-  "1.0.0"
-);
+  'withAndroidManifestService',
+  '1.0.0'
+)
 ```
 
 5. Add the wallet package names you want to be detected by your app.
+
 </Tab>
-</Tabs>
 
 </Tab>
   <Tab title="React Native CLI">
@@ -637,7 +660,9 @@ Example:
 ## Connectors
 
 <Info>
-**Optional feature** - These connectors are only needed if you want to support specific wallets that use custom connection protocols. All 600+ wallets in the AppKit ecosystem work via WalletConnect protocol regardless of this configuration.
+  **Optional feature** - These connectors are only needed if you want to support specific wallets
+  that use custom connection protocols. All 600+ wallets in the AppKit ecosystem work via
+  WalletConnect protocol regardless of this configuration.
 </Info>
 
 AppKit supports various custom connectors for specific wallets that use their own connection protocols. These connectors allow you to integrate popular wallets like Coinbase and Phantom directly into your AppKit configuration.
@@ -647,7 +672,9 @@ AppKit supports various custom connectors for specific wallets that use their ow
 Coinbase Wallet is a popular wallet that uses a custom connection protocol. To enable it in your AppKit configuration, you'll need to install the Coinbase SDK and add a specific connector.
 
 <Note>
-**Expo Compatibility:** Coinbase SDK works with [Expo Prebuild](https://docs.expo.dev/workflow/prebuild/) but not with Expo Go. You'll need to use `expo prebuild` to generate native code before building your app.
+  **Expo Compatibility:** Coinbase SDK works with [Expo
+  Prebuild](https://docs.expo.dev/workflow/prebuild/) but not with Expo Go. You'll need to use `expo
+  prebuild` to generate native code before building your app.
 </Note>
 
 To enable Coinbase Wallet, follow these steps:
@@ -697,41 +724,38 @@ npx pod-install
 
 ```typescript {4-5,9-11}
 // src/AppKitConfig.ts (or wherever you prefer to configure it)
-import "@walletconnect/react-native-compat";
+import '@walletconnect/react-native-compat'
 
-import { createAppKit } from '@reown/appkit-react-native';
-import { MMKV } from 'react-native-mmkv';
-import { CoinbaseConnector } from '@reown/appkit-coinbase-react-native';
+import { createAppKit } from '@reown/appkit-react-native'
+import { MMKV } from 'react-native-mmkv'
+import { CoinbaseConnector } from '@reown/appkit-coinbase-react-native'
 
 export const appKit = createAppKit({
   // ...
-  extraConnectors: [
-    new CoinbaseConnector({ storage: new MMKV() })
-  ],
+  extraConnectors: [new CoinbaseConnector({ storage: new MMKV() })]
   // ...
-});
+})
 ```
 
 7. Add the Coinbase response handler to process wallet responses:
 
 ```tsx
-import { handleResponse } from "@coinbase/wallet-mobile-sdk";
+import { handleResponse } from '@coinbase/wallet-mobile-sdk'
 
 // Add this to your app's deeplink handling code
 useEffect(() => {
-  const sub = Linking.addEventListener("url", ({ url }) => {
-    const handledBySdk = handleResponse(new URL(url));
+  const sub = Linking.addEventListener('url', ({ url }) => {
+    const handledBySdk = handleResponse(new URL(url))
     if (!handledBySdk) {
       // Handle other deeplinks
     }
-  });
+  })
 
-  return () => sub.remove();
-}, []);
+  return () => sub.remove()
+}, [])
 ```
 
 For more detailed information, check the [Coinbase docs](https://mobilewalletprotocol.github.io/wallet-mobile-sdk/docs/client-sdk/rn-install).
-
 
 ### Phantom & Solflare
 
@@ -743,25 +767,25 @@ Here's how to update your `AppKitConfig.ts` file, using the example from the [Im
 
 ```typescript {4,8-11}
 // src/AppKitConfig.ts (or wherever you prefer to configure it)
-import "@walletconnect/react-native-compat";
+import '@walletconnect/react-native-compat'
 
-import { createAppKit } from '@reown/appkit-react-native';
-import { SolanaAdapter, PhantomConnector, Solflare } from '@reown/appkit-solana-react-native';
+import { createAppKit } from '@reown/appkit-react-native'
+import { SolanaAdapter, PhantomConnector, Solflare } from '@reown/appkit-solana-react-native'
 
 export const appKit = createAppKit({
   // ...
   extraConnectors: [
     new PhantomConnector({ cluster: 'mainnet-beta' }), // Or 'devnet', 'testnet'
     new SolflareConnector({ cluster: 'mainnet-beta' }) // Or 'devnet', 'testnet'
-  ],
+  ]
   // ...
-});
+})
 ```
 
 <Note>
-The `cluster` option can be set to `'mainnet-beta'`, `'devnet'`, or `'testnet'` depending on which Solana cluster you want to connect to.
+  The `cluster` option can be set to `'mainnet-beta'`, `'devnet'`, or `'testnet'` depending on which
+  Solana cluster you want to connect to.
 </Note>
-
 
 ## Examples
 

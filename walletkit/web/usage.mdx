@@ -2,7 +2,7 @@
 title: Usage
 ---
 
-import CloudBanner from "/snippets/cloud-banner.mdx";
+import CloudBanner from '/snippets/cloud-banner.mdx'
 
 ## Overview
 
@@ -24,12 +24,12 @@ This section provides instructions on how to initialize the WalletKit client, ap
 This integration automatically opens a new web wallet tab when a user clicks "Connect" in a dApp. The wallet handles the WalletConnect URI automatically, meaning users don't need to manually copy and paste the URI. This provides a seamless, one-click connection experience.
 
 <Frame caption="Abstract Global Wallet to Wolfswap">
-<video
-  controls
-  autoPlay
-  className="w-full aspect-video"
-  src="/images/web-wallet-demo.mp4"
-></video>
+  <video
+    controls
+    autoPlay
+    className="w-full aspect-video"
+    src="/images/web-wallet-demo.mp4"
+  ></video>
 </Frame>
 
 ### QR Code Integration
@@ -37,17 +37,17 @@ This integration automatically opens a new web wallet tab when a user clicks "Co
 This integration only handles the session proposal and approval via the WalletConnect QR code. The user will need to manually copy and paste the WalletConnect URI into the wallet.
 
 <Frame caption="Safe Wallet Connecting to AppKit Lab">
-<video
-  controls
-  autoPlay
-  className="w-full aspect-video"
-  src="/images/web-wallet-qr-demo.mp4"
-></video>
+  <video
+    controls
+    autoPlay
+    className="w-full aspect-video"
+    src="/images/web-wallet-qr-demo.mp4"
+  ></video>
 </Frame>
 
 ## Cloud Configuration
 
-Create a new project on Reown Dashboard at https://dashboard.reown.com and obtain a new project ID.
+Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtain a new project ID.
 
 <CloudBanner />
 
@@ -56,26 +56,28 @@ Create a new project on Reown Dashboard at https://dashboard.reown.com and obtai
 Create a new instance from Core and initialize it with a projectId created from installation. Next, create WalletKit instance by calling init on walletKit. Passing in the options object containing metadata about the app and an optional relay URL.
 
 <Info>
-Make sure you initialize `walletKit` globally and use the same instance for all your sessions. For React-based apps, you can initialize it in the root component and export it to use in other components.
+  Make sure you initialize `walletKit` globally and use the same instance for all your sessions. For
+  React-based apps, you can initialize it in the root component and export it to use in other
+  components.
 </Info>
 
 ```javascript
-import { Core } from "@walletconnect/core";
-import { WalletKit } from "@reown/walletkit";
+import { Core } from '@walletconnect/core'
+import { WalletKit } from '@reown/walletkit'
 
 const core = new Core({
-  projectId: process.env.PROJECT_ID,
-});
+  projectId: process.env.PROJECT_ID
+})
 
 const walletKit = await WalletKit.init({
   core, // <- pass the shared `core` instance
   metadata: {
-    name: "Demo app",
-    description: "Demo Client as Wallet/Peer",
-    url: "https://reown.com/walletkit",
-    icons: [],
-  },
-});
+    name: 'Demo app',
+    description: 'Demo Client as Wallet/Peer',
+    url: 'https://reown.com/walletkit',
+    icons: []
+  }
+})
 ```
 
 ### Core Instance Sharing
@@ -89,27 +91,31 @@ Starting from newer versions of WalletKit, Core instances are shared globally by
 ```javascript
 const core = new Core({
   projectId: process.env.PROJECT_ID,
-  customStoragePrefix: `test-${Date.now()}`, // Unique prefix for each test
-});
+  customStoragePrefix: `test-${Date.now()}` // Unique prefix for each test
+})
 ```
 
 <Warning>
-Don't use randomly generated `customStoragePrefix` in production - this will cause the client to create new storage each time it is initialized. The client will not be able to persist/read existing data and all existing sessions will be lost after each reload.
+  Don't use randomly generated `customStoragePrefix` in production - this will cause the client to
+  create new storage each time it is initialized. The client will not be able to persist/read
+  existing data and all existing sessions will be lost after each reload.
 </Warning>
 
 #### Option 2: Disable global Core sharing
 
 ```javascript
 // Set environment variable before initializing Core
-process.env.DISABLE_GLOBAL_CORE = "true";
+process.env.DISABLE_GLOBAL_CORE = 'true'
 
 const core = new Core({
-  projectId: process.env.PROJECT_ID,
-});
+  projectId: process.env.PROJECT_ID
+})
 ```
 
 <Note>
-The global Core sharing behavior was introduced to prevent resource waste when multiple SDK instances are created. If you're running parallel tests and experiencing cross-test interference, use one of the solutions above to ensure proper test isolation.
+  The global Core sharing behavior was introduced to prevent resource waste when multiple SDK
+  instances are created. If you're running parallel tests and experiencing cross-test interference,
+  use one of the solutions above to ensure proper test isolation.
 </Note>
 
 ## Session
@@ -133,7 +139,8 @@ When opening the wallet directly from the dApp, the `WC_URI` will be in the foll
 We recommend closing the web wallet tab after the user approves the request and redirecting back to the dApp. For web requests, redirect to the original browser tab, and for mobile requests, redirect to the native mobile dApp.
 
 <Note>
-To test your web wallet connection flow, use our [Appkit Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL. 
+  To test your web wallet connection flow, use our [Appkit
+  Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL.
 </Note>
 
 ### Handling Session Requests
@@ -147,7 +154,8 @@ When a dApp sends a session request to your wallet, the request will be availabl
 This format allows your wallet to identify both the specific request and the session it belongs to.
 
 <Note>
-To test your web wallet connection flow, use our [Appkit Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL. 
+  To test your web wallet connection flow, use our [Appkit
+  Laboratory](https://appkit-lab.reown.com/) by adding a custom wallet with your web wallet URL.
 </Note>
 
 ### Handling Redirects
@@ -155,6 +163,7 @@ To test your web wallet connection flow, use our [Appkit Laboratory](https://app
 When handling redirects after session approval or request completion, you should:
 
 1. For web dApps:
+
    - Redirect back to the original browser tab using `window.opener.location.href`
    - Close the current wallet tab using `window.close()`
 
@@ -168,21 +177,21 @@ Example implementation:
 ```javascript
 function handleRedirect(session) {
   // Check if this is a native app
-  const isNativeApp = session.peer.metadata.redirect !== undefined;
-  
+  const isNativeApp = session.peer.metadata.redirect !== undefined
+
   if (isNativeApp) {
     // Redirect to native app if URL is available
     if (session.peer.metadata.redirect) {
-      window.location.href = session.peer.metadata.redirect;
+      window.location.href = session.peer.metadata.redirect
     } else {
       // Show "Return to App" message
-      showReturnToAppMessage();
+      showReturnToAppMessage()
     }
   } else {
     // For web dApps, redirect back to original tab
     if (window.opener) {
-      window.opener.location.href = session.peer.metadata.url;
-      window.close();
+      window.opener.location.href = session.peer.metadata.url
+      window.close()
     }
   }
 }
@@ -273,7 +282,7 @@ const approvedNamespaces = buildApprovedNamespaces({
 You can get the wallet active sessions using the `getActiveSessions` function.
 
 ```js
-const activeSessions = walletKit.getActiveSessions();
+const activeSessions = walletKit.getActiveSessions()
 ```
 
 ### EVM methods & events
@@ -323,16 +332,13 @@ The `session_proposal` event is emitted when a dapp initiates a new session with
 The `pair` method initiates a WalletConnect pairing process with a dapp using the given `uri` (QR code from the dapps). To learn more about pairing, checkout out the [docs](/advanced/api/core/pairing).
 
 ```javascript
-walletKit.on(
-  "session_proposal",
-  async (proposal: WalletKitTypes.SessionProposal) => {
-    const session = await walletKit.approveSession({
-      id: proposal.id,
-      namespaces,
-    });
-  }
-);
-await walletKit.pair({ uri });
+walletKit.on('session_proposal', async (proposal: WalletKitTypes.SessionProposal) => {
+  const session = await walletKit.approveSession({
+    id: proposal.id,
+    namespaces
+  })
+})
+await walletKit.pair({ uri })
 ```
 
 ### 🛠️ Usage examples
@@ -364,15 +370,12 @@ Additionally, we highly recommend you to use our `namespace` builder utility tha
 In the event you want to reject the session proposal, call the `rejectSession` method. The `getSDKError` function comes from the `@walletconnect/utils` [library](https://github.com/WalletConnect/walletconnect-monorepo/tree/v2.0/packages/utils).
 
 ```javascript
-walletKit.on(
-  "session_proposal",
-  async (proposal: WalletKitTypes.SessionProposal) => {
-    await walletKit.rejectSession({
-      id: proposal.id,
-      reason: getSdkError("USER_REJECTED_METHODS"),
-    });
-  }
-);
+walletKit.on('session_proposal', async (proposal: WalletKitTypes.SessionProposal) => {
+  await walletKit.rejectSession({
+    id: proposal.id,
+    reason: getSdkError('USER_REJECTED_METHODS')
+  })
+})
 ```
 
 ### 🛠️ Usage examples
@@ -404,24 +407,21 @@ As an example, if the dapp requests a `personal_sign` method, you can extract th
 To sign the message, you can use your wallet's `signMessage` method and pass in the message. The signed message, along with the `id` from the event payload, can then be used to create a `response` object, which can be passed into `respondSessionRequest`.
 
 ```javascript
-walletKit.on(
-  "session_request",
-  async (event: WalletKitTypes.SessionRequest) => {
-    const { topic, params, id } = event;
-    const { request } = params;
-    const requestParamsMessage = request.params[0];
+walletKit.on('session_request', async (event: WalletKitTypes.SessionRequest) => {
+  const { topic, params, id } = event
+  const { request } = params
+  const requestParamsMessage = request.params[0]
 
-    // convert `requestParamsMessage` by using a method like hexToUtf8
-    const message = hexToUtf8(requestParamsMessage);
+  // convert `requestParamsMessage` by using a method like hexToUtf8
+  const message = hexToUtf8(requestParamsMessage)
 
-    // sign the message
-    const signedMessage = await wallet.signMessage(message);
+  // sign the message
+  const signedMessage = await wallet.signMessage(message)
 
-    const response = { id, result: signedMessage, jsonrpc: "2.0" };
+  const response = { id, result: signedMessage, jsonrpc: '2.0' }
 
-    await walletKit.respondSessionRequest({ topic, response });
-  }
-);
+  await walletKit.respondSessionRequest({ topic, response })
+})
 ```
 
 To reject a session request, the response should be similar to this.
@@ -429,12 +429,12 @@ To reject a session request, the response should be similar to this.
 ```javascript
 const response = {
   id,
-  jsonrpc: "2.0",
+  jsonrpc: '2.0',
   error: {
     code: 5000,
-    message: "User rejected.",
-  },
-};
+    message: 'User rejected.'
+  }
+}
 ```
 
 ### 🛠️ Usage examples
@@ -459,13 +459,13 @@ Example usage:
 `id` argument being the request id from the request payload.
 
 ```javascript
-import { formatJsonRpcResult } from "@walletconnect/jsonrpc-utils";
+import { formatJsonRpcResult } from '@walletconnect/jsonrpc-utils'
 
-const signature = await cryptoWallet.signTransaction(signTransaction);
+const signature = await cryptoWallet.signTransaction(signTransaction)
 const response = await walletKit.respondSessionRequest({
   topic: session.topic,
-  response: formatJsonRpcResult(id, signature),
-});
+  response: formatJsonRpcResult(id, signature)
+})
 ```
 
 ### Updating a Session
@@ -477,48 +477,48 @@ After you update the session, the other peer will receive a `session_update` eve
 An example adding a new account to an existing session:
 
 ```javascript
-const namespaces = session.namespaces;
+const namespaces = session.namespaces
 const accounts = [
-  "eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
-  "eip155:1:0x1234567890123456789012345678901234567890",
-];
+  'eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb',
+  'eip155:1:0x1234567890123456789012345678901234567890'
+]
 const updatedNamespaces = {
   ...namespaces,
   eip155: {
     ...namespaces.eip155,
-    accounts,
-  },
-};
+    accounts
+  }
+}
 const { acknowledged } = await walletKit.updateSession({
   topic: session.topic,
-  namespaces: updatedNamespaces,
-});
+  namespaces: updatedNamespaces
+})
 // If you wish to be notified when the dapp acknowledges the update.
 // note that if the dapp is offline `acknowledged` will not resolve until it comes back online
-await acknowledged();
+await acknowledged()
 ```
 
 An example adding a new chain to an existing session:
 
 ```javascript
-const namespaces = session.namespaces;
-const chains = ["eip155:1", "eip155:137"];
+const namespaces = session.namespaces
+const chains = ['eip155:1', 'eip155:137']
 const accounts = [
-  "eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
-  "eip155:137:0x1234567890123456789012345678901234567890",
-];
+  'eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb',
+  'eip155:137:0x1234567890123456789012345678901234567890'
+]
 const updatedNamespaces = {
   ...namespaces,
   eip155: {
     ...namespaces.eip155,
     accounts,
-    chains,
-  },
-};
+    chains
+  }
+}
 await walletKit.updateSession({
   topic: session.topic,
-  namespaces: updatedNamespaces,
-});
+  namespaces: updatedNamespaces
+})
 ```
 
 ### 🛠️ Usage examples
@@ -552,10 +552,10 @@ Additionally, we highly recommend you to use our `namespace` builder utility tha
 Sessions have a default expiry of 7 days. To extend a session by an additional 7 days, call `.extendSession` method and pass in the `topic` of the session you wish to extend.
 
 ```javascript
-const { acknowledged } = await walletKit.extendSession({ topic });
+const { acknowledged } = await walletKit.extendSession({ topic })
 // if you wish to be notified when the dapp acks the extend
 // note that if the dapp is offline `acknowledged` will not resolve until it comes back online
-await acknowledged();
+await acknowledged()
 ```
 
 ### 🛠️ Usage examples
@@ -579,6 +579,7 @@ The other peer will receive a `session_delete` and be notified that the session 
 **Note**
 
 It's important that you're subscribed to the `session_delete` event as well, to be notified when the other peer initiates a disconnect.
+
 </Note>
 <Tip>
 We recommend using the `getSDKError` utility function, that will provide ready-to-use `reason` payloads and is available in the `@walletconnect/utils` [library](https://github.com/WalletConnect/walletconnect-monorepo/tree/v2.0/packages/utils).
@@ -587,8 +588,8 @@ We recommend using the `getSDKError` utility function, that will provide ready-t
 ```javascript
 await walletKit.disconnectSession({
   topic,
-  reason: getSdkError("USER_DISCONNECTED"),
-});
+  reason: getSdkError('USER_DISCONNECTED')
+})
 ```
 
 ### 🛠️ Usage examples
@@ -611,11 +612,11 @@ To emit session events, call the `emitSessionEvent` and pass in the params. If y
 await walletKit.emitSessionEvent({
   topic,
   event: {
-    name: "accountsChanged",
-    data: ["0xab16a96D359eC26a11e2C2b3d8f8B8942d5Bfcdb"],
+    name: 'accountsChanged',
+    data: ['0xab16a96D359eC26a11e2C2b3d8f8B8942d5Bfcdb']
   },
-  chainId: "eip155:1",
-});
+  chainId: 'eip155:1'
+})
 ```
 
 In the following example, the wallet will emit `session_event` when the wallet switches chains.
@@ -624,9 +625,9 @@ In the following example, the wallet will emit `session_event` when the wallet s
 await walletKit.emitSessionEvent({
   topic,
   event: {
-    name: "chainChanged",
-    data: 1,
+    name: 'chainChanged',
+    data: 1
   },
-  chainId: "eip155:1",
-});
+  chainId: 'eip155:1'
+})
 ```

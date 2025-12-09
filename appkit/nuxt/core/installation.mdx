@@ -2,23 +2,21 @@
 title: Installation
 ---
 
-import CloudBanner from "/snippets/cloud-banner.mdx";
+import CloudBanner from '/snippets/cloud-banner.mdx'
 
-import NuxtWagmiImplementation from "/snippets/appkit/nuxt/wagmi/about/implementation.mdx";
-import NuxtWagmiModal from "/snippets/appkit/nuxt/wagmi/about/triggermodal.mdx";
+import NuxtWagmiImplementation from '/snippets/appkit/nuxt/wagmi/about/implementation.mdx'
 
-import NuxtEthersImplementation from "/snippets/appkit/nuxt/ethers/about/implementation.mdx";
-import NuxtEthersModal from "/snippets/appkit/nuxt/ethers/about/triggermodal.mdx";
+import NuxtEthersImplementation from '/snippets/appkit/nuxt/ethers/about/implementation.mdx'
 
-import NuxtSolanaImplementation from "/snippets/appkit/nuxt/solana/about/implementation.mdx";
-import NuxtSolanaModal from "/snippets/appkit/nuxt/solana/about/triggermodal.mdx";
+import NuxtSolanaImplementation from '/snippets/appkit/nuxt/solana/about/implementation.mdx'
 
-import NuxtBitcoinImplementation from "/snippets/appkit/nuxt/bitcoin/about/implementation.mdx";
-import NuxtBitcoinModal from "/snippets/appkit/nuxt/bitcoin/about/triggermodal.mdx";
+import NuxtBitcoinImplementation from '/snippets/appkit/nuxt/bitcoin/about/implementation.mdx'
+
+import NuxtTonImplementation from '/snippets/appkit/nuxt/ton/about/implementation.mdx'
 
 # Nuxt
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
+AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin and TON.
 Choose one of these to get started.
 
 <Note>
@@ -120,11 +118,34 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 </CodeGroup>
 
 </Tab>
+<Tab title="TON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ton
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 ## Cloud Configuration
 
-Create a new project on Reown Dashboard at https://dashboard.reown.com and obtain a new project ID.
+Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtain a new project ID.
 
 <CloudBanner />
 
@@ -154,87 +175,94 @@ Check the Nuxt Wagmi example
 <NuxtBitcoinImplementation />
 
 </Tab>
+<Tab title="TON">
+
+<NuxtTonImplementation />
+
+</Tab>
 </Tabs>
 
 ## Trigger the modal
 
-The recommended way to trigger the modal in Nuxt is to use the `<appkit-button />` web component wrapped in `<client-only>` for SSR compatibility:
+<Note>
+  AppKit for Nuxt requires SSR compatibility considerations. Make sure to use the `<client-only>` wrapper and configure your Nuxt app appropriately.
+</Note>
 
-``` javascript
+<Tabs>
+<Tab title="AppKit">
+
+To open AppKit you can use our [**web components**](/appkit/vue/core/components) or build your own button with AppKit [**composables**](/appkit/vue/core/composables#useAppKit).
+
+<CodeGroup>
+
+```vue ConnectButton.vue
 <template>
   <client-only>
-    <div class="appkit-buttons-container">
-      <appkit-button />
-    </div>
+    <appkit-button />
   </client-only>
 </template>
 ```
 
-The `<appkit-button />` is a web component that's automatically registered when AppKit is initialized. The `<client-only>` wrapper ensures it only renders on the client side, preventing SSR hydration issues.
-
-### Alternative approaches
-
-You can also trigger the modal programmatically using the AppKit composables:
-
-``` javascript
+```vue ConnectButtonWithComposables.vue
 <script setup lang="ts">
-import { useAppKit } from '@reown/appkit/vue';
+import { useAppKit } from '@reown/appkit/vue'
 
-const { open } = useAppKit();
+const { open } = useAppKit()
+</script>
 
-function openModal() {
-  open();
+<template>
+  <client-only>
+    <button @click="open()">Open Connect Modal</button>
+    <button @click="open({ view: 'Networks' })">Open Network Modal</button>
+  </client-only>
+</template>
+```
+
+</CodeGroup>
+
+<Note>
+  The `<client-only>` wrapper ensures AppKit components only render on the client side, preventing SSR hydration issues.
+</Note>
+
+</Tab>
+<Tab title="AppKit Core">
+
+To open AppKit Core you need to call the `connect` function from the Universal Connector.
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+let session = ref(null)
+
+async function handleConnect() {
+  // universalConnector is the universal connector instance from the implementation section
+  if (!universalConnector) {
+    return
+  }
+
+  const { session: providerSession } = await universalConnector.connect()
+  session.value = providerSession
 }
 
-function openConnectModal() {
-  open({ view: 'Connect' });
-}
-
-function openAccountModal() {
-  open({ view: 'Account' });
+async function handleDisconnect() {
+  if (!universalConnector) {
+    return
+  }
+  await universalConnector.disconnect()
+  session.value = null
 }
 </script>
 
 <template>
   <client-only>
-    <button @click="openModal">Open Modal</button>
-    <button @click="openConnectModal">Connect Wallet</button>
-    <button @click="openAccountModal">View Account</button>
+    <div>
+      <button @click="handleConnect">Open AppKit Core</button>
+      <button @click="handleDisconnect">Disconnect</button>
+    </div>
   </client-only>
 </template>
 ```
-
-Or use other AppKit web components:
-
-``` javascript
-<template>
-  <client-only>
-    <appkit-connect-button />
-    <appkit-account-button />
-    <appkit-network-button />
-  </client-only>
-</template>
-```
-
-<Tabs>
-<Tab title="Wagmi">
-
-<NuxtWagmiModal />
-
-</Tab>
-<Tab title="Ethers">
-
-<NuxtEthersModal />
-
-</Tab>
-<Tab title="Solana">
-
-<NuxtSolanaModal />
-
-</Tab>
-<Tab title="Bitcoin">
-
-<NuxtBitcoinModal />
 
 </Tab>
 </Tabs>
@@ -263,6 +291,7 @@ bun add @wagmi/core
 ```bash pnpm
 pnpm add @wagmi/core
 ```
+
 </CodeGroup>
 
 [Wagmi actions](https://wagmi.sh/core/api/actions/readContract) can help us interact with wallets and smart contracts:
@@ -270,17 +299,17 @@ pnpm add @wagmi/core
 For this use case, we need to import the `wagmiConfig` from our AppKit WagmiAdapter configuration.
 
 ```ts
-import { readContract } from "@wagmi/core";
-import { USDTAbi } from "../abi/USDTAbi";
+import { readContract } from '@wagmi/core'
+import { USDTAbi } from '../abi/USDTAbi'
 
-const USDTAddress = "0x...";
+const USDTAddress = '0x...'
 
 const data = readContract(wagmiConfig, {
   address: USDTAddress,
   abi: USDTAbi,
-  functionName: "totalSupply",
-  args: [],
-});
+  functionName: 'totalSupply',
+  args: []
+})
 ```
 
 Read more about Wagmi actions for smart contract interaction [here](https://wagmi.sh/core/actions/readContract).
@@ -291,25 +320,25 @@ Read more about Wagmi actions for smart contract interaction [here](https://wagm
 [Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
 
 ```ts
-import { BrowserProvider, Contract, parseEther } from "ethers";
-import { useAppKitProvider, useAppKitAccount } from "@reown/appkit/vue";
+import { BrowserProvider, Contract, parseEther } from 'ethers'
+import { useAppKitProvider, useAppKitAccount } from '@reown/appkit/vue'
 
-const { walletProvider } = useAppKitProvider("eip155");
-const { address } = useAppKitAccount();
+const { walletProvider } = useAppKitProvider('eip155')
+const { address } = useAppKitAccount()
 
-if (!walletProvider) throw Error("No provider found");
-if (!address) throw Error("No address found");
+if (!walletProvider) throw Error('No provider found')
+if (!address) throw Error('No address found')
 
 function sendTransaction() {
   const tx = {
     from: address,
-    to: "0x...", // any address
-    value: parseEther("0.0001"),
-  };
-  const ethersProvider = new BrowserProvider(walletProvider);
-  const signer = await ethersProvider.getSigner();
-  const tx = await signer.sendTransaction(tx);
-  console.log("transaction:", tx);
+    to: '0x...', // any address
+    value: parseEther('0.0001')
+  }
+  const ethersProvider = new BrowserProvider(walletProvider)
+  const signer = await ethersProvider.getSigner()
+  const tx = await signer.sendTransaction(tx)
+  console.log('transaction:', tx)
 }
 ```
 

@@ -1,0 +1,47 @@
+AppKit TON provides a set of React components and hooks to easily connect TON wallets with your application.
+
+On top of your app set up the following configuration, making sure that all functions are called outside any React component to avoid unwanted rerenders.
+
+```tsx
+// App.tsx
+import { createAppKit } from '@reown/appkit/react'
+import { TonAdapter } from '@reown/appkit-adapter-ton'
+import { ton, tonTestnet } from '@reown/appkit/networks'
+
+// 1. Get projectId from https://dashboard.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 2. Set the networks
+const networks = [ton, tonTestnet]
+
+// 3. Set up TON Adapter
+const tonAdapter = new TonAdapter({
+  projectId
+})
+
+// 4. Create a metadata object - optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit TON Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+// 5. Create modal
+createAppKit({
+  adapters: [tonAdapter],
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true // Optional - defaults to your Dashboard configuration,
+    email: false,
+    socials: []
+  }
+})
+
+export default function App() {
+  return <YourApp />
+}
+```
+

@@ -1,0 +1,50 @@
+AppKit TON is built on top of the AppKit library and provides a set of components and actions to easily connect TON wallets with your decentralized application.
+
+On top of your app set up the following configuration.
+
+```tsx
+// App.tsx
+import { createAppKit } from '@reown/appkit'
+import { TonAdapter } from '@reown/appkit-adapter-ton'
+import { ton, tonTestnet } from '@reown/appkit/networks'
+
+// 1. Get projectId from https://dashboard.reown.com
+const projectId = 'YOUR_PROJECT_ID'
+
+// 2. Set the networks
+const networks = [ton, tonTestnet]
+
+// 3. Set up TON Adapter
+const tonAdapter = new TonAdapter({
+  projectId
+})
+
+// 4. Create a metadata object - optional
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit TON Example',
+  url: 'https://example.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+// 5. Create modal
+const modal = createAppKit({
+  adapters: [tonAdapter],
+  networks,
+  metadata,
+  projectId,
+  features: {
+    analytics: true // Optional - defaults to your Dashboard configuration,
+    email: false,
+    socials: []
+  }
+})
+
+// 6. Trigger modal programmatically
+const openConnectModalBtn = document.getElementById('open-connect-modal')
+const openNetworkModalBtn = document.getElementById('open-network-modal')
+
+openConnectModalBtn.addEventListener('click', () => modal.open())
+openNetworkModalBtn.addEventListener('click', () => modal.open({ view: 'Networks' }))
+```
+

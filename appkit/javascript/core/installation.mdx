@@ -2,33 +2,29 @@
 title: Installation
 ---
 
-import CloudBanner from "/snippets/cloud-banner.mdx";
+import CloudBanner from '/snippets/cloud-banner.mdx'
 
-import WagmiImplementation from "/snippets/appkit/javascript/wagmi/about/implementation.mdx";
-import WagmiModal from "/snippets/appkit/javascript/wagmi/about/triggermodal.mdx";
+import WagmiImplementation from '/snippets/appkit/javascript/wagmi/about/implementation.mdx'
 
-import Ethers5Implementation from "/snippets/appkit/javascript/ethers5/implementation.mdx";
+import Ethers5Implementation from '/snippets/appkit/javascript/ethers5/implementation.mdx'
 
-import EthersImplementation from "/snippets/appkit/javascript/ethers/about/implementation.mdx";
-import EthersModal from "/snippets/appkit/javascript/ethers/about/triggermodal.mdx";
+import EthersImplementation from '/snippets/appkit/javascript/ethers/about/implementation.mdx'
 
-import SolanaImplementation from "/snippets/appkit/javascript/solana/about/implementation.mdx";
-import SolanaModal from "/snippets/appkit/javascript/solana/about/triggermodal.mdx";
-import SolanaPrograms from "/snippets/appkit/javascript/solana/about/programs.mdx";
+import SolanaImplementation from '/snippets/appkit/javascript/solana/about/implementation.mdx'
+import SolanaPrograms from '/snippets/appkit/javascript/solana/about/programs.mdx'
 
-import BitcoinImplementation from "/snippets/appkit/javascript/bitcoin/about/implementation.mdx";
-import BitcoinModal from "/snippets/appkit/javascript/bitcoin/about/triggermodal.mdx";
+import BitcoinImplementation from '/snippets/appkit/javascript/bitcoin/about/implementation.mdx'
 
-import CoreImplementation from "/snippets/appkit/javascript/core/about/implementation.mdx";
-import CoreModal from "/snippets/appkit/javascript/core/about/triggermodal.mdx";
+import TonImplementation from '/snippets/appkit/javascript/ton/about/implementation.mdx'
 
-AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, 
-[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
+import CoreImplementation from '/snippets/appkit/javascript/core/about/implementation.mdx'
+
+AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum,
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
 Choose one of these to get started.
 
 <Note>
-  We recommend using
-  [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to get
+  We recommend using [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to get
   started with AppKit JavaScript.
 </Note>
 
@@ -154,6 +150,29 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 </CodeGroup>
 
 </Tab>
+<Tab title="TON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ton
+```
+
+</CodeGroup>
+
+</Tab>
 <Tab title="Others networks (AppKit Core)">
 
 <CodeGroup>
@@ -181,7 +200,7 @@ pnpm add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common et
 
 ## Cloud Configuration
 
-Create a new project on Reown Dashboard at https://dashboard.reown.com and obtain a new project ID.
+Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtain a new project ID.
 
 <CloudBanner />
 
@@ -225,6 +244,14 @@ Check the JavaScript Bitcoin example
 <BitcoinImplementation />
 
 </Tab>
+<Tab title="TON">
+<Card title="TON Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-ton">
+Check the JavaScript TON example
+</Card>
+
+<TonImplementation />
+
+</Tab>
 <Tab title="Others networks (AppKit Core)">
 <Card title="AppKit Core Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-core-universal-connector">
 Check the JavaScript AppKit Core example for Sui and Stacks
@@ -238,34 +265,76 @@ Check the JavaScript AppKit Core example for Sui and Stacks
 ## Trigger the modal
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="AppKit">
 
-<WagmiModal />
+To open AppKit you can use our [**web component**](/appkit/javascript/core/components) or build your own button with AppKit [**actions**](/appkit/javascript/core/actions#open-and-close-the-modal).
+
+<CodeGroup>
+
+```tsx ConnectButton.html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML AppKit Example</title>
+  </head>
+  <body>
+    <appkit-button />
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
+```
+
+You can trigger the modal by calling the `open` function from the modal instance.
+
+```js ConnectButtonWithFunctions.js
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  projectId
+})
+
+modal.open()
+```
+
+</CodeGroup>
 
 </Tab>
-<Tab title="Ethers v5">
+<Tab title="AppKit Core">
 
-<EthersModal />
+To open AppKit Core you need to call the `connect` function from the Universal Connector.
 
-</Tab>
-<Tab title="Ethers">
+```tsx
+<script>
+  let session = null
 
-<EthersModal />
+  async function handleConnect() {
+    // universalConnector is the universal connector instance from the implementation section
+    if (!universalConnector) {
+      return
+    }
 
-</Tab>
-<Tab title="Solana">
+    const { session: providerSession } = await universalConnector.connect()
+    session = providerSession
+  }
 
-<SolanaModal />
+  async function handleDisconnect() {
+    if (!universalConnector) {
+      return
+    }
+    await universalConnector.disconnect()
+    session = null
+  }
 
-</Tab>
-<Tab title="Bitcoin">
+  document.getElementById('open-connect-modal').addEventListener('click', handleConnect)
+  document.getElementById('disconnect').addEventListener('click', handleDisconnect)
+</script>
 
-<BitcoinModal />
-
-</Tab>
-<Tab title="Others networks (AppKit Core)">
-
-<CoreModal />
+<div>
+  <button id="open-connect-modal">Open AppKit Core</button>
+  <button id="disconnect">Disconnect</button>
+</div>
+```
 
 </Tab>
 </Tabs>
@@ -294,6 +363,7 @@ bun a @wagmi/core
 ```bash pnpm
 pnpm add @wagmi/core
 ```
+
 </CodeGroup>
 
 [Wagmi actions](https://wagmi.sh/core/api/actions/readContract) can help us interact with wallets and smart contracts:
@@ -301,17 +371,17 @@ pnpm add @wagmi/core
 For this use case, we need to import the `wagmiConfig`from our AppKit WagmiAdapter configuration.
 
 ```tsx
-import { readContract } from "@wagmi/core";
-import { USDTAbi } from "../abi/USDTAbi";
+import { readContract } from '@wagmi/core'
+import { USDTAbi } from '../abi/USDTAbi'
 
-const USDTAddress = "0x...";
+const USDTAddress = '0x...'
 
 const data = readContract(wagmiConfig, {
   address: USDTAddress,
   abi: USDTAbi,
-  functionName: "totalSupply",
-  args: [],
-});
+  functionName: 'totalSupply',
+  args: []
+})
 ```
 
 Read more about Wagmi actions for smart contract interaction [here](https://wagmi.sh/core/actions/readContract).
@@ -322,29 +392,29 @@ Read more about Wagmi actions for smart contract interaction [here](https://wagm
 [Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
 
 ```tsx
-import { BrowserProvider, Contract, parseEther } from "ethers";
+import { BrowserProvider, Contract, parseEther } from 'ethers'
 
-const provider = await modal.subscribeProviders((state) => {
-  return state["eip155"];
-});
+const provider = await modal.subscribeProviders(state => {
+  return state['eip155']
+})
 
-const addressFrom = await modal.subscribeAccount((state) => {
-  return state;
-});
+const addressFrom = await modal.subscribeAccount(state => {
+  return state
+})
 
-if (!provider) throw Error("No provider found");
-if (!addressFrom) throw Error("No address found");
+if (!provider) throw Error('No provider found')
+if (!addressFrom) throw Error('No address found')
 
 function sendTransaction() {
   const tx = {
     from: addressFrom,
-    to: "0x...", // any address
-    value: parseEther("0.0001"),
-  };
-  const ethersProvider = new BrowserProvider(provider);
-  const signer = await ethersProvider.getSigner();
-  const tx = await signer.sendTransaction(tx);
-  console.log("transaction:", tx);
+    to: '0x...', // any address
+    value: parseEther('0.0001')
+  }
+  const ethersProvider = new BrowserProvider(provider)
+  const signer = await ethersProvider.getSigner()
+  const tx = await signer.sendTransaction(tx)
+  console.log('transaction:', tx)
 }
 ```
 
@@ -362,33 +432,35 @@ If you are starting from scratch, you can use the following methods to set up yo
 <Accordion title="Set up Reown AppKit using AI">
   If you're using Cursor IDE (or another AI based IDE) to build a project with Reown AppKit, Reown provides a `.mdc` file that enhances your development experience. The `reown-appkit.mdc` [file here](https://github.com/reown-com/reown-docs/blob/main/reown-appkit.mdc) contains Cursor-specific rules and type hints for Reown AppKit.
 
-  To use it in your project:
+To use it in your project:
 
-  1. Copy the `reown-appkit.mdc` file from this repository
-  2. Create a `.cursor/rules` folder in your project's root directory (if it doesn't exist)
-  3. Place the `.mdc` file in your project's `.cursor/rules` folder
+1. Copy the `reown-appkit.mdc` file from this repository
+2. Create a `.cursor/rules` folder in your project's root directory (if it doesn't exist)
+3. Place the `.mdc` file in your project's `.cursor/rules` folder
 
-  For more info, refer to [Cursor's documentation](https://docs.cursor.com/context/rules#project-rules).
+For more info, refer to [Cursor's documentation](https://docs.cursor.com/context/rules#project-rules).
+
 </Accordion>
 <Accordion title="AppKit CLI">
   Reown offers a dedicated CLI to set up a minimal version of AppKit in the easiest and quickest way possible.
 
-  To do this, please run the command below.
+To do this, please run the command below.
 
-  ```bash
-  npx @reown/appkit-cli
-  ```
+```bash
+npx @reown/appkit-cli
+```
 
-  After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
+After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
 
-  1. **Project Name**: Enter the name for your project.
-  2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
-  3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
+1. **Project Name**: Enter the name for your project.
+2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
+3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
 
-  After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
+After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
 
-  To fully configure your project, please obtain a `projectId` from the Reown Dashboard and update your project accordingly.
+To fully configure your project, please obtain a `projectId` from the Reown Dashboard and update your project accordingly.
 
-  **Refer to [this section](#cloud-configuration) for more information.**
+**Refer to [this section](#cloud-configuration) for more information.**
+
 </Accordion>
 </AccordionGroup>
