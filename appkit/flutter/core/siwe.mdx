@@ -21,12 +21,12 @@ More info [here](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/i
 <Warning>
 This feature is compatible only with EVM blockchains. Therefore, including non-EVM blockchains will result in the internal disabling of the 1-CA + SIWE mechanism.
 
-If you are willing to give support just to EVM blockchains you should disable Solana support from AppKit by calling `ReownAppKitModalNetworks.removeSupportedNetworks('solana');` right before your `ReownAppKitModal()` definition.
+If you want to support only EVM blockchains, you should disable Solana support from AppKit by calling `ReownAppKitModalNetworks.removeSupportedNetworks('solana');` right before your `ReownAppKitModal()` definition.
 </Warning>
 
 ## Configure your SIWEConfig object
 
-```javascript
+```dart
 final _siweConfig = SIWEConfig(
   getNonce: () async {
     // The getNonce method functions as a safeguard
@@ -106,7 +106,7 @@ final _siweConfig = SIWEConfig(
 
 Add the siwe configuration in `ReownAppKitModal` initialization
 
-```javascript {14}
+```dart {14}
 final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
@@ -126,7 +126,7 @@ final _appKitModal = ReownAppKitModal(
 
 ### SIWEConfig reference
 
-```javascript 
+```dart 
 class SIWEConfig {
   final Future<String> Function() getNonce;
   final Future<SIWEMessageArgs> Function() getMessageParams;
@@ -182,7 +182,7 @@ Not configuring `siweConfig` object has the same effect as setting `false` on `s
 
 Simple method to generate a timestamp-based nonce
 
-```javascript
+```dart
 SIWEUtils.generateNonce();
 ```
 
@@ -190,7 +190,7 @@ SIWEUtils.generateNonce();
 
 Creates [EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361#informal-message-template) message based on input arguments.
 
-```javascript
+```dart
 SIWEUtils.formatMessage(args);
 ```
 
@@ -198,7 +198,7 @@ SIWEUtils.formatMessage(args);
 
 Verify a SIWE signature. Internally it calls your backend verification method.
 
-```javascript
+```dart
 await SIWEUtils.verifySignature(
   address,
   message,
@@ -212,7 +212,7 @@ await SIWEUtils.verifySignature(
 
 Get the chain ID from the SIWE message.
 
-```javascript
+```dart
 SIWEUtils.getChainIdFromMessage(message);
 ```
 
@@ -220,7 +220,7 @@ SIWEUtils.getChainIdFromMessage(message);
 
 Get the address from the SIWE message.
 
-```javascript
+```dart
 SIWEUtils.getAddressFromMessage(message);
 ```
 
@@ -228,7 +228,7 @@ SIWEUtils.getAddressFromMessage(message);
 
 This basic configuration is enough to try the feature out without a backend
 
-```javascript
+```dart
 final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',

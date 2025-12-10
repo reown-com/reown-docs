@@ -2,7 +2,7 @@
 title: Email & Social Wallets
 ---
 
-AppKit enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social accounts.
+AppKit enables passwordless Web3 onboarding and authentication, allowing your users to interact with your application by creating a non-custodial wallet with just their emails or social accounts.
 
 <Frame caption="Email & Social Wallets Demo">
   <video
@@ -29,7 +29,7 @@ Email and Social login are supported only on EVM networks and Solana.
 
 In order to support Email and Social Wallets creation just set `featuresConfig:` parameter in `ReownAppKitModal` initialization.
 
-```javascript {14-27}
+```dart {14-27}
 final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
@@ -62,7 +62,7 @@ final _appKitModal = ReownAppKitModal(
 
 ## Options
 
-- **_socials `List<AppKitSocialOption>`_** : This list contains the list of social platforms that you want to enable for user authentication. Is empty by default, it means that no social options is enabled. The buttons in the modal will be shown in the same order you configure the list.
+- **_socials `List<AppKitSocialOption>`_** : This list contains the list of social platforms that you want to enable for user authentication. It is empty by default, which means that no social options are enabled. The buttons in the modal will be shown in the same order you configure the list.
 - **_showMainWallets `bool`_** : This boolean defines whether you want to show the main wallet options on the first connect screen. If this is `false` it will show a button that directs you to a new screen displaying all available wallets. Default `true`.
 
 <Info>
@@ -70,7 +70,7 @@ In order for Farcaster to work properly, either `AppKitModalConnectButton()` or 
 
 If you already use them then nothing else has to be done, but in case you don't use them but still want to support Email & Social Wallets you would have to instantiate and hide them as follows:
 
-```javascript
+```dart
 AppKitModalConnectButton(
   appKit: _appKitModal,
   custom: SizedBox.shrink(), // Will make the button invisible

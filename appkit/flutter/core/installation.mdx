@@ -50,6 +50,10 @@ Example:
 </array>
 ```
 
+<Note>
+Apple only allows a maximum of 50 entries in this array, so every other entry beyond the 50th will not be considered. See note here: https://developer.apple.com/documentation/uikit/uiapplication/canopenurl(_:)#Discussion
+</Note>
+
 </Tab>
 <Tab title="Android">
 
@@ -95,7 +99,7 @@ If you still want to support it, on your iOS and Android native side make the fo
 
 1. Open your `Info.plist` file.
 2. Locate the `<key>LSApplicationQueriesSchemes</key>` section.
-3. Include `<string>cbwallet</string>` scheme as mentioned above in previous section
+3. Include the `<string>cbwallet</string>` scheme as mentioned above in the previous section
 
 Example:
 
@@ -114,7 +118,7 @@ Example:
 import CoinbaseWalletSDK
 ```
 
-```swift
+```swift {2-8} {14-21}
 override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
     if #available(iOS 13.0, *) {
       if (CoinbaseWalletSDK.isConfigured == true) {
@@ -147,7 +151,7 @@ Check out the [AppDelegate.swift](https://github.com/reown-com/reown_flutter/blo
 <Tab title="Android">
 
 1. Open your `AndroidManifest.xml` file.
-2. Add `<package android:name="org.toshi"/>` scheme inside `<queries>...</queries>` as mentioned above in previous section
+2. Add the `<package android:name="org.toshi"/>` scheme inside `<queries>...</queries>` as mentioned above in the previous section
 
 Example:
 
@@ -171,7 +175,7 @@ Example:
 
 #### Disable Coinbase Wallet
 
-Coinbase Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Coinbase Wallet in your app you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Coinbase Wallet is enabled by default. However, in order to function properly, a few steps have to be done as described in the previous section. If you don't want to include/support Coinbase Wallet in your app, you just need to pass Coinbase Wallet id `fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa` to the [excludedWalletIds](./options#excludedwalletids) options array.
 
 <hr />
 
@@ -243,23 +247,33 @@ Example:
 
 <Tabs>
 <Tab title="Flutter">
-```javascript
+```dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:reown_appkit/modal/i_appkit_modal_impl.dart';
 
 class DeepLinkHandler {
   static const _eventChannel = EventChannel('com.exampledapp/events');
+  static const _methodChannel = MethodChannel('com.exampledapp/methods');
   static late IReownAppKitModal _appKitModal;
 
-  static void init(IReownAppKitModal appKitModal) {
-    if (kIsWeb) return;
-
+  static void initEventChannel() {
     try {
-      _appKitModal = appKitModal;
       _eventChannel.receiveBroadcastStream().listen(_onLink, onError: _onError);
     } catch (e) {
-      debugPrint('[SampleDapp] checkInitialLink $e');
+      print(e);
+    }
+  }
+
+  static void initMethodChannel(IReownAppKitModal appKitModal) {
+    _appKitModal = appKitModal;
+  }
+
+  static void checkInitialLink() async {
+    try {
+      _methodChannel.invokeMethod('initialLink');
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -271,8 +285,8 @@ class DeepLinkHandler {
     }
   }
 
-  static void _onError(dynamic error) {
-    print(error);
+  static void _onError(dynamic e) {
+    print(e);
   }
 }
 ```
@@ -284,77 +298,105 @@ class DeepLinkHandler {
 <Tabs>
 <Tab title="iOS">
 ```swift
-import Flutter
 import UIKit
+import Flutter
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-  private static let EVENTS_CHANNEL = "com.exampledapp/events"
-  private var eventsChannel: FlutterEventChannel?
-  private let linkStreamHandler = LinkStreamHandler()
+    
+    private static let EVENTS_CHANNEL = "com.exampledapp/events" // TODO: Use your own channel name
+    private static let METHODS_CHANNEL = "com.exampledapp/methods" // TODO: Use your own channel name
+    
+    private var eventsChannel: FlutterEventChannel?
+    private var methodsChannel: FlutterMethodChannel?
+    var initialLink: String?
+    
+    private let linkStreamHandler = LinkStreamHandler()
+    
+    override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        GeneratedPluginRegistrant.register(with: self)
+        
+        if let window = self.window, let controller = window.rootViewController as? FlutterViewController {
+            eventsChannel = FlutterEventChannel(name: AppDelegate.EVENTS_CHANNEL, binaryMessenger: controller.binaryMessenger)
+            eventsChannel?.setStreamHandler(linkStreamHandler)
+            
+            methodsChannel = FlutterMethodChannel(name: AppDelegate.METHODS_CHANNEL, binaryMessenger: controller.binaryMessenger)
+            methodsChannel?.setMethodCallHandler({ [weak self] (call: FlutterMethodCall, result: FlutterResult) -> Void in
+                if (call.method == "initialLink") {
+                    if let link = self?.initialLink {
+                        let handled = self?.linkStreamHandler.handleLink(link)
+                        if (handled == true) {
+                            self?.initialLink = nil
+                        }
+                    }
+                }
+            })
+        }
+        
+        // Add your deep link handling logic here
+        if let url = launchOptions?[.url] as? URL {
+            self.initialLink = url.absoluteString
+        }
 
-  override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-
-    let controller = window.rootViewController as! FlutterViewController
-    eventsChannel = FlutterEventChannel(name: AppDelegate.EVENTS_CHANNEL, binaryMessenger: controller.binaryMessenger)
-    eventsChannel?.setStreamHandler(linkStreamHandler)
-
-    if let userActivityDictionary = launchOptions?[.userActivityDictionary] as? [String: Any],
-      let userActivity = userActivityDictionary["UIApplicationLaunchOptionsUserActivityKey"] as? NSUserActivity,
-      userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-
-      handleIncomingUniversalLink(userActivity: userActivity)
+        if let userActivityDictionary = launchOptions?[.userActivityDictionary] as? [String: Any],
+           let userActivity = userActivityDictionary["UIApplicationLaunchOptionsUserActivityKey"] as? NSUserActivity,
+           userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            
+            handleIncomingUniversalLink(userActivity: userActivity)
+        }
+        
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
-
-  override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-    return linkStreamHandler.handleLink(url.absoluteString)
-  }
-
-  override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-    if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-      handleIncomingUniversalLink(userActivity: userActivity)
-      return true
+    
+    override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return linkStreamHandler.handleLink(url.absoluteString)
     }
-
-    return false
-  }
-
-  private func handleIncomingUniversalLink(userActivity: NSUserActivity) {
-    if let url = userActivity.webpageURL {
-      print("App launched with Universal Link: \(url.absoluteString)")
-      let _ = linkStreamHandler.handleLink(url.absoluteString)
+    
+    override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            handleIncomingUniversalLink(userActivity: userActivity)
+            return true
+        }
+        
+        return false
     }
-  }
+    
+    private func handleIncomingUniversalLink(userActivity: NSUserActivity) {
+        if let url = userActivity.webpageURL {
+            // Handle the URL, navigate to appropriate screen
+            print("App launched with Universal Link: \(url.absoluteString)")
+            let handled = linkStreamHandler.handleLink(url.absoluteString)
+            if (!handled){
+                self.initialLink = url.absoluteString
+            }
+        }
+    }
 }
 
 class LinkStreamHandler: NSObject, FlutterStreamHandler {
-  var eventSink: FlutterEventSink?
-  var queuedLinks = [String]()
-
-  func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-    self.eventSink = events
-    queuedLinks.forEach({ events($0) })
-    queuedLinks.removeAll()
-    return nil
-  }
-
-  func onCancel(withArguments arguments: Any?) -> FlutterError? {
-    self.eventSink = nil
-    return nil
-  }
-
-  func handleLink(_ link: String) -> Bool {
-    guard let eventSink = eventSink else {
-      queuedLinks.append(link)
-      return false
+    var eventSink: FlutterEventSink?
+    var queuedLinks = [String]()
+    
+    func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        self.eventSink = events
+        queuedLinks.forEach({ events($0) })
+        queuedLinks.removeAll()
+        return nil
     }
-    eventSink(link)
-    return true
-  }
+    
+    func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        self.eventSink = nil
+        return nil
+    }
+    
+    func handleLink(_ link: String) -> Bool {
+        guard let eventSink = eventSink else {
+            queuedLinks.append(link)
+            return false
+        }
+        eventSink(link)
+        return true
+    }
 }
 ```
 </Tab>
@@ -419,7 +461,7 @@ _Constructing a Solana transaction would depend on the library/package of your c
 
 #### Disable Phantom Wallet
 
-Phantom Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Phantom Wallet in your app you just need to pass Phantom Wallet id `a797aa35c0fadbfc1a53e7f675162ed5226968b44a19ee3d24385c64d1d3c393` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Phantom Wallet is enabled by default. However, in order to function properly, a few steps have to be done as described in the previous section. If you don't want to include/support Phantom Wallet in your app, you just need to pass Phantom Wallet id `a797aa35c0fadbfc1a53e7f675162ed5226968b44a19ee3d24385c64d1d3c393` to the [excludedWalletIds](./options#excludedwalletids) options array.
 
 <hr />
 
@@ -487,11 +529,13 @@ Example:
 </Tab>
 </Tabs>
 
+<Note>
 The rest of the configuration is identical to Phantom's configuration.
+</Note>
 
 #### Disable Solflare Wallet
 
-Solflare Wallet is enabled by default even though, in order to function properly, a few steps have to be done as described in the previous section. However, if you don't want to include/support Solflare Wallet in your app you just need to pass Solflare Wallet id `1ca0bdd4747578705b1939af023d120677c64fe6ca76add81fda36e350605e79` to [excludedWalletIds](./options#excludedwalletids) options Array.
+Solflare Wallet is enabled by default. However, in order to function properly, a few steps have to be done as described in the previous section. If you don't want to include/support Solflare Wallet in your app, you just need to pass Solflare Wallet id `1ca0bdd4747578705b1939af023d120677c64fe6ca76add81fda36e350605e79` to the [excludedWalletIds](./options#excludedwalletids) options array.
 
 ## Examples
 
