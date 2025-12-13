@@ -1,0 +1,66 @@
+
+### **Title: Handling Missing Peer Dependencies (Next.js / Turbopack)**
+
+````mdx
+# Troubleshooting: Missing Peer Dependencies
+
+When integrating `@reown/appkit-adapter-wagmi` into projects with strict bundling environments (such as Next.js 14+ with Turbopack), you may encounter multiple build errors stating `Module not found`.
+
+This occurs because the adapter attempts to resolve imports for various wallet connectors (Coinbase, MetaMask, Porto, etc.) during the build process. If these optional peer dependencies are not present in your `node_modules`, the build will fail.
+
+## Common Error Messages
+
+You might see terminal output similar to this:
+
+```bash
+Module not found: Can't resolve '@coinbase/wallet-sdk'
+Module not found: Can't resolve 'porto'
+Module not found: Can't resolve '@walletconnect/ethereum-provider'
+Module not found: Can't resolve '@metamask/sdk'
+Module not found: Can't resolve 'gemini-wallet/core'
+````
+
+## Resolution
+
+To resolve these errors, you must explicitly install the missing SDKs and providers. While these are often listed as optional dependencies, strict bundlers require them to be present to successfully compile the adapter code.
+
+### 1\. Install Wallet SDKs & Providers
+
+Run the following command to install the complete set of required peer dependencies:
+
+```bash npm
+npm install @coinbase/wallet-sdk porto @walletconnect/ethereum-provider @metamask/sdk gemini-wallet/core
+```
+
+```bash pnpm
+pnpm add @coinbase/wallet-sdk porto @walletconnect/ethereum-provider @metamask/sdk gemini-wallet/core
+```
+
+```bash yarn
+yarn add @coinbase/wallet-sdk porto @walletconnect/ethereum-provider @metamask/sdk gemini-wallet/core
+```
+
+### 2\. Verify Core Dependencies
+
+Ensure your project also has the fundamental AppKit and Wagmi packages installed:
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi viem wagmi @tanstack/react-query
+```
+
+## Detailed Breakdown of Dependencies
+
+| Package | Reason for Requirement |
+| :--- | :--- |
+| `@coinbase/wallet-sdk` | Required for the Coinbase Wallet connector. |
+| `porto` | Required for the experimental Porto connector. |
+| `@metamask/sdk` | Required for deep linking and interaction with the MetaMask mobile app. |
+| `@walletconnect/ethereum-provider` | The core provider for WalletConnect v2 connections. |
+| `gemini-wallet/core` | Required for specific hardware/custodial wallet integrations referenced by the adapter. |
+
+## Why does this happen?
+
+The Wagmi Adapter is designed to be flexible and support many wallets out of the box. However, modern bundlers (especially Turbopack) scan all `import` statements at build time to ensure validity. If an optional dependency is imported by the library but not installed in your project, the bundler cannot resolve the path, causing the build to crash. Explicitly installing these packages satisfies the bundler's resolution process.
+
+```
+
