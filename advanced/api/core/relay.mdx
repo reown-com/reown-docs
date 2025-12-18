@@ -3,21 +3,17 @@ title: Relay Client
 ---
 
 Relay client provides transport layer for Sign, Auth and Chat SDKs.
-You can configure it once and every SDK will transport protocol messages via same instance of a relay client with only one opened websocket connection.
+You can configure it once and every SDK will transport protocol messages via the same instance of a relay client with only one opened WebSocket connection.
 The Relay API can be accessed through the Core Client
 
-<Tabs
-	
-	
->
+<Tabs>
 <Tab title="iOS">
 
 Before using Sign or Auth SDK, it is necessary to configure a shared Networking Client instance. Set a project ID generated when starting a project on Reown Dashboard and SocketFactory instance.
 
-WalletConnect Swift SDK does not depend on any websocket library. SocketFactory parameter allows you to pass your own implementation of websocket connection.
+WalletConnect Swift SDK does not depend on any WebSocket library. SocketFactory parameter allows you to pass your own implementation of WebSocket connection.
 
 Here's an example of WebSocketFactory implementation using Starscream v3
-
 ```swift
 import Starscream
 
@@ -33,7 +29,6 @@ struct SocketFactory: WebSocketFactory {
 Please note that if you have made changes to the list of **Allowed Domains** in the **Reown Dashboard**, then you may encounter an error with the connection if you use **Starscream** or any other socket client. For example, the native implementation of **Starscream** will use the `relay.walletconnect.com` as an `Origin` parameter if not provided, which will be missing from the list of **Allowed Domains**. The solution to this could be the inclusion of the `relay.walletconnect.com` in the **Allowed Domains**, corresponding changes in the socket client implementation, or following changes in the `WebSocketFactory`.
 
 Create and register App Group Identifier in [Apple Developer Center](https://developer.apple.com/account/resources/identifiers/list/applicationGroup) if needed and provide it during Networking client configuration.
-
 ```swift
 import Starscream
 
@@ -49,29 +44,25 @@ struct DefaultSocketFactory: WebSocketFactory {
 ```
 
 #### Networking client configuration
-
 ```swift
 Networking.configure(groupIdentifier: <String>, projectId: <String>, socketFactory: SocketFactory())
 ```
 
-`groupIdentifier` - App group identifier, created on [Apple Developer Center](https://developer.apple.com/account/resources/identifiers/list/applicationGrou). Enables to share keychain items between the Notify SDK and a UNNotificationServiceExtension to receive and decrypt push notifications.
+`groupIdentifier` - App group identifier, created on [Apple Developer Center](https://developer.apple.com/account/resources/identifiers/list/applicationGroup). Enables to share keychain items between the Notify SDK and a UNNotificationServiceExtension to receive and decrypt push notifications.
 
-#### Web Socket Connection
+#### WebSocket Connection
 
-By default web socket connection is handled internally by the SDK. That means that Web socket will be safely disconnected when apps go to background and it will connect back when app reaches foreground. But if it is not expected for your app and you want to handle socket connection manually you can do it as follows:
+By default WebSocket connection is handled internally by the SDK. That means that WebSocket will be safely disconnected when apps go to background and it will connect back when app reaches foreground. But if it is not expected for your app and you want to handle socket connection manually you can do it as follows:
 
 1. set socketConnectionType for manual
-
 ```swift
 Networking.configure(projectId: <String>, socketFactory: SocketFactory(), socketConnectionType: .manual)
 ```
 
 2. control socket connection:
-
 ```swift
 try Networking.instance.connect()
 ```
-
 ```swift
 try Networking.instance.disconnect()
 ```
@@ -79,20 +70,19 @@ try Networking.instance.disconnect()
 </Tab>
 <Tab title="Android">
 
-#### Web Socket connection control
+#### WebSocket connection control
 
 There are two connection types, Automatic and Manual.
 
-Automatic connection type enables SDK to control web socket connection internally. Meaning, web socket connection is closed when app goes to the background and is opened when app goes to the foreground.
+Automatic connection type enables SDK to control WebSocket connection internally. Meaning, WebSocket connection is closed when app goes to the background and is opened when app goes to the foreground.
 
-Manual connection type enables developers to control web socket connection.
-
+Manual connection type enables developers to control WebSocket connection.
 ```kotlin
 CoreClient.initialize(projectId = projectId, connectionType = ConnectionType.MANUAL, application = application)
 
-CoreClient.Relay.connect() { error -> /*Error when wrong connection type is in use*/}
+CoreClient.Relay.connect() { error -> /*Error when wrong connection type is in use*/ }
 
-CoreClient.Relay.disconnect() { error -> /*Error when wrong connection type is in use*/}
+CoreClient.Relay.disconnect() { error -> /*Error when wrong connection type is in use*/ }
 ```
 
 </Tab>
