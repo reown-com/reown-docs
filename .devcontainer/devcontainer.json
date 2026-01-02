@@ -1,0 +1,4 @@
+gh repo clone reown-com/reown-docs{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {}
+}
