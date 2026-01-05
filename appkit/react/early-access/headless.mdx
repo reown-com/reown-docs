@@ -34,7 +34,7 @@ The essential hook for accessing all types of wallets and methods to build your 
 <CodeGroup>
 
 ```tsx useAppKitWallets.tsx
-const { data, isFetchingWallets, isFetchingWcUri, wcUri, page, count, fetchWallets, connect } =
+const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, wcUri, connectingWallet, page, count, fetchWallets, connect, resetWcUri } =
   useAppKitWallets()
 ```
 
