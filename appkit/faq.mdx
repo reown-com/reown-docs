@@ -177,6 +177,28 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     This means you must pass in all the networks you plan to support during the initial setup.
   </Accordion>
 
+  <Accordion title="Why can't I open wallet apps from in-app browsers on Android?">
+    When users access a dApp from within an in-app browser (such as Telegram, Discord, or other apps with embedded browsers) on Android, they may be unable to open external wallet apps like MetaMask or Trust Wallet. This is a known platform limitation on Android where in-app browsers restrict the ability to launch external applications via deep links.
+
+    ### Why this happens
+
+    Android in-app browsers (WebViews) are sandboxed environments that, by default, do not allow navigation to custom URL schemes or intent URLs that would open external apps. This is a security measure implemented at the operating system level and is not something that can be resolved by AppKit or the dApp itself.
+
+    ### Workarounds for users
+
+    1. **Open in external browser**: Most in-app browsers have an option to open the current page in the device's default browser (usually accessible via a menu or "Open in Browser" button). From the external browser, wallet deep links will work as expected.
+
+    2. **Copy the link and paste in browser**: Users can copy the dApp URL and paste it into their preferred mobile browser (Chrome, Firefox, etc.).
+
+    3. **Use QR code scanning**: If the user has their wallet app open, they can use the wallet's built-in QR code scanner to scan the WalletConnect QR code displayed in the AppKit modal, which bypasses the need for deep linking entirely.
+
+    4. **Use the wallet's built-in browser**: Many wallet apps (MetaMask, Trust Wallet, etc.) have their own built-in dApp browsers. Users can navigate to the dApp directly within their wallet app for a seamless experience.
+
+    ### For app developers embedding WebViews
+
+    If you are building an app that embeds a WebView and want to support wallet connections, you need to explicitly handle deep links in your WebView implementation. See our [troubleshooting guide](/appkit/recipes/troubleshooting#in-app-browser-deeplink-detection) for code examples on how to intercept and handle wallet deep links across different platforms.
+  </Accordion>
+
   <Accordion title="Error Codes">
     Below is a list of error codes you may encounter when using AppKit, along with their descriptions and recommended actions:
 
