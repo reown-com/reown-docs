@@ -1,4 +1,6 @@
-**Deposit with Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like Coinbase and Binance (with more exchanges coming soon). Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
+**Deposit from Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like Binance (with more exchanges coming soon). Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
+
+The feature now supports automatic swapping and bridging of tokens when needed during deposits, allowing users to deposit from any supported asset on their exchange and receive the desired token on the target network.
 
 ## Pre-Requisites
 
@@ -20,13 +22,13 @@ This feature will start working as soon as your team is on the allowed-list. Ple
     Projects first need to install and set up Reown AppKit before integrating AppKit Pay. If you haven't done so, please refer to the [Reown AppKit docs](/appkit/overview#quickstart).
 </Warning> */}
 
-After enabling it, __Deposit with Exchange__ is accessible through the Account Screen by clicking on the "Fund wallet" button, and the modal below will be shown:
+After enabling it, __Deposit from Exchange__ is accessible through the Account Screen by clicking on the "Fund wallet" button, and the modal below will be shown:
 <img width="300" className="block dark:hidden" src="/images/flutter_dwe_light.png" alt="Funding your wallet with Deposit with Exchange" />
 <img width="300" className="hidden dark:block" src="/images/flutter_dwe_dark.png" alt="Funding your wallet with Deposit with Exchange" />
 
 ## Stand-alone feature
 
-If desired, Deposit with Exchange can be used as a stand-alone feature with the following helpers:
+If desired, Deposit from Exchange can be used as a stand-alone feature with the following helpers:
 
 - Get available payment assets based on the network:
 ```dart
@@ -41,12 +43,19 @@ ___includeNative:___ will include or exclude native tokens, such as ETH on Ether
 ```dart
 _appKitModal.configDeposit(
   supportedAssets: assets,
-  preselectedRecipient: depositAddress,
+  configuredRecipients: {
+    'eip155': '0xYourEVMAddress',
+    'solana': 'YourSolanaAddress',
+  },
+  filterByNetwork: true,
+  depositAssetButton: true,
   showNetworkIcon: false,
 );
 ```
 ___supportedAssets:___ (optional) previously selected supported assets<br />
-___preselectedRecipient:___ (optional) if provided, will be used as recipient address instead of the connected wallet (if any)<br />
+___configuredRecipients:___ (optional) a map of namespace to recipient address. If provided, will be used as recipient address instead of the connected wallet (if any) for the corresponding namespace<br />
+___filterByNetwork:___ (optional) when true, filters available assets by the currently selected network<br />
+___depositAssetButton:___ (optional) controls visibility of the deposit asset selection button<br />
 ___showNetworkIcon:___ (optional) hides or shows the chain icon on the screen<br />
 ___preselectedAsset:___ (optional) if provided, will fix the feature on the provided asset and disable the Asset Selector<br />
 
@@ -288,7 +297,7 @@ At this point, your dApp will launch this URL on the user's device, and the Exch
 
 Once the user completes the transaction on the Exchange side, they should return to your dApp and wait for the confirmation status.
 
-> The recommended approach here is that, right after the user launches the payment URL, your dApp starts to query the confirmation status in a loop with a 5-second delay between each request, until either **CONFIRMED** or **FAILED** is received (or your own timeout logic is triggered).
+> The recommended approach here is that, right after the user launches the payment URL, your dApp starts to query the confirmation status in a loop with a 3-second delay between each request, until a terminal status is received (or your own timeout logic is triggered). The SDK uses a maximum of 30 polling attempts by default.
 
 ```dart
 final params = GetExchangeDepositStatusParams(
