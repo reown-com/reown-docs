@@ -311,62 +311,9 @@ final GetExchangeDepositStatusResult result = await appKit.getExchangeDepositSta
 // result.txHash
 ```
 
-The `status` field uses the `QuoteStatus` enum with the following possible values:
+Possible values of `status` are: **UNKNOWN**, **IN_PROGRESS**, **CONFIRMED**, **FAILED**
 
-- **waiting:** Transaction has not been submitted yet
-- **pending:** Transaction submitted, checking confirmation
-- **submitted:** Transaction has been submitted to the network
-- **success:** Transaction confirmed, payment successful, `txHash` will be provided along with this status
-- **failure:** Transaction failed
-- **refund:** Transaction was refunded
-- **timeout:** Transaction timed out
-
-The `QuoteStatus` enum also provides helper methods:
-- `isError` - Returns true for failure, refund, or timeout statuses
-- `isSuccess` - Returns true for success status
-
----
-
-## Transfer Quotes (Swap/Bridge Support)
-
-When the source asset from the exchange differs from the destination asset or network, the SDK automatically handles swapping and bridging through the Transfers service. This allows users to deposit from any supported exchange asset and receive the desired token on the target network.
-
-### Getting a Transfer Quote
-
-To get a quote for a transfer that may involve swapping or bridging:
-
-```dart
-final quote = await appKit.getQuote(
-  sourceAsset: sourceExchangeAsset,
-  destinationAsset: destinationAsset,
-  amount: '100.0',
-  recipient: recipientAddress,
-);
-// quote.origin - Source asset details
-// quote.destination - Destination asset details
-// quote.fees - List of fees (QuoteFee)
-// quote.steps - List of steps (QuoteStep)
-// quote.estimatedTime - Estimated completion time
-```
-
-### Quote Details
-
-The `Quote` object contains comprehensive information about the transfer:
-
-- **origin:** Source asset amount and currency
-- **destination:** Destination asset amount and currency
-- **fees:** Breakdown of all fees involved in the transfer
-- **steps:** The steps required to complete the transfer (deposit, transaction, etc.)
-- **estimatedTime:** Estimated time to complete the transfer
-
-### Fee Breakdown
-
-Each fee in the quote includes:
-- **id:** Unique identifier for the fee type
-- **label:** Human-readable label (e.g., "Service Fee", "Network Fee")
-- **amount:** Fee amount in base units
-- **currency:** Currency/asset for the fee
-
-### Direct Transfers
-
-When the source and destination are the same chain and asset, the SDK uses a direct transfer path which bypasses the swapping/bridging logic for faster execution with no swap fees. These transfers are identified by `QuoteType.directTransfer`.
+- **UNKNOWN:** Transaction has not been submitted yet
+- **IN_PROGRESS:** Transaction submitted, checking confirmation
+- **CONFIRMED:** Transaction confirmed, payment successful, `txHash` will be provided along with this status
+- **FAILED:** Transaction failed
