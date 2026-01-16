@@ -30,4 +30,23 @@ function App() {
 }
 ```
 
+### useAppKitProvider
+
+Hook that returns the `walletProvider` and the `WalletProviderType`.
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit/react";
+
+function Components() {
+  const { walletProvider } = useAppKitProvider<Provider>("eip155");
+
+  async function onSignMessage() {
+    console.log(walletProvider);
+  }
+
+  return <button onClick={() => onSignMessage()}>Sign Message</button>;
+}
+```
+
 <Card title="Learn More" href="https://wagmi.sh/react/hooks/useReadContract" />

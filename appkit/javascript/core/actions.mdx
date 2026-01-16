@@ -1,5 +1,5 @@
 ---
-title: Actions
+title: "Actions"
 ---
 
 import WagmiActions from "/snippets/appkit/javascript/wagmi/actions.mdx";
@@ -48,6 +48,9 @@ open({
     toToken: 'ETH'
   }
 })
+
+// to open wallet send interface
+modal.open({ view: 'WalletSend' })
 ```
 
 List of views you can select
@@ -61,6 +64,7 @@ List of views you can select
 | `WhatIsANetwork`  | "What is a network" onboarding view.                                                                                                                      |
 | `WhatIsAWallet`   | "What is a wallet" onboarding view.                                                                                                                       |
 | `OnRampProviders` | On-Ramp main view.                                                                                                                                        |
+| `WalletSend`      | Token sending interface that allows users to send tokens to another address.                                                                             |
 | `Swap`            | Swap main view.                                                                                                                                           |
 
 ## Disconnect
@@ -84,6 +88,95 @@ modal.subscribeWalletInfo(handler);
 
 const { name, icon } = modal.getWalletInfo();
 ```
+
+## Get Disabled Networks
+
+Returns an array of CAIP networks that are disabled in the current configuration. This is useful for understanding which networks are not available for user selection.
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  projectId,
+});
+
+const disabledNetworks = modal.getDisabledCaipNetworks();
+console.log('Disabled networks:', disabledNetworks);
+```
+
+## Provider Access
+
+Access wallet providers for direct blockchain interactions across different namespaces.
+
+### subscribeProviders
+
+Subscribe to provider state changes and access wallet providers for different blockchain namespaces.
+
+```ts
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  projectId,
+});
+
+const unsubscribe = modal.subscribeProviders((state) => {
+  const eip155Provider = state["eip155"];
+  const solanaProvider = state["solana"];
+  const bitcoinProvider = state["bip122"];
+  
+  console.log("Providers updated:", { eip155Provider, solanaProvider, bitcoinProvider });
+});
+
+const providers = modal.getProviders();
+const eip155Provider = providers["eip155"];
+```
+
+### Examples by Namespace
+
+<Tabs>
+<Tab title="EVM (eip155)">
+
+```ts
+import { BrowserProvider, Contract, parseEther } from "ethers";
+
+const provider = await modal.subscribeProviders((state) => {
+  return state["eip155"];
+});
+
+if (!provider) throw Error("No EVM provider found");
+
+const ethersProvider = new BrowserProvider(provider);
+const signer = await ethersProvider.getSigner();
+```
+
+</Tab>
+<Tab title="Solana">
+
+```ts
+const provider = await modal.subscribeProviders((state) => {
+  return state["solana"];
+});
+
+if (!provider) throw Error("No Solana provider found");
+
+const signature = await provider.signMessage(new TextEncoder().encode("Hello"));
+```
+
+</Tab>
+<Tab title="Bitcoin (bip122)">
+
+```ts
+const provider = await modal.subscribeProviders((state) => {
+  return state["bip122"];
+});
+
+if (!provider) throw Error("No Bitcoin provider found");
+
+const signature = await provider.signMessage("Hello from AppKit");
+```
+
+</Tab>
+</Tabs>
 
 ## Ethereum Library
 
@@ -151,7 +244,7 @@ const themeMode = modal.getThemeMode();
 ## Wallet Buttons
 
 
-Using wallet buttons ([Demo in our Lab](https://appkit-lab.reown.com/library/wagmi-wallet-button/)), you can directly connect to the top 20 wallets, WalletConnect QR and also all the social logins.
+Using wallet buttons ([Demo in our Lab](https://appkit-lab.reown.com/appkit/?name=wagmi)), you can directly connect to the top 20 wallets, WalletConnect QR and also all the social logins.
 This feature allows to customize dApps, enabling users to connect their wallets effortlessly, all without the need for the traditional modal.
 
 Follow these steps to use the component:
@@ -178,38 +271,79 @@ pnpm add @reown/appkit-wallet-button
 
 </CodeGroup>
 
-2. Import the library in your project and create the AppKit Wallet Button:
+2. Import and use it in your Javascript dApp:
 
-```tsx
-import { createAppKitWalletButton } from '@reown/appkit-wallet-button'
+```javascript
+<script type="module">
+  import { createAppKitWalletButton } from '@reown/appkit-wallet-button';
+  const wb = createAppKitWalletButton();
 
-// Create AppKit Wallet Button
-const appKitWalletButton = createAppKitWalletButton()
-```
-
-3. Use this script for your Button called 'walletButton':
-
-```tsx
-document.getElementById('walletButton')?.addEventListener(
-  'click', async () => {
-    // check if it's ready
-    if (appKitWalletButton.isReady()) {
-      appKitWalletButton
-          .connect('walletConnect')
-          .then(data => {
-              console.log('connected', data)
-          })
-          .catch(err => {
-              console.log('error connecting', err)
-          })
-    } else {
-      console.log('appKitWalletButton is not ready')
+  function connectWallet(id) {
+    if (wb.isReady()) {
+      wb.connect(id);
     }
   }
-)
 
+  // Attach it to the global scope so it can be called from inline HTML
+  window.connectWallet = connectWallet;
+</script>
+
+<button onclick="connectWallet('walletConnect')">Open QR modal</button>
+<button onclick="connectWallet('metamask')">Connect to MetaMask</button>
+<button onclick="connectWallet('google')">Connect to Google</button>
  
 ```
+
+#### Multichain Support
+
+You can specify a blockchain namespace to target specific chains:
+
+```javascript
+<script type="module">
+  import { createAppKitWalletButton } from '@reown/appkit-wallet-button';
+  
+  // Create wallet buttons for different namespaces
+  const evmWalletButton = createAppKitWalletButton({ namespace: 'eip155' });
+  const solanaWalletButton = createAppKitWalletButton({ namespace: 'solana' });
+  const bitcoinWalletButton = createAppKitWalletButton({ namespace: 'bip122' });
+
+  function connectEVMWallet(id) {
+    if (evmWalletButton.isReady()) {
+      evmWalletButton.connect(id);
+    }
+  }
+
+  function connectSolanaWallet(id) {
+    if (solanaWalletButton.isReady()) {
+      solanaWalletButton.connect(id);
+    }
+  }
+
+  function connectBitcoinWallet(id) {
+    if (bitcoinWalletButton.isReady()) {
+      bitcoinWalletButton.connect(id);
+    }
+  }
+
+  // Attach to global scope
+  window.connectEVMWallet = connectEVMWallet;
+  window.connectSolanaWallet = connectSolanaWallet;
+  window.connectBitcoinWallet = connectBitcoinWallet;
+</script>
+
+<!-- Connect to Ethereum/EVM chains -->
+<button onclick="connectEVMWallet('metamask')">Connect MetaMask (EVM)</button>
+
+<!-- Connect to Solana -->
+<button onclick="connectSolanaWallet('phantom')">Connect Phantom (Solana)</button>
+
+<!-- Connect to Bitcoin -->
+<button onclick="connectBitcoinWallet('leather')">Connect Leather (Bitcoin)</button>
+```
+
+<Note>
+  Make sure to call `createAppKitWalletButton` after `createAppKit`.
+</Note>
 
 #### Options for wallet property. 
 Change the string parameter `name` from `appKitWalletButton.connect(name)` in order to open a different wallet.
@@ -219,6 +353,49 @@ Change the string parameter `name` from `appKitWalletButton.connect(name)` in or
 | QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                               |
 | Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `coinbase`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, and `tokenpocket` |
 | Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                                      |
+
+#### Options for namespace property
+
+| Value     | Description                           |
+| --------- | ------------------------------------- |
+| `eip155`  | Ethereum and EVM-compatible chains    |
+| `solana`  | Solana blockchain                     |
+| `bip122`  | Bitcoin blockchain                    |
+
+#### Enhanced Multichain Examples
+
+The wallet button now supports enhanced multichain functionality with improved namespace targeting:
+
+```javascript
+<script type="module">
+  import { createAppKitWalletButton } from '@reown/appkit-wallet-button';
+  
+  const wallets = [
+    { wallet: 'metamask', namespace: 'eip155', label: 'MetaMask EVM' },
+    { wallet: 'metamask', namespace: 'solana', label: 'MetaMask Solana' },
+    { wallet: 'phantom', namespace: 'bip122', label: 'Phantom Bitcoin' }
+  ];
+
+  wallets.forEach(({ wallet, namespace, label }) => {
+    const walletButton = createAppKitWalletButton({ namespace });
+    
+    walletButton.subscribeIsReady(({ isReady }) => {
+      if (!isReady) return;
+
+      const button = document.querySelector(`[data-wallet="${wallet}-${namespace}"]`);
+      if (button) {
+        button.disabled = false;
+        button.textContent = `Connect ${label}`;
+        button.onclick = () => walletButton.connect(wallet);
+      }
+    });
+  });
+</script>
+
+<button data-wallet="metamask-eip155" disabled>Loading...</button>
+<button data-wallet="metamask-solana" disabled>Loading...</button>
+<button data-wallet="phantom-bip122" disabled>Loading...</button>
+```
 
 
 ## themeVariables

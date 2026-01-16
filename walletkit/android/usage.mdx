@@ -10,7 +10,7 @@ This section provides instructions on how to initialize the WalletKit client, ap
 
 Links to sections on this page. Some sections are platform specific and are only visible when the platform is selected. To view a summary of useful platform specific topics, check out **Extra (Platform Specific)** under this section.
 
-**[Initialization](#initialization)**: Creating a new WalletKit instance and initializing it with a projectId from [Cloud](https://cloud.reown.com).
+**[Initialization](#initialization)**: Creating a new WalletKit instance and initializing it with a projectId from [Reown Dashboard](https://dashboard.reown.com).
 
 **Session**: Connection between a dapp and a wallet.
 
@@ -42,7 +42,7 @@ To check the full list of platform specific instructions for your preferred plat
 ## Initialization
 
 ```kotlin
-val projectId = "" // Get Project ID at https://cloud.reown.com/
+val projectId = "" // Get Project ID at https://dashboard.reown.com/
 val connectionType = ConnectionType.AUTOMATIC or ConnectionType.MANUAL
 val telemetryEnabled: Boolean = true
 val appMetaData = Core.Model.AppMetaData(
@@ -313,7 +313,7 @@ val event: Wallet.Model.SessiomEvent = SessionEvent(name = "accountsChanged", da
 
 val sessionEmit = Wallet.Params.SessionEmit(topic = sessionTopic, chainId = "eip155:1", event = event)
 
-WalletKit.emitSessionEvent(sessionEmit) { error -> /*callback for error while emiting an event*/ }
+WalletKit.emitSessionEvent(sessionEmit) { error -> /*callback for error while emitting an event*/ }
 ```
 
 ### Session Disconnect

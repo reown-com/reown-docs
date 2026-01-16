@@ -93,7 +93,7 @@ response.when(
 
 ### Implementation during Session Request
 
-If you are looking to trigger Chain Abstraction during a eth_sendTransaction Session Request you should do it inside the session request handler as explained in [Responding to Session requests](../usage.mdx#responding-to-session-requests) section.
+If you are looking to trigger Chain Abstraction during a eth_sendTransaction Session Request you should do it inside the session request handler as explained in [Responding to Session requests](/walletkit/flutter/usage#responding-to-session-requests) section.
 
 ```swift
 Future<void> _ethSendTransactionHandler(String topic, dynamic params) async {
@@ -198,7 +198,7 @@ Future<String> erc20TokenBalance({
 
  ## Android
 
- In your android (project's) build.gradle file add support for Jitpack:
+ If you didn't do it already, in your android (project's) build.gradle file add support for Jitpack:
 
  ```
  allprojects {
@@ -237,7 +237,7 @@ Best way to test Chain Abstraction is to use our Sample wallet.
 - [Sample Wallet for iOS](https://testflight.apple.com/join/Uv0XoBuD)
 - [Sample Wallet for Android](https://appdistribution.firebase.dev/i/2b8b3dce9e2831cd)
 
-You can also use the [AppKit laboratory](https://appkit-lab.reown.com/library/wagmi/) and try sending [USDC/USDT](../../../walletkit/features/early-access/chain-abstraction.mdx#what-are-the-supported-tokens-and-networks) with any chain abstraction-supported wallet. 
+You can also use the [AppKit laboratory](https://appkit-lab.reown.com/appkit/?name=wagmi) and try sending [USDC/USDT](/walletkit/features/chain-abstraction#what-are-the-supported-tokens-and-networks%3F) with any chain abstraction-supported wallet. 
 
 <video controls width="100%" height="100%" style={{ borderRadius: '10px' }}>
   <source src="/images/assets/chain-abstraction-demo.mp4" type="video/mp4" />

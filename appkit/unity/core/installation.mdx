@@ -3,13 +3,13 @@ title: Unity
 sidebarTitle: Installation
 ---
 
-import CloudBanner from "/snippets/cloud-banner.mdx";
+import CloudBanner from "/snippets/cloud-banner.mdx"
 
-With AppKit, you can easily let people interact with multiple EVM compatible wallets and blockchains.
+With AppKit, you can easily let people interact with multiple EVM and Solana compatible wallets and blockchains directly from your Unity game.
 
 ## Install
 
-Let's get started by installing the package!
+Let's get started by installing the AppKit package!
 
 ### Prerequisites
 
@@ -19,7 +19,7 @@ Let's get started by installing the package!
 - Gamma color space
   - If you need Linear color space, please [open a GitHub issue](https://github.com/reown-com/reown-dotnet/issues)
 
-### Package
+### AppKit Package
 
 <Tabs>
 <Tab title="OpenUPM CLI">
@@ -29,6 +29,7 @@ To install AppKit package via OpenUPM, you need to have [Node.js](https://nodejs
 ```bash
 openupm add com.reown.appkit.unity
 ```
+
 </Tab>
 <Tab title="Package Manager with OpenUPM">
 
@@ -52,9 +53,18 @@ openupm add com.reown.appkit.unity
    - `com.reown.sign.nethereum`
    - `com.reown.sign.nethereum.unity`
    - `com.reown.appkit.unity`
+   - `com.reown.unity.dependencies`
 7. Press `Add` button
+
 </Tab>
 </Tabs>
+
+<Note>
+  If you encounter errors related to the `com.unity.vectorgraphics` package after installing AppKit,
+  please install it manually from the Package Manager. Click the plus ➕ button in the Package
+  Manager window, then select the `Add package by name...` option and enter
+  `com.unity.vectorgraphics`.
+</Note>
 
 ## Configure
 
@@ -77,7 +87,7 @@ await AppKit.InitializeAsync(
 ```
 
 - **projectId**: The project ID is a unique identifier for your project.
-  - If you don’t have a Project ID, you can create one at [Reown Cloud](https://cloud.reown.com).
+  - If you don't have a Project ID, you can create one at [Reown Dashboard](https://dashboard.reown.com).).
 - **name**: The project name is a human-readable name for your project.
 - **description**: The project description is a human-readable description for your project.
 - **url**: The project URL
@@ -118,10 +128,12 @@ public async Task ResumeSession()
 }
 ```
 
+> Optional: Using Solana Unity SDK? You can keep using `Solana.Unity.SDK`'s `Web3` and route all signing through AppKit with our adapter. See the adapter section in [Usage](/appkit/unity/core/usage#appkit-with-solana-unity-sdk).
+
 ## Examples and Test dApps
 
 - [Unity AppKit Example in Github](https://github.com/reown-com/reown-dotnet/tree/main/sample/)
-- [A WebGL sample](https://unity-appkit.vercel.app/)
+- [A WebGL sample](https://appkit-unity.reown.com/)
 - [Android Build (Firebase)](https://appdistribution.firebase.dev/i/093025eda71719e2)
 - [iOS Build (Testflight)](https://testflight.apple.com/join/MPkPYk43)
 

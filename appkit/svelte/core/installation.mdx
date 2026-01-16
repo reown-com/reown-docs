@@ -1,0 +1,356 @@
+---
+title: Installation
+---
+
+import CloudBanner from '/snippets/cloud-banner.mdx'
+
+import SvelteWagmiImplementation from '/snippets/appkit/svelte/wagmi/about/implementation.mdx'
+import SvelteWagmiModal from '/snippets/appkit/svelte/wagmi/about/triggermodal.mdx'
+
+import SvelteEthersImplementation from '/snippets/appkit/svelte/ethers/about/implementation.mdx'
+import SvelteEthersModal from '/snippets/appkit/svelte/ethers/about/triggermodal.mdx'
+
+import SvelteSolanaImplementation from '/snippets/appkit/svelte/solana/about/implementation.mdx'
+import SvelteSolanaModal from '/snippets/appkit/svelte/solana/about/triggermodal.mdx'
+
+import SvelteBitcoinImplementation from '/snippets/appkit/svelte/bitcoin/about/implementation.mdx'
+import SvelteBitcoinModal from '/snippets/appkit/svelte/bitcoin/about/triggermodal.mdx'
+
+import SvelteTonImplementation from '/snippets/appkit/svelte/ton/about/implementation.mdx'
+import SvelteTonModal from '/snippets/appkit/svelte/ton/about/triggermodal.mdx'
+
+# Svelte
+
+AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin and TON.
+Choose one of these to get started.
+
+<Note>
+  We recommend using [SvelteKit v5](https://kit.svelte.dev/) to get started with AppKit Svelte.
+</Note>
+
+## Installation
+
+<Tabs>
+<Tab title="Wagmi">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Ethers">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ethers ethers
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ethers ethers
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-ethers ethers
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ethers ethers
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Solana">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-solana
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-solana
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-solana
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-solana
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Bitcoin">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="TON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ton
+```
+
+</CodeGroup>
+
+</Tab>
+</Tabs>
+
+## Cloud Configuration
+
+Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtain a new project ID.
+
+<CloudBanner />
+
+## Implementation
+
+<Tabs>
+<Tab title="Wagmi">
+<Card title="Svelte Wagmi Example" icon="github" href="https://github.com/reown-com/appkit/tree/main/examples/sveltekit-wagmi">
+Check the Svelte Wagmi example
+</Card>
+
+<SvelteWagmiImplementation />
+
+</Tab>
+<Tab title="Ethers">
+<Card title="Svelte Ethers Example" icon="github" href="https://github.com/reown-com/appkit/tree/main/examples/sveltekit-ethers">
+Check the Svelte Ethers example
+</Card>
+
+<SvelteEthersImplementation />
+
+</Tab>
+<Tab title="Solana">
+
+<SvelteSolanaImplementation />
+
+</Tab>
+<Tab title="Bitcoin">
+
+<SvelteBitcoinImplementation />
+
+</Tab>
+<Tab title="TON">
+
+<SvelteTonImplementation />
+
+</Tab>
+</Tabs>
+
+## Trigger the modal
+
+The recommended way to trigger the modal in Svelte is to use the `<appkit-button />` web component. After setting up AppKit in your application, you can simply use the button component anywhere in your Svelte templates:
+
+```javascript
+<script lang="ts">
+  // Import your AppKit configuration to ensure it's initialized
+  import '$lib/appkit';
+</script>
+
+<main>
+  <h1>Svelte + AppKit Integration</h1>
+
+  <div class="card">
+    <appkit-button />
+  </div>
+</main>
+```
+
+The `<appkit-button />` is a web component that's automatically registered when AppKit is initialized. No additional imports are required.
+
+### Alternative approaches
+
+You can also trigger the modal programmatically using the AppKit instance:
+
+```javascript
+<script lang="ts">
+  import { appKit } from '$lib/appkit';
+
+  function openModal() {
+    appKit?.open();
+  }
+
+  function openConnectModal() {
+    appKit?.open({ view: 'Connect' });
+  }
+
+  function openAccountModal() {
+    appKit?.open({ view: 'Account' });
+  }
+</script>
+
+<button on:click={openModal}>Open Modal</button>
+<button on:click={openConnectModal}>Connect Wallet</button>
+<button on:click={openAccountModal}>View Account</button>
+```
+
+Or use other AppKit web components:
+
+```javascript
+<appkit-connect-button />
+<appkit-account-button />
+<appkit-network-button />
+```
+
+<Tabs>
+<Tab title="Wagmi">
+
+<SvelteWagmiModal />
+
+</Tab>
+<Tab title="Ethers">
+
+<SvelteEthersModal />
+
+</Tab>
+<Tab title="Solana">
+
+<SvelteSolanaModal />
+
+</Tab>
+<Tab title="Bitcoin">
+
+<SvelteBitcoinModal />
+
+</Tab>
+<Tab title="TON">
+
+<SvelteTonModal />
+
+</Tab>
+</Tabs>
+
+## Blockchain Interaction
+
+<Tabs>
+
+<Tab title="Wagmi">
+You need to install @wagmi/core to interact with smart contracts:
+
+<CodeGroup>
+
+```bash npm
+npm install @wagmi/core
+```
+
+```bash Yarn
+yarn add @wagmi/core
+```
+
+```bash Bun
+bun a @wagmi/core
+```
+
+```bash pnpm
+pnpm add @wagmi/core
+```
+
+</CodeGroup>
+
+[Wagmi actions](https://wagmi.sh/core/api/actions/readContract) can help us interact with wallets and smart contracts:
+
+For this use case, we need to import the `wagmiConfig` from our AppKit WagmiAdapter configuration.
+
+```ts
+import { readContract } from '@wagmi/core'
+import { USDTAbi } from '../abi/USDTAbi'
+
+const USDTAddress = '0x...'
+
+const data = readContract(wagmiConfig, {
+  address: USDTAddress,
+  abi: USDTAbi,
+  functionName: 'totalSupply',
+  args: []
+})
+```
+
+Read more about Wagmi actions for smart contract interaction [here](https://wagmi.sh/core/actions/readContract).
+
+</Tab>
+<Tab title="Ethers">
+
+[Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
+
+```ts
+import { BrowserProvider, Contract, parseEther } from 'ethers'
+
+const provider = await appKit.subscribeProviders(state => {
+  return state['eip155']
+})
+
+const addressFrom = await appKit.subscribeAccount(state => {
+  return state
+})
+
+if (!provider) throw Error('No provider found')
+if (!addressFrom) throw Error('No address found')
+
+function sendTransaction() {
+  const tx = {
+    from: addressFrom,
+    to: '0x...', // any address
+    value: parseEther('0.0001')
+  }
+  const ethersProvider = new BrowserProvider(provider)
+  const signer = await ethersProvider.getSigner()
+  const tx = await signer.sendTransaction(tx)
+  console.log('transaction:', tx)
+}
+```
+
+</Tab>
+</Tabs>

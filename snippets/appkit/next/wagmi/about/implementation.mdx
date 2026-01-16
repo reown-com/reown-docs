@@ -13,7 +13,7 @@ import { cookieStorage, createStorage, http } from '@wagmi/core'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { mainnet, arbitrum } from '@reown/appkit/networks'
 
-// Get projectId from https://cloud.reown.com
+// Get projectId from https://dashboard.reown.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 
 if (!projectId) {
@@ -45,19 +45,15 @@ import { mainnet, arbitrum, base, scroll, polygon } from '@reown/appkit/networks
 ```
 
 <Note>
-Looking to add a custom network? Check out the [custom networks](../../core/custom-networks) section.
+  Looking to add a custom network? Check out the [custom
+  networks](/appkit/next/core/custom-networks) section.
 </Note>
 
 ## SSR and Hydration
 
-:::info
-
 - Using cookies is completely optional and by default Wagmi will use `localStorage` instead if the `storage` param is not defined.
 - The `ssr` flag will delay the hydration of Wagmi's store to avoid hydration mismatch errors.
 - AppKit doesn't fully support the `ssr` flag.
-  :::
-
-<br />
 
 ### Context Provider
 
@@ -136,13 +132,12 @@ export const metadata: Metadata = {
   description: 'Powered by Reown'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode
 }>) {
-
-  const headersObj = await headers();
+  const headersObj = await headers()
   const cookies = headersObj.get('cookie')
 
   return (

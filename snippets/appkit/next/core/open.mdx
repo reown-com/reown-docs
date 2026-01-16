@@ -24,46 +24,29 @@ open({
     toToken: 'ETH'
   }
 })
+
+// to open wallet send interface
+open({ view: 'WalletSend' })
 ```
 
-List of views you can select
+**Available namespaces for the Connect view:**
 
-<Table
-  headers={["Variable", "Description"]}
-  data={[
-    {
-      variable: { code: "Connect" },
-      description:
-        "Principal view of the modal - default view when disconnected. A `namespace` can be selected to connect to a specific network (solana, bip122 or eip155)",
-    },
-    {
-      variable: { code: "Account" },
-      description: "User profile - default view when connected",
-    },
-    {
-      variable: { code: "AllWallets" },
-      description: "Shows the list of all available wallets",
-    },
-    {
-      variable: { code: "Networks" },
-      description:
-        "List of available networks - you can select and target a specific network before connecting",
-    },
-    {
-      variable: { code: "WhatIsANetwork" },
-      description: '"What is a network" onboarding view',
-    },
-    {
-      variable: { code: "WhatIsAWallet" },
-      description: '"What is a wallet" onboarding view',
-    },
-    {
-      variable: { code: "OnRampProviders" },
-      description: "On-Ramp main view",
-    },
-    {
-      variable: { code: "Swap" },
-      description: "Swap main view",
-    },
-  ]}
-/>
+| Namespace | Description |
+|-----------|-------------|
+| solana    | For connecting to Solana wallets |
+| bip122    | For connecting to Bitcoin wallets |
+| eip155    | For connecting to Ethereum wallets |
+
+**List of views you can select:**
+
+| Variable        | Description                                                                                                                                             |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Connect         | Principal view of the modal - default view when disconnected. A `namespace` can be selected to connect to a specific network (solana, bip122 or eip155) |
+| Account         | User profile - default view when connected                                                                                                              |
+| AllWallets      | Shows the list of all available wallets                                                                                                                 |
+| Networks        | List of available networks - you can select and target a specific network before connecting                                                             |
+| WhatIsANetwork  | "What is a network" onboarding view                                                                                                                     |
+| WhatIsAWallet   | "What is a wallet" onboarding view                                                                                                                      |
+| OnRampProviders | On-Ramp main view                                                                                                                                       |
+| WalletSend      | Token sending interface that allows users to send tokens to another address                                                                             |
+| Swap            | Swap main view                                                                                                                                          |

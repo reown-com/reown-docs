@@ -37,30 +37,65 @@ pnpm add @reown/appkit-pay
 ```
 </CodeGroup>
 
-### Usage
+### `pay` - Full Payment Flow
+
+#### Usage
 ```ts
-import { usePay } from '@reown/appkit-pay';
-import { baseSepoliaETH } from '@reown/appkit-pay' 
+import { pay, baseSepoliaETH } from '@reown/appkit-pay' 
 ```
 
-In order to run the payment, we are using the function `openPay`. 
+This function handles the complete payment flow — it opens the payment UI *and* waits for the result (success, failure, cancel, timeout). This function receives three values: `recipient`, `amount`, and `paymentAsset`.
 
 ```ts
-// --- Open Modal ---
-await openPay({
+// pay function returns a PaymentResult object
+const result = await pay({
     recipient: addressRecipient,
-    amount: 0.0001,
+    amount: amount,
     paymentAsset: baseSepoliaETH
 });
+
+if (result.success) {
+    console.log("Payment successful: " + result.result);
+} else {
+    console.error("Payment error: " + result.error);
+}
 ```
 
+## Prerequisites
+
+### Enable Payments Feature in Dashboard
+
+The "Payments" feature **must be enabled** in the [Reown Dashboard](https://dashboard.reown.com) before you can use AppKit Pay, even for local testing. 
+
+1. Go to your project in the Reown Dashboard
+2. Navigate to the Payments section
+3. Enable the Payments feature for your projectId
+
+
+## Test locally
+
+In order to test locally use localhost and port 3000. This is the only port available for local testing.
+
+Add the following to your package.json file in order to run the development server on port 3000:
+```json
+"scripts": {
+    "dev": "vite --port 3000",
+},
+```
+
+## Supported Networks and Assets
+
+For a complete list of supported networks and assets across different exchanges (Coinbase, Binance), please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Exchange documentation.
 
 ## Assets Configuration
 
-For the moment, AppKit Pay has pre-configured these assets: baseETH, baseSepoliaETH, and baseUSDC.
+For the moment, AppKit Pay has pre-configured these assets: 
+- baseETH, baseSepoliaETH, and baseUSDC
+- ethereumUSDC, optimismUSDC, arbitrumUSDC, polygonUSDC and solanaUSDC
+- ethereumUSDT, optimismUSDT, arbitrumUSDT, polygonUSDT and solanaUSDT
 
 ```ts
-import { baseETH, baseSepoliaETH, baseUSDC } from '@reown/appkit-pay' 
+import { baseETH } from '@reown/appkit-pay' 
 ```
 
 For custom assets, you can create a paymentAsset object with all the information:
@@ -80,10 +115,10 @@ const paymentAssetDetails = {
 
 ## Functions
 
-### openPay
+### pay
 Opens the payment modal. Resolves when the modal is closed by the user or programmatically.
 
-`openPay(amount, addressRecipient, options: PaymentOptions): Promise<void>`
+`pay(amount, addressRecipient, options: PaymentOptions): Promise<PaymentResult>`
 
 ### getExchanges
 Fetches available exchanges.

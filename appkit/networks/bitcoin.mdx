@@ -5,6 +5,13 @@ pagination_next: appkit/react/core/installation
 
 The AppKit SDK supports Bitcoin, allowing users to connect their Bitcoin wallets to applications. AppKit provides a simple, secure, and seamless in-app experience for users looking to transact within web3.
 
+<video
+  controls
+  autoPlay
+  src="/images/bitcoin-demo.mp4"
+  className="w-full"
+></video>
+
 ### Bitcoin Standards and Supported Wallets
 
 The AppKit Bitcoin integration aims to support connections through WBIPs and the Bitcoin Wallet Standard. However, most wallets have their own proprietary connection interfaces. To address this, we will gradually expand the list of supported wallets.
@@ -16,27 +23,35 @@ Currently, the following extension wallets are supported:
 - **Leather**
 - **Phantom**.
 
+Here is the list of supported Bitcoin JSON-RPC methods:
+1. `sendTransfer`
+2. `getAccountAddresses`
+3. `signPSBT`
+4. `signMessage`
+
+You can find more information about the supported Bitcoin RPC methods [here](/advanced/multichain/rpc-reference/bitcoin-rpc).
+
 While we provide a standardized interface for Bitcoin connector methods, not all wallets support every method. As a result, you may encounter a `MethodNotSupportedError` when attempting to use methods that are not supported by a specific wallet.
 If your wallet supports a mentioned standard but you cannot connect, please reach out to our development team for assistance via [Github issues](https://github.com/reown-com/appkit/issues/new/choose).
-<Card title="Try Demo" href="https://appkit-lab.reown.com/library/bitcoin/" horizontal />
+<Card title="Try Demo" href="https://appkit-lab.reown.com/appkit/?name=bitcoin" horizontal />
 
 
 ## Get Started
 
 <CardGroup cols={2}>
-  <Card title="React" icon="react" href="/appkit/react/core/installation?platform=bitcoin">
+  <Card title="React" icon="react" href="/appkit/react/core/installation#bitcoin">
     Get started with AppKit in React.
   </Card>
 
-  <Card title="Next.js" icon="square-n" href="/appkit/next/core/installation?platform=bitcoin">
+  <Card title="Next.js" icon="square-n" href="/appkit/next/core/installation#bitcoin">
     Get started with AppKit in Next.js.
   </Card>
 
-  <Card title="Vue" icon="vuejs" href="/appkit/vue/core/installation?platform=bitcoin">
+  <Card title="Vue" icon="vuejs" href="/appkit/vue/core/installation#bitcoin">
     Get started with AppKit in Vue.
   </Card>
 
-  <Card title="JavaScript" icon="js" href="/appkit/javascript/core/installation?platform=bitcoin">
+  <Card title="JavaScript" icon="js" href="/appkit/javascript/core/installation#bitcoin">
     Get started with AppKit in JavaScript.
   </Card>
 </CardGroup>

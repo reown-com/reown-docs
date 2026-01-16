@@ -1,0 +1,125 @@
+---
+title: Wallet Buttons
+---
+
+<Frame>
+  <img src="/images/assets/walletButtons.jpg" />
+</Frame>
+
+Using the wallet button composable ([Demo in our Lab](https://appkit-lab.reown.com/appkit/?name=wagmi)), you can directly connect to the top 20 wallets, WalletConnect QR, and all the social logins.
+
+Follow these steps to use the composable:
+
+1. Install the package:
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-wallet-button
+```
+
+```bash Yarn
+yarn add @reown/appkit-wallet-button
+```
+
+```bash Bun
+bun a @reown/appkit-wallet-button
+```
+
+```bash pnpm
+pnpm add @reown/appkit-wallet-button
+```
+
+</CodeGroup>
+
+2. Import and use in your Vue component:
+
+```javascript
+<template>
+  <div>
+    <button @click="() => appKitWalletButton.connect('metamask')" :disabled="!isReady">
+      Connect to MetaMask
+    </button>
+    <button @click="() => appKitWalletButton.connect('walletConnect')" :disabled="!isReady">
+      Open QR modal
+    </button>
+    <button @click="() => appKitWalletButton.connect('google')" :disabled="!isReady">
+      Connect to Google
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { createAppKitWalletButton } from '@reown/appkit-wallet-button'
+
+const appKitWalletButton = createAppKitWalletButton()
+const isReady = ref(false)
+
+onMounted(() => {
+  isReady.value = appKitWalletButton.isReady()
+})
+</script>
+```
+
+<Note>
+  Make sure to call wallet button methods after `createAppKit` has been initialized.
+</Note>
+
+#### Options for wallet property
+
+| Type          | Options                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| QR Code       | `walletConnect`                                                                                                                                                                                                                                                                                                                                                               |
+| Wallets       | `metamask`, `trust`, `coinbase`, `rainbow`, `jupiter`, `solflare`, `coin98`, `magic-eden`, `backpack`, `frontier`, `xverse`, `okx`, `bitget`, `leather`, `binance`, `uniswap`, `safepal`, `bybit`, `phantom`, `ledger`, `timeless-x`, `safe`, `zerion`, `oneinch`, `crypto-com`, `imtoken`, `kraken`, `ronin`, `robinhood`, `exodus`, `argent`, `tokenpocket`, and more |
+| Social logins | `google`, `github`, `apple`, `facebook`, `x`, `discord`, and `farcaster`                                                                                                                                                                                                                                                                                                      |
+
+#### Options for namespace property
+
+| Value     | Description                           |
+| --------- | ------------------------------------- |
+| `eip155`  | Ethereum and EVM-compatible chains    |
+| `solana`  | Solana blockchain                     |
+| `bip122`  | Bitcoin blockchain                    |
+
+#### Enhanced Multichain Examples
+
+The wallet button now supports enhanced multichain functionality with improved namespace targeting:
+
+```javascript
+<template>
+  <div>
+    <button 
+      v-for="wallet in wallets" 
+      :key="`${wallet.wallet}-${wallet.namespace}`"
+      @click="() => connectWallet(wallet.wallet, wallet.namespace)" 
+      :disabled="!isReady"
+    >
+      {{ wallet.label }}
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { createAppKitWalletButton } from '@reown/appkit-wallet-button'
+
+const wallets = [
+  { wallet: 'metamask', namespace: 'eip155', label: 'MetaMask EVM' },
+  { wallet: 'metamask', namespace: 'solana', label: 'MetaMask Solana' },
+  { wallet: 'phantom', namespace: 'bip122', label: 'Phantom Bitcoin' }
+]
+
+const appKitWalletButton = createAppKitWalletButton()
+const isReady = ref(false)
+
+const connectWallet = (wallet, namespace) => {
+  const walletButton = createAppKitWalletButton({ namespace })
+  walletButton.connect(wallet)
+}
+
+onMounted(() => {
+  isReady.value = appKitWalletButton.isReady()
+})
+</script>
+```

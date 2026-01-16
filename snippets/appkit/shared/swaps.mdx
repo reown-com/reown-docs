@@ -34,3 +34,36 @@ const modal = createAppKit({
   }
 })
 ```
+
+## Setting Default Tokens
+
+You can programmatically open the Swap view with pre-selected tokens and amounts using the `open` function from the [`useAppKit`](/appkit/react/core/hooks#useappkit) hook. This allows you to customize the default swap experience for your users.
+
+```ts
+import { useAppKit } from '@reown/appkit/react'
+
+function Component() {
+  const { open } = useAppKit()
+
+  const openSwapWithDefaults = () => {
+    open({
+      view: 'Swap',
+      arguments: {
+        amount: '100',      // Optional: pre-fill the swap amount
+        fromToken: 'USDC',  // Optional: set the token to swap from
+        toToken: 'ETH'      // Optional: set the token to swap to
+      }
+    })
+  }
+
+  return <button onClick={openSwapWithDefaults}>Swap USDC to ETH</button>
+}
+```
+
+### Parameters
+
+- `amount` (optional): Pre-fill the amount to swap
+- `fromToken` (optional): Set the default token to swap from (e.g., 'USDC', 'ETH', 'DAI')
+- `toToken` (optional): Set the default token to swap to (e.g., 'ETH', 'USDC', 'USDT')
+
+This is particularly useful when you want to guide users to swap specific tokens or create custom swap buttons for different token pairs in your application.

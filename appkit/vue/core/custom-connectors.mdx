@@ -2,7 +2,7 @@
 title: Custom connectors
 ---
 
-Add custom connectors for Wagmi
+In AppKit, a 'connector' is the bridge between your app and a user's wallet. This page shows how to add custom connectors beyond the default ones, allowing your users to connect with additional wallet types and authentication methods.
 
 <Tabs>
 <Tab title="Wagmi">
@@ -18,8 +18,9 @@ import { createAppKit } from '@reown/appkit/vue'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 import { http, WagmiProvider, CreateConnectorFn } from 'wagmi'
-import { sepolia } from '@reown/appkit/networks'
-import { walletConnect, coinbaseWallet, injected } from 'wagmi/connectors'
+import { abstractTestnet } from '@reown/appkit/networks'
+// you need to add the abstract library in order to make it work
+import { abstractWalletConnector } from "@abstract-foundation/agw-react/connectors";
 
 const projectId = 'YOUR_PROJECT_ID'
 
@@ -27,23 +28,13 @@ const metadata = {
   //....
 }
 
-// create the connectors (delete the ones you don't need)
+// create the custom connector (in this example Abastract)
 const connectors: CreateConnectorFn[] = []
-connectors.push(walletConnect({ projectId, metadata, showQrModal: false })) // showQrModal must be false
-connectors.push(injected({ shimDisconnect: true }))
-connectors.push(
-  coinbaseWallet({
-    appName: metadata.name,
-    appLogoUrl: metadata.icons[0]
-  })
-)
+connectors.push(abstractWalletConnector())
 
-const export networks = [sepolia]
+const export networks = [abstractTestnet]
 
 export const wagmiAdapter = new WagmiAdapter({
-  transports: {
-    [sepolia.id]: http()
-  },
   connectors,
   projectId,
   networks
@@ -54,9 +45,11 @@ export const config = wagmiAdapter.wagmiConfig
 createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [sepolia]
+  networks
 })
 ```
+
+Check our Vue Wagmi demo in [Github](https://github.com/reown-com/appkit-web-examples/)
 
 </Tab>
 </Tabs>

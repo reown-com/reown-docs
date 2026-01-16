@@ -6,7 +6,7 @@ In your `App.vue` file set up the following configuration.
   import { SolanaAdapter } from "@reown/appkit-adapter-solana/vue";
   import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
 
-  // 1. Get projectId from https://cloud.reown.com
+  // 1. Get projectId from https://dashboard.reown.com
   const projectId = "YOUR_PROJECT_ID";
 
   // 2. Set up metadata
@@ -33,5 +33,5 @@ In your `App.vue` file set up the following configuration.
 ```
 
 <Warning>
-Make sure that the `url` from the `metadata` matches your domain and subdomain. This will later be used by the [Verify API](../../../cloud/verify) to tell wallets if your application has been verified or not.
+Make sure that the `url` from the `metadata` matches your domain and subdomain. This will later be used by the **Verify API** to tell wallets if your application has been verified or not.
 </Warning>

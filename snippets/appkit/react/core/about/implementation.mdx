@@ -1,0 +1,75 @@
+For a quick integration of Appkit Core you can use the `UniversalConnector` class. Which simplifies the integration of Appkit Core by providing a single interface for all the blockchain protocols.
+
+You can configure the Universal Connector with the networks you want to support.
+For more information, please visit [RPC Reference](https://docs.reown.com/advanced/multichain/rpc-reference/cosmos-rpc) section from our docs.
+
+We recommend creating a config file to establish a singleton instance for the Universal Connector:
+
+```tsx
+import type { AppKitNetwork } from '@reown/appkit/networks'
+import type { CustomCaipNetwork } from '@reown/appkit-common'
+import { UniversalConnector } from '@reown/appkit-universal-connector'
+
+// Get projectId from https://dashboard.reown.com
+export const projectId = import.meta.env.VITE_PROJECT_ID || "b56e18d47c72ab683b10814fe9495694" // this is a public projectId only to use on localhost
+
+if (!projectId) {
+  throw new Error('Project ID is not defined')
+}
+
+// you can configure your own network
+const suiMainnet: CustomCaipNetwork<'sui'> = {
+  id: 784,
+  chainNamespace: 'sui' as const,
+  caipNetworkId: 'sui:mainnet',
+  name: 'Sui',
+  nativeCurrency: { name: 'SUI', symbol: 'SUI', decimals: 9 },
+  rpcUrls: { default: { http: ['https://fullnode.mainnet.sui.io:443'] } }
+}
+
+
+export async function getUniversalConnector() {
+  const universalConnector = await UniversalConnector.init({
+    projectId,
+    metadata: {
+      name: 'Universal Connector',
+      description: 'Universal Connector',
+      url: 'https://appkit.reown.com',
+      icons: ['https://appkit.reown.com/icon.png']
+    },
+    networks: [
+      {
+        methods: ['sui_signPersonalMessage'],
+        chains: [suiMainnet as CustomCaipNetwork],
+        events: [],
+        namespace: 'sui'
+      }
+    ]
+  })
+
+  return universalConnector
+}
+```
+
+In de App.tsx file you can add :
+
+```tsx
+import { useState, useEffect } from 'react'
+import { getUniversalConnector } from './config' // previous config file
+import { UniversalConnector } from '@reown/appkit-universal-connector'
+
+export function App() {
+  const [universalConnector, setUniversalConnector] = useState<UniversalConnector>()
+  const [session, setSession] = useState<any>()
+
+  
+  // Initialize the Universal Connector on component mount
+  useEffect(() => {
+    getUniversalConnector().then(setUniversalConnector)
+  }, [])
+
+  // Set the session state in case it changes
+  useEffect(() => {
+    setSession(universalConnector?.provider.session)
+  }, [universalConnector?.provider.session])
+```

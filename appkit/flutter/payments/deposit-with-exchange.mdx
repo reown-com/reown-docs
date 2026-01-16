@@ -1,0 +1,319 @@
+**Deposit from Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like Binance (with more exchanges coming soon). Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
+
+The feature now supports automatic swapping and bridging of tokens when needed during deposits, allowing users to deposit from any supported asset on their exchange and receive the desired token on the target network.
+
+## Pre-Requisites
+
+**To enable this feature, you will need to provide your own Coinbase Developer Platform (CDP) API keys.**
+
+You can find instructions on how to do this [here](https://docs.cdp.coinbase.com/onramp-&-offramp/introduction/getting-started).
+
+Head over to [Reown Dashboard](https://dashboard.reown.com) and navigate to the "Fund from Exchange" section to configure your API keys.
+
+<Frame>
+  <img src="/images/dwe-coinbase.png" alt="Coinbase CDP Keys Setup" />
+</Frame>
+
+## Quickstart 
+
+This feature will start working as soon as your team is on the allowed-list. Please contact sales@reown.com to get started.
+
+{/* <Warning>
+    Projects first need to install and set up Reown AppKit before integrating AppKit Pay. If you haven't done so, please refer to the [Reown AppKit docs](/appkit/overview#quickstart).
+</Warning> */}
+
+After enabling it, __Deposit from Exchange__ is accessible through the Account Screen by clicking on the "Fund wallet" button, and the modal below will be shown:
+<img width="300" className="block dark:hidden" src="/images/flutter_dwe_light.png" alt="Funding your wallet with Deposit with Exchange" />
+<img width="300" className="hidden dark:block" src="/images/flutter_dwe_dark.png" alt="Funding your wallet with Deposit with Exchange" />
+
+## Stand-alone feature
+
+If desired, Deposit from Exchange can be used as a stand-alone feature with the following helpers:
+
+- Get available payment assets based on the network:
+```dart
+final List<ExchangeAsset> assets = _appKitModal.getPaymentAssetsForNetwork(
+    chainId: 'eip155:1',
+    includeNative: false,
+);
+```
+___includeNative:___ will include or exclude native tokens, such as ETH on Ethereum or SOL on Solana. These are included by default.
+
+- Configure the feature (if desired):
+```dart
+_appKitModal.configDeposit(
+  supportedAssets: assets,
+  configuredRecipients: {
+    'eip155': '0xYourEVMAddress',
+    'solana': 'YourSolanaAddress',
+  },
+  filterByNetwork: true,
+  depositAssetButton: true,
+  showNetworkIcon: false,
+);
+```
+___supportedAssets:___ (optional) previously selected supported assets<br />
+___configuredRecipients:___ (optional) a map of namespace to recipient address. If provided, will be used as recipient address instead of the connected wallet (if any) for the corresponding namespace<br />
+___filterByNetwork:___ (optional) when true, filters available assets by the currently selected network<br />
+___depositAssetButton:___ (optional) controls visibility of the deposit asset selection button<br />
+___showNetworkIcon:___ (optional) hides or shows the chain icon on the screen<br />
+___preselectedAsset:___ (optional) if provided, will fix the feature on the provided asset and disable the Asset Selector<br />
+
+- Open the modal on Deposit Screen:
+```dart
+// Unmodified
+_appKitModal.openDepositView();
+
+// With different screen title
+_appKitModal.openModalView(
+    ReownAppKitModalDepositScreen(
+        titleOverride: 'Your own title',
+    ),
+);
+```
+
+---
+
+## Headless (no UI) version usage
+
+### Instance creation
+
+Create a `ReownAppKit` instance and initialize it (as with any other AppKit usage).
+
+```dart
+final appKit = ReownAppKit(
+  core: ReownCore(
+    projectId: '876c62..........', // Project ID retrieved from Reown Dashboard
+  ),
+  metadata: PairingMetadata(
+    name: 'Example',
+    description: 'Deposit With Exchange Example',
+    url: 'https://example.com/',
+    icons: [
+      'https://example.com/icon.png',
+    ],
+    redirect: Redirect(native: 'exampleapp://'),
+  ),
+);
+```
+
+### Initialize the SDK
+
+After creating the instance, initialize it.
+
+```dart
+// unawaited
+appKit.init().then((_) => setState(() {}));
+
+// awaited
+await appKit.init();
+```
+
+### Supported Assets
+
+Currently the feature works with a set of supported assets. You can use the following function to filter them according to your needs.
+
+```dart
+// Get supported assets on the given chainId (CAIP-2) 
+// Null value will return all supported assets in all networks
+final List<ExchangeAsset> assets = appKit.getPaymentAssetsForNetwork(
+	chainId: 'eip155:1',
+);
+```
+
+Or you can pick any of the preconfigured constants by looking at their definitions:
+
+```dart
+const ethereumETH = ExchangeAsset(
+  network: 'eip155:1',
+  address: 'native',
+  metadata: AssetMetadata(name: 'Ethereum', symbol: 'ETH', decimals: 18),
+);
+
+const ethereumUSDC = ExchangeAsset(
+  network: 'eip155:1',
+  address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  metadata: AssetMetadata(name: 'USD Coin', symbol: 'USDC', decimals: 6),
+);
+
+const ethereumUSDT = ExchangeAsset(
+  network: 'eip155:1',
+  address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+  metadata: AssetMetadata(name: 'Tether USD', symbol: 'USDT', decimals: 6),
+);
+
+const optimismUSDT = ExchangeAsset(
+  network: 'eip155:10',
+  address: '0x94b008aA00579c1307B0EF2c499aD98a8ce58e58',
+  metadata: AssetMetadata(name: 'Tether USD', symbol: 'USDT', decimals: 6),
+);
+
+const polygonUSDC = ExchangeAsset(
+  network: 'eip155:137',
+  address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+  metadata: AssetMetadata(name: 'USD Coin', symbol: 'USDC', decimals: 6),
+);
+
+const polygonUSDT = ExchangeAsset(
+  network: 'eip155:137',
+  address: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
+  metadata: AssetMetadata(name: 'Tether USD', symbol: 'USDT', decimals: 6),
+);
+
+const baseETH = ExchangeAsset(
+  network: 'eip155:8453',
+  address: 'native',
+  metadata: AssetMetadata(name: 'Ethereum', symbol: 'ETH', decimals: 18),
+);
+
+const baseUSDC = ExchangeAsset(
+  network: 'eip155:8453',
+  address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+  metadata: AssetMetadata(name: 'USD Coin', symbol: 'USDC', decimals: 6),
+);
+
+const arbitrumUSDC = ExchangeAsset(
+  network: 'eip155:42161',
+  address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+  metadata: AssetMetadata(name: 'USD Coin', symbol: 'USDC', decimals: 6),
+);
+
+const arbitrumUSDT = ExchangeAsset(
+  network: 'eip155:42161',
+  address: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+  metadata: AssetMetadata(name: 'Tether USD', symbol: 'USDT', decimals: 6),
+);
+
+const baseSepoliaETH = ExchangeAsset(
+  network: 'eip155:84532',
+  address: 'native',
+  metadata: AssetMetadata(name: 'Ethereum', symbol: 'ETH', decimals: 18),
+);
+
+const baseSepoliaUSDC = ExchangeAsset(
+  network: 'eip155:84532',
+  address: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+  metadata: AssetMetadata(name: 'USD Coin', symbol: 'USDC', decimals: 6),
+);
+
+const sepoliaETH = ExchangeAsset(
+  network: 'eip155:11155111',
+  address: 'native',
+  metadata: AssetMetadata(name: 'Ethereum', symbol: 'ETH', decimals: 18),
+);
+
+const solanaSOL = ExchangeAsset(
+  network: 'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp',
+  address: 'native',
+  metadata: AssetMetadata(name: 'Solana', symbol: 'SOL', decimals: 9),
+);
+
+const solanaUSDC = ExchangeAsset(
+  network: 'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp',
+  address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+  metadata: AssetMetadata(name: 'USD Coin', symbol: 'USDC', decimals: 6),
+);
+
+const solanaUSDT = ExchangeAsset(
+  network: 'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp',
+  address: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',
+  metadata: AssetMetadata(name: 'Tether USD', symbol: 'USDT', decimals: 6),
+);
+
+const List<ExchangeAsset> allExchangeAssets = [
+  ethereumETH,
+  ethereumUSDC,
+  ethereumUSDT,
+  optimismUSDT,
+  polygonUSDC,
+  polygonUSDT,
+  baseETH,
+  baseUSDC,
+  arbitrumUSDC,
+  arbitrumUSDT,
+  baseSepoliaETH,
+  baseSepoliaUSDC,
+  sepoliaETH,
+  solanaSOL,
+  solanaUSDC,
+  solanaUSDT,
+];
+```
+
+### Get Supported Exchanges
+
+Whether you previously selected a supported `asset` or not, the next step is to get all the supported exchanges. If `asset` is provided, the response will include only the exchanges supporting that particular asset.
+
+```dart
+final params = GetExchangesParams(page: 1, asset: asset);
+final GetExchangesResult result = await appKit.getExchanges(params: params);
+// result.exchanges;
+// result.total;
+```
+
+`GetExchangesParams` also accepts `includeOnly` and exclude parameters to filter the `getExchanges` response. Example:
+
+```dart
+final params = GetExchangesParams(
+  page: 1,
+  asset: asset,
+  includeOnly: ['binance'],
+);
+final GetExchangesResult result = await appKit.getExchanges(params: params);
+// result.exchanges will only contain Binance;
+// result.total = 1;
+```
+
+`GetExchangesResult` contains a list of exchanges (`List<Exchange>`) and the total number of them.
+
+### Payment URL
+
+After the user selects the Exchange to fund their wallet from, it's time to get the payment (funding) redirect URL with params:
+
+- Selected `Exchange` ⇒ id
+- Selected `ExchangeAsset`
+- Amount to fund
+- Your wallet address in CAIP-10
+
+```dart
+final params = GetExchangeUrlParams(
+  exchangeId: exchange.id,
+  asset: asset,
+  amount: '1.0',
+  recipient: '${asset.network}:$yourWalletAddress',
+);
+final GetExchangeUrlResult result = await appKit.getExchangeUrl(
+  params: params,
+);
+// result.sessionId;
+// result.url;
+```
+
+The result will contain a `sessionId` (relevant later to check the status of the transaction/funding) and the payment URL.
+
+At this point, your dApp will launch this URL on the user's device, and the Exchange App will be launched if installed; otherwise, their default browser will open to log into the exchange and fund.
+
+### Status Check
+
+Once the user completes the transaction on the Exchange side, they should return to your dApp and wait for the confirmation status.
+
+> The recommended approach here is that, right after the user launches the payment URL, your dApp starts to query the confirmation status in a loop with a 3-second delay between each request, until a terminal status is received (or your own timeout logic is triggered). The SDK uses a maximum of 30 polling attempts by default.
+
+```dart
+final params = GetExchangeDepositStatusParams(
+  exchangeId: exchange.id,
+  sessionId: sessionId,
+);
+final GetExchangeDepositStatusResult result = await appKit.getExchangeDepositStatus(
+  params: params
+);
+// result.status
+// result.txHash
+```
+
+Possible values of `status` are: **UNKNOWN**, **IN_PROGRESS**, **CONFIRMED**, **FAILED**
+
+- **UNKNOWN:** Transaction has not been submitted yet
+- **IN_PROGRESS:** Transaction submitted, checking confirmation
+- **CONFIRMED:** Transaction confirmed, payment successful, `txHash` will be provided along with this status
+- **FAILED:** Transaction failed

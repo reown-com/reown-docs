@@ -1,0 +1,138 @@
+---
+title: Update AppKit packages to the latest
+---
+
+## Prerequisites
+
+- Node & a package manager (npm, pnpm, or yarn).
+- A project already using AppKit:
+
+```json
+"dependencies": {
+  "@reown/appkit": "1.8.1",
+  "@reown/appkit-adapter-wagmi": "1.8.1"
+}
+```
+
+<Note>
+More @reown/* packages can be used in your project. This is an example of a project using AppKit and Wagmi for EVM networks.
+</Note>
+
+## 1. Find the latest AppKit version
+
+Use the registry to read the current published version (do this once, and use the same number for every @reown/* package you install):
+
+```bash
+# npm
+npm view @reown/appkit version
+
+# pnpm
+pnpm view @reown/appkit version
+
+# yarn
+yarn npm info @reown/appkit version
+
+# bun
+bun info @reown/appkit version
+```
+
+You can also eyeball the version on npm’s package page for [@reown/appkit](https://www.npmjs.com/package/@reown/appkit).
+
+## 2. Update your dependencies (all @reown/* to the same version)
+
+Replace X.Y.Z below with the version you just looked up.
+
+<CodeGroup>
+
+```bash npm
+npm install \
+  @reown/appkit@X.Y.Z \
+  @reown/appkit-adapter-wagmi@X.Y.Z
+```
+
+```bash Yarn
+yarn add \
+  @reown/appkit@X.Y.Z \
+  @reown/appkit-adapter-wagmi@X.Y.Z
+```
+
+```bash Bun
+bun add \
+  @reown/appkit@X.Y.Z \
+  @reown/appkit-adapter-wagmi@X.Y.Z
+```
+
+```bash pnpm
+pnpm add \
+  @reown/appkit@X.Y.Z \
+  @reown/appkit-adapter-wagmi@X.Y.Z
+```
+
+</CodeGroup>
+
+<Note>
+AppKit publishes its packages in coordinated releases; mixing versions can cause subtle peer-dep and type mismatches, so keep @reown/* on the exact same X.Y.Z. 
+</Note>
+
+## 3. Pin in package.json (Optional) 
+
+If you prefer explicit pins (no carets), update `package.json`:
+
+```json
+"dependencies": {
+  "@reown/appkit": "X.Y.Z",
+  "@reown/appkit-adapter-wagmi": "X.Y.Z"
+}
+```
+Then reinstall to refresh your lockfile:
+
+<CodeGroup>
+
+```bash npm
+rm -rf node_modules package-lock.json && npm install
+```
+
+```bash Yarn
+rm -rf node_modules yarn.lock && yarn install
+```
+
+```bash Bun
+rm -rf node_modules bun.lockb && bun install
+```
+
+```bash pnpm
+rm -rf node_modules pnpm-lock.yaml && pnpm i
+```
+
+</CodeGroup>
+
+## 4. Try Locally (Optional) 
+
+After updating dependencies, test the changes locally:
+
+<CodeGroup>
+
+```bash npm
+npm run dev
+```
+```bash Yarn
+yarn dev
+```
+```bash Bun
+bun run dev
+```
+```bash pnpm
+pnpm dev
+``` 
+</CodeGroup>
+
+## 5. Commit & CI
+
+Commit package.json + the lockfile, and let CI run your build/tests.
+
+
+## 6. Done ✅
+
+That’s it. This keeps your AppKit stack consistent and aligned with the latest release.
+
+All the releases information are available in the [AppKit GitHub Releases](https://github.com/reown-com/appkit/releases).

@@ -7,37 +7,29 @@ The **Sign In With X** feature enables decentralized applications (Dapps) to aut
 </Frame>
 <br />
 
-<Card
-  title="Try Demo"
-  href="https://appkit-lab.reown.com/library/siwx-default/"
-/>
+<Card title="Try Demo" href="https://appkit-lab.reown.com/appkit/?name=siwx-default" />
 <br />
 
 ## Getting Started
 
 **SIWX** works as a plugin system for AppKit and you are going to add the plugin in the AppKit configuration. There are some ways to implement the **SIWX** feature:
 
-- Use the default implementation provided by AppKit
-- Use Cloud Auth SIWX to manage the sessions in the Cloud Dashboard
+- Use Reown Authentication to manage the sessions in the Reown Dashboard
+- Use the `DefaultSIWX` class provided by AppKit
 - Create a custom implementation to suit your specific requirements.
 
 To initialize the **SIWX** feature, you need to add the `siwx` parameter to the `createAppKit` function.
 
-### Default Implementation
+### Reown Authentication
 
-By using the default implementation, you can quickly integrate the **SIWX** feature into your Dapp. The default implementation provides a set of pre-built components that allow you to have the feature up and running in no time.
+Reown Authentication is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions. With Reown Authentication, you will be able to see and control the sessions of your users using the Reown [Dashboard](/cloud/reown-authentication).
 
-Read more about the [Default Implementation](./siwx-default).
-
-### Cloud Auth Implementation
-
-The Cloud Auth SIWX is a predefined implementation of the SIWX configuration plugin that uses the Cloud service to create and manage SIWX messages and sessions. With Cloud Auth SIWX, you will be able to see and control the sessions of your users using the [User Management Dashboard](/cloud/user-management).
-
-Read more about the [Cloud Auth Implementation](./siwx-cloud-auth).
+Read more about the [Reown Authentication Implementation](./reown-authentication).
 
 ### Custom Implementation
 
-The `siwx` param expects to receive a defined interface from which you are able to create your own implementation. This is what allows you to customize the feature to suit your specific requirements.
+`DefaultSIWX` is a scaffold implementation of the SIWX feature for quick custom integration. It offers pre-built components to get the feature running quickly with some custom adjustments. 
+Additionally, the expected ` parameters can be configured to allow customization of the feature to suit your specific requirements.
 
 The defined interface must follow specific rules to make sure that AppKit can interact with it correctly. Read more about how to have your [Custom Implementation](./siwx-custom).
 
@@ -56,4 +48,5 @@ If you are currently already using **SIWE** from `@reown/appkit-siwe`, after App
 It is important to note that if you cannot use `siweConfig` and `siwx` at the same time, `createAppKit` will throw an error in case this happens.
 
 You may replace `siweConfig` with your own `siwx` configuration manually if you would like to do so.
+
 </Warning>

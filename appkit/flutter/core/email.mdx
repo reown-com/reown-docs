@@ -2,7 +2,7 @@
 title: Email & Social Wallets
 ---
 
-AppKit enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social accounts.
+AppKit enables passwordless Web3 onboarding and authentication, allowing your users to interact with your application by creating a non-custodial wallet with just their emails or social accounts.
 
 <Frame caption="Email & Social Wallets Demo">
   <video
@@ -16,20 +16,20 @@ AppKit enables passwordless Web3 onboarding and authentication, allowing your us
 <Warning>
 Remember to whitelist your dapp's iOS's bundleId and Android's packageName in your cloud configuration.
 
-1. LogIn into https://cloud.reown.com
+1. LogIn into https://dashboard.reown.com
 2. Open Dashboard and scroll down to _Mobile Application IDs_ menu
 3. Add your iOS Bundle ID and your Android Package Name
 </Warning>
 
-<Warning>
+<Note>
 Email and Social login are supported only on EVM networks and Solana.
-</Warning>
+</Note>
 
 ## Integration
 
 In order to support Email and Social Wallets creation just set `featuresConfig:` parameter in `ReownAppKitModal` initialization.
 
-```javascript {14-23}
+```dart {14-27}
 final _appKitModal = ReownAppKitModal(
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
@@ -44,30 +44,33 @@ final _appKitModal = ReownAppKitModal(
     ),
   ),
   featuresConfig: FeaturesConfig(
-    email: true,
     socials: [
-      AppKitSocialOption.Farcaster,
+      AppKitSocialOption.Email,
       AppKitSocialOption.X,
+      AppKitSocialOption.Google,
       AppKitSocialOption.Apple,
       AppKitSocialOption.Discord,
+      AppKitSocialOption.GitHub,
+      AppKitSocialOption.Facebook,
+      AppKitSocialOption.Twitch,
+      AppKitSocialOption.Telegram,
     ],
-    showMainWallets: false,
+    showMainWallets: false, // OPTIONAL - true by default
   ),
 );
 ```
 
 ## Options
 
-- **_email `bool`_** : This boolean defines whether you want to enable email login. Default `true`
-- **_socials `List<AppKitSocialOption>`_** : This list contains the list of social platforms that you want to enable for user authentication. The platforms in the example include Farcaster, X, Discord. Is empty by default, it means that no social options is enabled.
-- **showMainWallets `bool`\_** : This boolean defines whether you want to show the main wallet options on the first connect screen. If this is `false` it will show a button that directs you to a new screen displaying all available wallets. Default `true`.
+- **_socials `List<AppKitSocialOption>`_** : This list contains the list of social platforms that you want to enable for user authentication. It is empty by default, which means that no social options are enabled. The buttons in the modal will be shown in the same order you configure the list.
+- **_showMainWallets `bool`_** : This boolean defines whether you want to show the main wallet options on the first connect screen. If this is `false` it will show a button that directs you to a new screen displaying all available wallets. Default `true`.
 
 <Info>
-In order for Email Wallet to work properly, either `AppKitModalConnectButton()` or `AppKitModalAccountButton()` has to be instantiated during the whole lifetime of the app.
+In order for Farcaster to work properly, either `AppKitModalConnectButton()` or `AppKitModalAccountButton()` has to be instantiated during the whole lifetime of the app.
 
 If you already use them then nothing else has to be done, but in case you don't use them but still want to support Email & Social Wallets you would have to instantiate and hide them as follows:
 
-```javascript
+```dart
 AppKitModalConnectButton(
   appKit: _appKitModal,
   custom: SizedBox.shrink(), // Will make the button invisible
@@ -81,10 +84,6 @@ AppKitModalAccountButton(
 
 ## User Flow
 
-1. Users will be able to connect to you application by simply using an email address. AppKit will send to them a One Time Password (OTP) to copy and paste in the modal, which will help to verify the user's authenticity. This will create a non-custodial wallet for your user which will be available in any application that integrates AppKit and Email Wallets.
+1.	Users can connect to your application using either an email address or a social login option. Upon selecting an option, they will be redirected to a secure login page in the device’s default browser. If the Email option is selected, AppKit will first send an approval link to the user's email, followed by a One-Time Password (OTP) to be used in the login flow. This process helps verify the user’s identity. In both cases, whether using Email or Social login, a non-custodial wallet will be created for the user. This wallet will be accessible across any application that integrates AppKit and Email Wallets.
 
-2. Eventually the user can optionally choose to move from a non-custodial wallet to a self-custodial one by pressing "Upgrade Wallet" on AppKit. This will open the (Reown secure website) that will walk your user through the upgrading process.
-
-<Note>
-Due to Safari’s strict third-party cookie policies, the SDK is not preserving sessions after the app is terminated (removed from memory). So upon app termination the user will have to re-authenticate themselves through a new OTP code if they want to sign. Our team is working to solve this issue soon.
-</Note>
+2.	Eventually, users can optionally choose to upgrade from a non-custodial wallet to a self-custodial one by tapping “Upgrade Wallet” in AppKit. This action opens the Reown secure website, which guides the user through the upgrade process.

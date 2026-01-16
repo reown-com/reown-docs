@@ -1,13 +1,81 @@
 ---
-title: Web Components
-sidebarTitle: Components
+title: Components
 ---
 
-import Components from "/snippets/appkit/shared/components.mdx";
+AppKit provides pre-built React components that you can use to trigger the modal or display wallet information.
 
-## Trigger the modal
+## React Components
 
-<Components />
+```tsx
+import { 
+  AppKitButton, 
+  AppKitConnectButton, 
+  AppKitAccountButton, 
+  AppKitNetworkButton 
+} from "@reown/appkit/react";
+
+export default function MyApp() {
+  return (
+    <div>
+      {/* Default button that handles the modal state */}
+      <AppKitButton />
+      
+      {/* Button for connecting a wallet */}
+      <AppKitConnectButton />
+      
+      {/* Button for account view */}
+      <AppKitAccountButton />
+      
+      {/* Button for network selection */}
+      <AppKitNetworkButton />
+    </div>
+  );
+}
+```
+
+### Component Properties
+
+All React components support the same properties as their HTML element counterparts:
+
+- **AppKitButton**: `size`, `label`, `loadingLabel`, `disabled`, `balance`, `namespace`
+- **AppKitConnectButton**: `size`, `label`, `loadingLabel`
+- **AppKitAccountButton**: `disabled`, `balance`
+- **AppKitNetworkButton**: `disabled`
+
+## React Components
+
+AppKit provides React-specific components that integrate seamlessly with your React application. These components automatically reflect the AppKit state and provide a more React-native experience.
+
+### `<AppKitButton />` and `<AppKitNetworkButton />`
+
+These React components provide the same functionality as the web components but with better React integration and TypeScript support.
+
+```jsx
+import { AppKitButton, AppKitNetworkButton } from '@reown/appkit/react'
+
+export function AppKitButtons() {
+  return (
+    <div>
+      {/* Default button */}
+      <AppKitButton />
+      
+      {/* Network selection button */}
+      <AppKitNetworkButton />
+      
+      {/* Button with specific namespace */}
+      <AppKitButton namespace="eip155" />
+    </div>
+  )
+}
+```
+
+#### Props
+
+Both components accept the following optional props:
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `namespace` | `string` | Specify the blockchain namespace (`eip155`, `solana`, `bip122`) |
 
 ### `<appkit-wallet-button  />`
 
@@ -15,7 +83,7 @@ import Components from "/snippets/appkit/shared/components.mdx";
   <img src="/images/assets/walletButtons.jpg" />
 </Frame>
 
-Using the wallet button components ([Demo in our Lab](https://appkit-lab.reown.com/library/wagmi-wallet-button/)), you can directly connect to the top 20 wallets, WalletConnect QR, and all the social logins.
+Using the wallet button components ([Demo in our Lab](https://appkit-lab.reown.com/appkit/?name=wagmi)), you can directly connect to the top 20 wallets, WalletConnect QR, and all the social logins.
 This component allows to customize dApps, enabling users to connect their wallets effortlessly, all without the need to open the traditional modal.
 
 Follow these steps to use the component:
@@ -50,7 +118,54 @@ import "@reown/appkit-wallet-button/react";
 3. Use the component in the project:
 
 ```tsx
-<appkit-wallet-button wallet="metamask" />
+import { AppKitWalletButton } from "@reown/appkit-wallet-button/react";
+
+export default function MyApp() {
+  return <AppKitWalletButton wallet="metamask" />;
+}
+```
+
+#### Multichain Support
+
+You can specify a blockchain namespace to target specific chains:
+
+```tsx
+<!-- Connect to Ethereum/EVM chains -->
+<appkit-wallet-button wallet="metamask" namespace="eip155" />
+
+<!-- Connect to Solana -->
+<appkit-wallet-button wallet="phantom" namespace="solana" />
+
+<!-- Connect to Bitcoin -->
+<appkit-wallet-button wallet="leather" namespace="bip122" />
+```
+
+#### React Hook Integration
+
+You can also use the `useAppKitWallet` hook for programmatic wallet connections with multichain support:
+
+```tsx
+import { useAppKitWallet } from '@reown/appkit-wallet-button/react'
+
+export function WalletConnector() {
+  const { data, error, isPending, isSuccess, isError, connect } = useAppKitWallet({
+    namespace: 'eip155', // Use 'solana' or 'bip122' for other chains
+    onError: err => {
+      console.error('Connection error:', err)
+    },
+    onSuccess: data => {
+      console.log('Connected successfully:', data)
+    }
+  })
+
+  return (
+    <>
+      <button onClick={() => connect('walletConnect')}>Open QR modal</button>
+      <button onClick={() => connect('metamask')}>Connect to MetaMask</button>
+      <button onClick={() => connect('google')}>Connect to Google</button>
+    </>
+  )
+}
 ```
 
 #### Options for wallet property
@@ -60,3 +175,11 @@ import "@reown/appkit-wallet-button/react";
 | QR Code       | walletConnect                                                                                                                                                                                                                                                                                              |
 | Wallets       | metamask, trust, coinbase, rainbow, coinbase, jupiter, solflare, coin98, magic-eden, backpack, frontier, xverse, okx, bitget, leather, binance, uniswap, safepal, bybit, phantom, ledger, timeless-x, safe, zerion, oneinch, crypto-com, imtoken, kraken, ronin, robinhood, exodus, argent and tokenpocket |
 | Social logins | google, github, apple, facebook, x, discord and farcaster                                                                                                                                                                                                                                                  |
+
+#### Options for namespace property
+
+| Value     | Description                           |
+| --------- | ------------------------------------- |
+| `eip155`  | Ethereum and EVM-compatible chains    |
+| `solana`  | Solana blockchain                     |
+| `bip122`  | Bitcoin blockchain                    |

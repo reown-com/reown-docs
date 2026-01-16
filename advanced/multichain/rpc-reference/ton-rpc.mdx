@@ -1,0 +1,203 @@
+---
+title: "TON"
+description: TON JSON-RPC Methods
+---
+
+## Network / Chain Information
+
+| CAIP-2 | Chain ID | Name | RPC Endpoint | Namespace |
+|--------|----------|------|--------------|-----------|
+| `ton:-239` | `-239` | TON Mainnet | `https://toncenter.com/api/v2/jsonRPC` | `ton` |
+| `ton:-3` | `-3` | TON Testnet | `https://testnet.toncenter.com/api/v2/jsonRPC` | `ton` |
+
+## RPC Methods
+
+Wallets must support the following JSON-RPC methods over WalletConnect sessions. No events are required.
+
+## ton_sendMessage
+
+Submit one or more transaction messages to the TON network.
+
+### Request
+
+```typescript
+interface TonSendMessageRequest {
+  method: 'ton_sendMessage';
+  params: TonSendTransactionParams[];
+}
+
+interface TonSendTransactionParams {
+  valid_until?: number;        // optional UNIX timestamp
+  from?: string;               // optional sender address (TEP-123 format)
+  messages: TonTransactionMessage[];
+}
+
+interface TonTransactionMessage {
+  address: string;             // recipient in TEP-123 format
+  amount: number | string;     // value in nanotons
+  payload?: string;            // optional base64 BoC
+  stateInit?: string;          // optional base64 BoC
+}
+```
+
+### Example Request
+
+```json
+{
+  "id": 123,
+  "jsonrpc": "2.0",
+  "params": {
+    "chainId": "ton:-239",
+    "request": {
+      "method": "ton_sendMessage",
+      "params": [
+        {
+          "valid_until": 1658253458,
+          "from": "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn",
+          "messages": [
+            {
+              "address": "EQBBJBB3HagsujBqVfqeDUPJ0kXjgTPLWPFFffuNXNiJL0aA",
+              "amount": "20000000",
+              "stateInit": "base64boc..."
+            },
+            {
+              "address": "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn",
+              "amount": "60000000",
+              "payload": "base64boc..."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+### Success Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "result": "base64bocEncodedTransaction"
+}
+```
+
+<Note>
+The `base64bocEncodedTransaction` in the result is a base64 encoded BOC (Bag of Cells) of an external message.
+</Note>
+
+#### Example: Building an External-In Message
+
+```typescript
+// Build external-in message for the result
+const message: Message = {
+  info: {
+    type: 'external-in',
+    src: null,
+    dest: Address.parse("<the sender address>"),
+    importFee: BigInt(0)
+  },
+  init: null,
+  body: transfer
+}
+
+const externalMessageCell = beginCell()
+  .store(storeMessage(message, { forceRef: true }))
+  .endCell()
+
+return externalMessageCell.toBoc().toString('base64')
+```
+
+### Error Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "error": {
+    "code": <number>,
+    "message": "<error message>"
+  }
+}
+```
+
+## ton_signData
+
+Sign an off-chain payload (text, binary, or cell) for authentication or verification by dApps.
+
+### Request
+
+```typescript
+interface TonSignDataRequest {
+  method: 'ton_signData';
+  params: TonSignDataParams[];
+}
+
+type TonSignDataParams =
+  | { type: 'text'; text: string; from?: string }
+  | { type: 'binary'; bytes: string; from?: string }
+  | { type: 'cell'; schema: string; cell: string; from?: string };
+```
+
+### Example Request
+
+```json
+{
+  "id": 123,
+  "jsonrpc": "2.0",
+  "params": {
+    "chainId": "ton:-239",
+    "request": {
+      "method": "ton_signData",
+      "params": [
+        {
+          "type": "text",
+          "text": "Confirm new 2FA number:\\n+1 234 567 8901",
+          "from": "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn"
+        }
+      ]
+    }
+  }
+}
+```
+
+### Success Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "result": {
+    "signature": "base64_signature",
+    "publicKey": "base64_encoded_publicKey",
+    "timestamp": 1658253458,
+    "domain": "yourapp.com",
+    "payload": {
+      "type": "text",
+      "text": "Confirm new 2FA number:\\n+1 234 567 8901"
+    }
+  }
+}
+```
+
+### Error Response
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 123,
+  "error": {
+    "code": <number>,
+    "message": "<error message>"
+  }
+}
+```
+
+## Notes & Considerations
+
+- If `from` is omitted, the wallet should prompt the user to select an address.
+- All requests and responses must comply with JSON-RPC structure (`id`, `jsonrpc`, etc.).
+- Signature verification can be done using `ed25519.verify` on the original bytes.
+- `stateInit` support is needed when your wallet supports contract deployment flows.
+- The `domain` field in responses indicates the originating application (dApp) domain.

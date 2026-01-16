@@ -2,9 +2,6 @@
 title: Email & Socials
 ---
 
-import WagmiImplementation from "/snippets/appkit/react-native/wagmi/email.mdx";
-import EthersImplementation from "/snippets/appkit/react-native/ethers/email.mdx";
-
 AppKit enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social network.
 
 <Note>
@@ -13,34 +10,40 @@ Due to Safari’s strict third-party cookie policies, the SDK is not preserving 
 
 </Note>
 
+<Note>
+
+Email and social wallets currently support EVM chains only. Support for additional chains (Solana, Bitcoin) will be available soon.
+
+</Note>
+
 ## Integration
 
-<Tabs>
+### Update your Dashboard settings
+1. Go to your [Dashboard](https://dashboard.reown.com) project
+2. Open Dashboard and scroll down to Mobile Application IDs menu
+3. Add your iOS Bundle ID and/or your Android Package Name
+* Changes might take some minutes to impact
 
-<Tab title="Wagmi">
-   ### Update your Cloud settings
-   1. Go to your [Cloud](https://cloud.reown.com) project
-   2. Open Dashboard and scroll down to Mobile Application IDs menu
-   3. Add your iOS Bundle ID and/or your Android Package Name
-   * Changes might take some minutes to impact
 
-   <WagmiImplementation />
-</Tab>
+### Enable Email & Social Authentication
 
-<Tab title="Ethers">
-  ### Update your Cloud settings 1. Go to your [Cloud](https://cloud.reown.com)
-  project 2. Open Dashboard and scroll down to Mobile Application IDs menu 3.
-  Add your iOS Bundle ID and/or your Android Package Name * Changes might take
-  some minutes to impact
-  <EthersImplementation />
-</Tab>
+To enable email and social authentication in your AppKit configuration, add the `features` option to your `createAppKit` call:
 
-</Tabs>
 
-## Options
+```tsx {4-6}
+export const appKit = createAppKit({
+  // other config...
+  features: {
+    email: true,
+    socials: ['email', 'google', 'x', 'discord', 'apple', 'facebook', 'github', 'farcaster'],
+    showWallets: true
+  }
+});
+```
+
 
 - **_email [boolean]_** : This boolean defines whether you want to enable email login. Default `true`
-- **_socials [array]_** : This array contains the list of social platforms that you want to enable for user authentication. The platforms supported are X, Discord and Apple. The default value of `undefined` displays everything. Set it to `false` to disable this feature. You can also pass an empty array to disable it.
+- **_socials [array]_** : This array contains the list of social platforms that you want to enable for user authentication. The platforms supported are Google, X, GitHub, Discord, Apple, Facebook and Farcaster. The default value of `undefined` displays everything. Set it to `false` to disable this feature. You can also pass an empty array to disable it.
 - **_emailShowWallets [boolean]_** : This boolean defines whether you want to show the wallet options on the first connect screen. If this is false and `socials` are enabled, it will show a button that directs you to a new screen displaying the wallet options. Default `true`
 
 ## User Flow
@@ -51,4 +54,4 @@ Due to Safari’s strict third-party cookie policies, the SDK is not preserving 
    - For Social options, the One Time Password (OTP) is not sent.
 
 2. Eventually the user can optionally choose to move from a non-custodial wallet to a self-custodial one by pressing "Upgrade Wallet" on AppKit.
-   This will open the _([WalletConnect secure website](https://secure.walletconnect.com/dashboard))_ that will walk your user through the upgrading process.
+   This will open the _([Reown Secure Site](https://secure.reown.com/dashboard))_ that will walk your user through the upgrading process.

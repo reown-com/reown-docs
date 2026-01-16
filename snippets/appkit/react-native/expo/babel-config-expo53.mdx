@@ -1,0 +1,14 @@
+### Create babel.config.js
+
+For Expo SDK 53 and later, you need to create a `babel.config.js` file in your project root to properly support the valtio library:
+
+```js
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: [["babel-preset-expo", { unstable_transformImportMeta: true }]],
+  };
+};
+```
+
+This configuration enables the `unstable_transformImportMeta` option which is required for valtio to work correctly with Expo 53+.

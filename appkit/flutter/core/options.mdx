@@ -2,8 +2,9 @@
 title: Options
 ---
 
-```javascript
+```dart
 final _appKitModal = ReownAppKitModal(
+  logLevel: LogLevel.error,
   context: context,
   projectId: '{YOUR_PROJECT_ID}',
   metadata: const PairingMetadata(
@@ -14,7 +15,7 @@ final _appKitModal = ReownAppKitModal(
     redirect: Redirect( // OPTIONAL
       native: 'exampleapp://',
       universal: 'https://reown.com/exampleapp',
-      linkMode: false,
+      linkMode: true|false,
     ),
   ),
   // disconnectOnDispose: false,
@@ -25,18 +26,24 @@ final _appKitModal = ReownAppKitModal(
   //   socials: [...], // OPTIONAL - empty by default
   //   showMainWallets: true, // OPTIONAL - true by default
   // ),
-  // getBalanceFallback: () async { }, OPTIONAL - null by default
-  // requiredNamespaces: {}, OPTIONAL - null by default
-  // optionalNamespaces: {}, OPTIONAL - null by default
-  // featuredWalletIds: {}, OPTIONAL - null by default
-  // includedWalletIds: {}, OPTIONAL - null by default
-  // excludedWalletIds: {}, OPTIONAL - null by default
+  // getBalanceFallback: () async { }, // OPTIONAL - null by default
+  // optionalNamespaces: {}, // OPTIONAL - null by default
+  // featuredWalletIds: {}, // OPTIONAL - null by default
+  // includedWalletIds: {}, // OPTIONAL - null by default
+  // excludedWalletIds: {}, // OPTIONAL - null by default
+  // customWallets: [ // OPTIONAL - null by default
+  //   ReownAppKitModalWalletInfo(
+  //     listing: AppKitModalWalletListing(
+  //       ...
+  //     ),
+  //   ),
+  // ],
 );
 ```
 
 ### enableAnalytics:
 
-Enable analytics to get more insights on your users activity within your [Reown Cloud's dashboard](https://cloud.reown.com)
+Enable analytics to get more insights into your users' activity within your [Reown Dashboard](https://dashboard.reown.com)
 
 ### siweConfig:
 
@@ -46,26 +53,26 @@ Will be disabled automatically if you decide to support/include non-EVM blockcha
 
 ### featuresConfig:
 
-Used to configure extra features such [Email and Social Login](../core/email).
+Used to configure extra features such as [Email and Social Login](../core/email).
 
 ### getBalanceFallback:
 
 This callback method will be triggered if getting the balance from our blockchain API fails due to unsupported network. You may replace this with your own `getBalance()` method if desired.
 
-### requiredNamespaces: and optionalNamespaces:
+### optionalNamespaces:
 
 These are the set of namespaces that will be requested to the wallet you are connecting to.
 
-These values are optionals and, in most cases, not required since AppKit already defines every required and optional namespace internally based on configured networks.
+These values are optional and, in most cases, not required, as AppKit already defines all namespaces internally based on the [default configured networks](https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/lib/modal/utils/public/appkit_modal_default_networks.dart) (EVM and Solana).
 
-However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) these are the object you should modify. See [Custom Networks](../core/custom-chains). section.
+However, if you would want to override that definition with your own or support more networks than just EVM and Solana (i.e. Polkadot, Kadena, etc...) then this is the object you should modify. See [Custom Networks](../core/custom-chains) section.
 
 ### featuredWalletIds:
 
-Allows to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). 
+Allows you to override default recommended wallets that are fetched from the API. You can define an array of wallet ids you'd like to prioritize (order is respected). 
 You can find the wallets IDs in our [Wallets List](/cloud/wallets/wallet-list).
 
-```javascript
+```dart
 final Set<String> featuredWalletIds = {
   'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
   '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust
@@ -75,9 +82,9 @@ final Set<String> featuredWalletIds = {
 
 ### includedWalletIds:
 
-Similar to `featuredWalletIds` this option allows you to determine exactly which wallets do you want to show. If `includedWalletIds` is set then only the wallets listed in this object are going to be displayed in the modal.
+Similar to `featuredWalletIds`, this option allows you to determine exactly which wallets you want to show. If `includedWalletIds` is set, then only the wallets listed in this object will be displayed in the modal.
 
-```javascript
+```dart
 final Set<String> includedWalletIds = {
   'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
   '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust
@@ -87,12 +94,36 @@ final Set<String> includedWalletIds = {
 
 ### excludedWalletIds:
 
-Similar to `includedWalletIds` this option allows you to exclude a list of wallets from the API response.
+Similar to `includedWalletIds`, this option allows you to exclude a list of wallets from the API response.
 
-```javascript
+```dart
 final Set<String> excludedWalletIds = {
   'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
   '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust
   'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa', // Coinbase Wallet
 }
 ```
+
+### customWallets:
+
+A list of user defined wallets. Example:
+
+```dart
+customWallets: [
+  ReownAppKitModalWalletInfo(
+    listing: AppKitModalWalletListing(
+      id: '00001',
+      name: 'Reown Web Sample',
+      homepage: 'https://react-wallet.walletconnect.com',
+      imageId:
+          'https://avatars.githubusercontent.com/u/179229932?s=200&v=4',
+      order: 1,
+      webappLink: 'https://react-wallet.walletconnect.com',
+    ),
+  ),
+],
+```
+
+### disconnectOnDispose:
+
+Whether you want to disconnect the user when disposing the context that holds your modal instance

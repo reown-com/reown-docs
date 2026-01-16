@@ -2,73 +2,38 @@
 title: Installation
 ---
 
-import CloudBanner from "/snippets/cloud-banner.mdx";
+import CloudBanner from '/snippets/cloud-banner.mdx'
 
-import WagmiImplementation from "/snippets/appkit/next/wagmi/about/implementation.mdx";
-import WagmiModal from "/snippets/appkit/next/wagmi/about/triggermodal.mdx";
+import WagmiImplementation from '/snippets/appkit/next/wagmi/about/implementation.mdx'
 
-import Ethers5Implementation from "/snippets/appkit/next/ethers5/implementation.mdx";
-import Ethers5Modal from "/snippets/appkit/next/ethers5/triggermodal.mdx";
+import Ethers5Implementation from '/snippets/appkit/next/ethers5/implementation.mdx'
 
-import EthersImplementation from "/snippets/appkit/next/ethers/about/implementation.mdx";
-import EthersModal from "/snippets/appkit/next/ethers/about/triggermodal.mdx";
+import EthersImplementation from '/snippets/appkit/next/ethers/about/implementation.mdx'
 
-import SolanaImplementation from "/snippets/appkit/next/solana/about/implementation.mdx";
-import SolanaModal from "/snippets/appkit/next/solana/about/triggermodal.mdx";
-import SolanaPrograms from "/snippets/appkit/next/solana/about/programs.mdx";
+import SolanaImplementation from '/snippets/appkit/next/solana/about/implementation.mdx'
+import SolanaPrograms from '/snippets/appkit/next/solana/about/programs.mdx'
 
-import BitcoinImplementation from "/snippets/appkit/next/bitcoin/about/implementation.mdx";
-import BitcoinModal from "/snippets/appkit/next/bitcoin/about/triggermodal.mdx";
+import BitcoinImplementation from '/snippets/appkit/next/bitcoin/about/implementation.mdx'
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana and Bitcoin.
-Choose one of these to get started.
+import TonImplementation from '/snippets/appkit/next/ton/about/implementation.mdx'
+
+import CoreImplementation from '/snippets/appkit/react/core/about/implementation.mdx'
+
+AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum,
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
 
 <Note>
-  These steps are specific to [Next.js](https://nextjs.org/) app router. For
-  other React frameworks read the [React
-  documentation](../../react/core/installation).
+  These steps are specific to [Next.js](https://nextjs.org/) app router. For other React frameworks
+  read the [React documentation](../../react/core/installation).
 </Note>
 
 ## Installation
 
 **If you prefer referring to a video tutorial for this, please [click here](#video-tutorial).**
 
-### Set up Reown AppKit using AI
+**Setting up from scratch? → Try out the [AppKit CLI templates](#alternative-installation) or the [AI-assisted setup](#alternative-installation).**
 
-If you're using Cursor IDE (or another AI based IDE) to build a project with Reown AppKit, Reown provides a `.mdc` file that enhances your development experience. The `reown-appkit.mdc` [file here](https://github.com/reown-com/reown-docs/blob/main/reown-appkit.mdc) contains Cursor-specific rules and type hints for Reown AppKit.
-
-To use it in your project:
-
-1. Copy the `reown-appkit.mdc` file from this repository
-2. Create a `.cursor/rules` folder in your project's root directory (if it doesn't exist)
-3. Place the `.mdc` file in your project's `.cursor/rules` folder
-
-For more info, refer to [Cursor's documentation](https://docs.cursor.com/context/rules#project-rules).
-
-
-### AppKit CLI
-
-Reown offers a dedicated CLI to set up a minimal version of AppKit in the easiest and quickest way possible.
-
-To do this, please run the command below.
-
-```bash
-npx @reown/appkit-cli
-```
-
-After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
-
-1. **Project Name**: Enter the name for your project.
-2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
-3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
-
-After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
-
-To fully configure your project, please obtain a `projectId` from the Reown Cloud Dashboard and update your project accordingly.
-
-**Refer to [this section](#cloud-configuration) for more information.**
-
-### Custom Installation
+## Custom Installation
 
 <Tabs>
 <Tab title="Wagmi">
@@ -186,11 +151,57 @@ pnpm add @reown/appkit @reown/appkit-adapter-bitcoin
 </CodeGroup>
 
 </Tab>
+<Tab title="TON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-ton
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-ton
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-universal-connector @reown/appkit-common ethers
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common ethers
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common ethers
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-universal-connector @reown/appkit-common ethers
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 ## Cloud Configuration
 
-Create a new project on Reown Cloud at https://cloud.reown.com and obtain a new project ID.
+Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtain a new project ID.
 
 <CloudBanner />
 
@@ -233,34 +244,88 @@ Check the Next Bitcoin example
 <BitcoinImplementation />
 
 </Tab>
+<Tab title="TON">
+<Card title="TON Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-ton-app-router">
+Check the Next TON example
+</Card>
+<TonImplementation />
+
+</Tab>
+<Tab title="Others networks (AppKit Core)">
+
+<CoreImplementation />
+
+</Tab>
 </Tabs>
 
 ## Trigger the modal
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="AppKit">
 
-<WagmiModal />
+To open AppKit you can use our [**React components**](/appkit/react/core/components) or build your own button with AppKit [**hooks**](/appkit/react/core/hooks#useAppKit).
+
+<CodeGroup>
+
+```tsx ConnectButton.tsx
+import { AppKitButton } from '@reown/appkit/react'
+
+export default function ConnectButton() {
+  return <AppKitButton />
+}
+```
+
+```tsx ConnectButtonWithHooks.tsx
+import { useAppKit } from '@reown/appkit/react'
+
+export default function ConnectButton() {
+  const { open } = useAppKit()
+
+  return (
+    <>
+      <button onClick={() => open()}>Open Connect Modal</button>
+      <button onClick={() => open({ view: 'Networks' })}>Open Network Modal</button>
+    </>
+  )
+}
+```
+
+</CodeGroup>
 
 </Tab>
-<Tab title="Ethers v5">
+<Tab title="AppKit Core">
 
-<Ethers5Modal />
+To open AppKit Core you need to call the `connect` function from the Universal Connector.
 
-</Tab>
-<Tab title="Ethers">
+```tsx
+// get the session from the universal connector
+const handleConnect = async () => {
+  if (!universalConnector) {
+    return
+  }
 
-<EthersModal />
+  const { session: providerSession } = await universalConnector.connect()
+  setSession(providerSession)
+}
 
-</Tab>
-<Tab title="Solana">
+// disconnect the universal connector
+const handleDisconnect = async () => {
+  if (!universalConnector) {
+    return
+  }
+  await universalConnector.disconnect()
+  setSession(null)
+}
 
-<SolanaModal />
+...
 
-</Tab>
-<Tab title="Bitcoin">
-
-<BitcoinModal />
+return (
+  <div>
+    <button onClick={handleConnect}>Open AppKit Core</button>
+    <button onClick={handleDisconnect}>Disconnect</button>
+  </div>
+)
+```
 
 </Tab>
 </Tabs>
@@ -273,17 +338,17 @@ Check the Next Bitcoin example
 [Wagmi hooks](https://wagmi.sh/react/api/hooks/useReadContract) can help us interact with wallets and smart contracts:
 
 ```tsx
-import { useReadContract } from "wagmi";
-import { USDTAbi } from "../abi/USDTAbi";
+import { useReadContract } from 'wagmi'
+import { USDTAbi } from '../abi/USDTAbi'
 
-const USDTAddress = "0x...";
+const USDTAddress = '0x...'
 
 function App() {
   const result = useReadContract({
     abi: USDTAbi,
     address: USDTAddress,
-    functionName: "totalSupply",
-  });
+    functionName: 'totalSupply'
+  })
 }
 ```
 
@@ -295,38 +360,38 @@ Read more about Wagmi hooks for smart contract interaction [here](https://wagmi.
 [Ethers](https://docs.ethers.org/v6/) can help us interact with wallets and smart contracts:
 
 ```tsx
-import { useAppKitProvider, useAppKitAccount } from "@reown/appkit/react";
-import { BrowserProvider, Contract, formatUnits } from "ethers";
+import { useAppKitProvider, useAppKitAccount } from '@reown/appkit/react'
+import { BrowserProvider, Contract, formatUnits } from 'ethers'
 
-const USDTAddress = "0x617f3112bf5397D0467D315cC709EF968D9ba546";
+const USDTAddress = '0x617f3112bf5397D0467D315cC709EF968D9ba546'
 
 // The ERC-20 Contract ABI, which is a common contract interface
 // for tokens (this is the Human-Readable ABI format)
 const USDTAbi = [
-  "function name() view returns (string)",
-  "function symbol() view returns (string)",
-  "function balanceOf(address) view returns (uint)",
-  "function transfer(address to, uint amount)",
-  "event Transfer(address indexed from, address indexed to, uint amount)",
-];
+  'function name() view returns (string)',
+  'function symbol() view returns (string)',
+  'function balanceOf(address) view returns (uint)',
+  'function transfer(address to, uint amount)',
+  'event Transfer(address indexed from, address indexed to, uint amount)'
+]
 
 function Components() {
-  const { address, caipAddress, isConnected } = useAppKitAccount();
-  const { walletProvider } = useAppKitProvider("eip155");
+  const { address, caipAddress, isConnected } = useAppKitAccount()
+  const { walletProvider } = useAppKitProvider('eip155')
 
   async function getBalance() {
-    if (!isConnected) throw Error("User disconnected");
+    if (!isConnected) throw Error('User disconnected')
 
-    const ethersProvider = new BrowserProvider(walletProvider);
-    const signer = await ethersProvider.getSigner();
+    const ethersProvider = new BrowserProvider(walletProvider)
+    const signer = await ethersProvider.getSigner()
     // The Contract object
-    const USDTContract = new Contract(USDTAddress, USDTAbi, signer);
-    const USDTBalance = await USDTContract.balanceOf(address);
+    const USDTContract = new Contract(USDTAddress, USDTAbi, signer)
+    const USDTBalance = await USDTContract.balanceOf(address)
 
-    console.log(formatUnits(USDTBalance, 18));
+    console.log(formatUnits(USDTBalance, 18))
   }
 
-  return <button onClick={getBalance}>Get User Balance</button>;
+  return <button onClick={getBalance}>Get User Balance</button>
 }
 ```
 
@@ -345,24 +410,74 @@ Next.js relies on [SSR](https://nextjs.org/docs/pages/building-your-application/
 ```ts
 // Path: next.config.js
 const nextConfig = {
-  webpack: (config) => {
-    config.externals.push("pino-pretty", "lokijs", "encoding");
-    return config;
-  },
-};
+  webpack: config => {
+    config.externals.push('pino-pretty', 'lokijs', 'encoding')
+    return config
+  }
+}
 ```
 
 - [Learn more about SSR with Wagmi](https://wagmi.sh/react/guides/ssr)
 
 ## Video Tutorial
 
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/lxTGqXh7LiA?si=rxEaMIEYK7vdW_vt"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
-></iframe>
+<div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0 }}>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      maxWidth: '560px',
+      margin: '0 auto'
+    }}
+    src="https://www.youtube.com/embed/lxTGqXh7LiA?si=rxEaMIEYK7vdW_vt"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  />
+</div>
+
+## Alternative Installation
+
+If you are starting from scratch, you can use the following methods to set up your project with Reown AppKit.
+
+<AccordionGroup>
+<Accordion title="Set up Reown AppKit using AI">
+  If you're using Cursor IDE (or another AI based IDE) to build a project with Reown AppKit, Reown provides a `.mdc` file that enhances your development experience. The `reown-appkit.mdc` [file here](https://github.com/reown-com/reown-docs/blob/main/reown-appkit.mdc) contains Cursor-specific rules and type hints for Reown AppKit.
+
+To use it in your project:
+
+1. Copy the `reown-appkit.mdc` file from this repository
+2. Create a `.cursor/rules` folder in your project's root directory (if it doesn't exist)
+3. Place the `.mdc` file in your project's `.cursor/rules` folder
+
+For more info, refer to [Cursor's documentation](https://docs.cursor.com/context/rules#project-rules).
+
+</Accordion>
+<Accordion title="AppKit CLI">
+  Reown offers a dedicated CLI to set up a minimal version of AppKit in the easiest and quickest way possible.
+
+To do this, please run the command below.
+
+```bash
+npx @reown/appkit-cli
+```
+
+After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
+
+1. **Project Name**: Enter the name for your project.
+2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
+3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
+
+After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
+
+To fully configure your project, please obtain a `projectId` from the Reown Dashboard and update your project accordingly.
+
+**Refer to [this section](#cloud-configuration) for more information.**
+
+</Accordion>
+</AccordionGroup>

@@ -1,0 +1,36 @@
+To open AppKit you need to call the `connect` function from the Provider, sending the namespace, methods, the full chain Namespace and the events available.
+For more information, please visit [RPC Reference](https://docs.reown.com/advanced/multichain/rpc-reference/cosmos-rpc) section from our docs.
+
+```tsx
+<script>
+    let address = null
+    let addressStacks = null
+    let session = null
+
+    async function handleConnect() {
+      // universalConnector is the universal connector instance from the implementation section
+      if (!universalConnector) {
+        return
+      }
+
+      const { session: providerSession } = await universalConnector.connect()
+      // get the address from the session
+      if (providerSession?.namespaces?.sui?.accounts?.[0]?.split(':')[2]) {
+        address = providerSession?.namespaces?.sui?.accounts?.[0]?.split(':')[2]
+      } else if (providerSession?.namespaces?.stacks?.accounts?.[0]?.split(':')[2]) {
+        addressStacks = providerSession?.namespaces?.stacks?.accounts?.[0]?.split(':')[2]
+      }
+      // update the session
+      session = providerSession;
+    }
+
+    document.getElementById('open-connect-modal').addEventListener('click', handleConnect);
+</script>
+.... 
+
+<div> 
+  <button id="open-connect-modal">Open AppKit Core</button>
+</div>
+
+```
+

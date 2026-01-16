@@ -1,0 +1,46 @@
+To open AppKit you can use our [**web component**](/appkit/nuxt/core/components) or build your own button with AppKit [**composables**](/appkit/nuxt/core/composables#useAppKit).
+
+<Tabs>
+<Tab title="Web Components">
+
+Web components are global html elements that don't require importing. Make sure to wrap them in `<client-only>` for SSR compatibility.
+
+```javascript
+<template>
+  <client-only>
+    <appkit-button />
+  </client-only>
+</template>
+```
+
+<Info>
+You can also use `<appkit-connect-button>` and `<appkit-account-button>` components.
+</Info>
+
+</Tab>
+<Tab title="Composables">
+
+You can trigger the modal by calling the `open` method from `useAppKit` composable.
+
+```javascript
+<script setup lang="ts">
+import { useAppKit } from '@reown/appkit/vue'
+
+const { open } = useAppKit()
+
+function openModal() {
+  open()
+}
+</script>
+
+<template>
+  <client-only>
+    <button @click="openModal">Open Modal</button>
+  </client-only>
+</template>
+```
+
+Learn more about the AppKit composables [here](/appkit/nuxt/core/composables)
+
+</Tab>
+</Tabs>

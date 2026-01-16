@@ -1,0 +1,38 @@
+### useAppKitAccount
+
+Hook that returns the client's information.
+
+```tsx
+import { useAppKitAccount } from "@reown/appkit/react";
+
+const { address, status, isConnected } = useAppKitAccount();
+```
+
+### useAppKitProvider
+
+Hook that returns the `walletProvider` and the `WalletProviderType`.
+
+```tsx
+import { useAppKitProvider } from "@reown/appkit/react";
+import type { BitcoinConnector } from "@reown/appkit-adapter-bitcoin";
+
+function Components() {
+  const { walletProvider } = useAppKitProvider<BitcoinConnector>("bip122");
+
+  async function onSignMessage() {
+    if (!walletProvider) {
+      throw Error("user is disconnected");
+    }
+
+    const signature = await walletProvider.signMessage("Hello from AppKit");
+    console.log(signature);
+  }
+
+  return <button onClick={() => onSignMessage()}>Sign Message</button>;
+}
+```
+
+<Card
+  title="Learn More About Bitcoin"
+  href="https://developer.bitcoin.org/"
+/>

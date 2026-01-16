@@ -6,7 +6,7 @@ alwaysApply: false
 MDC
 # :jigsaw: Reown AppKit: Overview
 
-**Reown AppKit** is a free, open-source toolkit to integrate wallet connections and Web3 features in any app. It supports:
+**Reown AppKit** is an open-source toolkit with a generous free-tier, to integrate wallet connections and Web3 features in any app. It supports:
 
 - One-click wallet auth
 - Social logins
@@ -96,7 +96,7 @@ export const config = wagmiAdapter.wagmiConfig
 All supported **Viem networks** are available via `@reown/appkit/networks`:
 
 ```ts
-import { mainnet, arbitrum, base, scroll, polygon } from '@reown/appkit/networks'
+import { mainnet, arbitrum, base, scroll, polygon, hedera } from '@reown/appkit/networks'
 ```
 
 ---

@@ -8,11 +8,16 @@ AppKit Flutter supports EVM and Solana networks by default since *version 1.2.0*
 
 This means that if you intend to support just EVM and Solana networks then no further adjustments are necessary.
 
-However, with extra configuration to `ReownAppKitModalNetworks` and `optionalNamespaces` you can connect to whatever other network you'd like.
+However, with extra configuration of `ReownAppKitModalNetworks` and `optionalNamespaces`, you can connect to whatever other network you'd like.
 
-For instance, if you want to support also Polkadot blockchain then first add Polkadot to the supported networks list:
+<Note>
+If you are starting from scratch, you can avoid this by using our [CLI tool](https://pub.dev/packages/reown_cli) and passing the chains you want to support as arguments.
+</Note>
 
-```javascript
+
+For instance, if you also want to support the Polkadot blockchain, then first add Polkadot to the supported networks list:
+
+```dart
 // Add more non-EVM nor Solana networks, such as Polkadot
 ReownAppKitModalNetworks.addSupportedNetworks('polkadot', [
   ReownAppKitModalNetworkInfo(
@@ -34,11 +39,11 @@ ReownAppKitModalNetworks.addSupportedNetworks('polkadot', [
 ]);
 ```
 
-_Remember to do this before `ReownAppKitModal` instance configuration and to set `isTestNetwork: true` if you are adding a testnet_
+_Remember to do this before the `ReownAppKitModal` instance configuration and to set `isTestNetwork: true` if you are adding a testnet_
 
 Then modify/add `optionalNamespaces:` property in ReownAppKitModal instance as follows:
 
-```javascript
+```dart
 optionalNamespaces: {
   'eip155': RequiredNamespace.fromJson({
     'chains': ReownAppKitModalNetworks.getAllSupportedNetworks(
@@ -67,14 +72,14 @@ optionalNamespaces: {
 },
 ```
 
-_When you set `optionalNamespaces` property you are overwriting the internal definition of it so it is important that you also include `eip155` and `solana` in this case. If you plan to support only EVM + Solana then this extra step is not needed as mentioned before_
+_When you set the `optionalNamespaces` property, you are overwriting the internal definition of it, so it is important that you also include `eip155` and `solana` in this case. If you plan to support only EVM + Solana, then this extra step is not needed as mentioned before_
 
 
 `ReownAppKitModalNetworks` class also comes with handy methods to change the configuration of the supported networks list:
 
 - You can add more EVM networks
 
-```javascript
+```dart
 List<ReownAppKitModalNetworkInfo> extraChains = [...];
 ReownAppKitModalNetworks.addSupportedNetworks('eip155', extraChains);
 // The same applies for other namespaces
@@ -82,25 +87,25 @@ ReownAppKitModalNetworks.addSupportedNetworks('eip155', extraChains);
 
 - You can remove Solana networks if you don't want to support it
 
-```javascript
+```dart
 ReownAppKitModalNetworks.removeSupportedNetworks('solana');
 // The same applies for other namespaces
 ```
 
 - You can remove test networks altogether
 
-```javascript
+```dart
 // Remove every test network
 ReownAppKitModalNetworks.removeTestNetworks();
 ```
 
 ## Configuration examples
 
-A list of different ways of configure `ReownAppKitModal()` instance to support different blockchains.
+A list of different ways to configure `ReownAppKitModal()` instance to support different blockchains.
 
 #### 1. Default support (EVM + Solana blockchains)
 
-```javascript
+```dart
 // Nothing more is required to support EVM + Solana networks besides adding more EVM or Solana networks
 // ReownAppKitModalNetworks.addSupportedNetworks('eip155', extraChains);
 // ReownAppKitModalNetworks.addSupportedNetworks('solana', extraChains);
@@ -130,7 +135,7 @@ final _appKitModal = ReownAppKitModal(
 
 #### 2. Only EVM blockchains support
 
-```javascript
+```dart
 // first remove support for Solana networks
 ReownAppKitModalNetworks.removeSupportedNetworks('solana');
 
@@ -161,7 +166,7 @@ final _appKitModal = ReownAppKitModal(
 
 #### 3. Only Solana blockchain support
 
-```javascript
+```dart
 // first remove support for EVM networks
 ReownAppKitModalNetworks.removeSupportedNetworks('eip155');
 
@@ -190,7 +195,7 @@ final _appKitModal = ReownAppKitModal(
 
 #### 4. Default support (EVM + Solana blockchains) + Polkadot + Tron
 
-```javascript
+```dart
 // Add Polkadot and Tron before instantiating ReownAppKitModal()
 ReownAppKitModalNetworks.addSupportedNetworks('polkadot', [
   ReownAppKitModalNetworkInfo(
