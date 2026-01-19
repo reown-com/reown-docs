@@ -187,6 +187,10 @@ Install the adapters for the chains you intend to support:
 
   </Tab>
   <Tab title="Solana">
+    <Warning>
+    MetaMask does not currently support WalletConnect connections on Solana. The MetaMask team is working on adding this feature. In the meantime, we recommend using other wallets that support Solana. You can find the complete list of supported wallets on [WalletGuide](https://walletguide.walletconnect.network/).
+    </Warning>
+
     <p>For Solana, install the Solana adapter:</p>
     ```bash
     npx expo install @reown/appkit-solana-react-native text-encoding
@@ -605,6 +609,7 @@ module.exports = createRunOncePlugin(
 
 </Tab>
 
+</Tabs>
 </Tab>
   <Tab title="React Native CLI">
 
