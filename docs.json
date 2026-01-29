@@ -86,11 +86,9 @@
                   "appkit/features/swaps",
                   "appkit/features/onramp",
                   "appkit/features/multichain",
-                  "appkit/features/smart-accounts",
-                  "appkit/features/smart-accounts-interaction",
-                  "appkit/features/sponsored-transactions",
-                  "appkit/features/smart-sessions",
-                  "appkit/features/chain-abstraction"
+                                    "appkit/features/smart-accounts",
+                                    "appkit/features/smart-accounts-interaction",
+                                    "appkit/features/chain-abstraction"
                 ]
               },
               {
@@ -139,11 +137,9 @@
                       "appkit/recipes/EVM-smart-contract-interaction",
                       "appkit/recipes/solana-send-transaction",
                       "appkit/recipes/bitcoin-send-transaction",
-                      "appkit/recipes/switching-to-send-calls",
-                      "appkit/recipes/sponsoring-first-transaction",
-                      "appkit/recipes/travel-rule",
-                      "appkit/recipes/smart-sessions",
-                      "appkit/recipes/update-appkit",
+                                            "appkit/recipes/switching-to-send-calls",
+                                            "appkit/recipes/travel-rule",
+                                            "appkit/recipes/update-appkit",
                       "appkit/recipes/universal-connector",
                       "appkit/recipes/troubleshooting"
                     ]
@@ -227,14 +223,13 @@
                   "appkit/react/core/siwx"
                 ]
               },
-              {
-                "group": "Early Access",
-                "pages": [
-                  "appkit/react/early-access/smart-session",
-                  "appkit/react/early-access/chain-abstraction",
-                  "appkit/react/early-access/headless"
-                ]
-              },
+                            {
+                              "group": "Early Access",
+                              "pages": [
+                                "appkit/react/early-access/chain-abstraction",
+                                "appkit/react/early-access/headless"
+                              ]
+                            },
               {
                 "group": "Payments",
                 "pages": [
@@ -243,25 +238,24 @@
                 ]
               },
               {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/react/transactions/onramp",
-                  "appkit/react/transactions/swaps",
-                  "appkit/react/transactions/sponsored-transactions"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "appkit/react/cloud/relay",
-                  "appkit/react/cloud/blockchain-api",
-                  "appkit/react/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Next",
+                          "group": "Transactions",
+                          "pages": [
+                            "appkit/react/transactions/onramp",
+                            "appkit/react/transactions/swaps"
+                          ]
+                        },
+                        {
+                          "group": "Cloud",
+                          "pages": [
+                            "appkit/react/cloud/relay",
+                            "appkit/react/cloud/blockchain-api",
+                            "appkit/react/cloud/analytics"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "dropdown": "Next",
             "icon": "square-n",
             "description": "AppKit on NextJS",
             "pages": [
@@ -289,13 +283,12 @@
                   "appkit/next/core/siwx"
                 ]
               },
-              {
-                "group": "Early Access",
-                "pages": [
-                  "appkit/next/early-access/smart-session",
-                  "appkit/next/early-access/chain-abstraction"
-                ]
-              },
+                            {
+                              "group": "Early Access",
+                              "pages": [
+                                "appkit/next/early-access/chain-abstraction"
+                              ]
+                            },
               {
                 "group": "Payments",
                 "pages": [
@@ -304,25 +297,24 @@
                 ]
               },
               {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/next/transactions/onramp",
-                  "appkit/next/transactions/swaps",
-                  "appkit/next/transactions/sponsored-transactions"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "appkit/next/cloud/relay",
-                  "appkit/next/cloud/blockchain-api",
-                  "appkit/next/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Vue",
+                          "group": "Transactions",
+                          "pages": [
+                            "appkit/next/transactions/onramp",
+                            "appkit/next/transactions/swaps"
+                          ]
+                        },
+                        {
+                          "group": "Cloud",
+                          "pages": [
+                            "appkit/next/cloud/relay",
+                            "appkit/next/cloud/blockchain-api",
+                            "appkit/next/cloud/analytics"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "dropdown": "Vue",
             "icon": "vuejs",
             "description": "AppKit on VueJS",
             "pages": [
@@ -347,11 +339,7 @@
                 "group": "Authentication",
                 "pages": ["appkit/vue/core/socials", "appkit/vue/core/siwe", "appkit/vue/core/siwx"]
               },
-              {
-                "group": "Early Access",
-                "pages": ["appkit/vue/early-access/smart-session"]
-              },
-              {
+                            {
                 "group": "Payments",
                 "pages": [
                   "appkit/vue/payments/pay-with-exchange",
@@ -359,25 +347,24 @@
                 ]
               },
               {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/vue/transactions/onramp",
-                  "appkit/vue/transactions/swaps",
-                  "appkit/vue/transactions/sponsored-transactions"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "appkit/vue/cloud/relay",
-                  "appkit/vue/cloud/blockchain-api",
-                  "appkit/vue/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "JavaScript",
+                          "group": "Transactions",
+                          "pages": [
+                            "appkit/vue/transactions/onramp",
+                            "appkit/vue/transactions/swaps"
+                          ]
+                        },
+                        {
+                          "group": "Cloud",
+                          "pages": [
+                            "appkit/vue/cloud/relay",
+                            "appkit/vue/cloud/blockchain-api",
+                            "appkit/vue/cloud/analytics"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "dropdown": "JavaScript",
             "icon": "js",
             "description": "AppKit on JavaScript",
             "pages": [
@@ -405,11 +392,7 @@
                   "appkit/javascript/core/siwx"
                 ]
               },
-              {
-                "group": "Early Access",
-                "pages": ["appkit/javascript/early-access/smart-session"]
-              },
-              {
+                            {
                 "group": "Payments",
                 "pages": [
                   "appkit/javascript/payments/pay-with-exchange",
@@ -417,25 +400,24 @@
                 ]
               },
               {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/javascript/transactions/onramp",
-                  "appkit/javascript/transactions/swaps",
-                  "appkit/javascript/transactions/sponsored-transactions"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "appkit/javascript/cloud/relay",
-                  "appkit/javascript/cloud/blockchain-api",
-                  "appkit/javascript/cloud/analytics"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Svelte",
+                          "group": "Transactions",
+                          "pages": [
+                            "appkit/javascript/transactions/onramp",
+                            "appkit/javascript/transactions/swaps"
+                          ]
+                        },
+                        {
+                          "group": "Cloud",
+                          "pages": [
+                            "appkit/javascript/cloud/relay",
+                            "appkit/javascript/cloud/blockchain-api",
+                            "appkit/javascript/cloud/analytics"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "dropdown": "Svelte",
             "icon": "/images/icons/svelte.svg",
             "description": "AppKit on Svelte",
             "pages": [
