@@ -152,7 +152,19 @@ WebSocket RPC is not recommended for production use, and may be removed in the f
 
 ## Using the Blockchain API
 
-No config or setup is needed for AppKit integrations. For other usage, see the [Usage](https://github.com/walletconnect/blockchain-api#usage) section.
+No config or setup is needed for AppKit integrations.
+
+For other usage, the endpoint is:
+
+```
+https://rpc.walletconnect.org/v1?chainId=eip155:1&projectId=<your-project-id>
+```
+
+For example:
+
+```bash
+curl -X POST "https://rpc.walletconnect.org/v1?chainId=eip155:1&projectId=<your-project-id>" --data '{"id":"1","jsonrpc":"2.0","method":"eth_chainId","params":[]}'
+```
 
 ## Limits
 
