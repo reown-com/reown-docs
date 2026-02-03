@@ -1,0 +1,270 @@
+---
+title: "Liquid"
+description: Liquid JSON-RPC Methods
+---
+
+We define an account as the group of addresses derived using the same account value in their [derivation paths](https://github.com/ElementsProject/ELIPs/blob/main/elip-0150.mediawiki). We use the first address of the [external chain](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#examples) ("first external address"), as the identifier for an account. An account's total balance is defined as the sum of all unspent transaction outputs (UTXOs) belonging to its entire group of addresses.
+
+1. Dapps **must** only display the first external address as a connected account.
+2. Wallets **must** only offer to connect the first external address(es).
+
+#### Account Definition
+
+The derivation path levels in [ELIP-150](https://github.com/ElementsProject/ELIPs/blob/main/elip-0150.mediawiki) are:
+
+```
+m / purpose' / coin_type' / account' / change / address_index
+```
+
+-- TODO: complete standard, maybe delete it as we would use
+-- insert https://github.com/ElementsProject/ELIPs/blob/main/elip-0150.mediawiki
+
+Addresses with different `purpose`, `change`, and `address_index` values are considered to belong to the same account. Valid `purpose` values are 44, 49, 84, and 86. We use the first external Native SegWit (purpose = 84) address as the default account identifier.
+
+
+## send_transfer
+
+This method is used to sign and submit a transfer of any `amount` of Bitcoin to a single `recipientAddress`, optionally including a `changeAddress` for the change amount and `memo` set as an OP_RETURN output by supporting wallets. The transaction will be signed and broadcast upon user approval.
+
+### Parameters
+
+- `Object`
+  - `account` : `String` - _(Required)_ The connected account's first external address.
+  - `recipientAddress` : `String` - _(Required)_ The recipient's public address.
+  - `amount` : `String` - _(Required)_ The amount of Bitcoin to send, denominated in satoshis (Bitcoin base unit).
+  - `changeAddress` : `String` - _(Optional)_ The sender's public address to receive change.
+  - `memo` : `String` - _(Optional)_ The OP_RETURN value as a hex string without 0x prefix, maximum 80 bytes.
+
+### Returns
+
+- `Object`
+  - `txid` : `String` - _(Required)_ The transaction id as a hex string without 0x prefix.
+
+## get_account_addresses
+
+This method returns all current addresses needed for a dapp to fetch all UTXOs, calculate the total balance, and prepare transactions. Dapps will typically use an indexing service to query for balances and UTXOs for all addresses returned by this method.
+
+### Parameters
+
+- `Object`
+  - `program_hex` : `String` - _(Required)_ Specifies which program to use for signing input.
+  - `index` : `u64` - _(Required)_ Index of address which would be derived from private key.
+
+### Returns
+
+- `Object`
+  - `account_address_hex` : `String` - _(Required)_ The account address hex string without 0x prefix.
+
+## signPset
+
+This method can be used to request the signature of a Partially Signed Elements Transaction (PSET) and covers use cases (e.g., involving multiple-recipient transactions) requiring granular control over which UTXOs to spend or how to route change.
+
+### Parameters
+
+- `Object`
+  - `account` : `String` - _(Required)_ The connected account's first external address.
+  - `psbt` : `String` - _(Required)_ Base64 encoded string of the PSBT to sign.
+  - `signInputs` : `Array`
+    - `Object`
+      - `address` : `String` - _(Required)_ The address whose private key to use for signing.
+      - `index` : `Integer` - _(Required)_ Specifies which input to sign.
+      - `program_hex` : `String` - _(Required)_ Specifies which program to use for signing input.
+  - `broadcast` : `Boolean` - _(Optional)_ Whether to finalize and broadcast the transaction after signing it. Default is `false`.
+
+### Returns
+
+- `Object`
+  - `psbt` : `String` - _(Required)_ The base64 encoded signed PSBT.
+  - `txid` : `String` - _(Optional)_ The transaction ID as a hex-encoded string, without 0x prefix. This must be returned if the transaction was broadcasted.
+
+## signMessage
+
+This method is used to sign a message with one of the connected account's addresses.
+
+### Parameters
+
+- `Object`
+  - `account` : `String` - _(Required)_ The connected account's first external address.
+  - `message` : `String` - _(Required)_ The message to be signed by the wallet.
+  - `address` : `String` - _(Optional)_ The address whose private key to use for signing the message.
+
+### Returns
+
+- `Object`
+  - `address` : `String` - _(Required)_ The Bitcoin address used to sign the message.
+  - `signature` : `String` - _(Required)_ Hex encoded bytes of the signature, without 0x prefix.
+  - `messageHash` : `String` - _(Optional)_ Hex encoded bytes of the message hash, without 0x prefix.
+
+
+## query_utxos
+
+This method queries UTXOs from the store using multiple filters. Each filter is processed in parallel, and results are aggregated. Filters may include asset ID, script pubkey, contract CMR, token tags, and more.
+
+### Parameters
+
+* Array
+  * Object
+    * `asset_id` : `AssetId` - (Optional) Filter by asset ID.
+    * `script_pubkey` : `Script` - (Optional) Filter by script pubkey (contract address).
+    * `cmr` : `CMR` - (Optional) Filter by Commitment Merkle Root of contract.
+    * `taproot_pubkey_gen` : `TaprootPubkeyGen` - (Optional) Filter by taproot public key generator.
+    * `token_tag` : `String` - (Optional) Filter by token tag (e.g., "option_token").
+    * `required_value` : `u64` - (Optional) Minimum total value in satoshis.
+    * `limit` : `i64` - (Optional) Maximum number of UTXOs to return.
+    * `include_spent` : `Boolean` - (Optional) Include spent UTXOs in results. Default is false.
+
+### Returns
+
+* Array<UtxoQueryResult>
+  * Found(Vec<UtxoEntry>, ContractContext) - UTXOs matching the filter with sufficient value.
+  * InsufficientValue(Vec<UtxoEntry>, ContractContext) - UTXOs found but total value is below required_value.
+  * Empty - No UTXOs match the filter.
+
+## add_contract
+This method adds a Simplicity smart contract to the store. The contract is identified by its compiled program's Commitment Merkle Root (CMR) and associated with a taproot address via TaprootPubkeyGen.
+
+### Parameters
+
+* Object
+  * `source` : `String` - (Required) The Simplicity contract source code.
+  * `arguments` : `Arguments` - (Required) The serialized arguments for the contract.
+  * `taproot_pubkey_gen` : `TaprootPubkeyGen` - (Required) The taproot public key generator for the contract's address.
+  * `app_metadata` : `[u8]` - (Optional) Application-specific metadata (arbitrary bytes).
+
+### Returns
+
+  * Result<(), Error> - Success if the contract was added.
+
+## get_contract_metadata
+This method retrieves the application metadata associated with a contract.
+
+### Parameters
+
+* Object
+  * `taproot_pubkey_gen` : `TaprootPubkeyGen` - (Required) The taproot public key generator identifying the contract.
+
+### Returns
+
+  * `Result<Option<Vec<u8>>, Error>` - Returns Some(metadata) if found, None if contract doesn't exist or has no metadata.
+
+
+## update_contract_metadata
+
+This method updates the application metadata for an existing contract.
+### Parameters
+
+* Object
+  * `taproot_pubkey_gen` : `TaprootPubkeyGen` - (Required) The taproot public key generator identifying the contract.
+  * `metadata` : `[u8]` - (Required) The new metadata bytes.
+
+### Returns
+
+* Result<(), Error> - Success if metadata was updated.
+
+
+## get_contract_by_script_pubkey
+This method retrieves contract information by the script pubkey (contract address).
+### Parameters
+
+* Object
+  * `script_pubkey` : `Script` - (Required) The script pubkey to search for.
+
+### Returns
+
+  * Result<Option<(Vec<u8>, Vec<u8>, String)>, Error> - Returns (metadata, arguments, taproot_pubkey_gen_string) if found, None otherwise.
+
+
+## list_contracts_by_source
+This method lists all contracts matching a specific source code.
+### Parameters
+
+* Object
+  * `source` : `String` - (Required) The contract source code to search for.
+
+### Returns
+
+  * Array<(Vec<u8>, String)> - List of (arguments, taproot_pubkey_gen_string) tuples for all contracts with matching source.
+
+
+## list_contracts_by_source_with_metadata
+
+This method lists all contracts matching a specific source code, including metadata.
+
+### Parameters
+
+* Object
+  * `source` : `String` - (Required) The contract source code to search for.
+
+### Returns
+
+* Array<(Vec<u8>, String, Option<Vec<u8>>)> - List of (arguments, taproot_pubkey_gen_string, metadata) tuples.
+
+
+## list_unspent_outpoints
+
+This method retrieves all unspent outpoints currently in the store.
+
+### Returns
+
+* Array<OutPoint> - List of all outpoints where is_spent = 0.
+
+
+## list_tracked_script_pubkeys
+
+This method retrieves all distinct script pubkeys from contracts stored in the database.
+
+### Returns
+
+* Array<Script> - List of distinct script pubkeys from the simplicity_contracts table.
+
+
+## insert_contract_token
+This method creates a token-to-contract association, mapping an asset ID to a contract with a descriptive tag.
+
+### Parameters
+
+* Object
+  * `taproot_pubkey_gen` : `TaprootPubkeyGen` - (Required) The contract identifier.
+  * `asset_id` : `AssetId` - (Required) The asset/token ID to associate.
+  * `tag` : `String` - (Required) A descriptive tag (e.g., "option_token", "grantor_token", "settlement_token").
+
+### Returns
+
+* Result<(), Error> - Success if the association was created or updated.
+
+
+## get_contract_by_token
+
+This method retrieves contract information by token asset ID.
+
+### Parameters
+
+* Object
+  * `asset_id` : `AssetId` - (Required) The asset ID to search for.
+
+### Returns
+
+* Result<Option<(String, String)>, Error> - Returns (taproot_pubkey_gen, tag) if the token is associated with a contract, None otherwise.
+
+
+## list_tokens_by_tag
+
+This method lists all assets with a specific token tag.
+
+### Parameters
+
+* Object
+  * `tag` : `String` - (Required) The tag to search for (e.g., "option_token").
+
+### Returns
+
+* Array<(AssetId, String)> - List of (asset_id, taproot_pubkey_gen) tuples for all tokens with the matching tag.
+
+
+## send_raw_transaction
+
+This method sends a raw transaction to the Liquid RPC node to which the wallet is connected.
+
+### Returns
+
+* Result<(), Error> - Success if the transaction was sent.
