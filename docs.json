@@ -75,10 +75,10 @@
                 "group": "Getting Started",
                 "pages": ["appkit/overview"]
               },
-              {
-                "group": "Paid Plans",
-                "pages": ["appkit/paid-plans/enterprise"]
-              },
+                            {
+                              "group": "Paid Plans",
+                              "pages": ["appkit/paid-plans/pro", "appkit/paid-plans/enterprise"]
+                            },
               {
                 "group": "Features",
                 "pages": [
