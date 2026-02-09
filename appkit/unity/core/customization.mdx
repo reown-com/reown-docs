@@ -2,8 +2,8 @@
 title: Customization
 ---
 
-The Reown uses Unity's [UI Toolkit](https://docs.unity3d.com/Manual/UIElements.html) system.
-By following this guide,you can customize the Reown to match your game's style, even if you have minimal or no prior
+Reown uses Unity's [UI Toolkit](https://docs.unity3d.com/Manual/UIElements.html) system.
+By following this guide,you can customize Reown to match your game's style, even if you have minimal or no prior
 knowledge of UI Toolkit.
 
 <Frame>
@@ -12,19 +12,19 @@ knowledge of UI Toolkit.
 
 ## Theming
 
-The Reown relies heavily on [Unity Style Sheet (USS) variables](https://docs.unity3d.com/Manual/UIE-USS-variables.html)
+Reown relies heavily on [Unity Style Sheet (USS) variables](https://docs.unity3d.com/Manual/UIE-USS-variables.html)
 for easy customization of various UI aspects, such as colors, spacing, border radius, and more.
 
 ### Preparation
 
-The first step in theming the Reown is to create a custom panel settings asset, followed by a custom theme file.
-Then, link them to the Reown.
+The first step in theming Reown is to create a custom panel settings asset, followed by a custom theme file.
+Then, link them to Reown.
 
 1. In Unity Editor, right-click in the Project window and select **Create -> UI Toolkit -> Panel Settings Asset**.
 2. Right-click again in the Project window and select **Create -> UI Toolkit -> TSS Theme File**.
 3. Select the newly created Panel Settings Asset, and in the Inspector window, assign the newly created TSS Theme File
 to the `Theme Style Sheet` field.
-4. In the same Inspector window, set `Reference DPI` to 160. This is the recommended DPI for the Reown, but feel free
+4. In the same Inspector window, set `Reference DPI` to 160. This is the recommended DPI for Reown, but feel free
 to adjust it to your needs.
 
 <Frame>
@@ -42,7 +42,7 @@ newly created `Panel Settings Asset` to the `Panel Settings` field of `UI Docume
 ![unity-appkit-panel-settings](/images/assets/unity-appkit-panel-settings.webp)
 </Frame>
 
-Everything is set up, now you can start customizing the Reown to match your game's style.
+Everything is set up, now you can start customizing Reown to match your game's style.
 
 ### Overriding Variables
 
@@ -95,7 +95,7 @@ the [UI Toolkit documentation](https://docs.unity3d.com/Manual/UIE-get-started-w
 
 ## Advanced Customization
 
-The Reown follows the MVP (Model-View-Presenter) architecture, allowing you to customize the UI and behavior by
+Reown follows the MVP (Model-View-Presenter) architecture, allowing you to customize the UI and behavior by
 replacing the default views and presenters with your own. Views load UXML layout files from the Resources folder and
 configure bindings. Presenters handle the business logic and communicate with the views. In some cases, presenters can
 build views dynamically and pass them to another view. Below are two examples showing how to customize both static
@@ -217,7 +217,7 @@ If you find that some parts of the presenter can't be customized, please [open a
 
 ### Static View Customization
 
-All core views in the Reown accept optional path to the UXML layout file in the constructor.
+All core views in Reown accept optional path to the UXML layout file in the constructor.
 
 Let's extend the `CustomAccountPresenter` class we made in the previous example to use a custom UXML layout file.
 To do so, override `CreateViewInstance` method and return a new instance of `AccountView` with a custom UXML layout path.
