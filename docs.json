@@ -64,7 +64,7 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "AppKit",
+        "tab": "Reown",
         "icon": "layer-group",
         "dropdowns": [
           {
@@ -316,7 +316,7 @@
                     {
                       "dropdown": "Vue",
             "icon": "vuejs",
-            "description": "AppKit on VueJS",
+            "description": "Reown on VueJS",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -562,7 +562,7 @@
           {
             "dropdown": "Kotlin",
             "icon": "android",
-            "description": "AppKit on Kotlin (Android)",
+            "description": "Reown on Kotlin (Android)",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -592,7 +592,7 @@
           {
             "dropdown": "Swift",
             "icon": "apple",
-            "description": "AppKit on Swift (iOS)",
+            "description": "Reown on Swift (iOS)",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -805,7 +805,7 @@
     ],
     "primary": {
       "type": "button",
-      "label": "AppKit Demo",
+      "label": "Reown Demo",
       "href": "https://demo.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks"
     }
   },
