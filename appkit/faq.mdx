@@ -18,7 +18,7 @@ This FAQ section covers common questions and solutions for using Reown. The ques
     This error typically occurs when the `projectId` is not configured correctly. To resolve this:
 
     1. Create a valid project ID at [https://dashboard.reown.com/](https://dashboard.reown.com/)
-    2. Add it to your Reown configuration:
+    2. Add it to your Reown AppKit configuration:
 
     ```javascript
     const modal = createAppKit({
@@ -98,7 +98,7 @@ This FAQ section covers common questions and solutions for using Reown. The ques
   </Accordion>
 
   <Accordion title="How can I use custom RPCs with Reown?">
-    You can use your own RPC by setting the `customRpcUrls` option in the Reown configuration. This lets you define custom RPC URLs for specific chains. Each entry must follow the format:
+    You can use your own RPC by setting the `customRpcUrls` option in the Reown AppKit configuration. This lets you define custom RPC URLs for specific chains. Each entry must follow the format:
 
     ```javascript
     customRpcUrls: {
@@ -107,7 +107,7 @@ This FAQ section covers common questions and solutions for using Reown. The ques
     }
     ```
 
-    Reown will prioritize these URLs over the default ones.
+    The SDK will prioritize these URLs over the default ones.
   </Accordion>
 </AccordionGroup>
 

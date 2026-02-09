@@ -6,7 +6,7 @@ Reown integrates with EIP-5792 to interact with embedded Wallets (smart accounts
 
 ## wallet_getCapabilities
 
-Reown checks the `atomic` capability from `wallet_getCapabilities` of the wallet in order to know if a wallet required to handle the batch of calls atomically or not.
+The SDK checks the `atomic` capability from `wallet_getCapabilities` of the wallet in order to know if a wallet required to handle the batch of calls atomically or not.
 Wallets should include the [EIP-5792 capabilities in CAIP-25](https://docs.walletconnect.network/wallet-sdk/android/eip5792#wallet-response). 
 
 ## wallet_sendCalls

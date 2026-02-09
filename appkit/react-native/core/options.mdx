@@ -2,7 +2,7 @@
 title: Options
 ---
 
-Reown for React Native is configured by calling the `createAppKit` function and passing a configuration object to it. This function initializes and returns the Reown instance that you will use throughout your application, typically by providing it via the `AppKitProvider`.
+Reown for React Native is configured by calling the `createAppKit` function and passing a configuration object to it. This function initializes and returns the Reown AppKit instance that you will use throughout your application, typically by providing it via the `AppKitProvider`.
 
 ```typescript
 import { createAppKit } from '@reown/appkit-react-native';
@@ -170,7 +170,7 @@ createAppKit({
 ### `adapters`
 *   **Type:** `Array<Adapter>`
 *   **Required:** Yes
-*   **Description:** An array of initialized chain adapter instances. Each adapter is responsible for handling a specific blockchain namespace (e.g., 'eip155' for EVM chains, 'solana' for Solana). Reown will map the networks provided in the `networks` option to the appropriate adapter based on the namespace derived from the network's `id` and the namespaces supported by each adapter.
+*   **Description:** An array of initialized chain adapter instances. Each adapter is responsible for handling a specific blockchain namespace (e.g., 'eip155' for EVM chains, 'solana' for Solana). The SDK will map the networks provided in the `networks` option to the appropriate adapter based on the namespace derived from the network's `id` and the namespaces supported by each adapter.
 
 ```typescript
 import { EthersAdapter } from '@reown/appkit-ethers-react-native';

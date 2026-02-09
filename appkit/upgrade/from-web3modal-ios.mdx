@@ -29,7 +29,7 @@ All references to Web3Modal in your import statements should be changed to AppKi
 
 ### Step 3. Update Instance Access and Method Calls
 
-The singleton instance access for Web3Modal has been replaced with Reown. Update all instances where Web3Modal.instance is used to Reown.instance.
+The singleton instance access for Web3Modal has been replaced with AppKit. Update all instances where Web3Modal.instance is used to AppKit.instance.
 
 ```swift {6-8}
 // Remove the following code line
@@ -44,7 +44,7 @@ The singleton instance access for Web3Modal has been replaced with Reown. Update
 
 ### Step 4. Update Configuration Method
 
-The configure method has also been updated to reflect the new branding. Replace calls to Web3Modal.configure with Reown.configure. Old Configuration:
+The configure method has also been updated to reflect the new branding. Replace calls to Web3Modal.configure with AppKit.configure. Old Configuration:
 
 ```swift {6-8}
 // Remove the following code line
@@ -59,4 +59,4 @@ The configure method has also been updated to reflect the new branding. Replace 
 
 ### Step 5. Test Your Changes
 
-After updating all references to Web3Modal to use Reown, thoroughly test your application to ensure that all functionalities work as expected.
+After updating all references to Web3Modal to use AppKit, thoroughly test your application to ensure that all functionalities work as expected.

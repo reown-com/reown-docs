@@ -15,7 +15,7 @@ At the core of Reown is a centralized `AppKit` instance that handles connection 
 
 ### Reown CLI
 
-Get started quickly with our dedicated CLI that sets up a minimal Reown configuration for you.
+Get started quickly with our dedicated CLI that sets up a minimal Reown AppKit configuration for you.
 
 Run the command below and select React Native:
 
@@ -670,11 +670,11 @@ Example:
   WalletConnect protocol regardless of this configuration.
 </Info>
 
-Reown supports various custom connectors for specific wallets that use their own connection protocols. These connectors allow you to integrate popular wallets like Coinbase and Phantom directly into your Reown configuration.
+Reown supports various custom connectors for specific wallets that use their own connection protocols. These connectors allow you to integrate popular wallets like Coinbase and Phantom directly into your Reown AppKit configuration.
 
 ### Coinbase
 
-Coinbase Wallet is a popular wallet that uses a custom connection protocol. To enable it in your Reown configuration, you'll need to install the Coinbase SDK and add a specific connector.
+Coinbase Wallet is a popular wallet that uses a custom connection protocol. To enable it in your Reown AppKit configuration, you'll need to install the Coinbase SDK and add a specific connector.
 
 <Note>
   **Expo Compatibility:** Coinbase SDK works with [Expo
@@ -764,7 +764,7 @@ For more detailed information, check the [Coinbase docs](https://mobilewalletpro
 
 ### Phantom & Solflare
 
-Phantom and Solflare are popular wallets on the Solana blockchain. Because they use a custom connection protocol, it requires a specific connector to be added to your Reown configuration.
+Phantom and Solflare are popular wallets on the Solana blockchain. Because they use a custom connection protocol, it requires a specific connector to be added to your Reown AppKit configuration.
 
 To enable Phantom Wallet, you'll need to import the `PhantomConnector` or `SolflareConnector` from `@reown/appkit-solana-react-native` and add it to the `extraConnectors` array in your `createAppKit` configuration.
 
