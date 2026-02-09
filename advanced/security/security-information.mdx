@@ -7,7 +7,7 @@ Security is not just a feature but a fundamental aspect of Reown's architecture.
 ## Reown - Embedded Wallet Key Management
 
 ### Architecture and Custody
-Reown Embedded wallets enable applications to provide end-users with a quick onboarding experience by provisioning a non-custodial wallet through social login or email wallets. While the implementation varies per network, Reown relies on a SOC 2 Type 2 compliant third-party vendor for key management. The vendor's [security overview](https://magic.link/docs/home/security/product-security) and [list of audits](https://magic.link/docs/home/security/security-compliance) are available in their documentation.
+Embedded wallets enable applications to provide end-users with a quick onboarding experience by provisioning a non-custodial wallet through social login or email wallets. While the implementation varies per network, Reown relies on a SOC 2 Type 2 compliant third-party vendor for key management. The vendor's [security overview](https://magic.link/docs/home/security/product-security) and [list of audits](https://magic.link/docs/home/security/security-compliance) are available in their documentation.
 
 For a subset of EVM Networks, gas abstraction functionality requires deploying a Smart Account on behalf of the end-user. In this case, the key management provider acts as a signer for this Smart Account. Reown relies on a third-party vendor for the Smart Account implementation. The [Smart Account implementation audits](https://docs.safe.global/smart-account-audits) are available in their documentation.
 
@@ -38,7 +38,7 @@ The security infrastructure of Reown has undergone multiple rounds of audits by 
 | Audit Scope | Auditor | Report |
 | --- | --- | --- |
 | WalletConnect Comprehensive Threat Model | Spearbit | [View Report](https://drive.google.com/file/d/1QpPSLvCEMunaYHHBPN0g6kYd39uFxpPk/view) |
-| Reown Embedded Wallet Integration Pentest | Halborn | [View Report](https://drive.google.com/file/d/1LQ6BkcI4PHs_FKAzpCRMqwD--rq6uOy6/view) |
+| Embedded Wallet Integration Pentest | Halborn | [View Report](https://drive.google.com/file/d/1LQ6BkcI4PHs_FKAzpCRMqwD--rq6uOy6/view) |
 | WalletKit Security Review & Lightweight Threat Model | Trail of Bits | [View Report](https://github.com/trailofbits/publications/blob/master/reviews/2023-03-walletconnectv2-securityreview.pdf) |
 
 ## Bug Bounty Program

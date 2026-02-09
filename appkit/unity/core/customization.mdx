@@ -190,7 +190,7 @@ public class CustomAccountPresenter : AccountPresenter
 
 The last step is to replace the default presenter with the custom one.
 
-All screens in the Reown modal (e.g. Account, Wallet Search, QR Code, etc.) are called `modal view`. The class that
+All screens in the modal (e.g. Account, Wallet Search, QR Code, etc.) are called `modal view`. The class that
 is responsible for storing, hiding, and showing the modal views is `RouterController`. To replace a modal view implementation
 with a custom one, you need to create a custom presenter and pass it to the `RegisterModalView` method of `RouterController`.
 
@@ -217,7 +217,7 @@ If you find that some parts of the presenter can't be customized, please [open a
 
 ### Static View Customization
 
-All core views in Reown accept optional path to the UXML layout file in the constructor.
+All core views accept optional path to the UXML layout file in the constructor.
 
 Let's extend the `CustomAccountPresenter` class we made in the previous example to use a custom UXML layout file.
 To do so, override `CreateViewInstance` method and return a new instance of `AccountView` with a custom UXML layout path.
