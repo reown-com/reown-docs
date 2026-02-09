@@ -8,9 +8,9 @@ A Content Security Policy (CSP) is a security feature that helps protect web app
 
 ## CSP Guidance
 
-### AppKit
+### Reown
 
-The following is a **partial CSP** that covers WalletConnect's libraries and services for [AppKit](https://docs.walletconnect.com/appkit/overview). Note that **you may need to define additional sources based on your application's requirements**.
+The following is a **partial CSP** that covers WalletConnect's libraries and services for [Reown](https://docs.walletconnect.com/appkit/overview). Note that **you may need to define additional sources based on your application's requirements**.
 
 ```
 default-src 'self';
@@ -33,7 +33,7 @@ For a full of list of RPC sources used by `wagmi/viem`, please refer to [Viem's 
 
 <Note>
 
-**Cross-Origin-Opener-Policy for Social Login Security**: The `Cross-Origin-Opener-Policy: same-origin-allow-popups` header is essential when using AppKit's social login features (Google, X, GitHub, Discord, Apple, Facebook, Farcaster). This header helps prevent tabnabbing attacks during OAuth flows by controlling how popup windows can interact with your application. Without this header, malicious sites could potentially hijack the authentication flow and redirect users to phishing pages.
+**Cross-Origin-Opener-Policy for Social Login Security**: The `Cross-Origin-Opener-Policy: same-origin-allow-popups` header is essential when using Reown's social login features (Google, X, GitHub, Discord, Apple, Facebook, Farcaster). This header helps prevent tabnabbing attacks during OAuth flows by controlling how popup windows can interact with your application. Without this header, malicious sites could potentially hijack the authentication flow and redirect users to phishing pages.
 
 </Note>
 

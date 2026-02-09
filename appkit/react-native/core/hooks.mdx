@@ -2,7 +2,7 @@
 title: Hooks
 ---
 
-AppKit for React Native provides a set of hooks to interact with the wallet connection lifecycle, access connection state, and control the modal.
+Reown for React Native provides a set of hooks to interact with the wallet connection lifecycle, access connection state, and control the modal.
 
 All hooks are imported from `@reown/appkit-react-native`.
 
@@ -108,7 +108,7 @@ export default function MyComponent() {
 
 ## `useProvider()`
 
-The provider access hook that provides access to the underlying chain-specific provider for the currently active connection. Use this hook when you need to perform direct interactions with the blockchain that go beyond the standard AppKit actions.
+The provider access hook that provides access to the underlying chain-specific provider for the currently active connection. Use this hook when you need to perform direct interactions with the blockchain that go beyond the standard Reown actions.
 
 By default, `useProvider()` returns the provider for the currently active network.
 
@@ -156,7 +156,7 @@ export default function ChainSpecificActions() {
 - Signing transactions and messages with the connected wallet
 - Integrating with blockchain-specific libraries (ethers, solana web3, etc.)
 - Building custom wallet interactions across different chains
-- Performing advanced blockchain operations not covered by AppKit's standard actions
+- Performing advanced blockchain operations not covered by Reown's standard actions
 
 ### Returns
 - `provider`: The underlying chain-specific provider for the currently active connection
@@ -282,7 +282,7 @@ export default function AppStatus() {
 
 ## `useAppKitLogs()`
 
-The logging hook that provides access to AppKit's internal logging system. Use this hook when you need to debug your application, monitor AppKit's behavior, or export logs for troubleshooting purposes.
+The logging hook that provides access to Reown's internal logging system. Use this hook when you need to debug your application, monitor Reown's behavior, or export logs for troubleshooting purposes.
 
 ```typescript
 import { useAppKitLogs } from '@reown/appkit-react-native';
@@ -319,7 +319,7 @@ export default function DebugPanel() {
 ```
 
 ### Use Cases
-- Debugging AppKit behavior and troubleshooting issues
+- Debugging Reown behavior and troubleshooting issues
 - Monitoring application performance and error tracking
 - Exporting logs for support or analysis purposes
 - Building custom debugging interfaces for development
@@ -338,7 +338,7 @@ export default function DebugPanel() {
 - `clearLogs`: Function to clear all logs
 
 <Note>
-This hook requires the `debug` option to be set to `true` in your AppKit configuration to capture logs. See the [Options](/appkit/react-native/core/options#debug) documentation for more details.
+This hook requires the `debug` option to be set to `true` in your Reown configuration to capture logs. See the [Options](/appkit/react-native/core/options#debug) documentation for more details.
 </Note>
 
 ## Deprecated Hooks

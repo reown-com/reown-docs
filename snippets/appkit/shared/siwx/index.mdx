@@ -12,10 +12,10 @@ The **Sign In With X** feature enables decentralized applications (Dapps) to aut
 
 ## Getting Started
 
-**SIWX** works as a plugin system for AppKit and you are going to add the plugin in the AppKit configuration. There are some ways to implement the **SIWX** feature:
+**SIWX** works as a plugin system for Reown and you are going to add the plugin in the Reown configuration. There are some ways to implement the **SIWX** feature:
 
 - Use Reown Authentication to manage the sessions in the Reown Dashboard
-- Use the `DefaultSIWX` class provided by AppKit
+- Use the `DefaultSIWX` class provided by Reown
 - Create a custom implementation to suit your specific requirements.
 
 To initialize the **SIWX** feature, you need to add the `siwx` parameter to the `createAppKit` function.
@@ -31,7 +31,7 @@ Read more about the [Reown Authentication Implementation](./reown-authentication
 `DefaultSIWX` is a scaffold implementation of the SIWX feature for quick custom integration. It offers pre-built components to get the feature running quickly with some custom adjustments. 
 Additionally, the expected ` parameters can be configured to allow customization of the feature to suit your specific requirements.
 
-The defined interface must follow specific rules to make sure that AppKit can interact with it correctly. Read more about how to have your [Custom Implementation](./siwx-custom).
+The defined interface must follow specific rules to make sure that Reown can interact with it correctly. Read more about how to have your [Custom Implementation](./siwx-custom).
 
 ## SIWX Expected Behavior
 

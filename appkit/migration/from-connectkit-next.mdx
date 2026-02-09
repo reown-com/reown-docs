@@ -5,7 +5,7 @@ sidebarTitle: "From ConnectKit"
 
 # Migration from ConnectKit to AppKit
 
-If you have currently set up ConnectKit as the wallet provider for your Web3 app, you can easily migrate to **Reown AppKit**.
+If you have currently set up ConnectKit as the wallet provider for your Web3 app, you can easily migrate to **Reown**.
 
 Assuming that your Web3 app is set up similarly to ConnectKit's example app [here](https://github.com/family/connectkit/tree/main/examples/nextjs), let's explore how to migrate from this example app to Reown AppKit.
 
@@ -17,7 +17,7 @@ To migrate from ConnectKit to Reown AppKit, please follow the steps below.
 
 ## Step 2. Install & uninstall libraries
 
-- Run this command to install Reown AppKit and uninstall ConnectKit.
+- Run this command to install Reown and uninstall ConnectKit.
 
 <CodeGroup>
 ```bash npm
@@ -37,7 +37,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi&& pnpm remove connectkit
 ## Step 3. Change the code in the `/components/Web3Provider.tsx` file
 
 - Navigate to the `/components/Web3Provider.tsx` file inside your ConnectKit example Web3 app directory. 
-. Now, you need to remove the existing configuration that uses ConnectKit and replace it with Reown AppKit. Refer to the code snippet below.
+. Now, you need to remove the existing configuration that uses ConnectKit and replace it with Reown. Refer to the code snippet below.
 
 ```tsx {7,10-12, 22, 25-28, 33-41, 46, 49}
 import React from 'react';
@@ -127,5 +127,5 @@ export default Home;
 
 + Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from ConnectKit to Reown AppKit.
 + Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
-+ Check our [AppKit Web examples](- [Web Examples](https://github.com/reown-com/appkit-web-examples) to compare with your implementation in case you are having issues 
++ Check our [Reown Web examples](- [Web Examples](https://github.com/reown-com/appkit-web-examples) to compare with your implementation in case you are having issues 
 + If you want to start from scratch, please refer to the Installation docs [here](/appkit/overview)

@@ -2,7 +2,7 @@
 title: Email & Socials
 ---
 
-AppKit enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social network.
+Reown enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social network.
 
 <Note>
 
@@ -27,7 +27,7 @@ Email and social wallets currently support EVM chains only. Support for addition
 
 ### Enable Email & Social Authentication
 
-To enable email and social authentication in your AppKit configuration, add the `features` option to your `createAppKit` call:
+To enable email and social authentication in your Reown configuration, add the `features` option to your `createAppKit` call:
 
 
 ```tsx {4-6}
@@ -48,8 +48,8 @@ export const appKit = createAppKit({
 
 ## User Flow
 
-1. Users will be able to connect to you application by simply using an email address. AppKit will send to them a One Time Password (OTP) to copy and paste in the modal, which will help to
-   verify the user's authenticity. This will create a non-custodial wallet for your user which will be available in any application that integrates AppKit and email login.
+1. Users will be able to connect to you application by simply using an email address. Reown will send to them a One Time Password (OTP) to copy and paste in the modal, which will help to
+   verify the user's authenticity. This will create a non-custodial wallet for your user which will be available in any application that integrates Reown and email login.
 
    - For Social options, the One Time Password (OTP) is not sent.
 

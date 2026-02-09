@@ -5,11 +5,11 @@ title: Custom networks
 
 If you cannot find the network you are looking for within the `@reown/appkit/networks` path, you can always add a custom network.
 
-Since AppKit v1.1.0, there are two ways to add your network to AppKit:
+Since Reown v1.1.0, there are two ways to add your network to AppKit:
 
 ### 1. Adding Your Chain to Viem’s Directory (Recommended)
 
-Reown AppKit use Viem to provide EVM chains to users under the hood. If your chain is EVM-compatible, it is recommended to open a PR to Viem to add your network to Viem’s directory. Once your chain is accepted by Viem, it will automatically be available in AppKit with no additional steps required.
+Reown use Viem to provide EVM chains to users under the hood. If your chain is EVM-compatible, it is recommended to open a PR to Viem to add your network to Viem’s directory. Once your chain is accepted by Viem, it will automatically be available in Reown with no additional steps required.
 
 **Here is the documentation of how to add new chain to Viem:**
 https://github.com/wevm/viem/blob/main/.github/CONTRIBUTING.md#chains
@@ -62,7 +62,7 @@ createAppKit({
 })
 ```
 
-You can use your own RPC by setting the `customRpcUrls` option in the [AppKit configuration](/appkit/next/core/options#customrpcurls). This lets you define custom RPC URLs for specific chains. Each entry must follow the format:
+You can use your own RPC by setting the `customRpcUrls` option in the [Reown configuration](/appkit/next/core/options#customrpcurls). This lets you define custom RPC URLs for specific chains. Each entry must follow the format:
 
 ```javascript
 customRpcUrls: {
@@ -71,4 +71,4 @@ customRpcUrls: {
 }
 ```
 
-AppKit will prioritize these URLs over the default ones.
+Reown will prioritize these URLs over the default ones.

@@ -2,7 +2,7 @@
 title: Options
 ---
 
-AppKit for React Native is configured by calling the `createAppKit` function and passing a configuration object to it. This function initializes and returns the AppKit instance that you will use throughout your application, typically by providing it via the `AppKitProvider`.
+Reown for React Native is configured by calling the `createAppKit` function and passing a configuration object to it. This function initializes and returns the Reown instance that you will use throughout your application, typically by providing it via the `AppKitProvider`.
 
 ```typescript
 import { createAppKit } from '@reown/appkit-react-native';
@@ -83,8 +83,8 @@ createAppKit({
 
 **Example Sources for Network Configurations:**
 
-<Accordion title="Pre-exported by AppKit">
-For convenience, AppKit exports configurations for Solana and Bitcoin networks.
+<Accordion title="Pre-exported by Reown">
+For convenience, Reown exports configurations for Solana and Bitcoin networks.
 
 ```typescript
 import { solana, bitcoin } from '@reown/appkit-react-native';
@@ -170,7 +170,7 @@ createAppKit({
 ### `adapters`
 *   **Type:** `Array<Adapter>`
 *   **Required:** Yes
-*   **Description:** An array of initialized chain adapter instances. Each adapter is responsible for handling a specific blockchain namespace (e.g., 'eip155' for EVM chains, 'solana' for Solana). AppKit will map the networks provided in the `networks` option to the appropriate adapter based on the namespace derived from the network's `id` and the namespaces supported by each adapter.
+*   **Description:** An array of initialized chain adapter instances. Each adapter is responsible for handling a specific blockchain namespace (e.g., 'eip155' for EVM chains, 'solana' for Solana). Reown will map the networks provided in the `networks` option to the appropriate adapter based on the namespace derived from the network's `id` and the namespaces supported by each adapter.
 
 ```typescript
 import { EthersAdapter } from '@reown/appkit-ethers-react-native';
@@ -192,7 +192,7 @@ createAppKit({
 ### `storage`
 *   **Type:** `Storage`
 *   **Required:** Yes
-*   **Description:** A storage implementation that handles data persistence. AppKit provides a flexible storage interface that works with any storage solution you prefer.
+*   **Description:** A storage implementation that handles data persistence. Reown provides a flexible storage interface that works with any storage solution you prefer.
 
 The `Storage` interface, which can be imported from `@reown/appkit-react-native`, is defined as follows:
 
@@ -320,7 +320,7 @@ export interface Storage {
 ### `extraConnectors`
 *   **Type:** `Array<Connector>`
 *   **Required:** No
-*   **Description:** Additional wallet connectors that extend AppKit's connection capabilities beyond the standard WalletConnect protocol. This is useful for wallets that require custom connection methods, like Phantom Wallet and Coinbase.
+*   **Description:** Additional wallet connectors that extend Reown's connection capabilities beyond the standard WalletConnect protocol. This is useful for wallets that require custom connection methods, like Phantom Wallet and Coinbase.
 
 ```typescript
 import { PhantomConnector } from '@reown/appkit-solana-react-native';
@@ -335,7 +335,7 @@ createAppKit({
 
 ### `defaultNetwork`
 *   **Type:** `AppKitNetwork` (Optional)
-*   **Description:** The network that AppKit should attempt to connect to by default, or highlight initially if no prior session exists. This object must be one of the networks defined in your `networks` array.
+*   **Description:** The network that Reown should attempt to connect to by default, or highlight initially if no prior session exists. This object must be one of the networks defined in your `networks` array.
 
 ```typescript
 createAppKit({
@@ -415,7 +415,7 @@ createAppKit({
 
 ### `themeMode`
 *   **Type:** `'light' | 'dark'` (Optional)
-*   **Description:** Sets the initial theme for the AppKit modal. Defaults to the system theme or 'light' if system theme is unavailable.
+*   **Description:** Sets the initial theme for the Reown modal. Defaults to the system theme or 'light' if system theme is unavailable.
 
 ```typescript
 createAppKit({
@@ -426,7 +426,7 @@ createAppKit({
 
 ### `themeVariables`
 *   **Type:** `Object` (Optional)
-*   **Description:** Allows you to customize the accent color of the AppKit modal. Refer to the Theming documentation for details.
+*   **Description:** Allows you to customize the accent color of the Reown modal. Refer to the Theming documentation for details.
 
 ```typescript
 createAppKit({
@@ -455,7 +455,7 @@ createAppKit({
 
 ### `tokens`
 *   **Type:** `Record<string, { address: string }>` (Optional)
-*   **Description:** An object to configure specific tokens for which AppKit should display balances. The keys are CAIP-2 network IDs (e.g., 'eip155:1' for Ethereum Mainnet for a specific Solana network instance if required by ID structure). The value for each network ID is an object containing the token's contract `address` on that network.
+*   **Description:** An object to configure specific tokens for which Reown should display balances. The keys are CAIP-2 network IDs (e.g., 'eip155:1' for Ethereum Mainnet for a specific Solana network instance if required by ID structure). The value for each network ID is an object containing the token's contract `address` on that network.
 
 ```typescript
 createAppKit({
@@ -477,7 +477,7 @@ createAppKit({
 ### `clipboardClient`
 *   **Type:** `Object`
 *   **Required:** No (but functionally required for copy features)
-*   **Description:** Allows you to provide your own clipboard implementation. **If this client is not provided, all UI elements within AppKit that offer a "copy to clipboard" functionality (e.g., for addresses, QR code URIs) will be hidden.** To enable copy features, you must supply this client.
+*   **Description:** Allows you to provide your own clipboard implementation. **If this client is not provided, all UI elements within Reown that offer a "copy to clipboard" functionality (e.g., for addresses, QR code URIs) will be hidden.** To enable copy features, you must supply this client.
     It requires an async `setString` method that takes a string value to be copied.
 
 ```typescript
@@ -544,7 +544,7 @@ You can override any of the following properties:
 
 ### `features`
 *   **Type:** `Object` (Optional)
-*   **Description:** An object to toggle additional AppKit features on or off.
+*   **Description:** An object to toggle additional Reown features on or off.
 
     *   `swaps`: (Boolean, Optional) Enable/disable the token swap feature. Default: `true`.
     *   `onramp`: (Boolean, Optional) Enable/disable the onramp feature. Default: `true`.

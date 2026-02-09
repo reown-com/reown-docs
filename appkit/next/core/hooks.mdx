@@ -13,7 +13,7 @@ Hooks are React functions that provide access to wallet connection features, mod
 
 ## Hook Ecosystem
 
-AppKit provides a comprehensive set of React hooks that work together to provide a complete wallet connection and blockchain interaction experience. These hooks can be categorized into several functional groups:
+Reown provides a comprehensive set of React hooks that work together to provide a complete wallet connection and blockchain interaction experience. These hooks can be categorized into several functional groups:
 
 - **Connection Hooks**: Manage wallet connections and user authentication (`useAppKit`, `useAppKitAccount`, `useDisconnect`)
 - **Network Hooks**: Handle blockchain network selection and information (`useAppKitNetwork`)
@@ -25,7 +25,7 @@ AppKit provides a comprehensive set of React hooks that work together to provide
 - **Authentication Hooks**: Handle authentication and user management (`useAppKitUpdateEmail`, `useAppKitSIWX`)
 - **Solana-Specific Hooks**: Solana blockchain interactions (`useAppKitConnection` from Solana adapter)
 
-The diagram below illustrates how these hooks relate to each other and to the core AppKit functionality:
+The diagram below illustrates how these hooks relate to each other and to the core Reown functionality:
 
 ```mermaid
 graph TD
@@ -251,7 +251,7 @@ const { isReady, isPending, connect } = useAppKitWallet({
 
 #### Options for the connect parameter
 
-AppKit supports the [top 32 wallets](https://github.com/reown-com/appkit/blob/main/packages/wallet-button/src/utils/ConstantsUtil.ts#L11-L44), WalletConnect, social logins, and email authentication:
+Reown supports the [top 32 wallets](https://github.com/reown-com/appkit/blob/main/packages/wallet-button/src/utils/ConstantsUtil.ts#L11-L44), WalletConnect, social logins, and email authentication:
 
 | Type          | Options                                                                                                                                                                                                                                                                                                                                                           |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -432,13 +432,13 @@ const {
 - Tracking which network the user has selected
 - Creating custom UI elements that respond to modal state changes
 - Implementing custom loading states based on modal state
-- Checking if AppKit has been fully initialized before rendering components
+- Checking if Reown has been fully initialized before rendering components
 - Displaying chain-specific UI based on the active blockchain namespace
 
 ### Returns
 
-- `initialized`: Boolean that indicates if AppKit has been initialized. This sets to true when all controllers, adapters and internal state is ready
-- `loading`: Boolean that indicates if AppKit is loading
+- `initialized`: Boolean that indicates if Reown has been initialized. This sets to true when all controllers, adapters and internal state is ready
+- `loading`: Boolean that indicates if Reown is loading
 - `open`: Boolean that indicates if the modal is open
 - `selectedNetworkId`: The current chain id selected by the user in CAIP-2 format
 - `activeChain`: The active chain namespace (e.g., 'eip155', 'solana', 'bip122')

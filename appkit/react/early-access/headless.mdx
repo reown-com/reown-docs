@@ -12,11 +12,11 @@ title: Headless
   us](https://share.hsforms.com/1_oWa8QkwRXi6oR0nZ_SIxQnxw6s) to get access.
 </Info>
 
-AppKit Headless allows developers to build a fully customizable "Connect" experience powered by AppKit's existing features without using the AppKit modal. Headless exposes wallet discovery, rendering WalletConnect QR codes, and social provider flows via simple hooks and utility functions.
+Reown Headless allows developers to build a fully customizable "Connect" experience powered by Reown's existing features without using the Reown modal. Headless exposes wallet discovery, rendering WalletConnect QR codes, and social provider flows via simple hooks and utility functions.
 
 ## Installation
 
-Headless requires AppKit to be configured with the `headless` flag. See the [installation](../core/installation) docs before getting started and make sure you're enabling headless as expected.
+Headless requires Reown to be configured with the `headless` flag. See the [installation](../core/installation) docs before getting started and make sure you're enabling headless as expected.
 
 ```tsx
 createAppKit({
@@ -62,8 +62,8 @@ const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, w
 </ResponseField>
 
 <ResponseField name="isInitialized" type="boolean">
-  Boolean that indicates if the AppKit is initialized. It's useful to render a fallback UI when the
-  AppKit initializes and detects all injected wallets.
+  Boolean that indicates if the Reown is initialized. It's useful to render a fallback UI when the
+  Reown initializes and detects all injected wallets.
 </ResponseField>
 
 <ResponseField name="wcUri" type="string | undefined">
@@ -82,7 +82,7 @@ const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, w
 </ResponseField>
 
 <ResponseField name="count" type="number">
-  The total number of available WalletConnect wallets based on the AppKit configurations and given
+  The total number of available WalletConnect wallets based on the Reown configurations and given
   parameters.
 </ResponseField>
 
@@ -117,7 +117,7 @@ const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, w
 
 The `useAppKitWallets` hook returns a list of injected and WalletConnect wallets that let you render directly in the connect page.
 
-If you configure your AppKit as multi-chain, we suggest rendering a namespace selection component where users should select which namespace to connect when using browser extensions. This could be achieved with the `connectors` array of the `WalletItem`.
+If you configure your Reown as multi-chain, we suggest rendering a namespace selection component where users should select which namespace to connect when using browser extensions. This could be achieved with the `connectors` array of the `WalletItem`.
 
 If a user selects a WalletConnect wallet, you can show the QR code to the users and let them scan it with their preferred wallets. To handle the QR flows, you can use the `isFetchingWcUri`, `wcUri`, and `resetWcUri` props from the `useAppKitWallets` hook.
 

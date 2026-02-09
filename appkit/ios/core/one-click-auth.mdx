@@ -2,16 +2,16 @@
 title: One-Click Auth (SIWE)
 ---
 
-AppKit provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a form of authentication that enables users to control their digital identity with their Ethereum account. SIWE is a standard also known as EIP-4361.
+Reown provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a form of authentication that enables users to control their digital identity with their Ethereum account. SIWE is a standard also known as EIP-4361.
 
 ## One-Click Auth
 
-One-Click Auth represents a key advancement within WalletConnect v2, streamlining the user authentication process in AppKit by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
+One-Click Auth represents a key advancement within WalletConnect v2, streamlining the user authentication process in Reown by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
 Connecting a wallet, proving control of an address with an off-chain signature, authorizing specific actions. These are the kinds of authorizations that can be encoded as "ReCaps". ReCaps are permissions for a specific website or dapp that can be compactly encoded as a long string in the message you sign and translated by any wallet into a straight-forward one-sentence summary. WalletConnect uses permissions expressed as ReCaps to enable a One-Click Authentication.
 
-## Configure your AppKit Client
+## Configure your Reown Client
 
-To integrate SIWE with AppKit, you need to configure your AppKit client using `AuthRequestParams`, which are required to create a SIWE message for the user to sign:
+To integrate SIWE with Reown, you need to configure your Reown client using `AuthRequestParams`, which are required to create a SIWE message for the user to sign:
 
 ```swift
 AppKit.configure(
@@ -47,7 +47,7 @@ extension AuthRequestParams {
 }
 ```
 
-Configuring your AppKit client with AuthRequestParams will prioritize authentication requests over regular session proposals. If the wallet supports One-Click Auth, the session will be created and the user will automatically authenticate without needing to send another SIWE request over personal_sign. If the wallet does not support One-Click Auth, it will fall back to the session proposal. In this case, to authenticate the user, you can send another session request to prove address ownership.
+Configuring your Reown client with AuthRequestParams will prioritize authentication requests over regular session proposals. If the wallet supports One-Click Auth, the session will be created and the user will automatically authenticate without needing to send another SIWE request over personal_sign. If the wallet does not support One-Click Auth, it will fall back to the session proposal. In this case, to authenticate the user, you can send another session request to prove address ownership.
 
 To check whether the user has signed a SIWE message, subscribe to authResponsePublisher:
 
@@ -63,7 +63,7 @@ AppKit.instance.authResponsePublisher.sink { (id, result) in
 
 ### Link Mode
 
-The latest release of AppKit supports link mode, a low latency mechanism for transporting 1-click auth requests and session requests over universal links, eliminating the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with networking connections, especially when the user has an unstable internet connection.
+The latest release of Reown supports link mode, a low latency mechanism for transporting 1-click auth requests and session requests over universal links, eliminating the need for a WebSocket connection with the Relay. This significantly enhances the user experience when connecting native dApps to native wallets by reducing the latency associated with networking connections, especially when the user has an unstable internet connection.
 
 <Frame>
 <video
@@ -106,7 +106,7 @@ For a debugging guide, visit the [Debugging Universal Links](https://developer.a
 
 Once link mode is configured, your dApp will connect and send requests to wallets via universal links after receiving proof from the wallet that it also supports link mode.
 
-The wallet will also send responses using universal links. Your app needs to pass these responses to the AppKit client so it can process them.
+The wallet will also send responses using universal links. Your app needs to pass these responses to the Reown client so it can process them.
 
 ```swift
 AppKit.instance.handleDeeplink(url)

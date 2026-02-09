@@ -73,7 +73,7 @@ await AppKit.InitializeAsync(new AppKitConfig
 
 ### Enable Installed Wallet Detection
 
-To enable AppKit to detect wallets installed on mobile devices, you need to make specific changes to the native side of the project.
+To enable Reown to detect wallets installed on mobile devices, you need to make specific changes to the native side of the project.
 
 <Tabs>
 <Tab title="Android">
@@ -153,7 +153,7 @@ The default `unityInstance.SetFullscreen(1)` method enables fullscreen for the c
 it to the [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer).
 This causes the modal to be rendered behind the canvas, making it invisible to the user when fullscreen is enabled.
 
-To fix this, AppKit creates a container around the canvas node and appends the modal UI to it.
+To fix this, Reown creates a container around the canvas node and appends the modal UI to it.
 By requesting fullscreen on the container, the modal will always be rendered on top of the canvas.
 
 ```javascript
@@ -164,7 +164,7 @@ document.querySelector('#canvas-container').requestFullscreen();
 ### Redirect from Wallet to App
 
 After a connection or request approval, most wallets attempt to redirect back to the app.
-To ensure reliability, particularly on iOS, it is recommended to register a custom URL scheme and provide it to AppKit.
+To ensure reliability, particularly on iOS, it is recommended to register a custom URL scheme and provide it to Reown.
 
 - [Register URL Scheme for Android](https://docs.unity3d.com/6000.0/Documentation/Manual/deep-linking-android.html)
 - [Register URL Scheme for iOS](https://docs.unity3d.com/6000.0/Documentation/Manual/deep-linking-ios.html)

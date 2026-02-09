@@ -1,19 +1,19 @@
 ---
 title: Migrate from Web3Modal v5 to Reown AppKit Solana
-sidebarTitle: AppKit Ethers
+sidebarTitle: Reown Ethers
 ---
 
 # Upgrade Guide
 
-## Web3Modal v5 to Reown Web AppKit | Ethers
+## Web3Modal v5 to Reown Web Reown | Ethers
 
 This guide will help you migrate from Web3Modal v5 using ethers to the latest Reown AppKit.
 
 **Find here all the upgrades guides:**
 
-- [To Reown Web AppKit using Wagmi](/appkit/upgrade/to-reown-appkit-web).
-- [To Reown Web AppKit using Solana](/appkit/upgrade/to-reown-appkit-solana-web).
-- [To Reown Web AppKit using Ethers v5](/appkit/upgrade/to-reown-appkit-ethers5-web).
+- [To Reown Web Reown using Wagmi](/appkit/upgrade/to-reown-appkit-web).
+- [To Reown Web Reown using Solana](/appkit/upgrade/to-reown-appkit-solana-web).
+- [To Reown Web Reown using Ethers v5](/appkit/upgrade/to-reown-appkit-ethers5-web).
 
 ### Installation
 
@@ -38,7 +38,7 @@ pnpm remove @web3modal/ethers
 ```
 </CodeGroup>
 
-Next, install the Reown AppKit packages.
+Next, install the Reown packages.
 
 <CodeGroup>
 
@@ -67,7 +67,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-ethers
 >
 <Tab title="React">
 
-You can start the AppKit configuration by using either the **default** or **advanced** mode.
+You can start the Reown configuration by using either the **default** or **advanced** mode.
 
 Default mode will implement WalletConnect, Browser Wallets (injected) and Coinbase options in addition to [WalletConnect's provider](../../cloud/blockchain-api).
 <Info>
@@ -125,7 +125,7 @@ Finally, set up the `EthersAdapter` and pass the other parameters to `createAppK
 </Tab>
 <Tab title="Vue">
 
-You can start the AppKit configuration by using either the **default** or **advanced** mode.
+You can start the Reown configuration by using either the **default** or **advanced** mode.
 
 Default mode will implement WalletConnect, Browser Wallets (injected) and Coinbase options in addition to [WalletConnect's provider](../../cloud/blockchain-api).
 <Info>
@@ -258,7 +258,7 @@ function HomePage() {
 }
 ```
 
-Learn more about Reown AppKit [here](../react/core/installation)
+Learn more about Reown [here](../react/core/installation)
 
 </Tab>
 <Tab title="Vue">
@@ -273,7 +273,7 @@ document.getElementById('my-button').addEventListener('click', () => {
 <button id="my-button">Connect Wallet</button>
 ```
 
-Learn more about Reown AppKit JavaScript [here](../javascript/core/installation)
+Learn more about Reown JavaScript [here](../javascript/core/installation)
 
 </Tab>
 <Tab title="JavaScript">
@@ -288,14 +288,14 @@ document.getElementById('my-button').addEventListener('click', () => {
 <button id="my-button">Connect Wallet</button>
 ```
 
-Learn more about Reown AppKit JavaScript [here](../javascript/core/installation)
+Learn more about Reown JavaScript [here](../javascript/core/installation)
 
 </Tab>
 </Tabs>
 
 ### Properties
 
-As you may have noticed, some of the properties of Web3Modal have changed as a consequence of the migration to Reown AppKit.
+As you may have noticed, some of the properties of Web3Modal have changed as a consequence of the migration to Reown.
 
 #### adapters
 
@@ -303,11 +303,11 @@ The `adapters` property is a new property that is an array of adapters that can 
 
 #### networks
 
-The `chains` property is now `networks` in Reown AppKit. You should import them from `@reown/appkit/networks` package instead of importing these networks from `viem` or other packages.
+The `chains` property is now `networks` in Reown. You should import them from `@reown/appkit/networks` package instead of importing these networks from `viem` or other packages.
 
 #### defaultNetwork
 
-The `defaultChain` property is now `defaultNetwork` in Reown AppKit. This is a network object that specifies the default network for your Web3 app.
+The `defaultChain` property is now `defaultNetwork` in Reown. This is a network object that specifies the default network for your Web3 app.
 
 ### Utility Functions
 
@@ -337,7 +337,7 @@ In versions prior to v5, which were single-chain, `getChainId()` returned a sing
 - `@web3modal/wagmi` (along with ethers and ethers5) returned `number | undefined`.
 - `@web3modal/solana` returned `string | undefined`.
 
-Now, in Reown AppKit, since both chains can be connected simultaneously, the type definition is `number | string | undefined`.
+Now, in Reown, since both chains can be connected simultaneously, the type definition is `number | string | undefined`.
 </Info>
 
 #### modal.switchNetwork(network)
@@ -348,7 +348,7 @@ This switches the active network to the different network being passed.
 Unlike in v5, `modal.switchNetwork` takes the chain object as parameter rather than the chain id.
 
 - (v5) - switchNetwork(137) -> switches the chain to Polygon as we are passing Polygon's chain id.
-- (Reown AppKit v1) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
+- (Reown v1) - switchNetwork(polygon) -> `polygon` is imported from `@reown/appkit/networks`.
 
 ```tsx {4-6}
 // Remove the following code line
@@ -380,7 +380,7 @@ This returns the active connection provider type.
 
 #### modal.subscribeProvider(callback)
 
-This is a listener that detects changes to the AppKit state, such as `address`, `chainId`, `isConnected`, `provider`, and `providerType`.
+This is a listener that detects changes to the Reown state, such as `address`, `chainId`, `isConnected`, `provider`, and `providerType`.
 
 - `address` - It returns the connected wallet address. The value returned is the same as `modal.getAddress()`
 - `chainId` - It returns the active network’s `chainId` . The value returned is the same as `modal.getChainId()`

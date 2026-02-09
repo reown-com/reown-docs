@@ -1,10 +1,10 @@
 ---
-title: WalletConnect Modal to Reown AppKit Core
+title: WalletConnect Modal to Reown Core
 ---
 
-**Reown AppKit Core is the upgraded version of WalletConnect Modal.** It provides a user-friendly experience while maintaining the familiar QR code functionality for wallet connections. **AppKit Core** is the base version of Reown AppKit that includes the traditional WalletConnect Modal with QR code functionality.
+**Reown Core is the upgraded version of WalletConnect Modal.** It provides a user-friendly experience while maintaining the familiar QR code functionality for wallet connections. **Reown Core** is the base version of Reown that includes the traditional WalletConnect Modal with QR code functionality.
 
-<Note>This is a preview version of Reown AppKit Core.</Note>
+<Note>This is a preview version of Reown Core.</Note>
 
 <Frame>
   <video
@@ -23,14 +23,14 @@ Please, follow the different sections based on which package you were using befo
 4. [**`@walletconnect/modal`**](#universal-provider)
 
 <Note>
-If your project has `@walletconnect/modal` in the `package.json` or your project files, you need to remove it and uninstall it. After that, you can refer to the [Universal Provider path](#universal-provider) to setup AppKit Core in your project.
+If your project has `@walletconnect/modal` in the `package.json` or your project files, you need to remove it and uninstall it. After that, you can refer to the [Universal Provider path](#universal-provider) to setup Reown Core in your project.
 </Note>
 
- **AppKit Core** is the most basic version of Reown AppKit which replaces WalletConnect Modal. Please refer to [this section](#setting-up-appkit-core-from-scratch) if you are starting from scratch.
+ **Reown Core** is the most basic version of Reown which replaces WalletConnect Modal. Please refer to [this section](#setting-up-appkit-core-from-scratch) if you are starting from scratch.
 
 ## Installation
 
-You first need to install the AppKit package in order to get started. You can do this by running the command below.
+You first need to install the Reown package in order to get started. You can do this by running the command below.
 
 <Note>
   Make sure to use a version equal or greater than v1.7.0
@@ -96,7 +96,7 @@ pnpm remove @walletconnect/modal
 ```
 </CodeGroup>
 
-Then, you can use the following code to configure AppKit with `UniversalProvider`.
+Then, you can use the following code to configure Reown with `UniversalProvider`.
 
 ```javascript {9-11, 34-43}
 // Remove the code lines below the comment that says "Remove the code line below"
@@ -167,7 +167,7 @@ await provider.connect({
 
 ### How to use a Custom Network
 
-WalletConnect Modal has always been chain agnostic. AppKit Core is chain agnostic as well. Hence, you can configure custom networks like Polkadot, Cosmos, etc., using AppKit Core.
+WalletConnect Modal has always been chain agnostic. Reown Core is chain agnostic as well. Hence, you can configure custom networks like Polkadot, Cosmos, etc., using Reown Core.
 
 <AccordionGroup>
   <Accordion title="Polkadot">
@@ -338,7 +338,7 @@ pnpm remove @walletconnect/modal
 ```
 </CodeGroup>
 
-Then, you can use the following code to configure AppKit with `SignClient`.
+Then, you can use the following code to configure Reown with `SignClient`.
 
 ```javascript {6-8, 26-32}
 import { SignClient } from '@walletconnect/sign-client'
@@ -400,7 +400,7 @@ const { uri, approval } = await signClient.connect({
 
 ### How to use a Custom Network
 
-WalletConnect Modal has always been chain agnostic. AppKit Core is chain agnostic as well. Hence, you can configure custom networks like Polkadot, Cosmos, etc., using AppKit Core.
+WalletConnect Modal has always been chain agnostic. Reown Core is chain agnostic as well. Hence, you can configure custom networks like Polkadot, Cosmos, etc., using Reown Core.
 
 <AccordionGroup>
   <Accordion title="Polkadot">
@@ -551,7 +551,7 @@ Below are the examples for the corresponding library/programming language.
 3. [NextJS](https://github.com/reown-com/appkit/tree/main/examples/next-ak-basic-sign-client-app-router)
 4. [Vue](https://github.com/reown-com/appkit/tree/main/examples/vue-ak-basic-sign-client)
 
-## Setting up AppKit Core from scratch
+## Setting up Reown Core from scratch
 
 If you are setting up AppKit Core from scratch, you can refer to the "Multichain" section under AppKit "Core" for installation which shows a basic installation of AppKit Core. [Click here](/appkit/react/core/multichain?platform=basic) to learn more.
 

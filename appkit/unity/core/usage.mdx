@@ -2,14 +2,14 @@
 title: Usage
 ---
 
-After you have installed and configured AppKit,
+After you have installed and configured Reown,
 you can start using it to interact with the wallet provider and blockchain.
 
 ## EVM
 
-AppKit comes with the [Nethereum](https://nethereum.com/) and [Wagmi](https://wagmi.sh/) integration out of the box.
+Reown comes with the [Nethereum](https://nethereum.com/) and [Wagmi](https://wagmi.sh/) integration out of the box.
 
-To interact with EVM chains use `AppKit.Evm` (see [Actions](/appkit/unity/core/actions#evm-actions) for more details). Internally, AppKit will use Wagmi on WebGL or Nethereum on other platforms.
+To interact with EVM chains use `AppKit.Evm` (see [Actions](/appkit/unity/core/actions#evm-actions) for more details). Internally, Reown will use Wagmi on WebGL or Nethereum on other platforms.
 Nethereum is already preconfigured with RPC URL and interceptor that will route the requests between the wallet provider and RPC node.
 
 ### Sending Ether
@@ -122,7 +122,7 @@ public class ClaimCondition
 
 ### Nethereum Integration
 
-AppKit offers deep integration with [Nethereum](https://nethereum.com/) on native platforms, with limited support on WebGL.
+Reown offers deep integration with [Nethereum](https://nethereum.com/) on native platforms, with limited support on WebGL.
 
 If you need to use Nethereum directly, you can access a preconfigured `Web3` instance from AppKit:
 
@@ -137,21 +137,21 @@ Avoid caching this `Web3` instance, as it may be updated when the active chain i
 
 ## Solana
 
-AppKit supports Solana self-custodial wallets on iOS, Android, Windows, and macOS via WalletConnect protocol.
+Reown supports Solana self-custodial wallets on iOS, Android, Windows, and macOS via WalletConnect protocol.
 Support for WebGL and other login methods, including social login, is planned.
 
-Out of the box, AppKit handles Solana-enabled wallet connection, Solana RPC, and message signing — no third-party packages required.
+Out of the box, Reown handles Solana-enabled wallet connection, Solana RPC, and message signing — no third-party packages required.
 
-AppKit can also forward transactions to wallets for signing. If you need to build the transaction object, you'll want to use third-party client- or server-side tool. This part isn't included by default.
+Reown can also forward transactions to wallets for signing. If you need to build the transaction object, you'll want to use third-party client- or server-side tool. This part isn't included by default.
 
 If you're using the [Solana Unity SDK](https://solana.unity-sdk.gg) from Magic Blocks, you can use our adapter package. It lets you keep using the same Solana Unity APIs,
-with just a few extra lines of code to support AppKit-powered wallet connections.
+with just a few extra lines of code to support Reown-powered wallet connections.
 
 Depending on your goals and project stage, you can choose the integration flow that fits best. Below is a brief description of each approach.
 
 ### Built-in Solana Actions
 
-After completing [AppKit installation](/appkit/unity/core/installation), add Solana chain to your AppKit configuration and use `AppKit.Solana`.
+After completing [Reown installation](/appkit/unity/core/installation), add Solana chain to your Reown configuration and use `AppKit.Solana`.
 
 For the full list of Solana-specific methods, see the [Solana Actions documentation](/appkit/unity/core/actions#solana-actions)
 
@@ -203,15 +203,15 @@ long slot = await AppKit.Solana.RpcRequestAsync<long>("getSlot");
 
 You can refer to [Reown.SolanaCore.Unity](https://github.com/reown-com/reown-dotnet/tree/develop/playground/Reown.SolanaCore.Unity) playground project for complete example.
 
-### AppKit with Solana Unity SDK
+### Reown with Solana Unity SDK
 
-Reown provides an optional `Reown.AppKit.Solana.Unity` adapter package that connects Reown AppKit to the Solana Unity SDK.
+Reown provides an optional `Reown.AppKit.Solana.Unity` adapter package that connects Reown to the Solana Unity SDK.
 It provides an AppKit-backed `WalletBase` so you can keep using `Web3` instance from `Solana.Unity.SDK` while all signing and session management go through AppKit.
 
 #### What this adapter does
 
-- Installs an AppKit-powered wallet (`AppKitWalletBase`) and wires it into `Web3` via `web3.WalletBase`.
-- Hooks AppKit events (`AccountConnected`, `AccountChanged`) to keep `Web3.Account` in sync.
+- Installs a Reown-powered wallet (`AppKitWalletBase`) and wires it into `Web3` via `web3.WalletBase`.
+- Hooks Reown events (`AccountConnected`, `AccountChanged`) to keep `Web3.Account` in sync.
 - Proxies signing to AppKit:
   - Transactions: `AppKit.Solana.SignTransactionAsync`, `SignAllTransactionsAsync`
   - Messages: `AppKit.Solana.SignMessageAsync`
@@ -219,14 +219,14 @@ It provides an AppKit-backed `WalletBase` so you can keep using `Web3` instance 
 #### Requirements
 
 - `Solana.Unity-SDK` in your Unity project (`https://github.com/magicblock-labs/Solana.Unity-SDK`).
-- Reown AppKit for Unity set up in your scene (follow the [Installation](/appkit/unity/core/installation)).
+- Reown for Unity set up in your scene (follow the [Installation](/appkit/unity/core/installation)).
 
 #### Installation
 
 <Tabs>
 <Tab title="OpenUPM CLI">
 
-To install AppKit adapter for Solana Unity SDK via OpenUPM, you need to have [Node.js](https://nodejs.org/en/) and [openupm-cli](https://openupm.com/docs/getting-started.html#installing-openupm-cli) installed. Once you have them installed, you can run the following commands:
+To install Reown adapter for Solana Unity SDK via OpenUPM, you need to have [Node.js](https://nodejs.org/en/) and [openupm-cli](https://openupm.com/docs/getting-started.html#installing-openupm-cli) installed. Once you have them installed, you can run the following commands:
 
 ```bash
 openupm add com.reown.appkit.solana.unity
@@ -252,7 +252,7 @@ openupm add com.reown.appkit.solana.unity
 
 #### Quick start
 
-Initialize AppKit once on startup, then use the extension methods on `Web3`.
+Initialize Reown once on startup, then use the extension methods on `Web3`.
 
 ```csharp
 using Reown.AppKit.Unity;
@@ -288,20 +288,20 @@ public class Bootstrap : MonoBehaviour
 }
 ```
 
-For full setup (prefab, logging, Android/iOS/WebGL notes), see the [AppKit docs](/appkit/unity/core/installation).
+For full setup (prefab, logging, Android/iOS/WebGL notes), see the [Reown docs](/appkit/unity/core/installation).
 
 #### Using the extension methods
 
 The adapter adds extension methods to `Web3`.
 
-##### Try to resume an AppKit session
+##### Try to resume a Reown session
 
 ```csharp
 var (resumed, account) = await web3.TryResumeAppKitSession();
 Debug.Log($"Resumed: {resumed}, Address: {account?.PublicKey}");
 ```
 
-##### Login with AppKit (default AppKit modal UI)
+##### Login with Reown (default Reown modal UI)
 
 ```csharp
 var account = await web3.LoginAppKit();
@@ -321,7 +321,7 @@ var account = await web3.LoginAppKit(walletId: "0ef262ca2a56b88d179c93a21383fee4
 Once you call `LoginAppKit` (or a session resume succeeds), the adapter sets `web3.WalletBase = AppKitWalletBase`. From that point:
 
 - Existing `Web3` calls keep working.
-- Any required signatures are requested through AppKit.
+- Any required signatures are requested through Reown.
 - You can also use all existing AppKit APIs, e.g. methods from `AppKit.Solana`
 
 Example:
@@ -335,4 +335,4 @@ var signature = await Web3.Wallet.SignMessage(bytes);
 #### Notes
 
 - If `Web3.customRpc` is not set, the adapter will use the RPC provider provided by Reown.
-- We provide a modified Solana Unity SDK sample project that demonstrates AppKit integration. See it [here](https://github.com/reown-com/reown-dotnet/tree/develop/playground/Reown.SolanaSdk.Unity). Note: the upstream sample has a few known issues, unrelated to AppKit, that we left as‑is.
+- We provide a modified Solana Unity SDK sample project that demonstrates Reown integration. See it [here](https://github.com/reown-com/reown-dotnet/tree/develop/playground/Reown.SolanaSdk.Unity). Note: the upstream sample has a few known issues, unrelated to Reown, that we left as‑is.

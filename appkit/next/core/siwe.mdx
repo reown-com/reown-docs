@@ -3,7 +3,7 @@ title: Sign In With Ethereum
 sidebarTitle: One-Click Auth (SIWE)
 ---
 
-AppKit provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a new form of authentication that enables users to control their digital identity with their Ethereum account.
+Reown provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a new form of authentication that enables users to control their digital identity with their Ethereum account.
 SIWE is a standard also known as [EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361).
 
 <Warning>
@@ -13,7 +13,7 @@ SIWE is a standard also known as [EIP-4361](https://docs.login.xyz/general-infor
 
 ## One-Click Auth
 
-**One-Click Auth** represents a key advancement within WalletConnect v2, streamlining the user authentication process in AppKit by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
+**One-Click Auth** represents a key advancement within WalletConnect v2, streamlining the user authentication process in Reown by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
 It supports both [EIP-1271](https://eips.ethereum.org/EIPS/eip-1271), the standard for signature validation in smart accounts, and [EIP-6492](https://eips.ethereum.org/EIPS/eip-6492), which enables signature validation for smart accounts (contracts) that are not yet deployed, allowing messages to be signed without requiring prior deployment.
 
 Connecting a wallet, proving control of an address with an off-chain signature, authorizing specific actions. These are the kinds of authorizations that can be encoded as ["ReCaps"](https://eips.ethereum.org/EIPS/eip-5573). ReCaps are permissions for a specific website or dapp that can be compactly encoded as a long string in the message you sign and translated by any wallet into a straight-forward one-sentence summary.
@@ -53,7 +53,7 @@ pnpm add @reown/appkit-siwe next-auth
 
 <Warning>For a better UX we recommend using One-Click Auth.</Warning>
 
-Install the AppKit SIWE package, additionally we also recommend installing [siwe](https://docs.login.xyz/) which will abstract a lot of the required logic.
+Install the Reown SIWE package, additionally we also recommend installing [siwe](https://docs.login.xyz/) which will abstract a lot of the required logic.
 
 <CodeGroup>
 
@@ -211,7 +211,7 @@ const address = getAddressFromMessage(message);
 </Tab>
 <Tab title="Legacy">
 
-With help of the [siwe package](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/implement-the-frontend) we will create the required configuration for AppKit.
+With help of the [siwe package](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/implement-the-frontend) we will create the required configuration for Reown.
 
 <Info>
   The nonce and verification process will be implemented in your backend. [Read
@@ -492,7 +492,7 @@ export { handler as GET, handler as POST };
 
 <Card title="Learn More" href="https://next-auth.js.org/" />
 
-## Initialize AppKit with your `siweConfig`.
+## Initialize Reown with your `siweConfig`.
 
 ```js
 // Pass your siweConfig inside the createAppKit() function

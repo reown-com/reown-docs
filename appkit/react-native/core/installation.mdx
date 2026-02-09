@@ -5,17 +5,17 @@ title: Installation
 import CloudBanner from '/snippets/cloud-banner.mdx'
 import ExpoBabel from '/snippets/appkit/react-native/expo/babel-config-expo53.mdx'
 
-AppKit for React Native enables seamless integration with multiple blockchain ecosystems, including **EVM chains (like Ethereum, Polygon, etc.), Solana, Bitcoin, and TON**. It provides a unified API to manage wallet connections, interact with different chains, and build rich multi-chain applications.
+Reown for React Native enables seamless integration with multiple blockchain ecosystems, including **EVM chains (like Ethereum, Polygon, etc.), Solana, Bitcoin, and TON**. It provides a unified API to manage wallet connections, interact with different chains, and build rich multi-chain applications.
 
-At the core of AppKit is a centralized `AppKit` instance that handles connection logic, manages various chain adapters, and provides data to your application via a React Context.
+At the core of Reown is a centralized `AppKit` instance that handles connection logic, manages various chain adapters, and provides data to your application via a React Context.
 
 <CloudBanner />
 
 ## Installation
 
-### AppKit CLI
+### Reown CLI
 
-Get started quickly with our dedicated CLI that sets up a minimal AppKit configuration for you.
+Get started quickly with our dedicated CLI that sets up a minimal Reown configuration for you.
 
 Run the command below and select React Native:
 
@@ -23,11 +23,11 @@ Run the command below and select React Native:
 npx @reown/appkit-cli
 ```
 
-### Add AppKit to your existing project
+### Add Reown to your existing project
 
 Installation is a two-step process:
 
-1. Install the core AppKit library.
+1. Install the core Reown library.
 2. Install the specific chain adapters you need for your application.
 
 <Tabs groupId="rn-environment">
@@ -181,7 +181,7 @@ Install the adapters for the chains you intend to support:
         export default App;
         ```
 
-        <p>For a practical implementation example, you can refer to the <a href="https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/App.tsx" target="_blank\">Reown AppKit + Wagmi example on GitHub</a>.</p>
+        <p>For a practical implementation example, you can refer to the <a href="https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/App.tsx" target="_blank\">Reown + Wagmi example on GitHub</a>.</p>
       </Tab>
     </Tabs>
 
@@ -238,7 +238,7 @@ Install the adapters for the chains you intend to support:
 
 ### Prerequisites
 
-Before setting up AppKit, you need to wrap your app with `SafeAreaProvider` from `react-native-safe-area-context`. This is required for proper modal rendering and safe area handling.
+Before setting up Reown, you need to wrap your app with `SafeAreaProvider` from `react-native-safe-area-context`. This is required for proper modal rendering and safe area handling.
 
 <Note>**Expo users**: You can skip this step as it's already handled internally by Expo.</Note>
 
@@ -252,7 +252,7 @@ function App() {
 
 For more detailed information about `SafeAreaProvider`, check the [official documentation](https://appandflow.github.io/react-native-safe-area-context/api/safe-area-provider).
 
-### 1. Initialize AppKit
+### 1. Initialize Reown
 
 Create an instance of `AppKit`. This is where you'll configure your project ID (if using WalletConnect features) and define the chains your application will support, along with their respective adapters.
 
@@ -303,7 +303,7 @@ export const appKit = createAppKit({
 ```
 
 <Note>
-  **Default Features:** AppKit comes with email and social login, swaps, and onramp features enabled
+  **Default Features:** Reown comes with email and social login, swaps, and onramp features enabled
   by default. To disable any of these features, see the [Options](./options) documentation for
   configuration details.
 </Note>
@@ -349,7 +349,7 @@ export interface Storage {
 
 For complete storage implementation examples, see the [Storage Options](./options#storage) documentation.
 
-**Update AppKit Configuration**
+**Update Reown Configuration**
 
 Finally, import your custom storage and pass it to `createAppKit` in your `AppKitConfig.ts`. This example builds on the configuration from [Initialize AppKit](#1-initialize-appkit):
 
@@ -395,7 +395,7 @@ export const appKit = createAppKit({
 })
 ```
 
-### 3. Provide AppKit Instance
+### 3. Provide Reown Instance
 
 Wrap your application with the `AppKitProvider` to make the `AppKit` instance available throughout your component tree via context.
 
@@ -422,9 +422,9 @@ function App() {
 export default App
 ```
 
-### 4. Render AppKit UI
+### 4. Render Reown UI
 
-To display the AppKit modal and other potential UI elements, you need to include the `<AppKit />` component in your application. If you want the modal to be accessible from anywhere in your app, it's best to place this component within your main application root component (e.g., the `YourAppRootComponent` from the example above, or directly in `App.tsx` if it serves as your main layout).
+To display the Reown modal and other potential UI elements, you need to include the `<AppKit />` component in your application. If you want the modal to be accessible from anywhere in your app, it's best to place this component within your main application root component (e.g., the `YourAppRootComponent` from the example above, or directly in `App.tsx` if it serves as your main layout).
 
 ```tsx {3,11}
 // YourAppRootComponent.tsx (or App.tsx if it contains your main layout)
@@ -461,9 +461,9 @@ This is a known issue with Expo Router on Android and this workaround resolves t
 
 </Note>
 
-### 5. Using AppKit in Components
+### 5. Using Reown in Components
 
-You can now access AppKit functionalities (like connecting, getting account state, etc.) using hooks provided by the library.
+You can now access Reown functionalities (like connecting, getting account state, etc.) using hooks provided by the library.
 
 ```tsx {2,5,6}
 // components/ConnectButton.tsx
@@ -493,7 +493,7 @@ For detailed examples on specific actions like signing messages, sending transac
 
 **Pre-built Components**
 
-AppKit includes pre-built components to speed up your development:
+Reown includes pre-built components to speed up your development:
 
 - `<AppKitButton />` - A pre-styled connect button
 - `<AppKitAccountButton />` - A button showing account information when connected
@@ -507,11 +507,11 @@ For detailed information about all available components, hooks, and examples for
 - Showing a green checkmark next to installed wallets
 - Prioritizing installed wallets at the top of the wallet selection list
 
-All 600+ wallets in the AppKit ecosystem work via WalletConnect protocol regardless of this configuration. You only need to add the wallets your users most commonly have installed.
+All 600+ wallets in the Reown ecosystem work via WalletConnect protocol regardless of this configuration. You only need to add the wallets your users most commonly have installed.
 
 </Info>
 
-To enable AppKit to detect wallets installed on the device, you can make specific changes to the native code of your project.
+To enable Reown to detect wallets installed on the device, you can make specific changes to the native code of your project.
 
 <Tabs groupId="rn-environment">
   <Tab title="Expo">
@@ -520,7 +520,7 @@ To enable AppKit to detect wallets installed on the device, you can make specifi
 
 <Tab title="iOS">
 
-To enable AppKit to detect wallets installed on the device in your Expo project for iOS, follow these steps:
+To enable Reown to detect wallets installed on the device in your Expo project for iOS, follow these steps:
 
 1. Open your `app.json` (or `app.config.js`) file.
 2. Locate the ios section within the configuration.
@@ -550,7 +550,7 @@ Your configuration should look like this:
 
 </Tab>
 <Tab title="Android">
-To enable AppKit to detect wallets installed on the device in your Expo project for Android, follow these steps:
+To enable Reown to detect wallets installed on the device in your Expo project for Android, follow these steps:
 
 1. Open your `app.json` (or `app.config.js`) file.
 2. Locate the plugins section within the configuration.
@@ -666,15 +666,15 @@ Example:
 
 <Info>
   **Optional feature** - These connectors are only needed if you want to support specific wallets
-  that use custom connection protocols. All 600+ wallets in the AppKit ecosystem work via
+  that use custom connection protocols. All 600+ wallets in the Reown ecosystem work via
   WalletConnect protocol regardless of this configuration.
 </Info>
 
-AppKit supports various custom connectors for specific wallets that use their own connection protocols. These connectors allow you to integrate popular wallets like Coinbase and Phantom directly into your AppKit configuration.
+Reown supports various custom connectors for specific wallets that use their own connection protocols. These connectors allow you to integrate popular wallets like Coinbase and Phantom directly into your Reown configuration.
 
 ### Coinbase
 
-Coinbase Wallet is a popular wallet that uses a custom connection protocol. To enable it in your AppKit configuration, you'll need to install the Coinbase SDK and add a specific connector.
+Coinbase Wallet is a popular wallet that uses a custom connection protocol. To enable it in your Reown configuration, you'll need to install the Coinbase SDK and add a specific connector.
 
 <Note>
   **Expo Compatibility:** Coinbase SDK works with [Expo
@@ -764,7 +764,7 @@ For more detailed information, check the [Coinbase docs](https://mobilewalletpro
 
 ### Phantom & Solflare
 
-Phantom and Solflare are popular wallets on the Solana blockchain. Because they use a custom connection protocol, it requires a specific connector to be added to your AppKit configuration.
+Phantom and Solflare are popular wallets on the Solana blockchain. Because they use a custom connection protocol, it requires a specific connector to be added to your Reown configuration.
 
 To enable Phantom Wallet, you'll need to import the `PhantomConnector` or `SolflareConnector` from `@reown/appkit-solana-react-native` and add it to the `extraConnectors` array in your `createAppKit` configuration.
 
@@ -798,7 +798,7 @@ export const appKit = createAppKit({
 
 <Tab title="Wagmi">
   <Card
-    title="AppKit with Wagmi example"
+    title="Reown with Wagmi example"
     icon="github"
     href="https://github.com/reown-com/react-native-examples/tree/main/dapps/W3MWagmi"
   >
@@ -808,7 +808,7 @@ export const appKit = createAppKit({
 
 <Tab title="Ethers">
   <Card
-    title="AppKit with Ethers example"
+    title="Reown with Ethers example"
     icon="github"
     href="https://github.com/reown-com/react-native-examples/tree/main/dapps/W3MEthers"
   >
@@ -818,7 +818,7 @@ export const appKit = createAppKit({
 
 <Tab title="Ethers v5">
   <Card
-    title="AppKit with Ethers v5 example"
+    title="Reown with Ethers v5 example"
     icon="github"
     href="https://github.com/reown-com/react-native-examples/tree/main/dapps/W3MEthers5"
   >
@@ -830,7 +830,7 @@ export const appKit = createAppKit({
 
 ## Test Apps
 
-Want to see AppKit in action? Download our sample AppKit apps below and explore what it can do. Enjoy! 😊
+Want to see Reown in action? Download our sample Reown apps below and explore what it can do. Enjoy! 😊
 
 - [Android Build (Firebase)](https://appdistribution.firebase.google.com/pub/i/0297fbd3de8f1e3f)
 - [iOS Build (Testflight)](https://testflight.apple.com/join/YW2jD2s0)

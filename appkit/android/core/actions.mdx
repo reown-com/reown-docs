@@ -12,7 +12,7 @@ You can get selected chain by calling the `getSelectedChain()` on the `AppKit` o
 AppKit.getSelectedChain()
 ```
 
-## AppKit.ModalDelegate
+## Reown.ModalDelegate
 
 ```kotlin
 val appKitModalDelegate = object : AppKit.ModalDelegate {
@@ -62,7 +62,7 @@ val appKitModalDelegate = object : AppKit.ModalDelegate {
 }
 ```
 
-You have set delegate on AppKit to start getting updates from Wallet.
+You have set delegate on Reown to start getting updates from Wallet.
 
 ```kotlin
     AppKit.setDelegate(appKitModalDelegate)
@@ -105,7 +105,7 @@ AppKit.request(
 
 ### Get Active Account
 
-Returns the current active account connected via AppKit
+Returns the current active account connected via Reown
 
 ```kotlin
 AppKit.getAccount()

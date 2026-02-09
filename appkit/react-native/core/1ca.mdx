@@ -5,7 +5,7 @@ sidebarTitle: One-Click Auth (SIWE)
 
 ## One-Click Auth
 
-**One-Click Auth** represents a key advancement within WalletConnect v2, streamlining the user authentication process in AppKit by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
+**One-Click Auth** represents a key advancement within WalletConnect v2, streamlining the user authentication process in Reown by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
 
 Connecting a wallet, proving control of an address with an off-chain signature, authorizing specific actions. These are the kinds of authorizations that can be encoded as ["ReCaps"](https://eips.ethereum.org/EIPS/eip-5573). ReCaps are permissions for a specific website or dapp that can be compactly encoded as a long string in the message you sign and translated by any wallet into a straight-forward one-sentence summary.
 WalletConnect uses permissions expressed as ReCaps to enable a One-Click Authentication.
@@ -14,9 +14,9 @@ WalletConnect uses permissions expressed as ReCaps to enable a One-Click Authent
 
 In order for One-Click Auth to work, you need to meet the following requirements:
 
-1. **Enable SIWX in your AppKit configuration** - One-Click Auth requires [SIWX (Sign In With X)](./siwx) to be enabled in your AppKit setup.
+1. **Enable SIWX in your Reown configuration** - One-Click Auth requires [SIWX (Sign In With X)](./siwx) to be enabled in your Reown setup.
 
-2. **Configure EVM chains only** - One-Click Auth currently supports EVM chains only. Make sure your AppKit [networks](./options#networks) configuration includes only EVM-compatible chains.
+2. **Configure EVM chains only** - One-Click Auth currently supports EVM chains only. Make sure your Reown [networks](./options#networks) configuration includes only EVM-compatible chains.
 
 3. **Use [Reown Authentication](./reown-authentication) or set up a backend** - You need to have a backend to communicate with. This backend will be used to generate a nonce, verify messages and handle sessions.
    More info [here](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/implement-the-backend)

@@ -1,9 +1,9 @@
 ---
-title: How to Sign Messages, Send Transactions, and Get Balance on Solana using AppKit
-sidebarTitle: "Solana Transactions using AppKit"
+title: How to Sign Messages, Send Transactions, and Get Balance on Solana using Reown
+sidebarTitle: "Solana Transactions using Reown"
 ---
 
-Learn how to use Reown AppKit for essential wallet functionalities such as signing messages, sending transactions, and retrieving wallet balances.
+Learn how to use Reown for essential wallet functionalities such as signing messages, sending transactions, and retrieving wallet balances.
 
 ---
 
@@ -22,16 +22,16 @@ Let's dive in!
 ## Prerequisites
 
 - A fundamental understanding of JavaScript and React.
-- A minimal installation of AppKit in React.
+- A minimal installation of Reown in React.
 - Obtain a new project Id on Reown Dashboard at https://dashboard.reown.com
 
 ## Final project
-<Card title="Appkit Example for Interacting with the Solana Blockchain" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-solana">
+<Card title="Reown Example for Interacting with the Solana Blockchain" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-solana">
 Clone this Github repo to try it out locally.
 </Card>
 
 
-## AppKit Minimal Installation
+## Reown Minimal Installation
 
 You can start a small project following the guidelines from our [installation React docs using Solana](https://docs.reown.com/appkit/react/core/installation?platform=solana)
 
@@ -164,7 +164,7 @@ import { useAppKitAccount, useAppKitProvider } from "@reown/appkit/react";
 import type { Provider } from "@reown/appkit-adapter-solana/react";
 ```
 
-2. Use the `useAppKitAccount`, useAppKitConnection and useAppKitProvider AppKit hooks to get the connection object, the walletProvider and the address from the user.
+2. Use the `useAppKitAccount`, useAppKitConnection and useAppKitProvider Reown hooks to get the connection object, the walletProvider and the address from the user.
 
 ```js
 const { isConnected, address } = useAppKitAccount();
@@ -213,7 +213,7 @@ return (
 
 ## Conclusion
 
-By following this guide, you've learned how to integrate Reown AppKit and Solana into your React application to perform essential wallet operations.
+By following this guide, you've learned how to integrate Reown and Solana into your React application to perform essential wallet operations.
 You can now fetch wallet balances, sign messages, and send transactions in the Solana blockchain.
 
-Keep exploring AppKit to enhance your dApp's functionality and user experience!
+Keep exploring Reown to enhance your dApp's functionality and user experience!

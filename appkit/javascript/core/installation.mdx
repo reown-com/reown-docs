@@ -19,13 +19,13 @@ import TonImplementation from '/snippets/appkit/javascript/ton/about/implementat
 
 import CoreImplementation from '/snippets/appkit/javascript/core/about/implementation.mdx'
 
-AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum,
-[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
+Reown provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum,
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON and other networks. Reown Core with Universal Provider library, enable compatibility across any blockchain protocol.
 Choose one of these to get started.
 
 <Note>
   We recommend using [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to get
-  started with AppKit JavaScript.
+  started with Reown JavaScript.
 </Note>
 
 ## Installation
@@ -173,7 +173,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-ton
 </CodeGroup>
 
 </Tab>
-<Tab title="Others networks (AppKit Core)">
+<Tab title="Others networks (Reown Core)">
 
 <CodeGroup>
 
@@ -256,9 +256,9 @@ Check the JavaScript TON example
 <TonImplementation />
 
 </Tab>
-<Tab title="Others networks (AppKit Core)">
-<Card title="AppKit Core Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-core-universal-connector">
-Check the JavaScript AppKit Core example for Sui and Stacks
+<Tab title="Others networks (Reown Core)">
+<Card title="Reown Core Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/javascript/javascript-core-universal-connector">
+Check the JavaScript Reown Core example for Sui and Stacks
 </Card>
 
 <CoreImplementation />
@@ -269,9 +269,9 @@ Check the JavaScript AppKit Core example for Sui and Stacks
 ## Trigger the modal
 
 <Tabs>
-<Tab title="AppKit">
+<Tab title="Reown">
 
-To open AppKit you can use our [**web component**](/appkit/javascript/core/components) or build your own button with AppKit [**actions**](/appkit/javascript/core/actions#open-and-close-the-modal).
+To open Reown you can use our [**web component**](/appkit/javascript/core/components) or build your own button with Reown [**actions**](/appkit/javascript/core/actions#open-and-close-the-modal).
 
 <CodeGroup>
 
@@ -304,9 +304,9 @@ modal.open()
 </CodeGroup>
 
 </Tab>
-<Tab title="AppKit Core">
+<Tab title="Reown Core">
 
-To open AppKit Core you need to call the `connect` function from the Universal Connector.
+To open Reown Core you need to call the `connect` function from the Universal Connector.
 
 ```tsx
 <script>
@@ -433,8 +433,8 @@ function sendTransaction() {
 If you are starting from scratch, you can use the following methods to set up your project with Reown AppKit.
 
 <AccordionGroup>
-<Accordion title="Set up Reown AppKit using AI">
-  If you're using Cursor IDE (or another AI based IDE) to build a project with Reown AppKit, Reown provides a `.mdc` file that enhances your development experience. The `reown-appkit.mdc` [file here](https://github.com/reown-com/reown-docs/blob/main/reown-appkit.mdc) contains Cursor-specific rules and type hints for Reown AppKit.
+<Accordion title="Set up Reown using AI">
+  If you're using Cursor IDE (or another AI based IDE) to build a project with Reown, Reown provides a `.mdc` file that enhances your development experience. The `reown-appkit.mdc` [file here](https://github.com/reown-com/reown-docs/blob/main/reown-appkit.mdc) contains Cursor-specific rules and type hints for Reown.
 
 To use it in your project:
 
@@ -445,8 +445,8 @@ To use it in your project:
 For more info, refer to [Cursor's documentation](https://docs.cursor.com/context/rules#project-rules).
 
 </Accordion>
-<Accordion title="AppKit CLI">
-  Reown offers a dedicated CLI to set up a minimal version of AppKit in the easiest and quickest way possible.
+<Accordion title="Reown CLI">
+  Reown offers a dedicated CLI to set up a minimal version of Reown in the easiest and quickest way possible.
 
 To do this, please run the command below.
 
@@ -460,7 +460,7 @@ After running the command, you will be prompted to confirm the installation of t
 2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
 3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
 
-After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
+After providing the project name and selecting your preferences, the CLI will install a minimal example of Reown with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
 
 To fully configure your project, please obtain a `projectId` from the Reown Dashboard and update your project accordingly.
 

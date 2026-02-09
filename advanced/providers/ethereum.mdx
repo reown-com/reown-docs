@@ -7,7 +7,7 @@ Built on top of [Universal Provider](./universal) and [WalletConnectModal](../wa
 You can use this on it's own or pass it down to libraries like ethers, viem or web3js.
 
 <Note>
-`showQrModal` has been deprecated as WalletConnect's Web3Modal is now rebranded as Reown's AppKit. If you are looking to use this, please refer to the ["**Use with AppKit**"](#use-with-appkit) section below.
+`showQrModal` has been deprecated as WalletConnect's Web3Modal is now rebranded as Reown. If you are looking to use this, please refer to the ["**Use with Reown**"](#use-with-appkit) section below.
 </Note>
 
 ## Installation
@@ -81,9 +81,9 @@ The Ethereum Provider's `init` method takes the following parameters:
 | **events**       | The required events you want to support. Not recommended for multi-chain applications.                                                                   | `string[]`                   | false    |
 
 
-## Use with AppKit
+## Use with Reown
 
-The QRModal is enabled by default on reown's AppKit. In order to use it, all you need to do is to create an AppKit instance.
+The QRModal is enabled by default on Reown. In order to use it, all you need to do is to create a Reown instance.
 
 ### Installation
 
@@ -120,7 +120,7 @@ const modal = createAppKit({
 });
 ```
 
-## Use without AppKit
+## Use without Reown
 
 You can subscribe to the `display_uri` event and handle the URI yourself.
 
