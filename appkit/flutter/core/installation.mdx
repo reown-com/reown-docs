@@ -86,6 +86,10 @@ Example:
 
 ### Coinbase Wallet support
 
+<Warning>
+  The new **Base Wallet** (formerly Coinbase Wallet) does not currently support the Coinbase Mobile Wallet SDK used by this connector. This means the Coinbase connector **will not work with Base Wallet** until the Base team adds support for the SDK on their end. This is a known limitation on the Base/Coinbase side and not an issue with AppKit. We will update this documentation once the Base team implements SDK compatibility.
+</Warning>
+
 Coinbase Wallet does not use the WalletConnect protocol for communication between the dApp and the wallet.
 
 This means that pairing topic, session topic, session events and other session-related features are not available when connecting to Coinbase Wallet.
