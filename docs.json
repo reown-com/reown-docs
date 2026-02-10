@@ -661,7 +661,6 @@
               {
                 "group": "WalletGuide",
                 "pages": [
-                  "cloud/explorer-submission",
                   {
                     "group": "WalletGuide Chains",
                     "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
@@ -748,7 +747,6 @@
                     "pages": [
                       "advanced/api/sign/overview",
                       "advanced/api/sign/dapp-usage",
-                      "advanced/api/sign/wallet-usage",
                       "advanced/api/sign/smart-contract-wallet-usage"
                     ]
                   }
@@ -762,7 +760,7 @@
                 ]
               },
               "advanced/push-server",
-              "advanced/walletconnect-deprecations"
+              "advanced/walletkit-migration"
             ]
           },
           {
