@@ -118,6 +118,7 @@
               {
                 "group": "Network",
                 "pages": [
+                  "appkit/networks/supported-chains",
                   "appkit/networks/evm",
                   "appkit/networks/solana",
                   "appkit/networks/bitcoin"

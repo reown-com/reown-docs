@@ -2,6 +2,20 @@ export const ChainList = () => {
   let chains = [];
   let filteredChains = [];
 
+  const getAppKitSupport = (namespace) => {
+    if (namespace.startsWith("eip155:")) return "yes";
+    if (namespace.startsWith("solana:")) return "yes";
+    if (namespace.startsWith("bip122:")) return "yes";
+    if (namespace.startsWith("polkadot:")) return "partial";
+    return "no";
+  };
+
+  const getAppKitLabel = (support) => {
+    if (support === "yes") return "AppKit";
+    if (support === "partial") return "AppKit (Flutter)";
+    return "";
+  };
+
   if (typeof document !== "undefined") {
     fetch(
       "https://explorer-api.walletconnect.com/v3/chains?projectId=8e998cd112127e42dce5e2bf74122539"
@@ -9,8 +23,9 @@ export const ChainList = () => {
       .then((response) => response.json())
       .then((data) => {
         chains = Object.keys(data.chains).map((key) => ({
-          name: data.chains[key].name, 
-          namespace: key, 
+          name: data.chains[key].name,
+          namespace: key,
+          appKitSupport: getAppKitSupport(key),
         }));
         filteredChains = [...chains];
         renderChains(filteredChains);
@@ -40,12 +55,35 @@ export const ChainList = () => {
           border border-gray-500 p-2 text-center 
           w-full dark:bg-gray-600 dark:text-white h-20
         `;
-        card.innerText = chain.name;
+        card.style.position = "relative";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.innerText = chain.name;
+        card.appendChild(nameSpan);
+
+        const label = getAppKitLabel(chain.appKitSupport);
+        if (label) {
+          const badge = document.createElement("span");
+          badge.innerText = label;
+          badge.style.cssText = `
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: ${chain.appKitSupport === "yes" ? "#008847" : "#b45309"};
+            color: white;
+            font-weight: 600;
+          `;
+          card.appendChild(badge);
+        }
+
         card.onclick = () => {
           navigator.clipboard.writeText(chain.namespace);
-          card.innerText = "Chain ID copied!";
+          nameSpan.innerText = "Chain ID copied!";
           setTimeout(() => {
-            card.innerText = chain.name;
+            nameSpan.innerText = chain.name;
           }, 3000);
         };
         container.appendChild(card);
