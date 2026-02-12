@@ -674,6 +674,10 @@ Reown supports various custom connectors for specific wallets that use their own
 
 ### Coinbase
 
+<Warning>
+  The new **Base Wallet** (formerly Coinbase Wallet) does not currently support the Coinbase Mobile Wallet SDK used by this connector. This means the Coinbase connector **will not work with Base Wallet** until the Base team adds support for the SDK on their end. This is a known limitation on the Base/Coinbase side and not an issue with AppKit. We will update this documentation once the Base team implements SDK compatibility.
+</Warning>
+
 Coinbase Wallet is a popular wallet that uses a custom connection protocol. To enable it in your Reown AppKit configuration, you'll need to install the Coinbase SDK and add a specific connector.
 
 <Note>
