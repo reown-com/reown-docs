@@ -64,19 +64,21 @@ export const ChainList = () => {
 
         const label = getAppKitLabel(chain.appKitSupport);
         if (label) {
+          const isDark = document.documentElement.classList.contains("dark");
           const badge = document.createElement("span");
           badge.innerText = label;
           badge.style.cssText = `
             position: absolute;
-            bottom: 3px;
-            right: 3px;
-            font-size: 9px;
-            padding: 1px 5px;
-            border-radius: 3px;
-            background-color: ${chain.appKitSupport === "yes" ? "#008847" : "#b45309"};
-            color: white;
-            font-weight: 600;
-            line-height: 1.2;
+            bottom: 4px;
+            right: 4px;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid ${isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(10, 14, 12, 0.1)"};
+            background-color: ${isDark ? "#202020" : "#ffffff"};
+            color: ${isDark ? "#e5e7eb" : "#374151"};
+            font-weight: 500;
+            line-height: 1.4;
           `;
           card.appendChild(badge);
         }
