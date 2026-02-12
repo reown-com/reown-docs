@@ -6,6 +6,7 @@ export const ChainList = () => {
     if (namespace.startsWith("eip155:")) return "yes";
     if (namespace.startsWith("solana:")) return "yes";
     if (namespace.startsWith("bip122:")) return "yes";
+    if (namespace.startsWith("ton:")) return "yes";
     if (namespace.startsWith("polkadot:")) return "partial";
     return "no";
   };
