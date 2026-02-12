@@ -185,7 +185,7 @@ YourAppScreen(navController: NavController) {
 
 ### Reown State
 
-AppKitState is an object that ensures communication between your application and the state of the Reown.
+AppKitState is an object that ensures communication between your application and the state of your Reown AppKit instance.
 
 #### Create appKitState:
 
@@ -207,4 +207,4 @@ returns `StateFlow<Boolean>` whose value is updated depending on whether the app
     appKitState.isConnected
 ```
 
-returns `StateFlow<Boolean>` whose value depends on the active session in Reown
+returns `StateFlow<Boolean>` whose value depends on the active session in your Reown AppKit instance.

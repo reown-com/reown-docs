@@ -7,7 +7,7 @@ Security is not just a feature but a fundamental aspect of Reown's architecture.
 ## Reown - Embedded Wallet Key Management
 
 ### Architecture and Custody
-Embedded wallets enable applications to provide end-users with a quick onboarding experience by provisioning a non-custodial wallet through social login or email wallets. While the implementation varies per network, Reown relies on a SOC 2 Type 2 compliant third-party vendor for key management. The vendor's [security overview](https://magic.link/docs/home/security/product-security) and [list of audits](https://magic.link/docs/home/security/security-compliance) are available in their documentation.
+Embedded wallets enable applications to provide end-users with a quick onboarding experience by provisioning a non-custodial wallet through social login or email wallets. While the implementation varies per network, Reown AppKit relies on a SOC 2 Type 2 compliant third-party vendor for key management. The vendor's [security overview](https://magic.link/docs/home/security/product-security) and [list of audits](https://magic.link/docs/home/security/security-compliance) are available in their documentation.
 
 For a subset of EVM Networks, gas abstraction functionality requires deploying a Smart Account on behalf of the end-user. In this case, the key management provider acts as a signer for this Smart Account. Reown relies on a third-party vendor for the Smart Account implementation. The [Smart Account implementation audits](https://docs.safe.global/smart-account-audits) are available in their documentation.
 
@@ -15,7 +15,7 @@ For a subset of EVM Networks, gas abstraction functionality requires deploying a
 Reown enables end-users to export their keys when needed.
 
 ### Audits
-Both the key management vendors and Smart Account vendors have undergone multiple audits (see links above). The integration of the key management provider into Reown has been audited by Halborn. The complete audit report is available [here](https://drive.google.com/file/d/1LQ6BkcI4PHs_FKAzpCRMqwD--rq6uOy6/view).
+Both the key management vendors and Smart Account vendors have undergone multiple audits (see links above). The integration of the key management provider into Reown AppKit has been audited by Halborn. The complete audit report is available [here](https://drive.google.com/file/d/1LQ6BkcI4PHs_FKAzpCRMqwD--rq6uOy6/view).
 
 ## WalletKit
 
@@ -33,7 +33,7 @@ WalletKit's design philosophy prioritizes minimizing third-party dependencies to
 
 ## Third-Party Reviews
 
-The security infrastructure of Reown has undergone multiple rounds of audits by independent security auditing firms, including Trail of Bits, Halborn, and Spearbit. These audits cover both Reown and WalletKit, along with a comprehensive company-wide Threat Model.
+Reown's security infrastructure has undergone multiple rounds of audits by independent security auditing firms, including Trail of Bits, Halborn, and Spearbit. These audits cover both Reown AppKit and WalletConnect's WalletKit, along with a comprehensive company-wide Threat Model.
 
 | Audit Scope | Auditor | Report |
 | --- | --- | --- |
