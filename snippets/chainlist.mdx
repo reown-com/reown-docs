@@ -67,14 +67,15 @@ export const ChainList = () => {
           badge.innerText = label;
           badge.style.cssText = `
             position: absolute;
-            top: 4px;
-            right: 4px;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
+            bottom: 2px;
+            right: 2px;
+            font-size: 7px;
+            padding: 1px 4px;
+            border-radius: 3px;
             background-color: ${chain.appKitSupport === "yes" ? "#008847" : "#b45309"};
             color: white;
             font-weight: 600;
+            line-height: 1.2;
           `;
           card.appendChild(badge);
         }
