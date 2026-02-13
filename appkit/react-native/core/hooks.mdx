@@ -21,7 +21,7 @@ export default function MyComponent() {
 
     // Actions
     disconnect, // Function to disconnect the current session
-    switchNetwork, // Function to attempt to switch to a different chain/network
+    switchNetwork, // Function to switch to a different chain/network. Accepts an AppKitNetwork object or a CAIP network ID string (e.g., 'eip155:1')
   } = useAppKit();
 }
 ```
@@ -37,7 +37,7 @@ export default function MyComponent() {
 - `open`: Function to open the modal
 - `close`: Function to close the modal
 - `disconnect`: Function to disconnect the current session
-- `switchNetwork`: Function to switch to a different chain/network
+- `switchNetwork`: Function to switch to a different chain/network. Accepts an `AppKitNetwork` object or a CAIP network ID string (e.g., `'eip155:1'`)
 
 ### Parameters
 
@@ -60,6 +60,21 @@ Here is a list of possible views you can select:
 | `WhatIsANetwork` | "What is a network" onboarding view.                                                               |
 | `WhatIsAWallet`  | "What is a wallet" onboarding view.                                                                |
 
+**switchNetwork**
+
+You can switch networks by passing either an `AppKitNetwork` object or a CAIP network ID string:
+
+```typescript
+const { switchNetwork } = useAppKit();
+
+// Using an AppKitNetwork object
+switchNetwork(polygonNetwork);
+
+// Using a CAIP network ID string
+await switchNetwork('eip155:1'); // Ethereum Mainnet
+await switchNetwork('eip155:137'); // Polygon
+```
+
 ## `useAccount()`
 
 The essential hook for accessing wallet connection state and user information. Use this hook whenever you need to know if a user is connected, get their wallet address, or access their account details.
@@ -69,24 +84,26 @@ import { useAccount } from '@reown/appkit-react-native';
 
 export default function MyComponent() {
   const {
+    allAccounts, // Account[], all connected accounts across all connections
     address, // String, the connected account address (e.g., '0x...', 'Sol...', 'bc1...')
     chainId, // Number or String, the chain ID of the currently active connection
     isConnected, // Boolean, true if a wallet is connected on the current chain/namespace
     namespace, // String, the active namespace (e.g., 'eip155', 'solana', 'bip122')
-    chain, // AppKitNetwork object with active chain information
+    chain // AppKitNetwork object with active chain information
   } = useAccount();
 
   if (isConnected) {
     return (
-      <div>
-        <p>Connected to chain: {chainId}</p>
-        <p>Namespace: {namespace}</p>
-        <p>Chain: {chain?.name}</p>
-        <p>Address: {address}</p>
-      </div>
+      <View>
+        <Text>Connected to chain: {chainId}</Text>
+        <Text>Namespace: {namespace}</Text>
+        <Text>Chain: {chain?.name}</Text>
+        <Text>Address: {address}</Text>
+        <Text>Total accounts: {allAccounts.length}</Text>
+      </View>
     );
   }
-  return <p>Not Connected</p>;
+  return <Text>Not Connected</Text>;
 }
 ```
 
@@ -100,11 +117,21 @@ export default function MyComponent() {
 - Getting detailed chain information for network-specific features
 
 ### Returns
+- `allAccounts`: Array of all connected accounts across all connections (Account[])
 - `address`: The connected account address (string)
 - `chainId`: The chain ID of the currently active connection (number or string)
 - `isConnected`: Boolean indicating if a wallet is connected on the current chain/namespace
 - `namespace`: The active namespace (string, e.g., 'eip155', 'solana', 'bip122')
 - `chain`: The active chain object with detailed chain information (AppKitNetwork type)
+
+The `Account` type has the following structure:
+
+| Property    | Type           | Description                                                    |
+| ----------- | -------------- | -------------------------------------------------------------- |
+| `address`   | `string`       | The blockchain address of the account                          |
+| `namespace` | `string`       | The blockchain namespace (e.g., 'eip155', 'solana', 'bip122') |
+| `chainId`   | `string`       | The chain ID where this account is active                      |
+| `type`      | `AccountType?` | Optional account type (e.g., 'eoa' or 'smartAccount')         |
 
 ## `useProvider()`
 
@@ -279,6 +306,61 @@ export default function AppStatus() {
 - `isLoading`: Boolean indicating if the modal is loading
 - `isConnected`: Boolean indicating if a user is connected
 - `chain`: The connected chain object
+
+## `useAppKitTheme()`
+
+The theme control hook that provides access to the modal's visual appearance settings. Use this hook when you need to dynamically change the theme mode or customize theme variables at runtime, such as implementing a dark/light mode toggle or matching the modal's appearance with your application's theme.
+
+```typescript
+import { useAppKitTheme } from '@reown/appkit-react-native';
+
+export default function ThemeControl() {
+  const {
+    themeMode, // 'dark' or 'light', the current theme mode
+    themeVariables, // Current theme variables (e.g., { accent: '#00BB7F' })
+    setThemeMode, // Function to change the theme mode
+    setThemeVariables, // Function to update theme variables
+  } = useAppKitTheme();
+
+  return (
+    <View>
+      <Text>Current theme: {themeMode}</Text>
+      <Button
+        title="Toggle Theme"
+        onPress={() => setThemeMode(themeMode === 'dark' ? 'light' : 'dark')}
+      />
+      <Button
+        title="Set Accent Color"
+        onPress={() => setThemeVariables({ accent: '#FF5733' })}
+      />
+      <Button
+        title="Reset to System Theme"
+        onPress={() => setThemeMode(undefined)}
+      />
+    </View>
+  );
+}
+```
+
+### Use Cases
+
+- Implementing a dark/light mode toggle in your app
+- Matching the modal's appearance with your application's theme
+- Dynamically changing the accent color based on user preferences
+- Resetting the theme to follow the system setting
+
+### Returns
+
+- `themeMode`: The current theme mode (`'dark'` or `'light'`)
+- `themeVariables`: The current theme variables object
+- `setThemeMode`: Function to set the theme mode. Pass `'dark'`, `'light'`, or `undefined` to revert to the system theme
+- `setThemeVariables`: Function to update theme variables. Pass `undefined` or `{}` to clear custom variables
+
+The following theme variables are currently supported:
+
+| Variable | Description                                 | Type     |
+| -------- | ------------------------------------------- | -------- |
+| `accent` | Color used for buttons, icons, labels, etc. | `string` |
 
 ## `useAppKitLogs()`
 
