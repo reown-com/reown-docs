@@ -106,8 +106,4 @@ public var authResponsePublisher: AnyPublisher<(id: RPCID, result: Result<(Sessi
 
 ### Sign methods
 
-Reown is internally using Sign SDK and most of its method are being exposed through Reown interface.
-
-### Where to go from here
-
-Check the Reown usage in our Sample app that is part of Reown repository.
+Reown AppKit uses the Sign SDK to implement the WalletConnect Protocol. Most Sign SDK functionality is exposed through the [`AppKit`](https://github.com/reown-com/reown-dotnet/blob/main/src/Reown.AppKit.Unity/Runtime/AppKit.cs#L17-L45) class, the main entry point for developers.
