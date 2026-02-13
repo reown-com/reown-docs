@@ -27,7 +27,7 @@ npx @reown/appkit-cli
 
 Installation is a two-step process:
 
-1. Install the core Reown library.
+1. Install the core Reown AppKit library.
 2. Install the specific chain adapters you need for your application.
 
 <Tabs groupId="rn-environment">
@@ -181,7 +181,7 @@ Install the adapters for the chains you intend to support:
         export default App;
         ```
 
-        <p>For a practical implementation example, you can refer to the <a href="https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/App.tsx" target="_blank\">Reown + Wagmi example on GitHub</a>.</p>
+        <p>For a practical implementation example, you can refer to the <a href="https://github.com/reown-com/appkit-react-native/blob/develop/apps/native/App.tsx" target="_blank\">Reown AppKit + Wagmi example on GitHub</a>.</p>
       </Tab>
     </Tabs>
 
@@ -252,7 +252,7 @@ function App() {
 
 For more detailed information about `SafeAreaProvider`, check the [official documentation](https://appandflow.github.io/react-native-safe-area-context/api/safe-area-provider).
 
-### 1. Initialize Reown
+### 1. Initialize Reown AppKit
 
 Create an instance of `AppKit`. This is where you'll configure your project ID (if using WalletConnect features) and define the chains your application will support, along with their respective adapters.
 
@@ -303,7 +303,7 @@ export const appKit = createAppKit({
 ```
 
 <Note>
-  **Default Features:** Reown comes with email and social login, swaps, and onramp features enabled
+  **Default Features:** Reown AppKit comes with email and social login, swaps, and onramp features enabled
   by default. To disable any of these features, see the [Options](./options) documentation for
   configuration details.
 </Note>
@@ -349,7 +349,7 @@ export interface Storage {
 
 For complete storage implementation examples, see the [Storage Options](./options#storage) documentation.
 
-**Update Reown Configuration**
+**Update Reown AppKit Configuration**
 
 Finally, import your custom storage and pass it to `createAppKit` in your `AppKitConfig.ts`. This example builds on the configuration from [Initialize AppKit](#1-initialize-appkit):
 

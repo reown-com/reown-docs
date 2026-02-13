@@ -3,9 +3,9 @@ title: Migration from ConnectKit to AppKit
 sidebarTitle: "From ConnectKit"
 ---
 
-# Migration from ConnectKit to AppKit
+# Migration from ConnectKit to Reown AppKit
 
-If you have currently set up ConnectKit as the wallet provider for your Web3 app, you can easily migrate to **Reown**.
+If you have currently set up ConnectKit as the wallet provider for your Web3 app, you can easily migrate to **Reown AppKit**.
 
 Assuming that your Web3 app is set up similarly to ConnectKit's example app [here](https://github.com/family/connectkit/tree/main/examples/nextjs), let's explore how to migrate from this example app to Reown AppKit.
 
@@ -37,7 +37,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi&& pnpm remove connectkit
 ## Step 3. Change the code in the `/components/Web3Provider.tsx` file
 
 - Navigate to the `/components/Web3Provider.tsx` file inside your ConnectKit example Web3 app directory. 
-. Now, you need to remove the existing configuration that uses ConnectKit and replace it with Reown. Refer to the code snippet below.
+. Now, you need to remove the existing configuration that uses ConnectKit and replace it with Reown AppKit. Refer to the code snippet below.
 
 ```tsx {7,10-12, 22, 25-28, 33-41, 46, 49}
 import React from 'react';

@@ -53,7 +53,7 @@ pnpm add @reown/appkit-siwe next-auth
 
 <Warning>For a better UX we recommend using One-Click Auth.</Warning>
 
-Install the Reown SIWE package, additionally we also recommend installing [siwe](https://docs.login.xyz/) which will abstract a lot of the required logic.
+Install the Reown SIWE package. For the best experience, we recommend also installing [siwe](https://docs.login.xyz/) to abstract a lot of the required logic.
 
 <CodeGroup>
 
@@ -211,7 +211,7 @@ const address = getAddressFromMessage(message);
 </Tab>
 <Tab title="Legacy">
 
-With help of the [siwe package](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/implement-the-frontend) we will create the required configuration for Reown.
+With help of the [siwe package](https://docs.login.xyz/sign-in-with-ethereum/quickstart-guide/implement-the-frontend) we will create the required configuration for Reown AppKit.
 
 <Info>
   The nonce and verification process will be implemented in your backend. [Read
@@ -492,7 +492,7 @@ export { handler as GET, handler as POST };
 
 <Card title="Learn More" href="https://next-auth.js.org/" />
 
-## Initialize Reown with your `siweConfig`.
+## Initialize Reown AppKit with your `siweConfig`.
 
 ```js
 // Pass your siweConfig inside the createAppKit() function
