@@ -31,3 +31,29 @@ The following list shows the theme variables you can override:
 | Variable | Description                                 | Type     |
 | -------- | ------------------------------------------- | -------- |
 | `accent` | Color used for buttons, icons, labels, etc. | `string` |
+
+## Runtime Theme Control
+
+You can also change the theme dynamically at runtime using the `useAppKitTheme` hook:
+
+```typescript
+import { useAppKitTheme } from '@reown/appkit-react-native';
+
+function MyComponent() {
+  const { themeMode, setThemeMode, setThemeVariables } = useAppKitTheme();
+
+  // Toggle between dark and light mode
+  setThemeMode(themeMode === 'dark' ? 'light' : 'dark');
+
+  // Reset to follow the system theme
+  setThemeMode(undefined);
+
+  // Change the accent color
+  setThemeVariables({ accent: '#FF5733' });
+
+  // Clear custom variables
+  setThemeVariables(undefined);
+}
+```
+
+See the [Hooks documentation](/appkit/react-native/core/hooks#useappkittheme) for full details.
