@@ -18,6 +18,32 @@ export const ChainList = () => {
   };
 
   if (typeof document !== "undefined") {
+    if (!document.getElementById("appkit-badge-styles")) {
+      const style = document.createElement("style");
+      style.id = "appkit-badge-styles";
+      style.textContent = `
+        .appkit-badge {
+          position: absolute;
+          bottom: 6px;
+          right: 6px;
+          font-size: 11px;
+          padding: 3px 10px;
+          border-radius: 9999px;
+          border: 1px solid rgba(10, 14, 12, 0.15);
+          background-color: #f3f4f6;
+          color: #374151;
+          font-weight: 500;
+          line-height: 1.4;
+        }
+        .dark .appkit-badge {
+          border-color: rgba(255, 255, 255, 0.15);
+          background-color: #4b5563;
+          color: #e5e7eb;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
     fetch(
       "https://explorer-api.walletconnect.com/v3/chains?projectId=8e998cd112127e42dce5e2bf74122539"
     )
@@ -64,22 +90,9 @@ export const ChainList = () => {
 
         const label = getAppKitLabel(chain.appKitSupport);
         if (label) {
-          const isDark = document.documentElement.classList.contains("dark");
           const badge = document.createElement("span");
           badge.innerText = label;
-          badge.style.cssText = `
-            position: absolute;
-            bottom: 6px;
-            right: 6px;
-            font-size: 11px;
-            padding: 3px 10px;
-            border-radius: 9999px;
-            border: 1px solid ${isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(10, 14, 12, 0.15)"};
-            background-color: ${isDark ? "#2a2a2a" : "#f3f4f6"};
-            color: ${isDark ? "#d1d5db" : "#374151"};
-            font-weight: 500;
-            line-height: 1.4;
-          `;
+          badge.className = "appkit-badge";
           card.appendChild(badge);
         }
 
