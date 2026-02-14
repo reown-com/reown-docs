@@ -2,7 +2,7 @@
 title: Email & Social Wallets
 ---
 
-AppKit enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social accounts.
+Reown enables passwordless Web3 onboarding and authentication, allowing your users interact with your application by creating a non-custodial wallet with just their emails or social accounts.
 
 <Note>
 Email login option is currently only available on WebGL. We're working on adding support for other platforms.
@@ -10,8 +10,8 @@ Email login option is currently only available on WebGL. We're working on adding
 
 ## User flow
 
-1. Users will be able to connect to you application by simply using an email address. AppKit will send to them a One Time Password (OTP) to copy and paste in the modal, which will help to
-   verify the user's authenticity. This will create a non-custodial wallet for your user which will be available in any application that integrates AppKit and email login.
+1. Users will be able to connect to your application by simply using an email address. The SDK will send to them a One Time Password (OTP) to copy and paste in the modal, which will help to
+   verify the user's authenticity. This will create a non-custodial wallet for your user which will be available in any application that integrates the Reown SDK and email login.
    Alternatively, users can connect using social accounts.
 
 2. Eventually the user can optionally choose to move from a non-custodial wallet to a self-custodial one by pressing "Upgrade Wallet" on AppKit (currently only visible on WebGL).
@@ -42,7 +42,7 @@ var appKitConfig = new AppKitConfig
 
 ## UI Variants
 
-AppKit SDK offers multiple UI variants to customize the user experience for the authentication process. Note, that the UI can be slightly different depending on the platform.
+Reown SDK offers multiple UI variants to customize the user experience for the authentication process. Note, that the UI can be slightly different depending on the platform.
 
 By configuring the `socials` option in the `AppKitConfig` object, you can control the amount of social providers you want to show on the connect screen:
 
@@ -72,7 +72,7 @@ By configuring the `socials` option in the `AppKitConfig` object, you can contro
 
 ## Actions
 
-AppKit provides methods to initiate social login connections programmatically, allowing you to build custom UI elements that trigger the authentication flow.
+Reown provides methods to initiate social login connections programmatically, allowing you to build custom UI elements that trigger the authentication flow.
 
 ```csharp
 // Async-await approach

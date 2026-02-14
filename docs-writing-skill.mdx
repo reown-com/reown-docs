@@ -1,6 +1,6 @@
 ---
 name: reown-documentation-writing
-description: Write and review documentation for Reown products using Mintlify. Use when writing docs for Reown, AppKit, WalletKit, creating SDK guides, writing overview pages, reviewing documentation, or when the user mentions Reown docs, documentation, Mintlify, or technical writing.
+description: Write and review documentation for Reown products using Mintlify. Use when writing docs for Reown, Reown, WalletKit, creating SDK guides, writing overview pages, reviewing documentation, or when the user mentions Reown docs, documentation, Mintlify, or technical writing.
 ---
 
 # Reown Documentation Writing Skill
@@ -57,7 +57,7 @@ sidebarTitle: "Overview"
 | ❌ Incorrect | ✅ Correct |
 |-------------|-----------|
 | React SDK Implementation Guide | React |
-| Reown AppKit API Reference v2.0 | API Reference |
+| Reown API Reference v2.0 | API Reference |
 | EIP-155 Chain Configuration | Supported Networks |
 
 ### Heading Hierarchy
@@ -341,11 +341,11 @@ Important notice about prerequisites or upcoming changes.
 ```mermaid
 sequenceDiagram
     dApp->>AppKit: createAppKit()
-    AppKit->>Wallet: Connection Request
+    Reown->>Wallet: Connection Request
     Wallet->>User: Approve Connection
     User->>Wallet: Confirm
     Wallet->>AppKit: Connected
-    AppKit->>dApp: Session Established
+    Reown->>dApp: Session Established
 ```
 
 <Steps>

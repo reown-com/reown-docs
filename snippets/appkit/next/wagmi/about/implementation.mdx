@@ -37,7 +37,7 @@ export const config = wagmiAdapter.wagmiConfig
 
 ## Importing networks
 
-Reown AppKit use [Viem](https://viem.sh/) networks under the hood, which provide a wide variety of networks for EVM chains. You can find all the networks supported by Viem within the `@reown/appkit/networks` path.
+The SDK uses [Viem](https://viem.sh/) networks under the hood, which provide a wide variety of networks for EVM chains. You can find all the networks supported by Viem within the `@reown/appkit/networks` path.
 
 ```js {2}
 import { createAppKit } from '@reown/appkit'
@@ -53,11 +53,11 @@ import { mainnet, arbitrum, base, scroll, polygon } from '@reown/appkit/networks
 
 - Using cookies is completely optional and by default Wagmi will use `localStorage` instead if the `storage` param is not defined.
 - The `ssr` flag will delay the hydration of Wagmi's store to avoid hydration mismatch errors.
-- AppKit doesn't fully support the `ssr` flag.
+- Reown doesn't fully support the `ssr` flag.
 
 ### Context Provider
 
-Let's create now a context provider that will wrap our application and initialized AppKit (`createAppKit` needs to be called inside a Next Client Component file).
+Let's create now a context provider that will wrap our application and initialized Reown (`createAppKit` needs to be called inside a Next Client Component file).
 
 In this example we will create a file called `context/index.tsx` outside our app directory and set up the following configuration
 

@@ -1,8 +1,8 @@
 ---
-title: "How to Configure AppKit with Virtual TestNets?"
+title: "How to Configure Reown with Virtual TestNets?"
 sidebarTitle: "Configure Virtual TestNets"
 ---
-Learn how to use Reown AppKit to enable wallet connections and interact with [Tenderly](https://tenderly.co/) Virtual Testnets. With AppKit, you can provide seamless wallet connections, including email and social logins, on-ramp functionality, smart accounts, one-click authentication, and wallet notifications, all designed to deliver an exceptional user experience. With Tenderly’s Virtual TestNets, you can replicate real networks for various stages of your Web3 app development.
+Learn how to use Reown AppKit to enable wallet connections and interact with [Tenderly](https://tenderly.co/) Virtual Testnets. With Reown, you can provide seamless wallet connections, including email and social logins, on-ramp functionality, smart accounts, one-click authentication, and wallet notifications, all designed to deliver an exceptional user experience. With Tenderly’s Virtual TestNets, you can replicate real networks for various stages of your Web3 app development.
 
 In this tutorial, you will learn how to:
 
@@ -15,11 +15,11 @@ Let’s get started!
 
 ## Setup
 
-In this section, you'll learn how to set up the development environment to use AppKit with Tenderly’s Virtual TestNets.
+In this section, you'll learn how to set up the development environment to use Reown with Tenderly’s Virtual TestNets.
 
-For this tutorial, we'll be using Next.js, though you can use any other framework compatible with AppKit.
+For this tutorial, we'll be using Next.js, though you can use any other framework compatible with Reown.
 
-> AppKit is available on eight frameworks, including React, Next.js, Vue, JavaScript, React Native, Flutter, Android, iOS, and Unity.
+> Reown is available on eight frameworks, including React, Next.js, Vue, JavaScript, React Native, Flutter, Android, iOS, and Unity.
 
 Now, let’s create a Next app. In order to do so, please run the command given below:
 
@@ -29,9 +29,9 @@ npx create-next-app@latest appkit-vTestnet-example
 
 The above command creates a Next app and sets the name of the Next app as “appkit-vTestnet-example”.
 
-### Install AppKit
+### Install Reown
 
-Now, we need to install AppKit and other dependencies that we need for our app to function as expected. For this tutorial, we will be using “wagmi” as our preferred Ethereum library. However, you can also use [Ethers](https://docs.reown.com/appkit/next/core/installation?platform=ethers).
+Now, we need to install Reown AppKit and other dependencies that we need for our app to function as expected. For this tutorial, we will be using “wagmi” as our preferred Ethereum library. However, you can also use [Ethers](https://docs.reown.com/appkit/next/core/installation?platform=ethers).
 
 ```bash
 npm install @reown/appkit @reown/appkit-wagmi-adapter wagmi @tanstack/react-query
@@ -51,7 +51,7 @@ Now, enter the name for your project and click on “**Continue**”.
 <Frame>
 ![image.png](/images/recipes/tenderly2.png)
 </Frame>
-Select the product as “**AppKit**” and click on “**Continue**”.
+Select the product as “**Reown**” and click on “**Continue**”.
 <Frame>
 ![image.png](/images/recipes/tenderly3.png)
 </Frame>
@@ -95,15 +95,15 @@ TENDERLY_VIRTUAL_TESTNET_RPC = <YOUR_TENDERLY_VIRTUAL_TESTNET_RPC_URL>
 <Note>
 **_Note:_** Please make sure you follow the best practices when you are working with secret keys and other sensitive information. Environment variables that start with `NEXT_PUBLIC` will be exposed by your app which can be misused by bad actors.
 </Note>
-### Configure AppKit
+### Configure Reown
 
-We’ve created an in-depth technical guide on getting started with Reown AppKit on any EVM chain. Refer to the guide below to learn how to configure AppKit. A GitHub repository is also provided at the end of the guide, which you can clone to quickly get started.
+We’ve created an in-depth technical guide on getting started with Reown on any EVM chain. Refer to the guide below to learn how to configure Reown. A GitHub repository is also provided at the end of the guide, which you can clone to quickly get started.
 
-[How to Get Started with Reown AppKit on Any EVM Chain](https://reown.com/blog/how-to-get-started-with-reown-appkit-on-any-evm-chain)
+[How to Get Started with Reown on Any EVM Chain](https://reown.com/blog/how-to-get-started-with-reown-appkit-on-any-evm-chain)
 
-### Configure Tenderly Virtual TestNet with AppKit
+### Configure Tenderly Virtual TestNet with Reown
 
-In order to set up Tenderly’s Virtual TestNet with AppKit, you need to first configure your Tenderly Virtual TestNet as a custom chain.
+In order to set up Tenderly’s Virtual TestNet with Reown, you need to first configure your Tenderly Virtual TestNet as a custom chain.
 
 Inside your `/app` directory, create a new file named `tenderly.config.ts`. Now, paste the code snippet shared below inside the code file, i.e., `app/tenderly.config.ts`.
 
@@ -257,7 +257,7 @@ npm run dev
 
 ## Conclusion
 
-And that’s it! You have now learned how to create a simple app using AppKit and configure it with [Tenderly](https://tenderly.co/) Virtual TestNets.
+And that’s it! You have now learned how to create a simple app using Reown and configure it with [Tenderly](https://tenderly.co/) Virtual TestNets.
 <Card title="Tenderly Virtual TestNets Example" icon="github" href="https://github.com/rohit-710/appkit-tenderly-vTestnet">
 View the complete code repository here.
 </Card>

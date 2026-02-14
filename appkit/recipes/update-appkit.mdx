@@ -1,5 +1,5 @@
 ---
-title: Update AppKit packages to the latest
+title: Update Reown packages to the latest
 ---
 
 ## Prerequisites
@@ -15,10 +15,10 @@ title: Update AppKit packages to the latest
 ```
 
 <Note>
-More @reown/* packages can be used in your project. This is an example of a project using AppKit and Wagmi for EVM networks.
+More @reown/* packages can be used in your project. This is an example of a project using Reown and Wagmi for EVM networks.
 </Note>
 
-## 1. Find the latest AppKit version
+## 1. Find the latest Reown version
 
 Use the registry to read the current published version (do this once, and use the same number for every @reown/* package you install):
 
@@ -71,7 +71,7 @@ pnpm add \
 </CodeGroup>
 
 <Note>
-AppKit publishes its packages in coordinated releases; mixing versions can cause subtle peer-dep and type mismatches, so keep @reown/* on the exact same X.Y.Z. 
+Reown publishes its packages in coordinated releases; mixing versions can cause subtle peer-dep and type mismatches, so keep @reown/* on the exact same X.Y.Z. 
 </Note>
 
 ## 3. Pin in package.json (Optional) 
@@ -133,6 +133,6 @@ Commit package.json + the lockfile, and let CI run your build/tests.
 
 ## 6. Done ✅
 
-That’s it. This keeps your AppKit stack consistent and aligned with the latest release.
+That’s it. This keeps your Reown stack consistent and aligned with the latest release.
 
-All the releases information are available in the [AppKit GitHub Releases](https://github.com/reown-com/appkit/releases).
+All the releases information are available in the [Reown GitHub Releases](https://github.com/reown-com/appkit/releases).

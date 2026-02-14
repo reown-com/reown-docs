@@ -5,9 +5,9 @@ sidebarTitle: Overview
 
 ## Introduction
 
-This guide is designed to help existing AppKit customers better understand the latest version of the AppKit SDK, and **complete the upgrade in less than 30 minutes**. We’ll walk you through the new features and benefits you can expect, along with clear, step-by-step instructions to help you seamlessly update your app to the latest version of AppKit.
+This guide is designed to help existing Reown customers better understand the latest version of the Reown SDK, and **complete the upgrade in less than 30 minutes**. We’ll walk you through the new features and benefits you can expect, along with clear, step-by-step instructions to help you seamlessly update your app to the latest version of Reown AppKit.
 
-**Already good to go? [Upgrade to the latest version of AppKit here.](#upgrade-platform-list)**
+**Already good to go? [Upgrade to the latest version of Reown AppKit here.](#upgrade-platform-list)**
 
 ## Why hundreds of apps are already upgrading:
 
@@ -19,42 +19,42 @@ This guide is designed to help existing AppKit customers better understand the l
 
 <CardGroup cols={2}>
   <Card title="Web" icon="browser" href="/appkit/upgrade/to-reown-appkit-web">
-    Migrate to AppKit in Web.
+    Migrate to Reown in Web.
   </Card>
 
   <Card title="React Native" icon="react" href="/appkit/upgrade/from-web3modal-react-native">
-    Migrate to AppKit in React Native.
+    Migrate to Reown in React Native.
   </Card>
 
   <Card title="Flutter" icon="flutter" href="/appkit/upgrade/from-web3modal-flutter">
-    Migrate to AppKit in Flutter.
+    Migrate to Reown in Flutter.
   </Card>
 
   <Card title="Android" icon="android" href="/appkit/upgrade/from-web3modal-android">
-    Migrate to AppKit in Android.
+    Migrate to Reown in Android.
   </Card>
 
   <Card title="iOS" icon="apple" href="/appkit/upgrade/from-web3modal-ios">
-    Migrate to AppKit in iOS.
+    Migrate to Reown in iOS.
   </Card>
 
   <Card title="Unity" icon="unity" href="/appkit/upgrade/from-web3modal-unity">
-    Migrate to AppKit in Unity.
+    Migrate to Reown in Unity.
   </Card>
 </CardGroup>
 
 
-## What’s New with the latest Reown AppKit
+## What's New with Reown
 
-**Reown AppKit** is a powerful solution for developers looking to integrate wallet connections and other Web3 functionalities into their apps on any EVM chain. In just a few simple steps, you can provide your users with seamless wallet access, one-click authentication, social logins, and notifications—streamlining their experience while enabling advanced features like on-ramp functionality and smart accounts. By following this guide, you'll quickly get up and running with Reown’s AppKit, enhancing your app’s user experience and interaction with blockchain technology.
+**Reown** is a powerful solution for developers looking to integrate wallet connections and other Web3 functionalities into their apps on any EVM chain. In just a few simple steps, you can provide your users with seamless wallet access, one-click authentication, social logins, and notifications—streamlining their experience while enabling advanced features like on-ramp functionality and smart accounts. By following this guide, you'll quickly get up and running with Reown, enhancing your app's user experience and interaction with blockchain technology.
 
 Now here is the exciting part, the new features, so let’s dive in!
 
-### AppKit is now multi-chain
+### Reown is now multi-chain
 
 Built from the ground up, AppKit has been reimagined to deliver an entirely new level of performance and flexibility. This isn’t just an upgrade, it’s a powerful transformation designed to supercharge your experience with enhanced speed, reliability, and seamless integrations. Onchain UX just got even better!
 
-Appkit’s core architecture is now chain agnostic, allowing one instance to support multiple networks at once. Each network has it’s own adaptor which sits on top of the core SDK. Builders can simply create the required adaptors and pass them in the `createAppkit()` function.
+Reown's core architecture is now chain agnostic, allowing one instance to support multiple networks at once. Each network has it’s own adaptor which sits on top of the core SDK. Builders can simply create the required adaptors and pass them in the `createAppkit()` function.
 
 ```jsx
 // 1. Create the Wagmi adapter
@@ -68,11 +68,11 @@ export const wagmiAdapter = new WagmiAdapter({
 const solanaWeb3JsAdapter = new SolanaAdapter();
 ```
 
-Currently, AppKit supports over 300 EVM chains and Solana, with more non-EVM chains coming soon [Learn more here](https://reown.com/blog/how-to-get-started-with-reown-appkit-on-any-evm-chain).
+Currently, Reown supports over 300 EVM chains and Solana, with more non-EVM chains coming soon [Learn more here](https://reown.com/blog/how-to-get-started-with-reown-appkit-on-any-evm-chain).
 
 ## Universal Accounts
 
-AppKit’s Universal Accounts are advanced, powerful smart accounts that are automatically set up for your users, unlocking seamless access to powerful features immediately.
+Reown’s Universal Accounts are advanced, powerful smart accounts that are automatically set up for your users, unlocking seamless access to powerful features immediately.
 
 ### Key features
 
@@ -86,11 +86,11 @@ With Universal Accounts, users enjoy the benefits of gas abstraction through pay
 
 ### Getting started
 
-Setting up Universal Accounts is easy. Simply integrate with AppKit or upgrade your existing AppKit, and your users will automatically receive these smart accounts, enabling a powerful, user-friendly experience from day one.
+Setting up Universal Accounts is easy. Simply integrate with Reown or upgrade your existing Reown SDK, and your users will automatically receive these smart accounts, enabling a powerful, user-friendly experience from day one.
 
 ## Gas Abstraction, made simple
 
-With AppKit, your users can enjoy a frictionless experience without the hassle of network fees. Reown gas abstraction feature leverages paymasters, dedicated modules that allow users to cover transaction fees with any ERC-20 token instead of native network tokens. This means no more managing tokens across networks just to interact with your app.
+With Reown, your users can enjoy a frictionless experience without the hassle of network fees. Reown's gas abstraction feature leverages paymasters, dedicated modules that allow users to cover transaction fees with any ERC-20 token instead of native network tokens. This means no more managing tokens across networks just to interact with your app.
 
 ### Use cases and benefits
 
@@ -100,7 +100,7 @@ With AppKit, your users can enjoy a frictionless experience without the hassle o
 
 ### Get started in minutes
 
-Integrating gas abstraction with AppKit is as easy as updating your AppKit SDK. With just a few lines of code, your app can support token paymasters, offering your users an optimized, fee-friendly experience from day one.
+Integrating gas abstraction with Reown is as easy as updating your Reown SDK. With just a few lines of code, your app can support token paymasters, offering your users an optimized, fee-friendly experience from day one.
 <Frame>
 <video
   controls
@@ -125,7 +125,7 @@ Reown IDs act as unique identifiers for your users, allowing them to interact wi
 
 ### Getting started
 
-Integrating Reown IDs into your application is seamless. Simply update your AppKit SDK, and your users will automatically receive their unique Reown IDs, making account sharing and interaction smoother than ever!"
+Integrating Reown IDs into your application is seamless. Simply update your Reown SDK, and your users will automatically receive their unique Reown IDs, making account sharing and interaction smoother than ever!"
 <Frame>
 <video
   controls

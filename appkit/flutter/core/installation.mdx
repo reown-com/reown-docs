@@ -3,7 +3,7 @@ title: Flutter
 sidebarTitle: Installation
 ---
 
-With AppKit Flutter, you can easily let people interact with multiple EVM compatible wallets and blockchains.
+With Reown Flutter, you can easily let people interact with multiple EVM compatible wallets and blockchains.
 
 Let's get started with the installation and configuration!
 
@@ -27,7 +27,7 @@ platform :ios, '13.0'
 
 ### Enable Installed Wallet Detection
 
-To enable AppKit to detect installed wallets on the device, you need to make specific changes to the native sides of the project.
+To enable the SDK to detect installed wallets on the device, you need to make specific changes to the native sides of the project.
 
 <Tabs>
 <Tab title="iOS">
@@ -193,7 +193,7 @@ Phantom Wallet does not use the WalletConnect protocol for communication between
 
 This means that pairing topic, session topic, session events and other session-related features are not available when connecting to Phantom Wallet and the interaction is really basic. Dapp sends a request, Phantom Wallet responds. That's all.
 
-Furthermore, Phantom Wallet's deep/universal linking mechanism supports interaction exclusively with the Solana network. This means that if you have EVM networks configured in your AppKit instance, they will not be available for use after connecting with Phantom.
+Furthermore, Phantom Wallet's deep/universal linking mechanism supports interaction exclusively with the Solana network. This means that if you have EVM networks configured in your Reown AppKit instance, they will not be available for use after connecting with Phantom.
 
 In order to support Phantom Wallet interactions, a few extra steps have to be performed (only if you haven't implemented [Link Mode](./link-mode) already).
 
@@ -479,7 +479,7 @@ Similar to Phantom Wallet, Solflare does not use the WalletConnect protocol for 
 
 This means that pairing topic, session topic, session events and other session-related features are not available when connecting to Solflare Wallet and the interaction is really basic. Dapp sends a request, Solflare Wallet responds. That's all.
 
-Furthermore, Solflare Wallet's deep/universal linking mechanism supports interaction exclusively with the Solana network. This means that if you have EVM networks configured in your AppKit instance, they will not be available for use after connecting with Solflare.
+Furthermore, Solflare Wallet's deep/universal linking mechanism supports interaction exclusively with the Solana network. This means that if you have EVM networks configured in your Reown AppKit instance, they will not be available for use after connecting with Solflare.
 
 In order to support Solflare Wallet interactions, a few extra steps have to be performed (only if you haven't implemented [Link Mode](./link-mode) already).
 
@@ -547,19 +547,19 @@ Solflare Wallet is enabled by default. However, in order to function properly, a
   title="Basic example"
   icon="github"
   href="https://github.com/reown-com/reown_flutter/blob/develop/packages/reown_appkit/example/example.md">
-A starting point to use AppKit with Flutter
+A starting point to use Reown with Flutter
 </Card>
 
 <Card
   title="Full example"
   icon="github"
   href="https://github.com/reown-com/reown_flutter/tree/develop/packages/reown_appkit/example/base/lib">
-Full Flutter example using AppKit, which is also our demo dApp
+Full Flutter example using Reown, which is also our demo dApp
 </Card>
 
 ## Test Apps
 
-Want to see AppKit in action? Download our sample AppKit apps below and explore what it can do. Enjoy! 😊
+Want to see Reown in action? Download our sample Reown apps below and explore what it can do. Enjoy! 😊
 
 - [Android Build (Firebase)](https://appdistribution.firebase.dev/i/52c9b87bbf5fbe01)
 - [iOS Build (Testflight)](https://testflight.apple.com/join/6aRJSllc)

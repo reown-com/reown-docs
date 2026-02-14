@@ -1,5 +1,5 @@
 ---
-title: Travel Rule using AppKit
+title: Travel Rule using Reown
 ---
 
 ## What is the Travel Rule?
@@ -23,10 +23,10 @@ SIWX (Sign In With Solana, EVM or Bitcoin) is a two-step authentication process:
 Here's a practical example:
 
 - John wants to transfer funds from his PortugalEx account to his non-custodial wallet
-- PortugalEx implements AppKit in their withdrawal page to enable wallet connections
+- PortugalEx implements Reown in their withdrawal page to enable wallet connections
 - When John initiates the withdrawal:
-  1. He connects his self-custodial wallet through AppKit's interface
-  2. AppKit prompts him to sign a message with the connected wallet
+  1. He connects his self-custodial wallet through Reown's interface
+  2. Reown prompts him to sign a message with the connected wallet
   3. Only after successful signature verification does PortugalEx allow the transfer
 - This SIWX flow ensures John truly owns and controls the destination wallet before permitting withdrawals
 
@@ -35,7 +35,7 @@ Here's a practical example:
 
 Before implementing SIWX for Travel Rule compliance, ensure you have:
 
-- AppKit installed and configured in your project following the [AppKit Next installation guide](https://docs.reown.com/appkit/next/core/installation)
+- Reown installed and configured in your project following the [Reown Next installation guide](https://docs.reown.com/appkit/next/core/installation)
 - A project ID from [Reown Dashboard](https://dashboard.reown.com)
 
 ## Example Implementation
@@ -50,7 +50,7 @@ Before implementing SIWX for Travel Rule compliance, ensure you have:
 
 ### Installation
 
-Install the AppKit SIWX package:
+Install the Reown SIWX package:
 
 <CodeGroup>
 ```bash npm
@@ -72,7 +72,7 @@ bun add @reown/appkit-siwx
 
 ### Usage
 
-Once you have AppKit set up in your dApp, you can easily enable SIWX by adding the default implementation with the following configuration:
+Once you have Reown set up in your dApp, you can easily enable SIWX by adding the default implementation with the following configuration:
 
 ```ts {2, 8}
 import { createAppKit } from '@reown/appkit'

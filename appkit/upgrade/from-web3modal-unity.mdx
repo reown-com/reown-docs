@@ -1,6 +1,6 @@
 ---
 title:  Upgrade from Web3Modal to Reown AppKit on Unity
-sidebarTitle: Reown AppKit - Unity
+sidebarTitle: Reown - Unity
 ---
 
 This document outlines the steps to migrate from the old `com.walletconnect` packages to the new `com.reown` package in your Unity project.
@@ -46,15 +46,15 @@ If the `com.walletconnect.web3modal` package was installed manually via the Pack
 remove all `com.walletconnect` packages and replace them with the `com.reown` packages. You can find the list of all necessary packages in the
 [Installation Documentation](/appkit/unity/core/installation#package) under `Package Manager with OpenUPM` tab.
 
-### Step 2. Update your AppKit config
+### Step 2. Update your Reown config
 
 The `com.walletconnect.web3modal` package used two configuration objects: `WalletConnectProjectConfig` scriptable object
 and optional `Web3ModalConfig` class.
 
-The Reown AppKit combines these two configurations into a single `AppKitConfig` class that can be passed into AppKit initialization method.
+The Reown combines these two configurations into a single `AppKitConfig` class that can be passed into Reown initialization method.
 
 1. Delete `WalletConnectProjectConfig` scriptable object
-2. Initialize AppKit from your script
+2. Initialize Reown from your script
 
 ```csharp
 private async void Start()
@@ -83,7 +83,7 @@ If not, you can manually update the namespaces as follows:
   data={[
     {
       old: { code: "WalletConnect.Web3Modal" },
-      new: { code: "Reown.AppKit.Unity" },
+      new: { code: "Reown.Reown.Unity" },
     },
     {
       old: { code: "WalletConnectUnity.Nethereum" },
@@ -123,7 +123,7 @@ await AppKit.Evm.SendTransactionAsync(address, value);
 
 ### Step 5. Rename USS variables
 
-If you customized any AppKit USS variables, simply change `--wui` part of the variable name to `--ro`. For example:
+If you customized any Reown USS variables, simply change `--wui` part of the variable name to `--ro`. For example:
 
 ```css {4-5}
 // Remove the following code line

@@ -64,11 +64,11 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "AppKit",
+        "tab": "Reown",
         "icon": "layer-group",
         "dropdowns": [
           {
-            "dropdown": "AppKit - Overview",
+            "dropdown": "Reown - Overview",
             "icon": "layer-group",
             "pages": [
               {
@@ -127,7 +127,7 @@
                 "group": "Guides",
                 "pages": [
                   {
-                    "group": "AppKit Guides",
+                    "group": "Reown Guides",
                     "pages": [
                       "appkit/recipes/telegram-mini-app",
                       "appkit/recipes/tenderly-virtual-testnets",
@@ -151,14 +151,14 @@
                 "group": "Upgrade",
                 "pages": [
                   {
-                    "group": "AppKit",
+                    "group": "Reown",
                     "pages": [
                       {
-                        "group": "Web3Modal to Reown AppKit",
+                        "group": "Web3Modal to Reown",
                         "pages": [
                           "appkit/upgrade/from-w3m-to-reown",
                           {
-                            "group": "Reown AppKit - Web",
+                            "group": "Reown - Web",
                             "pages": [
                               "appkit/upgrade/to-reown-appkit-web",
                               "appkit/upgrade/to-reown-appkit-ethers-web",
@@ -197,7 +197,7 @@
           {
             "dropdown": "React",
             "icon": "react",
-            "description": "AppKit on React",
+            "description": "Reown on React",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -257,7 +257,7 @@
                     {
                       "dropdown": "Next",
             "icon": "square-n",
-            "description": "AppKit on NextJS",
+            "description": "Reown on NextJS",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -316,7 +316,7 @@
                     {
                       "dropdown": "Vue",
             "icon": "vuejs",
-            "description": "AppKit on VueJS",
+            "description": "Reown on VueJS",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -366,7 +366,7 @@
                     {
                       "dropdown": "JavaScript",
             "icon": "js",
-            "description": "AppKit on JavaScript",
+            "description": "Reown on JavaScript",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -419,7 +419,7 @@
                     {
                       "dropdown": "Svelte",
             "icon": "/images/icons/svelte.svg",
-            "description": "AppKit on Svelte",
+            "description": "Reown on Svelte",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -449,7 +449,7 @@
           {
             "dropdown": "Nuxt",
             "icon": "mountains",
-            "description": "AppKit on Nuxt",
+            "description": "Reown on Nuxt",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -480,7 +480,7 @@
           {
             "dropdown": "React Native",
             "icon": "mobile-screen-button",
-            "description": "AppKit on React Native",
+            "description": "Reown on React Native",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -524,7 +524,7 @@
           {
             "dropdown": "Flutter",
             "icon": "flutter",
-            "description": "AppKit on Flutter",
+            "description": "Reown on Flutter",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -562,7 +562,7 @@
           {
             "dropdown": "Kotlin",
             "icon": "android",
-            "description": "AppKit on Kotlin (Android)",
+            "description": "Reown on Kotlin (Android)",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -592,7 +592,7 @@
           {
             "dropdown": "Swift",
             "icon": "apple",
-            "description": "AppKit on Swift (iOS)",
+            "description": "Reown on Swift (iOS)",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -621,7 +621,7 @@
           {
             "dropdown": "Unity",
             "icon": "unity",
-            "description": "AppKit on Unity",
+            "description": "Reown on Unity",
             "pages": [
               {
                 "group": "Fundamentals",
@@ -803,7 +803,7 @@
     ],
     "primary": {
       "type": "button",
-      "label": "AppKit Demo",
+      "label": "Reown Demo",
       "href": "https://demo.reown.com/?utm_source=navbar&utm_medium=docs&utm_campaign=backlinks"
     }
   },

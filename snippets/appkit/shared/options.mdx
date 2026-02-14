@@ -25,7 +25,7 @@ For custom networks, refer to this [doc page](/appkit/react/core/custom-networks
 
 ## metadata
 
-Metadata for your AppKit. The `name`, `description`, `icons`, and `url` are used at certain places like the wallet connection, sign message, etc screens. If not provided, they will be fetched from the metadata of your website's document object.
+Metadata for your Reown AppKit instance. The `name`, `description`, `icons`, and `url` are used at certain places like the wallet connection, sign message, etc screens. If not provided, they will be fetched from the metadata of your website's document object.
 
 ```ts
 createAppKit({
@@ -109,7 +109,7 @@ createAppKit({
 
 ## defaultAccountTypes
 
-It allows you to configure the default account selected for the specified networks in AppKit. For example, if you want your EVM networks to use an EOA account by default, you can configure it as shown in the code below.
+It allows you to configure the default account selected for the specified networks. For example, if you want your EVM networks to use an EOA account by default, you can configure it as shown in the code below.
 
 ```ts
 createAppKit({
@@ -164,7 +164,7 @@ createAppKit({
 <Tabs>
 <Tab title="Wagmi">
 
-Set or override the images of any [connector](https://wagmi.sh/core/connectors/injected). AppKit supports two types of connector identification:
+Set or override the images of any [connector](https://wagmi.sh/core/connectors/injected). Reown supports two types of connector identification:
 - **EIP6963 wallets** (announced wallets): Use RDNS format like `'io.metamask'`, `'io.coinbase'`, `'app.phantom'`
 - **Other wallets**: Use normal connector IDs like `walletConnect`, `injected`, `appKitAuth`
 
@@ -263,7 +263,7 @@ createAppKit({
 
 ## debug
 
-Enable or disable debug mode in your AppKit. This is useful if you want to see UI alerts when debugging. Default is `false`.
+Enable or disable debug mode in your Reown AppKit instance. This is useful if you want to see UI alerts when debugging. Default is `false`.
 
 ```ts
 debug: true;
@@ -304,7 +304,7 @@ createAppKit({
 
 ## features
 
-Allows you to toggle (enable or disable) additional features provided by AppKit. Features such as analytics, email and social logins, On-ramp, swaps, etc., can be enabled using this parameter.
+Allows you to toggle (enable or disable) additional features provided by Reown. Features such as analytics, email and social logins, On-ramp, swaps, etc., can be enabled using this parameter.
 
 ### analytics
 
@@ -323,7 +323,7 @@ createAppKit({
 
 ### swaps
 
-Enable or disable the swap feature in your AppKit. [Swaps](/appkit/react/transactions/swaps) feature is enabled by default.
+Enable or disable the swap feature in your Reown AppKit instance. [Swaps](/appkit/react/transactions/swaps) feature is enabled by default.
 
 ```ts
 createAppKit({
@@ -336,7 +336,7 @@ createAppKit({
 
 ### onramp
 
-Enable or disable the onramp feature in your AppKit. [Onramp](/appkit/react/transactions/onramp) feature is enabled by default.
+Enable or disable the onramp feature in your Reown AppKit instance. [Onramp](/appkit/react/transactions/onramp) feature is enabled by default.
 
 ```ts
 createAppKit({
@@ -416,9 +416,9 @@ The `allWallets` parameter allows you to add or remove the "All Wallets" button 
 
 | Value         | Description                                              |
 | ------------- | -------------------------------------------------------- |
-| `SHOW`        | Shows the "All Wallets" button on AppKit.                |
+| `SHOW`        | Shows the "All Wallets" button in the modal.                |
 | `HIDE`        | Removes the "All Wallets" button from AppKit.            |
-| `ONLY_MOBILE` | Shows the "All Wallets" button on AppKit only on mobile. |
+| `ONLY_MOBILE` | Shows the "All Wallets" button in the modal only on mobile. |
 
 ```ts
 createAppKit({
@@ -481,7 +481,7 @@ The `preference` (or `coinbasePreference`) flag accepts one of the following str
 <Tabs>
 <Tab title="Wagmi">
 
-AppKit can be configured in **two** different ways: **Default** or **Custom**
+Reown can be configured in **two** different ways: **Default** or **Custom**
 
 Select your preferred configuration mode below:
 
