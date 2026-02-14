@@ -2,15 +2,57 @@ export const ChainList = () => {
   let chains = [];
   let filteredChains = [];
 
+  const getAppKitSupport = (namespace) => {
+    if (namespace.startsWith("eip155:")) return "yes";
+    if (namespace.startsWith("solana:")) return "yes";
+    if (namespace.startsWith("bip122:")) return "yes";
+    if (namespace.startsWith("ton:")) return "yes";
+    if (namespace.startsWith("polkadot:")) return "partial";
+    return "no";
+  };
+
+  const getAppKitLabel = (support) => {
+    if (support === "yes") return "Reown";
+    if (support === "partial") return "Reown (Flutter)";
+    return "";
+  };
+
   if (typeof document !== "undefined") {
+    if (!document.getElementById("appkit-badge-styles")) {
+      const style = document.createElement("style");
+      style.id = "appkit-badge-styles";
+      style.textContent = `
+        .appkit-badge {
+          position: absolute;
+          bottom: 6px;
+          right: 6px;
+          font-size: 11px;
+          padding: 3px 10px;
+          border-radius: 9999px;
+          border: 1px solid rgba(10, 14, 12, 0.15);
+          background-color: #f3f4f6;
+          color: #374151;
+          font-weight: 500;
+          line-height: 1.4;
+        }
+        .dark .appkit-badge {
+          border-color: rgba(255, 255, 255, 0.15);
+          background-color: #4b5563;
+          color: #e5e7eb;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
     fetch(
       "https://explorer-api.walletconnect.com/v3/chains?projectId=8e998cd112127e42dce5e2bf74122539"
     )
       .then((response) => response.json())
       .then((data) => {
         chains = Object.keys(data.chains).map((key) => ({
-          name: data.chains[key].name, 
-          namespace: key, 
+          name: data.chains[key].name,
+          namespace: key,
+          appKitSupport: getAppKitSupport(key),
         }));
         filteredChains = [...chains];
         renderChains(filteredChains);
@@ -40,12 +82,25 @@ export const ChainList = () => {
           border border-gray-500 p-2 text-center 
           w-full dark:bg-gray-600 dark:text-white h-20
         `;
-        card.innerText = chain.name;
+        card.style.position = "relative";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.innerText = chain.name;
+        card.appendChild(nameSpan);
+
+        const label = getAppKitLabel(chain.appKitSupport);
+        if (label) {
+          const badge = document.createElement("span");
+          badge.innerText = label;
+          badge.className = "appkit-badge";
+          card.appendChild(badge);
+        }
+
         card.onclick = () => {
           navigator.clipboard.writeText(chain.namespace);
-          card.innerText = "Chain ID copied!";
+          nameSpan.innerText = "Chain ID copied!";
           setTimeout(() => {
-            card.innerText = chain.name;
+            nameSpan.innerText = chain.name;
           }, 3000);
         };
         container.appendChild(card);

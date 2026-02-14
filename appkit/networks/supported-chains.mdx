@@ -1,0 +1,58 @@
+---
+title: Reown AppKit Supported Chains
+sidebarTitle: Supported Chains
+---
+
+Reown AppKit provides native SDK support for a specific set of blockchain networks. This page lists the chains you can integrate directly using the AppKit SDK.
+
+<Note>
+Looking for the full list of chains supported by the WalletConnect protocol? See the [WalletConnect Cloud Supported Chains](/cloud/chains/chain-list) page.
+</Note>
+
+## Natively Supported Chains
+
+| Chain | Platforms |
+|---|---|
+| **EVM** (Ethereum, Polygon, Arbitrum, Optimism, Base, etc.) | React, Next.js, Vue, JavaScript, Svelte, Nuxt, React Native, Flutter, Android, iOS, Unity |
+| **Solana** | React, Next.js, Vue, JavaScript, React Native |
+| **Bitcoin** | React, Next.js, Vue, JavaScript, React Native |
+| **TON** | React, Next.js, Vue, JavaScript, Svelte, Nuxt |
+| **Polkadot** | Flutter |
+
+### EVM Chains
+
+AppKit supports all EVM-compatible chains. As long as the chain is included in [Viem's chain definitions](https://github.com/wevm/viem/blob/main/src/chains/index.ts), AppKit will support it. This includes Ethereum, Polygon, Arbitrum, Optimism, Base, Avalanche, BNB Smart Chain, and many more.
+
+<Card title="EVM Setup Guide" icon="ethereum" href="/appkit/networks/evm" horizontal>
+  Get started with EVM chains in AppKit.
+</Card>
+
+### Solana
+
+AppKit supports Solana on web frameworks and React Native. You can connect Solana wallets and interact with the Solana network directly through the SDK.
+
+<Card title="Solana Setup Guide" icon="circle-nodes" href="/appkit/networks/solana" horizontal>
+  Get started with Solana in AppKit.
+</Card>
+
+### Bitcoin
+
+AppKit supports Bitcoin wallet connections through WBIPs and the Bitcoin Wallet Standard. Supported wallets include Xverse, OKX, Leather, and Phantom.
+
+<Card title="Bitcoin Setup Guide" icon="bitcoin-sign" href="/appkit/networks/bitcoin" horizontal>
+  Get started with Bitcoin in AppKit.
+</Card>
+
+### TON
+
+AppKit supports TON on web frameworks. You can connect TON wallets and interact with the TON network directly through the SDK.
+
+### Polkadot
+
+AppKit supports Polkadot on Flutter. For Polkadot integration details on other platforms, refer to the [Polkadot integration guide](/advanced/multichain/polkadot/dapp-integration-guide).
+
+## Other Chains via WalletConnect Protocol
+
+Chains not listed above can still work with WalletConnect at the protocol level for dApp-wallet communication. The [WalletConnect Cloud Supported Chains](/cloud/chains/chain-list) page lists all chains available through the protocol, including Cosmos, Sui, Stacks, Tron, Near, Stellar, and more.
+
+For RPC method references on these chains, see the [Multi-Chain RPC Reference](/advanced/multichain/rpc-reference/ethereum-rpc).
