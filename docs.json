@@ -56,6 +56,10 @@
     {
       "source": "/appkit/features/telegram-mini-apps",
       "destination": "/appkit/integrations/telegram-mini-apps"
+    },
+    {
+      "source": "/appkit/networks/solana",
+      "destination": "/appkit/networks/svm"
     }
   ],
   "contextual": {
@@ -119,7 +123,7 @@
                 "group": "Network",
                 "pages": [
                   "appkit/networks/evm",
-                  "appkit/networks/solana",
+                  "appkit/networks/svm",
                   "appkit/networks/bitcoin"
                 ]
               },
