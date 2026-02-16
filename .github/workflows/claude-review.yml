@@ -30,11 +30,19 @@ jobs:
           fetch-depth: 0
 
       - name: Claude Review
-        uses: WalletConnect/actions/claude/auto-review@29a239cc76760181de7c79de0d249bbb99db304e
+        uses: WalletConnect/actions/claude/auto-review@master
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           project_context: |
             This is the official documentation portal for Reown (formerly WalletConnect), built with Mintlify.
+
+            CRITICAL: Before starting any PR review, you MUST read the tone of voice guidance at reown-tone-of-voice-extract.md in the repository root. All documentation content must comply with these voice and tone principles.
+
+            Your review process:
+            1. Read the content in full before making any judgments.
+            2. Evaluate it against each of the voice principles and tone rules in reown-tone-of-voice-extract.md.
+            3. For every violation you find, produce a finding that includes: the original text, which principle it violates and why, and a rewritten version that fixes the issue while preserving technical accuracy.
+            4. If the content has no violations, say so explicitly - do not invent issues.
 
             Architecture and Stack:
             - Static documentation site using Mintlify framework rendering MDX files
@@ -69,3 +77,4 @@ jobs:
             - Consistency across platform-specific documentation
             - Valid links and redirect configurations in docs.json
             - Proper spelling (cspell is enforced)
+            - Tone of voice compliance per reown-tone-of-voice-extract.md
