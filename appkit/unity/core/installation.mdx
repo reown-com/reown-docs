@@ -5,11 +5,11 @@ sidebarTitle: Installation
 
 import CloudBanner from "/snippets/cloud-banner.mdx"
 
-With AppKit, you can easily let people interact with multiple EVM and Solana compatible wallets and blockchains directly from your Unity game.
+With Reown, you can easily let people interact with multiple EVM and Solana compatible wallets and blockchains directly from your Unity game.
 
 ## Install
 
-Let's get started by installing the AppKit package!
+Let's get started by installing the Reown AppKit package!
 
 ### Prerequisites
 
@@ -19,12 +19,12 @@ Let's get started by installing the AppKit package!
 - Gamma color space
   - If you need Linear color space, please [open a GitHub issue](https://github.com/reown-com/reown-dotnet/issues)
 
-### AppKit Package
+### Reown Package
 
 <Tabs>
 <Tab title="OpenUPM CLI">
 
-To install AppKit package via OpenUPM, you need to have [Node.js](https://nodejs.org/en/) and [openupm-cli](https://openupm.com/docs/getting-started.html#installing-openupm-cli) installed. Once you have them installed, you can run the following commands:
+To install the Reown AppKit package via OpenUPM, you need to have [Node.js](https://nodejs.org/en/) and [openupm-cli](https://openupm.com/docs/getting-started.html#installing-openupm-cli) installed. Once you have them installed, you can run the following commands:
 
 ```bash
 openupm add com.reown.appkit.unity
@@ -60,7 +60,7 @@ openupm add com.reown.appkit.unity
 </Tabs>
 
 <Note>
-  If you encounter errors related to the `com.unity.vectorgraphics` package after installing AppKit,
+  If you encounter errors related to the `com.unity.vectorgraphics` package after installing Reown,
   please install it manually from the Package Manager. Click the plus ➕ button in the Package
   Manager window, then select the `Add package by name...` option and enter
   `com.unity.vectorgraphics`.
@@ -96,7 +96,7 @@ await AppKit.InitializeAsync(
 ## Implement
 
 1. Add `Reown AppKit` prefab from `Packages/Reown.AppKit.Unity/Prefabs` to your scene.
-2. Initialize AppKit from your script
+2. Initialize Reown from your script
 
 ```csharp
 public async void Start()
@@ -128,11 +128,11 @@ public async Task ResumeSession()
 }
 ```
 
-> Optional: Using Solana Unity SDK? You can keep using `Solana.Unity.SDK`'s `Web3` and route all signing through AppKit with our adapter. See the adapter section in [Usage](/appkit/unity/core/usage#appkit-with-solana-unity-sdk).
+> Optional: Using Solana Unity SDK? You can keep using `Solana.Unity.SDK`'s `Web3` and route all signing through Reown with our adapter. See the adapter section in [Usage](/appkit/unity/core/usage#appkit-with-solana-unity-sdk).
 
 ## Examples and Test dApps
 
-- [Unity AppKit Example in Github](https://github.com/reown-com/reown-dotnet/tree/main/sample/)
+- [Unity Reown Example in Github](https://github.com/reown-com/reown-dotnet/tree/main/sample/)
 - [A WebGL sample](https://appkit-unity.reown.com/)
 - [Android Build (Firebase)](https://appdistribution.firebase.dev/i/093025eda71719e2)
 - [iOS Build (Testflight)](https://testflight.apple.com/join/MPkPYk43)

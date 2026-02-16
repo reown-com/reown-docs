@@ -1,9 +1,9 @@
 ---
 title: Migrate to Multichain
-description: A guide to help you migrate your existing Reown AppKit React Native integration to the new multichain version.
+description: A guide to help you migrate your existing Reown React Native integration to the new multichain version.
 ---
 
-This guide will walk you through the necessary steps to update your existing Reown AppKit React Native integration to the latest multichain version. The new version introduces a more flexible and powerful architecture, centered around a core AppKit library and distinct chain-specific adapters.
+This guide will walk you through the necessary steps to update your existing Reown React Native integration to the latest multichain version. The new version introduces a more flexible and powerful architecture, centered around a core Reown library and distinct chain-specific adapters.
 
 ## Key Changes at a Glance
 
@@ -18,10 +18,10 @@ Before diving into the specific steps, here's a high-level overview of the most 
 Your first step is to update your project's dependencies.
 
 ### a. Remove Old Packages (If Applicable)
-If you were previously using older, specific AppKit packages like `@web3modal/*` or potentially differently named predecessors to `@reown/appkit-*-react-native`, you should remove them. The primary packages to focus on now are `@reown/appkit-react-native` and the new chain adapters.
+If you were previously using older, specific Reown packages like `@web3modal/*` or potentially differently named predecessors to `@reown/appkit-*-react-native`, you should remove them. The primary packages to focus on now are `@reown/appkit-react-native` and the new chain adapters.
 
 ### b. Install Core Package & Polyfills/Helpers
-Install the main AppKit library along with essential peer dependencies for React Native:
+Install the main Reown library along with essential peer dependencies for React Native:
 
 ```bash
 # For Expo projects
@@ -90,9 +90,9 @@ import "@walletconnect/react-native-compat"; // MUST BE THE VERY FIRST IMPORT
 
 This step is critical for avoiding runtime errors related to missing polyfills.
 
-## 3. AppKit Initialization (`createAppKit`)
+## 3. Reown Initialization (`createAppKit`)
 
-The way you initialize AppKit has changed significantly to support the new adapter-based architecture.
+The way you initialize Reown has changed significantly to support the new adapter-based architecture.
 
 ### Old Implementation
 
@@ -187,7 +187,7 @@ export const appKit = createAppKit({
 -   `createAppKit` is imported from `@reown/appkit-react-native`.
 -   You explicitly create instances of the adapters you need (e.g., `new EthersAdapter()`, `new WagmiAdapter(...)`).
 -   The `adapters` array in `createAppKit` takes these initialized adapter instances.
--   The `networks` array in `createAppKit` takes `AppKitNetwork` objects, which define all supported networks for AppKit's UI and context. `viem/chains` objects can be directly used for EVM networks.
+-   The `networks` array in `createAppKit` takes `AppKitNetwork` objects, which define all supported networks for Reown's UI and context. `viem/chains` objects can be directly used for EVM networks.
 -   For the `WagmiAdapter`, the `networks` property in its constructor defines which EVM chains *it* will specifically manage using Wagmi.
 
 ## 4. Provider Setup
@@ -247,7 +247,7 @@ function App() {
 export default App;
 ```
 
-### c. Rendering AppKit UI
+### c. Rendering Reown UI
 Ensure the `<AppKit />` component (imported from `@reown/appkit-react-native`) is included in your app's component tree, typically in your root component, to render the modal UI. This was likely already in place.
 
 ```tsx
@@ -282,7 +282,7 @@ Refer to the [Options](./options) documentation for the complete and up-to-date 
 
 ## 6. Hooks Migration
 
-All AppKit hooks are now imported directly from `@reown/appkit-react-native`.
+All Reown hooks are now imported directly from `@reown/appkit-react-native`.
 
 -   **`useAppKit()`**:
     -   Import from `@reown/appkit-react-native`.
@@ -299,7 +299,7 @@ All AppKit hooks are now imported directly from `@reown/appkit-react-native`.
     -   Use this to get the underlying chain-specific provider/client (e.g., Ethers provider, Wagmi client, Solana connection).
 -   **`useAppKitEventSubscription()` (New Hook)**:
     -   Import from `@reown/appkit-react-native`.
-    -   Allows subscription to various AppKit lifecycle events.
+    -   Allows subscription to various Reown lifecycle events.
 -   **Deprecated Hooks:**
     -   `useDisconnect`: The `disconnect` function is now available from `useAppKit().disconnect()`.
 

@@ -10,12 +10,12 @@ import SiweParams from "/snippets/appkit/shared/siwe/parameters.mdx";
 **SIWE is being migrated to SIWX.** We recommend using [SIWX (Sign In With X)](/appkit/authentication/siwx/default) for new implementations as it provides multichain authentication support. For existing SIWE implementations, see the [migration guide](/appkit/authentication/siwx/default#migrating-from-siwe-to-siwx).
 </Warning>
 
-AppKit provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a new form of authentication that enables users to control their digital identity with their Ethereum account.
+Reown provides a simple solution for integrating with "Sign In With Ethereum" (SIWE), a form of authentication that enables users to control their digital identity with their Ethereum account.
 SIWE is a standard also known as [EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361).
 
 ## One-Click Auth
 
-**One-Click Auth** represents a key advancement within WalletConnect v2, streamlining the user authentication process in AppKit by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
+**One-Click Auth** represents a key advancement within WalletConnect v2, streamlining the user authentication process by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
 
 Connecting a wallet, proving control of an address with an off-chain signature, authorizing specific actions. These are the kinds of authorizations that can be encoded as ["ReCaps"](https://eips.ethereum.org/EIPS/eip-5573). ReCaps are permissions for a specific website or dapp that can be compactly encoded as a long string in the message you sign and translated by any wallet into a straight-forward one-sentence summary.
 WalletConnect uses permissions expressed as ReCaps to enable a One-Click Authentication.
@@ -49,7 +49,7 @@ pnpm add @reown/appkit-siwe siwe
 
 <Warning>For a better UX we recommend using One-Click Auth.</Warning>
 
-Install the AppKit SIWE package, additionally we also recommend installing [siwe](https://docs.login.xyz/) which will abstract a lot of the required logic.
+Install the Reown SIWE package. For the best experience, we recommend also installing [siwe](https://docs.login.xyz/) to abstract a lot of the required logic.
 
 <CodeGroup>
 
@@ -77,7 +77,7 @@ pnpm add @reown/appkit-siwe siwe
 
 <SiweCode />
 
-## Initialize AppKit with your `siweConfig`
+## Initialize Reown AppKit with your `siweConfig`
 
 ```ts
 // Pass your siweConfig inside the createAppKit() function

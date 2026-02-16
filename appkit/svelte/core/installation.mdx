@@ -21,11 +21,11 @@ import SvelteTonModal from '/snippets/appkit/svelte/ton/about/triggermodal.mdx'
 
 # Svelte
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin and TON.
+Reown has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin and TON.
 Choose one of these to get started.
 
 <Note>
-  We recommend using [SvelteKit v5](https://kit.svelte.dev/) to get started with AppKit Svelte.
+  We recommend using [SvelteKit v5](https://kit.svelte.dev/) to get started with Reown for Svelte.
 </Note>
 
 ## Installation
@@ -195,7 +195,7 @@ MetaMask does not currently support WalletConnect connections on Solana. The Met
 
 ## Trigger the modal
 
-The recommended way to trigger the modal in Svelte is to use the `<appkit-button />` web component. After setting up AppKit in your application, you can simply use the button component anywhere in your Svelte templates:
+The recommended way to trigger the modal in Svelte is to use the `<appkit-button />` web component. After setting up Reown in your application, you can simply use the button component anywhere in your Svelte templates:
 
 ```javascript
 <script lang="ts">
@@ -212,11 +212,11 @@ The recommended way to trigger the modal in Svelte is to use the `<appkit-button
 </main>
 ```
 
-The `<appkit-button />` is a web component that's automatically registered when AppKit is initialized. No additional imports are required.
+The `<appkit-button />` is a web component that's automatically registered when Reown is initialized. No additional imports are required.
 
 ### Alternative approaches
 
-You can also trigger the modal programmatically using the AppKit instance:
+You can also trigger the modal programmatically using the Reown AppKit instance:
 
 ```javascript
 <script lang="ts">
@@ -240,7 +240,7 @@ You can also trigger the modal programmatically using the AppKit instance:
 <button on:click={openAccountModal}>View Account</button>
 ```
 
-Or use other AppKit web components:
+Or use other Reown web components:
 
 ```javascript
 <appkit-connect-button />

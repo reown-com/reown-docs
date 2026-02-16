@@ -3,7 +3,7 @@ title: Sign-In With Ethereum
 sidebarTitle: One-Click Auth (SIWE)
 ---
 
-AppKit provides a simple solution for integrating with "Sign-In With Ethereum" (SIWE), a new form of authentication that
+Reown provides a simple solution for integrating with "Sign-In With Ethereum" (SIWE), a form of authentication that
 enables users to control their digital identity with their Ethereum account.
 SIWE is a standard also known as [EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361).
 
@@ -14,7 +14,7 @@ SIWE is a standard also known as [EIP-4361](https://docs.login.xyz/general-infor
 ## One-Click Auth
 
 _One-Click Auth_ represents a key advancement within WalletConnect v2, streamlining the user authentication process in
-AppKit by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
+Reown by enabling them to seamlessly connect with a wallet and sign a SIWE message with just one click.
 
 Connecting a wallet, proving control of an address with an off-chain signature, authorizing specific actions.
 These are the kinds of authorizations that can be encoded as ["ReCaps"](https://eips.ethereum.org/EIPS/eip-5573). ReCaps are permissions for a specific website
@@ -33,7 +33,7 @@ However, there is a potential risk that the wallet could provide an address the 
 To mitigate this account spoofing risk, the standard practice is to require the user to sign a message with
 the provided address and then verify the signature.
 
-The Sign-In With Ethereum (SIWE) feature in AppKit can facilitate this verification process,
+The Sign-In With Ethereum (SIWE) feature can facilitate this verification process,
 enabling the application to confirm the user's Ethereum address even the app doesn't have a backend.
 
 ### 0. Create basic SIWE configuration
@@ -60,7 +60,7 @@ siweConfig.SignInSuccess += _ => Debug.Log("Address verified successfully!");
 siweConfig.SignOutSuccess += () => Debug.Log("Address verification canceled or wallet disconnected.");
 ```
 
-### 1. Initialize AppKit with your `SiweConfig`
+### 1. Initialize Reown AppKit with your `SiweConfig`
 
 Add the SIWE configuration to `AppKitConfig`
 
@@ -85,7 +85,7 @@ var appKitConfig = new AppKitConfig
 };
 ```
 
-With this configuration, AppKit will enforce address verification and invoke the `SignInSuccess` delegate when the
+With this configuration, the SDK will enforce address verification and invoke the `SignInSuccess` delegate when the
 user successfully verifies the address.
 
 ## Sign-In With Ethereum with Backend
@@ -170,7 +170,7 @@ siweConfig.SignInSuccess += _ => Debug.Log("[Dapp] SIWE Sign In Success!");
 siweConfig.SignOutSuccess += () => Debug.Log("[Dapp] SIWE Sign Out Success!");
 ```
 
-### 1. Initialize AppKit with your `SiweConfig`
+### 1. Initialize Reown with your `SiweConfig`
 
 Add the SIWE configuration to `AppKitConfig`
 

@@ -1,13 +1,13 @@
 ---
 title: Upgrade from Web3Modal to Reown AppKit for React Native
-sidebarTitle: Reown AppKit - React Native
+sidebarTitle: Reown - React Native
 ---
 
 This document outlines the steps to migrate from the old `@web3modal` packages to the new multichain `@reown/appkit` packages in your React Native project.
 
 ## Overview of Changes
 
-The new AppKit architecture introduces a core library with pluggable chain adapters, providing better support for multiple blockchains (EVM, Solana, Bitcoin) in a single integration.
+The new Reown architecture introduces a core library with pluggable chain adapters, providing better support for multiple blockchains (EVM, Solana, Bitcoin) in a single integration.
 
 **Key Changes:**
 - **Core Library**: Use `@reown/appkit-react-native` as the main package
@@ -41,7 +41,7 @@ yarn add @reown/appkit-wagmi-react-native wagmi viem@2.x @tanstack/react-query
 yarn add @reown/appkit-solana-react-native @reown/appkit-bitcoin-react-native
 ```
 
-**Step 2. Update your AppKit configuration**
+**Step 2. Update your Reown AppKit configuration**
 
 Create a new `AppKitConfig.ts` file with the multichain setup:
 
@@ -115,7 +115,7 @@ function App() {
 export default App;
 ```
 
-**Step 4. Update your component with AppKit UI**
+**Step 4. Update your component with Reown UI**
 
 ```tsx
 // YourAppRootComponent.tsx
@@ -239,7 +239,7 @@ yarn add @reown/appkit-ethers-react-native
 yarn add @reown/appkit-solana-react-native @reown/appkit-bitcoin-react-native
 ```
 
-**Step 2. Update your AppKit configuration**
+**Step 2. Update your Reown AppKit configuration**
 
 Create a new `AppKitConfig.ts` file with the multichain setup:
 
@@ -299,7 +299,7 @@ function App() {
 export default App;
 ```
 
-**Step 4. Update your component with AppKit UI**
+**Step 4. Update your component with Reown UI**
 
 ```tsx
 // YourAppRootComponent.tsx
@@ -418,7 +418,7 @@ export const appKit = createAppKit({
 - `W3mNetworkButton` → `NetworkButton`
 
 ### Multichain Support
-The new AppKit supports multiple blockchains natively. You can add support for Solana and Bitcoin by installing their respective adapters:
+The new Reown supports multiple blockchains natively. You can add support for Solana and Bitcoin by installing their respective adapters:
 
 ```bash
 # For Solana support
@@ -450,5 +450,5 @@ export const appKit = createAppKit({
 
 - Ensure that you have updated all relevant configurations and imports in your project to reflect the changes from Web3Modal to the new multichain AppKit.
 - Test your application thoroughly to ensure that the migration has been successful and that all functionality is working as expected.
-- Check our [AppKit examples for React Native](https://github.com/reown-com/react-native-examples/tree/multichain) to compare with your implementation in case you are having issues
+- Check our [Reown examples for React Native](https://github.com/reown-com/react-native-examples/tree/multichain) to compare with your implementation in case you are having issues
 - For detailed information about the new architecture, see the [Migration to Multichain guide](../react-native/core/migration-multichain)

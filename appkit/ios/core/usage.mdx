@@ -10,7 +10,7 @@ Make sure that you properly configure Networking and Pair Clients first.
 
 - [Networking](/advanced/api/core/relay)
 
-### Initialize AppKit Client
+### Initialize Reown AppKit Client
 
 In order to initialize a client just call a `configure` method from the AppKit instance wrapper
 
@@ -70,7 +70,7 @@ or you can change them later by calling `AppKit.set(sessionParams: SessionParams
 
 ### Provided UI components
 
-Now you can use the `AppKitButton` or `AppKitNetworkButton` components. These two components reflect the state of the AppKit client,
+Now you can use the `AppKitButton` or `AppKitNetworkButton` components. These two components reflect the state of the Reown AppKit client,
 including the session state, account address and balance, currently selected network, and will automatically update when the state changes.
 More can be found in https://github.com/reown-com/reown-swift/blob/develop/Sample/Example/ContentView.swift as part of the Sample app.
 
@@ -90,7 +90,7 @@ Otherwise you can specify the viewController to present from.
 AppKit.present(from: viewController)
 ```
 
-### Subscribe for AppKit Publishers
+### Subscribe for Reown Publishers
 
 The following publishers are available to subscribe:
 
@@ -106,8 +106,4 @@ public var authResponsePublisher: AnyPublisher<(id: RPCID, result: Result<(Sessi
 
 ### Sign methods
 
-AppKit is internally using Sign SDK and most of its method are being exposed through AppKit interface.
-
-### Where to go from here
-
-Check the AppKit usage in our Sample app that is part of AppKit repository.
+Reown AppKit uses the Sign SDK to implement the WalletConnect Protocol. Most Sign SDK functionality is exposed through the [`AppKit`](https://github.com/reown-com/reown-dotnet/blob/main/src/Reown.AppKit.Unity/Runtime/AppKit.cs#L17-L45) class, the main entry point for developers.

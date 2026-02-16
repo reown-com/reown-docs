@@ -5,7 +5,7 @@ sidebarTitle: "From Privy"
 
 <Note> 
 If you're migrating a React Privy dApp originally built with `create-react-app`, we recommend switching to **Vite** for improved performance and a better developer experience. 
-You can check out our [examples](https://github.com/reown-com/appkit-web-examples) for a complete implementation using **Vite + AppKit**.
+You can check out our [examples](https://github.com/reown-com/appkit-web-examples) for a complete implementation using **Vite + Reown AppKit**.
 </Note>
 
 Follow the steps below to migrate from a default Privy project (using Next.js Pages) to an **AppKit** project with wagmi.
@@ -17,7 +17,7 @@ Follow the steps below to migrate from a default Privy project (using Next.js Pa
 
 ### Step 2. Install & uninstall libraries
 
-Replace Privy dependencies with AppKit by running the following commands for your preferred package manager:
+Replace Privy dependencies with Reown AppKit by running the following commands for your preferred package manager:
 <CodeGroup>
 
 ```bash npm
@@ -40,7 +40,7 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem && pnpm remove @pr
 
 ### Step 3. Update `_app.tsx`
 
-To make AppKit Functional in a similar way, we need to replace the PrivyProvider with the combination of WagmiProvider and QueryClientProvider
+Next, we need to replace the PrivyProvider with the combination of WagmiProvider and QueryClientProvider
 
 1. Update Your Imports
 ```tsx {2-6}
@@ -52,7 +52,7 @@ To make AppKit Functional in a similar way, we need to replace the PrivyProvider
 + import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 ```
 
-2. Configure AppKit Outside the Component
+2. Configure Reown AppKit Outside the Component
 ```tsx {1-11}
 + const projectId = "<YOUR_PROJECT_ID_FROM_STEP_1>"
 + const wagmiAdapter = new WagmiAdapter({ projectId, [mainnet] })
@@ -82,12 +82,12 @@ Update your component tree to use WagmiProvider and QueryClientProvider, and ren
 ```
 
 <Info>
-AppKit web components (like `<appkit-button>`) are **global HTML elements** — no imports are necessary. 
+Reown AppKit web components (like `<appkit-button>`) are **global HTML elements** — no imports are necessary. 
 </Info>
 
 
 ### Final notes
 
 - Test your application thoroughly to ensure the migration has been successful and that all functionality is working as expected.
-- Check our [AppKit Web examples](https://github.com/reown-com/appkit-web-examples) to compare with your implementation if you encounter issues.
+- Check our [Reown Web examples](https://github.com/reown-com/appkit-web-examples) to compare with your implementation if you encounter issues.
 - If you want to start from scratch, refer to the Installation docs [here](/appkit/next/core/installation).
