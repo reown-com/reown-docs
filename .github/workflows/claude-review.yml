@@ -1,0 +1,80 @@
+name: Claude Auto Review
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [main]
+  issue_comment:
+    types: [created]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: |
+      github.event_name == 'pull_request'
+      || (
+        github.event_name == 'issue_comment'
+        && github.event.issue.pull_request
+        && contains(github.event.comment.body, '@claude review')
+      )
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Claude Review
+        uses: WalletConnect/actions/claude/auto-review@master
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          project_context: |
+            This is the official documentation portal for Reown (formerly WalletConnect), built with Mintlify.
+
+            CRITICAL: Before starting any PR review, you MUST read the tone of voice guidance at reown-tone-of-voice-extract.md in the repository root. All documentation content must comply with these voice and tone principles.
+
+            Your review process:
+            1. Read the content in full before making any judgments.
+            2. Evaluate it against each of the voice principles and tone rules in reown-tone-of-voice-extract.md.
+            3. For every violation you find, produce a finding that includes: the original text, which principle it violates and why, and a rewritten version that fixes the issue while preserving technical accuracy.
+            4. If the content has no violations, say so explicitly - do not invent issues.
+
+            Architecture and Stack:
+            - Static documentation site using Mintlify framework rendering MDX files
+            - Package manager: pnpm
+            - Spell checking via cspell on all .md and .mdx files
+            - Analytics integrations: PostHog and Google Tag Manager
+            - Central configuration in docs.json controlling navigation, theme (Aspen), redirects, and integrations
+
+            Content Structure:
+            - appkit/ - Primary SDK documentation covering 11 platforms: React, Next.js, Vue, JavaScript, Svelte, Nuxt, React Native, Flutter, iOS (Swift), Android (Kotlin), Unity (C#)
+            - cloud/ - Cloud services docs: Relay (WebSocket), Blockchain API (RPC), Analytics, Explorer/WalletGuide
+            - advanced/ - Multichain RPC references (Sui, Stacks, Bitcoin), providers, security
+            - snippets/ - Reusable code examples shared across platform docs
+            - images/ - Static assets (icons, demos, screenshots)
+
+            Key Patterns and Conventions:
+            - Each platform SDK follows a consistent structure: core/installation, core/options, core/hooks or core/actions, core/components, core/theming
+            - MDX files use Mintlify components (Cards, Tabs, CodeGroups, Accordions)
+            - Code examples demonstrate createAppKit() initialization with projectId, metadata, networks, and adapters
+            - Redirects maintain backward compatibility from legacy WalletConnect/Web3Modal paths to current Reown paths
+
+            Domain-Specific Knowledge:
+            - Multichain Web3 infrastructure supporting EVM, Solana, Bitcoin, Sui, TON, and Stacks networks
+            - CAIP-2 chain identifiers (e.g., eip155:1 for Ethereum mainnet)
+            - Authentication patterns: SIWE (Sign In With Ethereum), SIWX (multi-chain), One-Click Auth, social logins
+            - Payment features: Pay with Exchange (PWE), Deposit with Exchange (DWE), One-Click Checkout
+            - Chain abstraction for cross-chain transaction orchestration
+
+            Review Focus:
+            - Accuracy of code examples and SDK usage patterns
+            - Correct MDX syntax and Mintlify component usage
+            - Consistency across platform-specific documentation
+            - Valid links and redirect configurations in docs.json
+            - Proper spelling (cspell is enforced)
+            - Tone of voice compliance per reown-tone-of-voice-extract.md
