@@ -16,9 +16,11 @@ import BitcoinImplementation from '/snippets/appkit/vue/bitcoin/about/implementa
 
 import TonImplementation from '/snippets/appkit/vue/ton/about/implementation.mdx'
 
+import TronImplementation from '/snippets/appkit/vue/tron/about/implementation.mdx'
+
 ## Introduction
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin and TON.
+AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin, TON and TRON.
 Choose one of these to get started.
 
 ## Installation
@@ -166,6 +168,29 @@ pnpm add @reown/appkit @reown/appkit-adapter-ton
 </CodeGroup>
 
 </Tab>
+<Tab title="TRON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-tron
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 <CloudBanner />
@@ -219,6 +244,11 @@ Check the Vue TON example
 </Card>
 
 <TonImplementation />
+
+</Tab>
+<Tab title="TRON">
+
+<TronImplementation />
 
 </Tab>
 </Tabs>
