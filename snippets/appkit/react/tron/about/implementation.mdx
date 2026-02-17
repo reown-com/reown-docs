@@ -57,6 +57,10 @@ export default function App() {
 
 TRON adapter requires you to install wallet adapters separately. This gives you control over which wallets to support and reduces bundle size.
 
+<Tabs>
+<Tab title="TronLink">
+<CodeGroup>
+
 ```bash npm
 npm install @tronweb3/tronwallet-adapter-tronlink
 ```
@@ -73,30 +77,145 @@ bun add @tronweb3/tronwallet-adapter-tronlink
 pnpm add @tronweb3/tronwallet-adapter-tronlink
 ```
 
-### Additional Wallet Adapters
+</CodeGroup>
+</Tab>
 
-You can install additional TRON wallet adapters:
+<Tab title="MetaMask">
+<CodeGroup>
 
-```bash
+```bash npm
 npm install @tronweb3/tronwallet-adapter-metamask-tron
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-metamask-tron
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-metamask-tron
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-metamask-tron
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="Trust Wallet">
+<CodeGroup>
+
+```bash npm
 npm install @tronweb3/tronwallet-adapter-trust
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-trust
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-trust
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-trust
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="OKX Wallet">
+<CodeGroup>
+
+```bash npm
 npm install @tronweb3/tronwallet-adapter-okxwallet
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-okxwallet
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-okxwallet
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-okxwallet
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="BitKeep">
+<CodeGroup>
+
+```bash npm
 npm install @tronweb3/tronwallet-adapter-bitkeep
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-bitkeep
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-bitkeep
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-bitkeep
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="Binance Wallet">
+<CodeGroup>
+
+```bash npm
 npm install @tronweb3/tronwallet-adapter-binance
 ```
 
-Then add them to the `walletAdapters` array:
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-binance
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-binance
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-binance
+```
+
+</CodeGroup>
+</Tab>
+</Tabs>
+
+<Note>
+For a complete list of available TRON wallet adapters, visit the [official wallet adapter documentation](https://walletadapter.org/docs/guide/wallet-reference.html).
+</Note>
+
+### Using Multiple Wallet Adapters
+
+After installing your desired wallet adapters, import and add them to the `walletAdapters` array when creating the TRON adapter:
 
 ```tsx
 import { TronLinkAdapter } from '@tronweb3/tronwallet-adapter-tronlink'
 import { MetaMaskAdapter } from '@tronweb3/tronwallet-adapter-metamask-tron'
 import { TrustAdapter } from '@tronweb3/tronwallet-adapter-trust'
+import { OkxWalletAdapter } from '@tronweb3/tronwallet-adapter-okxwallet'
 
 const tronAdapter = new TronAdapter({
   walletAdapters: [
-    new TronLinkAdapter({ openUrlWhenWalletNotFound: false, checkTimeout: 3000 }),
+    new TronLinkAdapter({
+      openUrlWhenWalletNotFound: false,
+      checkTimeout: 3000
+    }),
     new MetaMaskAdapter(),
-    new TrustAdapter()
+    new TrustAdapter(),
+    new OkxWalletAdapter({
+      openUrlWhenWalletNotFound: false
+    })
   ]
 })
 ```
