@@ -75,35 +75,23 @@
                 "group": "Getting Started",
                 "pages": ["appkit/overview"]
               },
-                            {
-                              "group": "Paid Plans",
-                              "pages": ["appkit/paid-plans/pro", "appkit/paid-plans/enterprise"]
-                            },
               {
-                "group": "Features",
-                "pages": [
-                  "appkit/features/index",
-                  "appkit/features/swaps",
-                  "appkit/features/onramp",
-                  "appkit/features/multichain",
-                                    "appkit/features/smart-accounts",
-                                    "appkit/features/smart-accounts-interaction",
-                                    "appkit/features/chain-abstraction"
-                ]
+                "group": "Paid Plans",
+                "pages": ["appkit/paid-plans/pro", "appkit/paid-plans/enterprise"]
               },
               {
-                "group": "Authentication",
+                "group": "Accounts & Authentication",
                 "pages": [
-                  "appkit/authentication/socials",
-                  "appkit/authentication/one-click-auth",
-                  "appkit/authentication/siwx/default"
-                ]
-              },
-              {
-                "group": "Integrations",
-                "pages": [
-                  "appkit/integrations/telegram-mini-apps",
-                  "appkit/integrations/farcaster-mini-apps"
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/authentication/socials",
+                      "appkit/authentication/one-click-auth",
+                      "appkit/authentication/siwx/default"
+                    ]
+                  },
+                  "appkit/features/smart-accounts",
+                  "appkit/features/smart-accounts-interaction"
                 ]
               },
               {
@@ -112,11 +100,21 @@
                   "appkit/payments/overview",
                   "appkit/payments/pay-with-exchange",
                   "appkit/payments/deposit-with-exchange",
-                  "appkit/payments/one-click-checkout"
+                  "appkit/payments/one-click-checkout",
+                  "appkit/features/swaps",
+                  "appkit/features/onramp"
                 ]
               },
               {
-                "group": "Network",
+                "group": "Multichain Tools",
+                "pages": [
+                  "appkit/features/multichain",
+                  "appkit/features/chain-abstraction",
+                  "appkit/authentication/siwx/default"
+                ]
+              },
+              {
+                "group": "Supported Networks",
                 "pages": [
                   "appkit/networks/supported-chains",
                   "appkit/networks/evm",
@@ -125,10 +123,17 @@
                 ]
               },
               {
+                "group": "Use Cases",
+                "pages": [
+                  "appkit/integrations/telegram-mini-apps",
+                  "appkit/integrations/farcaster-mini-apps"
+                ]
+              },
+              {
                 "group": "Guides",
                 "pages": [
                   {
-                    "group": "AppKit Guides",
+                    "group": "How Tos",
                     "pages": [
                       "appkit/recipes/telegram-mini-app",
                       "appkit/recipes/tenderly-virtual-testnets",
@@ -138,9 +143,9 @@
                       "appkit/recipes/EVM-smart-contract-interaction",
                       "appkit/recipes/solana-send-transaction",
                       "appkit/recipes/bitcoin-send-transaction",
-                                            "appkit/recipes/switching-to-send-calls",
-                                            "appkit/recipes/travel-rule",
-                                            "appkit/recipes/update-appkit",
+                      "appkit/recipes/switching-to-send-calls",
+                      "appkit/recipes/travel-rule",
+                      "appkit/recipes/update-appkit",
                       "appkit/recipes/universal-connector",
                       "appkit/recipes/troubleshooting"
                     ]
@@ -192,6 +197,21 @@
               {
                 "group": "Technical Reference",
                 "pages": ["appkit/faq"]
+              },
+              {
+                "anchor": "Contact Us",
+                "href": "https://reown.com/contact",
+                "icon": "headset"
+              },
+              {
+                "anchor": "Community",
+                "href": "https://discord.gg/reown",
+                "icon": "discord"
+              },
+              {
+                "anchor": "Blog",
+                "href": "https://reown.com/blog",
+                "icon": "newspaper"
               }
             ]
           },
@@ -771,25 +791,7 @@
         ]
       }
     ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Contact Us",
-          "href": "https://reown.com/contact",
-          "icon": "headset"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://discord.gg/reown",
-          "icon": "discord"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://reown.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    "global": {}
   },
   "logo": {
     "light": "/images/docs-logo.svg",
