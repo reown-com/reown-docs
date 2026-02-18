@@ -109,8 +109,7 @@
                 "group": "Multichain Tools",
                 "pages": [
                   "appkit/features/multichain",
-                  "appkit/features/chain-abstraction",
-                  "appkit/authentication/siwx/default"
+                  "appkit/features/chain-abstraction"
                 ]
               },
               {
@@ -197,21 +196,6 @@
               {
                 "group": "Technical Reference",
                 "pages": ["appkit/faq"]
-              },
-              {
-                "anchor": "Contact Us",
-                "href": "https://reown.com/contact",
-                "icon": "headset"
-              },
-              {
-                "anchor": "Community",
-                "href": "https://discord.gg/reown",
-                "icon": "discord"
-              },
-              {
-                "anchor": "Blog",
-                "href": "https://reown.com/blog",
-                "icon": "newspaper"
               }
             ]
           },
@@ -791,7 +775,25 @@
         ]
       }
     ],
-    "global": {}
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Contact Us",
+          "href": "https://reown.com/contact",
+          "icon": "headset"
+        },
+        {
+          "anchor": "Community",
+          "href": "https://discord.gg/reown",
+          "icon": "discord"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://reown.com/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
   },
   "logo": {
     "light": "/images/docs-logo.svg",
