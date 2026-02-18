@@ -88,66 +88,6 @@ title: About Reown SDK
   </Card>
 </CardGroup>
 
-## Features
-
-<Frame>![AppKit banner](/images/appkit.png)</Frame>
-
-#### Framework Agnostic
-
-Integrate effortlessly with popular frameworks like React, Vue, Svelte, vanilla JavaScript, and more.
-
-#### EIP-6963 Support
-
-Seamlessly connect browser extension wallets for an enhanced user experience. Learn more about **EIP-6963 [here](https://eips.ethereum.org/EIPS/eip-6963).**
-
-#### Email & Social Login
-
-Expand your app’s reach by enabling users to connect using their email or social accounts. Implement these features with minimal code and leverage Smart Account functionality for advanced capabilities.
-
-#### On-Ramp
-
-Allow users to securely purchase crypto with fiat, directly within your app, supporting over 100 cryptocurrencies.
-
-#### Customizable UI
-
-Choose between light and dark modes, accent colors, or fully customize the interface with your own branding.
-
-#### Multi-Chain Ready
-
-Easily configure support for EVM and non-EVM chains, giving users access to multiple blockchain networks.
-
-#### Hundreds of Wallets
-
-Connect with popular wallets like MetaMask, Rainbow, Coinbase, and many more to maximize accessibility.
-
-#### Transaction History
-
-Display all user transactions directly in the account view for added transparency.
-
-#### Swaps
-
-Simplify token swapping for users with AppKit Modal, allowing secure, in-app swaps with just one line of code.
-
-#### One-Click Auth
-
-Streamline user authentication with WalletConnect v2 integration. Users can sign in and connect to your app with just one tap, supporting multi-chain and multi-account signing.
-
-#### Smart Accounts
-
-Enhance security and user convenience with features like multi-signature authorization and automated transaction workflows.
-
-#### Solana Support
-
-Bring the Solana blockchain to your application with simple, secure wallet connections and seamless transaction support.
-
-#### Notifications
-
-Engage your users with web3-native notifications sent straight to their wallets or through in-app and Web3Inbox notifications.
-
-#### Telegram MiniApps
-
-Build Web3 mini-apps for Telegram with a prebuilt interface for connecting self-custodial wallets or enabling wallet creation via email or social login.
-
 ## Framework Support
 
 While AppKit offers a wide range of features, networks, and authentication methods that make it easy to build interactive and user-friendly blockchain applications, certain features are limited to specific frameworks.
@@ -174,3 +114,23 @@ While AppKit offers a wide range of features, networks, and authentication metho
 | Email & Social Login |<center>✅</center>  |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>✅</center>|<center>✅</center>|
 |  One-Click Auth |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|
 |    SIWX        |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|
+
+## Reown SDK (AppKit) vs AppKit Core
+
+### What is AppKit Core?
+AppKit Core is a **chain-agnostic** implementation that uses the Universal Provider/Universal Connector for blockchain interactions. Whereas the Reown SDK (AppKit) includes chain-specific adapters and full UI, AppKit Core offers a minimal, chain-agnostic foundation.
+
+The Reown SDK is best for most builders, but AppKit Core is ideal for developers who want to build more flexible custom-built solutions—those that don't need built-in features from day one.
+
+---
+
+| Feature | Reown SDK (AppKit) | AppKit Core |
+| :--- | :---: | :---: |
+| Swaps | ✅ | ❌ |
+| Onramps | ✅ | ❌ |
+| Smart Accounts | ✅ | ❌ |
+| Pre-Built Modal UI | ✅ | ❌ |
+| Chain-specific adapters | ✅ | ❌ |
+| Wallet Connections via WalletConnect Protocol | ✅ | ✅ |
+| Multichain support | ✅ | ✅ |
+| Multichain auth (SIWX) | ✅ | ✅ |
