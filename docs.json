@@ -99,13 +99,6 @@
                 ]
               },
               {
-                "group": "Interactions",
-                "pages": [
-                  "cloud/blockchain-api",
-                  "appkit/features/smart-accounts-interaction"
-                ]
-              },
-              {
                 "group": "Payments",
                 "pages": [
                   "appkit/payments/overview",
@@ -117,16 +110,23 @@
                 ]
               },
               {
+                "group": "Multichain Tools",
+                "pages": [
+                  "appkit/features/multichain",
+                  "appkit/features/chain-abstraction"
+                ]
+              },
+              {
                 "group": "Dashboard",
                 "pages": [
                   "cloud/analytics"
                 ]
               },
               {
-                "group": "Multichain Tools",
+                "group": "Interactions",
                 "pages": [
-                  "appkit/features/multichain",
-                  "appkit/features/chain-abstraction"
+                  "cloud/blockchain-api",
+                  "appkit/features/smart-accounts-interaction"
                 ]
               },
               {
