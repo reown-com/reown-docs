@@ -613,68 +613,39 @@
         "icon": "cloud",
         "pages": [
           {
-            "group": "Guides",
-            "pages": [
-              {
-                "group": "How Tos",
-                "pages": [
-                  "appkit/recipes/telegram-mini-app",
-                  "appkit/recipes/tenderly-virtual-testnets",
-                  "appkit/recipes/wallet-buttons-react",
-                  "appkit/recipes/wagmi-send-transaction",
-                  "appkit/recipes/ethers-send-transaction",
-                  "appkit/recipes/EVM-smart-contract-interaction",
-                  "appkit/recipes/solana-send-transaction",
-                  "appkit/recipes/bitcoin-send-transaction",
-                  "appkit/recipes/switching-to-send-calls",
-                  "appkit/recipes/travel-rule",
-                  "appkit/recipes/update-appkit",
-                  "appkit/recipes/universal-connector",
-                  "appkit/recipes/troubleshooting"
-                ]
-              },
-              "appkit/recipes/gtm-checklist"
-            ]
-          },
-          {
-            "group": "Upgrade",
-            "pages": [
-              {
-                "group": "AppKit",
-                "pages": [
-                  {
-                    "group": "Web3Modal to Reown AppKit",
-                    "pages": [
-                      "appkit/upgrade/from-w3m-to-reown",
-                      {
-                        "group": "Reown AppKit - Web",
-                        "pages": [
-                          "appkit/upgrade/to-reown-appkit-web",
-                          "appkit/upgrade/to-reown-appkit-ethers-web",
-                          "appkit/upgrade/to-reown-appkit-ethers5-web",
-                          "appkit/upgrade/to-reown-appkit-solana-web"
-                        ]
-                      },
-                      "appkit/upgrade/from-web3modal-react-native",
-                      "appkit/upgrade/from-web3modal-flutter",
-                      "appkit/upgrade/from-web3modal-android",
-                      "appkit/upgrade/from-web3modal-ios",
-                      "appkit/upgrade/from-web3modal-unity"
-                    ]
-                  }
-                ]
-              },
-              "appkit/upgrade/wcm"
-            ]
-          },
-          {
             "group": "Migration",
             "pages": [
               "appkit/migration/index",
-              "appkit/migration/from-privy-next",
-              "appkit/migration/from-rainbowkit-next",
-              "appkit/migration/from-connectkit-next",
-              "appkit/migration/from-anza-adapter-react"
+              {
+                "group": "Migrate from other libraries",
+                "pages": [
+                  "appkit/migration/from-privy-next",
+                  "appkit/migration/from-rainbowkit-next",
+                  "appkit/migration/from-connectkit-next",
+                  "appkit/migration/from-anza-adapter-react"
+                ]
+              },
+              {
+                "group": "Web3Modal to Reown AppKit",
+                "pages": [
+                  "appkit/upgrade/from-w3m-to-reown",
+                  {
+                    "group": "Reown AppKit - Web",
+                    "pages": [
+                      "appkit/upgrade/to-reown-appkit-web",
+                      "appkit/upgrade/to-reown-appkit-ethers-web",
+                      "appkit/upgrade/to-reown-appkit-ethers5-web",
+                      "appkit/upgrade/to-reown-appkit-solana-web"
+                    ]
+                  },
+                  "appkit/upgrade/from-web3modal-react-native",
+                  "appkit/upgrade/from-web3modal-flutter",
+                  "appkit/upgrade/from-web3modal-android",
+                  "appkit/upgrade/from-web3modal-ios",
+                  "appkit/upgrade/from-web3modal-unity"
+                ]
+              },
+              "appkit/upgrade/wcm"
             ]
           },
           {
@@ -775,6 +746,30 @@
               },
               "advanced/push-server",
               "advanced/walletkit-migration"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              {
+                "group": "How Tos",
+                "pages": [
+                  "appkit/recipes/telegram-mini-app",
+                  "appkit/recipes/tenderly-virtual-testnets",
+                  "appkit/recipes/wallet-buttons-react",
+                  "appkit/recipes/wagmi-send-transaction",
+                  "appkit/recipes/ethers-send-transaction",
+                  "appkit/recipes/EVM-smart-contract-interaction",
+                  "appkit/recipes/solana-send-transaction",
+                  "appkit/recipes/bitcoin-send-transaction",
+                  "appkit/recipes/switching-to-send-calls",
+                  "appkit/recipes/travel-rule",
+                  "appkit/recipes/update-appkit",
+                  "appkit/recipes/universal-connector",
+                  "appkit/recipes/troubleshooting"
+                ]
+              },
+              "appkit/recipes/gtm-checklist"
             ]
           },
           {
