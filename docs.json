@@ -669,6 +669,13 @@
             ]
           },
           {
+            "group": "Security",
+            "pages": [
+              "advanced/security/security-information",
+              "advanced/security/content-security-policy"
+            ]
+          },
+          {
             "group": "Technical Reference",
             "pages": ["link-spec", "external-link-01", "advanced/faq"]
           }
