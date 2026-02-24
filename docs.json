@@ -773,8 +773,8 @@
             ]
           },
           {
-            "group": "Technical Reference",
-            "pages": ["link-spec", "external-link-01", "advanced/faq"]
+              "group": "Technical Reference",
+              "pages": ["link-spec", "external-link-01", "advanced/faq", "advanced/report-an-issue"]
           }
         ]
       }
@@ -787,9 +787,9 @@
           "icon": "headset"
         },
         {
-          "anchor": "Community",
-          "href": "https://discord.gg/reown",
-          "icon": "discord"
+          "anchor": "Report an Issue",
+          "href": "/advanced/report-an-issue",
+          "icon": "bug"
         },
         {
           "anchor": "Blog",
