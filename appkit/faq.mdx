@@ -1,6 +1,6 @@
 ---
-title: "AppKit FAQs"
-sidebarTitle: "FAQs"
+title: 'AppKit FAQs'
+sidebarTitle: 'FAQs'
 ---
 
 This FAQ section covers common questions and solutions for using AppKit. The questions are organized into three main categories:
@@ -27,6 +27,7 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     });
     ```
     3. Ensure that you have added your domain to the allowed domains in your project settings. If you have not done so, you can do so by navigating to **"Project Domains"** on the Dashboard, clicking on **"Configure Domains"** and adding your domain.
+
   </Accordion>
 
   <Accordion title="Why are the 'Connect wallet' and 'Network' buttons greyed out?">
@@ -52,8 +53,9 @@ This FAQ section covers common questions and solutions for using AppKit. The que
       - Try switching to a different ISP or network.
 
     3. **Connectivity issues**
-      - Confirm that you can reach `relay.walletconnect.org`.  
+      - Confirm that you can reach `relay.walletconnect.org`.
       - A 100% packet loss when pinging may indicate the service is blocked on your network.
+
 </Accordion>
 
   <Accordion title="Why can't I see any wallets in the modal and only see the 'Connect Wallet' title?">
@@ -95,6 +97,7 @@ This FAQ section covers common questions and solutions for using AppKit. The que
       )
     }
     ```
+
   </Accordion>
 
   <Accordion title="How can I use custom RPCs with AppKit?">
@@ -108,6 +111,7 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     ```
 
     AppKit will prioritize these URLs over the default ones.
+
   </Accordion>
 </AccordionGroup>
 
@@ -140,11 +144,14 @@ This FAQ section covers common questions and solutions for using AppKit. The que
       Solana Address: {solanaAccountState.address}<br />
     </>
     ```
+
   </Accordion>
 
-  <Accordion title="How do I remove the 'UX by Reown' branding?">
-    Currently, only enterprise clients can hide "UX by Reown" on the AppKit modal by adjusting this option on our Dashboard. If you are an enterprise client and would like to hide this branding, contact us [via our form here](https://share.hsforms.com/1_oWa8QkwRXi6oR0nZ_SIxQnxw6s).
-  </Accordion>
+<Accordion title="How do I remove the 'UX by Reown' branding?">
+  Currently, only enterprise clients can hide "UX by Reown" on the AppKit modal by adjusting this
+  option on our Dashboard. If you are an enterprise client and would like to hide this branding,
+  contact us [via our form here](https://share.hsforms.com/1_oWa8QkwRXi6oR0nZ_SIxQnxw6s).
+</Accordion>
 
   <Accordion title="How do I increase my project's RPC limits?">
     Reown currently provides 2.5 million requests per 30 days. If you wish to increase this limit, you need to upgrade to AppKit Pro.
@@ -165,17 +172,19 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     This happens when you connect with a social login but haven’t made a transaction yet. Before the first transaction, the smart account isn’t deployed, so the signature includes extra data for deployment and verification. After the first transaction, the account is deployed and signatures go back to normal size.
 
     You can always use [viem's verifyMessage](https://viem.sh/docs/actions/public/verifyMessage) to verify the signature in different formats.
+
   </Accordion>
 
-  <Accordion title="How can I add my web wallet to the wallet list in WalletConnect?">
-    Add your web wallet to WalletConnect by following the steps in this link: https://docs.reown.com/cloud/explorer-submission.
-  </Accordion>
+<Accordion title="How can I add my web wallet to the wallet list in WalletConnect?">
+  Add your web wallet to WalletConnect by following the steps in this link:
+  https://docs.reown.com/cloud/explorer-submission.
+</Accordion>
 
-  <Accordion title="Can I reinitialize AppKit with different network configurations?">
-    Currently, `createAppKit` can only be called once during the application's lifecycle. 
-    It cannot be lazily initialized and then torn down for re-initialization. 
-    This means you must pass in all the networks you plan to support during the initial setup.
-  </Accordion>
+<Accordion title="Can I reinitialize AppKit with different network configurations?">
+  Currently, `createAppKit` can only be called once during the application's lifecycle. It cannot be
+  lazily initialized and then torn down for re-initialization. This means you must pass in all the
+  networks you plan to support during the initial setup.
+</Accordion>
 
   <Accordion title="Why can't I open wallet apps from in-app browsers on Android?">
     When users access a dApp from within an in-app browser (such as Telegram, Discord, or other apps with embedded browsers) on Android, they may be unable to open external wallet apps like MetaMask or Trust Wallet. This is a known platform limitation on Android where in-app browsers restrict the ability to launch external applications via deep links.
@@ -197,6 +206,65 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     ### For app developers embedding WebViews
 
     If you are building an app that embeds a WebView and want to support wallet connections, you need to explicitly handle deep links in your WebView implementation. See our [troubleshooting guide](/appkit/recipes/troubleshooting#in-app-browser-deeplink-detection) for code examples on how to intercept and handle wallet deep links across different platforms.
+
+  </Accordion>
+
+  <Accordion title="How do I delete a project?">
+    To delete a project from your [Reown Dashboard](https://dashboard.reown.com/):
+
+    1. Open the **Team** dropdown at the top of the Dashboard and select the team that contains the project you want to delete.
+
+    <Frame>
+      <img src="/images/faq/team-dropdown.png" alt="Team dropdown in the Reown Dashboard" />
+    </Frame>
+
+    2. Click on the **three dots** (`...`) menu at the end of the project you want to delete.
+
+    <Frame>
+      <img src="/images/faq/delete-project.png" alt="Project options menu showing Rename and Delete actions" />
+    </Frame>
+
+    3. Click **Delete** to remove the project.
+
+    4. Type the name of the project to confirm and click **Delete**.
+
+    <Frame>
+      <img src="/images/faq/confirm-delete-project.png" alt="Confirmation dialog to delete a project" />
+    </Frame>
+
+    <Warning>
+      Deleting a project is permanent and cannot be undone. Any integrations using this project's `projectId` will stop working immediately.
+    </Warning>
+
+  </Accordion>
+
+  <Accordion title="How do I delete a team?">
+    To delete a team from your [Reown Dashboard](https://dashboard.reown.com/):
+
+    1. Open the **Team** dropdown at the top of the Dashboard and select the team you want to delete.
+
+    <Frame>
+      <img src="/images/faq/team-dropdown.png" alt="Team dropdown in the Reown Dashboard" />
+    </Frame>
+
+    2. Navigate to the team **Settings** page.
+
+    3. Click the **Delete** button at the bottom of the settings page.
+
+    <Frame>
+      <img src="/images/faq/delete-team.png" alt="Delete button on the team settings page" />
+    </Frame>
+
+    4. Type the name of the team to confirm and click **Delete**.
+
+    <Frame>
+      <img src="/images/faq/confirm-delete-team.png" alt="Confirmation dialog to delete a team" />
+    </Frame>
+
+    <Warning>
+      Deleting a team is permanent and cannot be undone. All projects within the team will also be deleted, and any integrations using their `projectId` values will stop working immediately.
+    </Warning>
+
   </Accordion>
 
   <Accordion title="Error Codes">
@@ -214,6 +282,7 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     | APKT008 | Project ID Missing | No project ID was found. Set one up in your config at https://dashboard.reown.com. |
     | APKT009 | Server Error | We couldn't load your App Configuration. Check your network and try again. Contact support if it keeps happening. |
     | APKT010 | Rate Limited | Too many requests for App Configuration. Please wait a few minutes and try again. Reach out to support if needed. |
+
   </Accordion>
 </AccordionGroup>
 
@@ -224,5 +293,6 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     Free tier AppKit customers only are only entitled to support via [Discord](https://discord.gg/reown). Please join the Discord server and create a forum post **#developers-forum** and the team will get back to you.
 
     AppKit Pro and Enterprise customers get priority support via dedicated channels.
+
   </Accordion>
 </AccordionGroup>
