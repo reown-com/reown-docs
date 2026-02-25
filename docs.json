@@ -183,8 +183,13 @@
                             {
                               "group": "Early Access",
                               "pages": [
-                                "appkit/react/early-access/chain-abstraction",
-                                "appkit/react/early-access/headless"
+                                "appkit/react/early-access/chain-abstraction"
+                              ]
+                            },
+                            {
+                              "group": "Headless",
+                              "pages": [
+                                "appkit/react/core/headless"
                               ]
                             },
               {
