@@ -215,16 +215,20 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     1. Open the **Team** dropdown at the top of the Dashboard and select the team that contains the project you want to delete.
 
     <Frame>
-      <img src="/images/faq/team-dropdown.png" />
+      <img src="/images/faq/team-dropdown.png" alt="Team dropdown in the Reown Dashboard" />
     </Frame>
 
     2. Click on the **three dots** (`...`) menu at the end of the project you want to delete.
 
     <Frame>
-      <img src="/images/faq/delete-project.png" />
+      <img src="/images/faq/delete-project.png" alt="Project options menu showing Rename and Delete actions" />
     </Frame>
 
     3. Click **Delete** to remove the project.
+
+    <Warning>
+      Deleting a project is permanent and cannot be undone. Any integrations using this project's `projectId` will stop working immediately.
+    </Warning>
 
   </Accordion>
 
@@ -234,7 +238,7 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     1. Open the **Team** dropdown at the top of the Dashboard and select the team you want to delete.
 
     <Frame>
-      <img src="/images/faq/team-dropdown.png" />
+      <img src="/images/faq/team-dropdown.png" alt="Team dropdown in the Reown Dashboard" />
     </Frame>
 
     2. Navigate to the team **Settings** page.
@@ -242,8 +246,12 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     3. Click the **Delete** button at the bottom of the settings page.
 
     <Frame>
-      <img src="/images/faq/delete-team.png" />
+      <img src="/images/faq/delete-team.png" alt="Delete button on the team settings page" />
     </Frame>
+
+    <Warning>
+      Deleting a team is permanent and cannot be undone. All projects within the team will also be deleted, and any integrations using their `projectId` values will stop working immediately.
+    </Warning>
 
   </Accordion>
 
