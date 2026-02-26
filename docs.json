@@ -105,6 +105,7 @@
                   "appkit/features/swaps",
                   "appkit/features/onramp",
                   "appkit/payments/pay-with-exchange",
+                  "appkit/payments/pay-with-self-custodial-wallets",
                   "appkit/payments/deposit-with-exchange",
                   "appkit/payments/one-click-checkout"
                 ]
@@ -191,6 +192,7 @@
                 "group": "Payments",
                 "pages": [
                   "appkit/react/payments/pay-with-exchange",
+                  "appkit/react/payments/pay-with-self-custodial-wallets",
                   "appkit/react/payments/deposit-with-exchange"
                 ]
               },
@@ -250,6 +252,7 @@
                 "group": "Payments",
                 "pages": [
                   "appkit/next/payments/pay-with-exchange",
+                  "appkit/next/payments/pay-with-self-custodial-wallets",
                   "appkit/next/payments/deposit-with-exchange"
                 ]
               },
@@ -300,6 +303,7 @@
                 "group": "Payments",
                 "pages": [
                   "appkit/vue/payments/pay-with-exchange",
+                  "appkit/vue/payments/pay-with-self-custodial-wallets",
                   "appkit/vue/payments/deposit-with-exchange"
                 ]
               },
@@ -353,6 +357,7 @@
                 "group": "Payments",
                 "pages": [
                   "appkit/javascript/payments/pay-with-exchange",
+                  "appkit/javascript/payments/pay-with-self-custodial-wallets",
                   "appkit/javascript/payments/deposit-with-exchange"
                 ]
               },

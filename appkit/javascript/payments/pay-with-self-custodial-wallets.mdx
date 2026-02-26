@@ -1,0 +1,145 @@
+---
+title: AppKit Pay with Self-Custodial Wallets - JavaScript
+sidebarTitle: Pay with Self-Custodial Wallets
+---
+
+**AppKit Pay with Self-Custodial Wallets** enables end users to make crypto payments directly from non-custodial wallets. This includes mobile wallets connected via WalletConnect as well as many browser wallets, giving users full control of their assets throughout the payment process.
+
+## Quick Start  
+Here you can find a simplify process to integrate AppKit Pay with Javascript SDK:
+
+<Warning>
+    Projects first need to install and set up Reown AppKit before integrating AppKit Pay. If you haven't done so, please refer to the [Reown AppKit docs](/appkit/overview#quickstart).
+</Warning>
+
+### Install the library
+
+<Note>
+   Projects currently using Reown AppKit to enable self-custodial wallet payments in their own checkout flows are encouraged to switch to AppKit Pay for a simpler integration and significantly improved user experience. AppKit Pay can be found in `@reown/appkit-pay` npm package.
+</Note>
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit-pay
+```
+
+```bash Yarn
+yarn add @reown/appkit-pay
+```
+
+```bash Bun
+bun a @reown/appkit-pay
+```
+
+```bash pnpm
+pnpm add @reown/appkit-pay
+```
+</CodeGroup>
+
+### `pay` - Full Payment Flow
+
+#### Usage
+```ts
+import { pay, baseSepoliaETH } from '@reown/appkit-pay' 
+```
+
+This function handles the complete payment flow — it opens the payment UI *and* waits for the result (success, failure, cancel, timeout). This function receives three values: `recipient`, `amount`, and `paymentAsset`.
+
+```ts
+// pay function returns a PaymentResult object
+const result = await pay({
+    recipient: addressRecipient,
+    amount: amount,
+    paymentAsset: baseSepoliaETH
+});
+
+if (result.success) {
+    console.log("Payment successful: " + result.result);
+} else {
+    console.error("Payment error: " + result.error);
+}
+```
+
+## Prerequisites
+
+### Enable Payments Feature in Dashboard
+
+The "Payments" feature **must be enabled** in the [Reown Dashboard](https://dashboard.reown.com) before you can use AppKit Pay, even for local testing. 
+
+1. Go to your project in the Reown Dashboard
+2. Navigate to the Payments section
+3. Enable the Payments feature for your projectId
+
+
+## Test locally
+
+In order to test locally use localhost and port 3000. This is the only port available for local testing.
+
+Add the following to your package.json file in order to run the development server on port 3000:
+```json
+"scripts": {
+    "dev": "vite --port 3000",
+},
+```
+
+## Supported Networks and Assets
+
+For a complete list of supported networks and assets across different exchanges (Coinbase, Binance), please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Exchange documentation.
+
+## Assets Configuration
+
+For the moment, AppKit Pay has pre-configured these assets: 
+- baseETH, baseSepoliaETH, and baseUSDC
+- ethereumUSDC, optimismUSDC, arbitrumUSDC, polygonUSDC and solanaUSDC
+- ethereumUSDT, optimismUSDT, arbitrumUSDT, polygonUSDT and solanaUSDT
+
+```ts
+import { baseETH } from '@reown/appkit-pay' 
+```
+
+For custom assets, you can create a paymentAsset object with all the information:
+
+```ts
+// Configure the paymentAsset
+const paymentAssetDetails = {
+    network: 'eip155:8453', // Base Mainnet
+    asset: 'native', // Or USDC in Base: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
+    metadata: {
+        name: 'Ethereum', // Or 'USD Coin'
+        symbol: 'ETH',    // Or 'USDC'
+        decimals: 18      // Or 6 for USDC
+    }
+};
+```
+
+## Functions
+
+### pay
+Opens the payment modal. Resolves when the modal is closed by the user or programmatically.
+
+`pay(amount, addressRecipient, options: PaymentOptions): Promise<PaymentResult>`
+
+### getExchanges
+Fetches available exchanges.
+
+`getExchanges(page?: number): Promise<{ exchanges: Exchange[], total: number }>`
+
+### getPayResult
+Use with caution regarding timing; subscriptions are preferred.
+
+`getPayResult(): PayResult | null`
+
+Returns the result of the last successful payment. 
+
+### getPayError
+Use with caution regarding timing; subscriptions are preferred.
+
+`getPayError(): AppKitPayErrorMessage | null`
+
+Returns the error object if the last payment failed. 
+
+### getIsPaymentInProgress
+Checks if a payment is currently processing.
+
+`getIsPaymentInProgress(): boolean`
