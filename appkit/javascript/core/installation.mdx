@@ -17,11 +17,14 @@ import BitcoinImplementation from '/snippets/appkit/javascript/bitcoin/about/imp
 
 import TonImplementation from '/snippets/appkit/javascript/ton/about/implementation.mdx'
 
+import TronImplementation from '/snippets/appkit/javascript/tron/about/implementation.mdx'
+
 import CoreImplementation from '/snippets/appkit/javascript/core/about/implementation.mdx'
 
-AppKit provides seamless integration with multiple blockchain ecosystems. . It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum,
-[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON and other networks. AppKit Core with Universal Provider library, enable compatibility across any blockchain protocol.
-Choose one of these to get started.
+AppKit provides seamless integration with multiple blockchain ecosystems. It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum,
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON, TRON and other networks.
+
+AppKit Core with [Universal Provider](https://www.npmjs.com/package/@walletconnect/universal-provider) library, enable compatibility across any blockchain protocol.
 
 <Note>
   We recommend using [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to get
@@ -173,6 +176,29 @@ pnpm add @reown/appkit @reown/appkit-adapter-ton
 </CodeGroup>
 
 </Tab>
+<Tab title="TRON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-tron
+```
+
+</CodeGroup>
+
+</Tab>
 <Tab title="Others networks (AppKit Core)">
 
 <CodeGroup>
@@ -254,6 +280,11 @@ Check the JavaScript TON example
 </Card>
 
 <TonImplementation />
+
+</Tab>
+<Tab title="TRON">
+
+<TronImplementation />
 
 </Tab>
 <Tab title="Others networks (AppKit Core)">
