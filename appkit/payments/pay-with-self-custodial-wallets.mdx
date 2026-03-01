@@ -1,0 +1,152 @@
+---
+title: Pay with Self-Custodial Wallets
+---
+
+**AppKit Pay with Self-Custodial Wallets** enables end users to make crypto payments directly from **non-custodial wallets.** This includes mobile wallets connected via WalletConnect as well as many browser wallets, giving users full control of their assets throughout the payment process.
+
+<Frame caption="AppKit Pay with Self Custodial Wallet Demo">
+<video
+  controls
+  autoPlay
+  loop
+  src="/images/pay-with-wallet.mp4"
+></video>
+</Frame>
+
+This feature leverages Reown's vast wallet ecosystem to offer:
+
+- **600+ wallets supported**: All major wallets and any wallet that supports WalletConnect.
+
+- **Pre-filled transaction details**: Recipient address, network, asset, and amount are pre-filled, removing manual steps and eliminating over/underpayment risk.
+
+- **Seamless UX**: Support for Ethereum and other major networks with a smooth checkout experience.
+
+- **Full user control**: Users maintain custody of their assets throughout the entire payment process.
+
+***One integration. 600+ wallets. Seamless crypto payments from self-custodial wallets.***
+
+## Demo
+
+Want to see AppKit Pay with Self-Custodial Wallets in action? Try out the live demo to experience the payment flow firsthand.
+
+<CardGroup cols={2}>
+    <Card icon="flask" title="Try Demo" href="https://appkit-pay-ecommerce-demo.reown.com" external />
+</CardGroup>
+
+## Get Started
+
+<CardGroup cols={2}>
+  <Card title="React" icon="react" href="/appkit/react/payments/pay-with-self-custodial-wallets">
+    Get started with AppKit Pay with Self-Custodial Wallets in React.
+  </Card>
+
+  <Card
+    title="Next.js"
+    icon="square-n"
+    href="/appkit/next/payments/pay-with-self-custodial-wallets"
+  >
+    Get started with AppKit Pay with Self-Custodial Wallets in Next.js.
+  </Card>
+
+  <Card
+    title="Vue"
+    icon="vuejs"
+    href="/appkit/vue/payments/pay-with-self-custodial-wallets"
+  >
+    Get started with AppKit Pay with Self-Custodial Wallets in Vue.
+  </Card>
+
+  <Card title="JavaScript" icon="js" href="/appkit/javascript/payments/pay-with-self-custodial-wallets">
+    Get started with AppKit Pay with Self-Custodial Wallets in JavaScript.
+  </Card>
+</CardGroup>
+
+## Pay with Self-Custodial Wallets FAQs
+
+<AccordionGroup>
+  <Accordion title="What is 'Pay with Self-Custodial Wallets'?">
+    **Pay with Self-Custodial Wallets** is a feature of Reown's AppKit for Payments, enabling end users to make crypto payments directly from **non-custodial wallets.** This includes mobile wallets connected via WalletConnect as well as many browser wallets, giving users full control of their assets throughout the payment process.
+  </Accordion>
+
+  <Accordion title="How is it different from Pay with Exchange?">
+    Pay with Wallet uses **self-custodial wallets**, while Pay with Exchange initiates payments from **CEX accounts.** They can be used at the same time as both features are available through the same SDK and UI, letting the user choose the best options for them while making the integration fast and simple.
+  </Accordion>
+
+  <Accordion title="Which wallets are supported?">
+    600+ wallets are supported - all major wallets and any wallet that supports WalletConnect.
+  </Accordion>
+  </AccordionGroup>
+
+  ### User Experience
+
+  <AccordionGroup>
+  <Accordion title="How does the user authorize a payment?">
+    The user first connects their chosen wallet after which they will see a transaction prompt in their wallet interface with recipient address, network, asset and amount pre-filled. To complete the payment, the user must confirm the transaction in their chosen wallet.
+  </Accordion>
+
+  <Accordion title="What happens if a user cancels mid-flow?">
+    If a user abandons the flow before signing the transaction in their wallet, **no transaction occurs**. Apps can implement timeout logic to handle cancellations gracefully.
+  </Accordion>
+
+  <Accordion title="Can a user switch wallets?">
+    Yes, a user can simply disconnect a wallet and connect another without losing the payment detail.
+  </Accordion>
+  </AccordionGroup>
+
+  ### Compliance, Security & Observability
+
+  <AccordionGroup>
+  <Accordion title="Can we monitor transactions in real time?">
+    Yes. AppKit provides **blockchain** **transaction IDs**, which can be used for real-time monitoring and reconciliation.
+  </Accordion>
+  </AccordionGroup>
+
+  ### Integration & Support
+
+  <AccordionGroup>
+  <Accordion title="How do we integrate this into our checkout or app flow?">
+    Pay with Wallet is part of **AppKit Pay**, which includes components to handle wallet connection, transaction creation, and monitoring. Integration follows the standard AppKit SDK setup and works as a modal.
+  </Accordion>
+
+  <Accordion title="How long does a full integration typically take?">
+    For developers already using AppKit, integration is estimated to take **less than a day**. New customers must first complete the AppKit SDK integration, which typically takes a few days depending on team setup.
+  </Accordion>
+
+  <Accordion title="What's your uptime guarantee?">
+    Reown guarantees 99.9% uptime for paid customers, 90-day uptime can be found [here](https://status.reown.com/).
+    
+    Availability of a particular wallet will also depend on the wallet uptime.
+  </Accordion>
+  </AccordionGroup>
+
+  ### Pricing & Fees
+
+  <AccordionGroup>
+  <Accordion title="What does it cost to use Pay with Wallet?">
+    Reown uses a **tiered pricing model**, calculated on the USD value of processed payments. These fees are billed to Reown's customers monthly, and not applied to end users at the time of payment.
+  </Accordion>
+
+  <Accordion title="Are there overage fees or API rate limits?">
+    Yes, if usage exceeds AppKit tier limits.
+  </Accordion>
+
+  <Accordion title="Who pays the network fees?">
+    The **end user covers network fees**, they will be visible upon signing the transaction in the wallet.
+  </Accordion>
+  </AccordionGroup>
+
+  ### Strategic Benefits
+
+  <AccordionGroup>
+  <Accordion title="Why should we offer 'Pay with Wallet' to our users?">
+    - Reach **600+ wallets** and millions of users with one integration
+    - Seamless UX for Ethereum, and other major networks
+    - Pre-filled amount, network, asset removes **manual steps for users and** eliminates over/underpayment risk
+  </Accordion>
+
+  <Accordion title="Are there distinctive elements with your solution?">
+    - **Cross-wallet support** without needing individual wallet SDKs
+    - Real-time observability
+    - Option to mix with **Pay with Exchange** in the same checkout flow and one integration
+  </Accordion>
+</AccordionGroup>
