@@ -651,20 +651,6 @@
           {
             "group": "Advanced",
             "pages": [
-              {
-                "group": "WalletGuide",
-                "pages": [
-                  {
-                    "group": "WalletGuide Chains",
-                    "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
-                  },
-                  {
-                    "group": "WalletGuide Wallets",
-                    "pages": ["cloud/wallets/wallet-list"]
-                  },
-                  "cloud/explorer"
-                ]
-              },
               "cloud/relay",
               {
                 "group": "Multi-Chain",
