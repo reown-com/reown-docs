@@ -34,7 +34,7 @@ The essential hook for accessing all types of wallets and methods to build your 
 <CodeGroup>
 
 ```tsx useAppKitWallets.tsx
-const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, wcUri, connectingWallet, page, count, fetchWallets, connect, resetWcUri } =
+const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, wcUri, wcError, connectingWallet, page, count, fetchWallets, connect, resetWcUri } =
   useAppKitWallets()
 ```
 
@@ -71,6 +71,10 @@ const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, w
   wallet. Reset with resetWcUri().
 </ResponseField>
 
+<ResponseField name="wcError" type="boolean">
+  Boolean that indicates if there was an error fetching the WalletConnect URI.
+</ResponseField>
+
 <ResponseField name="connectingWallet" type="WalletItem | undefined">
   The wallet currently being connected to. This is set when a connection is initiated and cleared
   when it completes or fails. For WalletConnect wallets, resetWcUri() should be called to clear the
@@ -88,10 +92,29 @@ const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, w
 
 <ResponseField
   name="fetchWallets"
-  type="(options?: { page?: number; query?: string; }) => Promise&lt;void&gt;"
+  type="(options?: FetchWalletsOptions) => Promise&lt;void&gt;"
 >
   Function to fetch WalletConnect wallets from the explorer API. Allows you to list, search, and
   paginate through the wallets.
+
+  ```typescript
+  interface FetchWalletsOptions {
+    /** Page number to fetch (default: 1) */
+    page?: number
+    /** @deprecated Use `search` instead */
+    query?: string
+    /** Search query to filter wallets. When provided, switches to search mode. */
+    search?: string
+    /** Number of entries per page. Defaults to 40 for list mode, 100 for search mode. */
+    entries?: number
+    /** Filter wallets by badge type ('none' | 'certified') */
+    badge?: 'none' | 'certified'
+    /** Wallet IDs to include. Overrides the global includeWalletIds config when provided. */
+    include?: string[]
+    /** Wallet IDs to exclude. Overrides the default exclude list when provided. */
+    exclude?: string[]
+  }
+  ```
 </ResponseField>
 
 <ResponseField
@@ -357,7 +380,7 @@ function AllWalletsView() {
 
   useEffect(() => {
     if (searchQuery.length > 0) {
-      fetchWallets?.({ query: searchQuery })
+      fetchWallets?.({ search: searchQuery })
     } else {
       fetchWallets?.()
     }
@@ -365,7 +388,7 @@ function AllWalletsView() {
 
   function handleLoadMore() {
     if (searchQuery.length > 0) {
-      fetchWallets?.({ page: page + 1, query: searchQuery })
+      fetchWallets?.({ page: page + 1, search: searchQuery })
     } else {
       fetchWallets?.({ page: page + 1 })
     }
