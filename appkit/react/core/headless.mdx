@@ -70,6 +70,10 @@ const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, w
   wallet. Reset with resetWcUri().
 </ResponseField>
 
+<ResponseField name="wcError" type="boolean">
+  Boolean that indicates if there was an error fetching the WalletConnect URI.
+</ResponseField>
+
 <ResponseField name="connectingWallet" type="WalletItem | undefined">
   The wallet currently being connected to. This is set when a connection is initiated and cleared
   when it completes or fails. For WalletConnect wallets, resetWcUri() should be called to clear the
@@ -83,10 +87,6 @@ const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, w
 <ResponseField name="count" type="number">
   The total number of available WalletConnect wallets based on the AppKit configurations and given
   parameters.
-</ResponseField>
-
-<ResponseField name="wcError" type="boolean">
-  Boolean that indicates if there was an error fetching the WalletConnect URI.
 </ResponseField>
 
 <ResponseField
@@ -107,7 +107,7 @@ const { wallets, wcWallets, isFetchingWallets, isFetchingWcUri, isInitialized, w
     /** Number of entries per page. Defaults to 40 for list mode, 100 for search mode. */
     entries?: number
     /** Filter wallets by badge type ('none' | 'certified') */
-    badge?: BadgeType
+    badge?: 'none' | 'certified'
     /** Wallet IDs to include. Overrides the global includeWalletIds config when provided. */
     include?: string[]
     /** Wallet IDs to exclude. Overrides the default exclude list when provided. */
