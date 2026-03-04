@@ -117,7 +117,7 @@ export default function MyComponent() {
 - Getting detailed chain information for network-specific features
 
 ### Returns
-- `allAccounts`: Array of all connected accounts across all connections (Account[])
+- `allAccounts`: Array of all connected accounts across all connections. Each account includes `address`, `type`, and `namespace`. Accounts also include `caipAddress` (CAIP-10 format) and `chainId` when network information is available. (Account[])
 - `address`: The connected account address (string)
 - `chainId`: The chain ID of the currently active connection (number or string)
 - `isConnected`: Boolean indicating if a wallet is connected on the current chain/namespace
