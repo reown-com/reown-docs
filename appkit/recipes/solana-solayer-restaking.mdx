@@ -1,0 +1,278 @@
+---
+title: How to Restake SOL on Solayer using AppKit
+sidebarTitle: "Solayer Restaking with AppKit"
+---
+
+Learn how to use Reown AppKit with the Solana adapter to restake SOL on [Solayer](https://solayer.org) and receive sSOL — a yield-bearing liquid staking token.
+
+---
+
+In this recipe, you will learn how to:
+
+- Connect a Solana wallet using AppKit.
+- Restake SOL on Solayer to receive sSOL.
+- Display the user's sSOL balance.
+
+This guide takes approximately 20 minutes to complete.
+
+Let's dive in!
+
+## Prerequisites
+
+- A fundamental understanding of JavaScript and React.
+- A minimal installation of AppKit in React.
+- Obtain a new project Id on Reown Dashboard at https://dashboard.reown.com
+
+## AppKit Minimal Installation
+
+You can start a small project following the guidelines from our [installation React docs using Solana](https://docs.reown.com/appkit/react/core/installation#solana).
+
+## Start building
+
+In this guide, we will use the [Solayer partner restaking API](https://github.com/solayer-labs/solayer-cli/tree/main/restaking) to construct a restaking transaction and AppKit's Solana adapter to sign and send it.
+
+First, install the required dependencies:
+
+<CodeGroup>
+```bash npm
+npm install @solana/web3.js @solana/spl-token
+```
+
+```bash yarn
+yarn add @solana/web3.js @solana/spl-token
+```
+
+```bash pnpm
+pnpm add @solana/web3.js @solana/spl-token
+```
+
+```bash bun
+bun add @solana/web3.js @solana/spl-token
+```
+</CodeGroup>
+
+### Restake SOL on Solayer
+
+Solayer provides a restaking API that constructs a transaction for the user. The flow works as follows:
+
+1. Call the Solayer API with the user's wallet address and desired SOL amount.
+2. Receive a base64-encoded transaction from the API.
+3. Deserialize, sign, and send the transaction using the connected wallet.
+
+Here is a step-by-step implementation:
+
+1. Start by importing the necessary hooks and libraries.
+
+```tsx
+import { useAppKitConnection } from "@reown/appkit-adapter-solana/react";
+import { useAppKitAccount, useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
+import { VersionedTransaction } from "@solana/web3.js";
+```
+
+2. Use the hooks to retrieve the connection, provider, and user account information.
+
+```tsx
+const { connection } = useAppKitConnection();
+const { walletProvider } = useAppKitProvider<Provider>("solana");
+const { isConnected, address } = useAppKitAccount();
+```
+
+3. Create a helper function to fetch the restaking transaction from the Solayer API.
+
+```tsx
+/**
+ * Calls the Solayer partner restaking API to construct a transaction.
+ * @param staker - The user's wallet address
+ * @param amount - The amount of SOL to restake (in SOL, e.g. "1.5")
+ */
+async function getSolayerRestakeTx(staker: string, amount: string) {
+  const params = new URLSearchParams({ staker, amount });
+
+  const response = await fetch(
+    `https://app.solayer.org/api/action/restake/ssol?${params}`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error?.message || "Failed to fetch restake transaction");
+  }
+
+  return response.json();
+}
+```
+
+4. Create the restaking function that fetches the transaction, deserializes it, signs it via the wallet, and sends it.
+
+```tsx
+const handleRestakeSOL = async () => {
+  if (!address || !connection) return;
+
+  const amount = "1"; // Amount of SOL to restake
+
+  // Step 1: Fetch the restaking transaction from the Solayer API
+  const data = await getSolayerRestakeTx(address, amount);
+
+  // Step 2: Deserialize the transaction
+  const txBuffer = Buffer.from(data.transaction, "base64");
+  const transaction = VersionedTransaction.deserialize(new Uint8Array(txBuffer));
+
+  // Step 3: Sign and send the transaction using the connected wallet
+  const signature = await walletProvider.sendTransaction(transaction, connection);
+
+  console.log("Restake transaction signature:", signature);
+};
+```
+
+5. Finally, render a button to trigger the restaking action when the user is connected.
+
+```tsx
+return (
+  isConnected && (
+    <div>
+      <button onClick={handleRestakeSOL}>Restake SOL on Solayer</button>
+    </div>
+  )
+);
+```
+
+### Get sSOL Balance
+
+After restaking, users receive sSOL tokens. You can display the user's sSOL balance using the SPL token library.
+
+1. Import the additional dependencies.
+
+```tsx
+import { PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { getAssociatedTokenAddress, getAccount } from "@solana/spl-token";
+```
+
+2. Define the sSOL mint address constant.
+
+```tsx
+// Solayer sSOL mint address
+const SSOL_MINT = new PublicKey("sSo14endRuUbvQaJS3dq36Q829a3A6BEfoeeRGJywEh");
+```
+
+3. Create a function to fetch the sSOL balance.
+
+```tsx
+const handleGetSSOLBalance = async () => {
+  if (!address || !connection) return;
+
+  const wallet = new PublicKey(address);
+
+  // Get the associated token account for sSOL
+  const ssolAta = await getAssociatedTokenAddress(SSOL_MINT, wallet);
+
+  try {
+    const tokenAccount = await getAccount(connection, ssolAta);
+    const balance = Number(tokenAccount.amount) / LAMPORTS_PER_SOL;
+    console.log(`sSOL Balance: ${balance}`);
+  } catch (error) {
+    console.log("No sSOL token account found. Balance: 0");
+  }
+};
+```
+
+4. Add a button to check the sSOL balance.
+
+```tsx
+return (
+  isConnected && (
+    <div>
+      <button onClick={handleRestakeSOL}>Restake SOL on Solayer</button>
+      <button onClick={handleGetSSOLBalance}>Get sSOL Balance</button>
+    </div>
+  )
+);
+```
+
+### Full Component Example
+
+Here is the complete component combining all the functionality above:
+
+```tsx
+import { useAppKitConnection } from "@reown/appkit-adapter-solana/react";
+import { useAppKitAccount, useAppKitProvider } from "@reown/appkit/react";
+import type { Provider } from "@reown/appkit-adapter-solana/react";
+import { PublicKey, VersionedTransaction, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { getAssociatedTokenAddress, getAccount } from "@solana/spl-token";
+
+const SSOL_MINT = new PublicKey("sSo14endRuUbvQaJS3dq36Q829a3A6BEfoeeRGJywEh");
+
+async function getSolayerRestakeTx(staker: string, amount: string) {
+  const params = new URLSearchParams({ staker, amount });
+
+  const response = await fetch(
+    `https://app.solayer.org/api/action/restake/ssol?${params}`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error?.message || "Failed to fetch restake transaction");
+  }
+
+  return response.json();
+}
+
+export default function SolayerRestake() {
+  const { connection } = useAppKitConnection();
+  const { walletProvider } = useAppKitProvider<Provider>("solana");
+  const { isConnected, address } = useAppKitAccount();
+
+  const handleRestakeSOL = async () => {
+    if (!address || !connection) return;
+
+    const amount = "1"; // Amount of SOL to restake
+
+    const data = await getSolayerRestakeTx(address, amount);
+    const txBuffer = Buffer.from(data.transaction, "base64");
+    const transaction = VersionedTransaction.deserialize(new Uint8Array(txBuffer));
+
+    const signature = await walletProvider.sendTransaction(transaction, connection);
+    console.log("Restake transaction signature:", signature);
+  };
+
+  const handleGetSSOLBalance = async () => {
+    if (!address || !connection) return;
+
+    const wallet = new PublicKey(address);
+    const ssolAta = await getAssociatedTokenAddress(SSOL_MINT, wallet);
+
+    try {
+      const tokenAccount = await getAccount(connection, ssolAta);
+      const balance = Number(tokenAccount.amount) / LAMPORTS_PER_SOL;
+      console.log(`sSOL Balance: ${balance}`);
+    } catch (error) {
+      console.log("No sSOL token account found. Balance: 0");
+    }
+  };
+
+  if (!isConnected) return null;
+
+  return (
+    <div>
+      <h2>Solayer Restaking</h2>
+      <button onClick={handleRestakeSOL}>Restake SOL on Solayer</button>
+      <button onClick={handleGetSSOLBalance}>Get sSOL Balance</button>
+    </div>
+  );
+}
+```
+
+## Conclusion
+
+By following this guide, you've learned how to integrate Reown AppKit with Solayer's restaking protocol on Solana. You can now connect wallets, restake SOL to receive sSOL, and display sSOL balances.
+
+For more information about Solayer, visit the [Solayer documentation](https://docs.solayer.org).
+
+Keep exploring AppKit to enhance your dApp's functionality and user experience!
