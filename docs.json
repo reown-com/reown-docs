@@ -761,7 +761,6 @@
                   "appkit/recipes/ethers-send-transaction",
                   "appkit/recipes/EVM-smart-contract-interaction",
                   "appkit/recipes/solana-send-transaction",
-                  "appkit/recipes/solana-solayer-restaking",
                   "appkit/recipes/bitcoin-send-transaction",
                   "appkit/recipes/switching-to-send-calls",
                   "appkit/recipes/travel-rule",
