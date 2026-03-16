@@ -135,7 +135,9 @@
                   "appkit/networks/supported-chains",
                   "appkit/networks/evm",
                   "appkit/networks/solana",
-                  "appkit/networks/bitcoin"
+                  "appkit/networks/bitcoin",
+                  "appkit/networks/ton",
+                  "appkit/networks/tron"
                 ]
               },
               {
