@@ -156,6 +156,16 @@ This FAQ section covers common questions and solutions for using AppKit. The que
   <Accordion title="How do I increase my project's RPC limits?">
     Reown currently provides 2.5 million requests per 30 days. If you wish to increase this limit, you need to upgrade to AppKit Pro.
   </Accordion>
+
+  <Accordion title="Is there a limit on self-custodial wallet connections?">
+    There is no fixed number for what counts as "excessive" self-custodial connections. Our Terms of Service reserve the right to limit usage that is clearly abusive or disruptive, such as traffic spikes or automated spamming, and this is assessed case by case. See our [Community Licence](ttps://github.com/reown-com/appkit-react-native?tab=License-1-ov-file#readme) for clearest thresholds before paid plans are needed:
+
+    - **500 MAUs/month:** only authenticated users count toward this, not self-custodial connections
+    - **2.5M RPC calls/month:** only applies if you use Reown's built-in RPC
+
+    **Using your own RPC provider?** The RPC threshold above does not apply to you. 
+The only limit that could apply is the general fair-use clause in our ToS. This is aimed at clearly abusive patterns — such as traffic flooding or automated spam — and does not affect normal application usage.
+  </Accordion>
 </AccordionGroup>
 
 ## Technical
