@@ -68,7 +68,7 @@ jobs:
             - Multichain Web3 infrastructure supporting EVM, Solana, Bitcoin, Sui, TON, and Stacks networks
             - CAIP-2 chain identifiers (e.g., eip155:1 for Ethereum mainnet)
             - Authentication patterns: SIWE (Sign In With Ethereum), SIWX (multi-chain), One-Click Auth, social logins
-            - Payment features: Pay with Exchange (PWE), Deposit with Exchange (DWE), One-Click Checkout
+            - Payment features: Pay with Exchange (PWE), Deposit with Exchange (DWE)
             - Chain abstraction for cross-chain transaction orchestration
 
             Review Focus:
