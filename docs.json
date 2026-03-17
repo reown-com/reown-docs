@@ -105,8 +105,7 @@
                   "appkit/features/swaps",
                   "appkit/features/onramp",
                   "appkit/payments/pay-with-exchange",
-                  "appkit/payments/deposit-with-exchange",
-                  "appkit/payments/one-click-checkout"
+                  "appkit/payments/deposit-with-exchange"
                 ]
               },
               {
