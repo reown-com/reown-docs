@@ -24,8 +24,6 @@ import CoreImplementation from '/snippets/appkit/javascript/core/about/implement
 AppKit provides seamless integration with multiple blockchain ecosystems. It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum,
 [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON, TRON and other networks.
 
-AppKit Core with [Universal Provider](https://www.npmjs.com/package/@walletconnect/universal-provider) library, enable compatibility across any blockchain protocol.
-
 <Note>
   We recommend using [Vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to get
   started with AppKit JavaScript.
@@ -33,7 +31,15 @@ AppKit Core with [Universal Provider](https://www.npmjs.com/package/@walletconne
 
 ## Installation
 
-**Setting up from scratch? → Try out the [AppKit CLI templates](#alternative-installation) or the [AI-assisted setup](#alternative-installation).**
+Try installing AppKit Skills to get AI-assisted guidance. Your AI coding assistant can help you set up, build, and debug your AppKit integration.
+
+To install AppKit Skills, run the following command in your terminal:
+
+```bash
+npx skills add https://github.com/reown-com/skills --skill appkit --agent '*'
+```
+
+After installation, you can ask your AI assistant for help with AppKit setup, implementation, and troubleshooting.
 
 ## Custom Installation
 
@@ -464,16 +470,16 @@ function sendTransaction() {
 If you are starting from scratch, you can use the following methods to set up your project with Reown AppKit.
 
 <AccordionGroup>
-<Accordion title="Set up Reown AppKit using AI">
-  If you're using Cursor IDE (or another AI based IDE) to build a project with Reown AppKit, Reown provides a `.mdc` file that enhances your development experience. The `reown-appkit.mdc` [file here](https://github.com/reown-com/reown-docs/blob/main/reown-appkit.mdc) contains Cursor-specific rules and type hints for Reown AppKit.
+<Accordion title="AppKit Skills">
+  AppKit Skills provide AI-powered assistance for building with Reown AppKit. Once installed, your AI coding assistant can help you set up, build, and debug your AppKit integration.
 
-To use it in your project:
+To install AppKit Skills, run the following command in your terminal:
 
-1. Copy the `reown-appkit.mdc` file from this repository
-2. Create a `.cursor/rules` folder in your project's root directory (if it doesn't exist)
-3. Place the `.mdc` file in your project's `.cursor/rules` folder
+```bash
+npx skills add https://github.com/reown-com/skills --skill appkit --agent '*'
+```
 
-For more info, refer to [Cursor's documentation](https://docs.cursor.com/context/rules#project-rules).
+After installation, you can ask your AI assistant for help with AppKit setup, implementation, and troubleshooting.
 
 </Accordion>
 <Accordion title="AppKit CLI">
