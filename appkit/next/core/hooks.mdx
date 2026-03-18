@@ -137,7 +137,7 @@ const bip122Account = useAppKitAccount({ namespace: "bip122" }); // for bitcoin
 
 ### Returns
 
-- `allAccounts`: A list of connected accounts
+- `allAccounts`: A list of connected accounts. Each account includes the `address`, `type`, and `namespace`. Accounts also include `caipAddress` (CAIP-10 format) and `chainId` when network information is available.
 - `address`: The current account address
 - `caipAddress`: The current account address in CAIP format
 - `isConnected`: Boolean that indicates if the user is connected
@@ -156,6 +156,15 @@ type EmbeddedWalletInfo {
 }
 
 type ConnectionStatus = 'connected' | 'disconnected' | 'connecting' | 'reconnecting'
+
+type Account = {
+  namespace: ChainNamespace
+  address: string
+  chainId?: string | number
+  caipAddress?: `${string}:${string}:${string}`
+  type: string
+  publicKey?: string // Available for Bitcoin (bip122) accounts
+}
 
 type UseAppKitAccountReturnType = {
   isConnected: boolean
