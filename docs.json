@@ -99,7 +99,8 @@
                       "appkit/authentication/siwx/default"
                     ]
                   },
-                  "appkit/features/smart-accounts"
+                  "appkit/features/smart-accounts",
+                  "appkit/features/multiwallet-linking"
                 ]
               },
               {
