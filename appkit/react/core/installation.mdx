@@ -48,22 +48,26 @@ After installation, you can ask your AI assistant for help with AppKit setup, im
 <Tabs>
 <Tab title="Wagmi">
 
+<Warning>
+AppKit is only compatible with wagmi 2.x. Ensure you are using a compatible version (e.g., `wagmi@2.18.0`). Using wagmi v3 or higher may cause unexpected issues.
+</Warning>
+
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @tanstack/react-query
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.18.0 viem @tanstack/react-query
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @tanstack/react-query
+yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.18.0 viem @tanstack/react-query
 ```
 
 ```bash Bun
-bun add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @tanstack/react-query
+bun add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.18.0 viem @tanstack/react-query
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @tanstack/react-query
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.18.0 viem @tanstack/react-query
 ```
 
 </CodeGroup>
