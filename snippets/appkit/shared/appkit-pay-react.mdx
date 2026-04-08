@@ -127,7 +127,7 @@ Or handle the payment result in the UI by displaying the payment status:
 
 ## Supported Networks and Assets
 
-For a complete list of supported networks and assets, please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Self-Custodial Wallets documentation.
+For a complete list of supported networks and assets, please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-self-custodial-wallets#networks-and-assets-supported) section in our Pay with Self-Custodial Wallets documentation.
 
 ## Assets Configuration
 
@@ -186,6 +186,11 @@ import { useAvailableExchanges } from '@reown/appkit-pay/react';
 ```
 
 ### useAvailableExchanges
+
+<Warning>
+    The Pay with Exchange feature has been deprecated. The following exchange-related hooks are retained for backward compatibility only. For more details, see the [Payments FAQs](/appkit/payments/overview#payments-faqs).
+</Warning>
+
 Fetches and manages the state for available exchanges.
 
 `useAvailableExchanges(options?: { isFetchOnInit?: boolean } & GetExchangesParams): UseAvailableExchangesReturn`
@@ -200,6 +205,11 @@ Fetches and manages the state for available exchanges.
 }` 
 
 ### usePayUrlActions
+
+<Warning>
+    The Pay with Exchange feature has been deprecated. This hook is retained for backward compatibility only. For more details, see the [Payments FAQs](/appkit/payments/overview#payments-faqs).
+</Warning>
+
 Provides functions (getUrl, openUrl) to interact with specific exchange URLs, returning the sessionId needed for status tracking.
 
 `usePayUrlActions(): { getUrl, openUrl }`
@@ -207,6 +217,11 @@ Provides functions (getUrl, openUrl) to interact with specific exchange URLs, re
     - `openUrl(exchangeId, params, openInNewTab?): Promise<PayUrlResponse>` (Returns `{ url, sessionId }`)
 
 ### useExchangeBuyStatus
+
+<Warning>
+    The Pay with Exchange feature has been deprecated. This hook is retained for backward compatibility only. For more details, see the [Payments FAQs](/appkit/payments/overview#payments-faqs).
+</Warning>
+
 Fetches and polls for the status of a headless payment transaction using exchangeId and sessionId.
 
 `useExchangeBuyStatus(params: UseExchangeBuyStatusParameters): UseExchangeBuyStatusReturn`
