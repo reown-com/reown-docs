@@ -1,4 +1,4 @@
-**Pay with Exchange** unlocks a powerful new flow: users can pay in crypto directly from their Centralized Exchange (CEXs) accounts like Binance, with no new wallets, no app switching, and no lost conversions.
+**Pay with Self-Custodial Wallets** lets users pay with their self-custodial wallets like MetaMask, Trust, Ledger, and more directly in-app.
 
 ## Quickstart 
 
@@ -127,7 +127,7 @@ Or handle the payment result in the UI by displaying the payment status:
 
 ## Supported Networks and Assets
 
-For a complete list of supported networks and assets, please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Exchange documentation.
+For a complete list of supported networks and assets, please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Self-Custodial Wallets documentation.
 
 ## Assets Configuration
 
@@ -177,26 +177,10 @@ Add the following to your package.json file in order to run the development serv
 },
 ```
 
-## Test the complete exchange flow
-
-To test the entire exchange process, we've implemented a dedicated test scenario that activates when using the token `baseSepoliaETH`.
-
-<img src="/images/test-exchange.png" alt="Test Exchange"  />
-
-Upon selecting this test exchange, you will be redirected to a result modal where you can choose between two paths:
-
-- **Complete Successfully** – Simulates a successful exchange outcome.
-
-- **Trigger an Error** – Simulates a failed exchange with an error response.
-
-<img src="/images/test-exchange2.png" alt="Test Exchange Result"  />
-
-This setup allows you to safely verify both positive and negative exchange flows in a controlled environment.
-
 ## Hooks
 
 
-All the pay with exchanges hooks must be imported from `@reown/appkit-pay/react`. For example:
+All the hooks must be imported from `@reown/appkit-pay/react`. For example:
 ```tsx
 import { useAvailableExchanges } from '@reown/appkit-pay/react';
 ```
