@@ -1,16 +1,4 @@
-**Deposit with Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like Coinbase and Binance (with more exchanges coming soon). Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
-
-## Pre-Requisites
-
-**To enable this feature, you will need to provide your own Coinbase Developer Platform (CDP) API keys.**
-
-You can find instructions on how to do this [here](https://docs.cdp.coinbase.com/onramp-&-offramp/introduction/getting-started).
-
-Head over to [Reown Dashboard](https://dashboard.reown.com) and navigate to the "Fund from Exchange" section to configure your API keys.
-
-<Frame>
-  <img src="/images/dwe-coinbase.png" alt="Coinbase CDP Keys Setup" />
-</Frame>
+**Deposit with Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like Binance. Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
 
 ## Quickstart 
 
@@ -78,7 +66,16 @@ if (result.success) {
 
 ## Supported Networks and Assets
 
-For a complete list of supported networks and assets across different exchanges (Coinbase, Binance), please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Exchange documentation.
+Currently, Deposit with Exchange supports the following assets on the following networks:
+
+**Asset -> Network**
+
+**Binance**
+- USDC -> Ethereum, Optimism, Arbitrum, Base, Polygon, Solana
+- USDT -> Ethereum, Optimism, Arbitrum, Polygon, Solana
+- Native Solana
+
+For access to additional networks or assets, contact us [via our form here](https://share.hsforms.com/1_oWa8QkwRXi6oR0nZ_SIxQnxw6s).
 
 ## Assets Configuration
 

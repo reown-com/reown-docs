@@ -1,9 +1,9 @@
 ---
-title: Pay with Exchange - Javascript
-sidebarTitle: Pay with Exchange
+title: Pay with Self-Custodial Wallets - Javascript
+sidebarTitle: Self-custodial wallets
 ---
 
-**Pay with Exchange** unlocks a powerful new flow: users can pay in crypto directly from their Centralized Exchange (CEXs) accounts like Binance, with no new wallets, no app switching, and no lost conversions.
+**Pay with Self-Custodial Wallets** lets users pay with their self-custodial wallets like MetaMask, Trust, Ledger, and more directly in-app.
 
 ## Quick Start  
 Here you can find a simplify process to integrate AppKit Pay with Javascript SDK:
@@ -85,7 +85,7 @@ Add the following to your package.json file in order to run the development serv
 
 ## Supported Networks and Assets
 
-For a complete list of supported networks and assets, please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-exchange#networks-and-assets-supported) section in our Pay with Exchange documentation.
+For a complete list of supported networks and assets, please refer to the [Networks and Assets Supported](/appkit/payments/pay-with-self-custodial-wallets#networks-and-assets-supported) section in our Pay with Self-Custodial Wallets documentation.
 
 ## Assets Configuration
 
@@ -121,6 +121,11 @@ Opens the payment modal. Resolves when the modal is closed by the user or progra
 `pay(amount, addressRecipient, options: PaymentOptions): Promise<PaymentResult>`
 
 ### getExchanges
+
+<Warning>
+    The Pay with Exchange feature has been deprecated. The following exchange-related functions are retained for backward compatibility only. For more details, see the [Payments FAQs](/appkit/payments/overview#payments-faqs).
+</Warning>
+
 Fetches available exchanges.
 
 `getExchanges(page?: number): Promise<{ exchanges: Exchange[], total: number }>`

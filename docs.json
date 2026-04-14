@@ -60,6 +60,26 @@
     {
       "source": "/appkit/payments/one-click-checkout",
       "destination": "/appkit/payments/overview"
+    },
+    {
+      "source": "/appkit/payments/pay-with-exchange",
+      "destination": "/appkit/payments/pay-with-self-custodial-wallets"
+    },
+    {
+      "source": "/appkit/react/payments/pay-with-exchange",
+      "destination": "/appkit/react/payments/pay-with-self-custodial-wallets"
+    },
+    {
+      "source": "/appkit/next/payments/pay-with-exchange",
+      "destination": "/appkit/next/payments/pay-with-self-custodial-wallets"
+    },
+    {
+      "source": "/appkit/vue/payments/pay-with-exchange",
+      "destination": "/appkit/vue/payments/pay-with-self-custodial-wallets"
+    },
+    {
+      "source": "/appkit/javascript/payments/pay-with-exchange",
+      "destination": "/appkit/javascript/payments/pay-with-self-custodial-wallets"
     }
   ],
   "contextual": {
@@ -104,14 +124,19 @@
                 ]
               },
               {
-                "group": "Payments",
-                "pages": [
-                  "appkit/payments/overview",
-                  "appkit/features/swaps",
-                  "appkit/features/onramp",
-                  "appkit/payments/pay-with-exchange",
-                  "appkit/payments/deposit-with-exchange"
-                ]
+                  "group": "Payments",
+                  "pages": [
+                    "appkit/payments/overview",
+                    "appkit/features/swaps",
+                    {
+                      "group": "Fund wallets",
+                      "pages": [
+                        "appkit/features/onramp",
+                        "appkit/payments/pay-with-self-custodial-wallets",
+                        "appkit/payments/deposit-with-exchange"
+                      ]
+                    }
+                  ]
               },
               {
                 "group": "Multichain Tools",
@@ -201,8 +226,13 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/react/payments/pay-with-exchange",
-                  "appkit/react/payments/deposit-with-exchange"
+                  {
+                    "group": "Fund wallets",
+                    "pages": [
+                      "appkit/react/payments/pay-with-self-custodial-wallets",
+                      "appkit/react/payments/deposit-with-exchange"
+                    ]
+                  }
                 ]
               },
               {
@@ -260,8 +290,13 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/next/payments/pay-with-exchange",
-                  "appkit/next/payments/deposit-with-exchange"
+                  {
+                    "group": "Fund wallets",
+                    "pages": [
+                      "appkit/next/payments/pay-with-self-custodial-wallets",
+                      "appkit/next/payments/deposit-with-exchange"
+                    ]
+                  }
                 ]
               },
               {
@@ -310,8 +345,13 @@
                             {
                 "group": "Payments",
                 "pages": [
-                  "appkit/vue/payments/pay-with-exchange",
-                  "appkit/vue/payments/deposit-with-exchange"
+                  {
+                    "group": "Fund wallets",
+                    "pages": [
+                      "appkit/vue/payments/pay-with-self-custodial-wallets",
+                      "appkit/vue/payments/deposit-with-exchange"
+                    ]
+                  }
                 ]
               },
               {
@@ -363,8 +403,13 @@
                             {
                 "group": "Payments",
                 "pages": [
-                  "appkit/javascript/payments/pay-with-exchange",
-                  "appkit/javascript/payments/deposit-with-exchange"
+                  {
+                    "group": "Fund wallets",
+                    "pages": [
+                      "appkit/javascript/payments/pay-with-self-custodial-wallets",
+                      "appkit/javascript/payments/deposit-with-exchange"
+                    ]
+                  }
                 ]
               },
               {
@@ -510,7 +555,12 @@
               {
                 "group": "Payments",
                 "pages": [
-                  "appkit/flutter/payments/deposit-with-exchange"
+                  {
+                    "group": "Fund wallets",
+                    "pages": [
+                      "appkit/flutter/payments/deposit-with-exchange"
+                    ]
+                  }
                 ]
               },
               {
