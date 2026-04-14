@@ -128,10 +128,10 @@
                   "pages": [
                     "appkit/payments/overview",
                     "appkit/features/swaps",
-                    "appkit/features/onramp",
                     {
                       "group": "Fund wallets",
                       "pages": [
+                        "appkit/features/onramp",
                         "appkit/payments/pay-with-self-custodial-wallets",
                         "appkit/payments/deposit-with-exchange"
                       ]
