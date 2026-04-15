@@ -80,6 +80,22 @@
     {
       "source": "/appkit/javascript/payments/pay-with-exchange",
       "destination": "/appkit/javascript/payments/pay-with-self-custodial-wallets"
+    },
+    {
+      "source": "/appkit/features/chain-abstraction",
+      "destination": "/appkit/overview"
+    },
+    {
+      "source": "/appkit/react/early-access/chain-abstraction",
+      "destination": "/appkit/overview"
+    },
+    {
+      "source": "/appkit/next/early-access/chain-abstraction",
+      "destination": "/appkit/overview"
+    },
+    {
+      "source": "/appkit/next/experimental/chain-abstraction",
+      "destination": "/appkit/overview"
     }
   ],
   "contextual": {
@@ -141,8 +157,7 @@
               {
                 "group": "Multichain Tools",
                 "pages": [
-                  "appkit/features/multichain",
-                  "appkit/features/chain-abstraction"
+                  "appkit/features/multichain"
                 ]
               },
               {
@@ -212,12 +227,6 @@
                 ]
               },
                             {
-                              "group": "Early Access",
-                              "pages": [
-                                "appkit/react/early-access/chain-abstraction"
-                              ]
-                            },
-                            {
                               "group": "Headless",
                               "pages": [
                                 "appkit/react/core/headless"
@@ -281,12 +290,6 @@
                   "appkit/next/core/siwx"
                 ]
               },
-                            {
-                              "group": "Early Access",
-                              "pages": [
-                                "appkit/next/early-access/chain-abstraction"
-                              ]
-                            },
               {
                 "group": "Payments",
                 "pages": [
