@@ -805,7 +805,8 @@
                 "group": "Security",
                 "pages": [
                   "advanced/security/security-information",
-                  "advanced/security/content-security-policy"
+                  "advanced/security/content-security-policy",
+                  "advanced/security/verify-api"
                 ]
               },
               "advanced/push-server",
