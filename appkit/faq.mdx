@@ -276,6 +276,10 @@ This FAQ section covers common questions and solutions for using AppKit. The que
 
   </Accordion>
 
+  <Accordion title="Why does Trust Wallet still show 'Invalid domain' after I allowlisted my domain?">
+    Allowlisting a domain in the Reown Dashboard is only one step of the Verify API flow. The most common causes of a persistent `Invalid domain` or `This domain could not be verified` warning in Trust Wallet are an origin mismatch between the dApp's hosting URL and the allowlisted entry, a difference between `metadata.url` and the real origin, a CSP that blocks the Verify iframe, or caching delays that have not cleared yet. See [Verify API and Domain Verification](/advanced/security/verify-api) for the full end-to-end flow and a step-by-step troubleshooting checklist.
+  </Accordion>
+
   <Accordion title="Error Codes">
     Below is a list of error codes you may encounter when using AppKit, along with their descriptions and recommended actions:
 
