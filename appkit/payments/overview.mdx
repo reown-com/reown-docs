@@ -53,3 +53,79 @@ The Pay with exchange feature has been deprecated due to the evolving challenge 
 ### What happened to one-click checkout?
 
 One-click checkout has been migrated to WalletConnect Pay. [To set up seamless crypto payments for your business, visit the WalletConnect Pay docs here →](https://docs.walletconnect.com/payments/overview)
+
+## Reown Payments or WalletConnect Pay? Which solution is better for me?
+
+To understand which solution is better for you, browse and answer these questions for your own business.
+
+<details>
+<summary>Are you a web3 app builder or are you looking to accept crypto payments in any other type of business?</summary>
+
+The Reown SDK is designed for web3 app builders, incorporating payments solutions into a wider stack also offering authentication and interaction solutions. WalletConnect Pay is a standalone B2B payments infrastructure product targeting merchants, PSPs, and e-commerce/POS systems — it's purely focused on crypto payment processing.
+
+The bottom line:
+- If you're building a web3 app, Reown is likely your best solution
+- If you want to accept crypto payments in your online or IRL shop, WalletConnect Pay may suit you better.
+
+</details>
+
+<details>
+<summary>Which architecture type suits your business better?</summary>
+
+The Reown SDK's payment solutions are client-initiated: your frontend passes payment parameters (recipient, amount, asset) directly into the SDK, which opens a modal UI and handles the flow. WalletConnect Pay is server-authoritative: a payment intent is created server-side, and the wallet resolves the canonical payment details by calling Gateway endpoints. This means the server defines what the wallet does, not the client, making WalletConnect Pay more tamper-resistant.
+
+</details>
+
+<details>
+<summary>What level of compliance do you need?</summary>
+
+WCP includes compliance infrastructure that AppKit doesn't: KYC/AML data collection, sanction screening, travel rule data collection, fiat settlement for merchants, and refunds. It's built to handle regulatory requirements that enterprise payment flows require.
+
+</details>
+
+<details>
+<summary>What other features do you need?</summary>
+
+Reown offers broader solutions such as smart accounts, app analytics, funding from existing wallets, hooks and interactions infrastructure and more.
+
+WalletConnect Pay is purely for payments, also offering deeper payment solutions such as merchant reconciliation, fiat off-ramp, POS integration, gateway API, payment history, and whitelabel.
+
+</details>
+
+---
+
+## Reown Payments vs WalletConnect Pay — Features Comparison
+
+| Feature | Reown SDK | WalletConnect Pay (WCP) |
+|---|---|---|
+| **KEY DIFFERENCES** | | |
+| Description | Full-stack Web3 app SDK | Crypto payments infrastructure |
+| Built for | Crypto-enabled app developers | Merchants, PSPs, e-commerce/POS platforms |
+| Architecture | Client-initiated (frontend passes params to SDK) | Server-authoritative (wallet resolves intent via gateway) |
+| Checkout surface | Embedded in-app modal | Scan-to-pay (QR), POS terminal flows |
+| Wallet support | 700+ wallets | 700+ wallets |
+| Multi-chain support | Yes (EVM, Solana, Bitcoin, Ton, Tron) | EVM now; Solana coming soon |
+| Integration method | 1 SDK in app code | REST API embedded in merchant/PSP systems |
+| Merchant Autonomy | Each merchant has a wallet and retains full control and ownership over it. | Permissions are abstracted away from the Merchant via the gateway. |
+| **INCLUDED FEATURES** | | |
+| Cross-chain swaps | ✅ | ❌ |
+| Gas sponsorship | ✅ | ❌ |
+| Onramp | ✅ | ❌ |
+| Deposits to existing crypto wallets (Self-custodial & Exchange) | ✅ | ❌ |
+| Smart accounts | ✅ | ❌ |
+| Social/email onboarding | ✅ | ❌ |
+| Blockchain API & smart contract hooks | ✅ | ❌ |
+| Analytics | ✅ | ❌ |
+| Merchant reconciliation & dashboard | ❌ | ✅ |
+| Whitelabel / headless | ❌ | ✅ (coming soon) |
+| Fee splitting | ❌ | ✅ (coming soon) |
+| **CHECKOUT EXPERIENCE** | | |
+| POS (in-store) payments | ❌ | ✅ |
+| E-commerce checkout integration | ❌ | ✅ |
+| Merchant fiat settlement | ❌ | ✅ |
+| Refunds | ❌ | ✅ |
+| Cashback | ❌ | ✅ |
+| **COMPLIANCE** | | |
+| Merchant can prove wallet ownership for compliance reporting | ❌ | ✅ |
+| KYC / AML / Sanction screening | ❌ | ✅ |
+| Travel rule compliance | ❌ | ✅ |
