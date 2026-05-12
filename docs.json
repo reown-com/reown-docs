@@ -193,7 +193,7 @@
               },
               {
                 "group": "Technical Reference",
-                "pages": ["appkit/faq"]
+                "pages": ["appkit/features/events", "appkit/faq"]
               }
             ]
           },

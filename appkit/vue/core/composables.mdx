@@ -258,7 +258,7 @@ setThemeVariables({
 
 ## useAppKitEvents
 
-Composable function for subscribing to modal events.
+Subscribes to modal, wallet, and transaction events emitted by AppKit. Useful for analytics, telemetry, custom notifications, or reacting to specific user actions.
 
 ```ts
 import { useAppKitEvents } from "@reown/appkit/vue";
@@ -266,11 +266,28 @@ import { useAppKitEvents } from "@reown/appkit/vue";
 const events = useAppKitEvents();
 ```
 
+The composable returns the latest event object. Each time a new event is emitted, the component re-renders with the new value:
+
+```ts
+{
+  timestamp: number
+  data: {
+    type: 'track' | 'error'
+    event: string        // the event name
+    properties?: object  // event-specific payload
+  }
+}
+```
+
 ### Returns
 
 - `events.timestamp`: Get the timestamp of the event
-- `events.data.event`: Get string of the event.
-- `events.data.properties`: get more information from the event.
+- `events.data.event`: Get the event name string
+- `events.data.properties`: Get event-specific payload
+
+<Card title="Full events reference" icon="list" href="/appkit/features/events">
+  See every available event, its trigger condition, and the properties payload.
+</Card>
 
 ## useDisconnect
 
