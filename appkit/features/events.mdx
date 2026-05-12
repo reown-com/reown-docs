@@ -3,15 +3,15 @@ title: AppKit Events
 description: Full reference for modal, wallet, network, and transaction events emitted by AppKit.
 ---
 
-`useAppKitEvents` (React / Next) and `useAppKitEvents` (Vue / Nuxt composable) subscribe to every event emitted by AppKit.
-Use them for analytics, telemetry, custom notifications, or reacting to specific user actions.
+`useAppKitEvents` (React/Next hook and Vue/Nuxt composable) subscribes to every event emitted by AppKit.
+Use it for analytics, telemetry, custom notifications, or reacting to specific user actions.
 
 <Tabs>
 <Tab title="React / Next">
 ```ts
 import { useAppKitEvents } from '@reown/appkit/react'
 
-const event = useAppKitEvents()
+const events = useAppKitEvents()
 ```
 </Tab>
 <Tab title="Vue / Nuxt">
@@ -156,6 +156,10 @@ Each time a new event is emitted the hook / composable returns a fresh object:
 
 ## Examples
 
+<Note>
+The examples below use React syntax. Vue/Nuxt users should replace `useEffect` with `watchEffect` and import from `@reown/appkit/vue`.
+</Note>
+
 ### Track wallet connections with an analytics provider
 
 ```tsx
@@ -163,16 +167,16 @@ import { useEffect } from 'react'
 import { useAppKitEvents } from '@reown/appkit/react'
 
 export function AnalyticsTracker() {
-  const event = useAppKitEvents()
+  const events = useAppKitEvents()
 
   useEffect(() => {
-    if (event.data.event === 'CONNECT_SUCCESS') {
+    if (events.data.event === 'CONNECT_SUCCESS') {
       analytics.track('wallet_connected', {
-        wallet: event.data.properties.name,
-        method: event.data.properties.method
+        wallet: events.data.properties?.name,
+        method: events.data.properties?.method
       })
     }
-  }, [event])
+  }, [events])
 
   return null
 }
@@ -186,13 +190,13 @@ import { useAppKitEvents } from '@reown/appkit/react'
 import { toast } from 'your-toast-lib'
 
 export function NetworkToast() {
-  const event = useAppKitEvents()
+  const events = useAppKitEvents()
 
   useEffect(() => {
-    if (event.data.event === 'SWITCH_NETWORK') {
-      toast(`Switched to ${event.data.properties.network}`)
+    if (events.data.event === 'SWITCH_NETWORK') {
+      toast(`Switched to ${events.data.properties?.network}`)
     }
-  }, [event])
+  }, [events])
 
   return null
 }
@@ -205,12 +209,12 @@ import { useEffect } from 'react'
 import { useAppKitEvents } from '@reown/appkit/react'
 
 export function EventLogger() {
-  const event = useAppKitEvents()
+  const events = useAppKitEvents()
 
   useEffect(() => {
-    if (!event.data.event) return
-    console.log(`[AppKit] ${event.data.event}`, event.data.properties)
-  }, [event])
+    if (!events.data.event) return
+    console.log(`[AppKit] ${events.data.event}`, events.data.properties)
+  }, [events])
 
   return null
 }
@@ -224,19 +228,19 @@ import { useAppKitEvents } from '@reown/appkit/react'
 import { toast } from 'your-toast-lib'
 
 export function ConnectionErrorHandler() {
-  const event = useAppKitEvents()
+  const events = useAppKitEvents()
 
   useEffect(() => {
-    switch (event.data.event) {
+    switch (events.data.event) {
       case 'CONNECT_ERROR':
       case 'CONNECT_PROXY_ERROR':
-        toast.error(`Connection failed: ${event.data.properties?.message}`)
+        toast.error(`Connection failed: ${events.data.properties?.message}`)
         break
       case 'USER_REJECTED':
         toast.warn('Connection request was rejected')
         break
     }
-  }, [event])
+  }, [events])
 
   return null
 }
