@@ -1,0 +1,189 @@
+---
+title: Add Custom Networks
+sidebarTitle: Custom Networks
+---
+
+If you cannot find the network you are looking for within the `@reown/appkit/networks` path, you can always add a custom network to allow your app to support WalletConnect.
+
+Since AppKit v1.1.0, there are two ways to add your network to AppKit:
+
+### 1. Adding Your Chain to Viem's Directory (Recommended)
+
+Reown AppKit use Viem to provide EVM chains to users under the hood. If your chain is EVM-compatible, it is recommended to open a PR to Viem to add your network to Viem's directory. Once your chain is accepted by Viem, it will automatically be available in AppKit with no additional steps required.
+
+**Here is the documentation of how to add new chain to Viem:**
+
+[https://github.com/wevm/viem/blob/main/.github/CONTRIBUTING.md#chains](https://github.com/wevm/viem/blob/main/.github/CONTRIBUTING.md#chains)
+
+### 2. Creating a Custom Chain Object
+
+You can also create a custom network object without waiting for approval from Viem's repository.
+
+**Required Information**
+
+You will need the following values to create a custom network:
+
+* **id**: Chain ID of the network.
+* **name**: Name of the network.
+* **caipNetworkId**: CAIP-2 compliant network ID.
+* **chainNamespace**: Chain namespace.
+* **nativeCurrency**: Native currency of the network.
+* **rpcUrls**: Object containing the RPC URLs for the network.
+* **blockExplorers**: Object containing the block explorers for the network.
+
+```js theme={null}
+import { defineChain } from '@reown/appkit/networks';
+
+// Define the custom network
+const customNetwork = defineChain({
+  id: 123456789,
+  caipNetworkId: 'eip155:123456789',
+  chainNamespace: 'eip155',
+  name: 'Custom Network',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ether',
+    symbol: 'ETH',
+  },
+  blockExplorers: {
+    default: { name: 'Explorer', url: 'BLOCK_EXPLORER_URL' },
+  },
+  contracts: {
+    // Add the contracts here
+  }
+})
+
+// Then pass it to the AppKit
+createAppKit({
+    adapters: [...],
+    networks: [customNetwork],
+    chainImages: { // Customize networks' logos
+      123456789: '/custom-network-logo.png', // <chainId>: 'www.network.com/logo.png'
+    }
+})
+```
+
+You can use your own RPC by setting the `customRpcUrls` option in the [AppKit configuration](/appkit/react/core/options#customrpcurls). This lets you define custom RPC URLs for specific chains. Each entry must follow the format:
+
+```javascript theme={null}
+customRpcUrls: {
+  'eip155:1': 'https://your.custom.rpc.url',
+  'eip155:137': 'https://your.polygon.rpc.url'
+}
+```
+
+AppKit will prioritize these URLs over the default ones.
+
+## Example of adding WalletConnect to an app on an unsupported network
+
+This guide walks through adding WalletConnect support in your app for networks AppKit doesn't support natively, such as non-EVM networks and L1s that aren't Bitcoin, Solana, Ton or Tron.
+
+The integration is custom: render a "Connect with WalletConnect" button that opens the Reown AppKit QR modal. Each step links to the underlying Reown or WalletConnect doc for full reference.
+
+### 1. Install AppKit
+
+Install `@reown/appkit-core` and the framework adapter for your stack (React, Next.js, Vue, or vanilla JS). Pick the matching installation page from the [WalletConnect standalone integration overview](https://docs.walletconnect.network/app-sdk/overview#standalone-integration-of-walletconnect-as-an-app).
+
+### 2. Define the Network as a custom network
+
+Canton is non-EVM, so you'll need to register the chain through `defineChain` from `@reown/appkit/networks` using its CAIP-2 identifiers. In this example, we'll use Canton network which uses the identifiers `canton:mainnet` and `canton:testnet`:
+
+```typescript
+import { defineChain } from '@reown/appkit/networks'
+
+const cantonMainnet = defineChain({
+  id: 'canton:mainnet',
+  caipNetworkId: 'canton:mainnet',
+  chainNamespace: 'canton',
+  name: 'Canton Mainnet',
+  nativeCurrency: { name: 'Canton Coin', symbol: 'CC', decimals: 10 },
+  rpcUrls: { default: { http: ['<your-validator-rpc-url>'] } },
+  blockExplorers: { default: { name: 'Canton Explorer', url: '<explorer-url>' } },
+})
+
+const cantonTestnet = defineChain({
+  id: 'canton:testnet',
+  caipNetworkId: 'canton:testnet',
+  chainNamespace: 'canton',
+  name: 'Canton Testnet',
+  nativeCurrency: { name: 'Canton Coin', symbol: 'CC', decimals: 10 },
+  rpcUrls: { default: { http: ['<your-validator-rpc-url>'] } },
+  blockExplorers: { default: { name: 'Canton Explorer', url: '<explorer-url>' } },
+})
+```
+
+The RPC URL should point to either a local devnet or a private validator you control. In this case, both can be deployed using the [Hyperledger Splice Wallet Kernel](https://github.com/hyperledger-labs/splice-wallet-kernel); Canton does not expose a shared public RPC.
+
+Full reference: [Reown custom networks](/appkit/react/core/custom-networks).
+
+### 3. Initialize `universal-provider`
+
+```typescript
+const provider = await UniversalProvider.init({
+  projectId: '<your-walletconnect-project-id>',
+  metadata: {
+    name: '<your-app-name>',
+    description: '<your-app-description>',
+    url: '<your-app-url>',
+    icons: [],
+  },
+});
+```
+
+### 4. Pass the networks & universal-provider to AppKit
+
+```typescript
+import { createAppKit } from '@reown/appkit'
+
+createAppKit({
+  projectId: '<your-walletconnect-project-id>',
+  networks: [cantonMainnet, cantonTestnet],
+  universalProvider: provider // universal-provider instance
+})
+```
+
+### 5. Establishing a session on Canton
+
+Calling `.connect` would automatically trigger AppKit modal to display a QR.
+
+```typescript
+const namespacesToRequest = {
+  canton: {
+    chains: ['canton:mainnet', 'canton:testnet'],
+    methods: [
+      "canton_prepareSignExecute",
+      "canton_listAccounts",
+      "canton_getPrimaryAccount",
+      "canton_getActiveNetwork",
+      "canton_status",
+      "canton_ledgerApi",
+      "canton_signMessage",
+    ],
+    events: ['accountsChanged', 'chainChanged']
+  }
+}
+
+const session = await provider.connect({
+  optionalNamespaces: namespacesToRequest
+});
+```
+
+### 6. Verify
+
+* Confirm the wallet receives a session proposal scoped to `canton:mainnet` or `canton:testnet`.
+* Test signing on Canton Testnet before enabling Mainnet in production.
+
+### 7. Sending requests
+
+Use the `universal-provider` instance to send session requests on Canton:
+
+```typescript
+const result = await provider.request<{ signature: string, publicKey: string }>({
+  topic: session.topic,
+  chainId, // canton:mainnet for example
+  request: {
+    method: 'canton_signMessage',
+    params: { message: '<the message you want to sign>' },
+  },
+});
+```
