@@ -1,85 +1,66 @@
 ---
-title: About Reown SDK
+title: Get started with Reown
 ---
 
-**The Reown SDK (AppKit)** is an open-source all-in-one SDK for building seamless onchain apps. Offering smooth wallet connections, transactions, logins, and more, the Reown SDK is designed to onboard millions and scale with data-driven precision. It abstracts the complexity of blockchain infrastructure so you can focus on building apps that users love.
+> ## Documentation Index
+> Fetch the complete documentation index at: [https://docs.reown.com/llms.txt](https://docs.reown.com/llms.txt)
+> Use this file to discover all available pages before exploring further.
 
-**The Reown SDK (AppKit) includes:**
+Ready to start building apps? Let's dive in to set up and installation!
 
-**Accounts & Authentication**
-- Connections to 600+ wallets via the WalletConnect Network (SIWE)
-- [Email & social logins](/appkit/authentication/socials)
-- [Multichain authentication (SIWX)](/appkit/authentication/siwx/default)
-- [Smart Accounts](/appkit/features/smart-accounts)
+## Set yourself up in the Reown Dashboard
 
-**Payments Solutions**
-- [In-platform Swap feature](/appkit/features/swaps)
-- [In-platform Onramps](/appkit/features/onramp)
-- [Pay with Self-Custodial Wallets](/appkit/payments/pay-with-self-custodial-wallets)
-- [Deposit with Exchange](/appkit/payments/deposit-with-exchange)
+1. Navigate to the [Reown Login page](https://dashboard.reown.com/sign-up)
+2. Set up your account; either with an email and password or Google auth.
+3. Follow the onboarding flow so you get the best dashboard experience
+4. Toggle marketing communications on so you can receive updates your app performance and new product releases.
+5. Name your team and add team members (if applicable)
+6. Create your first project and copy the Project ID to get ready for installation.
 
-**Multichain Tools**
-- [Multichain Support](/appkit/features/multichain)
+## Get Started with your chosen framework
 
-**Flexible Frameworks & Platform Support**
-- Mobile and mini-app support
-- Built-in security (transaction screening and domain verification)
-- A choice of Frameworks, including; **React, React Native, Flutter, Kotlin, Swift, Unity** & more
-
-### Demo
-
-<Card
-  icon="flask"
-  title="Try Demo"
-  href="http://demo.reown.com/?utm_source=appkit&utm_medium=docs&utm_campaign=backlinks"
-  external
-/>
-<br />
-
-**Ready to get started? Check out the Quickstart section [here](#quickstart).**
-
-## Quickstart
+Now you have your project ID, you're ready to install using your chosen framework. For quickstart implementations and guidance, check out the [Install with AI guide](#get-started-with-ai-assistance) and [Install using the CLI guide](#get-started-with-the-cli)
 
 <CardGroup cols={2}>
   <Card title="React" icon="react" href="./react/core/installation">
     Get started with AppKit in React.
   </Card>
 
-<Card title="Next.js" icon="square-n" href="./next/core/installation">
-  Get started with AppKit in Next.js.
-</Card>
+  <Card title="Next.js" icon="square-n" href="./next/core/installation">
+    Get started with AppKit in Next.js.
+  </Card>
 
-<Card title="Vue" icon="vuejs" href="./vue/core/installation">
-  Get started with AppKit in Vue.
-</Card>
+  <Card title="Vue" icon="vuejs" href="./vue/core/installation">
+    Get started with AppKit in Vue.
+  </Card>
 
-<Card title="Svelte" icon="/images/icons/svelte.svg" href="./svelte/core/installation">
-  Get started with AppKit in Svelte.
-</Card>
+  <Card title="Svelte" icon="/images/icons/svelte.svg" href="./svelte/core/installation">
+    Get started with AppKit in Svelte.
+  </Card>
 
-<Card title="Nuxt" icon="mountains" href="./nuxt/core/installation">
-  Get started with AppKit in Nuxt.
-</Card>
+  <Card title="Nuxt" icon="mountains" href="./nuxt/core/installation">
+    Get started with AppKit in Nuxt.
+  </Card>
 
-<Card title="JavaScript" icon="js" href="./javascript/core/installation">
-  Get started with AppKit in JavaScript.
-</Card>
+  <Card title="JavaScript" icon="js" href="./javascript/core/installation">
+    Get started with AppKit in JavaScript.
+  </Card>
 
-<Card title="React Native" icon="react" href="./react-native/core/installation">
-  Get started with AppKit in React Native.
-</Card>
+  <Card title="React Native" icon="react" href="./react-native/core/installation">
+    Get started with AppKit in React Native.
+  </Card>
 
-<Card title="Flutter" icon="flutter" href="./flutter/core/installation">
-  Get started with AppKit in Flutter.
-</Card>
+  <Card title="Flutter" icon="flutter" href="./flutter/core/installation">
+    Get started with AppKit in Flutter.
+  </Card>
 
-<Card title="Android" icon="android" href="./android/core/installation">
-  Get started with AppKit in Android.
-</Card>
+  <Card title="Android" icon="android" href="./android/core/installation">
+    Get started with AppKit in Android.
+  </Card>
 
-<Card title="iOS" icon="apple" href="./ios/core/installation">
-  Get started with AppKit in iOS.
-</Card>
+  <Card title="iOS" icon="apple" href="./ios/core/installation">
+    Get started with AppKit in iOS.
+  </Card>
 
   <Card title="Unity" icon="unity" href="./unity/core/installation">
     Get started with AppKit in Unity.
@@ -88,47 +69,91 @@ title: About Reown SDK
 
 ## Framework Support
 
-While AppKit offers a wide range of features, networks, and authentication methods that make it easy to build interactive and user-friendly blockchain applications, certain features are limited to specific frameworks.
+The Reown SDK offers a wide range of features, networks, and authentication methods that make it easy to build interactive and user-friendly blockchain applications. However, certain features are limited to specific frameworks.
 
 **The following table provides an overview of the features, networks, and authentication methods available in AppKit and the frameworks they support.**
 
-- ✅ - indicates the feature is supported and can be integrated.
-- ❌ - indicates the feature is not supported and cannot be integrated.
+* ✅ - indicates the feature is supported and can be integrated.
+* ❌ - indicates the feature is not supported and cannot be integrated.
 
-|                |    React                 | Next.js           |      Vue         | JavaScript        | React Native      | Flutter           | Android          | Swift             |  Unity (Web)      |  Unity (Native)   |
-|----------------|--------------------------|-------------------|------------------|-------------------| ------------------| ------------------| -----------------| ----------------- | ----------------- | ----------------- |
-| ***Features*** |                          |                   |                  |                   |                   |                   |                  |                   |                   |                   |
-| Swaps (EVM Only)|<center>✅</center>       |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>✅</center>|<center>❌</center>|
-| On-Ramp        |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>✅</center>|<center>❌</center>|
-| Multichain Modal |<center>✅</center>      |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|
-| Smart Accounts |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>✅</center>|<center>✅</center>|
-| Notifications  |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|
-| Telegram Mini Apps |<center>✅</center>    |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>✅</center>|<center>❌</center>|
-| ***Networks*** |                          |                   |                   |                  |                   |                   |                  |                   |                   |                   |
-| EVM Chains     |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|
-|     Solana     |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>✅</center>|
-|    Bitcoin     |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|
-| ***Authentication*** |                     |                  |                   |                  |                   |                   |                  |                   |                   |                   |
-| Email & Social Login |<center>✅</center>  |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>✅</center>|<center>✅</center>|
-|  One-Click Auth |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|
-|    SIWX        |<center>✅</center>        |<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>✅</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|<center>❌</center>|
+|                      | React              | Next.js            | Vue                | JavaScript         | React Native       | Flutter            | Android            | Swift              | Unity (Web)        | Unity (Native)     |
+| -------------------- | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ |
+| ***Features***       |                    |                    |                    |                    |                    |                    |                    |                    |                    |                    |
+| Swaps (EVM Only)     | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>✅</center> | <center>❌</center> |
+| On-Ramp              | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>✅</center> | <center>❌</center> |
+| Multichain Modal     | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> |
+| Smart Accounts       | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>✅</center> | <center>✅</center> |
+| Notifications        | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> |
+| Telegram Mini Apps   | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>✅</center> | <center>❌</center> |
+| ***Networks***       |                    |                    |                    |                    |                    |                    |                    |                    |                    |                    |
+| EVM Chains           | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> |
+| Solana               | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>✅</center> |
+| Bitcoin              | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> |
+| ***Authentication*** |                    |                    |                    |                    |                    |                    |                    |                    |                    |                    |
+| Email & Social Login | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>✅</center> | <center>✅</center> |
+| One-Click Auth       | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> |
+| SIWX                 | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> | <center>❌</center> |
 
-## Reown SDK (AppKit) vs AppKit Core
+## Get started with AI assistance
 
-### What is AppKit Core?
+Try installing AppKit Skills to get AI-assisted guidance. Your AI coding assistant can help you set up, build, and debug your AppKit integration.
+
+To install AppKit Skills, run the following command in your terminal:
+
+```bash theme={null}
+npx skills add https://github.com/reown-com/skills --skill appkit --agent '*'
+```
+
+After installation, you can ask your AI assistant for help with AppKit setup, implementation, and troubleshooting.
+
+## Get started with the CLI
+
+Reown offers a dedicated CLI to set up a minimal version of Reown AppKit in the easiest and quickest way possible.
+
+To do this, please run the command below.
+
+```bash theme={null}
+npx @reown/appkit-cli
+```
+
+After running the command, you will be prompted to confirm the installation of the CLI. Upon your confirmation, the CLI will request the following details:
+
+1. **Project Name**: Enter the name for your project.
+2. **Framework**: Select your preferred framework or library. Currently, you have three options: React, Next.js, and Vue.
+3. **Network-Specific libraries**: Choose whether you want to install Wagmi, Ethers, Solana, or Multichain (EVM + Solana).
+
+After providing the project name and selecting your preferences, the CLI will install a minimal example of AppKit with your preferred blockchain library. The example will be pre-configured with a `projectId` that will only work on `localhost`.
+
+To fully configure your project, please obtain a `projectId` from the Reown Dashboard and update your project accordingly.
+
+## Do I need Reown SDK (AppKit) or AppKit Core?
+
+Whether you need the Reown SDK or AppKit core depends on your implementation needs. You have 3 main options:
+
+**1. You want to enable all Reown Capabilities on a [Reown AppKit supported network](/appkit/networks/supported-chains)**
+In this case, you can install the regular appkit package [via your chosen framework](#get-started-with-your-chosen-framework)
+
+**2. You want to support multiple networks; both those supported by the Reown SDK and additional networks not already supported.**
+In this case, you can install the regular appkit package and set up the universal Connector. Find details to complete this [here](/appkit/recipes/universal-connector#start-building-with-universal-connector).
+
+**3. You only want to support a network the Reown SDK does NOT support natively.**
+In this case, you'll want to install the AppKit core package, configure your chosen network and use the UniversalProvider connector.
+
+### AppKit (Reown SDK) vs Appkit Core
+
 AppKit Core is a **chain-agnostic** implementation that uses the Universal Provider/Universal Connector for blockchain interactions. Whereas the Reown SDK (AppKit) includes chain-specific adapters and full UI, AppKit Core offers a minimal, chain-agnostic foundation.
 
 The Reown SDK is best for most builders, but AppKit Core is ideal for developers who want to build more flexible custom-built solutions—those that don't need built-in features from day one.
 
----
+***
 
-| Feature | Reown SDK (AppKit) | AppKit Core |
-| :--- | :---: | :---: |
-| Swaps | ✅ | ❌ |
-| Onramps | ✅ | ❌ |
-| Smart Accounts | ✅ | ❌ |
-| Pre-Built Modal UI | ✅ | ❌ |
-| Chain-specific adapters | ✅ | ❌ |
-| Wallet Connections via WalletConnect Protocol | ✅ | ✅ |
-| Multichain support | ✅ | ✅ |
-| Multichain auth (SIWX) | ✅ | ✅ |
+| Feature                                       | Reown SDK (AppKit) | AppKit Core |
+| :-------------------------------------------- | :----------------: | :---------: |
+| Swaps                                         |          ✅         |      ❌      |
+| Onramps                                       |          ✅         |      ❌      |
+| Smart Accounts                                |          ✅         |      ❌      |
+| Pre-Built Modal UI                            |          ✅         |      ❌      |
+| Chain-specific adapters                       |          ✅         |      ❌      |
+| Wallet Connections via WalletConnect Protocol |          ✅         |      ✅      |
+| Multichain support                            |          ✅         |      ✅      |
+| Multichain auth (SIWX)                        |          ✅         |      ✅      |
