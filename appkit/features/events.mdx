@@ -1,0 +1,247 @@
+---
+title: AppKit Events
+description: Full reference for modal, wallet, network, and transaction events emitted by AppKit.
+---
+
+`useAppKitEvents` (React/Next hook and Vue/Nuxt composable) subscribes to every event emitted by AppKit.
+Use it for analytics, telemetry, custom notifications, or reacting to specific user actions.
+
+<Tabs>
+<Tab title="React / Next">
+```ts
+import { useAppKitEvents } from '@reown/appkit/react'
+
+const events = useAppKitEvents()
+```
+</Tab>
+<Tab title="Vue / Nuxt">
+```ts
+import { useAppKitEvents } from '@reown/appkit/vue'
+
+const events = useAppKitEvents()
+```
+</Tab>
+</Tabs>
+
+## Event object shape
+
+Each time a new event is emitted the hook / composable returns a fresh object:
+
+```ts
+{
+  timestamp: number
+  data: {
+    type: 'track' | 'error'
+    event: string        // event name — see tables below
+    properties?: object  // event-specific payload
+  }
+}
+```
+
+| Field | Description |
+|---|---|
+| `timestamp` | Unix epoch milliseconds when the event fired |
+| `data.type` | `'track'` for normal events, `'error'` for failures |
+| `data.event` | One of the event names listed below |
+| `data.properties` | Optional object whose shape depends on the event |
+
+---
+
+## Available events
+
+### Modal
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `MODAL_OPEN` | The modal opens | `{ connected: boolean }` |
+| `MODAL_CLOSE` | The modal closes | `{ connected: boolean }` |
+
+### Wallet connection
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `SELECT_WALLET` | User picks a wallet from the list | `{ name, platform, displayIndex, walletRank, view }` |
+| `CONNECT_SUCCESS` | A wallet connection succeeds | `{ method: 'qrcode' \| 'mobile' \| 'browser' \| 'email', name, walletRank, view, reconnect? }` |
+| `CONNECT_ERROR` | A connection attempt fails | `{ message: string }` |
+| `CONNECT_PROXY_ERROR` | WalletConnect proxy connection fails | `{ message, uri, mobile_link, name }` |
+| `USER_REJECTED` | User rejects the connection request | `{ message: string }` |
+| `DISCONNECT_SUCCESS` | Disconnect succeeds | `{ namespace: 'all' \| ChainNamespace }` |
+| `DISCONNECT_ERROR` | Disconnect fails | `{ message? }` |
+| `CLICK_ALL_WALLETS` | User clicks "All Wallets" | — |
+| `CLICK_WALLET_HELP` | User clicks the wallet help link | — |
+| `CLICK_NETWORK_HELP` | User clicks the network help link | — |
+| `CLICK_GET_WALLET_HELP` | User clicks the get-wallet help link | — |
+| `GET_WALLET` | User clicks to install a wallet | `{ name, walletRank, explorerId, type: 'chrome_store' \| 'app_store' \| 'play_store' \| 'homepage' }` |
+| `SEARCH_WALLET` | User searches in the wallet list | `{ badge, search }` |
+
+### Network
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `SWITCH_NETWORK` | User switches network | `{ network: caipNetworkId }` |
+| `CLICK_NETWORKS` | User opens the network selector | — |
+
+### Email & social login
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `EMAIL_LOGIN_SELECTED` | User picks email login | — |
+| `EMAIL_SUBMITTED` | User submits email | — |
+| `EMAIL_VERIFICATION_CODE_SENT` | Verification code sent | — |
+| `EMAIL_VERIFICATION_CODE_PASS` | Code accepted | — |
+| `EMAIL_VERIFICATION_CODE_FAIL` | Code rejected | `{ message }` |
+| `EMAIL_EDIT` | User edits email | — |
+| `EMAIL_UPGRADE_FROM_MODAL` | User upgrades email account | — |
+| `DEVICE_REGISTERED_FOR_EMAIL` | Device registered for email auth | — |
+| `SOCIAL_LOGIN_STARTED` | Social login initiated | `{ provider }` |
+| `SOCIAL_LOGIN_SUCCESS` | Social login succeeds | `{ provider, reconnect? }` |
+| `SOCIAL_LOGIN_ERROR` | Social login fails | `{ provider, message }` |
+| `SOCIAL_LOGIN_CANCELED` | User cancels social login | `{ provider }` |
+| `SET_PREFERRED_ACCOUNT_TYPE` | User toggles EOA / Smart Account | `{ accountType, network }` |
+
+### SIWX (Sign-In With X)
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `CLICK_SIGN_SIWX_MESSAGE` | User clicks to sign | `{ network, isSmartAccount }` |
+| `CLICK_CANCEL_SIWX` | User cancels SIWX | `{ network, isSmartAccount }` |
+| `SIWX_AUTH_SUCCESS` | SIWX auth succeeds | `{ network, isSmartAccount }` |
+| `SIWX_AUTH_ERROR` | SIWX auth fails | `{ network, isSmartAccount, message? }` |
+
+### Transactions / activity
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `CLICK_TRANSACTIONS` | User opens activity view | `{ isSmartAccount }` |
+| `LOAD_MORE_TRANSACTIONS` | User paginates activity | `{ address, projectId, cursor, isSmartAccount }` |
+| `ERROR_FETCH_TRANSACTIONS` | Activity fetch fails | `{ address, projectId, cursor, isSmartAccount }` |
+
+### Send
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `OPEN_SEND` | Send flow opens | `{ isSmartAccount, network }` |
+| `SEND_INITIATED` | User submits a send | `{ isSmartAccount, network, token, amount }` |
+| `SEND_SUCCESS` | Send confirmed | `{ isSmartAccount, network, token, amount, hash }` |
+| `SEND_ERROR` | Send fails | `{ message, isSmartAccount, network, token, amount }` |
+| `SEND_REJECTED` | User rejects send | `{ message, isSmartAccount, network, token, amount }` |
+
+### Swap
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `OPEN_SWAP` | Swap flow opens | `{ isSmartAccount, network }` |
+| `INITIATE_SWAP` | User submits a swap | `{ isSmartAccount, network, swapFromToken, swapToToken, swapFromAmount, swapToAmount }` |
+| `SWAP_SUCCESS` | Swap confirmed | Same payload as `INITIATE_SWAP` |
+| `SWAP_ERROR` | Swap fails | Same payload as `INITIATE_SWAP` + `{ message }` |
+| `SWAP_APPROVAL_ERROR` | Token allowance approval fails | Same payload as `INITIATE_SWAP` + `{ message }` |
+| `CLICK_SELECT_TOKEN_TO_SWAP` | User clicks token selector in swap | — |
+| `CLICK_SELECT_NETWORK_TO_SWAP` | User clicks network selector in swap | — |
+| `CLICK_CONVERT` | User clicks convert in swap flow | — |
+
+### Pay / on-ramp
+
+| Event | When it fires | `properties` |
+|---|---|---|
+| `PAY_MODAL_OPEN` | Pay modal opens | `{ exchanges, configuration }` |
+| `PAY_EXCHANGE_SELECTED` | User picks an exchange | `{ source, exchange, configuration, currentPayment, headless?, caipNetworkId? }` |
+| `PAY_INITIATED` | Payment started | `{ source, paymentId, configuration, currentPayment, caipNetworkId?, message? }` |
+| `PAY_SUCCESS` | Payment succeeds | Same as `PAY_INITIATED` |
+| `PAY_ERROR` | Payment fails | Same as `PAY_INITIATED` |
+| `SELECT_BUY_CRYPTO` | User picks "Buy crypto" | `{ isSmartAccount }` |
+| `SELECT_BUY_PROVIDER` | User picks an on-ramp provider | `{ provider, isSmartAccount }` |
+| `SELECT_WHAT_IS_A_BUY` | User opens "What is buy?" help | `{ isSmartAccount }` |
+
+---
+
+## Examples
+
+<Note>
+The examples below use React syntax. Vue/Nuxt users should replace `useEffect` with `watchEffect` and import from `@reown/appkit/vue`.
+</Note>
+
+### Track wallet connections with an analytics provider
+
+```tsx
+import { useEffect } from 'react'
+import { useAppKitEvents } from '@reown/appkit/react'
+
+export function AnalyticsTracker() {
+  const events = useAppKitEvents()
+
+  useEffect(() => {
+    if (events.data.event === 'CONNECT_SUCCESS') {
+      analytics.track('wallet_connected', {
+        wallet: events.data.properties?.name,
+        method: events.data.properties?.method
+      })
+    }
+  }, [events])
+
+  return null
+}
+```
+
+### Show a toast when the user switches network
+
+```tsx
+import { useEffect } from 'react'
+import { useAppKitEvents } from '@reown/appkit/react'
+import { toast } from 'your-toast-lib'
+
+export function NetworkToast() {
+  const events = useAppKitEvents()
+
+  useEffect(() => {
+    if (events.data.event === 'SWITCH_NETWORK') {
+      toast(`Switched to ${events.data.properties?.network}`)
+    }
+  }, [events])
+
+  return null
+}
+```
+
+### Log every event during development
+
+```tsx
+import { useEffect } from 'react'
+import { useAppKitEvents } from '@reown/appkit/react'
+
+export function EventLogger() {
+  const events = useAppKitEvents()
+
+  useEffect(() => {
+    if (!events.data.event) return
+    console.log(`[AppKit] ${events.data.event}`, events.data.properties)
+  }, [events])
+
+  return null
+}
+```
+
+### React to connection errors
+
+```tsx
+import { useEffect } from 'react'
+import { useAppKitEvents } from '@reown/appkit/react'
+import { toast } from 'your-toast-lib'
+
+export function ConnectionErrorHandler() {
+  const events = useAppKitEvents()
+
+  useEffect(() => {
+    switch (events.data.event) {
+      case 'CONNECT_ERROR':
+      case 'CONNECT_PROXY_ERROR':
+        toast.error(`Connection failed: ${events.data.properties?.message}`)
+        break
+      case 'USER_REJECTED':
+        toast.warn('Connection request was rejected')
+        break
+    }
+  }, [events])
+
+  return null
+}
+```
