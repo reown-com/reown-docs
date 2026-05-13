@@ -86,7 +86,7 @@ Install `@reown/appkit-core` and the framework adapter for your stack (React, Ne
 
 ### 2. Define the Network as a custom network
 
-Canton is non-EVM, so you'll need to register the chain through `defineChain` from `@reown/appkit/networks` using its CAIP-2 identifiers. In this example, we'll use Canton network which uses the identifiers `canton:mainnet` and `canton:testnet`:
+If your chosen chain is non-EVM, you'll need to register it through `defineChain` from `@reown/appkit/networks` using its CAIP-2 identifiers. In this example, we'll use Canton network which uses the identifiers `canton:mainnet` and `canton:testnet`:
 
 ```typescript
 import { defineChain } from '@reown/appkit/networks'
