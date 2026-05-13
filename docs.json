@@ -174,14 +174,15 @@
                 ]
               },
               {
-                "group": "Supported Networks",
+                "group": "Networks",
                 "pages": [
                   "appkit/networks/supported-chains",
                   "appkit/networks/evm",
                   "appkit/networks/solana",
                   "appkit/networks/bitcoin",
                   "appkit/networks/ton",
-                  "appkit/networks/tron"
+                  "appkit/networks/tron",
+                  "appkit/networks/custom-networks"
                 ]
               },
               {
