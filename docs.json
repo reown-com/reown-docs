@@ -194,7 +194,17 @@
               },
               {
                 "group": "Technical Reference",
-                "pages": ["appkit/faq"]
+                "pages": [
+                  "appkit/faq",
+                  {
+                    "group": "Security",
+                    "pages": [
+                      "advanced/security/security-information",
+                      "advanced/security/content-security-policy"
+                    ]
+                  },
+                  "external-link-01"
+                ]
               }
             ]
           },
@@ -220,6 +230,12 @@
                 ]
               },
               {
+                "group": "Dashboard",
+                "pages": [
+                  "appkit/react/cloud/analytics"
+                ]
+              },
+              {
                 "group": "Authentication",
                 "pages": [
                   "appkit/react/core/socials",
@@ -227,12 +243,12 @@
                   "appkit/react/core/siwx"
                 ]
               },
-                            {
-                              "group": "Headless",
-                              "pages": [
-                                "appkit/react/core/headless"
-                              ]
-                            },
+              {
+                "group": "Headless",
+                "pages": [
+                  "appkit/react/core/headless"
+                ]
+              },
               {
                 "group": "Payments",
                 "pages": [
@@ -246,24 +262,16 @@
                 ]
               },
               {
-                          "group": "Transactions",
-                          "pages": [
-                            "appkit/react/transactions/onramp",
-                            "appkit/react/transactions/swaps"
-                          ]
-                        },
-                        {
-                          "group": "Cloud",
-                          "pages": [
-                            "appkit/react/cloud/relay",
-                            "appkit/react/cloud/blockchain-api",
-                            "appkit/react/cloud/analytics"
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "dropdown": "Next",
+                "group": "Transactions",
+                "pages": [
+                  "appkit/react/transactions/onramp",
+                  "appkit/react/transactions/swaps"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "Next",
             "icon": "square-n",
             "description": "AppKit on NextJS",
             "pages": [
@@ -281,6 +289,12 @@
                   "appkit/next/core/multichain",
                   "appkit/next/core/theming",
                   "appkit/next/core/resources"
+                ]
+              },
+              {
+                "group": "Dashboard",
+                "pages": [
+                  "appkit/next/cloud/analytics"
                 ]
               },
               {
@@ -304,24 +318,16 @@
                 ]
               },
               {
-                          "group": "Transactions",
-                          "pages": [
-                            "appkit/next/transactions/onramp",
-                            "appkit/next/transactions/swaps"
-                          ]
-                        },
-                        {
-                          "group": "Cloud",
-                          "pages": [
-                            "appkit/next/cloud/relay",
-                            "appkit/next/cloud/blockchain-api",
-                            "appkit/next/cloud/analytics"
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "dropdown": "Vue",
+                "group": "Transactions",
+                "pages": [
+                  "appkit/next/transactions/onramp",
+                  "appkit/next/transactions/swaps"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "Vue",
             "icon": "vuejs",
             "description": "AppKit on VueJS",
             "pages": [
@@ -343,10 +349,16 @@
                 ]
               },
               {
+                "group": "Dashboard",
+                "pages": [
+                  "appkit/vue/cloud/analytics"
+                ]
+              },
+              {
                 "group": "Authentication",
                 "pages": ["appkit/vue/core/socials", "appkit/vue/core/siwe", "appkit/vue/core/siwx"]
               },
-                            {
+              {
                 "group": "Payments",
                 "pages": [
                   {
@@ -359,24 +371,16 @@
                 ]
               },
               {
-                          "group": "Transactions",
-                          "pages": [
-                            "appkit/vue/transactions/onramp",
-                            "appkit/vue/transactions/swaps"
-                          ]
-                        },
-                        {
-                          "group": "Cloud",
-                          "pages": [
-                            "appkit/vue/cloud/relay",
-                            "appkit/vue/cloud/blockchain-api",
-                            "appkit/vue/cloud/analytics"
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "dropdown": "JavaScript",
+                "group": "Transactions",
+                "pages": [
+                  "appkit/vue/transactions/onramp",
+                  "appkit/vue/transactions/swaps"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "JavaScript",
             "icon": "js",
             "description": "AppKit on JavaScript",
             "pages": [
@@ -397,6 +401,12 @@
                 ]
               },
               {
+                "group": "Dashboard",
+                "pages": [
+                  "appkit/javascript/cloud/analytics"
+                ]
+              },
+              {
                 "group": "Authentication",
                 "pages": [
                   "appkit/javascript/core/socials",
@@ -404,7 +414,7 @@
                   "appkit/javascript/core/siwx"
                 ]
               },
-                            {
+              {
                 "group": "Payments",
                 "pages": [
                   {
@@ -417,22 +427,14 @@
                 ]
               },
               {
-                          "group": "Transactions",
-                          "pages": [
-                            "appkit/javascript/transactions/onramp",
-                            "appkit/javascript/transactions/swaps"
-                          ]
-                        },
-                        {
-                          "group": "Cloud",
-                          "pages": [
-                            "appkit/javascript/cloud/relay",
-                            "appkit/javascript/cloud/blockchain-api",
-                            "appkit/javascript/cloud/analytics"
-                          ]
-                        }
-                      ]
-                    },
+                "group": "Transactions",
+                "pages": [
+                  "appkit/javascript/transactions/onramp",
+                  "appkit/javascript/transactions/swaps"
+                ]
+              }
+            ]
+          },
                     {
                       "dropdown": "Svelte",
             "icon": "/images/icons/svelte.svg",
@@ -514,6 +516,12 @@
                 ]
               },
               {
+                "group": "Dashboard",
+                "pages": [
+                  "appkit/react-native/cloud/analytics"
+                ]
+              },
+              {
                 "group": "Transactions",
                 "pages": [
                   "appkit/react-native/transactions/swaps",
@@ -526,14 +534,6 @@
                   "appkit/react-native/core/email",
                   "appkit/react-native/core/1ca",
                   "appkit/react-native/core/siwx"
-                ]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "appkit/react-native/cloud/relay",
-                  "appkit/react-native/cloud/blockchain-api",
-                  "appkit/react-native/cloud/analytics"
                 ]
               }
             ]
@@ -557,6 +557,12 @@
                 ]
               },
               {
+                "group": "Dashboard",
+                "pages": [
+                  "appkit/flutter/cloud/analytics"
+                ]
+              },
+              {
                 "group": "Payments",
                 "pages": [
                   {
@@ -570,14 +576,6 @@
               {
                 "group": "Authentication",
                 "pages": ["appkit/flutter/core/email", "appkit/flutter/core/siwe"]
-              },
-              {
-                "group": "Cloud",
-                "pages": [
-                  "appkit/flutter/cloud/relay",
-                  "appkit/flutter/cloud/blockchain-api",
-                  "appkit/flutter/cloud/analytics"
-                ]
               }
             ]
           },
@@ -598,16 +596,14 @@
                 ]
               },
               {
-                "group": "Authentication",
-                "pages": ["appkit/android/core/one-click-auth"]
-              },
-              {
-                "group": "Cloud",
+                "group": "Dashboard",
                 "pages": [
-                  "appkit/android/cloud/relay",
-                  "appkit/android/cloud/blockchain-api",
                   "appkit/android/cloud/analytics"
                 ]
+              },
+              {
+                "group": "Authentication",
+                "pages": ["appkit/android/core/one-click-auth"]
               }
             ]
           },
@@ -627,16 +623,14 @@
                 ]
               },
               {
-                "group": "Authentication",
-                "pages": ["appkit/ios/core/one-click-auth"]
-              },
-              {
-                "group": "Cloud",
+                "group": "Dashboard",
                 "pages": [
-                  "appkit/ios/cloud/relay",
-                  "appkit/ios/cloud/blockchain-api",
                   "appkit/ios/cloud/analytics"
                 ]
+              },
+              {
+                "group": "Authentication",
+                "pages": ["appkit/ios/core/one-click-auth"]
               }
             ]
           },
@@ -658,25 +652,47 @@
                 ]
               },
               {
-                "group": "Authentication",
-                "pages": ["appkit/unity/core/socials", "appkit/unity/core/siwe"]
-              },
-              {
-                "group": "Cloud",
+                "group": "Dashboard",
                 "pages": [
-                  "appkit/unity/cloud/relay",
-                  "appkit/unity/cloud/blockchain-api",
                   "appkit/unity/cloud/analytics"
                 ]
+              },
+              {
+                "group": "Authentication",
+                "pages": ["appkit/unity/core/socials", "appkit/unity/core/siwe"]
               }
             ]
           }
         ]
       },
       {
-        "tab": "Advanced",
-        "icon": "cloud",
+        "tab": "Guides",
+        "icon": "book-open",
         "pages": [
+          {
+            "group": "Guides",
+            "pages": [
+              {
+                "group": "How Tos",
+                "pages": [
+                  "appkit/recipes/telegram-mini-app",
+                  "appkit/recipes/tenderly-virtual-testnets",
+                  "appkit/recipes/wallet-buttons-react",
+                  "appkit/recipes/wagmi-send-transaction",
+                  "appkit/recipes/ethers-send-transaction",
+                  "appkit/recipes/EVM-smart-contract-interaction",
+                  "appkit/recipes/solana-send-transaction",
+                  "appkit/recipes/bitcoin-send-transaction",
+                  "appkit/recipes/switching-to-send-calls",
+                  "appkit/recipes/travel-rule",
+                  "appkit/recipes/update-appkit",
+                  "appkit/recipes/universal-connector",
+                  "appkit/recipes/troubleshooting"
+                ]
+              },
+              "appkit/recipes/gtm-checklist"
+            ]
+          },
           {
             "group": "Migration",
             "pages": [
@@ -712,145 +728,12 @@
               },
               "appkit/upgrade/wcm"
             ]
-          },
-          {
-            "group": "Advanced",
-            "pages": [
-              {
-                "group": "WalletGuide",
-                "pages": [
-                  {
-                    "group": "WalletGuide Chains",
-                    "pages": ["cloud/chains/overview", "cloud/chains/chain-list"]
-                  },
-                  {
-                    "group": "WalletGuide Wallets",
-                    "pages": ["cloud/wallets/wallet-list"]
-                  },
-                  "cloud/explorer"
-                ]
-              },
-              "cloud/relay",
-              {
-                "group": "Multi-Chain",
-                "pages": [
-                  {
-                    "group": "RPC Reference",
-                    "pages": [
-                      "advanced/multichain/rpc-reference/cosmos-rpc",
-                      "advanced/multichain/rpc-reference/ethereum-rpc",
-                      "advanced/multichain/rpc-reference/solana-rpc",
-                      "advanced/multichain/rpc-reference/sui-rpc",
-                      "advanced/multichain/rpc-reference/polkadot-rpc",
-                      "advanced/multichain/rpc-reference/stacks-rpc",
-                      "advanced/multichain/rpc-reference/tron-rpc",
-                      "advanced/multichain/rpc-reference/near-rpc",
-                      "advanced/multichain/rpc-reference/starknet-rpc",
-                      "advanced/multichain/rpc-reference/stellar-rpc",
-                      "advanced/multichain/rpc-reference/hedera-rpc",
-                      "advanced/multichain/rpc-reference/tezos-rpc",
-                      "advanced/multichain/rpc-reference/ton-rpc",
-                      "advanced/multichain/rpc-reference/xrpl-rpc",
-                      "advanced/multichain/rpc-reference/casper-rpc",
-                      "advanced/multichain/rpc-reference/everscale-rpc",
-                      "advanced/multichain/rpc-reference/bitcoin-rpc",
-                      "advanced/multichain/rpc-reference/litecoin-rpc",
-                      "advanced/multichain/rpc-reference/dogecoin-rpc"
-                    ]
-                  },
-                  {
-                    "group": "Examples",
-                    "pages": [
-                      {
-                        "group": "Polkadot",
-                        "pages": [
-                          "advanced/multichain/polkadot/dapp-integration-guide",
-                          "advanced/multichain/polkadot/namespaces-guide",
-                          "advanced/multichain/polkadot/wallet-integration-guide"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Providers & Adapters",
-                "pages": [
-                  "advanced/providers/ethereum",
-                  "advanced/providers/universal",
-                  "advanced/providers/solana-adapter"
-                ]
-              },
-              {
-                "group": "APIs",
-                "pages": [
-                  {
-                    "group": "Core",
-                    "pages": [
-                      "advanced/api/core/pairing",
-                      "advanced/api/core/relay",
-                      "advanced/api/core/shared-core"
-                    ]
-                  },
-                  {
-                    "group": "Sign",
-                    "pages": [
-                      "advanced/api/sign/overview",
-                      "advanced/api/sign/dapp-usage",
-                      "advanced/api/sign/smart-contract-wallet-usage"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Security",
-                "pages": [
-                  "advanced/security/security-information",
-                  "advanced/security/content-security-policy"
-                ]
-              },
-              "advanced/push-server",
-              "advanced/walletkit-migration"
-            ]
-          },
-          {
-            "group": "Guides",
-            "pages": [
-              {
-                "group": "How Tos",
-                "pages": [
-                  "appkit/recipes/telegram-mini-app",
-                  "appkit/recipes/tenderly-virtual-testnets",
-                  "appkit/recipes/wallet-buttons-react",
-                  "appkit/recipes/wagmi-send-transaction",
-                  "appkit/recipes/ethers-send-transaction",
-                  "appkit/recipes/EVM-smart-contract-interaction",
-                  "appkit/recipes/solana-send-transaction",
-                  "appkit/recipes/bitcoin-send-transaction",
-                  "appkit/recipes/switching-to-send-calls",
-                  "appkit/recipes/travel-rule",
-                  "appkit/recipes/update-appkit",
-                  "appkit/recipes/universal-connector",
-                  "appkit/recipes/troubleshooting"
-                ]
-              },
-              "appkit/recipes/gtm-checklist"
-            ]
-          },
-          {
-              "group": "Technical Reference",
-              "pages": ["link-spec", "external-link-01", "advanced/faq", "advanced/report-an-issue"]
           }
         ]
       }
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "Contact Us",
-          "href": "https://reown.com/contact",
-          "icon": "headset"
-        },
         {
           "anchor": "Report an Issue",
           "href": "/advanced/report-an-issue",
