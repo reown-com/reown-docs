@@ -1,0 +1,154 @@
+---
+title: "Verify API and Domain Verification"
+description: "Understand how the WalletConnect Verify API works end-to-end, how it interacts with the Reown Dashboard domain allowlist, and how to troubleshoot the 'Invalid domain' or 'This domain could not be verified' warning in Trust Wallet and other wallets."
+sidebarTitle: "Verify API"
+---
+
+Many developers who allowlist their domain in the Reown Dashboard still see `This domain could not be verified` or `Invalid domain` warnings inside Trust Wallet and other external wallets when users try to connect. This page explains how the Verify API actually works, why a valid API response does not always translate into a green check in every wallet, and how to diagnose the most common misconfigurations.
+
+## How the Verify API works
+
+The Verify API is an attestation mechanism that lets a wallet confirm which origin actually sent a session proposal or signing request. Allowlisting a domain in the Dashboard is only part of the flow; the full path involves the dApp, the Verify server, the Relay, and the wallet.
+
+### End-to-end flow
+
+1. The dApp initializes AppKit or a raw WalletConnect client with a `projectId` and `metadata.url` that matches the domain it is served from.
+2. Before publishing an encrypted payload to the Relay (for example a session proposal or a `personal_sign` request), the dApp computes a hash of the encrypted envelope and registers an attestation with the Verify server.
+3. The Verify server independently determines the real origin that registered the attestation. In browsers this is done through a `postMessage` handshake with an iframe loaded from `verify.walletconnect.com` / `verify.walletconnect.org`, so the dApp cannot forge the origin value. On mobile, attestations are tied to the app bundle identifier.
+4. The dApp publishes the payload to the Relay, tagged with the attestation ID.
+5. The wallet receives the payload and, before showing the approval sheet, calls `GET /attestation/:attestationId` on the Verify server to fetch the origin that the server recorded for that attestation ID.
+6. The wallet compares the resolved origin with the domain registered on the project's `projectId` (fetched from the Explorer / Dashboard). It then sets the validation state on `verifyContext.verified` that it surfaces to the user.
+
+### What a valid attestation looks like
+
+When Verify is working, the payload delivered to the wallet includes a `verifyContext` similar to:
+
+```jsonc
+{
+  "verified": {
+    "origin": "https://your-dapp.com",
+    "validation": "VALID",
+    "verifyUrl": "https://verify.walletconnect.org",
+    "isScam": false
+  }
+}
+```
+
+- `origin` is the value the Verify server resolved for the attestation ID. This is the origin the wallet will render in the approval sheet.
+- `validation` can be `VALID`, `INVALID`, or `UNKNOWN`:
+  - `VALID` means the resolved origin matches a domain registered for the project's `projectId`.
+  - `INVALID` means the resolved origin does not match any registered domain (sometimes called "mismatch"). This is what produces the `Invalid domain` warning in Trust Wallet.
+  - `UNKNOWN` means the wallet could not resolve an attestation for this payload at all. This produces `This domain could not be verified`.
+- `isScam` is set independently of `validation` if the resolved origin matches an entry in one of the malicious-domain feeds the Verify server consults. A domain can be both `VALID` and `isScam: true` if Reown's partners have flagged it.
+
+### What the attestation hash represents
+
+The attestation ID is a hash of the encrypted envelope that the dApp is about to publish, not a hash of the domain. That is why each session proposal and each signing request produces a new attestation ID: rebinding a fresh hash to the current origin is what prevents another page from replaying a previously valid attestation.
+
+The hash is computed from the encrypted payload, so neither the Verify server nor the wallet can read the plaintext message. The only information the Verify server exposes through `GET /attestation/:attestationId` is the origin that registered that specific ID.
+
+## Why a valid API response does not always show as verified in Trust Wallet
+
+A successful `200` from `GET /attestation/:attestationId` on `verify.walletconnect.com` does not guarantee a green check mark in every wallet. Wallets layer additional checks on top of the Verify response, and the most common reasons Trust Wallet still shows `Invalid domain` are:
+
+- **The resolved origin does not match the project's registered domain.** Verify returned `validation: INVALID`, not `UNKNOWN`. The Verify server correctly attested that the request came from your origin, but the Dashboard has a different domain registered for the project. This is by far the most common cause of the Trust Wallet warning.
+- **`metadata.url` disagrees with the hosting origin.** The dApp's self-reported `metadata.url` (rendered in the wallet sheet) is different from the actual origin the Verify server attested. Wallets such as Trust Wallet compare the two and treat any mismatch as a failed verification, even when `verifyContext.verified.validation` is `VALID`.
+- **Wallet-side domain caches.** External wallets cache both the Explorer / Dashboard metadata and, in some cases, the dApp metadata itself. Allowlist changes in the Dashboard take about 15 minutes to propagate to the Relay and the Verify server, and can take longer to appear in a specific wallet build because of the wallet's own caches.
+- **Iframe or CSP issues that prevent attestation registration.** If the dApp's Content Security Policy blocks `frame-src https://verify.walletconnect.com https://verify.walletconnect.org`, the browser iframe attestation handshake never completes. The wallet then resolves `validation: UNKNOWN` and renders `This domain could not be verified`, regardless of what the Dashboard says. See [Content Security Policy](/advanced/security/content-security-policy) for the correct directives.
+- **Connection from a non-allowlisted origin.** When the dApp is served from a preview URL, a staging host, or an iframe embedded by another site, the origin registered with Verify is the embedding page's origin, not `metadata.url`. The Dashboard allowlist must include every origin you actually serve from, not only the production domain.
+- **Independent wallet heuristics.** Some wallets run their own scam / phishing checks on top of `verifyContext`. A payload can satisfy Verify's `VALID` state and still be flagged by the wallet's internal lists.
+
+<Note>
+  The Verify API is designed to make impersonation harder, not to be bulletproof. A wallet is always free to show its own warning on top of the Verify result, and behavior can differ between wallet versions.
+</Note>
+
+## Troubleshooting
+
+Work through the checks below in order. Most `Invalid domain` reports in Trust Wallet come from the first three.
+
+### 1. Confirm the Verify API is reading the correct domain
+
+Open the dApp in a regular browser tab (not an embedded preview) and trigger a connection. In the browser DevTools, inspect the session proposal / request event delivered to the wallet and read `verifyContext.verified`:
+
+```javascript
+// AppKit / WalletKit event payload
+const { verifyContext } = event
+console.log(verifyContext.verified.origin)      // what Verify resolved
+console.log(verifyContext.verified.validation)  // VALID | INVALID | UNKNOWN
+console.log(verifyContext.verified.isScam)
+```
+
+- If `origin` does not match the URL in the browser address bar, the dApp is being served from a different origin than you expect (for example a Vercel preview URL, a CDN subdomain, or an iframe host).
+- If `validation` is `UNKNOWN`, the attestation never registered. Check the browser console for blocked requests to `https://verify.walletconnect.com` or `https://verify.walletconnect.org` and the CSP guidance in [Content Security Policy](/advanced/security/content-security-policy).
+- If `validation` is `INVALID`, the attestation registered correctly but the resolved origin is not in the Dashboard allowlist for that `projectId`. Continue with step 2.
+
+You can also resolve an attestation directly. Capture an `attestationId` from the Relay message and call:
+
+```
+GET https://verify.walletconnect.org/attestation/<attestationId>
+```
+
+The response body contains the origin the Verify server recorded for that payload. That string is what the wallet compares against the allowlist — if it is wrong, no allowlist change on a different string will help.
+
+### 2. Check exact domain formats in the Dashboard
+
+The allowlist does exact-match comparison at the origin level. A `www` subdomain, a different scheme, a custom port, or a trailing path all count as different origins.
+
+| Allowlist entry           | Origins that match                                           |
+| ------------------------- | ------------------------------------------------------------ |
+| `example.com`             | `https://example.com` and `http://example.com`, but not `https://www.example.com` |
+| `https://example.com`     | `https://example.com` only                                   |
+| `https://www.example.com` | `https://www.example.com` only, not `https://example.com`    |
+| `https://example.com:8080`| `https://example.com:8080` only, not `https://example.com`   |
+| `https://*.example.com`   | `https://www.example.com` and other single-label subdomains, but not the naked `https://example.com` |
+
+Common mistakes:
+
+- Adding `https://example.com/` with a **trailing slash**. The allowlist expects an origin, not a URL; a trailing slash turns it into an invalid entry.
+- Registering only `example.com` when the dApp is actually served from `www.example.com` (or vice versa). Add both entries, or add a wildcard plus the naked domain.
+- Omitting preview and staging hosts. Add every hostname you actually serve from, including Vercel / Netlify preview URLs if you test Verify there.
+- Mixing `http` and `https`. Use `https://` explicitly for production so Verify does not accept cleartext origins.
+
+See [Project Allowlist](/cloud/relay#allowlist) for the full matching rules.
+
+### 3. Wait for caching delays to clear
+
+After editing the allowlist in the Dashboard, wait at least 15 minutes before re-testing. Allowlist changes take that long to propagate to the Relay and the Verify server. External wallets may cache Explorer / Dashboard metadata for longer; force-close the wallet app between attempts, and test again after the propagation window.
+
+### 4. Make `metadata.url` match the hosting origin
+
+In `createAppKit` (or the raw Sign client), `metadata.url` must point to the origin the dApp is actually served from, including scheme and (if non-default) port.
+
+```ts
+createAppKit({
+  projectId,
+  metadata: {
+    name: "My App",
+    description: "My App Description",
+    icons: ["https://myapp.com/icon.png"],
+    url: "https://myapp.com", // must match the origin the browser is on
+  },
+  // ...
+})
+```
+
+Trust Wallet and other wallets compare `metadata.url` with `verifyContext.verified.origin`. A mismatch — for example `url: "https://www.myapp.com"` while the dApp is served from `https://myapp.com` — produces the `Invalid domain` warning even if the Dashboard allowlist is correct.
+
+### 5. Check the browser console for blocked Verify requests
+
+If the CSP on the dApp's host does not allow `verify.walletconnect.com` / `verify.walletconnect.org` in `frame-src`, the attestation handshake fails silently and the wallet falls through to `UNKNOWN`. The CSP snippet in [Content Security Policy](/advanced/security/content-security-policy) already includes the correct entries; apply it as-is and then extend `connect-src` / `img-src` for any additional services your dApp needs.
+
+### 6. Test against a known-good wallet and the malicious demo
+
+Before filing the issue against a specific wallet, confirm the dApp behaves correctly with a reference setup:
+
+- Connect with the [WalletConnect React Wallet](https://react-wallet.walletconnect.com) — it surfaces `verifyContext` verbatim and is a good ground-truth.
+- Try the [Malicious App demo](https://malicious-app-verify-simulation.vercel.app/) to confirm the wallet correctly reports `isScam: true`. If `isScam` works against the demo but your domain still shows `Invalid domain`, the problem is almost certainly in the project's allowlist or `metadata.url`, not in the wallet.
+
+If the Verify response in DevTools is correct (`validation: VALID`, `origin` and `metadata.url` both match the production domain) and Trust Wallet still renders `Invalid domain`, capture the `attestationId`, the `verifyContext` payload, and the wallet build number, and share them via the [issue report form](/advanced/report-an-issue).
+
+## Related pages
+
+- [Project Allowlist](/cloud/relay#allowlist) — exact-match rules for allowlisted origins.
+- [Content Security Policy](/advanced/security/content-security-policy) — directives required for the Verify iframe.
+- [Security Information](/advanced/security/security-information) — broader overview of Reown's security architecture.
