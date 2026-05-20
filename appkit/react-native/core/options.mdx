@@ -518,6 +518,17 @@ createAppKit({
 })
 ```
 
+### `logger`
+*   **Type:** `'silent' | 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace'` (Optional)
+*   **Description:** Controls the log level forwarded to `@walletconnect/universal-provider`. Useful for silencing or tuning WalletConnect core logs. When omitted, WalletConnect's default logging is preserved.
+
+```typescript
+createAppKit({
+  //...
+  logger: 'silent'
+})
+```
+
 ### universalProviderConfigOverride
 
 Lets you customize specific aspects of the provider's behavior.
