@@ -17,10 +17,12 @@ import BitcoinImplementation from '/snippets/appkit/next/bitcoin/about/implement
 
 import TonImplementation from '/snippets/appkit/next/ton/about/implementation.mdx'
 
+import TronImplementation from '/snippets/appkit/next/tron/about/implementation.mdx'
+
 import CoreImplementation from '/snippets/appkit/react/core/about/implementation.mdx'
 
 AppKit provides seamless integration with multiple blockchain ecosystems. It supports [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum,
-[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON and other networks.
+[@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, as well as Bitcoin, TON, TRON and other networks.
 
 <Note>
   These steps are specific to [Next.js](https://nextjs.org/) app router. For other React frameworks
@@ -180,6 +182,29 @@ pnpm add @reown/appkit @reown/appkit-adapter-ton
 </CodeGroup>
 
 </Tab>
+<Tab title="TRON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-tron
+```
+
+</CodeGroup>
+
+</Tab>
 <Tab title="Others networks (AppKit Core)">
 
 <CodeGroup>
@@ -259,6 +284,13 @@ Check the Next Bitcoin example
 Check the Next TON example
 </Card>
 <TonImplementation />
+
+</Tab>
+<Tab title="TRON">
+<Card title="TRON Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/nextjs/next-tron-app-router">
+Check the Next TRON example
+</Card>
+<TronImplementation />
 
 </Tab>
 <Tab title="Others networks (AppKit Core)">

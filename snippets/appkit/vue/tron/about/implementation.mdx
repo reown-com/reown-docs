@@ -9,7 +9,7 @@ In your `App.vue` file set up the following configuration.
 
 import { createAppKit } from '@reown/appkit/vue'
 import { TronAdapter } from '@reown/appkit-adapter-tron'
-import { tronMainnet, tronShastaTestnet } from '@reown/appkit/networks'
+import { tronMainnet } from '@reown/appkit/networks'
 
 // Import wallet adapters you want to support
 import { TronLinkAdapter } from '@tronweb3/tronwallet-adapter-tronlink'
@@ -18,7 +18,7 @@ import { TronLinkAdapter } from '@tronweb3/tronwallet-adapter-tronlink'
 const projectId = 'YOUR_PROJECT_ID'
 
 // 2. Set the networks
-const networks = [tronMainnet, tronShastaTestnet]
+const networks = [tronMainnet]
 
 // 3. Set up TRON Adapter with wallet adapters
 const tronAdapter = new TronAdapter({
