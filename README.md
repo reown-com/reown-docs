@@ -1,6 +1,6 @@
 # Reown Documentation
 
-This repository contains the documentation for Reown. The documentation is built using [Mintlify](https://mintlify.com/).
+This repository contains the official documentation for Reown. The documentation is built using [Mintlify](https://mintlify.com/).
 
 ## Contributing to the Documentation
 
