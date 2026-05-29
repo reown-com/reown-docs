@@ -163,7 +163,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "cloud/analytics"
+                  "cloud/analytics",
+                  "cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -232,7 +233,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/react/cloud/analytics"
+                  "appkit/react/cloud/analytics",
+                  "appkit/react/cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -294,7 +296,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/next/cloud/analytics"
+                  "appkit/next/cloud/analytics",
+                  "appkit/next/cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -351,7 +354,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/vue/cloud/analytics"
+                  "appkit/vue/cloud/analytics",
+                  "appkit/vue/cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -403,7 +407,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/javascript/cloud/analytics"
+                  "appkit/javascript/cloud/analytics",
+                  "appkit/javascript/cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -518,7 +523,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/react-native/cloud/analytics"
+                  "appkit/react-native/cloud/analytics",
+                  "appkit/react-native/cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -559,7 +565,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/flutter/cloud/analytics"
+                  "appkit/flutter/cloud/analytics",
+                  "appkit/flutter/cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -598,7 +605,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/android/cloud/analytics"
+                  "appkit/android/cloud/analytics",
+                  "appkit/android/cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -625,7 +633,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/ios/cloud/analytics"
+                  "appkit/ios/cloud/analytics",
+                  "appkit/ios/cloud/dashboard-configuration-settings"
                 ]
               },
               {
@@ -654,7 +663,8 @@
               {
                 "group": "Dashboard",
                 "pages": [
-                  "appkit/unity/cloud/analytics"
+                  "appkit/unity/cloud/analytics",
+                  "appkit/unity/cloud/dashboard-configuration-settings"
                 ]
               },
               {
