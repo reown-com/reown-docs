@@ -19,7 +19,7 @@ sidebarTitle: Overview
 The layers are **cumulative** as you move from connecting a wallet toward using app features:
 
 1. A chain on the [Chain List](/cloud/chains/chain-list) only guarantees protocol-level connectivity. Anyone can register a chain in the Explorer, so this list is large and inclusive.
-2. To read balances or show transaction history through Reown's default RPC, the chain must also be on the [Blockchain API](/cloud/blockchain-api) list — a curated set that is **not** open for additions.
+2. To read balances or show transaction history through Reown's default RPC, the chain must also be on the [Blockchain API](/cloud/blockchain-api) list.
 3. To use **email/social (embedded) wallets**, the chain must additionally be reachable by the embedded wallet.
 
 So a chain can appear on the protocol Chain List, yet fail when an app tries to fetch a balance or send a transaction — because it isn't served by the Blockchain API, or isn't reachable by the embedded wallet.
