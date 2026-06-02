@@ -19,9 +19,12 @@ import SvelteBitcoinModal from '/snippets/appkit/svelte/bitcoin/about/triggermod
 import SvelteTonImplementation from '/snippets/appkit/svelte/ton/about/implementation.mdx'
 import SvelteTonModal from '/snippets/appkit/svelte/ton/about/triggermodal.mdx'
 
+import SvelteTronImplementation from '/snippets/appkit/svelte/tron/about/implementation.mdx'
+import SvelteTronModal from '/snippets/appkit/svelte/tron/about/triggermodal.mdx'
+
 # Svelte
 
-AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin and TON.
+AppKit has support for [Wagmi](https://wagmi.sh/) and [Ethers v6](https://docs.ethers.org/v6/) on Ethereum, [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/) on Solana, Bitcoin, TON and TRON.
 Choose one of these to get started.
 
 <Note>
@@ -156,6 +159,29 @@ pnpm add @reown/appkit @reown/appkit-adapter-ton
 </CodeGroup>
 
 </Tab>
+<Tab title="TRON">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-tron
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-tron
+```
+
+</CodeGroup>
+
+</Tab>
 </Tabs>
 
 ## Cloud Configuration
@@ -199,6 +225,11 @@ MetaMask does not currently support WalletConnect connections on Solana. The Met
 <Tab title="TON">
 
 <SvelteTonImplementation />
+
+</Tab>
+<Tab title="TRON">
+
+<SvelteTronImplementation />
 
 </Tab>
 </Tabs>
@@ -282,6 +313,11 @@ Or use other AppKit web components:
 <Tab title="TON">
 
 <SvelteTonModal />
+
+</Tab>
+<Tab title="TRON">
+
+<SvelteTronModal />
 
 </Tab>
 </Tabs>

@@ -1,0 +1,227 @@
+For this example, we'll be using **TRON**.
+
+Start by importing `createAppKit` from `@reown/appkit` and the necessary chains and TronAdapter from `@reown/appkit-adapter-tron`.
+
+```ts
+// lib/appkit.ts
+import { browser } from '$app/environment'
+import { createAppKit } from '@reown/appkit'
+import { TronAdapter } from '@reown/appkit-adapter-tron'
+import { tronMainnet } from '@reown/appkit/networks'
+
+// Import wallet adapters you want to support
+import { TronLinkAdapter } from '@tronweb3/tronwallet-adapter-tronlink'
+
+// Only initialize in browser environment
+let appKit: ReturnType<typeof createAppKit> | undefined = undefined
+
+if (browser) {
+  const projectId = import.meta.env.VITE_PROJECT_ID
+  if (!projectId) {
+    throw new Error('VITE_PROJECT_ID is not set')
+  }
+
+  const networks = [tronMainnet]
+
+  // Create adapter with wallet adapters
+  const tronAdapter = new TronAdapter({
+    walletAdapters: [
+      new TronLinkAdapter({
+        openUrlWhenWalletNotFound: false,
+        checkTimeout: 3000
+      })
+    ]
+  })
+
+  // Initialize AppKit
+  appKit = createAppKit({
+    adapters: [tronAdapter],
+    networks,
+    defaultNetwork: tronMainnet,
+    projectId,
+    metadata: {
+      name: 'SvelteKit Example',
+      description: 'SvelteKit Example using TRON adapter',
+      url: 'https://reown.com/appkit',
+      icons: ['https://avatars.githubusercontent.com/u/179229932?s=200&v=4']
+    }
+  })
+}
+
+export { appKit }
+```
+
+<Note>
+  Make sure to set your `VITE_PROJECT_ID` environment variable which you can get from [Reown Dashboard](https://dashboard.reown.com).
+</Note>
+
+<Note>
+  The `browser` check ensures AppKit is only initialized in the browser environment, which is important for SvelteKit's SSR compatibility.
+</Note>
+
+## Install Wallet Adapters
+
+TRON adapter requires you to install wallet adapters separately. This gives you control over which wallets to support and reduces bundle size.
+
+<Tabs>
+<Tab title="TronLink">
+<CodeGroup>
+
+```bash npm
+npm install @tronweb3/tronwallet-adapter-tronlink
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-tronlink
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-tronlink
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-tronlink
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="MetaMask">
+<CodeGroup>
+
+```bash npm
+npm install @tronweb3/tronwallet-adapter-metamask-tron
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-metamask-tron
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-metamask-tron
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-metamask-tron
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="Trust Wallet">
+<CodeGroup>
+
+```bash npm
+npm install @tronweb3/tronwallet-adapter-trust
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-trust
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-trust
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-trust
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="OKX Wallet">
+<CodeGroup>
+
+```bash npm
+npm install @tronweb3/tronwallet-adapter-okxwallet
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-okxwallet
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-okxwallet
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-okxwallet
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="BitKeep">
+<CodeGroup>
+
+```bash npm
+npm install @tronweb3/tronwallet-adapter-bitkeep
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-bitkeep
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-bitkeep
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-bitkeep
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="Binance Wallet">
+<CodeGroup>
+
+```bash npm
+npm install @tronweb3/tronwallet-adapter-binance
+```
+
+```bash Yarn
+yarn add @tronweb3/tronwallet-adapter-binance
+```
+
+```bash Bun
+bun add @tronweb3/tronwallet-adapter-binance
+```
+
+```bash pnpm
+pnpm add @tronweb3/tronwallet-adapter-binance
+```
+
+</CodeGroup>
+</Tab>
+</Tabs>
+
+<Note>
+For a complete list of available TRON wallet adapters, visit the [official wallet adapter documentation](https://walletadapter.org/docs/guide/wallet-reference.html).
+</Note>
+
+### Using Multiple Wallet Adapters
+
+After installing your desired wallet adapters, import and add them to the `walletAdapters` array when creating the TRON adapter:
+
+```ts
+import { TronLinkAdapter } from '@tronweb3/tronwallet-adapter-tronlink'
+import { MetaMaskAdapter } from '@tronweb3/tronwallet-adapter-metamask-tron'
+import { TrustAdapter } from '@tronweb3/tronwallet-adapter-trust'
+import { OkxWalletAdapter } from '@tronweb3/tronwallet-adapter-okxwallet'
+
+const tronAdapter = new TronAdapter({
+  walletAdapters: [
+    new TronLinkAdapter({
+      openUrlWhenWalletNotFound: false,
+      checkTimeout: 3000
+    }),
+    new MetaMaskAdapter(),
+    new TrustAdapter(),
+    new OkxWalletAdapter({
+      openUrlWhenWalletNotFound: false
+    })
+  ]
+})
+```
