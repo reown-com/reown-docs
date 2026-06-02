@@ -1,0 +1,57 @@
+---
+title: Supported Chains Overview
+sidebarTitle: Overview
+---
+
+"Is chain X supported?" doesn't have a single yes/no answer in the Reown stack — it depends on **which capability** you need. Support is layered, and a chain can be available at one layer but not another. This page is the single source of truth for how those layers fit together.
+
+## The four layers of "supported"
+
+| Capability | What "supported" means | Where the list lives | How to extend it |
+|---|---|---|---|
+| **Reown SDK (AppKit)** | The AppKit SDK has first-class support for the ecosystem (EVM, Solana, Bitcoin, TON, TRON). | [AppKit Supported Chains](/appkit/networks/supported-chains) | EVM: add the chain via [viem](https://github.com/wevm/viem/blob/main/src/chains/index.ts); other ecosystems per their setup guide |
+| **WalletConnect Protocol** | A dApp and wallet can communicate over the WalletConnect protocol (for example, using a QR code to connect). Appearing on this list does **not** guarantee that app features work. | [Chain List](/cloud/chains/chain-list) (live) | Register your chain in the Explorer — see [Chain Onboarding](/cloud/chains/overview). To connect via QR code across any of these networks, use the [Universal Connector](/appkit/recipes/universal-connector) |
+| **On-chain data / RPC proxy** (Blockchain API) | Reown's `rpc.walletconnect.org` proxy serves the chain — powering balances, transaction history, and the default RPC. This is a **curated, closed list**. | [Blockchain API](/cloud/blockchain-api) | [Configure your own RPC URL](/appkit/react/core/custom-networks#2-creating-a-custom-chain-object) for chains not on the list. |
+| **Embedded wallet** (Email / Social login) | Email and social login can sign and broadcast transactions on the chain. | EVM chains in viem + Solana/Devnet/Testnet — see [Email & Socials](/appkit/authentication/socials) | Limited to chains the Blockchain API can reach (see below) |
+
+## Listed ≠ usable
+
+The layers are **cumulative** as you move from connecting a wallet toward using app features:
+
+1. A chain on the [Chain List](/cloud/chains/chain-list) only guarantees protocol-level connectivity. Anyone can register a chain in the Explorer, so this list is large and inclusive.
+2. To read balances or show transaction history through Reown's default RPC, the chain must also be on the [Blockchain API](/cloud/blockchain-api) list.
+3. To use **email/social (embedded) wallets**, the chain must additionally be reachable by the embedded wallet.
+
+So a chain can appear on the protocol Chain List, yet fail when an app tries to fetch a balance or send a transaction — because it isn't served by the Blockchain API, or isn't reachable by the embedded wallet.
+
+### Embedded wallets and the Blockchain API
+
+<Note>
+Email and social login use Reown's secure-site embedded wallet, which signs inside an iframe hosted at `secure.walletconnect.org` and, by default, broadcasts through Reown's Blockchain API (`rpc.walletconnect.org`). In practice, embedded wallets are limited to the chains the secure site and Blockchain API support. A chain that is EVM-compatible in viem but outside that supported set will let a user log in, but transactions are not reliably served — so treat embedded-wallet support as "Blockchain-API-served chains only."
+</Note>
+
+## Which list should I check?
+
+| I want to… | Check this list |
+|---|---|
+| Let users connect a wallet | [Chain List](/cloud/chains/chain-list) |
+| Use AppKit SDK features (modal, hooks, etc.) | [AppKit Supported Chains](/appkit/networks/supported-chains) |
+| Read balances or transaction history, or use the default RPC | [Blockchain API](/cloud/blockchain-api) |
+| Offer email / social login | EVM-in-viem + Solana **and** [Blockchain API](/cloud/blockchain-api) coverage |
+
+## Detailed references
+
+<CardGroup cols={2}>
+  <Card title="Chain List (protocol)" icon="link" href="/cloud/chains/chain-list">
+    Every chain that can use the WalletConnect protocol.
+  </Card>
+  <Card title="AppKit Supported Chains" icon="layer-group" href="/appkit/networks/supported-chains">
+    Ecosystems with native AppKit SDK support.
+  </Card>
+  <Card title="Blockchain API" icon="server" href="/cloud/blockchain-api">
+    Chains served by Reown's RPC proxy.
+  </Card>
+  <Card title="Email & Socials" icon="envelope" href="/appkit/authentication/socials">
+    Chains supported for embedded (email/social) wallets.
+  </Card>
+</CardGroup>
