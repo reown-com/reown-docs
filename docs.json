@@ -118,7 +118,9 @@
                   {
                     "group": "Pricing Plans",
                     "pages": [
+                      "appkit/paid-plans/starter",
                       "appkit/paid-plans/pro",
+                      "appkit/paid-plans/growth",
                       "appkit/paid-plans/enterprise"
                     ]
                   }
