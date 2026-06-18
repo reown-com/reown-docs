@@ -144,7 +144,14 @@
                       "appkit/authentication/siwx/default"
                     ]
                   },
-                  "appkit/features/smart-accounts",
+                  {
+                    "group": "Smart Accounts",
+                    "pages": [
+                      "appkit/features/smart-accounts",
+                      "appkit/features/smart-accounts-interaction",
+                      "appkit/recipes/switching-to-send-calls"
+                    ]
+                  },
                   "appkit/features/multiwallet-linking"
                 ]
               },
@@ -205,7 +212,9 @@
                     ]
                   },
                   "appkit/networks/ton",
-                  "appkit/networks/tron"
+                  "appkit/networks/tron",
+                  "appkit/networks/custom-networks",
+                  "appkit/features/multichain"
                 ]
               },
               {
@@ -232,8 +241,7 @@
               {
                 "group": "Customization",
                 "pages": [
-                  "appkit/networks/custom-networks",
-                  "appkit/features/multichain"
+                  "appkit/customizing-ui"
                 ]
               }
             ]
@@ -645,12 +653,6 @@
                   "appkit/recipes/telegram-mini-app",
                   "appkit/recipes/tenderly-virtual-testnets",
                   "appkit/recipes/wallet-buttons-react",
-                  "appkit/recipes/wagmi-send-transaction",
-                  "appkit/recipes/ethers-send-transaction",
-                  "appkit/recipes/EVM-smart-contract-interaction",
-                  "appkit/recipes/solana-send-transaction",
-                  "appkit/recipes/bitcoin-send-transaction",
-                  "appkit/recipes/switching-to-send-calls",
                   "appkit/recipes/travel-rule",
                   "appkit/recipes/update-appkit",
                   "appkit/recipes/universal-connector",
