@@ -141,7 +141,8 @@
                     "pages": [
                       "appkit/authentication/socials",
                       "appkit/authentication/one-click-auth",
-                      "appkit/authentication/siwx/default"
+                      "appkit/authentication/siwx/default",
+                      "appkit/recipes/travel-rule"
                     ]
                   },
                   {
@@ -171,17 +172,17 @@
                 ]
               },
               {
-                "group": "Dashboard",
+                "group": "Data",
                 "pages": [
                   "cloud/analytics",
-                  "cloud/dashboard-configuration-settings"
+                  "cloud/blockchain-api"
                 ]
               },
               {
-                "group": "Interactions",
+                "group": "Settings",
                 "pages": [
-                  "cloud/blockchain-api",
-                  "appkit/features/smart-accounts-interaction"
+                  "cloud/dashboard-configuration-settings",
+                  "appkit/customizing-ui"
                 ]
               },
               {
@@ -213,8 +214,14 @@
                   },
                   "appkit/networks/ton",
                   "appkit/networks/tron",
-                  "appkit/networks/custom-networks",
-                  "appkit/features/multichain"
+                  {
+                    "group": "Other Network Settings",
+                    "pages": [
+                      "appkit/networks/custom-networks",
+                      "appkit/features/multichain",
+                      "appkit/recipes/universal-connector"
+                    ]
+                  }
                 ]
               },
               {
@@ -236,12 +243,6 @@
                     ]
                   },
                   "external-link-01"
-                ]
-              },
-              {
-                "group": "Customization",
-                "pages": [
-                  "appkit/customizing-ui"
                 ]
               }
             ]
@@ -652,10 +653,7 @@
                 "pages": [
                   "appkit/recipes/telegram-mini-app",
                   "appkit/recipes/tenderly-virtual-testnets",
-                  "appkit/recipes/wallet-buttons-react",
-                  "appkit/recipes/travel-rule",
                   "appkit/recipes/update-appkit",
-                  "appkit/recipes/universal-connector",
                   "appkit/recipes/troubleshooting"
                 ]
               },
