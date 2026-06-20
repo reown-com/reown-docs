@@ -326,8 +326,8 @@ packages:
       picomatch:
         optional: true
 
-  flatted@3.3.3:
-    resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==}
+  flatted@3.4.2:
+    resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
 
   gensequence@7.0.0:
     resolution: {integrity: sha512-47Frx13aZh01afHJTB3zTtKIlFI6vWY+MYCN9Qpew6i52rfKjnhCF/l1YlC8UmEMvvntZZ6z4PiCcmyuedR2aQ==}
@@ -733,7 +733,7 @@ snapshots:
       cspell-io: 9.2.0
       cspell-lib: 9.2.0
       fast-json-stable-stringify: 2.1.0
-      flatted: 3.3.3
+      flatted: 3.4.2
       semver: 7.7.2
       tinyglobby: 0.2.14
 
@@ -749,7 +749,7 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
-  flatted@3.3.3: {}
+  flatted@3.4.2: {}
 
   gensequence@7.0.0: {}
 
