@@ -311,36 +311,41 @@
                 ]
               },
               {
-                "group": "Authentication",
-                "pages": [
-                  "appkit/react/core/socials",
-                  "appkit/react/core/siwe",
-                  "appkit/react/core/siwx"
-                ]
-              },
-              {
                 "group": "Headless",
                 "pages": [
                   "appkit/react/core/headless"
                 ]
               },
               {
-                "group": "Payments",
+                "group": "Features",
                 "pages": [
                   {
-                    "group": "Fund wallets",
+                    "group": "Authentication",
                     "pages": [
-                      "appkit/react/payments/pay-with-self-custodial-wallets",
-                      "appkit/react/payments/deposit-with-exchange"
+                      "appkit/react/core/socials",
+                      "appkit/react/core/siwe",
+                      "appkit/react/core/siwx"
+                    ]
+                  },
+                  {
+                    "group": "Payments",
+                    "pages": [
+                      {
+                        "group": "Fund wallets",
+                        "pages": [
+                          "appkit/react/payments/pay-with-self-custodial-wallets",
+                          "appkit/react/payments/deposit-with-exchange"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Transactions",
+                    "pages": [
+                      "appkit/react/transactions/onramp",
+                      "appkit/react/transactions/swaps"
                     ]
                   }
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/react/transactions/onramp",
-                  "appkit/react/transactions/swaps"
                 ]
               }
             ]
@@ -362,30 +367,35 @@
                 ]
               },
               {
-                "group": "Authentication",
-                "pages": [
-                  "appkit/next/core/socials",
-                  "appkit/next/core/siwe",
-                  "appkit/next/core/siwx"
-                ]
-              },
-              {
-                "group": "Payments",
+                "group": "Features",
                 "pages": [
                   {
-                    "group": "Fund wallets",
+                    "group": "Authentication",
                     "pages": [
-                      "appkit/next/payments/pay-with-self-custodial-wallets",
-                      "appkit/next/payments/deposit-with-exchange"
+                      "appkit/next/core/socials",
+                      "appkit/next/core/siwe",
+                      "appkit/next/core/siwx"
+                    ]
+                  },
+                  {
+                    "group": "Payments",
+                    "pages": [
+                      {
+                        "group": "Fund wallets",
+                        "pages": [
+                          "appkit/next/payments/pay-with-self-custodial-wallets",
+                          "appkit/next/payments/deposit-with-exchange"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Transactions",
+                    "pages": [
+                      "appkit/next/transactions/onramp",
+                      "appkit/next/transactions/swaps"
                     ]
                   }
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/next/transactions/onramp",
-                  "appkit/next/transactions/swaps"
                 ]
               }
             ]
@@ -408,30 +418,35 @@
                 ]
               },
               {
-                "group": "Authentication",
-                "pages": [
-                  "appkit/vue/core/socials",
-                  "appkit/vue/core/siwe",
-                  "appkit/vue/core/siwx"
-                ]
-              },
-              {
-                "group": "Payments",
+                "group": "Features",
                 "pages": [
                   {
-                    "group": "Fund wallets",
+                    "group": "Authentication",
                     "pages": [
-                      "appkit/vue/payments/pay-with-self-custodial-wallets",
-                      "appkit/vue/payments/deposit-with-exchange"
+                      "appkit/vue/core/socials",
+                      "appkit/vue/core/siwe",
+                      "appkit/vue/core/siwx"
+                    ]
+                  },
+                  {
+                    "group": "Payments",
+                    "pages": [
+                      {
+                        "group": "Fund wallets",
+                        "pages": [
+                          "appkit/vue/payments/pay-with-self-custodial-wallets",
+                          "appkit/vue/payments/deposit-with-exchange"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Transactions",
+                    "pages": [
+                      "appkit/vue/transactions/onramp",
+                      "appkit/vue/transactions/swaps"
                     ]
                   }
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/vue/transactions/onramp",
-                  "appkit/vue/transactions/swaps"
                 ]
               }
             ]
@@ -453,30 +468,35 @@
                 ]
               },
               {
-                "group": "Authentication",
-                "pages": [
-                  "appkit/javascript/core/socials",
-                  "appkit/javascript/core/siwe",
-                  "appkit/javascript/core/siwx"
-                ]
-              },
-              {
-                "group": "Payments",
+                "group": "Features",
                 "pages": [
                   {
-                    "group": "Fund wallets",
+                    "group": "Authentication",
                     "pages": [
-                      "appkit/javascript/payments/pay-with-self-custodial-wallets",
-                      "appkit/javascript/payments/deposit-with-exchange"
+                      "appkit/javascript/core/socials",
+                      "appkit/javascript/core/siwe",
+                      "appkit/javascript/core/siwx"
+                    ]
+                  },
+                  {
+                    "group": "Payments",
+                    "pages": [
+                      {
+                        "group": "Fund wallets",
+                        "pages": [
+                          "appkit/javascript/payments/pay-with-self-custodial-wallets",
+                          "appkit/javascript/payments/deposit-with-exchange"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Transactions",
+                    "pages": [
+                      "appkit/javascript/transactions/onramp",
+                      "appkit/javascript/transactions/swaps"
                     ]
                   }
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/javascript/transactions/onramp",
-                  "appkit/javascript/transactions/swaps"
                 ]
               }
             ]
@@ -498,16 +518,21 @@
                 ]
               },
               {
-                "group": "Authentication",
+                "group": "Features",
                 "pages": [
-                  "appkit/svelte/core/socials"
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/svelte/transactions/onramp",
-                  "appkit/svelte/transactions/swaps"
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/svelte/core/socials"
+                    ]
+                  },
+                  {
+                    "group": "Transactions",
+                    "pages": [
+                      "appkit/svelte/transactions/onramp",
+                      "appkit/svelte/transactions/swaps"
+                    ]
+                  }
                 ]
               }
             ]
@@ -530,16 +555,21 @@
                 ]
               },
               {
-                "group": "Authentication",
+                "group": "Features",
                 "pages": [
-                  "appkit/nuxt/core/socials"
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/nuxt/transactions/onramp",
-                  "appkit/nuxt/transactions/swaps"
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/nuxt/core/socials"
+                    ]
+                  },
+                  {
+                    "group": "Transactions",
+                    "pages": [
+                      "appkit/nuxt/transactions/onramp",
+                      "appkit/nuxt/transactions/swaps"
+                    ]
+                  }
                 ]
               }
             ]
@@ -562,18 +592,23 @@
                 ]
               },
               {
-                "group": "Transactions",
+                "group": "Features",
                 "pages": [
-                  "appkit/react-native/transactions/swaps",
-                  "appkit/react-native/transactions/onramp"
-                ]
-              },
-              {
-                "group": "Authentication",
-                "pages": [
-                  "appkit/react-native/core/email",
-                  "appkit/react-native/core/1ca",
-                  "appkit/react-native/core/siwx"
+                  {
+                    "group": "Transactions",
+                    "pages": [
+                      "appkit/react-native/transactions/swaps",
+                      "appkit/react-native/transactions/onramp"
+                    ]
+                  },
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/react-native/core/email",
+                      "appkit/react-native/core/1ca",
+                      "appkit/react-native/core/siwx"
+                    ]
+                  }
                 ]
               }
             ]
@@ -596,21 +631,26 @@
                 ]
               },
               {
-                "group": "Payments",
+                "group": "Features",
                 "pages": [
                   {
-                    "group": "Fund wallets",
+                    "group": "Payments",
                     "pages": [
-                      "appkit/flutter/payments/deposit-with-exchange"
+                      {
+                        "group": "Fund wallets",
+                        "pages": [
+                          "appkit/flutter/payments/deposit-with-exchange"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/flutter/core/email",
+                      "appkit/flutter/core/siwe"
                     ]
                   }
-                ]
-              },
-              {
-                "group": "Authentication",
-                "pages": [
-                  "appkit/flutter/core/email",
-                  "appkit/flutter/core/siwe"
                 ]
               }
             ]
@@ -632,9 +672,14 @@
                 ]
               },
               {
-                "group": "Authentication",
+                "group": "Features",
                 "pages": [
-                  "appkit/android/core/one-click-auth"
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/android/core/one-click-auth"
+                    ]
+                  }
                 ]
               }
             ]
@@ -654,9 +699,14 @@
                 ]
               },
               {
-                "group": "Authentication",
+                "group": "Features",
                 "pages": [
-                  "appkit/ios/core/one-click-auth"
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/ios/core/one-click-auth"
+                    ]
+                  }
                 ]
               }
             ]
@@ -678,10 +728,15 @@
                 ]
               },
               {
-                "group": "Authentication",
+                "group": "Features",
                 "pages": [
-                  "appkit/unity/core/socials",
-                  "appkit/unity/core/siwe"
+                  {
+                    "group": "Authentication",
+                    "pages": [
+                      "appkit/unity/core/socials",
+                      "appkit/unity/core/siwe"
+                    ]
+                  }
                 ]
               }
             ]
