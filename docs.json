@@ -53,7 +53,15 @@
     },
     {
       "source": "/appkit/features/telegram-mini-apps",
-      "destination": "/appkit/integrations/telegram-mini-apps"
+      "destination": "https://reown.com/learn/how-to-build-a-telegram-mini-app"
+    },
+    {
+      "source": "/appkit/integrations/telegram-mini-apps",
+      "destination": "https://reown.com/learn/how-to-build-a-telegram-mini-app"
+    },
+    {
+      "source": "/appkit/recipes/telegram-mini-app",
+      "destination": "https://reown.com/learn/how-to-build-a-telegram-mini-app"
     },
     {
       "source": "/appkit/payments/one-click-checkout",
@@ -222,13 +230,6 @@
                       "appkit/recipes/universal-connector"
                     ]
                   }
-                ]
-              },
-              {
-                "group": "Use Cases",
-                "pages": [
-                  "appkit/integrations/telegram-mini-apps",
-                  "appkit/integrations/farcaster-mini-apps"
                 ]
               },
               {
@@ -651,7 +652,6 @@
               {
                 "group": "How Tos",
                 "pages": [
-                  "appkit/recipes/telegram-mini-app",
                   "appkit/recipes/tenderly-virtual-testnets",
                   "appkit/recipes/update-appkit",
                   "appkit/recipes/troubleshooting"
