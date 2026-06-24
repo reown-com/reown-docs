@@ -64,6 +64,14 @@
       "destination": "https://reown.com/learn/how-to-build-a-telegram-mini-app"
     },
     {
+      "source": "/appkit/migration/index",
+      "destination": "/appkit/migration/from-privy-next"
+    },
+    {
+      "source": "/appkit/recipes/gtm-checklist",
+      "destination": "/appkit/overview"
+    },
+    {
       "source": "/appkit/payments/one-click-checkout",
       "destination": "/appkit/payments/overview"
     },
@@ -235,6 +243,41 @@
               {
                 "group": "Technical Reference",
                 "pages": [
+                  {
+                    "group": "Migration",
+                    "pages": [
+                      {
+                        "group": "Migrate from other libraries",
+                        "pages": [
+                          "appkit/migration/from-privy-next",
+                          "appkit/migration/from-rainbowkit-next",
+                          "appkit/migration/from-connectkit-next",
+                          "appkit/migration/from-anza-adapter-react"
+                        ]
+                      },
+                      {
+                        "group": "Web3Modal to Reown AppKit",
+                        "pages": [
+                          "appkit/upgrade/from-w3m-to-reown",
+                          {
+                            "group": "Reown AppKit - Web",
+                            "pages": [
+                              "appkit/upgrade/to-reown-appkit-web",
+                              "appkit/upgrade/to-reown-appkit-ethers-web",
+                              "appkit/upgrade/to-reown-appkit-ethers5-web",
+                              "appkit/upgrade/to-reown-appkit-solana-web"
+                            ]
+                          },
+                          "appkit/upgrade/from-web3modal-react-native",
+                          "appkit/upgrade/from-web3modal-flutter",
+                          "appkit/upgrade/from-web3modal-android",
+                          "appkit/upgrade/from-web3modal-ios",
+                          "appkit/upgrade/from-web3modal-unity"
+                        ]
+                      },
+                      "appkit/upgrade/wcm"
+                    ]
+                  },
                   "appkit/faq",
                   {
                     "group": "Security",
@@ -243,6 +286,9 @@
                       "advanced/security/content-security-policy"
                     ]
                   },
+                  "appkit/recipes/troubleshooting",
+                  "appkit/recipes/update-appkit",
+                  "appkit/recipes/tenderly-virtual-testnets",
                   "external-link-01"
                 ]
               }
@@ -638,62 +684,6 @@
                   "appkit/unity/core/siwe"
                 ]
               }
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Guides",
-        "icon": "book-open",
-        "pages": [
-          {
-            "group": "Guides",
-            "pages": [
-              {
-                "group": "How Tos",
-                "pages": [
-                  "appkit/recipes/tenderly-virtual-testnets",
-                  "appkit/recipes/update-appkit",
-                  "appkit/recipes/troubleshooting"
-                ]
-              },
-              "appkit/recipes/gtm-checklist"
-            ]
-          },
-          {
-            "group": "Migration",
-            "pages": [
-              "appkit/migration/index",
-              {
-                "group": "Migrate from other libraries",
-                "pages": [
-                  "appkit/migration/from-privy-next",
-                  "appkit/migration/from-rainbowkit-next",
-                  "appkit/migration/from-connectkit-next",
-                  "appkit/migration/from-anza-adapter-react"
-                ]
-              },
-              {
-                "group": "Web3Modal to Reown AppKit",
-                "pages": [
-                  "appkit/upgrade/from-w3m-to-reown",
-                  {
-                    "group": "Reown AppKit - Web",
-                    "pages": [
-                      "appkit/upgrade/to-reown-appkit-web",
-                      "appkit/upgrade/to-reown-appkit-ethers-web",
-                      "appkit/upgrade/to-reown-appkit-ethers5-web",
-                      "appkit/upgrade/to-reown-appkit-solana-web"
-                    ]
-                  },
-                  "appkit/upgrade/from-web3modal-react-native",
-                  "appkit/upgrade/from-web3modal-flutter",
-                  "appkit/upgrade/from-web3modal-android",
-                  "appkit/upgrade/from-web3modal-ios",
-                  "appkit/upgrade/from-web3modal-unity"
-                ]
-              },
-              "appkit/upgrade/wcm"
             ]
           }
         ]
