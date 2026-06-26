@@ -157,15 +157,14 @@
                   "appkit/recipes/travel-rule"
                 ]
               },
-              {
-                "group": "Smart Accounts",
-                "pages": [
-                  "appkit/features/smart-accounts",
-                  "appkit/features/smart-accounts-interaction",
-                  "appkit/recipes/switching-to-send-calls"
-                ]
-              },
+              "appkit/features/smart-accounts",
               "appkit/features/multiwallet-linking"
+            ]
+          },
+          {
+            "group": "Data",
+            "pages": [
+              "cloud/analytics"
             ]
           },
           {
@@ -181,13 +180,6 @@
                   "appkit/payments/deposit-with-exchange"
                 ]
               }
-            ]
-          },
-          {
-            "group": "Data",
-            "pages": [
-              "cloud/analytics",
-              "cloud/blockchain-api"
             ]
           },
           {
@@ -231,7 +223,8 @@
                 "pages": [
                   "appkit/networks/custom-networks",
                   "appkit/features/multichain",
-                  "appkit/recipes/universal-connector"
+                  "appkit/recipes/universal-connector",
+                  "appkit/recipes/tenderly-virtual-testnets"
                 ]
               }
             ]
@@ -239,41 +232,6 @@
           {
             "group": "Technical Reference",
             "pages": [
-              {
-                "group": "Migration",
-                "pages": [
-                  {
-                    "group": "Migrate from other libraries",
-                    "pages": [
-                      "appkit/migration/from-privy-next",
-                      "appkit/migration/from-rainbowkit-next",
-                      "appkit/migration/from-connectkit-next",
-                      "appkit/migration/from-anza-adapter-react"
-                    ]
-                  },
-                  {
-                    "group": "Web3Modal to Reown AppKit",
-                    "pages": [
-                      "appkit/upgrade/from-w3m-to-reown",
-                      {
-                        "group": "Reown AppKit - Web",
-                        "pages": [
-                          "appkit/upgrade/to-reown-appkit-web",
-                          "appkit/upgrade/to-reown-appkit-ethers-web",
-                          "appkit/upgrade/to-reown-appkit-ethers5-web",
-                          "appkit/upgrade/to-reown-appkit-solana-web"
-                        ]
-                      },
-                      "appkit/upgrade/from-web3modal-react-native",
-                      "appkit/upgrade/from-web3modal-flutter",
-                      "appkit/upgrade/from-web3modal-android",
-                      "appkit/upgrade/from-web3modal-ios",
-                      "appkit/upgrade/from-web3modal-unity"
-                    ]
-                  },
-                  "appkit/upgrade/wcm"
-                ]
-              },
               "appkit/faq",
               {
                 "group": "Security",
@@ -283,8 +241,6 @@
                 ]
               },
               "appkit/recipes/troubleshooting",
-              "appkit/recipes/update-appkit",
-              "appkit/recipes/tenderly-virtual-testnets",
               "external-link-01"
             ]
           }
@@ -309,18 +265,13 @@
           {
             "group": "Features",
             "pages": [
-              {
-                "group": "Headless",
-                "pages": [
-                  "appkit/react/core/headless"
-                ]
-              },
+              "appkit/react/core/headless",
               {
                 "group": "Authentication",
                 "pages": [
                   "appkit/react/core/socials",
-                  "appkit/react/core/siwe",
-                  "appkit/react/core/siwx"
+                  "appkit/react/core/siwx",
+                  "appkit/react/core/siwe"
                 ]
               },
               {
@@ -364,8 +315,8 @@
                 "group": "Authentication",
                 "pages": [
                   "appkit/next/core/socials",
-                  "appkit/next/core/siwe",
-                  "appkit/next/core/siwx"
+                  "appkit/next/core/siwx",
+                  "appkit/next/core/siwe"
                 ]
               },
               {
@@ -410,8 +361,8 @@
                 "group": "Authentication",
                 "pages": [
                   "appkit/vue/core/socials",
-                  "appkit/vue/core/siwe",
-                  "appkit/vue/core/siwx"
+                  "appkit/vue/core/siwx",
+                  "appkit/vue/core/siwe"
                 ]
               },
               {
@@ -455,8 +406,8 @@
                 "group": "Authentication",
                 "pages": [
                   "appkit/javascript/core/socials",
-                  "appkit/javascript/core/siwe",
-                  "appkit/javascript/core/siwx"
+                  "appkit/javascript/core/siwx",
+                  "appkit/javascript/core/siwe"
                 ]
               },
               {

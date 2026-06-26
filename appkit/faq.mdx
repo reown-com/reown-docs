@@ -284,6 +284,98 @@ This FAQ section covers common questions and solutions for using AppKit. The que
 
   </Accordion>
 
+  <Accordion title="How do I update AppKit packages to the latest version?">
+    Keep every `@reown/*` package on the exact same version. AppKit publishes its packages in coordinated releases, so mixing versions can cause subtle peer-dep and type mismatches.
+
+    ### 1. Find the latest AppKit version
+
+    Use the registry to read the current published version (do this once, and use the same number for every `@reown/*` package you install):
+
+    ```bash
+    # npm
+    npm view @reown/appkit version
+
+    # pnpm
+    pnpm view @reown/appkit version
+
+    # yarn
+    yarn npm info @reown/appkit version
+
+    # bun
+    bun info @reown/appkit version
+    ```
+
+    You can also eyeball the version on npm's package page for [@reown/appkit](https://www.npmjs.com/package/@reown/appkit).
+
+    ### 2. Update your dependencies (all @reown/* to the same version)
+
+    Replace `X.Y.Z` below with the version you just looked up.
+
+    <CodeGroup>
+
+    ```bash npm
+    npm install \
+      @reown/appkit@X.Y.Z \
+      @reown/appkit-adapter-wagmi@X.Y.Z
+    ```
+
+    ```bash Yarn
+    yarn add \
+      @reown/appkit@X.Y.Z \
+      @reown/appkit-adapter-wagmi@X.Y.Z
+    ```
+
+    ```bash Bun
+    bun add \
+      @reown/appkit@X.Y.Z \
+      @reown/appkit-adapter-wagmi@X.Y.Z
+    ```
+
+    ```bash pnpm
+    pnpm add \
+      @reown/appkit@X.Y.Z \
+      @reown/appkit-adapter-wagmi@X.Y.Z
+    ```
+
+    </CodeGroup>
+
+    ### 3. Pin in package.json (optional)
+
+    If you prefer explicit pins (no carets), update `package.json`:
+
+    ```json
+    "dependencies": {
+      "@reown/appkit": "X.Y.Z",
+      "@reown/appkit-adapter-wagmi": "X.Y.Z"
+    }
+    ```
+
+    Then reinstall to refresh your lockfile:
+
+    <CodeGroup>
+
+    ```bash npm
+    rm -rf node_modules package-lock.json && npm install
+    ```
+
+    ```bash Yarn
+    rm -rf node_modules yarn.lock && yarn install
+    ```
+
+    ```bash Bun
+    rm -rf node_modules bun.lockb && bun install
+    ```
+
+    ```bash pnpm
+    rm -rf node_modules pnpm-lock.yaml && pnpm i
+    ```
+
+    </CodeGroup>
+
+    All release information is available in the [AppKit GitHub Releases](https://github.com/reown-com/appkit/releases).
+
+  </Accordion>
+
   <Accordion title="Error Codes">
     Below is a list of error codes you may encounter when using AppKit, along with their descriptions and recommended actions:
 
@@ -300,6 +392,44 @@ This FAQ section covers common questions and solutions for using AppKit. The que
     | APKT009 | Server Error | We couldn't load your App Configuration. Check your network and try again. Contact support if it keeps happening. |
     | APKT010 | Rate Limited | Too many requests for App Configuration. Please wait a few minutes and try again. Reach out to support if needed. |
 
+  </Accordion>
+</AccordionGroup>
+
+## Migration
+
+<AccordionGroup>
+  <Accordion title="How do I migrate from WalletConnect Modal to Reown AppKit?">
+    Follow our dedicated guide to upgrade from WalletConnect Modal to Reown AppKit:
+
+    - [Migrate from WalletConnect Modal to Reown AppKit](/appkit/upgrade/wcm)
+  </Accordion>
+
+  <Accordion title="How do I migrate from Web3Modal to Reown AppKit?">
+    Pick the guide that matches your platform:
+
+    **Web**
+
+    - [Reown AppKit (Wagmi)](/appkit/upgrade/to-reown-appkit-web)
+    - [Reown AppKit (Ethers)](/appkit/upgrade/to-reown-appkit-ethers-web)
+    - [Reown AppKit (Ethers v5)](/appkit/upgrade/to-reown-appkit-ethers5-web)
+    - [Reown AppKit (Solana)](/appkit/upgrade/to-reown-appkit-solana-web)
+
+    **Other platforms**
+
+    - [React Native](/appkit/upgrade/from-web3modal-react-native)
+    - [Flutter](/appkit/upgrade/from-web3modal-flutter)
+    - [Android](/appkit/upgrade/from-web3modal-android)
+    - [iOS](/appkit/upgrade/from-web3modal-ios)
+    - [Unity](/appkit/upgrade/from-web3modal-unity)
+  </Accordion>
+
+  <Accordion title="How do I migrate from other libraries to Reown AppKit?">
+    Follow the guide for the library you're migrating from:
+
+    - [Migrating from Privy to AppKit](/appkit/migration/from-privy-next)
+    - [Migrating from RainbowKit to AppKit](/appkit/migration/from-rainbowkit-next)
+    - [Migrating from ConnectKit to AppKit](/appkit/migration/from-connectkit-next)
+    - [Migrating from Solana Anza Adapter to AppKit](/appkit/migration/from-anza-adapter-react)
   </Accordion>
 </AccordionGroup>
 
