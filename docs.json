@@ -157,7 +157,13 @@
                   "appkit/recipes/travel-rule"
                 ]
               },
-              "appkit/features/smart-accounts",
+              {
+                "group": "Smart Accounts",
+                "pages": [
+                  "appkit/features/smart-accounts",
+                  "appkit/features/smart-accounts-interaction"
+                ]
+              },
               "appkit/features/multiwallet-linking"
             ]
           },
