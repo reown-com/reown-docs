@@ -48,12 +48,6 @@ If you encounter issues with minification, add the below rules to your applicati
 
 -keep class uniffi.** { *; }
 
-# Preserve all public and protected fields and methods
--keepclassmembers class ** {
-    public *;
-    protected *;
-}
-
 -dontwarn uniffi.**
 -dontwarn com.sun.jna.**
 ```
