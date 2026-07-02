@@ -8,7 +8,6 @@
     "light": "#008847",
     "dark": "#008847"
   },
-
   "integrations": {
     "gtm": {
       "tagId": "GTM-56G35T8X"
@@ -18,7 +17,6 @@
       "apiHost": "https://pineapple.reown.com"
     }
   },
-
   "favicon": "/images/favicon.png",
   "background": {
     "color": {
@@ -56,7 +54,23 @@
     },
     {
       "source": "/appkit/features/telegram-mini-apps",
-      "destination": "/appkit/integrations/telegram-mini-apps"
+      "destination": "https://reown.com/learn/how-to-build-a-telegram-mini-app"
+    },
+    {
+      "source": "/appkit/integrations/telegram-mini-apps",
+      "destination": "https://reown.com/learn/how-to-build-a-telegram-mini-app"
+    },
+    {
+      "source": "/appkit/recipes/telegram-mini-app",
+      "destination": "https://reown.com/learn/how-to-build-a-telegram-mini-app"
+    },
+    {
+      "source": "/appkit/migration/index",
+      "destination": "/appkit/migration/from-privy-next"
+    },
+    {
+      "source": "/appkit/recipes/gtm-checklist",
+      "destination": "/appkit/overview"
     },
     {
       "source": "/appkit/payments/one-click-checkout",
@@ -100,161 +114,175 @@
     }
   ],
   "contextual": {
-    "options": ["chatgpt", "claude", "copy", "view", "perplexity", "mcp", "cursor", "vscode"]
+    "options": [
+      "chatgpt",
+      "claude",
+      "copy",
+      "view",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "navigation": {
-    "tabs": [
+    "dropdowns": [
       {
-        "tab": "AppKit",
+        "dropdown": "AppKit - Overview",
         "icon": "layer-group",
-        "dropdowns": [
+        "pages": [
           {
-            "dropdown": "AppKit - Overview",
-            "icon": "layer-group",
+            "group": "Getting Started",
             "pages": [
+              "appkit/overview",
               {
-                "group": "Getting Started",
+                "group": "Pricing Plans",
                 "pages": [
-                  "appkit/overview",
-                  {
-                    "group": "Pricing Plans",
-                    "pages": [
-                      "appkit/paid-plans/starter",
-                      "appkit/paid-plans/pro",
-                      "appkit/paid-plans/growth",
-                      "appkit/paid-plans/enterprise"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Accounts & Authentication",
-                "pages": [
-                  {
-                    "group": "Authentication",
-                    "pages": [
-                      "appkit/authentication/socials",
-                      "appkit/authentication/one-click-auth",
-                      "appkit/authentication/siwx/default"
-                    ]
-                  },
-                  "appkit/features/smart-accounts",
-                  "appkit/features/multiwallet-linking"
-                ]
-              },
-              {
-                  "group": "Payments",
-                  "pages": [
-                    "appkit/payments/overview",
-                    "appkit/features/swaps",
-                    {
-                      "group": "Fund wallets",
-                      "pages": [
-                        "appkit/features/onramp",
-                        "appkit/payments/pay-with-self-custodial-wallets",
-                        "appkit/payments/deposit-with-exchange"
-                      ]
-                    }
-                  ]
-              },
-              {
-                "group": "Multichain Tools",
-                "pages": [
-                  "appkit/features/multichain"
-                ]
-              },
-              {
-                "group": "Dashboard",
-                "pages": [
-                  "cloud/analytics",
-                  "cloud/dashboard-configuration-settings"
-                ]
-              },
-              {
-                "group": "Interactions",
-                "pages": [
-                  "cloud/blockchain-api",
-                  "appkit/features/smart-accounts-interaction"
-                ]
-              },
-              {
-                "group": "Networks",
-                "pages": [
-                  "appkit/networks/overview",
-                  "appkit/networks/evm",
-                  "appkit/networks/solana",
-                  "appkit/networks/bitcoin",
-                  "appkit/networks/ton",
-                  "appkit/networks/tron"
-                ]
-              },
-              {
-                "group": "Use Cases",
-                "pages": [
-                  "appkit/integrations/telegram-mini-apps",
-                  "appkit/integrations/farcaster-mini-apps"
-                ]
-              },
-              {
-                "group": "Technical Reference",
-                "pages": [
-                  "appkit/faq",
-                  {
-                    "group": "Security",
-                    "pages": [
-                      "advanced/security/security-information",
-                      "advanced/security/content-security-policy"
-                    ]
-                  },
-                  "external-link-01"
+                  "appkit/paid-plans/starter",
+                  "appkit/paid-plans/pro",
+                  "appkit/paid-plans/growth",
+                  "appkit/paid-plans/enterprise"
                 ]
               }
             ]
           },
           {
-            "dropdown": "React",
-            "icon": "react",
-            "description": "AppKit on React",
+            "group": "Accounts & Authentication",
             "pages": [
               {
-                "group": "Fundamentals",
+                "group": "Authentication",
                 "pages": [
-                  "appkit/react/core/installation",
-                  "appkit/react/core/hooks",
-                  "appkit/react/core/options",
-                  "appkit/react/core/components",
-                  "appkit/react/core/smart-accounts",
-                  "appkit/react/core/smart-accounts-interaction",
-                  "appkit/react/core/custom-connectors",
-                  "appkit/react/core/custom-networks",
-                  "appkit/react/core/multichain",
-                  "appkit/react/core/theming",
-                  "appkit/react/core/resources"
+                  "appkit/authentication/socials",
+                  "appkit/authentication/one-click-auth",
+                  "appkit/authentication/siwx/default",
+                  "appkit/recipes/travel-rule"
                 ]
               },
               {
-                "group": "Dashboard",
+                "group": "Smart Accounts",
                 "pages": [
-                  "appkit/react/cloud/analytics",
-                  "appkit/react/cloud/dashboard-configuration-settings"
+                  "appkit/features/smart-accounts",
+                  "appkit/features/smart-accounts-interaction"
                 ]
               },
+              "appkit/features/multiwallet-linking"
+            ]
+          },
+          {
+            "group": "Data",
+            "pages": [
+              "cloud/analytics"
+            ]
+          },
+          {
+            "group": "Payments",
+            "pages": [
+              "appkit/payments/overview",
+              "appkit/features/swaps",
+              {
+                "group": "Fund wallets",
+                "pages": [
+                  "appkit/features/onramp",
+                  "appkit/payments/pay-with-self-custodial-wallets",
+                  "appkit/payments/deposit-with-exchange"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "cloud/dashboard-configuration-settings",
+              "appkit/customizing-ui"
+            ]
+          },
+          {
+            "group": "Networks",
+            "pages": [
+              "appkit/networks/overview",
+              {
+                "group": "EVM Chains",
+                "pages": [
+                  "appkit/networks/evm",
+                  "appkit/recipes/wagmi-send-transaction",
+                  "appkit/recipes/ethers-send-transaction",
+                  "appkit/recipes/EVM-smart-contract-interaction"
+                ]
+              },
+              {
+                "group": "Solana",
+                "pages": [
+                  "appkit/networks/solana",
+                  "appkit/recipes/solana-send-transaction"
+                ]
+              },
+              {
+                "group": "Bitcoin",
+                "pages": [
+                  "appkit/networks/bitcoin",
+                  "appkit/recipes/bitcoin-send-transaction"
+                ]
+              },
+              "appkit/networks/ton",
+              "appkit/networks/tron",
+              {
+                "group": "Other Network Settings",
+                "pages": [
+                  "appkit/networks/custom-networks",
+                  "appkit/features/multichain",
+                  "appkit/recipes/universal-connector",
+                  "appkit/recipes/tenderly-virtual-testnets"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Technical Reference",
+            "pages": [
+              "appkit/faq",
+              {
+                "group": "Security",
+                "pages": [
+                  "advanced/security/security-information",
+                  "advanced/security/content-security-policy"
+                ]
+              },
+              "appkit/recipes/troubleshooting",
+              "external-link-01"
+            ]
+          }
+        ]
+      },
+      {
+        "dropdown": "React",
+        "icon": "react",
+        "description": "AppKit on React",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/react/core/installation",
+              "appkit/react/core/hooks",
+              "appkit/react/core/options",
+              "appkit/react/core/components",
+              "appkit/react/core/custom-connectors",
+              "appkit/react/core/theming"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "appkit/react/core/headless",
               {
                 "group": "Authentication",
                 "pages": [
                   "appkit/react/core/socials",
-                  "appkit/react/core/siwe",
-                  "appkit/react/core/siwx"
+                  "appkit/react/core/siwx",
+                  "appkit/react/core/siwe"
                 ]
               },
               {
-                "group": "Headless",
-                "pages": [
-                  "appkit/react/core/headless"
-                ]
-              },
-              {
-                "group": "Payments",
+                "group": "Payments & Transactions",
                 "pages": [
                   {
                     "group": "Fund wallets",
@@ -262,56 +290,44 @@
                       "appkit/react/payments/pay-with-self-custodial-wallets",
                       "appkit/react/payments/deposit-with-exchange"
                     ]
-                  }
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
+                  },
                   "appkit/react/transactions/onramp",
                   "appkit/react/transactions/swaps"
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "dropdown": "Next",
+        "icon": "square-n",
+        "description": "AppKit on NextJS",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/next/core/installation",
+              "appkit/next/core/hooks",
+              "appkit/next/core/options",
+              "appkit/next/core/components",
+              "appkit/next/core/custom-connectors",
+              "appkit/next/core/theming"
+            ]
           },
           {
-            "dropdown": "Next",
-            "icon": "square-n",
-            "description": "AppKit on NextJS",
+            "group": "Features",
             "pages": [
-              {
-                "group": "Fundamentals",
-                "pages": [
-                  "appkit/next/core/installation",
-                  "appkit/next/core/hooks",
-                  "appkit/next/core/options",
-                  "appkit/next/core/components",
-                  "appkit/next/core/smart-accounts",
-                  "appkit/next/core/smart-accounts-interaction",
-                  "appkit/next/core/custom-connectors",
-                  "appkit/next/core/custom-networks",
-                  "appkit/next/core/multichain",
-                  "appkit/next/core/theming",
-                  "appkit/next/core/resources"
-                ]
-              },
-              {
-                "group": "Dashboard",
-                "pages": [
-                  "appkit/next/cloud/analytics",
-                  "appkit/next/cloud/dashboard-configuration-settings"
-                ]
-              },
               {
                 "group": "Authentication",
                 "pages": [
                   "appkit/next/core/socials",
-                  "appkit/next/core/siwe",
-                  "appkit/next/core/siwx"
+                  "appkit/next/core/siwx",
+                  "appkit/next/core/siwe"
                 ]
               },
               {
-                "group": "Payments",
+                "group": "Payments & Transactions",
                 "pages": [
                   {
                     "group": "Fund wallets",
@@ -319,53 +335,45 @@
                       "appkit/next/payments/pay-with-self-custodial-wallets",
                       "appkit/next/payments/deposit-with-exchange"
                     ]
-                  }
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
+                  },
                   "appkit/next/transactions/onramp",
                   "appkit/next/transactions/swaps"
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "dropdown": "Vue",
+        "icon": "vuejs",
+        "description": "AppKit on VueJS",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/vue/core/installation",
+              "appkit/vue/core/composables",
+              "appkit/vue/core/options",
+              "appkit/vue/core/components",
+              "appkit/vue/core/wallet-buttons",
+              "appkit/vue/core/custom-connectors",
+              "appkit/vue/core/theming"
+            ]
           },
           {
-            "dropdown": "Vue",
-            "icon": "vuejs",
-            "description": "AppKit on VueJS",
+            "group": "Features",
             "pages": [
               {
-                "group": "Fundamentals",
-                "pages": [
-                  "appkit/vue/core/installation",
-                  "appkit/vue/core/composables",
-                  "appkit/vue/core/options",
-                  "appkit/vue/core/components",
-                  "appkit/vue/core/wallet-buttons",
-                  "appkit/vue/core/smart-accounts",
-                  "appkit/vue/core/smart-accounts-interaction",
-                  "appkit/vue/core/custom-connectors",
-                  "appkit/vue/core/custom-networks",
-                  "appkit/vue/core/multichain",
-                  "appkit/vue/core/theming",
-                  "appkit/vue/core/resources"
-                ]
-              },
-              {
-                "group": "Dashboard",
-                "pages": [
-                  "appkit/vue/cloud/analytics",
-                  "appkit/vue/cloud/dashboard-configuration-settings"
-                ]
-              },
-              {
                 "group": "Authentication",
-                "pages": ["appkit/vue/core/socials", "appkit/vue/core/siwe", "appkit/vue/core/siwx"]
+                "pages": [
+                  "appkit/vue/core/socials",
+                  "appkit/vue/core/siwx",
+                  "appkit/vue/core/siwe"
+                ]
               },
               {
-                "group": "Payments",
+                "group": "Payments & Transactions",
                 "pages": [
                   {
                     "group": "Fund wallets",
@@ -373,56 +381,44 @@
                       "appkit/vue/payments/pay-with-self-custodial-wallets",
                       "appkit/vue/payments/deposit-with-exchange"
                     ]
-                  }
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
+                  },
                   "appkit/vue/transactions/onramp",
                   "appkit/vue/transactions/swaps"
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "dropdown": "JavaScript",
+        "icon": "js",
+        "description": "AppKit on JavaScript",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/javascript/core/installation",
+              "appkit/javascript/core/actions",
+              "appkit/javascript/core/options",
+              "appkit/javascript/core/components",
+              "appkit/javascript/core/custom-connectors",
+              "appkit/javascript/core/theming"
+            ]
           },
           {
-            "dropdown": "JavaScript",
-            "icon": "js",
-            "description": "AppKit on JavaScript",
+            "group": "Features",
             "pages": [
-              {
-                "group": "Fundamentals",
-                "pages": [
-                  "appkit/javascript/core/installation",
-                  "appkit/javascript/core/actions",
-                  "appkit/javascript/core/options",
-                  "appkit/javascript/core/components",
-                  "appkit/javascript/core/smart-accounts",
-                  "appkit/javascript/core/smart-accounts-interaction",
-                  "appkit/javascript/core/custom-connectors",
-                  "appkit/javascript/core/custom-networks",
-                  "appkit/javascript/core/multichain",
-                  "appkit/javascript/core/theming",
-                  "appkit/javascript/core/resources"
-                ]
-              },
-              {
-                "group": "Dashboard",
-                "pages": [
-                  "appkit/javascript/cloud/analytics",
-                  "appkit/javascript/cloud/dashboard-configuration-settings"
-                ]
-              },
               {
                 "group": "Authentication",
                 "pages": [
                   "appkit/javascript/core/socials",
-                  "appkit/javascript/core/siwe",
-                  "appkit/javascript/core/siwx"
+                  "appkit/javascript/core/siwx",
+                  "appkit/javascript/core/siwe"
                 ]
               },
               {
-                "group": "Payments",
+                "group": "Payments & Transactions",
                 "pages": [
                   {
                     "group": "Fund wallets",
@@ -430,112 +426,108 @@
                       "appkit/javascript/payments/pay-with-self-custodial-wallets",
                       "appkit/javascript/payments/deposit-with-exchange"
                     ]
-                  }
-                ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
+                  },
                   "appkit/javascript/transactions/onramp",
                   "appkit/javascript/transactions/swaps"
                 ]
               }
             ]
-          },
-                    {
-                      "dropdown": "Svelte",
-            "icon": "/images/icons/svelte.svg",
-            "description": "AppKit on Svelte",
+          }
+        ]
+      },
+      {
+        "dropdown": "Svelte",
+        "icon": "/images/icons/svelte.svg",
+        "description": "AppKit on Svelte",
+        "pages": [
+          {
+            "group": "Fundamentals",
             "pages": [
-              {
-                "group": "Fundamentals",
-                "pages": [
-                  "appkit/svelte/core/installation",
-                  "appkit/svelte/core/actions",
-                  "appkit/svelte/core/options",
-                  "appkit/svelte/core/components",
-                  "appkit/svelte/core/smart-accounts",
-                  "appkit/svelte/core/custom-connectors",
-                  "appkit/svelte/core/custom-networks",
-                  "appkit/svelte/core/multichain",
-                  "appkit/svelte/core/theming",
-                  "appkit/svelte/core/resources"
-                ]
-              },
-              {
-                "group": "Authentication",
-                "pages": ["appkit/svelte/core/socials"]
-              },
-              {
-                "group": "Transactions",
-                "pages": ["appkit/svelte/transactions/onramp", "appkit/svelte/transactions/swaps"]
-              }
+              "appkit/svelte/core/installation",
+              "appkit/svelte/core/actions",
+              "appkit/svelte/core/options",
+              "appkit/svelte/core/components",
+              "appkit/svelte/core/custom-connectors",
+              "appkit/svelte/core/theming"
             ]
           },
           {
-            "dropdown": "Nuxt",
-            "icon": "mountains",
-            "description": "AppKit on Nuxt",
+            "group": "Features",
             "pages": [
               {
-                "group": "Fundamentals",
+                "group": "Authentication",
                 "pages": [
-                  "appkit/nuxt/core/installation",
-                  "appkit/nuxt/core/options",
-                  "appkit/nuxt/core/components",
-                  "appkit/nuxt/core/composables",
-                  "appkit/nuxt/core/wallet-buttons",
-                  "appkit/nuxt/core/smart-accounts",
-                  "appkit/nuxt/core/custom-connectors",
-                  "appkit/nuxt/core/custom-networks",
-                  "appkit/nuxt/core/multichain",
-                  "appkit/nuxt/core/theming",
-                  "appkit/nuxt/core/resources"
+                  "appkit/svelte/core/socials"
                 ]
               },
               {
-                "group": "Authentication",
-                "pages": ["appkit/nuxt/core/socials"]
-              },
-              {
-                "group": "Transactions",
-                "pages": ["appkit/nuxt/transactions/onramp", "appkit/nuxt/transactions/swaps"]
+                "group": "Payments & Transactions",
+                "pages": [
+                  "appkit/svelte/transactions/onramp",
+                  "appkit/svelte/transactions/swaps"
+                ]
               }
+            ]
+          }
+        ]
+      },
+      {
+        "dropdown": "Nuxt",
+        "icon": "mountains",
+        "description": "AppKit on Nuxt",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/nuxt/core/installation",
+              "appkit/nuxt/core/options",
+              "appkit/nuxt/core/components",
+              "appkit/nuxt/core/composables",
+              "appkit/nuxt/core/wallet-buttons",
+              "appkit/nuxt/core/custom-connectors",
+              "appkit/nuxt/core/theming"
             ]
           },
           {
-            "dropdown": "React Native",
-            "icon": "mobile-screen-button",
-            "description": "AppKit on React Native",
+            "group": "Features",
             "pages": [
               {
-                "group": "Fundamentals",
+                "group": "Authentication",
                 "pages": [
-                  "appkit/react-native/core/installation",
-                  "appkit/react-native/core/options",
-                  "appkit/react-native/core/hooks",
-                  "appkit/react-native/core/components",
-                  "appkit/react-native/core/smart-accounts",
-                  "appkit/react-native/core/link-mode",
-                  "appkit/react-native/core/theming",
-                  "appkit/react-native/core/resources",
-                  "appkit/react-native/core/migration-multichain"
+                  "appkit/nuxt/core/socials"
                 ]
               },
               {
-                "group": "Dashboard",
+                "group": "Payments & Transactions",
                 "pages": [
-                  "appkit/react-native/cloud/analytics",
-                  "appkit/react-native/cloud/dashboard-configuration-settings"
+                  "appkit/nuxt/transactions/onramp",
+                  "appkit/nuxt/transactions/swaps"
                 ]
-              },
-              {
-                "group": "Transactions",
-                "pages": [
-                  "appkit/react-native/transactions/swaps",
-                  "appkit/react-native/transactions/onramp"
-                ]
-              },
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "dropdown": "React Native",
+        "icon": "mobile-screen-button",
+        "description": "AppKit on React Native",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/react-native/core/installation",
+              "appkit/react-native/core/options",
+              "appkit/react-native/core/hooks",
+              "appkit/react-native/core/components",
+              "appkit/react-native/core/link-mode",
+              "appkit/react-native/core/theming",
+              "appkit/react-native/core/migration-multichain"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
               {
                 "group": "Authentication",
                 "pages": [
@@ -543,36 +535,47 @@
                   "appkit/react-native/core/1ca",
                   "appkit/react-native/core/siwx"
                 ]
+              },
+              {
+                "group": "Payments & Transactions",
+                "pages": [
+                  "appkit/react-native/transactions/swaps",
+                  "appkit/react-native/transactions/onramp"
+                ]
               }
+            ]
+          }
+        ]
+      },
+      {
+        "dropdown": "Flutter",
+        "icon": "flutter",
+        "description": "AppKit on Flutter",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/flutter/core/installation",
+              "appkit/flutter/core/usage",
+              "appkit/flutter/core/options",
+              "appkit/flutter/core/link-mode",
+              "appkit/flutter/core/actions",
+              "appkit/flutter/core/events",
+              "appkit/flutter/core/theming"
             ]
           },
           {
-            "dropdown": "Flutter",
-            "icon": "flutter",
-            "description": "AppKit on Flutter",
+            "group": "Features",
             "pages": [
               {
-                "group": "Fundamentals",
+                "group": "Authentication",
                 "pages": [
-                  "appkit/flutter/core/installation",
-                  "appkit/flutter/core/usage",
-                  "appkit/flutter/core/options",
-                  "appkit/flutter/core/link-mode",
-                  "appkit/flutter/core/actions",
-                  "appkit/flutter/core/events",
-                  "appkit/flutter/core/theming",
-                  "appkit/flutter/core/custom-chains"
+                  "appkit/flutter/core/email",
+                  "appkit/flutter/core/siwe"
                 ]
               },
               {
-                "group": "Dashboard",
-                "pages": [
-                  "appkit/flutter/cloud/analytics",
-                  "appkit/flutter/cloud/dashboard-configuration-settings"
-                ]
-              },
-              {
-                "group": "Payments",
+                "group": "Payments & Transactions",
                 "pages": [
                   {
                     "group": "Fund wallets",
@@ -581,164 +584,93 @@
                     ]
                   }
                 ]
-              },
-              {
-                "group": "Authentication",
-                "pages": ["appkit/flutter/core/email", "appkit/flutter/core/siwe"]
-              }
-            ]
-          },
-          {
-            "dropdown": "Kotlin",
-            "icon": "android",
-            "description": "AppKit on Kotlin (Android)",
-            "pages": [
-              {
-                "group": "Fundamentals",
-                "pages": [
-                  "appkit/android/core/installation",
-                  "appkit/android/core/usage",
-                  "appkit/android/core/options",
-                  "appkit/android/core/actions",
-                  "appkit/android/core/components",
-                  "appkit/android/core/theming"
-                ]
-              },
-              {
-                "group": "Dashboard",
-                "pages": [
-                  "appkit/android/cloud/analytics",
-                  "appkit/android/cloud/dashboard-configuration-settings"
-                ]
-              },
-              {
-                "group": "Authentication",
-                "pages": ["appkit/android/core/one-click-auth"]
-              }
-            ]
-          },
-          {
-            "dropdown": "Swift",
-            "icon": "apple",
-            "description": "AppKit on Swift (iOS)",
-            "pages": [
-              {
-                "group": "Fundamentals",
-                "pages": [
-                  "appkit/ios/core/installation",
-                  "appkit/ios/core/usage",
-                  "appkit/ios/core/options",
-                  "appkit/ios/core/actions",
-                  "appkit/ios/core/custom-chains"
-                ]
-              },
-              {
-                "group": "Dashboard",
-                "pages": [
-                  "appkit/ios/cloud/analytics",
-                  "appkit/ios/cloud/dashboard-configuration-settings"
-                ]
-              },
-              {
-                "group": "Authentication",
-                "pages": ["appkit/ios/core/one-click-auth"]
-              }
-            ]
-          },
-          {
-            "dropdown": "Unity",
-            "icon": "unity",
-            "description": "AppKit on Unity",
-            "pages": [
-              {
-                "group": "Fundamentals",
-                "pages": [
-                  "appkit/unity/core/installation",
-                  "appkit/unity/core/usage",
-                  "appkit/unity/core/options",
-                  "appkit/unity/core/actions",
-                  "appkit/unity/core/events",
-                  "appkit/unity/core/customization",
-                  "appkit/unity/core/smart-accounts"
-                ]
-              },
-              {
-                "group": "Dashboard",
-                "pages": [
-                  "appkit/unity/cloud/analytics",
-                  "appkit/unity/cloud/dashboard-configuration-settings"
-                ]
-              },
-              {
-                "group": "Authentication",
-                "pages": ["appkit/unity/core/socials", "appkit/unity/core/siwe"]
               }
             ]
           }
         ]
       },
       {
-        "tab": "Guides",
-        "icon": "book-open",
+        "dropdown": "Kotlin",
+        "icon": "android",
+        "description": "AppKit on Kotlin (Android)",
         "pages": [
           {
-            "group": "Guides",
+            "group": "Fundamentals",
             "pages": [
-              {
-                "group": "How Tos",
-                "pages": [
-                  "appkit/recipes/telegram-mini-app",
-                  "appkit/recipes/tenderly-virtual-testnets",
-                  "appkit/recipes/wallet-buttons-react",
-                  "appkit/recipes/wagmi-send-transaction",
-                  "appkit/recipes/ethers-send-transaction",
-                  "appkit/recipes/EVM-smart-contract-interaction",
-                  "appkit/recipes/solana-send-transaction",
-                  "appkit/recipes/bitcoin-send-transaction",
-                  "appkit/recipes/switching-to-send-calls",
-                  "appkit/recipes/travel-rule",
-                  "appkit/recipes/update-appkit",
-                  "appkit/recipes/universal-connector",
-                  "appkit/recipes/troubleshooting"
-                ]
-              },
-              "appkit/recipes/gtm-checklist"
+              "appkit/android/core/installation",
+              "appkit/android/core/usage",
+              "appkit/android/core/options",
+              "appkit/android/core/actions",
+              "appkit/android/core/components",
+              "appkit/android/core/theming"
             ]
           },
           {
-            "group": "Migration",
+            "group": "Features",
             "pages": [
-              "appkit/migration/index",
               {
-                "group": "Migrate from other libraries",
+                "group": "Authentication",
                 "pages": [
-                  "appkit/migration/from-privy-next",
-                  "appkit/migration/from-rainbowkit-next",
-                  "appkit/migration/from-connectkit-next",
-                  "appkit/migration/from-anza-adapter-react"
+                  "appkit/android/core/one-click-auth"
                 ]
-              },
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "dropdown": "Swift",
+        "icon": "apple",
+        "description": "AppKit on Swift (iOS)",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/ios/core/installation",
+              "appkit/ios/core/usage",
+              "appkit/ios/core/options",
+              "appkit/ios/core/actions"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
               {
-                "group": "Web3Modal to Reown AppKit",
+                "group": "Authentication",
                 "pages": [
-                  "appkit/upgrade/from-w3m-to-reown",
-                  {
-                    "group": "Reown AppKit - Web",
-                    "pages": [
-                      "appkit/upgrade/to-reown-appkit-web",
-                      "appkit/upgrade/to-reown-appkit-ethers-web",
-                      "appkit/upgrade/to-reown-appkit-ethers5-web",
-                      "appkit/upgrade/to-reown-appkit-solana-web"
-                    ]
-                  },
-                  "appkit/upgrade/from-web3modal-react-native",
-                  "appkit/upgrade/from-web3modal-flutter",
-                  "appkit/upgrade/from-web3modal-android",
-                  "appkit/upgrade/from-web3modal-ios",
-                  "appkit/upgrade/from-web3modal-unity"
+                  "appkit/ios/core/one-click-auth"
                 ]
-              },
-              "appkit/upgrade/wcm"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "dropdown": "Unity",
+        "icon": "unity",
+        "description": "AppKit on Unity",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "appkit/unity/core/installation",
+              "appkit/unity/core/usage",
+              "appkit/unity/core/options",
+              "appkit/unity/core/actions",
+              "appkit/unity/core/events",
+              "appkit/unity/core/customization"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              {
+                "group": "Authentication",
+                "pages": [
+                  "appkit/unity/core/socials",
+                  "appkit/unity/core/siwe"
+                ]
+              }
             ]
           }
         ]
