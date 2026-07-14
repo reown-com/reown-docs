@@ -124,6 +124,7 @@ const bip122Account = useAppKitAccount({ namespace: "bip122" }); // for bitcoin
 
 ### Returns
 
+- `accountData.value.allAccounts`: A list of connected accounts. Each account includes the `address`, `type`, and `namespace`. Accounts also include `caipAddress` (CAIP-10 format) and `chainId` when network information is available.
 - `accountData.value.address`: The current account address
 - `accountData.value.caipAddress`: The current account address in CAIP format
 - `accountData.value.isConnected`: Boolean that indicates if the user is connected
