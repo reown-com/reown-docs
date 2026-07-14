@@ -132,6 +132,8 @@ The `Account` type has the following structure:
 | `namespace` | `string`       | The blockchain namespace (e.g., 'eip155', 'solana', 'bip122') |
 | `chainId`   | `string`       | The chain ID where this account is active                      |
 | `type`      | `AccountType?` | Optional account type (e.g., 'eoa' or 'smartAccount')         |
+| `caipAddress` | `string?`    | CAIP-10 formatted address. Present when network information is available. |
+| `publicKey` | `string?`      | Bitcoin public key. Only present for Bitcoin (bip122) accounts. |
 
 ## `useProvider()`
 
