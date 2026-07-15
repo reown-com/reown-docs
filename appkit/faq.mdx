@@ -375,6 +375,26 @@ This FAQ section covers common questions and solutions for using AppKit. The que
 
   </Accordion>
 
+  <Accordion title="Why does my Vercel deployment fail with a 'Missing ./tempo specifier in @wagmi/core' error?">
+    When deploying to Vercel, your build may fail with an error like:
+
+    ```bash
+    Missing "./tempo" specifier in "@wagmi/core" package
+    error TS2322: Type 'import("/vercel/path0/react/react-wagmi/node_modules/@wagmi/core/dist/types/createConfig")
+    ```
+
+    This is caused by a version mismatch between `@wagmi/core` and `@wagmi/connectors`. To resolve it, add `@wagmi/connectors` at version `6.2.0` to your dependencies:
+
+    ```json
+    "dependencies": {
+      "@wagmi/connectors": "6.2.0"
+    }
+    ```
+
+    Then reinstall your dependencies and redeploy.
+
+  </Accordion>
+
   <Accordion title="Error Codes">
     Below is a list of error codes you may encounter when using AppKit, along with their descriptions and recommended actions:
 
