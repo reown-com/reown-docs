@@ -187,3 +187,19 @@ const result = await provider.request<{ signature: string, publicKey: string }>(
   },
 });
 ```
+
+#### `canton_ledgerApi`
+
+Proxies a request to the Canton Ledger API and returns its response verbatim. The `params` object is forwarded as-is to the underlying Ledger API endpoint.
+
+**Response**
+
+```json
+{
+    "id": 1239,
+    "jsonrpc": "2.0",
+    "result": // raw Ledger API JSON response as-is
+}
+```
+
+<Info>The result field contains the raw Ledger API JSON response as-is.</Info>
