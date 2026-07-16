@@ -18,22 +18,27 @@ Follow the steps below to migrate from a default Privy project (using Next.js Pa
 ### Step 2. Install & uninstall libraries
 
 Replace Privy dependencies with AppKit by running the following commands for your preferred package manager:
+
+<Warning>
+  AppKit is only compatible with wagmi 2.x. Ensure you are using a compatible version.
+</Warning>
+
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem && npm uninstall @privy-io/react-auth @privy-io/server-auth
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem && npm uninstall @privy-io/react-auth @privy-io/server-auth
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem && yarn remove @privy-io/react-auth @privy-io/server-auth
+yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem && yarn remove @privy-io/react-auth @privy-io/server-auth
 ```
 
 ```bash Bun
-bun a @reown/appkit @reown/appkit-adapter-wagmi wagmi viem && bun remove @privy-io/react-auth @privy-io/server-auth
+bun a @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem && bun remove @privy-io/react-auth @privy-io/server-auth
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem && pnpm remove @privy-io/react-auth @privy-io/server-auth
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem && pnpm remove @privy-io/react-auth @privy-io/server-auth
 ```
 </CodeGroup>
 
