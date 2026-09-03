@@ -395,6 +395,24 @@ This FAQ section covers common questions and solutions for using AppKit. The que
 
   </Accordion>
 
+  <Accordion title="How does Verify API know if a website is a scam or suspicious?">
+    [Verify API](https://docs.walletconnect.network/wallet-sdk/web/verify) checks the origin that is
+    requesting a connection or a signature against the domains registered to that `projectId`, and it also
+    checks that domain's reputation. Wallets that implement Verify API use the result to warn users
+    before they approve a request from an unverified or malicious site.
+
+    The reputation data comes from three security providers whose threat intelligence is combined to
+    classify a domain as a scam or suspicious:
+
+    - [Hexagate](https://hexagate.com)
+    - [ChainPatrol](https://chainpatrol.io)
+    - [Hypernative](https://www.hypernative.io)
+
+    As a Web3 app, the best way to avoid being flagged is to keep your allowed domains up to date in the
+    [Reown Dashboard](https://dashboard.reown.com) so your origin always resolves as verified.
+
+  </Accordion>
+
   <Accordion title="Error Codes">
     Below is a list of error codes you may encounter when using AppKit, along with their descriptions and recommended actions:
 
