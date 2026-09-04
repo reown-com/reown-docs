@@ -687,6 +687,11 @@
           "anchor": "Blog",
           "href": "https://reown.com/blog",
           "icon": "newspaper"
+        },
+        {
+          "anchor": "Learn",
+          "href": "https://reown.com/learn",
+          "icon": "book"
         }
       ]
     }
