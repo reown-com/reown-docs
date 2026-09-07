@@ -193,7 +193,8 @@
             "group": "Settings",
             "pages": [
               "cloud/dashboard-configuration-settings",
-              "appkit/customizing-ui"
+              "appkit/customizing-ui",
+              "appkit/domain-verification"
             ]
           },
           {
