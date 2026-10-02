@@ -4,6 +4,8 @@ title: Installation
 
 import CloudBanner from '/snippets/cloud-banner.mdx'
 
+import Wagmi3Beta from '/snippets/appkit/shared/wagmi-3-beta.mdx'
+
 import NuxtWagmiImplementation from '/snippets/appkit/nuxt/wagmi/about/implementation.mdx'
 
 import NuxtEthersImplementation from '/snippets/appkit/nuxt/ethers/about/implementation.mdx'
@@ -38,10 +40,6 @@ After installation, you can ask your AI assistant for help with AppKit setup, im
 <Tabs>
 <Tab title="Wagmi">
 
-<Warning>
-  AppKit is only compatible with wagmi 2.x. Ensure you are using a compatible version.
-</Warning>
-
 <CodeGroup>
 
 ```bash npm
@@ -61,6 +59,8 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue @ta
 ```
 
 </CodeGroup>
+
+<Wagmi3Beta />
 
 </Tab>
 <Tab title="Ethers">
