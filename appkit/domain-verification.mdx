@@ -50,6 +50,14 @@ Shown when the domain has been flagged as malicious by one or more of the securi
   Verify API helps wallets detect suspicious or malicious domains, but it may not catch every threat. Use it as one more layer of protection alongside your wallet's other security measures.
 </Note>
 
+### Reading `verifyContext` by connection type
+
+How a wallet should read `verifyContext` depends on how the app connects:
+
+- **Web app over QR code or deep link (relay):** This is the full Verify API, including scam checks. Wallets show all four states: `VALID` as Domain match, `UNKNOWN` as Cannot verify, `INVALID` as Mismatch, and `isScam` as Security risk (ideally blocking or requiring the user to confirm).
+- **Native app over relay:** Native apps can't create a Verify attestation, so `UNKNOWN` is expected here. We suggest wallets use a neutral "Cannot verify" label rather than an alarming warning.
+- **[Link Mode](https://docs.walletconnect.com/wallets/features/link-mode) (native to native):** The domain check above applies, with no scam check. `INVALID` means the app's universal link domain doesn't match its `metadata.url`. The wallet's own Link Mode setup also needs to be complete, or the result falls back to `INVALID`.
+
 ## Get a domain verified
 
 Two steps get an app to a domain match:
