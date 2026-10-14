@@ -45,15 +45,18 @@ export const ChainList = () => {
     }
 
     fetch(
-      "https://explorer-api.walletconnect.com/v3/chains?projectId=8e998cd112127e42dce5e2bf74122539"
+      "https://api.web3modal.org/getChains?projectId=8e998cd112127e42dce5e2bf74122539&st=docs&sv=1.0.0"
     )
       .then((response) => response.json())
-      .then((data) => {
-        chains = Object.keys(data.chains).map((key) => ({
-          name: data.chains[key].name,
-          namespace: key,
-          appKitSupport: getAppKitSupport(key),
-        }));
+      .then(({ data }) => {
+        chains = data.map(({ name, namespace, reference }) => {
+          const chainId = `${namespace}:${reference}`;
+          return {
+            name,
+            namespace: chainId,
+            appKitSupport: getAppKitSupport(chainId),
+          };
+        });
         filteredChains = [...chains];
         renderChains(filteredChains);
 
