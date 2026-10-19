@@ -1,100 +1,13 @@
 ---
 title: Deposit with Exchange
 sidebarTitle: Exchange Wallets
-description: Let users seamlessly fund their connected wallets directly from their exchange accounts or another wallet.
+description: Let users top up their wallets and make deposits with WalletConnect Pay.
 ---
 
-<Note>
-If you're looking to enable crypto payments in your online or in-person business, check out WalletConnect Pay, our all-in-one payments solution. [Learn more in the WalletConnect Pay docs →](https://docs.walletconnect.com/payments/overview)
-</Note>
+If you're looking to let users top up their accounts or make deposits, check out **WalletConnect Pay**.
 
-**Deposit with Exchange** gives your users a seamless way to fund their connected wallets directly from centralized exchange accounts like **Binance**.
-Instead of forcing users to leave your app, log into their exchange, and manually handle withdrawals, you can offer a guided in-app flow that keeps them engaged and ready to transact.
+WalletConnect Pay supports account top-ups and deposits, so your users can fund their accounts with crypto they already hold in their wallets and exchange accounts.
 
-## Why Deposit with Exchange?
-
-- **Instant access to existing funds:** No need for fiat payments, KYC, or new providers. Users move crypto they already own.
-- **Frictionless experience:** Just a few clicks to deposit directly from an exchange into their wallet.
-- **Perpetually available:** Reown establishes direct agreements with partner exchanges to ensure perpetual availability.
-- **Security-first:** All activity flows directly through the exchange - no third-party access at any point.
-- **Full customization:** Deposit with Exchange is provided through a headless SDK to ensure flexibility for you and your users.
-- **Boost activation and retention:** A smoother onboarding and funding flow leads to better conversion, more repeat usage, less drop-offs.
-
-<Note>
-**Onramp.money, Rootstock Collective, Bitgpt.xyz**, and a dozen other teams use the Pay/Deposit with Exchange feature already.
-</Note>
-
-
-## How does it work?
-
-1. User connects a wallet through Reown AppKit.
-2. After user realizes that their wallet is short on funds, the user selects "Transfer or Deposit with Exchange" as the funding method.
-3. User chooses an exchange account and token.
-4. User completes the deposit/transfer flow via the CEX's authorization.
-5. The funds appear in the connected wallet and the user can proceed with their intended action.
-
-<video
-  autoPlay
-  loop
-  controls
-  src="/images/deposit-with-exchange.mp4"
-></video>
-
-
-## Supported tokens, networks, and platforms
-
-Currently, AppKit Deposit with Exchange supports the following assets on the following networks:
-
-**Asset -> Network**
-
-**Binance**
-- USDC → Ethereum, Optimism, Arbitrum, Base, Polygon, Solana
-- USDT → Ethereum, Optimism, Arbitrum, Polygon, Solana
-- Native Solana
-
-For access to additional networks or assets, contact us [via our form here](https://share.hsforms.com/1_oWa8QkwRXi6oR0nZ_SIxQnxw6s).
-
-**Platforms & SDKs**
-- **Web**: React, Next.js, Vue, JavaScript SDK
-- **Mobile and Native Apps**: Supported via deep link + QR
-
-## Use cases
-
-### Dapps (DeFi, Staking, Restaking)
-
-- Enable users to fund → stake in one smooth flow (early-access).
-- Avoid drop-off caused by slow fiat onramps or KYC barriers.
-
-**Examples**: Lido, dYdX, Synthetix, Aave.
-
-### Non-Custodial Wallets
-
-- In-app top-ups from supported exchanges.
-- No fiat, bridging, or browser extension hurdles.
-- Faster first transaction, better onboarding, reduced support overhead.
-
-**Examples**: Trust Wallet, Frame, Core, Rainbow.
-
-## Get Started
-
-<CardGroup cols={2}>
-  <Card title="React" icon="react" href="/appkit/react/payments/deposit-with-exchange">
-    Get started with Deposit with Exchange in React.
-  </Card>
-
-  <Card title="Next.js" icon="square-n" href="/appkit/next/payments/deposit-with-exchange">
-    Get started with Deposit with Exchange in Next.js.
-  </Card>
-
-  <Card title="Vue" icon="vuejs" href="/appkit/vue/payments/deposit-with-exchange">
-    Get started with Deposit with Exchange in Vue.
-  </Card>
-
-  <Card title="JavaScript" icon="js" href="/appkit/javascript/payments/deposit-with-exchange">
-    Get started with Deposit with Exchange in JavaScript.
-  </Card>
-
-  <Card title="Flutter" icon="flutter" href="/appkit/flutter/payments/deposit-with-exchange">
-    Get started with Deposit with Exchange in Flutter.
-  </Card>
-</CardGroup>
+<Card title="Account top-ups and deposits with WalletConnect Pay" icon="arrow-up-right-from-square" href="https://walletconnect.com/payments/account-top-ups-deposits">
+  Learn how WalletConnect Pay handles account top-ups and deposits.
+</Card>
