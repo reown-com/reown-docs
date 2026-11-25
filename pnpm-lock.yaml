@@ -385,8 +385,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  smol-toml@1.4.1:
-    resolution: {integrity: sha512-CxdwHXyYTONGHThDbq5XdwbFsuY4wlClRGejfE2NtwUtiHYsP1QtNsHb/hnj31jKYSchztJsaA8pSQoVzkfCFg==}
+  smol-toml@1.9.1:
+    resolution: {integrity: sha512-j7WyPdf0CJoutMzMoPLF/bVXHtKZIT9Rb4eGeEbWw8X2t5oirjPgpL+OpaENZrILYaXqYwnVH+qgUwVbl+pUJQ==}
     engines: {node: '>= 18'}
 
   tinyglobby@0.2.14:
@@ -652,7 +652,7 @@ snapshots:
     dependencies:
       '@cspell/cspell-types': 9.2.0
       comment-json: 4.2.5
-      smol-toml: 1.4.1
+      smol-toml: 1.9.1
       yaml: 2.8.0
 
   cspell-dictionary@9.2.0:
@@ -788,7 +788,7 @@ snapshots:
 
   semver@7.7.2: {}
 
-  smol-toml@1.4.1: {}
+  smol-toml@1.9.1: {}
 
   tinyglobby@0.2.14:
     dependencies:
