@@ -73,28 +73,76 @@
       "destination": "/appkit/overview"
     },
     {
+      "source": "/appkit/payments/overview",
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
       "source": "/appkit/payments/one-click-checkout",
-      "destination": "/appkit/payments/overview"
+      "destination": "https://docs.walletconnect.com/payments/overview"
     },
     {
       "source": "/appkit/payments/pay-with-exchange",
-      "destination": "/appkit/payments/pay-with-self-custodial-wallets"
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/payments/pay-with-self-custodial-wallets",
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/payments/deposit-with-exchange",
+      "destination": "https://walletconnect.com/payments/account-top-ups-deposits"
     },
     {
       "source": "/appkit/react/payments/pay-with-exchange",
-      "destination": "/appkit/react/payments/pay-with-self-custodial-wallets"
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/react/payments/pay-with-self-custodial-wallets",
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/react/payments/deposit-with-exchange",
+      "destination": "https://walletconnect.com/payments/account-top-ups-deposits"
     },
     {
       "source": "/appkit/next/payments/pay-with-exchange",
-      "destination": "/appkit/next/payments/pay-with-self-custodial-wallets"
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/next/payments/pay-with-self-custodial-wallets",
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/next/payments/deposit-with-exchange",
+      "destination": "https://walletconnect.com/payments/account-top-ups-deposits"
     },
     {
       "source": "/appkit/vue/payments/pay-with-exchange",
-      "destination": "/appkit/vue/payments/pay-with-self-custodial-wallets"
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/vue/payments/pay-with-self-custodial-wallets",
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/vue/payments/deposit-with-exchange",
+      "destination": "https://walletconnect.com/payments/account-top-ups-deposits"
     },
     {
       "source": "/appkit/javascript/payments/pay-with-exchange",
-      "destination": "/appkit/javascript/payments/pay-with-self-custodial-wallets"
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/javascript/payments/pay-with-self-custodial-wallets",
+      "destination": "https://docs.walletconnect.com/payments/overview"
+    },
+    {
+      "source": "/appkit/javascript/payments/deposit-with-exchange",
+      "destination": "https://walletconnect.com/payments/account-top-ups-deposits"
+    },
+    {
+      "source": "/appkit/flutter/payments/deposit-with-exchange",
+      "destination": "https://walletconnect.com/payments/account-top-ups-deposits"
     },
     {
       "source": "/appkit/features/chain-abstraction",
@@ -175,18 +223,10 @@
             ]
           },
           {
-            "group": "Payments",
+            "group": "Transactions",
             "pages": [
-              "appkit/payments/overview",
               "appkit/features/swaps",
-              {
-                "group": "Fund wallets",
-                "pages": [
-                  "appkit/features/onramp",
-                  "appkit/payments/pay-with-self-custodial-wallets",
-                  "appkit/payments/deposit-with-exchange"
-                ]
-              }
+              "appkit/features/onramp"
             ]
           },
           {
@@ -283,15 +323,8 @@
                 ]
               },
               {
-                "group": "Payments & Transactions",
+                "group": "Transactions",
                 "pages": [
-                  {
-                    "group": "Fund wallets",
-                    "pages": [
-                      "appkit/react/payments/pay-with-self-custodial-wallets",
-                      "appkit/react/payments/deposit-with-exchange"
-                    ]
-                  },
                   "appkit/react/transactions/onramp",
                   "appkit/react/transactions/swaps"
                 ]
@@ -328,15 +361,8 @@
                 ]
               },
               {
-                "group": "Payments & Transactions",
+                "group": "Transactions",
                 "pages": [
-                  {
-                    "group": "Fund wallets",
-                    "pages": [
-                      "appkit/next/payments/pay-with-self-custodial-wallets",
-                      "appkit/next/payments/deposit-with-exchange"
-                    ]
-                  },
                   "appkit/next/transactions/onramp",
                   "appkit/next/transactions/swaps"
                 ]
@@ -374,15 +400,8 @@
                 ]
               },
               {
-                "group": "Payments & Transactions",
+                "group": "Transactions",
                 "pages": [
-                  {
-                    "group": "Fund wallets",
-                    "pages": [
-                      "appkit/vue/payments/pay-with-self-custodial-wallets",
-                      "appkit/vue/payments/deposit-with-exchange"
-                    ]
-                  },
                   "appkit/vue/transactions/onramp",
                   "appkit/vue/transactions/swaps"
                 ]
@@ -419,15 +438,8 @@
                 ]
               },
               {
-                "group": "Payments & Transactions",
+                "group": "Transactions",
                 "pages": [
-                  {
-                    "group": "Fund wallets",
-                    "pages": [
-                      "appkit/javascript/payments/pay-with-self-custodial-wallets",
-                      "appkit/javascript/payments/deposit-with-exchange"
-                    ]
-                  },
                   "appkit/javascript/transactions/onramp",
                   "appkit/javascript/transactions/swaps"
                 ]
@@ -462,7 +474,7 @@
                 ]
               },
               {
-                "group": "Payments & Transactions",
+                "group": "Transactions",
                 "pages": [
                   "appkit/svelte/transactions/onramp",
                   "appkit/svelte/transactions/swaps"
@@ -499,7 +511,7 @@
                 ]
               },
               {
-                "group": "Payments & Transactions",
+                "group": "Transactions",
                 "pages": [
                   "appkit/nuxt/transactions/onramp",
                   "appkit/nuxt/transactions/swaps"
@@ -538,7 +550,7 @@
                 ]
               },
               {
-                "group": "Payments & Transactions",
+                "group": "Transactions",
                 "pages": [
                   "appkit/react-native/transactions/swaps",
                   "appkit/react-native/transactions/onramp"
@@ -573,17 +585,6 @@
                 "pages": [
                   "appkit/flutter/core/email",
                   "appkit/flutter/core/siwe"
-                ]
-              },
-              {
-                "group": "Payments & Transactions",
-                "pages": [
-                  {
-                    "group": "Fund wallets",
-                    "pages": [
-                      "appkit/flutter/payments/deposit-with-exchange"
-                    ]
-                  }
                 ]
               }
             ]
