@@ -20,7 +20,6 @@ AppKit provides a comprehensive set of React hooks that work together to provide
 - **UI Control Hooks**: Control the modal and UI elements (`useAppKitState`, `useAppKitTheme`)
 - **Data Access Hooks**: Access wallet and blockchain data (`useAppKitBalance`, `useWalletInfo`)
 - **Event Hooks**: Subscribe to wallet and connection events (`useAppKitEvents`)
-- **Payment Hooks**: Handle crypto payments and exchange integrations (`usePay`, `useAvailableExchanges`, `usePayUrlActions`, `useExchangeBuyStatus`)
 - **Multi-Wallet Hooks**: Manage multiple wallet connections (`useAppKitConnections`, `useAppKitConnection`)
 - **Authentication Hooks**: Handle authentication and user management (`useAppKitUpdateEmail`, `useAppKitSIWX`)
 - **Solana-Specific Hooks**: Solana blockchain interactions (`useAppKitConnection` from Solana adapter)
@@ -34,7 +33,6 @@ graph TD
   AppKit --> UIHooks[UI Control Hooks]
   AppKit --> DataHooks[Data Access Hooks]
   AppKit --> EventHooks[Event Hooks]
-  AppKit --> PaymentHooks[Payment Hooks]
   AppKit --> MultiWalletHooks[Multi-Wallet Hooks]
   AppKit --> AuthHooks[Authentication Hooks]
   AppKit --> SolanaHooks[Solana-Specific Hooks]
@@ -55,11 +53,6 @@ graph TD
   
   EventHooks --> useAppKitEvents
   
-  PaymentHooks --> usePay
-  PaymentHooks --> useAvailableExchanges
-  PaymentHooks --> usePayUrlActions
-  PaymentHooks --> useExchangeBuyStatus
-  
   MultiWalletHooks --> useAppKitConnections
   MultiWalletHooks --> useAppKitConnection
   
@@ -72,8 +65,6 @@ graph TD
   useAppKitAccount -.-> useAppKitBalance
   useAppKitNetwork -.-> useAppKitBalance
   useAppKitWallet -.-> useAppKitAccount
-  usePay -.-> useAvailableExchanges
-  usePayUrlActions -.-> useExchangeBuyStatus
 ```
 
 These hooks provide a modular way to integrate wallet functionality into your application, allowing you to use only the features you need.
@@ -1096,161 +1087,6 @@ function AccountSwitcher() {
 
 <Note>
   Related hooks: [useAppKitConnections](#useappkitconnections), [useAppKitAccount](#useappkitaccount), [useDisconnect](#usedisconnect)
-</Note>
-
-## usePay
-
-Hook that manages payment modal interactions and handles crypto payment flows. Use this hook when implementing payment features with exchange integrations.
-
-```ts
-import { usePay } from "@reown/appkit-pay/react";
-
-const { pay, isLoading, error } = usePay({
-  onSuccess: (result) => console.log('Payment successful:', result),
-  onError: (error) => console.error('Payment failed:', error)
-});
-```
-
-### Use Cases
-- Implementing crypto payment flows in your application
-- Handling payment success and error states
-- Integrating with centralized exchanges for payments
-- Building custom payment interfaces
-
-### Parameters
-
-- `onSuccess`: Optional callback function called when payment succeeds
-- `onError`: Optional callback function called when payment fails
-
-### Returns
-
-- `pay`: Function to initiate a payment with specified parameters
-- `isLoading`: Boolean indicating if a payment is in progress
-- `error`: Error object if payment fails
-
-<Note>
-  Related hooks: [useAvailableExchanges](#useavailableexchanges), [usePayUrlActions](#usepayurlactions)
-</Note>
-
-## useAvailableExchanges
-
-Hook that fetches and manages the state for available exchanges. Use this hook when you need to display available payment options or filter exchanges based on criteria.
-
-```ts
-import { useAvailableExchanges } from "@reown/appkit-pay/react";
-
-const { data, isLoading, error, fetch } = useAvailableExchanges({
-  isFetchOnInit: true,
-  asset: 'ETH',
-  amount: 100,
-  network: 'eip155:1'
-});
-```
-
-### Use Cases
-- Displaying available exchanges to users
-- Filtering exchanges based on asset or network
-- Building custom exchange selection interfaces
-- Implementing exchange comparison features
-
-### Parameters
-
-- `isFetchOnInit`: Whether to fetch exchanges on hook initialization
-- `asset`: Filter exchanges by specific asset
-- `amount`: Filter exchanges by minimum amount
-- `network`: Filter exchanges by network support
-
-### Returns
-
-- `data`: Array of available exchanges
-- `isLoading`: Boolean indicating if exchanges are being fetched
-- `error`: Error object if fetching fails
-- `fetch`: Function to manually refetch exchanges
-
-<Note>
-  Related hooks: [usePay](#usepay), [usePayUrlActions](#usepayurlactions)
-</Note>
-
-## usePayUrlActions
-
-Hook that provides functions to interact with specific exchange URLs, returning the sessionId needed for status tracking. Use this hook when implementing custom exchange flows.
-
-```ts
-import { usePayUrlActions } from "@reown/appkit-pay/react";
-
-const { getUrl, openUrl } = usePayUrlActions();
-
-// Get exchange URL
-const { url, sessionId } = await getUrl('binance', {
-  asset: 'ETH',
-  amount: 0.1,
-  recipient: '0x...'
-});
-
-// Open exchange URL in new tab
-const { url, sessionId } = await openUrl('coinbase', {
-  asset: 'USDC',
-  amount: 100,
-  recipient: '0x...'
-}, true);
-```
-
-### Use Cases
-- Building custom exchange integration flows
-- Implementing exchange URL generation
-- Creating custom payment interfaces
-- Tracking exchange sessions for status monitoring
-
-### Returns
-
-- `getUrl`: Function that returns exchange URL and session ID
-- `openUrl`: Function that opens exchange URL and returns session data
-
-<Note>
-  Related hooks: [useExchangeBuyStatus](#useexchangebuystatus), [useAvailableExchanges](#useavailableexchanges)
-</Note>
-
-## useExchangeBuyStatus
-
-Hook that fetches and polls for the status of a headless payment transaction using exchangeId and sessionId. Use this hook to track payment progress and handle completion.
-
-```ts
-import { useExchangeBuyStatus } from "@reown/appkit-pay/react";
-
-const { data, isLoading, error, refetch } = useExchangeBuyStatus({
-  exchangeId: 'binance',
-  sessionId: 'session-123',
-  pollingInterval: 5000,
-  isEnabled: true,
-  onSuccess: (status) => console.log('Payment completed:', status),
-  onError: (error) => console.error('Payment failed:', error)
-});
-```
-
-### Use Cases
-- Tracking payment transaction status
-- Implementing payment progress indicators
-- Handling payment completion and failure states
-- Building real-time payment monitoring
-
-### Parameters
-
-- `exchangeId`: The exchange identifier
-- `sessionId`: The session ID from payment URL actions
-- `pollingInterval`: How often to check status (in milliseconds)
-- `isEnabled`: Whether to enable status polling
-- `onSuccess`: Callback for successful payment completion
-- `onError`: Callback for payment errors
-
-### Returns
-
-- `data`: Current payment status data
-- `isLoading`: Boolean indicating if status is being fetched
-- `error`: Error object if status fetching fails
-- `refetch`: Function to manually refetch status
-
-<Note>
-  Related hooks: [usePayUrlActions](#usepayurlactions), [usePay](#usepay)
 </Note>
 
 ## useAppKitUpdateEmail

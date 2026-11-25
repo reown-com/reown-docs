@@ -20,7 +20,6 @@ AppKit provides a comprehensive set of Vue composables that work together to pro
 - **UI Control Composables**: Control the modal and UI elements (`useAppKitState`, `useAppKitTheme`)
 - **Data Access Composables**: Access wallet and blockchain data (`useWalletInfo`)
 - **Event Composables**: Subscribe to wallet and connection events (`useAppKitEvents`)
-- **Payment Composables**: Handle crypto payments and exchange integrations (`usePay`, `useAvailableExchanges`, `usePayUrlActions`, `useExchangeBuyStatus`)
 - **Multi-Wallet Composables**: Manage multiple wallet connections (`useAppKitConnections`, `useAppKitConnection`)
 - **Authentication Composables**: Handle authentication and user management (`useAppKitUpdateEmail`, `useAppKitSIWX`)
 - **Solana-Specific Composables**: Solana blockchain interactions (`useAppKitConnection` from Solana adapter)
@@ -36,7 +35,6 @@ graph TB
   UIComposables[UI Composables]
   DataComposables[Data Composables]
   EventComposables[Event Composables]
-  PaymentComposables[Payment Composables]
   MultiWalletComposables[Multi-Wallet Composables]
   AuthComposables[Authentication Composables]
   SolanaComposables[Solana Composables]
@@ -46,7 +44,6 @@ graph TB
   AppKit --> UIComposables
   AppKit --> DataComposables
   AppKit --> EventComposables
-  AppKit --> PaymentComposables
   AppKit --> MultiWalletComposables
   AppKit --> AuthComposables
   AppKit --> SolanaComposables
@@ -64,11 +61,6 @@ graph TB
   DataComposables --> useWalletInfo
   
   EventComposables --> useAppKitEvents
-  
-  PaymentComposables --> usePay
-  PaymentComposables --> useAvailableExchanges
-  PaymentComposables --> usePayUrlActions
-  PaymentComposables --> useExchangeBuyStatus
   
   MultiWalletComposables --> useAppKitConnections
   MultiWalletComposables --> useAppKitConnection
@@ -441,173 +433,6 @@ export default function Component() {
 
 <Note>
   Related composables: [useAppKitConnections](#useappkitconnections), [useAppKitAccount](#useappkitaccount)
-</Note>
-
-## usePay
-
-Composable function that manages payment modal interactions and handles crypto payment flows. Use this composable when implementing payment features with exchange integrations.
-
-```ts
-import { usePay } from "@reown/appkit-pay/vue";
-
-export default function Component() {
-  const { pay, isLoading, error } = usePay({
-    onSuccess: (result) => console.log('Payment successful:', result),
-    onError: (error) => console.error('Payment failed:', error)
-  });
-}
-```
-
-### Use Cases
-- Implementing crypto payment flows in your application
-- Handling payment success and error states
-- Integrating with centralized exchanges for payments
-- Building custom payment interfaces
-
-### Parameters
-
-- `onSuccess`: Optional callback function called when payment succeeds
-- `onError`: Optional callback function called when payment fails
-
-### Returns
-
-- `pay`: Function to initiate a payment with specified parameters
-- `isLoading`: Reactive reference to boolean indicating if a payment is in progress
-- `error`: Reactive reference to error object if payment fails
-
-<Note>
-  Related composables: [useAvailableExchanges](#useavailableexchanges), [usePayUrlActions](#usepayurlactions)
-</Note>
-
-## useAvailableExchanges
-
-Composable function that fetches and manages the state for available exchanges. Use this composable when you need to display available payment options or filter exchanges based on criteria.
-
-```ts
-import { useAvailableExchanges } from "@reown/appkit-pay/vue";
-
-export default function Component() {
-  const { data, isLoading, error, fetch } = useAvailableExchanges({
-    isFetchOnInit: true,
-    asset: 'ETH',
-    amount: 100,
-    network: 'eip155:1'
-  });
-}
-```
-
-### Use Cases
-- Displaying available exchanges to users
-- Filtering exchanges based on asset or network
-- Building custom exchange selection interfaces
-- Implementing exchange comparison features
-
-### Parameters
-
-- `isFetchOnInit`: Whether to fetch exchanges on composable initialization
-- `asset`: Filter exchanges by specific asset
-- `amount`: Filter exchanges by minimum amount
-- `network`: Filter exchanges by network support
-
-### Returns
-
-- `data`: Reactive reference to array of available exchanges
-- `isLoading`: Reactive reference to boolean indicating if exchanges are being fetched
-- `error`: Reactive reference to error object if fetching fails
-- `fetch`: Function to manually refetch exchanges
-
-<Note>
-  Related composables: [usePay](#usepay), [usePayUrlActions](#usepayurlactions)
-</Note>
-
-## usePayUrlActions
-
-Composable function that provides functions to interact with specific exchange URLs, returning the sessionId needed for status tracking. Use this composable when implementing custom exchange flows.
-
-```ts
-import { usePayUrlActions } from "@reown/appkit-pay/vue";
-
-export default function Component() {
-  const { getUrl, openUrl } = usePayUrlActions();
-
-  // Get exchange URL
-  const handleGetUrl = async () => {
-    const { url, sessionId } = await getUrl('binance', {
-      asset: 'ETH',
-      amount: 0.1,
-      recipient: '0x...'
-    });
-  };
-
-  // Open exchange URL in new tab
-  const handleOpenUrl = async () => {
-    const { url, sessionId } = await openUrl('coinbase', {
-      asset: 'USDC',
-      amount: 100,
-      recipient: '0x...'
-    }, true);
-  };
-}
-```
-
-### Use Cases
-- Building custom exchange integration flows
-- Implementing exchange URL generation
-- Creating custom payment interfaces
-- Tracking exchange sessions for status monitoring
-
-### Returns
-
-- `getUrl`: Function that returns exchange URL and session ID
-- `openUrl`: Function that opens exchange URL and returns session data
-
-<Note>
-  Related composables: [useExchangeBuyStatus](#useexchangebuystatus), [useAvailableExchanges](#useavailableexchanges)
-</Note>
-
-## useExchangeBuyStatus
-
-Composable function that fetches and polls for the status of a headless payment transaction using exchangeId and sessionId. Use this composable to track payment progress and handle completion.
-
-```ts
-import { useExchangeBuyStatus } from "@reown/appkit-pay/vue";
-
-export default function Component() {
-  const { data, isLoading, error, refetch } = useExchangeBuyStatus({
-    exchangeId: 'binance',
-    sessionId: 'session-123',
-    pollingInterval: 5000,
-    isEnabled: true,
-    onSuccess: (status) => console.log('Payment completed:', status),
-    onError: (error) => console.error('Payment failed:', error)
-  });
-}
-```
-
-### Use Cases
-- Tracking payment transaction status
-- Implementing payment progress indicators
-- Handling payment completion and failure states
-- Building real-time payment monitoring
-
-### Parameters
-
-- `exchangeId`: The exchange identifier
-- `sessionId`: The session ID from payment URL actions
-- `pollingInterval`: How often to check status (in milliseconds)
-- `isEnabled`: Whether to enable status polling
-- `onSuccess`: Callback for successful payment completion
-- `onError`: Callback for payment errors
-
-### Returns
-
-- `data`: Reactive reference to current payment status data
-- `isLoading`: Reactive reference to boolean indicating if status is being fetched
-- `error`: Reactive reference to error object if status fetching fails
-- `refetch`: Function to manually refetch status
-
-<Note>
-  Related composables: [usePayUrlActions](#usepayurlactions), [usePay](#usepay)
 </Note>
 
 ## useAppKitUpdateEmail
