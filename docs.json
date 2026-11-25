@@ -73,12 +73,8 @@
       "destination": "/appkit/overview"
     },
     {
-      "source": "/appkit/payments/overview",
-      "destination": "https://docs.walletconnect.com/payments/overview"
-    },
-    {
       "source": "/appkit/payments/one-click-checkout",
-      "destination": "https://docs.walletconnect.com/payments/overview"
+      "destination": "/appkit/payments/overview"
     },
     {
       "source": "/appkit/payments/pay-with-exchange",
@@ -223,10 +219,11 @@
             ]
           },
           {
-            "group": "Transactions",
+            "group": "Payments",
             "pages": [
-              "appkit/features/swaps",
-              "appkit/features/onramp"
+              "appkit/payments/overview",
+              "appkit/features/onramp",
+              "appkit/features/swaps"
             ]
           },
           {
