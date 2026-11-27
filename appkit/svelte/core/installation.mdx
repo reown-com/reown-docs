@@ -4,7 +4,7 @@ title: Installation
 
 import CloudBanner from '/snippets/cloud-banner.mdx'
 
-import Wagmi3Beta from '/snippets/appkit/shared/wagmi-3-beta.mdx'
+import UpgradeToAppKit2 from '/snippets/appkit/shared/upgrade-to-appkit-2.mdx'
 
 import SvelteWagmiImplementation from '/snippets/appkit/svelte/wagmi/about/implementation.mdx'
 import SvelteWagmiModal from '/snippets/appkit/svelte/wagmi/about/triggermodal.mdx'
@@ -46,7 +46,30 @@ npx skills add https://github.com/reown-com/skills --skill appkit --agent '*'
 After installation, you can ask your AI assistant for help with AppKit setup, implementation, and troubleshooting.
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="Wagmi v3">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @wagmi/connectors
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @wagmi/connectors
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @wagmi/connectors
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @wagmi/connectors
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Wagmi v2">
 
 <CodeGroup>
 
@@ -67,8 +90,6 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem
 ```
 
 </CodeGroup>
-
-<Wagmi3Beta />
 
 </Tab>
 <Tab title="Ethers">
@@ -197,10 +218,17 @@ Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtai
 ## Implementation
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="Wagmi v3">
 <Card title="Svelte Wagmi Example" icon="github" href="https://github.com/reown-com/appkit/tree/main/examples/sveltekit-wagmi">
 Check the Svelte Wagmi example
 </Card>
+
+<SvelteWagmiImplementation />
+
+</Tab>
+<Tab title="Wagmi v2">
+
+The AppKit setup is the same for Wagmi v2 and Wagmi v3. Only the installed package versions differ.
 
 <SvelteWagmiImplementation />
 
@@ -407,6 +435,16 @@ function sendTransaction() {
 
 </Tab>
 </Tabs>
+
+## Using AppKit 1.x
+
+AppKit 1.x is still available if you are not ready to upgrade. Install the 1.x packages by pinning the version, for example `@reown/appkit@1.x` and `@reown/appkit-adapter-wagmi@1.x` (all `@reown/*` packages must use the same version).
+
+<Card title="AppKit 1.x Examples" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/1.x/javascript">
+Check the JavaScript examples (usable from Svelte) for AppKit 1.x
+</Card>
+
+<UpgradeToAppKit2 />
 
 ## AppKit Skills
 

@@ -4,7 +4,7 @@ title: Installation
 
 import CloudBanner from '/snippets/cloud-banner.mdx'
 
-import Wagmi3Beta from '/snippets/appkit/shared/wagmi-3-beta.mdx'
+import UpgradeToAppKit2 from '/snippets/appkit/shared/upgrade-to-appkit-2.mdx'
 
 import WagmiImplementation from '/snippets/appkit/react/wagmi/about/implementation.mdx'
 
@@ -48,7 +48,30 @@ After installation, you can ask your AI assistant for help with AppKit setup, im
 </Warning>
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="Wagmi v3">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @wagmi/connectors @tanstack/react-query
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @wagmi/connectors @tanstack/react-query
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @wagmi/connectors @tanstack/react-query
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi viem @wagmi/connectors @tanstack/react-query
+```
+
+</CodeGroup>
+
+</Tab>
+<Tab title="Wagmi v2">
 
 <CodeGroup>
 
@@ -70,7 +93,9 @@ pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @tanstack/reac
 
 </CodeGroup>
 
-<Wagmi3Beta />
+<Card title="Wagmi v2 Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi-2.x">
+Check the React Wagmi v2 example with AppKit 2.x
+</Card>
 
 </Tab>
 <Tab title="Ethers v5">
@@ -300,9 +325,20 @@ function App() {
 ### Adapter Configuration
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="Wagmi v3">
 <Card title="wagmi Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi">
 Check the React wagmi example
+</Card>
+
+<WagmiImplementation />
+
+</Tab>
+<Tab title="Wagmi v2">
+
+The AppKit setup is the same for Wagmi v2 and Wagmi v3. Only the installed package versions differ.
+
+<Card title="Wagmi v2 Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi-2.x">
+Check the React Wagmi v2 example with AppKit 2.x
 </Card>
 
 <WagmiImplementation />
@@ -508,27 +544,15 @@ function Components() {
 
 </Tabs>
 
-## Video Tutorial
+## Using AppKit 1.x
 
-<div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0 }}>
-  <iframe
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      maxWidth: '560px',
-      margin: '0 auto'
-    }}
-    src="https://www.youtube.com/embed/lxTGqXh7LiA?si=1MQMbtqQtM6KSfE0"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerPolicy="strict-origin-when-cross-origin"
-    allowFullScreen
-  />
-</div>
+AppKit 1.x is still available if you are not ready to upgrade. Install the 1.x packages by pinning the version, for example `@reown/appkit@1.x` and `@reown/appkit-adapter-wagmi@1.x` (all `@reown/*` packages must use the same version).
+
+<Card title="AppKit 1.x Examples" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/1.x/react">
+Check the React examples for AppKit 1.x
+</Card>
+
+<UpgradeToAppKit2 />
 
 ## Alternative Installation
 

@@ -1,16 +1,12 @@
 ---
-title: "Migrate to Wagmi 3.0 (Beta)"
-description: "Step-by-step guide to upgrade a React AppKit project from Wagmi 2.x to the AppKit beta that supports Wagmi 3.0."
-sidebarTitle: "Wagmi 3.0 Migration"
+title: "Migrate from AppKit 1.x to 2.x"
+description: "Step-by-step guide to upgrade a React AppKit project from AppKit 1.x with Wagmi 2.x to AppKit 2.x with Wagmi 3.x."
+sidebarTitle: "AppKit 2.x Migration"
 ---
 
-<Warning>
-  AppKit support for Wagmi 3.0 is in beta. Test your app thoroughly before shipping to production.
-</Warning>
+This guide walks through upgrading a React project that uses the Wagmi adapter from AppKit `1.x` with Wagmi `2.x` to the latest AppKit `2.x` with Wagmi `3.x`.
 
-This guide walks through upgrading a React project that uses the Wagmi adapter from AppKit `1.x` with Wagmi `2.x` to the AppKit beta (`2.0.0-wagmi-3.0`) with Wagmi `3.x`.
-
-It uses the [React Wagmi example](https://github.com/reown-com/appkit-web-examples/blob/main/react/react-wagmi/package.json) as the starting point and the [upgraded React Wagmi example](https://github.com/reown-com/appkit-web-examples/tree/rtomas/bump-wagmi-3.7.7/react/react-wagmi) as the end result. Only `package.json` changes. The application code stays the same.
+It uses the [React Wagmi example for AppKit 1.x](https://github.com/reown-com/appkit-web-examples/tree/main/1.x/react/react-wagmi) as the starting point and the [React Wagmi example for AppKit 2.x](https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi) as the end result. Only `package.json` changes. The application code stays the same.
 
 ## Before and after
 
@@ -18,30 +14,32 @@ It uses the [React Wagmi example](https://github.com/reown-com/appkit-web-exampl
   "dependencies": {
 -   "@reown/appkit": "1.8.21",
 -   "@reown/appkit-adapter-wagmi": "1.8.21",
-+   "@reown/appkit": "2.0.0-wagmi-3.0",
-+   "@reown/appkit-adapter-wagmi": "2.0.0-wagmi-3.0",
++   "@reown/appkit": "2.0.0",
++   "@reown/appkit-adapter-wagmi": "2.0.0",
     "@tanstack/react-query": "5.90.3",
 -   "@wagmi/connectors": "6.2.0",
-+   "@wagmi/connectors": "8.2.0",
++   "@wagmi/connectors": "8.2.4",
     "react": "19.2.1",
     "react-dom": "19.2.1",
 -   "viem": "2.47.0",
 -   "wagmi": "2.19.5"
-+   "viem": "2.56.8",
-+   "wagmi": "3.7.7"
++   "viem": "2.58.8",
++   "wagmi": "3.7.11"
   }
 ```
+
+The versions above are an example. Use the latest releases when you upgrade.
 
 ## Migration steps
 
 <Steps>
 <Step title="Update the Reown packages">
 
-Set every `@reown/*` package in your project to `2.0.0-wagmi-3.0`. All Reown packages must use the same version, including any additional adapters (for example `@reown/appkit-adapter-solana` or `@reown/appkit-adapter-bitcoin`).
+Set every `@reown/*` package in your project to the latest 2.x version. All Reown packages must use the same version, including any additional adapters (for example `@reown/appkit-adapter-solana` or `@reown/appkit-adapter-bitcoin`).
 
 ```json package.json
-"@reown/appkit": "2.0.0-wagmi-3.0",
-"@reown/appkit-adapter-wagmi": "2.0.0-wagmi-3.0"
+"@reown/appkit": "2.0.0",
+"@reown/appkit-adapter-wagmi": "2.0.0"
 ```
 
 </Step>
@@ -50,8 +48,8 @@ Set every `@reown/*` package in your project to `2.0.0-wagmi-3.0`. All Reown pac
 Update `wagmi` to the latest `3.x` release and `viem` to the latest `2.x` release.
 
 ```json package.json
-"viem": "2.56.8",
-"wagmi": "3.7.7"
+"viem": "2.58.8",
+"wagmi": "3.7.11"
 ```
 
 </Step>
@@ -60,7 +58,7 @@ Update `wagmi` to the latest `3.x` release and `viem` to the latest `2.x` releas
 Wagmi 3.0 requires `@wagmi/connectors` as a direct dependency. Add it, or update it to the latest version if your project already includes it.
 
 ```json package.json
-"@wagmi/connectors": "8.2.0"
+"@wagmi/connectors": "8.2.4"
 ```
 
 </Step>
@@ -71,19 +69,19 @@ Remove `node_modules` and your lockfile, then install the updated packages:
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit@2.0.0-wagmi-3.0 @reown/appkit-adapter-wagmi@2.0.0-wagmi-3.0 wagmi@latest viem@latest @wagmi/connectors@latest
+npm install @reown/appkit@latest @reown/appkit-adapter-wagmi@latest wagmi@latest viem@latest @wagmi/connectors@latest
 ```
 
 ```bash Yarn
-yarn add @reown/appkit@2.0.0-wagmi-3.0 @reown/appkit-adapter-wagmi@2.0.0-wagmi-3.0 wagmi@latest viem@latest @wagmi/connectors@latest
+yarn add @reown/appkit@latest @reown/appkit-adapter-wagmi@latest wagmi@latest viem@latest @wagmi/connectors@latest
 ```
 
 ```bash Bun
-bun add @reown/appkit@2.0.0-wagmi-3.0 @reown/appkit-adapter-wagmi@2.0.0-wagmi-3.0 wagmi@latest viem@latest @wagmi/connectors@latest
+bun add @reown/appkit@latest @reown/appkit-adapter-wagmi@latest wagmi@latest viem@latest @wagmi/connectors@latest
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit@2.0.0-wagmi-3.0 @reown/appkit-adapter-wagmi@2.0.0-wagmi-3.0 wagmi@latest viem@latest @wagmi/connectors@latest
+pnpm add @reown/appkit@latest @reown/appkit-adapter-wagmi@latest wagmi@latest viem@latest @wagmi/connectors@latest
 ```
 
 </CodeGroup>
@@ -98,10 +96,10 @@ If your app calls Wagmi hooks or actions directly, check the [Wagmi 3.x migratio
 </Step>
 </Steps>
 
-<Card title="React Wagmi example (Wagmi 3.0)" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/rtomas/bump-wagmi-3.7.7/react/react-wagmi">
-Check the upgraded React Wagmi example
+<Card title="React Wagmi example (AppKit 2.x)" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/react/react-wagmi">
+Check the React Wagmi example for AppKit 2.x
 </Card>
 
 ## Report a bug
 
-If you find a bug while using the Wagmi 3.0 beta, contact support from the [Reown Dashboard](https://dashboard.reown.com) through the Intercom bubble, or [report an issue](/advanced/report-an-issue).
+If you find a bug after upgrading to AppKit 2.x, contact support from the [Reown Dashboard](https://dashboard.reown.com) through the Intercom bubble, or [report an issue](/advanced/report-an-issue).

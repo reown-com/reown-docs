@@ -4,7 +4,7 @@ title: Installation
 
 import CloudBanner from '/snippets/cloud-banner.mdx'
 
-import Wagmi3Beta from '/snippets/appkit/shared/wagmi-3-beta.mdx'
+import UpgradeToAppKit2 from '/snippets/appkit/shared/upgrade-to-appkit-2.mdx'
 
 import WagmiImplementation from '/snippets/appkit/vue/wagmi/about/implementation.mdx'
 
@@ -40,29 +40,50 @@ After installation, you can ask your AI assistant for help with AppKit setup, im
 ## Custom Installation
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="Wagmi v3">
 
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue viem
+npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue @wagmi/connectors viem
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue viem
+yarn add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue @wagmi/connectors viem
 ```
 
 ```bash Bun
-bun add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue viem
+bun add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue @wagmi/connectors viem
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue viem
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue @wagmi/connectors viem
 ```
 
 </CodeGroup>
 
-<Wagmi3Beta />
+</Tab>
+<Tab title="Wagmi v2">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue@0.3.x viem
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue@0.3.x viem
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue@0.3.x viem
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi @tanstack/vue-query @wagmi/vue@0.3.x viem
+```
+
+</CodeGroup>
 
 </Tab>
 <Tab title="Ethers v5">
@@ -214,10 +235,17 @@ Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtai
 ## Implementation
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="Wagmi v3">
 <Card title="wagmi Example" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/vue/vue-wagmi">
 Check the Vue wagmi example
 </Card>
+
+<WagmiImplementation />
+
+</Tab>
+<Tab title="Wagmi v2">
+
+The AppKit setup is the same for Wagmi v2 and Wagmi v3. Only the installed package versions differ.
 
 <WagmiImplementation />
 
@@ -413,6 +441,16 @@ Read more about Wagmi actions for smart contract interaction [here](https://wagm
 </Tab>
 
 </Tabs>
+
+## Using AppKit 1.x
+
+AppKit 1.x is still available if you are not ready to upgrade. Install the 1.x packages by pinning the version, for example `@reown/appkit@1.x` and `@reown/appkit-adapter-wagmi@1.x` (all `@reown/*` packages must use the same version).
+
+<Card title="AppKit 1.x Examples" icon="github" href="https://github.com/reown-com/appkit-web-examples/tree/main/1.x/vue">
+Check the Vue examples for AppKit 1.x
+</Card>
+
+<UpgradeToAppKit2 />
 
 ## Alternative Installation
 
