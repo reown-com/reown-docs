@@ -4,7 +4,7 @@ title: Installation
 
 import CloudBanner from '/snippets/cloud-banner.mdx'
 
-import Wagmi3Beta from '/snippets/appkit/shared/wagmi-3-beta.mdx'
+import UpgradeToAppKit2 from '/snippets/appkit/shared/upgrade-to-appkit-2.mdx'
 
 import NuxtWagmiImplementation from '/snippets/appkit/nuxt/wagmi/about/implementation.mdx'
 
@@ -38,29 +38,50 @@ npx skills add https://github.com/reown-com/skills --skill appkit --agent '*'
 After installation, you can ask your AI assistant for help with AppKit setup, implementation, and troubleshooting.
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="Wagmi v3">
 
 <CodeGroup>
 
 ```bash npm
-npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue @tanstack/vue-query
+npm install @reown/appkit @reown/appkit-adapter-wagmi viem @wagmi/vue @wagmi/connectors @tanstack/vue-query
 ```
 
 ```bash Yarn
-yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue @tanstack/vue-query
+yarn add @reown/appkit @reown/appkit-adapter-wagmi viem @wagmi/vue @wagmi/connectors @tanstack/vue-query
 ```
 
 ```bash Bun
-bun add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue @tanstack/vue-query
+bun add @reown/appkit @reown/appkit-adapter-wagmi viem @wagmi/vue @wagmi/connectors @tanstack/vue-query
 ```
 
 ```bash pnpm
-pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue @tanstack/vue-query
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi viem @wagmi/vue @wagmi/connectors @tanstack/vue-query
 ```
 
 </CodeGroup>
 
-<Wagmi3Beta />
+</Tab>
+<Tab title="Wagmi v2">
+
+<CodeGroup>
+
+```bash npm
+npm install @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue@0.3.x @tanstack/vue-query
+```
+
+```bash Yarn
+yarn add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue@0.3.x @tanstack/vue-query
+```
+
+```bash Bun
+bun add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue@0.3.x @tanstack/vue-query
+```
+
+```bash pnpm
+pnpm add @reown/appkit @reown/appkit-adapter-wagmi wagmi@2.x viem @wagmi/vue@0.3.x @tanstack/vue-query
+```
+
+</CodeGroup>
 
 </Tab>
 <Tab title="Ethers">
@@ -166,10 +187,17 @@ Create a new project on [Reown Dashboard](https://dashboard.reown.com) and obtai
 ## Implementation
 
 <Tabs>
-<Tab title="Wagmi">
+<Tab title="Wagmi v3">
 <Card title="Nuxt Wagmi Example" icon="github" href="https://github.com/reown-com/appkit/tree/main/examples/nuxt-wagmi-solana-bitcoin">
 Check the Nuxt Wagmi example
 </Card>
+
+<NuxtWagmiImplementation />
+
+</Tab>
+<Tab title="Wagmi v2">
+
+The AppKit setup is the same for Wagmi v2 and Wagmi v3. Only the installed package versions differ.
 
 <NuxtWagmiImplementation />
 
@@ -361,6 +389,12 @@ function sendTransaction() {
 
 </Tab>
 </Tabs>
+
+## Using AppKit 1.x
+
+AppKit 1.x is still available if you are not ready to upgrade. Install the 1.x packages by pinning the version, for example `@reown/appkit@1.x` and `@reown/appkit-adapter-wagmi@1.x` (all `@reown/*` packages must use the same version).
+
+<UpgradeToAppKit2 />
 
 ## AppKit Skills
 
